@@ -3,60 +3,84 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
-import { api } from '~/trpc/React'
+import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
+import { InactiveChainsDialog } from './InactiveChainsDialog'
 
 interface FlowsGraphPanelProps {
+  activeChainIds: string[]
+  data: InteropFlowsData | undefined
+  inactiveChainIds: string[]
   interopChains: InteropChainWithIcon[]
+  isLoading: boolean
 }
 
-export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
+export function FlowsGraphPanel({
+  activeChainIds,
+  data,
+  inactiveChainIds,
+  interopChains,
+  isLoading,
+}: FlowsGraphPanelProps) {
   const { selectedChains, selectedProtocols } = useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
-  )
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false
+  const inactiveChains = interopChains.filter((chain) =>
+    inactiveChainIds.includes(chain.id),
+  )
 
   return (
-    <div
-      id="flows-graph"
-      className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6 max-lg:order-2"
-      ref={containerRef}
-    >
-      {!size ? (
-        <Skeleton className="h-full w-full rounded-lg" />
-      ) : !hasEnoughChains ? (
-        <SelectionOverlay
-          message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
-        />
-      ) : !hasEnoughProtocols ? (
-        <SelectionOverlay
-          message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
-        />
-      ) : isLoading || !data ? (
-        <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
-      ) : (
-        <FlowsGraph
-          interopChains={interopChains}
-          data={data}
-          size={size}
-          isSmallScreen={isSmallScreen}
-        />
-      )}
+    <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
+      <div
+        id="flows-graph"
+        className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6"
+        ref={containerRef}
+      >
+        {!size ? (
+          <Skeleton className="h-full w-full rounded-lg" />
+        ) : !hasEnoughChains ? (
+          <SelectionOverlay
+            message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
+          />
+        ) : !hasEnoughProtocols ? (
+          <SelectionOverlay
+            message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
+          />
+        ) : isLoading || !data ? (
+          <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
+        ) : (
+          <FlowsGraph
+            interopChains={interopChains.filter((chain) =>
+              activeChainIds.includes(chain.id),
+            )}
+            visibleChainIds={activeChainIds}
+            data={data}
+            size={size}
+            isSmallScreen={isSmallScreen}
+          />
+        )}
+      </div>
+      {!isLoading &&
+        data &&
+        inactiveChains.length > 0 &&
+        hasEnoughChains &&
+        hasEnoughProtocols && (
+          <div className="mt-3 flex w-full items-center justify-center gap-1 pt-1">
+            <span className="font-normal text-secondary text-xs leading-none md:text-base">
+              No transfers detected for
+            </span>
+            <InactiveChainsDialog chains={inactiveChains} />
+          </div>
+        )}
     </div>
   )
 }

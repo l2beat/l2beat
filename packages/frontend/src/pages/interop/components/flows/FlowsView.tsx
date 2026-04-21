@@ -1,13 +1,19 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../chain-selector/types'
+import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from './consts'
 import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
+import {
+  getVisibleFlowChains,
+  getVisibleHighlightedChains,
+} from './utils/getVisibleFlowChains'
 import {
   InteropFlowsProvider,
   useInteropFlows,
@@ -29,8 +35,26 @@ export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
 }
 
 function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
-  const { highlightedChains } = useInteropFlows()
-  const hasGraphSelection = highlightedChains.length > 0
+  const { highlightedChains, selectedChains, selectedProtocols } =
+    useInteropFlows()
+  const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
+  const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
+  const { data, isLoading } = api.interop.flows.useQuery(
+    {
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    },
+    { enabled: hasEnoughChains && hasEnoughProtocols },
+  )
+  const { activeChainIds, inactiveChainIds } = getVisibleFlowChains(
+    selectedChains,
+    data?.flows ?? [],
+  )
+  const visibleHighlightedChains = getVisibleHighlightedChains(
+    highlightedChains,
+    activeChainIds,
+  )
+  const hasGraphSelection = visibleHighlightedChains.length > 0
 
   return (
     <PrimaryCard
@@ -50,9 +74,17 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
             <FlowsChainsSelector allChains={interopChains} />
             <FlowsProtocolsSelector allProtocols={protocols} />
           </div>
-          <SelectInfo highlightedChainsNumber={highlightedChains.length} />
+          <SelectInfo
+            highlightedChainsNumber={visibleHighlightedChains.length}
+          />
         </div>
-        <FlowsGraphPanel interopChains={interopChains} />
+        <FlowsGraphPanel
+          activeChainIds={activeChainIds}
+          data={data}
+          inactiveChainIds={inactiveChainIds}
+          interopChains={interopChains}
+          isLoading={isLoading}
+        />
       </div>
       <div
         className={cn(
@@ -61,7 +93,9 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         )}
       >
         <div className="h-full lg:w-[280px]">
-          <FlowsSelectedPathPanel />
+          <FlowsSelectedPathPanel
+            visibleHighlightedChains={visibleHighlightedChains}
+          />
         </div>
       </div>
     </PrimaryCard>
