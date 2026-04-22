@@ -28,5 +28,4 @@ export const polygonPosCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

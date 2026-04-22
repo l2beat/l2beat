@@ -17,5 +17,4 @@ export const zksync2Canonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

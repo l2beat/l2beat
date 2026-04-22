@@ -28,5 +28,4 @@ export const lineaCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

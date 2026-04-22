@@ -73,5 +73,4 @@ export const baseCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

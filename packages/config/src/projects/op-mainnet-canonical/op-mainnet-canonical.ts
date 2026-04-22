@@ -71,5 +71,4 @@ export const opMainnetCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

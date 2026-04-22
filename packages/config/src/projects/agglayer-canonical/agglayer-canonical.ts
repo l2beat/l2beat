@@ -20,5 +20,4 @@ export const agglayerCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

@@ -40,5 +40,4 @@ export const celoCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

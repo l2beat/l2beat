@@ -28,5 +28,4 @@ export const avalancheCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

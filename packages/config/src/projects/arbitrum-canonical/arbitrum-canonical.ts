@@ -44,5 +44,4 @@ export const arbitrumCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

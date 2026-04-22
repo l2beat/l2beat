@@ -40,5 +40,4 @@ export const inkCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }

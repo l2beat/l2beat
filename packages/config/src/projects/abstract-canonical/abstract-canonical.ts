@@ -17,5 +17,4 @@ export const abstractCanonical: BaseProject = {
     ],
     type: 'canonical',
   },
-  isInteropProtocol: true,
 }
