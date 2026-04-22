@@ -1,0 +1,374 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aave-v3",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170"],
+  "maxDepth": 8,
+  "maxAddresses": 400,
+  "overrides": {
+    "eth:0x0a16f2FCC0D44FaE41cc54e079281D84A363bECD": {
+      "ignoreMethods": ["getAllReservesTokens"]
+    },
+    "eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170": {
+      "ignoreMethods": ["getAddressesProviderAddressById"]
+    },
+    "eth:0x7c8509591f9693D21280d96e149a08A3bf69Cd0c": {
+      "ignoreMethods": ["getAllReservesTokens"],
+      "ignoreInWatchMode": ["getDebtCeilingDecimals"]
+    },
+    "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0": {
+      "ignoreMethods": ["getReservesList"],
+      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+    },
+    "eth:0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7": {
+      "ignoreMethods": ["getProposal", "getProposalState"],
+      "ignoreInWatchMode": [
+        "getProposalsCount",
+        "MIN_VOTING_DURATION",
+        "NAME",
+        "PRECISION_DIVIDER",
+        "PROPOSAL_EXPIRATION_TIME"
+      ]
+    },
+    "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1": {
+      "ignoreMethods": ["getReservesList"],
+      "ignoreInWatchMode": [
+        "getReservesCount",
+        "MAX_NUMBER_RESERVES",
+        "POOL_REVISION"
+      ]
+    },
+    "eth:0xB85B2bFEbeC4F5f401dbf92ac147A3076391fCD5": {
+      "ignoreMethods": ["getAllReservesTokens"]
+    },
+    // CrossChainControllerUpgradeRev3 — array overflow on chain-indexed getters
+    "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1": {
+      "ignoreMethods": [
+        "getConfigurationByChain",
+        "getForwarderBridgeAdaptersByChain",
+        "getOptimalBandwidthByChain",
+        "getReceiverBridgeAdaptersByChain"
+      ],
+      "ignoreInWatchMode": ["getCurrentEnvelopeNonce", "getCurrentTransactionNonce"]
+    },
+    // SameChainAdapter — array overflow on chain ID lookups
+    "eth:0x6cfbd2aA4691fc18B9C209bDd43DC3943C228FCf": {
+      "ignoreMethods": [
+        "getTrustedRemoteByChainId",
+        "infraToNativeChainId",
+        "nativeToInfraChainId"
+      ]
+    },
+    // StakedAaveV3 — array overflow on index-based getters
+    "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5": {
+      "ignoreMethods": ["getAdmin", "getPendingAdmin", "previewRedeem", "previewStake"],
+      "ignoreInWatchMode": [
+        "decimals",
+        "DELEGATE_BY_TYPE_TYPEHASH",
+        "DELEGATE_TYPEHASH",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "eip712Domain",
+        "EXCHANGE_RATE_UNIT",
+        "INITIAL_EXCHANGE_RATE",
+        "name",
+        "PERMIT_TYPEHASH",
+        "POWER_SCALE_FACTOR",
+        "PRECISION",
+        "REVISION",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    // 4th PoolInstance — suppress large reserves list
+    "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": {
+      "ignoreMethods": ["getReservesList"],
+      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+    },
+    // 4th AaveProtocolDataProvider — suppress reserve token enumeration
+    "eth:0x53519c32f73fE1797d10210c4950fFeBa3b21504": {
+      "ignoreMethods": ["getAllReservesTokens"]
+    },
+    // AaveEcosystemReserveV2
+    "eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491": {
+      "ignoreInWatchMode": ["deltaOf", "getNextStreamId", "getStream", "REVISION"]
+    },
+    // CollectorWithCustomImpl
+    "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c": {
+      "ignoreInWatchMode": ["deltaOf", "getNextStreamId", "getStream"]
+    },
+    // Gho Token
+    "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    // GnosisSafe (Aave Guardian)
+    "eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710": {
+      "ignoreInWatchMode": ["domainSeparator", "getChainId", "multisigThreshold", "nonce", "VERSION"]
+    },
+    // GnosisSafeL2 (BGD Labs Multisig)
+    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": {
+      "ignoreInWatchMode": ["domainSeparator", "getChainId", "multisigThreshold", "nonce", "VERSION"]
+    },
+    // PayloadsController
+    "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5": {
+      "ignoreInWatchMode": ["getPayloadsCount"]
+    },
+    // PoolConfiguratorInstance — GHO/Lido market
+    "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517": {
+      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+    },
+    // PoolConfiguratorInstance — main market
+    "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27": {
+      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+    },
+    // PoolConfiguratorInstance — Horizon RWA market
+    "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F": {
+      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+    },
+    // PoolConfiguratorInstance — EtherFi market
+    "eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d": {
+      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+    },
+    // PoolInstance — main market
+    "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2": {
+      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+    },
+    // RewardsController — main market
+    "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb": {
+      "ignoreInWatchMode": ["REVISION"]
+    },
+    // RewardsController — Horizon RWA market
+    "eth:0x1D5D386a90CEA8AcEa9fa75389e97CF5F1AE21D3": {
+      "ignoreInWatchMode": ["REVISION"]
+    },
+    // VariableDebtTokenMainnetInstanceGHO
+    "eth:0x786dBff3f1292ae8F92ea68Cf93c30b34B1ed04B": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "decimals",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    // Horizon RWA aToken proxies — discovered via getAllATokens on provider 0x53519c32...
+    // aHorRwaUSDC, aHorRwaRLUSD, aHorRwaUSTB, aHorRwaUSCC, aHorRwaUSYC, aHorRwaJTRSY,
+    // aHorRwaJAAA, aHorRwaVBILL, aHorRwaACRED — templates auto-apply ignoreInWatchMode
+    // Underlying RWA token contracts for the Horizon market (external protocols: Ondo, JTRSY, etc.)
+    // USTB, USCC, USYC, JTRSY, JAAA, VBILL, ACRED underlying tokens — not part of Aave scope
+    "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e": { "ignoreDiscovery": true },
+    "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c": { "ignoreDiscovery": true },
+    "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b": { "ignoreDiscovery": true },
+    "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86": { "ignoreDiscovery": true },
+    "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64": { "ignoreDiscovery": true },
+    "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01": { "ignoreDiscovery": true },
+    "eth:0x17418038ecF73BA4026c4f428547BF099706F27B": { "ignoreDiscovery": true },
+    // Actual reward distributor contracts from RewardsController (not aTokens)
+    "eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974": { "ignoreDiscovery": true },
+    "eth:0x30D20208d987713f46DFD34EF128Bb16C404D10f": { "ignoreDiscovery": true },
+    // aEthLidoWETH, aEthUSDS (main market), aEthLidowstETH — discovered via getAllATokens,
+    // templates auto-apply ignoreInWatchMode
+    // aGHO (ATokenInstance, main market) — template auto-applies ignoreInWatchMode
+    // aAAVE (ATokenWithDelegationInstance, main market) — template auto-applies ignoreInWatchMode
+    // All other aToken proxies are discovered via getAllATokens on the data providers
+    "eth:0x111111111117dC0aa78b770fA6A738034120C302": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xba100000625a3754423978a60c9317c58a424e3D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xD533a949740bb3306d119CC777fa900bA034cd52": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x90D2af7d622ca3141efA4d8f1F24d86E5974Cc8F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8236a87084f8B84306f72007F36F2618A5634494": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x14Bdc3A3AE09f5518b923b69489CBcAfB238e617": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x1F84a51296691320478c98b8d77f2Bbd17D34350": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3b3fB9C57858EF816833dC91565EFcd85D96f634": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x50D2C7992b802Eef16c04FeADAB310f31866a545": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x62C6E813b9589C3631Ba0Cdb013acdB8544038B7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x917459337CaAC939D41d7493B3999f571D20D667": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9F56094C450763769BA0EA9Fe2876070c0fD5F77": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBC6736d346a5eBC0dEbc997397912CD9b8FAe10a": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xe6A934089BBEe34F832060CE98848359883749B3": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xE8483517077afa11A9B07f849cee2552f040d7b2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "ignoreDiscovery": true
+    }
+  }
+}
