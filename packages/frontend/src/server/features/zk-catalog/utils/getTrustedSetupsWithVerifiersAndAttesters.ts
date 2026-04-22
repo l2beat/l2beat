@@ -70,7 +70,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -147,7 +147,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -161,7 +161,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -292,7 +292,7 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -302,10 +302,10 @@ export function getProjectsUsedIn(
       let url = `/scaling/projects/${project.slug}`
       if (project.daBridge) {
         const layer = allProjects
-          .filter((x) => x.isDaLayer)
+          .filter((x) => x.daLayer)
           .find((x) => x.id === project.daBridge?.daLayer)
         url = `/data-availability/projects/${layer?.slug}/${project.slug}`
-      } else if (project.isDaLayer) {
+      } else if (project.daLayer) {
         url = `/data-availability/projects/${project.slug}/no-bridge`
       }
 
@@ -323,7 +323,7 @@ export function getProjectsUsedIn(
 
 export function addProjectsUsedInDisplayInfo(
   usedIn: UsedInProject[],
-  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ): UsedInProjectWithIcon[] {
   return usedIn.map((project) => ({
     id: project.id,

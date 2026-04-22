@@ -57,7 +57,7 @@ export function renderProjectMarkdown(
 
 export function renderDashboardMarkdown(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[],
+  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
   projectsWithHighSeverityChanges: Set<string>,
   selectedEmoji?: string,
 ): string {

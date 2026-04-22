@@ -31,7 +31,7 @@ export async function getScalingProjectTvsBreakdown(
     slug,
     select: ['tvsConfig', 'tvsInfo'],
     optional: ['chainConfig', 'milestones', 'contracts', 'archivedAt'],
-    where: ['isScaling'],
+    where: ['scalingInfo'],
   })
 
   if (!project || env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())) {

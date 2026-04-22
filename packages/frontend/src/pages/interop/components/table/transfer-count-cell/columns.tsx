@@ -31,6 +31,8 @@ export const columns = [
     ),
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The time at which the source-chain transfer transaction occurred.',
     },
   }),
   columnHelper.display({
@@ -64,6 +66,8 @@ export const columns = [
     },
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The token amount sent on the source chain and the token amount received on the destination chain.',
     },
   }),
   columnHelper.accessor('valueUsd', {
@@ -81,6 +85,7 @@ export const columns = [
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
+      tooltip: 'The USD value of the transfer.',
     },
   }),
   columnHelper.accessor('duration', {
@@ -99,6 +104,8 @@ export const columns = [
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
+      tooltip:
+        'The time it took for the transfer to be received on the destination chain.',
     },
   }),
   columnHelper.display({
@@ -133,6 +140,8 @@ export const columns = [
     },
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The source and destination chains for this transfer. External links open the corresponding chain transactions.',
     },
   }),
 ]

@@ -5,8 +5,10 @@ import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
-import { createInteropEventType, type InteropEvent } from '../types'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { createInteropEventType, findChain, type InteropEvent } from '../types'
 import type { RelayApiClient } from './RelayApiClient'
+import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
@@ -20,26 +22,39 @@ export class RelayRootIndexer extends RootIndexer {
   }
 }
 
-export const TokenSent = createInteropEventType<{
+export type TokenSentArgs = {
   id: string
   amount?: string
   token?: Address32
   $dstChain: string
-}>('relay.TokenSent', { direction: 'outgoing' })
+}
 
-export const TokenReceived = createInteropEventType<{
+export const TokenSent = createInteropEventType<TokenSentArgs>(
+  'relay.TokenSent',
+  { direction: 'outgoing' },
+)
+
+export type TokenReceivedArgs = {
   id: string
   amount?: string
   token?: Address32
   $srcChain: string
-}>('relay.TokenReceived', { direction: 'incoming' })
+}
+
+export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
+  'relay.TokenReceived',
+  { direction: 'incoming' },
+)
 
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
+  private readonly bootstrapChainNamesById: Map<number, string>
 
   constructor(
-    private chains: { id: number; name: string }[],
+    chains: { id: number; name: string }[],
+    oneSidedChains: string[],
+    private configs: InteropConfigStore,
     private trackedChains: string[],
     private relayApiClient: RelayApiClient,
     private db: Database,
@@ -57,6 +72,11 @@ export class RelayIndexer extends ManagedChildIndexer {
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
+    )
+
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(
+      chains,
+      oneSidedChains,
     )
   }
 
@@ -78,9 +98,13 @@ export class RelayIndexer extends ManagedChildIndexer {
     if (chainId === undefined) {
       return 'Unknown'
     }
-    return (
-      this.chains.find((c) => c.id === chainId)?.name ?? `Unknown_${chainId}`
-    )
+
+    const networks = this.configs.get(RelayConfig)
+    if (networks) {
+      return findChain(networks, (network) => network.chainId, chainId)
+    }
+
+    return this.bootstrapChainNamesById.get(chainId) ?? `Unknown_${chainId}`
   }
 
   async update(from: number, to: number): Promise<number> {

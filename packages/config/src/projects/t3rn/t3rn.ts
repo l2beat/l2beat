@@ -16,6 +16,7 @@ export const t3rn: ScalingProject = underReviewL3({
   ],
   display: {
     name: 't3rn',
+    aliases: ['tern'],
     slug: 't3rn',
     stacks: [], // Custom stack - not based on standard stacks
     description:

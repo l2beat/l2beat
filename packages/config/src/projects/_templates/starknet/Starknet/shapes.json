@@ -8,5 +8,11 @@
     "hash": "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe",
     "address": "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
     "blockNumber": 22188285
+  },
+  "Starknet_v2026-11": {
+    "hash": "0x4ebd3e71fba7928b1daa4cdd93a1081aa0b578578cc8e6aada6a3b86b057fcb5",
+    "address": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
+    "chain": "ethereum",
+    "blockNumber": 24927241
   }
 }

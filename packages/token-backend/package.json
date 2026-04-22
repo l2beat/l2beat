@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",

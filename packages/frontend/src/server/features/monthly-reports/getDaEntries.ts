@@ -55,7 +55,7 @@ export async function getDaMonthlyUpdateEntries(
 ): Promise<DaMonthlyUpdateEntry[]> {
   const [daLayers, daBridges, newProjects, throughput] = await Promise.all([
     ps.getProjects({
-      select: ['isDaLayer', 'daLayer', 'colors'],
+      select: ['daLayer', 'colors'],
     }),
     await ps.getProjects({
       select: ['daBridge'],
@@ -86,7 +86,7 @@ export async function getDaMonthlyUpdateEntries(
 
 function getDaMonthlyUpdateEntry(
   daUpdateEntry: DataAvailabilityUpdate,
-  daLayer: Project<'isDaLayer' | 'daLayer' | 'colors'>,
+  daLayer: Project<'daLayer' | 'colors'>,
   daBridges: Project<'daBridge'>[],
   newProjects: Project<'scalingStage' | 'display' | 'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,

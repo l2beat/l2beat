@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1776166144,
+  "timestamp": 1776697693,
   "configHash": "0xb38099a89f4a1650c4592eb5b206aa3dfb12f4b33ad639c81fcfc9928be4e4d5",
   "entries": [
     {
@@ -85,8 +85,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 159902,
-        "committedPriorityRequestCount": 1831125,
+        "committedBatchesCount": 162376,
+        "committedPriorityRequestCount": 1834234,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -198,9 +198,9 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xd4460475F00307845082d3a146f36661354FBc67",
-        "executedBatchesCount": 159891,
-        "executedOnChainBatchesCount": 112222,
-        "executedPriorityRequestCount": 1831109,
+        "executedBatchesCount": 162361,
+        "executedOnChainBatchesCount": 113466,
+        "executedPriorityRequestCount": 1834215,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0xE315CbEDc21c5beC186bF478D899e91A604a6bC8",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
@@ -215,10 +215,10 @@
           "0x4c444f0000000000000000000000000000000000000000000000000000000000",
           "0x415a544543000000000000000000000000000000000000000000000000000000"
         ],
-        "lastAccountIndex": 722508,
-        "lastVerifiedEndBlockNumber": 214953316,
-        "lastVerifiedStateRoot": "0xec8f508043d81b42fdf18493887ebbb58b3b4dd5c071eb430a48a6c00871387a",
-        "lastVerifiedValidiumRoot": "0xcd7ab7a1fd927e631c2dc054b58ddf4b14eeb87f5d9fb2bb83ecbc7c98872cee",
+        "lastAccountIndex": 723092,
+        "lastVerifiedEndBlockNumber": 218905316,
+        "lastVerifiedStateRoot": "0xf66204064ddf7432932bfe375ba863c0d5a5bb9cf943bf2c084df8fe953289ee",
+        "lastVerifiedValidiumRoot": "0x13e43fe1f70e4eacf508da85bfd7a0f942d2af40c37aa327cc792cdcd797bfe5",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -242,7 +242,7 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_ORDER_BASE_AMOUNT": 0,
-        "openPriorityRequestCount": 26,
+        "openPriorityRequestCount": 27,
         "pendingOnChainBatchesCount": 9,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
@@ -283,13 +283,13 @@
             "tokenAddress": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
           }
         ],
-        "stateRoot": "0xec8f508043d81b42fdf18493887ebbb58b3b4dd5c071eb430a48a6c00871387a",
+        "stateRoot": "0xf66204064ddf7432932bfe375ba863c0d5a5bb9cf943bf2c084df8fe953289ee",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xcd7ab7a1fd927e631c2dc054b58ddf4b14eeb87f5d9fb2bb83ecbc7c98872cee",
-        "verifiedBatchesCount": 159891,
-        "verifiedPriorityRequestCount": 1831109,
+        "validiumRoot": "0x13e43fe1f70e4eacf508da85bfd7a0f942d2af40c37aa327cc792cdcd797bfe5",
+        "verifiedBatchesCount": 162361,
+        "verifiedPriorityRequestCount": 1834215,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -427,7 +427,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 58,
+        "nonce": 59,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -479,7 +479,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 48,
+        "versionId": 49,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -569,7 +569,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 87,
+        "nonce": 90,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -668,7 +668,7 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0xb37ab5d07d1186585f404614e3eb5043657d1065a63e3d6c4d148dfe380e4e0e"
+        "0x04265b02f2d070121154f7b50d4de98012a3d8647ca41f78f926e9150b4799cd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -676,15 +676,15 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4",
+        "$implementation": "eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4"
+        "getTarget": "eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4": "ZkLighterVerifier"
+        "eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f": "ZkLighterVerifier"
       }
     },
     {
@@ -842,6 +842,11 @@
       "function upgrade(bytes upgradeParameters)",
       "function usdc() view returns (address)",
       "function validators(address) view returns (bool)"
+    ],
+    "eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0x84E480C589e715D0CE7de004b1EEA69f8D714936": [
       "error AdditionalZkLighter_AccountIsNotRegistered()",
@@ -1001,11 +1006,6 @@
       "function transferMastership(address _newMaster)",
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0xd4460475F00307845082d3a146f36661354FBc67": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
@@ -1168,6 +1168,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xc00318e126be1461845e143d518fe8dc218304f44203d1b26d6498613c67f4a0"
   },
-  "usedBlockNumbers": { "ethereum": 24877737 },
+  "usedBlockNumbers": { "ethereum": 24921906 },
   "permissionsConfigHash": "0xd1e0b2f796c0d96b4b9801c4453b5edc394d28a91eb706a0ef4d51bb4c58fc9a"
 }

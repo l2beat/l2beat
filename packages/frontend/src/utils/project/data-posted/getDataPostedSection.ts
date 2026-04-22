@@ -25,7 +25,7 @@ export async function getDataPostedSection(
       projectId: project.id,
     }),
     ps.getProjects({
-      select: ['isDaLayer'],
+      select: ['daLayer'],
     }),
   ])
   if (!data || data.chart.length === 0) return undefined

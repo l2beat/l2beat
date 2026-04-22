@@ -60,7 +60,7 @@ export async function getZkCatalogProjectEntry(
     await Promise.all([
       ps.getProjects({
         select: ['display'],
-        optional: ['daBridge', 'isScaling', 'isDaLayer'],
+        optional: ['daBridge', 'scalingInfo', 'daLayer'],
       }),
       ps.getProjects({
         select: ['contracts'],

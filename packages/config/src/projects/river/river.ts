@@ -22,6 +22,7 @@ export const river: ScalingProject = opStackL2({
   },
   display: {
     name: 'Towns',
+    aliases: ['River'],
     slug: 'towns',
     description:
       'Towns is an Optimium based on the OP Stack. It is used by the Towns protocol - a protocol for building decentralized real-time messaging apps - acting as its backbone.',

@@ -23,7 +23,7 @@ export async function getScalingBadgeDialogData(input: {
 }): Promise<ScalingBadgeDialogData | undefined> {
   const projects = await ps.getProjects({
     select: ['display', 'scalingInfo'],
-    where: ['isScaling'],
+    where: ['scalingInfo'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 

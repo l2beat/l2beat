@@ -138,7 +138,7 @@ export async function getEcosystemEntry(
 
   const [allScalingProjects, projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
     ps.getProjects({
@@ -161,7 +161,7 @@ export async function getEcosystemEntry(
         'hasTestnet',
         'contracts',
       ],
-      where: ['isScaling'],
+      where: ['scalingInfo'],
     }),
     ps.getProjects({
       select: ['zkCatalogInfo'],

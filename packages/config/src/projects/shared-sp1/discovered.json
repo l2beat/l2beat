@@ -1,6 +1,6 @@
 {
   "name": "shared-sp1",
-  "timestamp": 1771497368,
+  "timestamp": 1776418775,
   "configHash": "0x86d0b146bca61949d9c418ead002090dd9ff69ce83da80872dda25e16de03d7a",
   "entries": [
     {
@@ -46,6 +46,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "allVerifiers": [
@@ -92,6 +96,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "owner": "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
@@ -146,6 +154,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1776172418,
+      "sinceBlock": 452416145,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
+    },
+    {
       "name": "SP1VerifierGatewayMultisig",
       "address": "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
@@ -179,7 +208,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -230,6 +259,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "allVerifiers": [
@@ -276,6 +309,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "base:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "owner": "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
@@ -330,6 +367,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1776172423,
+      "sinceBlock": 44691538,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
+    },
+    {
       "name": "SP1VerifierGatewayMultisig",
       "address": "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
@@ -363,7 +421,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -414,6 +472,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "allVerifiers": [
@@ -460,6 +522,10 @@
           {
             "selector": "0xbb1a6f29",
             "verifier": "eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"
+          },
+          {
+            "selector": "0x5a093a2f",
+            "verifier": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"
           }
         ],
         "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
@@ -514,6 +580,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SP1Verifier",
+      "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
+      "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
+      "sourceHashes": [
+        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1776172415,
+      "sinceBlock": 24878258,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
+      }
+    },
+    {
       "name": "SP1VerifierGatewayMultisig",
       "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
@@ -547,7 +634,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -586,6 +673,18 @@
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "arb1:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "arb1:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
       "error InvalidExitCode()",
       "error InvalidProof()",
       "error InvalidVkRoot()",
@@ -689,6 +788,18 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "base:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
@@ -781,6 +892,18 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
@@ -836,13 +959,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 433712964,
-    "base": 42354010,
-    "ethereum": 24490332
+    "arbitrum": 453398162,
+    "base": 44814714,
+    "ethereum": 24898730
   },
-  "permissionsConfigHash": "0x49dabc267fed24ffed187dc7b587e1e194b26389078986c70a1cfba7b323acee"
+  "permissionsConfigHash": "0x4bd56c5f9fa64feb9cee386d3d2af584cf1c104fd7e1ba5b99a9968e2cc77ffc"
 }

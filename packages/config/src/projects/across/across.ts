@@ -19,5 +19,4 @@ export const across: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }
