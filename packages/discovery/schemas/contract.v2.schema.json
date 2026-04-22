@@ -218,7 +218,12 @@
                           { "type": "array", "items": { "type": "string" } }
                         ]
                       },
-                      "groupBy": { "type": "string" },
+                      "groupBy": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "array", "items": { "type": "string" } }
+                        ]
+                      },
                       "ignoreRelative": { "type": "boolean" },
                       "set": {
                         "anyOf": [
@@ -274,7 +279,12 @@
                           { "type": "array", "items": { "type": "string" } }
                         ]
                       },
-                      "groupBy": { "type": "string" },
+                      "groupBy": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "array", "items": { "type": "string" } }
+                        ]
+                      },
                       "ignoreRelative": { "type": "boolean" },
                       "set": {},
                       "add": {

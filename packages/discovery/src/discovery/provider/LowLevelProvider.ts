@@ -318,6 +318,27 @@ export async function rpcWithRetries<T>(
   }
 }
 
+// Deterministic EVM-level errors that will never succeed on retry. The exact
+// formatting differs across nodes (geth, erigon, anvil, hardhat) and sometimes
+// includes extra context (e.g. `stack underflow (2 <=> 4)`), so each entry is
+// matched as a substring.
+const NON_RETRYABLE_EVM_ERROR_FRAGMENTS = [
+  'out of gas',
+  'execution reverted',
+  'gas uint64 overflow',
+  'invalid opcode',
+  'stack underflow',
+  'stack overflow',
+  'invalid jump destination',
+] as const
+
+function isNonRetryableEvmError(message: string | undefined): boolean {
+  if (message === undefined) return false
+  return NON_RETRYABLE_EVM_ERROR_FRAGMENTS.some((fragment) =>
+    message.includes(fragment),
+  )
+}
+
 function isServerError(e: unknown): boolean {
   const parsed = topLevelEthersError.safeParse(e)
   if (parsed.success) {
@@ -328,10 +349,7 @@ function isServerError(e: unknown): boolean {
       isServerError ||= topError.error.code === 'TIMEOUT'
       isServerError ||=
         topError.error.code === 'SERVER_ERROR' &&
-        !(topError.error?.error?.message ?? '').includes('out of gas') &&
-        topError.error?.error?.message !== 'execution reverted' &&
-        topError.error?.error?.message !== 'gas uint64 overflow' &&
-        topError.error?.error?.message !== 'invalid opcode: INVALID'
+        !isNonRetryableEvmError(topError.error?.error?.message)
     } else {
       isServerError ||= topError.status >= 400
       isServerError ||=

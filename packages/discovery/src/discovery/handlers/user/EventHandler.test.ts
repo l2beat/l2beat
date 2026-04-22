@@ -800,4 +800,61 @@ describe(EventHandler.name, () => {
       expect(EventHandlerDefinition.safeParse(v).success).toBeFalsy()
     })
   })
+
+  describe('multi-key groupBy', () => {
+    it('produces nested object keyed by two fields', async () => {
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          CurrentBatchMultichain(10, 1),
+          CurrentBatchMultichain(20, 1),
+          CurrentBatchMultichain(30, 2),
+          CurrentBatchMultichain(40, 2),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          set: { event: 'CurrentBatchMultichain' },
+          groupBy: ['chainId', 'batchIndex'],
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual({
+        1: { 10: 10, 20: 20 },
+        2: { 30: 30, 40: 40 },
+      })
+    })
+
+    it('single-key array behaves the same as string', async () => {
+      const provider = mockObject<IProvider>({
+        chain: 'ethereum',
+        getLogs: getLogsStub([
+          CurrentBatchMultichain(1, 1),
+          CurrentBatchMultichain(2, 2),
+        ]),
+      })
+
+      const handler = new EventHandler(
+        'field',
+        {
+          type: 'event',
+          select: ['batchIndex'],
+          set: { event: 'CurrentBatchMultichain' },
+          groupBy: ['chainId'],
+        },
+        stringABI,
+      )
+
+      const result = await handler.execute(provider, ADDRESS)
+
+      expect(result.value).toEqual({ 1: 1, 2: 2 })
+    })
+  })
 })

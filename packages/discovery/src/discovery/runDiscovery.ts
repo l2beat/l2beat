@@ -15,6 +15,7 @@ import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printDiscoverySummary } from './output/printDiscoverySummary'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
@@ -57,7 +58,14 @@ export async function runDiscovery(
 
   const timestampDate = getTimestamp(configReader, config)
 
-  const { result, timestamp, usedBlockNumbers, providerStats } = await discover(
+  const {
+    result,
+    timestamp,
+    usedBlockNumbers,
+    providerStats,
+    skippedDueToCap,
+    timedOut,
+  } = await discover(
     paths,
     chainConfigs,
     projectConfig,
@@ -65,6 +73,7 @@ export async function runDiscovery(
     timestampDate,
     http,
     config.overwriteCache,
+    config.analyzeTimeoutMs,
   )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
@@ -113,6 +122,14 @@ export async function runDiscovery(
     !!config.verboseTemplatization,
     projectConfig.color,
     templateService,
+  )
+
+  printDiscoverySummary(
+    logger,
+    result,
+    skippedDueToCap,
+    projectConfig.structure.maxAddresses,
+    timedOut,
   )
 }
 
@@ -197,11 +214,14 @@ export async function discover(
   timestampDate: Date | undefined,
   http: HttpClient,
   overwriteCache: boolean,
+  analyzeTimeoutMs?: number,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
   usedBlockNumbers: Record<string, number>
   providerStats: Record<string, AllProviderStats>
+  skippedDueToCap: ChainSpecificAddress[]
+  timedOut: ChainSpecificAddress[]
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
@@ -215,6 +235,7 @@ export async function discover(
     cache,
     http,
     logger,
+    { analyzeTimeoutMs },
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
   const result = await discoveryEngine.discover(
@@ -237,5 +258,7 @@ export async function discover(
     timestamp,
     usedBlockNumbers,
     providerStats: allProviders.getStats(),
+    skippedDueToCap: discoveryEngine.skippedDueToCap,
+    timedOut: discoveryEngine.timedOut,
   }
 }

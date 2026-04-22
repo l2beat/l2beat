@@ -25,14 +25,24 @@ export async function discoverAndUpdateDiffHistory(
   options: Options,
 ) {
   await discover(config, getChainConfigs(), options.logger)
-  await modelPermissionsCommand(
-    config.project,
-    options.configReader,
-    options.templateService,
-    options.paths,
-    options.debug,
-    options.logger,
-  )
+  try {
+    await modelPermissionsCommand(
+      config.project,
+      options.configReader,
+      options.templateService,
+      options.paths,
+      options.debug,
+      options.logger,
+    )
+  } catch (error) {
+    // Permission modelling is a separate, non-fatal step. We don't want a
+    // crash here (e.g. invalid Clingo input) to mask a successful discovery
+    // or block the diff-history / entrypoints steps that follow.
+    const message = error instanceof Error ? error.message : String(error)
+    options.logger.warn(
+      `Permission modelling failed (non-fatal): ${message.split('\n')[0]}`,
+    )
+  }
   await updateDiffHistory(
     config.project,
     options.description,
