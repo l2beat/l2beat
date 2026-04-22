@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
   "lastModified": "2026-04-20T00:00:00.000Z",
-  "compiledAt": "2026-04-21T09:00:35.000Z",
+  "compiledAt": "2026-04-22T15:57:14.000Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "stETH",
-    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $21.67B in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract."
+    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $22.34B in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract."
   },
   "totals": {
     "contractCount": 184,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 214,
     "adminCount": 34,
     "dependencyCount": 1,
-    "totalCapitalAtRisk": 21667688391.207012,
-    "totalTokenValueAtRisk": 21772953834.001663,
-    "totalTokenValue": 21772953834.001663,
+    "totalCapitalAtRisk": 22337649133.58869,
+    "totalTokenValueAtRisk": 22555541495.72479,
+    "totalTokenValue": 22555541495.72479,
     "linesOfCode": 38231,
     "verifiedContractCount": 184,
     "coverage": 100
@@ -29,7 +29,7 @@
     {
       "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "name": "Lido DAO Agent",
-      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $1.40B in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
+      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $2.06B in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
       "adminType": "Contract",
       "isGovernance": true,
       "functions": [
@@ -48,7 +48,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -59,8 +59,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -80,7 +80,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -91,8 +91,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -112,7 +112,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -123,8 +123,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -144,7 +144,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -155,8 +155,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -176,7 +176,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -187,8 +187,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -208,7 +208,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -219,8 +219,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -240,7 +240,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -251,8 +251,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -272,7 +272,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -283,8 +283,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -496,8 +496,8 @@
                 "receiveWithdrawals",
                 "burnShares"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -511,7 +511,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -539,7 +539,7 @@
                 "transferFrom",
                 "unwrap"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -577,7 +577,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1012,8 +1012,8 @@
                 "receiveWithdrawals",
                 "burnShares"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -1027,7 +1027,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1055,7 +1055,7 @@
                 "transferFrom",
                 "unwrap"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1093,7 +1093,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1395,7 +1395,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1643,7 +1643,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1747,8 +1747,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -1833,7 +1833,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2081,7 +2081,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2185,8 +2185,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -2504,7 +2504,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2551,7 +2551,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2598,7 +2598,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2776,8 +2776,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -2797,8 +2797,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -2859,8 +2859,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -2909,7 +2909,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2926,7 +2926,7 @@
                 "unwrap",
                 "balanceOf"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3005,7 +3005,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3298,8 +3298,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -3348,7 +3348,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3365,7 +3365,7 @@
                 "unwrap",
                 "balanceOf"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3444,7 +3444,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3789,7 +3789,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3798,7 +3798,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3808,7 +3808,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -3907,8 +3907,8 @@
                 "getPooledEthByShares",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -3975,7 +3975,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -4074,8 +4074,8 @@
                 "getPooledEthByShares",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -4221,7 +4221,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4255,7 +4255,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4310,7 +4310,7 @@
                 "getStakingModuleIds",
                 "getStakingModule"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4357,7 +4357,7 @@
                 "finalize",
                 "getWithdrawalStatus"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4414,8 +4414,8 @@
                 "receiveELRewards",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -4631,7 +4631,7 @@
                 "getStakingModuleIds",
                 "getStakingModule"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4678,7 +4678,7 @@
                 "finalize",
                 "getWithdrawalStatus"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4735,8 +4735,8 @@
                 "receiveELRewards",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -4919,7 +4919,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 1394996260.7771893,
+          "directFundsUsd": 2058198327.7619605,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -4928,7 +4928,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 1394996260.7771893,
+          "directFundsUsd": 2058198327.7619605,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -4938,7 +4938,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 1394996260.7771893,
+          "directFundsUsd": 2058198327.7619605,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -4963,8 +4963,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -4976,7 +4976,7 @@
                 "unwrap",
                 "permit"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5027,7 +5027,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5358,7 +5358,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 1394996260.7771893,
+          "directFundsUsd": 2058198327.7619605,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -5383,8 +5383,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -5396,7 +5396,7 @@
                 "unwrap",
                 "permit"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5447,7 +5447,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5857,8 +5857,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -5872,7 +5872,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5924,7 +5924,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6252,8 +6252,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -6267,7 +6267,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6319,7 +6319,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6759,7 +6759,7 @@
               "calledFunctions": [
                 "onValidatorExitTriggered"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6770,8 +6770,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -6899,7 +6899,7 @@
               "calledFunctions": [
                 "onValidatorExitTriggered"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6910,8 +6910,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -7013,7 +7013,7 @@
               "calledFunctions": [
                 "onValidatorExitTriggered"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7024,8 +7024,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -7162,7 +7162,7 @@
               "calledFunctions": [
                 "onValidatorExitTriggered"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7173,8 +7173,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -7361,7 +7361,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7586,7 +7586,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7696,8 +7696,8 @@
                 "transfer",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -7710,7 +7710,7 @@
                 "transferFrom",
                 "unwrap"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7826,7 +7826,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8051,7 +8051,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8161,8 +8161,8 @@
                 "transfer",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -8175,7 +8175,7 @@
                 "transferFrom",
                 "unwrap"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 20274013829.118637,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8307,8 +8307,8 @@
                 "getSharesByPooledEth",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -8353,7 +8353,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -8490,8 +8490,8 @@
                 "getSharesByPooledEth",
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -8536,7 +8536,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -8688,10 +8688,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 1401955684.6628153,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 21667688391.207012,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 2063635304.4700527,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 22337649133.58869,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
@@ -14415,7 +14415,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14442,7 +14442,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -14546,7 +14546,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14573,7 +14573,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -14677,7 +14677,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14704,7 +14704,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -14808,7 +14808,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14835,7 +14835,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -14939,7 +14939,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14966,7 +14966,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15070,7 +15070,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15097,7 +15097,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15201,7 +15201,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15228,7 +15228,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15332,7 +15332,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15359,7 +15359,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15463,7 +15463,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15490,7 +15490,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15533,8 +15533,8 @@
               "calledFunctions": [
                 "receiveELRewards"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -15577,7 +15577,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15598,8 +15598,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 6959423.885596932,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalReachableCapital": 5436976.708061747,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
@@ -15627,9 +15627,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029183669227929575,
+      "totalDirectCapital": 0.000030405506930300533,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -15856,7 +15856,7 @@
     {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
       "name": "TokenManager",
-      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $689.52 in direct capital through the LDO token and Voting contract.",
+      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $691.29 in direct capital through the LDO token and Voting contract.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -15865,7 +15865,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "changeController",
           "impact": "critical",
-          "directFundsUsd": 689.5196789025844,
+          "directFundsUsd": 691.2927590688851,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -15874,7 +15874,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "generateTokens",
           "impact": "critical",
-          "directFundsUsd": 689.5196789025844,
+          "directFundsUsd": 691.2927590688851,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -15896,7 +15896,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "destroyTokens",
           "impact": "critical",
-          "directFundsUsd": 689.5196789025844,
+          "directFundsUsd": 691.2927590688851,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -15918,7 +15918,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "enableTransfers",
           "impact": "critical",
-          "directFundsUsd": 689.5196789025844,
+          "directFundsUsd": 691.2927590688851,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -15927,7 +15927,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "claimTokens",
           "impact": "critical",
-          "directFundsUsd": 689.5196789025844,
+          "directFundsUsd": 691.2927590688851,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -15977,9 +15977,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 689.5196789025844,
+      "totalDirectCapital": 691.2927590688851,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 689.5196789025844,
+      "totalReachableCapital": 691.2927590688851,
       "totalReachableTokenValue": 0
     },
     {
@@ -17381,7 +17381,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17412,7 +17412,7 @@
                 "proxy__upgradeTo",
                 "proxy__upgradeToAndCall"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17524,8 +17524,8 @@
                 "deposit",
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -17798,8 +17798,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1401955684.6628153,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalReachableCapital": 2063635304.4700527,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0xf165148978Fa3cE74d76043f833463c340CFB704",
@@ -17916,10 +17916,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885626116,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885626116,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708092153,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708092153,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
@@ -17965,15 +17965,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029183669227929575,
+      "totalDirectCapital": 0.000030405506930300533,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "name": "DepositSecurityModule",
-      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $6.96M in reachable capital.",
+      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $5.44M in reachable capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -17996,10 +17996,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885626116,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885626116,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708092153,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708092153,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f",
@@ -18018,9 +18018,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029183669227929575,
+      "totalDirectCapital": 0.000030405506930300533,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029183669227929575,
+      "totalReachableCapital": 0.000030405506930300533,
       "totalReachableTokenValue": 0
     },
     {
@@ -19863,15 +19863,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885596932,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885596932,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708061747,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708061747,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
       "name": "LidoExecutionLayerRewardsVault",
-      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $6.96M in direct capital.",
+      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $5.44M in direct capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -19885,15 +19885,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885596932,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885596932,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708061747,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708061747,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "name": "WithdrawalVault",
-      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $6.96M in direct capital.",
+      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $5.44M in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -19907,10 +19907,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885596932,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885596932,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708061747,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708061747,
+      "totalReachableTokenValue": 22555541495.72479
     },
     {
       "address": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
@@ -19929,15 +19929,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6959423.885596932,
-      "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 6959423.885596932,
-      "totalReachableTokenValue": 21772953834.001663
+      "totalDirectCapital": 5436976.708061747,
+      "totalDirectTokenValue": 22555541495.72479,
+      "totalReachableCapital": 5436976.708061747,
+      "totalReachableTokenValue": 22555541495.72479
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 21667688391.207012,
-    "totalTokenValueAtRisk": 21772953834.001663
+    "totalFundsAtRisk": 22337649133.58869,
+    "totalTokenValueAtRisk": 22555541495.72479
   },
   "dependencies": [
     {
@@ -19995,8 +19995,8 @@
                 "deposit",
                 "getPooledEthBySharesRoundUp"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             },
             {
@@ -20007,7 +20007,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20019,7 +20019,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -20030,8 +20030,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 6959423.885596932,
-          "directTokenValueUsd": 21772953834.001663,
+          "directFundsUsd": 5436976.708061747,
+          "directTokenValueUsd": 22555541495.72479,
           "reachableContracts": [
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -20041,7 +20041,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 1394996260.7771893,
+              "fundsUsd": 2058198327.7619605,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20053,7 +20053,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029183669227929575,
+              "fundsUsd": 0.000030405506930300533,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -20127,7 +20127,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -20138,8 +20138,8 @@
                 "transferShares",
                 "getPooledEthByShares"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -20149,7 +20149,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 0.000029183669227929575,
+          "directFundsUsd": 0.000030405506930300533,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -20160,8 +20160,8 @@
                 "transferShares",
                 "getPooledEthByShares"
               ],
-              "fundsUsd": 6959423.885596932,
-              "tokenValueUsd": 21772953834.001663,
+              "fundsUsd": 5436976.708061747,
+              "tokenValueUsd": 22555541495.72479,
               "fundsAtRisk": true
             }
           ]
@@ -20185,20 +20185,20 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 1401955684.6628153,
-      "totalTokenValueAtRisk": 21772953834.001663
+      "totalFundsAtRisk": 2063635304.4700527,
+      "totalTokenValueAtRisk": 22555541495.72479
     }
   ],
   "dependencyEntityGroups": [
     {
       "entity": "Ethereum Deposit Contract",
-      "totalFundsAtRisk": 1401955684.6628153,
-      "totalTokenValueAtRisk": 21772953834.001663
+      "totalFundsAtRisk": 2063635304.4700527,
+      "totalTokenValueAtRisk": 22555541495.72479
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 1401955684.6628153,
-    "totalTokenValueAtRisk": 21772953834.001663
+    "totalFundsAtRisk": 2063635304.4700527,
+    "totalTokenValueAtRisk": 22555541495.72479
   },
   "funds": [
     {
@@ -20206,10 +20206,10 @@
       "name": "wstETH (Wrapped stETH)",
       "description": "The wrapped stETH contract that holds stETH on behalf of wstETH holders. Contains (N/A) in stETH, making it the largest single concentration of protocol funds. wstETH provides a non-rebasing wrapper around stETH for DeFi integrations.",
       "balances": {
-        "totalUsdValue": 10063171226.59505
+        "totalUsdValue": 10089009605.955994
       },
       "positions": {
-        "totalUsdValue": 10202561479.949146
+        "totalUsdValue": 10185004223.162643
       },
       "tokenInfo": null,
       "aggregate": null
@@ -20219,10 +20219,10 @@
       "name": "WithdrawalQueueERC721 (stETH)",
       "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds (N/A) in stETH and ETH balances, plus (N/A) in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals.",
       "balances": {
-        "totalUsdValue": 742414298.1028707
+        "totalUsdValue": 1072371462.0985718
       },
       "positions": {
-        "totalUsdValue": 652581962.6743184
+        "totalUsdValue": 985826865.6633888
       },
       "tokenInfo": null,
       "aggregate": null
@@ -20232,14 +20232,14 @@
       "name": "Lido stETH Token (ETH Buffer)",
       "description": "The stETH token contract itself holds (N/A) in ETH as a deposit buffer before it is staked on the Beacon Chain. This buffer provides immediate withdrawal liquidity for small requests.",
       "balances": {
-        "totalUsdValue": 6959423.885596932
+        "totalUsdValue": 5436976.708061747
       },
       "positions": null,
       "tokenInfo": {
         "symbol": "stETH",
-        "price": 2312.009864,
-        "totalSupply": "9417327.396835735",
-        "tokenValue": 21772953834.001663
+        "price": 2407.193139,
+        "totalSupply": "9370058899841682198648658",
+        "tokenValue": 22555541495.72479
       },
       "aggregate": null
     },
@@ -20248,10 +20248,10 @@
       "name": "Lido DAO Token (LDO)",
       "description": "The LDO governance token contract. Holds (N/A) in miscellaneous token balances.",
       "balances": {
-        "totalUsdValue": 689.5172400223902
+        "totalUsdValue": 691.2902239023053
       },
       "positions": {
-        "totalUsdValue": 0.0024388801941902234
+        "totalUsdValue": 0.002535166579763869
       },
       "tokenInfo": null,
       "aggregate": null
@@ -23162,6 +23162,38 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-04-22T15:57:14.000Z",
+      "updateNotifierId": 122,
+      "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+      "contractName": "Escrow",
+      "entity": null,
+      "id": "122:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getRageQuitSupport",
+          "before": 1210268,
+          "after": 1210016
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 119,
+      "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+      "contractName": "Escrow",
+      "entity": null,
+      "id": "119:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getRageQuitSupport",
+          "before": 1203694,
+          "after": 1210268
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-21T09:00:35.000Z",
       "updateNotifierId": 115,

@@ -1,7 +1,7 @@
 {
   "name": "uniswap-v3",
-  "timestamp": 1776590482,
-  "configHash": "0x323532b4e77278058116eace82c9493c8073f8c393cdce3598bd1e30643c7b6e",
+  "timestamp": 1776873434,
+  "configHash": "0x535b3f87838fd097cb32c2c90f7200167a7cb3f0091ce102fbf12c418ac2afc8",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -22,7 +22,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 613,
+        "nonce": 650,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -94,7 +94,8 @@
       },
       "fieldMeta": {
         "totalSupply": { "severity": "HIGH" },
-        "mintingAllowedAfter": { "severity": "HIGH" }
+        "mintingAllowedAfter": { "severity": "HIGH" },
+        "minter": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "Uni"
@@ -269,7 +270,7 @@
         "name": "Uniswap V3 Positions NFT-V1",
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "UNI-V3-POS",
-        "totalSupply": 1142271
+        "totalSupply": 1145865
       },
       "implementationNames": {
         "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": "NonfungiblePositionManager"
@@ -695,6 +696,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 24913001 },
+  "usedBlockNumbers": { "ethereum": 24936508 },
   "permissionsConfigHash": "0x76b670df01c07cceacf6b00f8f25912e428b8076658b925328f9fc32e39afca6"
 }

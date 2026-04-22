@@ -1,6 +1,6 @@
 {
   "name": "EtherFi-Stake",
-  "timestamp": 1776858023,
+  "timestamp": 1776873434,
   "configHash": "0x84d16156b15b2ac250f654d8b4fa359895c778bbf3c15dcec33cefa627f73a04",
   "entries": [
     {
@@ -18,8 +18,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x2f88250000000000",
-        "get_deposit_root": "0x54f5ebc738d21ee1ff7fa9b78b86b39376ae99666df1f6a3dd3e783f71c3c8d7"
+        "get_deposit_count": "0x5888250000000000",
+        "get_deposit_root": "0xc2c0ab3a40d84fa88d7c5ddd36baffa183d710152747c61b63de00dacc3ace63"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -77,11 +77,7 @@
         "$upgradeCount": 3,
         "accumulatedRevenue": "96800000000000000",
         "accumulatedRevenueThreshold": "200000000000000000",
-        "admins": [
-          "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "admins": [],
         "bids": [
           [0, 0, "eth:0x0000000000000000000000000000000000000000", false],
           [
@@ -227,7 +223,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 95,
+        "nonce": 97,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -297,21 +293,21 @@
         "$upgradeCount": 5,
         "acceptableRebaseAprInBps": 500,
         "auctionManager": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
-        "blockForNextReportToProcess": 24933958,
+        "blockForNextReportToProcess": 24935234,
         "ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE": "0xf63b1ce674d2cec0dbfcdcc7e504ce31a335c457c363b9fafb6ca524addf1775",
         "ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE": "0xe9d356a03911100a5418b1829f363128136c30112754cb3dbe73b1674abe2ac8",
         "etherFiNodesManager": "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F",
         "etherFiOracle": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
         "getImplementation": "eth:0xd50f28485A75A1FdE432BA7d012d0E2543D2f20d",
-        "lastAdminExecutionBlock": 24934385,
-        "lastHandledReportRefBlock": 24933957,
-        "lastHandledReportRefSlot": 14168223,
+        "lastAdminExecutionBlock": 24935663,
+        "lastHandledReportRefBlock": 24935233,
+        "lastHandledReportRefSlot": 14169503,
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "membershipManager": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "postReportWaitTimeInSlots": 50,
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
-        "slotForNextReportToProcess": 14168224,
+        "slotForNextReportToProcess": 14169504,
         "stakingManager": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
         "withdrawRequestNft": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c"
       },
@@ -462,11 +458,11 @@
           ]
         ],
         "$upgradeCount": 5,
-        "admins": ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"],
+        "admins": [],
         "eigenLayerDelegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenLayerStrategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "etherFiRedemptionManager": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-        "getTotalPooledEther": "371889768336142713982573",
+        "getTotalPooledEther": "371911428944160568354589",
         "isDelegated": true,
         "lido": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "lidoWithdrawalQueue": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -495,19 +491,6 @@
         "0x5f9546242e3e150fd8045aa3c8ee98425beac2f5f534cf5dc8c8b12631577abf"
       ],
       "proxyType": "EIP1967 proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x670F3818Fe5B1144e361A9A44EcbEA8231cCD32a",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1683046943,
       "sinceBlock": 17174441,
       "values": {
@@ -580,7 +563,20 @@
       "implementationNames": {
         "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d": "UUPSProxy",
         "eth:0xd3985048Bf1Cb613F5E199713a86B2aD3954F82A": "StakingManager"
-      }
+      },
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x670F3818Fe5B1144e361A9A44EcbEA8231cCD32a",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -592,6 +588,33 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689362147,
+      "sinceBlock": 17693714,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264",
+          "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9",
+          "eth:0x566E58ac0F2c4BCaF6De63760C56cC3f825C48f5",
+          "eth:0x71b67AC997056c9935f8AA98F3344432Ea2ec15c",
+          "eth:0x5dfb8BC4830ccF60d469D546aEC36531c97B96b5",
+          "eth:0xFa238cB37E58556b23ea45643FFe4Da382162a53",
+          "eth:0x46Cba1e9B1e5Db32dA28428f2fb85587BCb785E7"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x312b2c3cd67616c16bdd16f87a644ea214fcf1f32a727b8e01a91436ef0f425d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 740,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -660,34 +683,7 @@
           "from": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D",
           "role": ".owner"
         }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1689362147,
-      "sinceBlock": 17693714,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264",
-          "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9",
-          "eth:0x566E58ac0F2c4BCaF6De63760C56cC3f825C48f5",
-          "eth:0x71b67AC997056c9935f8AA98F3344432Ea2ec15c",
-          "eth:0x5dfb8BC4830ccF60d469D546aEC36531c97B96b5",
-          "eth:0xFa238cB37E58556b23ea45643FFe4Da382162a53",
-          "eth:0x46Cba1e9B1e5Db32dA28428f2fb85587BCb785E7"
-        ],
-        "$threshold": 4,
-        "domainSeparator": "0x312b2c3cd67616c16bdd16f87a644ea214fcf1f32a727b8e01a91436ef0f425d",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 740,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      ]
     },
     {
       "address": "eth:0x2e40aBFc43489044AC3bE20039FD69528820eCDB",
@@ -868,12 +864,12 @@
         "DEPRECATED_TNFT": "eth:0x7B5ae07E2AF1C861BcC4736D23f5f66A61E0cA5e",
         "DEPRECATED_whitelistEnabled": false,
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-        "ethAmountLockedForWithdrawal": "21370008203054076388212",
+        "ethAmountLockedForWithdrawal": "15605947070685878530467",
         "etherFiAdminContract": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
         "etherFiRedemptionManager": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
         "feeRecipient": "eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA",
         "getImplementation": "eth:0x83bc649fCdb2c8DA146b2154a559ddEDf937eF12",
-        "getTotalPooledEther": "2726764965575523918705410",
+        "getTotalPooledEther": "2721035135886103520094364",
         "LIQUIDITY_POOL_ADMIN_ROLE": "0x0e8d94121b3383f03d9ae60b39295aa793469d7230d51a3f62cbf47cd45481d9",
         "LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE": "0xc6ace799356a5a236ccaa6708c68b77b7de838b1700b6e0c40f48a1407a5eef0",
         "LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE": "0x20e7d93f475a4a8dd621285797dd2d68da59e4450b89aea5ca9bf079e95c1db5",
@@ -889,8 +885,8 @@
         "sharesForAmount": [0, 0, 1, 2, 3],
         "sharesForWithdrawalAmount": [0, 1, 2, 3, 4],
         "stakingManager": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
-        "totalValueInLp": "23100644802939655184537",
-        "totalValueOutOfLp": "2703664320772584263520873",
+        "totalValueInLp": "17340190880571457326792",
+        "totalValueOutOfLp": "2703694945005532062767572",
         "validatorSizeWei": "1901000000000000000000",
         "withdrawRequestNFT": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c"
       },
@@ -941,7 +937,7 @@
         "ethAmountLockedForPriorityWithdrawal": 0,
         "getFinalizedRequestIds": [],
         "getImplementation": "eth:0x554B2a0c78840bBD4fDB24e198cdD93f99E29456",
-        "getRemainderAmount": 318582337755906,
+        "getRemainderAmount": 318585547911165,
         "getRequestIds": [],
         "IMPLICIT_FEE_CLAIMER_ROLE": "0x4fb62203ff7abbe51d8c53865ac09965620ebfa150bfb9e0d3c26869f5c43935",
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
@@ -1017,8 +1013,8 @@
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "eETH",
-        "totalShares": "2494339587403465974746078",
-        "totalSupply": "2726764965575523918705410"
+        "totalShares": "2489073079014671266091579",
+        "totalSupply": "2721035135886103520094364"
       },
       "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
@@ -1153,11 +1149,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "admins": [
-          "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "admins": [],
         "allTimeHighDepositAmount": [0, 0, 0, 0, 0],
         "DEPRECATED_admin": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
         "DEPRECATED_protocolRevenueFeeSplitPercent": 0,
@@ -1185,22 +1177,22 @@
         "pointsBoostFactor": 10000,
         "pointsGrowthRate": 10000,
         "tierData": [
-          ["103838196532654501", 0, 10, 0],
-          ["119605451398670758", 1440, 11, 0],
-          ["134990666805815665", 3600, 12, 0],
-          ["150826238400454488", 6480, 13, 0]
+          ["103847088946937334", 0, 10, 0],
+          ["119615233054381874", 1440, 11, 0],
+          ["135001337702955065", 3600, 12, 0],
+          ["150837798539022171", 6480, 13, 0]
         ],
         "tierDeposits": [
-          ["16140877214399863405", "14765052917862511623"],
-          ["5670318139341159946", "5186988679512163871"],
-          ["54930320475052793256", "50248141896881213557"],
-          ["110453291820218771331", "101038417987759750726"]
+          ["16140877214399863405", "14764904141144353402"],
+          ["5670318139341159946", "5186936413993228407"],
+          ["54930320475052793256", "50247635582837738469"],
+          ["110453291820218771331", "101037399896980141542"]
         ],
         "tierVaults": [
-          ["44038319968006641737", "43124540561353958776"],
-          ["34907453409713232836", "33890641681710702865"],
-          ["99870008673024124260", "96126475581628983969"],
-          ["629157744739308721064", "600379605420278341737"]
+          ["44038227665259946556", "43124540561353958776"],
+          ["34907408102165646002", "33890641681710702865"],
+          ["99869958747769621354", "96126475581628983969"],
+          ["623494338063561945044", "594975069764201335150"]
         ],
         "tokenData": [
           [0, 0, 0, 0, 0, 0, 0],
@@ -1347,22 +1339,18 @@
           ]
         ],
         "$upgradeCount": 4,
-        "admins": [
-          "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "admins": [],
         "beaconGenesisTimestamp": 1606824023,
         "blockStampForNextReport": {
-          "slotFrom": 14168224,
-          "slotTo": 14168863,
-          "blockFrom": 24933958
+          "slotFrom": 14169504,
+          "slotTo": 14170143,
+          "blockFrom": 24935234
         },
         "computeSlotAtTimestamp": [],
         "consensusVersion": 1,
         "getImplementation": "eth:0x5eefE6f65a280A6f1Eb1FdFf36Ab9e2af6f38462",
-        "lastPublishedReportRefBlock": 24933957,
-        "lastPublishedReportRefSlot": 14168223,
+        "lastPublishedReportRefBlock": 24935233,
+        "lastPublishedReportRefSlot": 14169503,
         "numActiveCommitteeMembers": 3,
         "numCommitteeMembers": 3,
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
@@ -1370,7 +1358,7 @@
         "quorumSize": 2,
         "reportPeriodSlot": 640,
         "reportStartSlot": 7749600,
-        "slotForNextReport": 14168863
+        "slotForNextReport": 14170143
       },
       "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
@@ -1452,13 +1440,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1712814119,
       "sinceBlock": 19630367,
       "values": {
@@ -1468,7 +1449,14 @@
       },
       "implementationNames": {
         "eth:0x59a5518aCE8e3d60C740503639B94bD86F7CEDF0": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3",
+          "role": "admin"
+        }
+      ]
     },
     {
       "address": "eth:0x5c8c76F2e990F194462dC5f8a8c76Ba16966Ed42",
@@ -1626,40 +1614,40 @@
         "roleHolderCount": [0, 0, 0, 0, 0],
         "roleHolders": [[], [], [], [], []],
         "roles": {
-          "LIQUIDITY_POOL_ADMIN_ROLE": [
+          "0x0e8d94121b3383f03d9ae60b39295aa793469d7230d51a3f62cbf47cd45481d9": [
             "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
-          "ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE": [
+          "0xf63b1ce674d2cec0dbfcdcc7e504ce31a335c457c363b9fafb6ca524addf1775": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
           "0x57f33e5d123b762306ca9a672013c69ca3a7fdb87f6f140f9c06a1b62eeb5d60": [],
           "0x45dab652f6af38e394e24f46b5cac6c2825acb3d0b2d490b914660c6095274da": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "WITHDRAW_REQUEST_NFT_ADMIN_ROLE": [
+          "0xdf341d2a9af804fa0099198f83a0a0611aa273a03b36d576993f914e695dff2a": [
             "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
-          "ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE": [
+          "0x1fa5f863eb8a62c868fa7eb98a4e47ded14913e6885050cfd9090d04516345b0": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
-          "PROTOCOL_UNPAUSER": [
+          "0xb72d40a29b0ca5ab6e0b32830618dfdcae56fae676396ff1f7c3fede659935c8": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
             "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
           ],
-          "PROTOCOL_PAUSER": [
+          "0xe6ff4398839854a2087720a46165c7be195bc9de6f7a3c5a977d3b6917b76af2": [
             "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
             "eth:0x9AF1298993DC1f397973C62A5D47a284CF76844D",
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE": [
+          "0xe9d356a03911100a5418b1829f363128136c30112754cb3dbe73b1674abe2ac8": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
           "0xaa26b9baa4a66c7ac933a97b6adb2558a7a6fa699a65e95bb880b1c2156d033b": [
             "eth:0x8D5AAc5d3d5cda4c404fA7ee31B0822B648Bb150"
           ],
-          "IMPLICIT_FEE_CLAIMER_ROLE": [
+          "0x4fb62203ff7abbe51d8c53865ac09965620ebfa150bfb9e0d3c26869f5c43935": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
           "0x684a419db2f244d8b47d229bff16baab2feeb29ee4dda8ff5b02b2b030611481": [
@@ -1673,64 +1661,64 @@
             "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A",
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
-          "STAKING_MANAGER_NODE_CREATOR_ROLE": [
+          "0xa9e662c125cda0e0d367a277c57f51ca0b3a9ddb823ca7717301532d10b2b0f8": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "ETHERFI_NODES_MANAGER_ADMIN_ROLE": [
+          "0xa2a38b453c00b96e25a6611741c0fa71b17f9f21f28c0d5e77c008a31c1949ba": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
           ],
-          "ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE": [
+          "0x25f713693dd3e84995d0d9964722b195ad1b60efe6253e8fa19b8e74f9a6602a": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
             "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
           ],
-          "ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE": [
+          "0x59182b0a43541702fc3e73f22a962f8f868277e76091a99c516d2982b9df2f90": [
             "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F",
             "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"
           ],
-          "LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE": [
+          "0xc6ace799356a5a236ccaa6708c68b77b7de838b1700b6e0c40f48a1407a5eef0": [
             "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
           ],
-          "EETH_OPERATING_ADMIN_ROLE": [
+          "0x06b452e947f709c0549c7a2e857f0d57f53a00c27bb826a3340a48774a76512f": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "ETHERFI_NODES_MANAGER_EL_TRIGGER_EXIT_ROLE": [
+          "0x140ee46da08400488949dfb48bdfc7c0502610f6a6203d169743d6b9e776a0be": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "ETHERFI_NODES_MANAGER_POD_PROVER_ROLE": [
+          "0xf2c32172f8adc08057d18fb6422b871bd95592f20a6ab72ebf7963209047f50c": [
             "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
           ],
-          "STAKING_MANAGER_ADMIN_ROLE": [
+          "0xeb260b9ff913fc1877c5f4dad9a2de53d4add5c5bf95e630342a54ad228cdb5f": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "ETHERFI_RATE_LIMITER_ADMIN_ROLE": [
+          "0xb56db3e3aaf390cabc1ed5bc88c1fb620c033c618c569e3902254bcef71cf54c": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE": [
+          "0x20e7d93f475a4a8dd621285797dd2d68da59e4450b89aea5ca9bf079e95c1db5": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "STAKING_MANAGER_VALIDATOR_INVALIDATOR_ROLE": [
+          "0xcae8f60415c61e4b3a46975038089b058a1a802ec6912db2cb8b95d5d09dcb74": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "ETHERFI_NODES_MANAGER_EL_CONSOLIDATION_ROLE": [
+          "0x623ac534141a3de3d1e20f924b4a3b115aa68dc5b00452321cda0323932459ab": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
           "0x88a8da88c2d8c8a39db8251b01851784d85ea4e574f9b36f965e1fc736528f5f": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "ETHERFI_NODES_MANAGER_LEGACY_LINKER_ROLE": [
+          "0x8c7b9778e52066fde8fbd3e25c5180a9726e067622ca2cb96db1c1225b4c827b": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ],
-          "PRIORITY_WITHDRAWAL_QUEUE_ADMIN_ROLE": [
+          "0x756a7536f06e7e4456636342cf02e0825db97b9bbbcbe5142795cc76b4eeea14": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "PRIORITY_WITHDRAWAL_QUEUE_WHITELIST_MANAGER_ROLE": [
+          "0x9fad9ee19c69fc6a5f3a9ebfef13b0ed2faeb808252a4bb01f970bb4012ffa15": [
             "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
           ],
-          "PRIORITY_WITHDRAWAL_QUEUE_REQUEST_MANAGER_ROLE": [
+          "0x39730a843a472e74e79db13c62de74d1602801e7cfce5acb9837f64a50ff5f4b": [
             "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
           ]
         }
@@ -2216,7 +2204,7 @@
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getApproved": [],
         "getClaimableAmount": [],
-        "getEEthRemainderAmount": "4888071026839355388",
+        "getEEthRemainderAmount": "7553455888101255600",
         "getImplementation": "eth:0x2f4A5921FcAB46F1F3154e8b42Fc189e08fae3Ed",
         "getRequest": [
           [0, 0, false, 0],
@@ -2234,7 +2222,7 @@
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "membershipManager": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
         "name": "Withdraw Request NFT",
-        "nextRequestId": 77239,
+        "nextRequestId": 77253,
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "ownerOf": [],
         "paused": false,
@@ -2242,7 +2230,7 @@
         "shareRemainderSplitToTreasuryInBps": 10000,
         "symbol": "WithdrawRequestNFT",
         "tokenURI": [],
-        "totalRemainderEEthShares": "4471419144008220492",
+        "totalRemainderEEthShares": "6909540952500461536",
         "treasury": "eth:0x2f5301a3D59388c509C65f8698f521377D41Fd0F",
         "WITHDRAW_REQUEST_NFT_ADMIN_ROLE": "0xdf341d2a9af804fa0099198f83a0a0611aa273a03b36d576993f914e695dff2a"
       },
@@ -2412,9 +2400,9 @@
         "FINALIZE_ROLE": "0x485191a2ef18512555bd4426d18a716ce8e98c80ec2de16394dcf86d7d91bc80",
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastFinalizedRequestId": 120981,
-        "getLastRequestId": 122323,
-        "getLockedEtherAmount": "28936378637778602471394",
+        "getLastFinalizedRequestId": 120984,
+        "getLastRequestId": 122353,
+        "getLockedEtherAmount": "31799994718614416156409",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -2433,8 +2421,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 1342,
-        "unfinalizedStETH": "407846855821265448239643",
+        "unfinalizedRequestNumber": 1369,
+        "unfinalizedStETH": "413526831002906535924391",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -2599,13 +2587,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1712814107,
       "sinceBlock": 19630366,
       "values": {
@@ -2615,7 +2596,14 @@
       },
       "implementationNames": {
         "eth:0x915B16B555872A084B3512169b1F1dC089C3ca9A": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "EigenPodManager",
@@ -2712,13 +2700,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1731884111,
       "sinceBlock": 21210550,
       "values": {
@@ -2728,7 +2709,14 @@
       },
       "implementationNames": {
         "eth:0x95E10c0978c2e5eC52e89e7E97e1B52FF3A13bcb": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -2739,13 +2727,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x83998e169026136760bE6AF93e776C2F352D4b28",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1712814071,
       "sinceBlock": 19630363,
       "values": {
@@ -2755,7 +2736,14 @@
       },
       "implementationNames": {
         "eth:0x96a226ad7c14870502f9794fB481EE102E595fFa": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83998e169026136760bE6AF93e776C2F352D4b28",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "GnosisSafe",
@@ -2812,6 +2800,42 @@
         "0x8733732c79bd6b32ef91afae7d324bba01a2ca098b9ac16e115f279b3da18cce"
       ],
       "proxyType": "immutable",
+      "sinceTimestamp": 1708791971,
+      "sinceBlock": 19298624,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
+          }
+        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 259200,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      },
+      "implementationNames": {
+        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": "EtherFiTimelock"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2918,43 +2942,7 @@
           "from": "eth:0x95E10c0978c2e5eC52e89e7E97e1B52FF3A13bcb",
           "role": ".owner"
         }
-      ],
-      "sinceTimestamp": 1708791971,
-      "sinceBlock": 19298624,
-      "values": {
-        "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "TIMELOCK_ADMIN_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"]
-          },
-          "PROPOSER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
-          },
-          "EXECUTOR_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
-          },
-          "CANCELLER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["eth:0xcdd57D11476c22d265722F68390b036f3DA48c21"]
-          }
-        },
-        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "getMinDelay": 259200,
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      },
-      "implementationNames": {
-        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": "EtherFiTimelock"
-      }
+      ]
     },
     {
       "name": "Liquifier",
@@ -3013,11 +3001,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "admins": [
-          "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F",
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "admins": [],
         "cbEth": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
         "cbEth_Eth_Pool": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
         "DEPRECATED_accumulatedFee": 7141828645050000,
@@ -3178,13 +3162,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1712814083,
       "sinceBlock": 19630364,
       "values": {
@@ -3194,7 +3171,14 @@
       },
       "implementationNames": {
         "eth:0xaa249a01a3D73611a27B735130Ab77fd6b0f5a3e": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf",
+          "role": "admin"
+        }
+      ]
     },
     {
       "address": "eth:0xAd5a32Fe0220C945BC90494Ed5CdE850B7EedF24",
@@ -3243,15 +3227,15 @@
         "getBeaconStat": {
           "depositedValidators": 455863,
           "beaconValidators": 446218,
-          "beaconBalance": "9055340062431635000000000"
+          "beaconBalance": "9054644817316830000000000"
         },
-        "getBufferedEther": "1810408172105643622090",
+        "getBufferedEther": "2228273012823071159007",
         "getContractVersion": 3,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
         "getEIP712StETH": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
         "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
-        "getExternalEther": "4545487637824218754247",
+        "getExternalEther": "4545809512029127489651",
         "getExternalShares": "3688117005854830419411",
         "getFee": 999,
         "getFeeDistribution": {
@@ -3262,7 +3246,7 @@
         "getInitializationBlock": 11473216,
         "getLidoLocator": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getMaxExternalRatioBP": 3000,
-        "getMaxMintableExternalShares": "3253117676861243788126818",
+        "getMaxMintableExternalShares": "3252790625096994410618116",
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getStakeLimitFullInfo": {
           "isStakingPaused_": false,
@@ -3270,11 +3254,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149998998000000000000000",
-          "prevStakeBlockNumber": 24935222
+          "prevStakeLimit": "149992000000000000000000",
+          "prevStakeBlockNumber": 24936486
         },
-        "getTotalPooledEther": "9370335958241564862376337",
-        "getTotalShares": "7602901636029084940360612",
+        "getTotalPooledEther": "9370058899841682198648658",
+        "getTotalShares": "7602138515245836392840309",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -3291,7 +3275,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9370335958241564862376337",
+        "totalSupply": "9370058899841682198648658",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -3387,24 +3371,21 @@
           ]
         ],
         "$upgradeCount": 4,
-        "accruedLoyaltyPointsOf": [0, 0, 83316, 102672, 102672],
+        "accruedLoyaltyPointsOf": [0, 0, 83334, 102690, 102690],
         "accruedStakingRewardsOf": [
           0,
           0,
-          "10383819653265450",
-          "10383819653265450"
+          "10384708894693733",
+          "10384708894693733"
         ],
-        "accruedTierPointsOf": [0, 0, 19477, 24403, 24403],
-        "admins": [
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "accruedTierPointsOf": [0, 0, 19482, 24407, 24407],
+        "admins": [],
         "allTimeHighDepositOf": [
           0,
           0,
-          "112225840544428671",
-          "110383819653265450",
-          "110383819653265450"
+          "112226915271607858",
+          "110384708894693733",
+          "110384708894693733"
         ],
         "claimableTier": [0, 0, 3, 3, 3],
         "contractURI": "",
@@ -3412,7 +3393,7 @@
         "eapMerkleRoot": "0xc12bd7feb66b0edb84904b71894cddb13b9795954d6da83044af04d85f90a179",
         "getImplementation": "eth:0x290d981b41B713437265Cd7846806D7500307106",
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-        "loyaltyPointsOf": [0, 0, 103640, 102672, 102672],
+        "loyaltyPointsOf": [0, 0, 103658, 102690, 102690],
         "maxTokenId": 10000,
         "mintingPaused": false,
         "nextMintTokenId": 10001,
@@ -3420,7 +3401,7 @@
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "requiredEapPointsPerEapDeposit": [0, 0, 5348, 7002],
         "tierOf": [0, 0, 2, 0, 0],
-        "tierPointsOf": [0, 0, 24402, 24403, 24403],
+        "tierPointsOf": [0, 0, 24407, 24407, 24407],
         "transferLockedUntil": [0, 0, 0, 0, 0],
         "uri": [
           "https://etherfi-membership-metadata.s3.ap-southeast-1.amazonaws.com/mainnet/{id}",
@@ -3432,9 +3413,9 @@
         "valueOf": [
           0,
           0,
-          "112225840544428671",
-          "110383819653265450",
-          "110383819653265450"
+          "112226915271607858",
+          "110384708894693733",
+          "110384708894693733"
         ]
       },
       "errors": {
@@ -3668,7 +3649,7 @@
         "name": "Curve.fi ETH/wBETH",
         "oracle_method": "26970434976082401409518253780829902607332438938587170119746310637809052410593",
         "owner": "eth:0x742C3cF9Af45f91B109a81EfEaf11535ECDe9571",
-        "price_oracle": "998416724387794938",
+        "price_oracle": "998416722460262125",
         "stored_rates": ["1000000000000000000", "1095827933635000000"],
         "symbol": "ETHwBETHCRV",
         "totalSupply": "3500842579678157661",
@@ -4635,14 +4616,14 @@
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getEETHByWeETH": [0, 1, 2, 3, 4],
         "getImplementation": "eth:0x2d10683E941275D502173053927AD6066e6aFd6B",
-        "getRate": "1093181128722735750",
+        "getRate": "1093192144026264247",
         "getWeETHByeETH": [0, 0, 1, 2, 3],
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "name": "Wrapped eETH",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "weETH",
-        "totalSupply": "2242639297568920346488811",
+        "totalSupply": "2242090050077941073245631",
         "WEETH_OPERATING_ADMIN_ROLE": "0xfeab26ff201be143cb96161bb5c9224b5761f7085c44d6677299b1cfc2153cd7"
       },
       "errors": {
@@ -4748,10 +4729,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "admins": [
-          "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-          "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
-        ],
+        "admins": [],
         "auctionManagerContractAddress": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
         "getImplementation": "eth:0xfcC674Fc9A0602692D2a91905E7e978aE6EE2cAF",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
@@ -5077,13 +5055,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1712810903,
       "sinceBlock": 19630101,
       "values": {
@@ -5093,7 +5064,14 @@
       },
       "implementationNames": {
         "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "Vyper_contract",
@@ -5111,9 +5089,9 @@
         "A": 900,
         "A_precise": 90000,
         "admin_actions_deadline": 0,
-        "admin_balances": ["236917725681885895", "281039074167639960"],
+        "admin_balances": ["286678655809485551", "322155966423590955"],
         "admin_fee": 5000000000,
-        "balances": ["9289182016870792699176", "32574410653273243394468"],
+        "balances": ["9114207909325030778390", "32752215349730482813667"],
         "coins": [
           "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
@@ -5124,7 +5102,7 @@
         "future_admin_fee": 5000000000,
         "future_fee": 1000000,
         "future_owner": "eth:0x0000000000000000000000000000000000000000",
-        "get_virtual_price": "1136308101710973280",
+        "get_virtual_price": "1136372345790014501",
         "initial_A": 20000,
         "initial_A_time": 1731805535,
         "lp_token": "eth:0x06325440D014e39736583c165C2963BA99fAf14E",
@@ -9008,6 +8986,6 @@
     "tokens/Lido/stETH": "0x2080eca52531b41fd56005cb8fbff2e333d17fc420f97e956a799da2a041baf6",
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816"
   },
-  "usedBlockNumbers": { "ethereum": 24935230 },
+  "usedBlockNumbers": { "ethereum": 24936508 },
   "permissionsConfigHash": "0xd6ebe10e5d0ab67033af708c0719b270addd1616318005c2b62f775e379b2fb1"
 }

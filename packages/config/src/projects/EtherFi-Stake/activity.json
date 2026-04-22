@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776762485,
-  "lastConsumedUpdateNotifierId": 117,
+  "lastReconciledAt": 1776874310,
+  "lastConsumedUpdateNotifierId": 120,
   "events": [
     {
       "timestamp": "2026-03-26T08:10:03.000Z",
@@ -546,6 +546,1113 @@
           "after": false
         }
       ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.multisigThreshold",
+          "before": "3 of 5 (60%)",
+          "after": "4 of 7 (57%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.0",
+          "after": "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264"
+        },
+        {
+          "field": "values.$members.1",
+          "after": "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:role:Safe.threshold",
+      "type": "role-update",
+      "roleName": "Safe.threshold",
+      "changes": [
+        {
+          "field": "values.$threshold",
+          "before": 3,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+      "contractName": "EtherfiOFTAdapterUpgradeable",
+      "entity": null,
+      "id": "120:eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.layerZeroConfig",
+          "after": {
+            "perEid": {
+              "30102": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30106": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30111": {
+                "peer": "0x0000000000000000000000005a7facb970d094b6c7ff1df0ea68d99e6e73cbff",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30165": {
+                "peer": "0x000000000000000000000000c1fa6e2e8667d9be0ca938a54c7e0285e9df924a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30183": {
+                "peer": "0x0000000000000000000000001bf74c010e6320bab11e2e5a532b5ac15e0b8aa6",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30184": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30214": {
+                "peer": "0x00000000000000000000000001f0a31698c4d065659b9bdc21b3610292a1c506",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30243": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30260": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30320": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30322": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30332": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30335": {
+                "peer": "0x000000000000000000000000a6cb988942610f6731e664379d15ffcfbf282b44",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30339": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30362": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30367": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30383": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30390": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30396": {
+                "peer": "0x00000000000000000000000060a08269e5f3406d8fd7892567d53188c7f75009",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              }
+            },
+            "delegate": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+      "contractName": "EtherfiL1SyncPoolETH",
+      "entity": null,
+      "id": "120:eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.layerZeroConfig",
+          "after": {
+            "perEid": {
+              "30111": {
+                "peer": "0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30183": {
+                "peer": "0x000000000000000000000000823106e745a62d0c2fc4d27644c62ade946d9cca",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30184": {
+                "peer": "0x000000000000000000000000c38e046dfdadf15f7f56853674242888301208a5",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30214": {
+                "peer": "0x000000000000000000000000750cf0fd3bc891d8d864b732bc4ad340096e5e68",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 1,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x747C741496a507E4B404b50463e691A8d692f6Ac"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30243": {
+                "peer": "0x00000000000000000000000052c4221cb805479954cde5accff8c4dcaf96623b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30362": {
+                "peer": "0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              }
+            },
+            "delegate": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "contractName": "Executor",
+      "entity": null,
+      "id": "120:eth:0x173272739Bd7Aa6e4e214714048a9fE699453059:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+      "contractName": "DVN",
+      "entity": null,
+      "id": "120:eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x747C741496a507E4B404b50463e691A8d692f6Ac",
+      "contractName": "DeadDVN",
+      "entity": null,
+      "id": "120:eth:0x747C741496a507E4B404b50463e691A8d692f6Ac:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "contractName": "DVN",
+      "entity": null,
+      "id": "120:eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "contractName": "SendUln302",
+      "isDependency": true,
+      "entity": "LayerZero",
+      "id": "120:eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "contractName": "ReceiveUln302",
+      "isDependency": true,
+      "entity": "LayerZero",
+      "id": "120:eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "contractName": "VerifierNetwork",
+      "entity": null,
+      "id": "120:eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc:contract-added",
+      "type": "contract-added"
     }
   ]
 }
