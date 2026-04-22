@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-07T16:38:13.108Z",
+  "lastModified": "2026-04-22T08:29:42.027Z",
   "contracts": {
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "functions": [
@@ -46,7 +46,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -58,7 +64,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -70,7 +82,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -82,7 +100,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -94,7 +118,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -106,7 +136,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -118,7 +154,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -130,7 +172,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -164,7 +212,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -176,7 +230,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -188,7 +248,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -200,7 +266,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -212,7 +284,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -224,7 +302,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -236,7 +320,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -248,7 +338,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -260,7 +356,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -272,7 +374,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -292,9 +400,16 @@
               "description": "Minting limit",
               "label": "Mint Limit",
               "impactCap": {
-                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -319,7 +434,13 @@
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
               "label": "Expired",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -333,6 +454,19 @@
             {
               "type": "other",
               "description": "Minting limit",
+              "label": "Mint Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "fieldName": "limit"
@@ -340,12 +474,6 @@
               "scopedTo": {
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
-              },
-              "label": "Mint Limit",
-              "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
               }
             },
             {
@@ -382,13 +510,20 @@
             {
               "type": "other",
               "description": "Per-chain inbound CCIP rate limit (enforced on-chain): the BurnMintTokenPool runs a token-bucket limiter BEFORE calling mint (_consumeInboundRateLimit in releaseOrMint). Max burst per chain ≈ 500k ZCHF on Base/Gnosis, 100–200k on others; refills LINEARLY at ~10k/hour (Base) or ~5k/hour (others). Aggregate burst ≈ 1.7M ZCHF. This cap holds even if the CCIP Committing DON and RMN are both compromised — they cannot bypass the pool's own rate limiter. Rate limits are admin-changeable by the FPS governance.",
+              "label": "CCIP Rate Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 1700000
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                }
+              },
               "scopedTo": {
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
-              },
-              "label": "CCIP Rate Limit",
-              "impactCap": {
-                "hardcodedUsd": 1700000
               }
             },
             {
@@ -418,7 +553,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -430,7 +571,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -442,7 +589,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -454,7 +607,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -466,7 +625,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -478,14 +643,20 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ],
-          "timestamp": "2026-04-07T16:38:13.108Z",
+          "timestamp": "2026-04-22T08:29:42.027Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-07T16:38:13.108Z"
+            "date": "2026-04-22T08:29:42.027Z"
           }
         },
         {
@@ -539,7 +710,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -551,7 +728,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -563,7 +746,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -575,7 +764,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -587,7 +782,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -599,7 +800,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -611,7 +818,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -658,7 +871,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -670,7 +889,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -682,7 +907,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -694,7 +925,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -706,7 +943,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -718,7 +961,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -730,7 +979,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -742,7 +997,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -776,7 +1037,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -788,7 +1055,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -800,7 +1073,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -812,7 +1091,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -824,7 +1109,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -836,7 +1127,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -848,7 +1145,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -860,7 +1163,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -872,7 +1181,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -884,7 +1199,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -918,7 +1239,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -930,7 +1257,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -942,7 +1275,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -954,7 +1293,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -966,7 +1311,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -978,7 +1329,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -990,7 +1347,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1002,7 +1365,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1014,7 +1383,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1026,7 +1401,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -1107,7 +1488,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1119,7 +1506,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1131,7 +1524,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1143,7 +1542,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1155,7 +1560,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -1202,7 +1613,13 @@
               },
               "label": "Additive Only",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1214,7 +1631,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1226,7 +1649,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1238,7 +1667,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1250,7 +1685,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1262,7 +1703,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1274,7 +1721,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {
@@ -1286,7 +1739,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             }
           ]
@@ -1503,7 +1962,13 @@
                 "fieldName": "equity"
               },
               "impactCap": {
-                "hardcodedUsd": 1000
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 1000
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               }
             },
             {

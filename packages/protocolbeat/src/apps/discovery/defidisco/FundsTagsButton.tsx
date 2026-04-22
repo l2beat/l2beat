@@ -10,6 +10,7 @@ const KNOWN_AGGREGATE_HANDLERS = [
   'aerodrome-v2-factory',
   'frankencoin-mintinghub',
   'uniswap-v2-factory',
+  'uniswap-v3-factory',
 ]
 
 export function FundsTagsButton() {

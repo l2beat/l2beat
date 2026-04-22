@@ -1,0 +1,147 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "uniswap-v3",
+  "import": ["../globalConfig.jsonc"],
+  "maxDepth": 12,
+  "initialAddresses": [
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af",
+    "eth:0xe34139463bA50bD61336E0c446Bd8C0867c6fE65",
+    "eth:0xA5644E29708357803b5A882D272c41cC0dF92B34",
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3"
+  ],
+  "overrides": {
+    "eth:0x000000000004444c5dc75cB358380D2e3dE08A90": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xd1428Ba554F4C8450b763a0B2040A4935c63f06C": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xEe6A57eC80ea46401049E92587E52f5Ec1c24785": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xB753548F6E010e7e680BA186F9Ca1BdAB2E90cf2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": {
+      "ignoreInWatchMode": ["DOMAIN_SEPARATOR"]
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "ignoreInWatchMode": ["MAX_RELEASE_LENGTH", "nonce"]
+    },
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "ignoreInWatchMode": ["GRACE_PERIOD", "MAXIMUM_DELAY", "MINIMUM_DELAY"]
+    },
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": {
+      "ignoreInWatchMode": ["parameters"]
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "fields": {
+        "totalSupply": { "severity": "HIGH" },
+        "mintingAllowedAfter": {
+          "severity": "HIGH"
+        },
+        "minter": {
+          "severity": "HIGH"
+        }
+      },
+      "ignoreInWatchMode": [
+        "decimals",
+        "DELEGATION_TYPEHASH",
+        "DOMAIN_TYPEHASH",
+        "minimumTimeBetweenMints",
+        "mintCap",
+        "name",
+        "PERMIT_TYPEHASH",
+        "symbol"
+      ]
+    },
+    "eth:0x3e8640574aa764763291eD733672D3A105107ac5": {
+      "ignoreMethods": ["getMerchants"],
+      "ignoreInWatchMode": ["getMerchants"]
+    },
+    "eth:0x4dbbbFb0e68bE9D8F5a377A4654604a62E851e80": {
+      "ignoreMethods": ["getConfirmations"],
+      "ignoreInWatchMode": ["getConfirmationCount"]
+    },
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
+      "ignoreMethods": ["getActions", "proposals"],
+      "ignoreInWatchMode": [
+        "BALLOT_TYPEHASH",
+        "DOMAIN_TYPEHASH",
+        "implementation",
+        "initialProposalId",
+        "MAX_PROPOSAL_THRESHOLD",
+        "MAX_VOTING_DELAY",
+        "MAX_VOTING_PERIOD",
+        "MIN_PROPOSAL_THRESHOLD",
+        "MIN_VOTING_DELAY",
+        "MIN_VOTING_PERIOD",
+        "name",
+        "proposalCount",
+        "proposalMaxOperations",
+        "state",
+        "timelock",
+        "uni"
+      ]
+    },
+    "eth:0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af": {
+      "ignoreInWatchMode": ["msgSender"],
+      "ignoreMethods": ["V4_POSITION_MANAGER"]
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreInWatchMode": ["decimals", "name", "symbol", "totalSupply"]
+    },
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": {
+      "ignoreMethods": [
+        "positions",
+        "tokenURI",
+        "ownerOf",
+        "getApproved",
+        "tokenByIndex",
+        "WETH9"
+      ],
+      "ignoreInWatchMode": [
+        "baseURI",
+        "DOMAIN_SEPARATOR",
+        "name",
+        "PERMIT_TYPEHASH",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xe34139463bA50bD61336E0c446Bd8C0867c6fE65": {
+      "ignoreInWatchMode": [
+        "deposits",
+        "maxIncentiveDuration",
+        "maxIncentiveStartLeadTime"
+      ],
+      "ignoreMethods": ["deposits"]
+    },
+    "eth:0xe5A5F138005E19A3E6D0FE68b039397EeEf2322b": {
+      "ignoreInWatchMode": [
+        "burnRequests",
+        "getMintRequestsLength",
+        "getBurnRequestsLength"
+      ],
+      "ignoreMethods": [
+        "burnRequests",
+        "getBurnRequest",
+        "getMintRequest",
+        "mintRequests"
+      ]
+    },
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": {
+      "ignoreInWatchMode": ["ZERO_FEE_SENTINEL"]
+    },
+    "eth:0xA5644E29708357803b5A882D272c41cC0dF92B34": {
+      "ignoreMethods": ["WETH9"]
+    }
+  }
+}

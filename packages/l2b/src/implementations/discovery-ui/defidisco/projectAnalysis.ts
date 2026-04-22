@@ -35,6 +35,7 @@ import { getFundsData } from './fundsData'
 import { DiscoveredDataAccess } from './ownerResolution'
 import {
   isUpgradeFunction,
+  normalizeImpactCap,
   type AdminDetail,
   type ApiAddressType,
   type ApiCallGraphResponse,
@@ -44,7 +45,8 @@ import {
   type ApiFundsDataResponse,
   type FunctionCapitalAnalysis,
   type Impact,
-  type ImpactCapUnit,
+  type ImpactCap,
+  type ImpactCapScaler,
   type Mitigation,
   type OwnershipChainStep,
   type ReachableContract,
@@ -156,8 +158,7 @@ export interface ProjectSummary {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
-const IMPACT_CAP_DENOMINATORS: Record<ImpactCapUnit, number> = {
-  raw: 1,
+const SCALER_DENOMINATORS: Record<ImpactCapScaler, number> = {
   '1e6': 1e6,
   '1e8': 1e8,
   '1e18': 1e18,
@@ -166,51 +167,113 @@ const IMPACT_CAP_DENOMINATORS: Record<ImpactCapUnit, number> = {
 }
 
 /**
- * Resolve an impactCap to a USD number.
- * Supports hardcoded USD values and on-chain field references (contractAddress + fieldName + unit).
- * Returns undefined if resolution fails (warns but never silently caps at 0).
+ * Resolve a unified ImpactCap (post-normalization) to USD.
+ *
+ * Formula:
+ *   raw = value.amount (hardcoded)  OR  on-chain field value (fieldRef)
+ *   usd =
+ *     unit=usd    → raw
+ *     unit=scaler → raw / denominator
+ *     unit=token  → (raw, optionally /10^decimals if fieldRef) × price
+ *   final = usd × (multiplier ?? 1)
+ *
+ * Note the asymmetry in 'token' mode: hardcoded amounts are interpreted as
+ * whole tokens (researcher-friendly), fieldRef amounts as raw on-chain units.
+ * Returns undefined on any failure; warns but never silently caps at 0.
  */
-function resolveStructuredImpactCap(
-  impactCap: {
-    hardcodedUsd?: number
-    contractAddress?: string
-    fieldName?: string
-    unit?: ImpactCapUnit
-  },
+function resolveImpactCap(
+  cap: ImpactCap,
   dataAccess: DiscoveredDataAccess,
+  fundsData: ApiFundsDataResponse | undefined,
 ): number | undefined {
-  // Hardcoded mode
-  if (impactCap.hardcodedUsd !== undefined) {
-    return impactCap.hardcodedUsd
+  const multiplier = cap.multiplier ?? 1
+  if (!isFinite(multiplier)) {
+    console.warn('[impactCap] invalid multiplier:', cap.multiplier)
+    return undefined
   }
 
-  // Field reference mode
-  if (!impactCap.contractAddress || !impactCap.fieldName || !impactCap.unit) {
-    return undefined
-  }
-  try {
-    const contract = dataAccess.findContract(impactCap.contractAddress)
-    const raw = dataAccess.getValuesObject(contract)[impactCap.fieldName]
-    if (raw === undefined) {
+  // 1. Resolve raw amount
+  let rawAmount: number
+  const fromField = cap.value.mode === 'fieldRef'
+  if (cap.value.mode === 'hardcoded') {
+    rawAmount = cap.value.amount
+    if (!isFinite(rawAmount)) return undefined
+  } else {
+    try {
+      const contract = dataAccess.findContract(cap.value.contractAddress)
+      const raw = dataAccess.getValuesObject(contract)[cap.value.fieldName]
+      if (raw === undefined) {
+        console.warn(
+          `[impactCap] Field "${cap.value.fieldName}" not found on contract ${cap.value.contractAddress}`,
+        )
+        return undefined
+      }
+      const n = typeof raw === 'number' ? raw : Number(raw)
+      if (!isFinite(n)) {
+        console.warn(
+          `[impactCap] Field "${cap.value.fieldName}" on ${cap.value.contractAddress} is not numeric: ${raw}`,
+        )
+        return undefined
+      }
+      rawAmount = n
+    } catch (err) {
       console.warn(
-        `[impactCap] Field "${impactCap.fieldName}" not found on contract ${impactCap.contractAddress}`,
+        `[impactCap] Exception reading field "${cap.value.fieldName}" on ${cap.value.contractAddress}: ${err}`,
       )
       return undefined
     }
-    const rawNum = typeof raw === 'number' ? raw : Number(raw)
-    if (!isFinite(rawNum)) {
+  }
+
+  // 2. Convert to USD via unit
+  let usd: number
+  if (cap.unit.kind === 'usd') {
+    usd = rawAmount
+  } else if (cap.unit.kind === 'scaler') {
+    const denom = SCALER_DENOMINATORS[cap.unit.factor]
+    if (denom === undefined) return undefined
+    usd = rawAmount / denom
+  } else {
+    // token
+    const info = lookupFundsContract(
+      fundsData,
+      cap.unit.tokenAddress,
+    )?.tokenInfo
+    if (
+      !info ||
+      typeof info.price !== 'number' ||
+      typeof info.decimals !== 'number'
+    ) {
       console.warn(
-        `[impactCap] Field "${impactCap.fieldName}" on ${impactCap.contractAddress} is not numeric: ${raw}`,
+        `[impactCap] Token ${cap.unit.tokenAddress} missing price/decimals in funds-data.json`,
       )
       return undefined
     }
-    return rawNum / IMPACT_CAP_DENOMINATORS[impactCap.unit]
-  } catch (err) {
-    console.warn(
-      `[impactCap] Exception resolving cap field "${impactCap.fieldName}" on ${impactCap.contractAddress}: ${err}`,
-    )
-    return undefined
+    const tokenAmount = fromField
+      ? rawAmount / Math.pow(10, info.decimals)
+      : rawAmount
+    usd = tokenAmount * info.price
   }
+
+  return usd * multiplier
+}
+
+/**
+ * Case-insensitive / chain-prefix-tolerant lookup into funds-data's contracts map.
+ * funds-data.json stores keys with chain prefix and checksummed hex, but researcher
+ * inputs may arrive in mixed case — normalize both sides before matching.
+ */
+function lookupFundsContract(
+  fundsData: ApiFundsDataResponse | undefined,
+  address: string,
+): ApiFundsDataResponse['contracts'][string] | undefined {
+  if (!fundsData?.contracts) return undefined
+  const direct = fundsData.contracts[address]
+  if (direct) return direct
+  const target = normalizeChainAddress(address)
+  for (const [key, value] of Object.entries(fundsData.contracts)) {
+    if (normalizeChainAddress(key) === target) return value
+  }
+  return undefined
 }
 
 /**
@@ -1409,14 +1472,14 @@ export class ProjectAnalysis {
         if (func.mitigations) mitigations.push(...func.mitigations)
 
         for (const m of mitigations) {
-          if (!m.impactCap) continue
-          if (
-            m.impactCap.hardcodedUsd === undefined &&
-            (!m.impactCap.contractAddress || !m.impactCap.fieldName)
-          )
-            continue
+          const normalized = normalizeImpactCap(m.impactCap)
+          if (!normalized) continue
 
-          const capUsd = resolveStructuredImpactCap(m.impactCap, dataAccess)
+          const capUsd = resolveImpactCap(
+            normalized,
+            dataAccess,
+            this.fundsData,
+          )
           if (capUsd === undefined) continue
 
           const base = `${normalizeChainAddress(contractAddr)}|${func.functionName}`
@@ -1636,7 +1699,14 @@ export class ProjectAnalysis {
     const dataAccess = new DiscoveredDataAccess(this.discovered)
     for (const m of merged) {
       if (m.impactCap && m.impactCapUsd === undefined) {
-        m.impactCapUsd = resolveStructuredImpactCap(m.impactCap, dataAccess)
+        const normalized = normalizeImpactCap(m.impactCap)
+        if (normalized) {
+          m.impactCapUsd = resolveImpactCap(
+            normalized,
+            dataAccess,
+            this.fundsData,
+          )
+        }
       }
     }
     return merged

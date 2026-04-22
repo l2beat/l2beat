@@ -133,7 +133,9 @@ src/
     ├── comparison.ts           # Metrics extraction, radar data, shared deps
     ├── dependencies.ts         # Dependency grouping utilities
     ├── format.ts               # USD formatting, address truncation, Etherscan URLs
-    └── narrative.ts            # Key findings, glossary
+    ├── narrative.ts            # Admin narrative generation (one-line summaries)
+    ├── keyFindings.ts          # Detector-array producing Report "Key Findings" cards
+    └── glossary.ts             # DeFi term definitions surfaced via <GlossaryTooltip>
 ```
 
 ## Key Types

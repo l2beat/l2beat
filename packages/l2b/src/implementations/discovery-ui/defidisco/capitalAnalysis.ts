@@ -261,12 +261,35 @@ export class CapitalAnalysisCalculator {
           ? pathIsViewOnly && isViewCall
           : false // Permission edges are always non-view
 
-        // Cap propagation: apply the cap of the current source function to
-        // the outgoing path. Take the minimum (tightest) cap along the path.
+        // Cap propagation: fold in the source function's cap (pathCapUsd
+        // already covers ancestors). Take the minimum (tightest) cap.
         const sourceFuncCap = this.getFunctionCap(contract, func, ownerAddress)
         const newPathCap =
           pathCapUsd !== undefined || sourceFuncCap !== undefined
             ? Math.min(pathCapUsd ?? Infinity, sourceFuncCap ?? Infinity)
+            : undefined
+
+        // Target function cap: the call to edge.targetFunction is itself
+        // bounded by whatever cap is attached to that specific function.
+        // Without this, a transitive reacher (e.g. a governor chain landing
+        // on UNI.setMinter) would see UNI as uncapped even though
+        // setMinter is capped at 2% of supply.
+        const targetFuncCap = this.getFunctionCap(
+          edge.targetContract,
+          edge.targetFunction,
+          ownerAddress,
+        )
+
+        // Per-edge effective cap when landing at the target contract.
+        // A pure view call cannot move funds, so its contribution to
+        // fund-drain potential is 0 regardless of any cap chain. That makes
+        // it a no-op in the "max (least restrictive) wins" merge, so it
+        // doesn't flip a capped contract to uncapped (the UNI balanceOf
+        // issue) while also honoring "view-only reaches are not at risk".
+        const edgeReachCap = isViewCall
+          ? 0
+          : newPathCap !== undefined || targetFuncCap !== undefined
+            ? Math.min(newPathCap ?? Infinity, targetFuncCap ?? Infinity)
             : undefined
 
         // Resolve implementation addresses to proxy for the output map,
@@ -276,34 +299,39 @@ export class CapitalAnalysisCalculator {
         if (existing) {
           if (!newPathIsViewOnly) existing.viewOnlyPath = false
           existing.calledFunctions.add(edge.targetFunction)
-          // Multiple paths: keep the maximum cap (least restrictive wins).
-          // If any path is uncapped (undefined), the contract is uncapped.
-          if (
-            existing.effectiveCapUsd !== undefined &&
-            newPathCap !== undefined
-          ) {
+          // Multi-path merge: max (least restrictive) wins. `undefined` means
+          // uncapped and dominates any numeric cap.
+          if (existing.effectiveCapUsd === undefined) {
+            // already uncapped, nothing a new edge can tighten
+          } else if (edgeReachCap === undefined) {
+            existing.effectiveCapUsd = undefined
+          } else {
             existing.effectiveCapUsd = Math.max(
               existing.effectiveCapUsd,
-              newPathCap,
+              edgeReachCap,
             )
-          } else {
-            existing.effectiveCapUsd = undefined // uncapped path found
           }
         } else {
           reachableContracts.set(targetNorm, {
             contractName: this.contractNameMap.get(targetNorm) ?? 'Unknown',
             viewOnlyPath: newPathIsViewOnly,
             calledFunctions: new Set([edge.targetFunction]),
-            effectiveCapUsd: newPathCap,
+            effectiveCapUsd: edgeReachCap,
           })
         }
 
-        // BFS queue uses original addresses for correct edge lookup
+        // BFS queue uses original addresses for correct edge lookup. We
+        // propagate the combined source+target cap so edges leaving the
+        // target inherit target's cap without needing a second lookup.
+        const propagatedPathCap =
+          newPathCap !== undefined || targetFuncCap !== undefined
+            ? Math.min(newPathCap ?? Infinity, targetFuncCap ?? Infinity)
+            : undefined
         queue.push({
           contract: edge.targetContract,
           function: edge.targetFunction,
           pathIsViewOnly: newPathIsViewOnly,
-          pathCapUsd: newPathCap,
+          pathCapUsd: propagatedPathCap,
         })
       }
     }
@@ -544,12 +572,48 @@ export class CapitalAnalysisCalculator {
       }
     }
 
-    // Calculate direct capital and token value
+    // Build per-contract caps for direct contracts from the admin's own
+    // functions. Max across functions = least restrictive call wins; if any
+    // impactful function on the contract has no cap, the contract is uncapped.
+    const directContractCaps = new Map<string, number | undefined>()
+    for (const func of admin.functions) {
+      if (this.functionIsNoImpact(func.contractAddress, func.functionName)) {
+        continue
+      }
+      const addr = normalizeChainAddress(
+        this.resolveToProxy(func.contractAddress),
+      )
+      const cap = this.getFunctionCap(
+        func.contractAddress,
+        func.functionName,
+        admin.adminAddress,
+      )
+      const hasEntry = directContractCaps.has(addr)
+      const existing = directContractCaps.get(addr)
+      if (hasEntry && existing === undefined) continue // already uncapped
+      if (cap === undefined) {
+        directContractCaps.set(addr, undefined)
+      } else if (existing !== undefined) {
+        directContractCaps.set(addr, Math.max(existing, cap))
+      } else {
+        directContractCaps.set(addr, cap)
+      }
+    }
+
+    // Calculate direct capital and token value, applying per-contract caps
     let totalDirectCapital = 0
     let totalDirectTokenValue = 0
     for (const addr of directContracts) {
-      totalDirectCapital += this.getContractFunds(addr)
-      totalDirectTokenValue += this.getContractTokenValue(addr)
+      const funds = this.getContractFunds(addr)
+      const tokenVal = this.getContractTokenValue(addr)
+      const cap = directContractCaps.get(addr)
+      if (cap !== undefined) {
+        totalDirectCapital += Math.min(funds, cap)
+        totalDirectTokenValue += Math.min(tokenVal, cap)
+      } else {
+        totalDirectCapital += funds
+        totalDirectTokenValue += tokenVal
+      }
     }
 
     // Build per-contract effective cap across all functions.

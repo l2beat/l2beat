@@ -217,6 +217,13 @@ export async function generateCallGraph(
   let cacheHits = 0
   let cacheMisses = 0
 
+  // Track contracts skipped due to Slither timeout (for loud end-of-run summary)
+  const timedOutContracts: { name: string; address: string }[] = []
+
+  // ANSI red (bright) for terminal output — TerminalPanel renders via ansi-html
+  const RED = '\x1b[1;31m'
+  const RESET = '\x1b[0m'
+
   for (let i = 0; i < contracts.length; i++) {
     const contract = contracts[i]!
     onProgress?.(
@@ -268,6 +275,25 @@ export async function generateCallGraph(
           generatedAt: new Date().toISOString(),
           skipped: true,
           skipReason: 'Unverified contract',
+        }
+        continue
+      }
+
+      if (slitherResult.error?.startsWith('TIMEOUT')) {
+        timedOutContracts.push({
+          name: contract.displayName,
+          address: contract.entryAddress,
+        })
+        onProgress?.(
+          `${RED}  !!! SKIPPED: ${contract.displayName} (${contract.entryAddress}) — Slither exceeded ${SLITHER_TIMEOUT_MS / 1000}s timeout and was killed. This contract will NOT appear in the call graph. !!!${RESET}`,
+        )
+        result[contract.entryAddress] = {
+          address: contract.entryAddress,
+          name: contract.displayName,
+          externalCalls: [],
+          generatedAt: new Date().toISOString(),
+          skipped: true,
+          skipReason: `Slither timeout after ${SLITHER_TIMEOUT_MS / 1000}s`,
         }
         continue
       }
@@ -469,12 +495,29 @@ export async function generateCallGraph(
   onProgress?.('=== Summary ===')
   onProgress?.(`Contracts analyzed: ${contracts.length}`)
   onProgress?.(`Cache: ${cacheHits} hits, ${cacheMisses} misses`)
-  onProgress?.(`Skipped (unverified): ${skippedCount}`)
+  const unverifiedSkipCount = skippedCount - timedOutContracts.length
+  onProgress?.(`Skipped (unverified): ${unverifiedSkipCount}`)
+  onProgress?.(
+    `Skipped (Slither timeout): ${timedOutContracts.length}${timedOutContracts.length > 0 ? ' — see details below' : ''}`,
+  )
   onProgress?.(`Errors: ${errorCount}`)
   onProgress?.(`Total external calls: ${totalCalls}`)
   onProgress?.(
     `Resolved: ${deterministicTotal} deterministic, ${optimisticTotal} optimistic, ${unresolvedTotal} unresolved`,
   )
+
+  if (timedOutContracts.length > 0) {
+    onProgress?.('')
+    onProgress?.(
+      `${RED}!!! ${timedOutContracts.length} contract(s) SKIPPED due to Slither timeout (${SLITHER_TIMEOUT_MS / 1000}s) !!!${RESET}`,
+    )
+    onProgress?.(
+      `${RED}These contracts are MISSING from the call graph and their external calls will not be analyzed:${RESET}`,
+    )
+    for (const c of timedOutContracts) {
+      onProgress?.(`${RED}  - ${c.name} (${c.address})${RESET}`)
+    }
+  }
 
   const response: ApiCallGraphResponse = {
     version: '1.0',
@@ -1342,6 +1385,8 @@ function parseSlithirForContract(
 /**
  * Run slither on a contract and parse the output
  */
+const SLITHER_TIMEOUT_MS = Number(process.env.SLITHER_TIMEOUT_MS) || 2 * 60 * 1000
+
 async function runSlitherOnContract(
   address: string,
   etherscanApiKey: string,
@@ -1390,6 +1435,21 @@ async function runSlitherOnContract(
 
     let _stdout = ''
     let stderr = ''
+    let timedOut = false
+    let settled = false
+
+    const timeoutHandle = setTimeout(() => {
+      timedOut = true
+      // SIGKILL (not SIGTERM) — Slither can ignore TERM during compile
+      slither.kill('SIGKILL')
+    }, SLITHER_TIMEOUT_MS)
+
+    const settle = (result: { output: string; error?: string }) => {
+      if (settled) return
+      settled = true
+      clearTimeout(timeoutHandle)
+      resolve(result)
+    }
 
     slither.stdout.on('data', (data) => {
       _stdout += data.toString()
@@ -1400,12 +1460,20 @@ async function runSlitherOnContract(
     })
 
     slither.on('close', (code) => {
+      if (timedOut) {
+        settle({
+          output: '',
+          error: `TIMEOUT: Slither did not complete within ${SLITHER_TIMEOUT_MS / 1000}s`,
+        })
+        return
+      }
+
       // Slither outputs the slithir analysis to STDERR, not stdout
       // Combine both streams for analysis
       const output = stderr
 
       if (output.includes('Source code not available')) {
-        resolve({
+        settle({
           output: '',
           error: 'UNVERIFIED',
         })
@@ -1414,20 +1482,20 @@ async function runSlitherOnContract(
 
       // Check if we got slithir output (in stderr)
       if (output.includes('HIGH_LEVEL_CALL') || output.includes('Function ')) {
-        resolve({ output })
+        settle({ output })
       } else if (code !== 0) {
-        resolve({
+        settle({
           output: '',
           error: output || `Slither exited with code ${code}`,
         })
       } else {
         // No HIGH_LEVEL_CALLs found but succeeded - contract might just have no external calls
-        resolve({ output })
+        settle({ output })
       }
     })
 
     slither.on('error', (err) => {
-      resolve({
+      settle({
         output: '',
         error: `Failed to spawn slither: ${err.message}`,
       })

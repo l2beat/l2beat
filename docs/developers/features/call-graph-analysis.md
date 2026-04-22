@@ -33,6 +33,27 @@ Uses Slither to analyze which external contracts each function calls. The output
 - **SafeERC20 wrapper synthesis** — OpenZeppelin's `safeTransfer`/`safeTransferFrom`/`safeApprove`/`forceApprove`/`safeIncreaseAllowance`/`safeDecreaseAllowance` route the underlying token call through `_callOptionalReturn` → `Address.functionCall` (low-level `call`), so Slither emits **no HIGH_LEVEL_CALL** for the real transfer/approve. Without a workaround, any function whose only external call goes through SafeERC20 is dropped entirely (the ABI-driven walker only keeps functions with ≥1 reachable HLC), and `safeApprove` mis-resolves to the `allowance()` pre-check inside the wrapper. `synthesizeSafeERC20Call()` in `callGraph.ts` emits a synthetic HLC per SafeERC20 `LIBRARY_CALL` by mapping `safeTransfer → transfer`, `safeTransferFrom → transferFrom`, `safeApprove/forceApprove → approve`, etc. The first LIBRARY_CALL argument is the token; a `CONVERT TMP_X = CONVERT srcVar to IERC20` alias tracker unwraps the Slither temp back to the caller's state variable name. If the wrapper sits inside another library that forwards its IERC20 param, the caller's `typeSubstitutions.get('IERC20')` is used as a fallback so the synthesized call still carries the real token name.
 - **LIBRARY_CALL argument propagation** — previously library bodies inherited the parent's `typeSubstitutions` unchanged. `collectHighLevelCalls` now builds a fresh `TypeSubstitutionMap` per library call via `buildTypeSubstitutionMap`, which fixes mis-labeled HLCs for any library taking interface-typed parameters (SafeERC20 is the common case; generic protocol libraries benefit too)
 
+### Timeout handling
+
+Each contract gets a fixed window to complete Slither analysis. If it exceeds the limit, the process is SIGKILL-ed (not SIGTERM — Slither can ignore SIGTERM during compile) and the contract is recorded as skipped.
+
+- **Env var**: `SLITHER_TIMEOUT_MS` — override the per-contract timeout (default: `2 * 60 * 1000` ms = 2 minutes)
+- **Effect on output**: skipped contracts are written to `call-graph-data.json` with `skipped: true` instead of an `externalCalls` array
+
+Skipped entry shape:
+```json
+{
+  "contracts": {
+    "eth:0x...": {
+      "skipped": true,
+      "skipReason": "Slither timeout after 120s"
+    }
+  }
+}
+```
+
+**Terminal output** — skipped contracts emit a red warning during the analysis run, and a summary block lists all timed-out contracts at the end. If a contract is missing from the call graph, check `call-graph-data.json` for a `skipped: true` entry on that address.
+
 ### Heuristic Resolution Engine
 
 When a direct `discovered.json` lookup fails, `callGraphHeuristics.ts` runs a set of heuristics in order and picks the highest-confidence result:

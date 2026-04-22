@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { GLOSSARY } from '../utils/narrative'
+import { GLOSSARY } from '../utils/glossary'
 
 interface GlossaryTooltipProps {
   term: string
@@ -20,15 +20,15 @@ export function GlossaryTooltip({ term, children }: GlossaryTooltipProps) {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <span className="border-b border-dotted border-purple-400 cursor-help text-purple-700">
+      <span className="cursor-help border-purple-400 border-b border-dotted text-purple-700">
         {children ?? term}
       </span>
       {show && (
-        <span className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 rounded-lg bg-bg-dark text-white text-sm p-3 leading-relaxed shadow-xl pointer-events-none">
+        <span className="-translate-x-1/2 pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 w-72 rounded-lg bg-bg-dark p-3 text-sm text-white leading-relaxed shadow-xl">
           <span className="font-semibold text-purple-300">{term}</span>
           <br />
           {definition}
-          <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-bg-dark" />
+          <span className="-translate-x-1/2 absolute top-full left-1/2 border-4 border-transparent border-t-bg-dark" />
         </span>
       )}
     </span>

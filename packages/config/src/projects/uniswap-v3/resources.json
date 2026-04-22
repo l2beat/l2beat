@@ -1,0 +1,88 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://uniswap.org/"
+    },
+    {
+      "type": "frontend",
+      "url": "https://app.uniswap.org/",
+      "frontendSubtype": "official"
+    },
+    {
+      "type": "frontend",
+      "url": "https://github.com/Uniswap/interface",
+      "frontendSubtype": "self-hosted",
+      "label": "Self-hosted Interface"
+    },
+    {
+      "type": "frontend",
+      "url": "https://github.com/Uniswap/interface/releases",
+      "frontendSubtype": "self-hosted",
+      "label": "IPFS Releases"
+    },
+    {
+      "type": "docs",
+      "url": "https://docs.uniswap.org/"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/Uniswap"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/Uniswap"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/Uniswap/v3-core/blob/main/LICENSE",
+      "label": "BUSL-1.1",
+      "licenseScope": "Core Contracts"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/Uniswap/v3-periphery/blob/main/LICENSE",
+      "label": "GPL-2.0",
+      "licenseScope": "Periphery Contracts"
+    },
+    {
+      "type": "defiscan-v1",
+      "url": "https://www.defiscan.info/protocols/uniswap-v3/ethereum"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface/blob/main/apps/web/LICENSE",
+      "type": "license",
+      "label": "GPL-3.0",
+      "licenseScope": "Frontend"
+    }
+  ],
+  "audits": [
+    {
+      "author": "ABDK Consulting",
+      "date": "2021-03",
+      "scope": "Core contracts",
+      "url": "https://github.com/Uniswap/v3-core/blob/main/audits/abdk/audit.pdf"
+    },
+    {
+      "author": "ABDK Consulting",
+      "date": "2021-04",
+      "scope": "Periphery contracts",
+      "url": "https://github.com/Uniswap/v3-periphery/blob/main/audits/abdk/audit.pdf"
+    },
+    {
+      "author": "Trail of Bits",
+      "date": "2021-03",
+      "scope": "Core contracts",
+      "url": "https://github.com/Uniswap/v3-core/blob/main/audits/tob/audit.pdf"
+    },
+    {
+      "author": "Cantina",
+      "date": "2024-07",
+      "scope": "Bug Bounty Program",
+      "url": "https://cantina.xyz/bounties/f9df94db-c7b1-434b-bb06-d1360abdd1be",
+      "bounty": 2250000
+    }
+  ],
+  "linesOfCode": 7933,
+  "lastModified": "2026-04-18T10:31:58.900Z"
+}

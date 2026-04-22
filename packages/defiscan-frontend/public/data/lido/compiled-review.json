@@ -18,7 +18,7 @@
     "scoredFunctionCount": 214,
     "adminCount": 34,
     "dependencyCount": 1,
-    "totalCapitalAtRisk": 21667689080.726692,
+    "totalCapitalAtRisk": 21667688391.207012,
     "totalTokenValueAtRisk": 21772953834.001663,
     "totalTokenValue": 21772953834.001663,
     "linesOfCode": 38231,
@@ -823,7 +823,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -1338,7 +1339,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -1377,9 +1379,10 @@
               "calledFunctions": [
                 "balanceOf"
               ],
-              "fundsUsd": 689.5196789025844,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -1449,7 +1452,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -1813,9 +1817,10 @@
               "calledFunctions": [
                 "balanceOf"
               ],
-              "fundsUsd": 689.5196789025844,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -1885,7 +1890,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -3038,7 +3044,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -3476,7 +3483,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -3956,7 +3964,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -4122,7 +4131,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -4283,7 +4293,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
@@ -4553,7 +4564,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -4562,9 +4574,10 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -4601,7 +4614,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
@@ -4871,7 +4885,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -4880,9 +4895,10 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 20265732706.544197,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -5035,7 +5051,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -5454,7 +5471,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -6937,7 +6955,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -7085,7 +7104,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -7325,9 +7345,10 @@
               "calledFunctions": [
                 "balanceOf"
               ],
-              "fundsUsd": 689.5196789025844,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -7383,7 +7404,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -7712,7 +7734,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -7787,9 +7810,10 @@
               "calledFunctions": [
                 "balanceOf"
               ],
-              "fundsUsd": 689.5196789025844,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -7845,7 +7869,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -8174,7 +8199,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -8214,7 +8240,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -8293,7 +8320,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
@@ -8372,7 +8400,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -8394,7 +8423,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -8473,7 +8503,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             },
             {
               "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
@@ -8552,7 +8583,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         },
@@ -8658,7 +8690,7 @@
       ],
       "totalDirectCapital": 1401955684.6628153,
       "totalDirectTokenValue": 21772953834.001663,
-      "totalReachableCapital": 21667689080.726692,
+      "totalReachableCapital": 21667688391.207012,
       "totalReachableTokenValue": 21772953834.001663
     },
     {
@@ -15558,7 +15590,8 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
-              "fundsAtRisk": true
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 0
             }
           ]
         }
@@ -19903,7 +19936,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 21667689080.726692,
+    "totalFundsAtRisk": 21667688391.207012,
     "totalTokenValueAtRisk": 21772953834.001663
   },
   "dependencies": [

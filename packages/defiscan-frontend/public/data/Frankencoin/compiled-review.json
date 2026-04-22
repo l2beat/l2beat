@@ -76,7 +76,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -100,7 +106,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -124,7 +136,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -173,7 +191,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -202,7 +226,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -279,7 +309,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -308,7 +344,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -328,9 +370,16 @@
               "description": "Minting limit",
               "label": "Mint Limit",
               "impactCap": {
-                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -340,7 +389,7 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "impactCapUsd": 10000000
+              "impactCapUsd": 12829000
             },
             {
               "type": "other",
@@ -356,7 +405,13 @@
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
               "label": "Expired",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -408,7 +463,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -437,7 +498,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -466,7 +533,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -490,7 +563,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -514,7 +593,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -551,7 +636,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -580,7 +671,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -604,7 +701,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -628,7 +731,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -652,7 +761,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -681,7 +796,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -710,7 +831,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -753,7 +880,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -790,7 +923,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -819,7 +958,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -883,7 +1028,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -912,7 +1063,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -941,7 +1098,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -965,7 +1128,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -989,7 +1158,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1051,7 +1226,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1075,7 +1256,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1099,7 +1286,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1148,7 +1341,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1177,7 +1376,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1324,7 +1529,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1433,7 +1644,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1462,7 +1679,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1474,12 +1697,25 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 2000000,
+          "directTokenValueUsd": 2565800,
           "reachableContracts": [],
           "mitigations": [
             {
               "type": "other",
               "description": "Minting limit",
+              "label": "Mint Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "fieldName": "limit"
@@ -1488,13 +1724,7 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Mint Limit",
-              "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
-              },
-              "impactCapUsd": 2000000
+              "impactCapUsd": 2565800
             },
             {
               "type": "other",
@@ -1558,7 +1788,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1587,7 +1823,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1616,7 +1858,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1640,7 +1888,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1664,7 +1918,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1701,7 +1961,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1730,7 +1996,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1754,7 +2026,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1778,7 +2056,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1802,7 +2086,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1831,7 +2121,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1860,7 +2156,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1903,7 +2205,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -1969,9 +2277,9 @@
                 "equity"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1000,
+              "tokenValueUsd": 0,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 1000
+              "effectiveCapUsd": 0
             }
           ],
           "mitigations": [
@@ -1997,9 +2305,9 @@
                 "equity"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1000,
+              "tokenValueUsd": 0,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 1000
+              "effectiveCapUsd": 0
             }
           ],
           "mitigations": [
@@ -2018,7 +2326,13 @@
                 "fieldName": "equity"
               },
               "impactCap": {
-                "hardcodedUsd": 1000
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 1000
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 1000
             },
@@ -2032,7 +2346,7 @@
       "totalDirectCapital": 14975612.245568939,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 14975612.245568939,
-      "totalReachableTokenValue": 1000
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
@@ -2258,7 +2572,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2287,7 +2607,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2316,7 +2642,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2340,7 +2672,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2364,7 +2702,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2388,7 +2732,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2400,7 +2750,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 1700000,
+          "directTokenValueUsd": 2180930,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -2415,15 +2765,22 @@
             {
               "type": "other",
               "description": "Per-chain inbound CCIP rate limit (enforced on-chain): the BurnMintTokenPool runs a token-bucket limiter BEFORE calling mint (_consumeInboundRateLimit in releaseOrMint). Max burst per chain ≈ 500k ZCHF on Base/Gnosis, 100–200k on others; refills LINEARLY at ~10k/hour (Base) or ~5k/hour (others). Aggregate burst ≈ 1.7M ZCHF. This cap holds even if the CCIP Committing DON and RMN are both compromised — they cannot bypass the pool's own rate limiter. Rate limits are admin-changeable by the FPS governance.",
+              "label": "CCIP Rate Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 1700000
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                }
+              },
               "scopedTo": {
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "CCIP Rate Limit",
-              "impactCap": {
-                "hardcodedUsd": 1700000
-              },
-              "impactCapUsd": 1700000
+              "impactCapUsd": 2180930
             },
             {
               "type": "other",
@@ -2459,7 +2816,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2483,7 +2846,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2491,7 +2860,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 1700000,
+      "totalTokenValueAtRisk": 2180930,
       "dependencyType": "callgraph"
     },
     {
@@ -2551,7 +2920,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 427612.8807145811,
+          "directFundsUsd": 448771.4422058004,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2562,15 +2931,28 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1572387.1192854191,
+              "tokenValueUsd": 2117028.5577942,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 2000000
+              "effectiveCapUsd": 2565800
             }
           ],
           "mitigations": [
             {
               "type": "other",
               "description": "Minting limit",
+              "label": "Mint Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "fieldName": "limit"
@@ -2579,13 +2961,7 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Mint Limit",
-              "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
-              },
-              "impactCapUsd": 2000000
+              "impactCapUsd": 2565800
             },
             {
               "type": "other",
@@ -2616,7 +2992,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mintTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 427612.8807145811,
+          "directFundsUsd": 448771.4422058004,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2627,15 +3003,28 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1572387.1192854191,
+              "tokenValueUsd": 2117028.5577942,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 2000000
+              "effectiveCapUsd": 2565800
             }
           ],
           "mitigations": [
             {
               "type": "other",
               "description": "Minting limit",
+              "label": "Mint Limit",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "fieldName": "limit"
@@ -2644,13 +3033,7 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Mint Limit",
-              "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
-              },
-              "impactCapUsd": 2000000
+              "impactCapUsd": 2565800
             },
             {
               "type": "other",
@@ -2712,7 +3095,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2754,7 +3143,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -2796,15 +3191,21 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 427612.8807145811,
-      "totalTokenValueAtRisk": 1572387.1192854191,
+      "totalFundsAtRisk": 448771.4422058004,
+      "totalTokenValueAtRisk": 2117028.5577942,
       "dependencyType": "callgraph"
     },
     {
@@ -2986,9 +3387,16 @@
               "description": "Minting limit",
               "label": "Mint Limit",
               "impactCap": {
-                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -2998,7 +3406,7 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "impactCapUsd": 10000000
+              "impactCapUsd": 12829000
             },
             {
               "type": "other",
@@ -3014,7 +3422,13 @@
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
               "label": "Expired",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -3055,9 +3469,16 @@
               "description": "Minting limit",
               "label": "Mint Limit",
               "impactCap": {
-                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                  "fieldName": "limit"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+                },
+                "multiplier": 1
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -3067,7 +3488,7 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "impactCapUsd": 10000000
+              "impactCapUsd": 12829000
             },
             {
               "type": "other",
@@ -3083,7 +3504,13 @@
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
               "label": "Expired",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -3150,7 +3577,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3192,7 +3625,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3234,7 +3673,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3267,7 +3712,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3460,7 +3911,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3489,7 +3946,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3518,7 +3981,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3542,7 +4011,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3566,7 +4041,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3590,7 +4071,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3614,7 +4101,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3643,7 +4136,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3667,7 +4166,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3715,7 +4220,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3744,7 +4255,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3773,7 +4290,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3797,7 +4320,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3821,7 +4350,13 @@
               },
               "label": "Additive Only",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3874,7 +4409,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3903,7 +4444,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -3927,7 +4474,13 @@
               },
               "label": "Not Called",
               "impactCap": {
-                "hardcodedUsd": 0
+                "value": {
+                  "mode": "hardcoded",
+                  "amount": 0
+                },
+                "unit": {
+                  "kind": "usd"
+                }
               },
               "impactCapUsd": 0
             }
@@ -4002,8 +4555,8 @@
     },
     {
       "entity": "VCHF",
-      "totalFundsAtRisk": 427612.8807145811,
-      "totalTokenValueAtRisk": 1572387.1192854191
+      "totalFundsAtRisk": 448771.4422058004,
+      "totalTokenValueAtRisk": 2117028.5577942
     },
     {
       "entity": "XCHF",
@@ -4012,7 +4565,7 @@
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 427612.8807145811,
+    "totalFundsAtRisk": 448771.4422058004,
     "totalTokenValueAtRisk": 35964390.48381721
   },
   "funds": [
