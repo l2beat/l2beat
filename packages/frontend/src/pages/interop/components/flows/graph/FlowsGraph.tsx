@@ -51,6 +51,7 @@ export function FlowsGraph({
       <ParticleLayer
         flows={data.flows}
         chainData={data.chainData}
+        visibleChainIds={visibleChainIds}
         layout={layout}
         interopChains={interopChains}
         centerX={center}
