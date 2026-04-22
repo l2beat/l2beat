@@ -131,7 +131,7 @@ export function getSearchBarProjectEntries<
       kind: 'interop',
       tags: dedupeTags([
         ...commonTags,
-        project.interopConfig.shortName,
+        project.shortName,
         'interop',
       ]),
     })
