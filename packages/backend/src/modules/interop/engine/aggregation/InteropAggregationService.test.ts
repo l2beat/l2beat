@@ -342,6 +342,9 @@ function createTransfer(
     srcTime: timestamp,
     srcTxHash: 'random-hash',
     srcLogIndex: 0,
+    // We need to preserve explicit undefined here for one-sided transfer tests.
+    // Using ?? would replace it with the fallback and accidentally make the
+    // transfer two-sided again.
     srcEventId:
       'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
     srcTokenAddress: undefined,
