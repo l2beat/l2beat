@@ -29,6 +29,7 @@ import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
+import { GasZipConfigPlugin } from './gaszip/gaszip.config'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
 import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneConfigPlugin } from './hyperlane.config'
@@ -169,6 +170,13 @@ export function createInteropPlugins(
         rpcs,
         deps.configIntervalMs,
       ),
+      new GasZipConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
@@ -259,7 +267,7 @@ export function createInteropPlugins(
       },
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(deps.oneSidedChains),
-      new GasZipPlugin(deps.logger),
+      new GasZipPlugin(deps.configs, deps.oneSidedChains),
       new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
     ],

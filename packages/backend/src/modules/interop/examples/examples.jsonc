@@ -3950,7 +3950,29 @@
       }
     ]
   },
+  "gasziponesided": {
+    "loadConfigs": ["gaszip"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xf69385c4dbdad1783768535af78cfb5037778aed6835fec29837b212bebf040e"
+      }
+    ],
+    "expects": {
+      "events": ["gaszip.Deposit"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "gaszip.Transfer",
+          "plugin": "gaszip",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        }
+      ]
+    }
+  },
   "gaszip": {
+    "loadConfigs": ["gaszip"],
     "txs": [
       {
         "chain": "ethereum",
