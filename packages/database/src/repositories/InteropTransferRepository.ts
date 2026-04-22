@@ -82,6 +82,11 @@ export interface InteropMissingTokenInfo {
   plugins: string[]
 }
 
+export interface InteropTransferTokenInfo {
+  chain: string
+  tokenAddress: string
+}
+
 interface PartialAbstractTokenFilter {
   chain: string
   address: Address32
@@ -417,6 +422,44 @@ export class InteropTransferRepository extends BaseRepository {
       .updateTable('InteropTransfer')
       .set({ isProcessed: false })
       .where('isProcessed', '=', true)
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  async markAsUnprocessedByTokens(
+    tokens: InteropTransferTokenInfo[],
+  ): Promise<number> {
+    if (tokens.length === 0) {
+      return 0
+    }
+
+    const uniqueTokens = Array.from(
+      new Map(
+        tokens.map((token) => [`${token.chain}:${token.tokenAddress}`, token]),
+      ).values(),
+    )
+
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where('isProcessed', '=', true)
+      .where((eb) =>
+        eb.or(
+          uniqueTokens.map((token) =>
+            eb.or([
+              eb.and([
+                eb('srcChain', '=', token.chain),
+                eb('srcTokenAddress', '=', token.tokenAddress),
+              ]),
+              eb.and([
+                eb('dstChain', '=', token.chain),
+                eb('dstTokenAddress', '=', token.tokenAddress),
+              ]),
+            ]),
+          ),
+        ),
+      )
       .executeTakeFirst()
 
     return Number(result.numUpdatedRows)

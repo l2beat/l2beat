@@ -25,9 +25,11 @@ describe(evaluateQualitySignals.name, () => {
     })
 
     expect(result).toHaveLength(3)
-    expect(hasReason(result, 'Count z-score=')).toEqual(true)
-    expect(hasReason(result, 'Src volume z-score=')).toEqual(true)
-    expect(hasReason(result, 'Dst volume z-score=')).toEqual(true)
+    expect(hasReason(result, 'significant increase in transfer count')).toEqual(
+      true,
+    )
+    expect(hasReason(result, 'src volume increased')).toEqual(true)
+    expect(hasReason(result, 'dst volume increased')).toEqual(true)
   })
 
   it('skips volume z-scores when identification quality is low', () => {
@@ -43,9 +45,11 @@ describe(evaluateQualitySignals.name, () => {
     })
 
     expect(result).toHaveLength(1)
-    expect(hasReason(result, 'Count z-score=')).toEqual(true)
-    expect(hasReason(result, 'Src volume z-score=')).toEqual(false)
-    expect(hasReason(result, 'Dst volume z-score=')).toEqual(false)
+    expect(hasReason(result, 'significant increase in transfer count')).toEqual(
+      true,
+    )
+    expect(hasReason(result, 'src volume increased')).toEqual(false)
+    expect(hasReason(result, 'dst volume increased')).toEqual(false)
   })
 
   it('does not flag sparse mostly-zero history', () => {
@@ -112,18 +116,21 @@ describe(DefaultInteropAggregationAnalyzer.name, () => {
     expect(result.suspiciousGroups).toHaveLength(1)
     expect(result.suspiciousGroups[0]?.id).toEqual('stargate')
     expect(
-      hasReason(result.suspiciousGroups[0]?.reasons ?? [], 'Count z-score='),
-    ).toEqual(true)
-    expect(
       hasReason(
         result.suspiciousGroups[0]?.reasons ?? [],
-        'Src volume z-score=',
+        'significant increase in transfer count',
       ),
     ).toEqual(true)
     expect(
       hasReason(
         result.suspiciousGroups[0]?.reasons ?? [],
-        'Dst volume z-score=',
+        'src volume increased',
+      ),
+    ).toEqual(true)
+    expect(
+      hasReason(
+        result.suspiciousGroups[0]?.reasons ?? [],
+        'dst volume increased',
       ),
     ).toEqual(true)
     expect(
@@ -167,7 +174,10 @@ describe(DefaultInteropAggregationAnalyzer.name, () => {
     expect(result.suspiciousGroups).toHaveLength(1)
     expect(result.suspiciousGroups[0]?.id).toEqual('stargate')
     expect(
-      hasReason(result.suspiciousGroups[0]?.reasons ?? [], 'Count z-score='),
+      hasReason(
+        result.suspiciousGroups[0]?.reasons ?? [],
+        'significant decrease in transfer count',
+      ),
     ).toEqual(true)
     expect(
       aggregatedInteropTransfer.getGroupsWithStatsInTimeRange,

@@ -4,8 +4,6 @@ import {
   type json,
   type UnixTime,
 } from '@l2beat/shared-pure'
-
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { BlockClient } from '../types'
 import {
@@ -40,25 +38,23 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     return parsed.data.result.blockNumber
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      async (blockNumber) => {
-        const transactions = await this.getTransactionsInBlock(blockNumber)
-        return {
-          timestamp: Math.min(...transactions.map((t) => t.createdAt)),
-        }
-      },
-    )
-  }
-
   async getBlockWithTransactions(tag: number | 'latest'): Promise<Block> {
     const blockNumber =
       tag === 'latest' ? await this.getLatestBlockNumber() : tag
+
+    // Block 0 has no transactions and the API returns an
+    // empty list for it. We derive block timestamps from their transactions,
+    // so there's nothing to infer from. We hard-code a timestamp
+    // one day before block 1, so the block-at-or-before search treats it as a valid lower bound.
+    if (blockNumber === 0) {
+      return {
+        number: 0,
+        hash: 'UNSUPPORTED',
+        logsBloom: 'UNSUPPORTED',
+        timestamp: 1592142495,
+        transactions: [],
+      }
+    }
 
     const transactions = await this.getTransactionsInBlock(blockNumber)
 

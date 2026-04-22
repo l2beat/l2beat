@@ -33,6 +33,7 @@ export const trcpRoot = initTRPC.context<Context>().create({
       data: {
         ...shape.data,
         zodError: error.cause,
+        stack: process.env.NODE_ENV !== 'production' && shape.data.stack,
       },
     }
   },

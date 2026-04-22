@@ -1,4 +1,5 @@
 import { RefreshCwIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -12,6 +13,8 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
+import { MissingTokenStatusBadge } from './MissingTokenStatusBadge'
+import { MissingTokenStatusGuide } from './MissingTokenStatusGuide'
 import { MissingTokensTable } from './table/MissingTokensTable'
 import type { ChainMetadata, MissingTokenRow } from './types'
 
@@ -42,10 +45,43 @@ export function MissingTokensPage() {
   )
 
   const totalOccurrences = rows.reduce((sum, row) => sum + row.count, 0)
-  const uniquePluginsCount = new Set(rows.flatMap((row) => row.plugins)).size
+  const statusCounts = rows.reduce(
+    (acc, row) => {
+      acc[row.tokenDbStatus]++
+      return acc
+    },
+    {
+      missing: 0,
+      incomplete: 0,
+      ready: 0,
+      unsupported: 0,
+    },
+  )
+
+  const requeueMissingTokens = api.missingTokens.requeue.useMutation()
 
   const refetchAll = async () => {
     await Promise.all([refetchMissingTokens(), refetchChains()])
+  }
+
+  const handleRequeue = async (
+    tokens: { chain: string; tokenAddress: string }[],
+  ) => {
+    try {
+      const result = await requeueMissingTokens.mutateAsync(tokens)
+
+      toast.success('Missing-token requeue requested', {
+        description: `${result.requestedTokenCount} tokens requeued, ${result.skippedTokenCount} skipped, ${result.updatedTransfers} transfers marked as unprocessed.`,
+      })
+
+      return true
+    } catch (error) {
+      toast.error('Missing-token requeue failed', {
+        description: error instanceof Error ? error.message : 'Unknown error',
+      })
+
+      return false
+    }
   }
 
   return (
@@ -56,8 +92,8 @@ export function MissingTokensPage() {
             <div className="space-y-1">
               <CardTitle>Missing tokens</CardTitle>
               <CardDescription>
-                Transfers with missing token pricing or metadata, grouped by
-                chain and address.
+                Transfers missing financial attribution, grouped by chain and
+                address and cross-checked against TokenDB.
               </CardDescription>
             </div>
             <Button
@@ -76,10 +112,24 @@ export function MissingTokensPage() {
               Refresh
             </Button>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{rows.length} missing tokens</Badge>
+          <CardContent className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{rows.length} queue rows</Badge>
             <Badge variant="secondary">{totalOccurrences} occurrences</Badge>
-            <Badge variant="secondary">{uniquePluginsCount} plugins</Badge>
+            <MissingTokenStatusBadge status="missing">
+              {statusCounts.missing} missing
+            </MissingTokenStatusBadge>
+            <MissingTokenStatusBadge status="incomplete">
+              {statusCounts.incomplete} incomplete
+            </MissingTokenStatusBadge>
+            <MissingTokenStatusBadge status="ready">
+              {statusCounts.ready} ready
+            </MissingTokenStatusBadge>
+            <MissingTokenStatusBadge status="unsupported">
+              {statusCounts.unsupported} unsupported
+            </MissingTokenStatusBadge>
+            <div className="ml-auto">
+              <MissingTokenStatusGuide />
+            </div>
           </CardContent>
         </Card>
 
@@ -103,6 +153,8 @@ export function MissingTokensPage() {
                 data={rows}
                 getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
                 enableCsvExport
+                isRequeuePending={requeueMissingTokens.isPending}
+                onRequeue={handleRequeue}
               />
             ) : null}
           </CardContent>

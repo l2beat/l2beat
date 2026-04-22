@@ -336,7 +336,11 @@ export async function getScalingProjectEntry(
         hostChain,
         projectsChangeReport.getChanges(hostChain.id),
       )
-    : { contracts: undefined, programHashes: undefined }
+    : {
+        contracts: undefined,
+        programHashes: undefined,
+        programHashesDescription: undefined,
+      }
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,

@@ -315,7 +315,10 @@ function matchFulfilledOrder(
 export class MayanSwiftPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-swift'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const mayanSwiftAddresses = toChainSpecificAddresses(
@@ -362,22 +365,67 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
     )
   }
 
-  matchTypes = [OrderFulfilled, OrderRefunded]
+  matchTypes = [OrderCreated, OrderFulfilled, OrderRefunded]
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (OrderCreated.checkType(event)) {
+      const hasTerminalEvent =
+        db.find(OrderFulfilled, { key: event.args.key }) ??
+        db.find(OrderRefunded, { key: event.args.key })
+      if (hasTerminalEvent) return
+
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: event,
+      }) as MayanForwardedEvent | undefined
+      const dstChain = mayanForwarded?.args.$dstChain ?? event.args.$dstChain
+      if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
+
+      return [
+        Result.Transfer('mayan-swift.Transfer', {
+          srcEvent: event,
+          dstChain,
+          srcAmount: mayanForwarded?.args.amountIn ?? event.args.amountIn,
+          srcTokenAddress:
+            mayanForwarded?.args.tokenIn ?? event.args.srcTokenAddress,
+          dstTokenAddress:
+            mayanForwarded?.args.tokenOut ?? event.args.dstTokenAddress,
+          extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
+          bridgeType: 'nonMinting',
+        }),
+      ]
+    }
+
     const orderEvent = asTerminalOrderEvent(event)
     if (!orderEvent) return
 
     const orderCreated = db.find(OrderCreated, {
       key: orderEvent.args.key,
     }) as OrderCreatedEvent | undefined
-    if (!orderCreated) return
+
+    if (OrderRefunded.checkType(orderEvent)) {
+      if (!orderCreated) return
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: orderCreated,
+      }) as MayanForwardedEvent | undefined
+      return matchRefundedOrder(orderCreated, orderEvent, mayanForwarded)
+    }
+
+    if (!orderCreated) {
+      const srcChain = orderEvent.args.$srcChain
+      if (!srcChain || !this.oneSidedChains.includes(srcChain)) return
+
+      return [
+        Result.Transfer('mayan-swift.Transfer', {
+          srcChain,
+          dstEvent: orderEvent,
+          dstAmount: orderEvent.args.dstAmount,
+          bridgeType: 'nonMinting',
+        }),
+      ]
+    }
+
     const mayanForwarded = db.find(MayanForwarded, {
       sameTxAfter: orderCreated,
     }) as MayanForwardedEvent | undefined
-
-    if (OrderRefunded.checkType(orderEvent)) {
-      return matchRefundedOrder(orderCreated, orderEvent, mayanForwarded)
-    }
     return matchFulfilledOrder(orderCreated, orderEvent, mayanForwarded)
   }
 }

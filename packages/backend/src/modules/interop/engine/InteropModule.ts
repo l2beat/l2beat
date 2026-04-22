@@ -126,6 +126,7 @@ export function createInteropModule({
   const router = createInteropRouter(
     db,
     config.interop,
+    tokenDbClient,
     processors,
     syncersManager,
     logger.for('InteropRouter'),
@@ -162,7 +163,6 @@ export function createInteropModule({
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
-    config.interop.oneSidedChains,
     configStore,
     config.interop.capture.chains.map((c) => c.id),
     relayApiClient,
