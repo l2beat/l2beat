@@ -168,6 +168,7 @@ export function ProjectScalingSummary({ project }: Props) {
                             project.header.tvs
                               .additionalTrustAssumptionsPercentage
                           }
+                          className="self-start"
                         />
                       )}
                     </div>

@@ -12,12 +12,16 @@ export const mint: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
+  archivedAt: UnixTime(1775534349), // 2026-04-07T03:59:09Z
   discovery,
   additionalBadges: [],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   isPartOfSuperchain: true,
   display: {
+    redWarning: {
+      text: 'Mint Blockchain ceased operations on April 17, 2026 and only supports withdrawals. Users must withdraw ETH, WBTC, USDC, and USDT to Ethereum via [mintchain.io/withdraw](https://mintchain.io/withdraw) before October 20, 2026. Any assets left on the chain after that date will be unrecoverable.',
+    },
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
@@ -51,6 +55,7 @@ export const mint: ScalingProject = opStackL2({
       },
     ],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    untilTimestamp: UnixTime(1775534349), // 2026-04-07T03:59:09Z
     apis: [
       { type: 'rpc', url: 'https://rpc.mintchain.io', callsPerMinute: 800 },
       { type: 'blockscout', url: 'https://explorer.mintchain.io/api' },
@@ -67,6 +72,14 @@ export const mint: ScalingProject = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('MINT'),
   genesisTimestamp: UnixTime(1715608931),
   milestones: [
+    {
+      title: 'Mint Blockchain shutdown',
+      url: 'https://mintchain.io/withdraw',
+      date: '2026-04-17T00:00:00Z',
+      description:
+        'Mint Blockchain ceases operations. Users must withdraw funds before October 20, 2026.',
+      type: 'incident',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',

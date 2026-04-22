@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x73f9634ad29a5b09ba32aa344b854881e170810c
+
+# Diff at Thu, 16 Apr 2026 21:38:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1769533383
+- current timestamp: 1776375430
+
+## Description
+
+SystemConfig upgraded to v1.4.0 (Arsia upgrade), new implementation at `0x9CA047689261E35c9e507b1BB0B7443C2A436310` ([diff](https://disco.l2beat.com/diff/eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3/eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310)). The owner (MantleSecurityMultisig) keeps `onlyOwner` control but the setter surface changes significantly:
+
+- Removed `setPreconfer`, `setBatchInbox`, and the `preconfer` / `batchInbox` storage fields. The shape is moved to a new dedicated `opstack/SystemConfig_v1_4_0_mantle` template (restricted by `validAddresses` to the Mantle SystemConfig proxy) so the owner-permission description matches the actual v1.4.0 setter surface instead of the shared template's stale "preconfer/batch submitter" wording.
+- Added separate base/blob fee scalars via `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`; the legacy `setGasConfig(overhead, scalar)` is still callable and marked deprecated.
+- Added `setEIP1559Params(denominator, elasticity)`, `setMinBaseFee`, `setDAFootprintGasScalar`, `setBaseFee`, and an EIP-7706-style `setOperatorFeeScalars(operatorFeeScalar, operatorFeeConstant)`.
+- Added `maximumGasLimit()` pure getter returning `500_000_000`. The currently stored `gasLimit` is `200_000_000_000` — i.e. 400× the new cap — and is retained as-is in storage (the cap is enforced on `initialize` and `setGasLimit`, not on existing storage). As a consequence, any future owner-initiated `setGasLimit` call must reduce the limit to `≤ 500_000_000`; raising it back above that ceiling would require another implementation upgrade. `batcherHash` now returns a raw `bytes32` from the new ABI (the template's view override casts it back to an address).
+
+The new Arsia-era fields (`basefeeScalar`, `blobbasefeeScalar`, `daFootprintGasScalar`, `eip1559Denominator`, `eip1559Elasticity`, `minBaseFee`, `operatorFeeConstant`, `operatorFeeScalar`) all initialize to zero, so the new fee mechanics are not yet activated onchain. The legacy `baseFee`, `overhead`, `scalar`, and `resourceConfig` values remain populated as before. `sequencerInbox` is still derived by the template from `batcherHash` and continues to track the same batch inbox address.
+
+OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0x00767dc6...`, `rangeVkeyCommitment` `0x47fd478c...`) and the `rollupConfigHash`. The Mantle team confirmed the ELFs were produced from [mantle-xyz/op-succinct@v2.2.0-beta.5](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) (commit `c269e9b792d762889f869c4526bba1bfe016036e`), and that the EigenDA code path has been removed entirely in the Arsia build — `programs/range/eigenda/` and the `EIGENDA_RANGE_ELF_EMBEDDED` constant are gone, only `programs/range/ethereum/` remains. The entries in `programHashes.ts` are labeled `OP_SUCCINCT_AGG_BLOBS` / `OP_SUCCINCT_RANGE_BLOBS` with `programUrl` and `verificationSteps` pinned to the `v2.2.0-beta.5` tag.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1"
++        "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654"
+      values.rangeVkeyCommitment:
+-        "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5"
++        "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a"
+      values.rollupConfigHash:
+-        "0x7e7ac4e2e568c2b6cc18427820fa07f8d1e1bd2c360058db04b1bf4b7e775bcd"
++        "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      template:
+-        "opstack/SystemConfig"
++        "opstack/SystemConfig_v1_4_0_mantle"
+      sourceHashes.1:
+-        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
++        "0x7ccc5496582a9154f67199e39a3b2e8f330f1acf0fe0b80d8f151067e7e9fa14"
+      description:
+-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
++        "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee)."
+      values.$implementation:
+-        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
++        "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"
+      values.$pastUpgrades.1:
++        ["2026-04-16T06:58:35.000Z","0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a",["eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.3.0"
++        "1.4.0"
+      values.basefeeScalar:
++        0
+      values.blobbasefeeScalar:
++        0
+      values.daFootprintGasScalar:
++        0
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.maximumGasLimit:
++        500000000
+      values.minBaseFee:
++        0
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      fieldMeta.gasLimit.description:
+-        "Gas limit for blocks on L2."
++        "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
+      implementationNames.eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3:
+-        "SystemConfig"
+      implementationNames.eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`."
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 220 +++++++++++++++++----
+ 1 file changed, 181 insertions(+), 39 deletions(-)
+```
+
 Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044
 
 # Diff at Tue, 27 Jan 2026 17:04:07 GMT:

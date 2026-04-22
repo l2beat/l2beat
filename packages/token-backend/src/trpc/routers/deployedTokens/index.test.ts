@@ -418,6 +418,126 @@ describe('deployedTokensRouter', () => {
       })
     })
 
+    it('falls back to rpc when no block explorer is configured', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const deploymentTimestamp = 1700000000
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('TKN'),
+          getBlockNumber: mockFn().resolvesTo(100),
+          getCode: mockFn().executes(async (_: string, block: number) =>
+            block >= 50 ? '0xdead' : '0x',
+          ),
+          getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
+        },
+      })
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          findByCoingeckoId: mockFn().resolvesTo(undefined),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([
+          {
+            id: 'token-id',
+            name: 'Token',
+            symbol: 'TKN',
+            platforms: { ethereum: '0x123' },
+          },
+        ]),
+      })
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
+    })
+
+    it('falls back to rpc when etherscan and blockscout throw', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const deploymentTimestamp = 1700000001
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('TKN'),
+          getBlockNumber: mockFn().resolvesTo(100),
+          getCode: mockFn().executes(async (_: string, block: number) =>
+            block >= 50 ? '0xdead' : '0x',
+          ),
+          getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
+        },
+        etherscan: {
+          getContractCreation: mockFn().rejectsWith(new Error('etherscan 500')),
+        },
+        blockscout: {
+          getContractCreation: mockFn().rejectsWith(
+            new Error('blockscout 500'),
+          ),
+        },
+      })
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          findByCoingeckoId: mockFn().resolvesTo(undefined),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([
+          {
+            id: 'token-id',
+            name: 'Token',
+            symbol: 'TKN',
+            platforms: { ethereum: '0x123' },
+          },
+        ]),
+      })
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result.data?.deploymentTimestamp).toEqual(deploymentTimestamp)
+    })
+
     it('includes rpc symbol and decimals in not-found-on-coingecko response', async () => {
       const chainRecord = {
         id: 1,
@@ -1178,10 +1298,12 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+          isInterop: true,
         },
         {
           chain: 'optimism',
           address: '0x0b2c639c533813f4aa9d7837caf62653d097ff85',
+          isInterop: true,
         },
       ])
     })
@@ -1286,6 +1408,7 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+          isInterop: true,
         },
       ])
     })
@@ -1327,6 +1450,7 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+          isInterop: true,
         },
       ])
     })
@@ -1367,6 +1491,7 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+          isInterop: true,
         },
       ])
     })
@@ -1426,6 +1551,7 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+          isInterop: true,
         },
       ])
     })
@@ -1819,6 +1945,117 @@ describe('deployedTokensRouter', () => {
               plugin: 'test-plugin',
             },
           ],
+        },
+      ])
+    })
+  })
+
+  describe('getCoingeckoSuggestions', () => {
+    it('returns a flat list of suggestions, skipping missing coins and deployed tokens', async () => {
+      const usdc = {
+        id: 'abstract-usdc',
+        symbol: 'USDC',
+        issuer: 'circle',
+        category: 'stablecoin' as const,
+        iconUrl: null,
+        coingeckoId: 'usd-coin',
+        coingeckoListingTimestamp: null,
+        comment: null,
+        reviewed: true,
+      }
+
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            usdc,
+            {
+              id: 'abstract-missing',
+              symbol: 'MISS',
+              issuer: null,
+              category: null,
+              iconUrl: null,
+              coingeckoId: 'missing-coin',
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+            {
+              id: 'abstract-no-coingecko',
+              symbol: 'NOCG',
+              issuer: null,
+              category: null,
+              iconUrl: null,
+              coingeckoId: null,
+              coingeckoListingTimestamp: null,
+              comment: null,
+              reviewed: true,
+            },
+          ]),
+        }),
+        chain: mockObject<ChainRepository>({
+          getAll: mockFn().resolvesTo([
+            {
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: 'https://etherscan.io',
+              aliases: ['eth'],
+              apis: [],
+            },
+            {
+              name: 'arbitrum',
+              chainId: 42161,
+              explorerUrl: null,
+              aliases: ['arb'],
+              apis: [],
+            },
+            {
+              name: 'blast',
+              chainId: 81457,
+              explorerUrl: null,
+              aliases: [],
+              apis: [],
+            },
+          ]),
+        }),
+        deployedToken: mockObject<DeployedTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            { chain: 'arbitrum', address: '0x222' },
+          ]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([
+          {
+            id: 'usd-coin',
+            symbol: 'usdc',
+            name: 'USD Coin',
+            platforms: {
+              eth: '0x111',
+              arb: '0x222',
+              blast: '0x333',
+            },
+          },
+        ]),
+      })
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getCoingeckoSuggestions()
+
+      expect(result).toEqual([
+        {
+          chain: 'ethereum',
+          address: '0x111',
+          explorerUrl: 'https://etherscan.io',
+          abstractToken: usdc,
+          isInterop: true,
+        },
+        {
+          chain: 'blast',
+          address: '0x333',
+          explorerUrl: undefined,
+          abstractToken: usdc,
+          isInterop: false,
         },
       ])
     })

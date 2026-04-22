@@ -10,8 +10,6 @@ export const memo: BaseProject = {
   shortName: undefined,
   archivedAt: UnixTime.fromDate(new Date('2025-06-03')),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
-  // tags
-  isDaLayer: true,
   // data
   statuses: {
     yellowWarning: undefined,

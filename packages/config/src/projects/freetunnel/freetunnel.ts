@@ -18,5 +18,4 @@ export const freetunnel: BaseProject = {
     ],
     type: 'multichain', // we track the multichain part, but there is also lock-minting on the esoteric source chains
   },
-  isInteropProtocol: true,
 }

@@ -129,6 +129,8 @@ export interface ProjectScalingDisplay {
   name: string
   /** Short name of the scaling project, will be used in some places on the website as a display name */
   shortName?: string
+  /** Extra search terms for project lookup, e.g. legacy names or common misspellings. */
+  aliases?: string[]
   /** URL-friendly scaling project name, will be used in website URLs */
   slug: string
   /** Technological stacks */

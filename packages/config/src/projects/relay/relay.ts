@@ -16,5 +16,4 @@ export const relay: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

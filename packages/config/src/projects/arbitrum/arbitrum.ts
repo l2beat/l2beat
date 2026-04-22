@@ -394,7 +394,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       date: '2026-01-05T00:00:00Z',
       description:
         'Arbitrum One upgraded to ArbOS 51 with Fusaka EVM support and new gas pricing.',
-      type: 'incident',
+      type: 'general',
     },
     {
       title: 'ArbOS 40, Callisto Upgrade',

@@ -4,6 +4,7 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
+  ProjectNameMobileStatusIcons,
 } from '../cells/ProjectNameCell'
 import type { CommonProjectColumnsOptions } from './CommonProjectColumns'
 import { getCommonProjectColumns } from './CommonProjectColumns'
@@ -18,15 +19,22 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => (
-        <ProjectNameInfoTooltip project={ctx.row.original}>
-          <TableLink href={getHref(ctx.row.original)}>
-            <ProjectNameCell
-              project={ctx.row.original}
-              withInfoTooltip
-              ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
-            />
-          </TableLink>
-        </ProjectNameInfoTooltip>
+        <div className="flex items-center gap-1.5 md:contents">
+          <ProjectNameInfoTooltip project={ctx.row.original}>
+            <TableLink href={getHref(ctx.row.original)}>
+              <ProjectNameCell
+                project={ctx.row.original}
+                withInfoTooltip
+                ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
+              />
+            </TableLink>
+          </ProjectNameInfoTooltip>
+          <ProjectNameMobileStatusIcons
+            className="shrink-0 md:hidden"
+            project={ctx.row.original}
+            ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
+          />
+        </div>
       ),
       enableHiding: false,
     }),

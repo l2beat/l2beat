@@ -22,6 +22,7 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
+import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
@@ -105,16 +106,18 @@ function DesktopStatusIcons({
   )
 }
 
-function MobileStatusIcons({
+export function ProjectNameMobileStatusIcons({
   project,
   ignoreUnderReviewIcon,
+  className,
 }: {
   project: ProjectCellProject
   ignoreUnderReviewIcon?: boolean
+  className?: string
 }) {
   const redWarningHref = redWarningDetailHref(project)
   return (
-    <div className="flex items-center gap-1.5">
+    <div className={cn('flex items-center gap-1.5', className)}>
       {project.isLayer3 && (
         <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
           {project.nameSecondLine}
@@ -253,7 +256,7 @@ export function ProjectNameCell({
           <PrimaryValueCell className="font-bold leading-none!">
             {projectName}
           </PrimaryValueCell>
-          <MobileStatusIcons
+          <ProjectNameMobileStatusIcons
             project={project}
             ignoreUnderReviewIcon={ignoreUnderReviewIcon}
           />
@@ -282,10 +285,6 @@ export function ProjectNameCell({
           <PrimaryValueCell className="font-bold leading-none!">
             {projectName}
           </PrimaryValueCell>
-          <MobileStatusIcons
-            project={project}
-            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
-          />
         </div>
         <CellBottomContent project={project} />
       </div>
@@ -313,7 +312,9 @@ export function ProjectNameInfoTooltip({
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipTrigger disabledOnMobile asChild>
+        {children}
+      </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">
           <span className="text-heading-18">What is {projectName}?</span>

@@ -16,5 +16,4 @@ export const cctpv1: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

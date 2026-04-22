@@ -142,6 +142,65 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     ],
     verifierHashes: [
       {
+        hash: '0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac',
+        name: 'SP1 Hypercube Plonk v6.1.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
+The regeneration process consumed around 100 GiB of memory on the peak.
+
+1. Install necessary dependencies: rust, docker, sp1 toolkit, go.
+
+\`\`\`
+sudo apt update
+sudo apt install build-essential golang-go protobuf-compiler
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+cargo install --debug --locked cargo-make
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt install -y docker-ce
+sudo usermod -aG docker $\{USER\}
+
+curl -L https://sp1up.succinct.xyz/ | bash
+source ~/.bashrc
+sp1up
+\`\`\`
+
+2. Clone [sp1 repo](https://github.com/succinctlabs/sp1), set \`SP1_ALLOW_DEPRECATED_HOOKS\` for correct compilation and run the script to regenerate verifiers.
+
+\`\`\`
+git clone https://github.com/succinctlabs/sp1.git
+cd sp1/crates/prover
+git checkout v6.1.0   # commit should be d454975ac7c1126097e36eceda9bce2cb9899da4
+export SP1_ALLOW_DEPRECATED_HOOKS=true  # fixes compilation errors
+
+make build-circuits
+\`\`\`
+      
+The script will generate Plonk verifier smart contract with verification keys and the verifier hash in \`build/plonk\` dir.
+        `,
+      },
+      {
         hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
         name: 'SP1 Hypercube Plonk v6.0.0',
         sourceLink:

@@ -230,7 +230,7 @@ async function getMockDaThroughputChartByProject({
   const timestamps = generateTimestamps([from, to], 'daily')
   const value = () => Math.random() * 900_000_000 + 90_000_000
 
-  const projects = (await ps.getProjects({ where: ['isScaling'] }))
+  const projects = (await ps.getProjects({ where: ['scalingInfo'] }))
     .map((p) => p.name)
     .slice(0, 50)
 

@@ -28,6 +28,17 @@ export async function getInteropSummaryData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
+  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
+    (chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }),
+  )
+
+  const activeInteropChains = interopChainsWithIcons.filter(
+    (chain) => !chain.isUpcoming,
+  )
+
   const initialSelection = getInitialInteropSelection({
     query: req.query,
     interopChainsIds,
@@ -47,14 +58,12 @@ export async function getInteropSummaryData(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => getCachedData(initialSelection, mode),
-  )
-
-  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
-    (chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }),
+    async () =>
+      getCachedData(
+        initialSelection,
+        mode,
+        activeInteropChains.map((chain) => chain.id),
+      ),
   )
 
   return {
@@ -77,10 +86,7 @@ export async function getInteropSummaryData(
         ...appLayoutProps,
         mode,
         ...queryState,
-        interopChains: interopChainsWithIcons.filter(
-          (chain) => !chain.isUpcoming,
-        ),
-        onboardingInteropChains: interopChainsWithIcons,
+        interopChains: activeInteropChains,
         initialSelection,
       },
     },
@@ -90,6 +96,7 @@ export async function getInteropSummaryData(
 async function getCachedData(
   initialSelection: InteropSelection,
   mode: InteropMode,
+  initialFlowsChains: string[],
 ) {
   const helpers = getSsrHelpers()
   const apiSelection = toInteropApiSelection(initialSelection, mode)
@@ -102,9 +109,22 @@ async function getCachedData(
       : undefined,
   ])
 
+  const shouldPrefetchFlows =
+    mode === 'public' &&
+    apiSelection.from.length === 0 &&
+    apiSelection.to.length === 0
+
+  if (shouldPrefetchFlows) {
+    await helpers.interop.flows.prefetch({
+      chains: initialFlowsChains,
+      protocolIds: protocols.map((protocol) => protocol.id),
+    })
+  }
+
   return {
     queryState: helpers.dehydrate(),
     protocols: protocols.map((protocol) => ({
+      id: protocol.id,
       name: protocol.interopConfig.name ?? protocol.name,
       iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
     })),
