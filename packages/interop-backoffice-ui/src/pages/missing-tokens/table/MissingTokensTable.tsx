@@ -1,3 +1,4 @@
+import { v } from '@l2beat/validate'
 import type { RowSelectionState } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
 import { Button } from '~/components/core/Button'
@@ -32,10 +33,10 @@ export function MissingTokensTable({
   onRequeue,
 }: MissingTokensTableProps) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
-  const [clickedActionIds, setClickedActionIds] = useLocalStorage<string[]>(
+  const [clickedActionIds, setClickedActionIds] = useLocalStorage(
     CLICKED_ACTIONS_STORAGE_KEY,
     [],
-    { deserialize: deserializeClickedActionIds },
+    v.array(v.string()),
   )
   const [hideUnsupported, setHideUnsupported] = useState(false)
 
@@ -82,11 +83,11 @@ export function MissingTokensTable({
   }, [selectableRowIds])
 
   useEffect(() => {
-    setClickedActionIds((current) => {
-      const nextIds = current.filter((rowId) => currentRowIds.has(rowId))
-      return nextIds.length === current.length ? current : nextIds
-    })
-  }, [currentRowIds, setClickedActionIds])
+    const nextIds = clickedActionIds.filter((rowId) => currentRowIds.has(rowId))
+    if (nextIds.length !== clickedActionIds.length) {
+      setClickedActionIds(nextIds)
+    }
+  }, [clickedActionIds, currentRowIds, setClickedActionIds])
 
   const columns = useMemo(
     () =>
@@ -97,13 +98,11 @@ export function MissingTokensTable({
         onActionVisited: (row) => {
           const rowId = getMissingTokensSelectionId(row)
 
-          setClickedActionIds((current) => {
-            if (current.includes(rowId)) {
-              return current
-            }
+          if (clickedActionIds.includes(rowId)) {
+            return
+          }
 
-            return [...current, rowId]
-          })
+          setClickedActionIds([...clickedActionIds, rowId])
         },
       }),
     [clickedActionIds, getExplorerUrl, setClickedActionIds],
@@ -207,12 +206,4 @@ export function MissingTokensTable({
       />
     </>
   )
-}
-
-function deserializeClickedActionIds(value: string) {
-  const parsed = JSON.parse(value)
-
-  return Array.isArray(parsed)
-    ? parsed.filter((item): item is string => typeof item === 'string')
-    : []
 }

@@ -5,7 +5,6 @@ import {
   getMissingTokenKey,
   getMissingTokenStatuses,
   getMissingTokens,
-  type MissingTokenDbStatus,
 } from '../../impls/missingTokens'
 import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
@@ -41,25 +40,9 @@ export function createMissingTokensRouter(deps: Dependencies) {
 
         return {
           updatedTransfers,
-          outcomes: tokens.map((token) => {
-            const status = statuses.get(`${token.chain}:${token.tokenAddress}`)
-            const outcome = status
-              ? statusToOutcome[status]
-              : statusToOutcome.unsupported
-
-            return {
-              ...token,
-              outcome,
-            }
-          }),
+          requestedTokenCount: readyTokens.length,
+          skippedTokenCount: tokens.length - readyTokens.length,
         }
       }),
   })
 }
-
-const statusToOutcome = {
-  ready: 'requested',
-  missing: 'skipped_missing',
-  incomplete: 'skipped_incomplete',
-  unsupported: 'skipped_unsupported',
-} satisfies Record<MissingTokenDbStatus, string>

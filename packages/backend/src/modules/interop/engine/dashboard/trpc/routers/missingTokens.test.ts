@@ -92,7 +92,7 @@ describe(createMissingTokensRouter.name, () => {
     ])
   })
 
-  it('requeues only ready rows and reports skipped outcomes', async () => {
+  it('requeues only ready rows and returns counts', async () => {
     const readyAddress = EthereumAddress.random()
     const missingAddress = EthereumAddress.random()
     const incompleteAddress = EthereumAddress.random()
@@ -171,28 +171,8 @@ describe(createMissingTokensRouter.name, () => {
     ])
     expect(result).toEqual({
       updatedTransfers: 4,
-      outcomes: [
-        {
-          chain: 'ethereum',
-          tokenAddress: Address32.from(readyAddress),
-          outcome: 'requeued',
-        },
-        {
-          chain: 'arbitrum',
-          tokenAddress: Address32.from(missingAddress),
-          outcome: 'skipped_missing',
-        },
-        {
-          chain: 'base',
-          tokenAddress: Address32.from(incompleteAddress),
-          outcome: 'skipped_incomplete',
-        },
-        {
-          chain: 'ethereum',
-          tokenAddress: Address32.ZERO,
-          outcome: 'skipped_unsupported',
-        },
-      ],
+      requestedTokenCount: 1,
+      skippedTokenCount: 3,
     })
   })
 })

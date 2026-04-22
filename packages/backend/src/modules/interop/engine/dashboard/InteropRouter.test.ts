@@ -49,7 +49,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -79,7 +79,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -111,7 +111,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -143,7 +143,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -183,7 +183,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -238,7 +238,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -275,7 +275,7 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>({} as any),
+        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,

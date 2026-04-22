@@ -69,13 +69,9 @@ export function MissingTokensPage() {
   ) => {
     try {
       const result = await requeueMissingTokens.mutateAsync(tokens)
-      const requeuedCount = result.outcomes.filter(
-        (outcome) => outcome.outcome === 'requeued',
-      ).length
-      const skippedCount = result.outcomes.length - requeuedCount
 
       toast.success('Missing-token requeue requested', {
-        description: `${requeuedCount} tokens requeued, ${skippedCount} skipped, ${result.updatedTransfers} transfers marked as unprocessed.`,
+        description: `${result.requestedTokenCount} tokens requeued, ${result.skippedTokenCount} skipped, ${result.updatedTransfers} transfers marked as unprocessed.`,
       })
 
       return true
