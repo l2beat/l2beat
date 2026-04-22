@@ -3,7 +3,10 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type OnChangeFn,
+  type Row,
   type RowData,
+  type RowSelectionState,
   type SortingState,
   type TableOptions,
   useReactTable,
@@ -28,6 +31,9 @@ interface UseTanStackTableOptions<TData extends RowData> {
   initialSorting?: SortingState
   initialPageSizeOption?: PageSizeOption
   searchPlaceholder?: string
+  rowSelection?: RowSelectionState
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>
+  enableRowSelection?: boolean | ((row: Row<TData>) => boolean)
 }
 
 export function useTanStackTable<TData extends RowData>({
@@ -37,6 +43,9 @@ export function useTanStackTable<TData extends RowData>({
   initialSorting = [],
   initialPageSizeOption = '100',
   searchPlaceholder = 'Search',
+  rowSelection,
+  onRowSelectionChange,
+  enableRowSelection,
 }: UseTanStackTableOptions<TData>) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
   const [pageSizeOption, setPageSizeOption] = useState<PageSizeOption>(
@@ -52,11 +61,13 @@ export function useTanStackTable<TData extends RowData>({
     state: {
       sorting,
       globalFilter,
+      ...(rowSelection ? { rowSelection } : {}),
     },
     filterFns: {
       fuzzy: fuzzyFilter,
     },
     onSortingChange: setSorting,
+    onRowSelectionChange,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -69,6 +80,7 @@ export function useTanStackTable<TData extends RowData>({
       },
     },
     getRowId,
+    enableRowSelection,
   })
   const filteredRowsCount = table.getFilteredRowModel().rows.length
 

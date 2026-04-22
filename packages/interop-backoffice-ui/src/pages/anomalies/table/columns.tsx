@@ -242,7 +242,7 @@ function getTokenUiHref(chain: string, address: string | undefined) {
       ? address
       : Address32.cropToEthereumAddress(Address32(address))
 
-  return `https://tokens.l2beat.com/tokens/${chain}/${normalizedAddress}`
+  return `http://localhost:5174/tokens/${chain}/${normalizedAddress}`
 }
 
 function getTokenLabel(

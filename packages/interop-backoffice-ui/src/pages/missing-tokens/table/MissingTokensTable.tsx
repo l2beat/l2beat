@@ -1,8 +1,10 @@
+import type { RowSelectionState } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import { Checkbox } from '~/components/core/Checkbox'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { MissingTokenRow } from '../types'
 import { getMissingTokenRowId } from '../utils'
 import {
@@ -29,8 +31,12 @@ export function MissingTokensTable({
   isRequeuePending = false,
   onRequeue,
 }: MissingTokensTableProps) {
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([])
-  const [clickedActionIds, setClickedActionIds] = useState<string[]>([])
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  const [clickedActionIds, setClickedActionIds] = useLocalStorage<string[]>(
+    CLICKED_ACTIONS_STORAGE_KEY,
+    [],
+    { deserialize: deserializeClickedActionIds },
+  )
   const [hideUnsupported, setHideUnsupported] = useState(false)
 
   const selectableRowIds = useMemo(
@@ -59,67 +65,33 @@ export function MissingTokensTable({
   )
 
   useEffect(() => {
-    setSelectedRowIds((current) =>
-      current.filter((rowId) => selectableRowIds.has(rowId)),
-    )
+    setRowSelection((current) => {
+      let didChange = false
+      const next: RowSelectionState = {}
+
+      for (const [rowId, isSelected] of Object.entries(current)) {
+        if (isSelected && selectableRowIds.has(rowId)) {
+          next[rowId] = true
+        } else {
+          didChange = true
+        }
+      }
+
+      return didChange ? next : current
+    })
   }, [selectableRowIds])
 
   useEffect(() => {
-    const storedIds = readClickedActionIds()
-    const nextIds = storedIds.filter((rowId) => currentRowIds.has(rowId))
-
-    setClickedActionIds(nextIds)
-
-    if (nextIds.length !== storedIds.length) {
-      writeClickedActionIds(nextIds)
-    }
-  }, [currentRowIds])
+    setClickedActionIds((current) => {
+      const nextIds = current.filter((rowId) => currentRowIds.has(rowId))
+      return nextIds.length === current.length ? current : nextIds
+    })
+  }, [currentRowIds, setClickedActionIds])
 
   const columns = useMemo(
     () =>
       createMissingTokensColumns({
         getExplorerUrl,
-        isRowSelected: (row) =>
-          selectedRowIds.includes(getMissingTokensSelectionId(row)),
-        isRowSelectable: (row) => row.tokenDbStatus !== 'unsupported',
-        setRowsSelected: (rows, selected) => {
-          setSelectedRowIds((current) => {
-            const next = new Set(current)
-
-            for (const row of rows) {
-              const rowId = getMissingTokensSelectionId(row)
-
-              if (!selectableRowIds.has(rowId)) {
-                continue
-              }
-
-              if (selected) {
-                next.add(rowId)
-              } else {
-                next.delete(rowId)
-              }
-            }
-
-            return Array.from(next)
-          })
-        },
-        toggleRowSelected: (row, selected) => {
-          const rowId = getMissingTokensSelectionId(row)
-
-          if (!selectableRowIds.has(rowId)) {
-            return
-          }
-
-          setSelectedRowIds((current) => {
-            const next = new Set(current)
-            if (selected) {
-              next.add(rowId)
-            } else {
-              next.delete(rowId)
-            }
-            return Array.from(next)
-          })
-        },
         isActionVisited: (row) =>
           clickedActionIds.includes(getMissingTokensSelectionId(row)),
         onActionVisited: (row) => {
@@ -130,13 +102,11 @@ export function MissingTokensTable({
               return current
             }
 
-            const next = [...current, rowId]
-            writeClickedActionIds(next)
-            return next
+            return [...current, rowId]
           })
         },
       }),
-    [clickedActionIds, getExplorerUrl, selectableRowIds, selectedRowIds],
+    [clickedActionIds, getExplorerUrl, setClickedActionIds],
   )
 
   const {
@@ -156,15 +126,14 @@ export function MissingTokensTable({
     initialSorting: [{ id: 'count', desc: true }],
     getRowId: getMissingTokensSelectionId,
     searchPlaceholder: 'Search chains, addresses, plugins, and status',
+    rowSelection,
+    onRowSelectionChange: setRowSelection,
+    enableRowSelection: (row) => row.original.tokenDbStatus !== 'unsupported',
   })
 
-  const selectedRows = useMemo(
-    () =>
-      data.filter((row) =>
-        selectedRowIds.includes(getMissingTokensSelectionId(row)),
-      ),
-    [data, selectedRowIds],
-  )
+  const selectedRows = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original)
   const selectedReadyCount = selectedRows.filter(
     (row) => row.tokenDbStatus === 'ready',
   ).length
@@ -202,7 +171,7 @@ export function MissingTokensTable({
             )
 
             if (didRequeue) {
-              setSelectedRowIds([])
+              setRowSelection({})
             }
           }}
           disabled={selectedRows.length === 0 || isRequeuePending}
@@ -240,33 +209,10 @@ export function MissingTokensTable({
   )
 }
 
-function readClickedActionIds() {
-  if (typeof window === 'undefined') {
-    return []
-  }
+function deserializeClickedActionIds(value: string) {
+  const parsed = JSON.parse(value)
 
-  try {
-    const rawValue = window.localStorage.getItem(CLICKED_ACTIONS_STORAGE_KEY)
-    if (!rawValue) {
-      return []
-    }
-
-    const parsed = JSON.parse(rawValue)
-    return Array.isArray(parsed)
-      ? parsed.filter((value): value is string => typeof value === 'string')
-      : []
-  } catch {
-    return []
-  }
-}
-
-function writeClickedActionIds(rowIds: string[]) {
-  if (typeof window === 'undefined') {
-    return
-  }
-
-  window.localStorage.setItem(
-    CLICKED_ACTIONS_STORAGE_KEY,
-    JSON.stringify(rowIds),
-  )
+  return Array.isArray(parsed)
+    ? parsed.filter((item): item is string => typeof item === 'string')
+    : []
 }

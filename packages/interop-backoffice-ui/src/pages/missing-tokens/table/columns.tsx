@@ -16,10 +16,6 @@ const columnHelper = createColumnHelper<MissingTokenRow>()
 
 export function createMissingTokensColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
-  isRowSelected: (row: MissingTokenRow) => boolean
-  isRowSelectable: (row: MissingTokenRow) => boolean
-  setRowsSelected: (rows: MissingTokenRow[], selected: boolean) => void
-  toggleRowSelected: (row: MissingTokenRow, selected: boolean) => void
   isActionVisited: (row: MissingTokenRow) => boolean
   onActionVisited: (row: MissingTokenRow) => void
 }): TableOptions<MissingTokenRow>['columns'] {
@@ -27,17 +23,16 @@ export function createMissingTokensColumns(options: {
     columnHelper.display({
       id: 'select',
       header: ({ table }) => {
-        const selectableRows = table
+        const selectableRowCount = table
           .getFilteredRowModel()
-          .rows.map((row) => row.original)
-          .filter(options.isRowSelectable)
+          .flatRows.filter((row) => row.getCanSelect()).length
+        const selectedSelectableRowCount = table
+          .getFilteredSelectedRowModel()
+          .flatRows.filter((row) => row.getCanSelect()).length
         const allSelected =
-          selectableRows.length > 0 &&
-          selectableRows.every(options.isRowSelected)
-        const someSelected =
-          selectableRows.length > 0 &&
-          selectableRows.some(options.isRowSelected) &&
-          !allSelected
+          selectableRowCount > 0 &&
+          selectedSelectableRowCount === selectableRowCount
+        const someSelected = selectedSelectableRowCount > 0 && !allSelected
 
         return (
           <Checkbox
@@ -45,9 +40,9 @@ export function createMissingTokensColumns(options: {
             checked={
               allSelected ? true : someSelected ? 'indeterminate' : false
             }
-            disabled={selectableRows.length === 0}
+            disabled={selectableRowCount === 0}
             onCheckedChange={(checked) =>
-              options.setRowsSelected(selectableRows, checked === true)
+              table.toggleAllRowsSelected(checked === true)
             }
           />
         )
@@ -55,11 +50,9 @@ export function createMissingTokensColumns(options: {
       cell: ({ row }) => (
         <Checkbox
           aria-label={`Select ${row.original.chain} ${getMissingTokenAddressDisplay(row.original.tokenAddress)}`}
-          checked={options.isRowSelected(row.original)}
-          disabled={!options.isRowSelectable(row.original)}
-          onCheckedChange={(checked) =>
-            options.toggleRowSelected(row.original, checked === true)
-          }
+          checked={row.getIsSelected()}
+          disabled={!row.getCanSelect()}
+          onCheckedChange={(checked) => row.toggleSelected(checked === true)}
         />
       ),
       enableSorting: false,

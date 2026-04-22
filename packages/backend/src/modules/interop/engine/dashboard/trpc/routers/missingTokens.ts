@@ -2,8 +2,10 @@ import type { TokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import {
   dedupeMissingTokens,
+  getMissingTokenKey,
   getMissingTokenStatuses,
   getMissingTokens,
+  type MissingTokenDbStatus,
 } from '../../impls/missingTokens'
 import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
@@ -27,8 +29,7 @@ export function createMissingTokensRouter(deps: Dependencies) {
         const tokens = dedupeMissingTokens(input)
         const statuses = await getMissingTokenStatuses(tokens, deps)
         const readyTokens = tokens.filter(
-          (token) =>
-            statuses.get(`${token.chain}:${token.tokenAddress}`) === 'ready',
+          (token) => statuses.get(getMissingTokenKey(token)) === 'ready',
         )
 
         const updatedTransfers =
@@ -42,20 +43,23 @@ export function createMissingTokensRouter(deps: Dependencies) {
           updatedTransfers,
           outcomes: tokens.map((token) => {
             const status = statuses.get(`${token.chain}:${token.tokenAddress}`)
+            const outcome = status
+              ? statusToOutcome[status]
+              : statusToOutcome.unsupported
 
             return {
               ...token,
-              outcome:
-                status === 'ready'
-                  ? 'requeued'
-                  : status === 'missing'
-                    ? 'skipped_missing'
-                    : status === 'incomplete'
-                      ? 'skipped_incomplete'
-                      : 'skipped_unsupported',
+              outcome,
             }
           }),
         }
       }),
   })
 }
+
+const statusToOutcome = {
+  ready: 'requested',
+  missing: 'skipped_missing',
+  incomplete: 'skipped_incomplete',
+  unsupported: 'skipped_unsupported',
+} satisfies Record<MissingTokenDbStatus, string>

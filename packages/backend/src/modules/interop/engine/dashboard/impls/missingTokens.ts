@@ -48,7 +48,7 @@ export async function mapMissingTokensWithStatus<
 >(
   tokens: T[],
   deps: MissingTokensDeps,
-): Promise<Array<T & { tokenDbStatus: MissingTokenDbStatus }>> {
+): Promise<(T & { tokenDbStatus: MissingTokenDbStatus })[]> {
   const statuses = await getMissingTokenStatuses(tokens, deps)
 
   return tokens.map((token) => ({
