@@ -35,18 +35,15 @@ describe(getTopProtocolDisplay.name, () => {
 function project({
   id,
   name,
-  interopName,
 }: {
   id: string
   name: string
-  interopName?: string
 }): Project<'interopConfig'> {
   return {
     id: ProjectId(id),
     name,
     slug: id,
     interopConfig: {
-      name: interopName,
       type: 'intent',
       bridgeType: 'nonMinting',
       isAggregate: false,

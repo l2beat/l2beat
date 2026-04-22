@@ -8,7 +8,6 @@ export const inkCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1772801290), // 2026-03-06T12:48:10Z
   interopConfig: {
-    name: 'Ink Canonical',
     durationSplit: {
       lockAndMint: [
         {

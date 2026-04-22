@@ -8,7 +8,6 @@ export const lineaCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1772631490), // 2026-03-04T13:38:10Z
   interopConfig: {
-    name: 'Linea Canonical',
     durationSplit: {
       lockAndMint: [
         {

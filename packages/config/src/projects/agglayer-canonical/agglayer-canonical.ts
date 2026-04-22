@@ -8,7 +8,6 @@ export const agglayerCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1770733275), // 2026-02-10T14:21:15Z
   interopConfig: {
-    name: 'Agglayer Canonical',
     plugins: [
       {
         plugin: 'agglayer',

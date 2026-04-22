@@ -8,7 +8,6 @@ export const arbitrumCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769097139), // 2026-01-22T15:52:19Z
   interopConfig: {
-    name: 'Arbitrum Canonical',
     durationSplit: {
       lockAndMint: [
         {

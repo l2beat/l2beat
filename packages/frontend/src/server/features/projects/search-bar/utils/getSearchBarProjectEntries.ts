@@ -122,13 +122,11 @@ export function getSearchBarProjectEntries<
   if (project.interopConfig && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
     results.push({
       ...common,
-      name: project.interopConfig.name ?? project.name,
       href: `/interop/protocols/${project.slug}`,
       category: 'interop',
       kind: 'interop',
       tags: dedupeTags([
         ...commonTags,
-        project.interopConfig.name,
         project.interopConfig.shortName,
         'interop',
       ]),

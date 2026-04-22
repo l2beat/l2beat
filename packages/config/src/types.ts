@@ -1244,7 +1244,6 @@ export type InteropPluginName =
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropConfig {
-  name?: string
   shortName?: string
   type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
