@@ -1,4 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -340,11 +340,17 @@ describe(ArrayHandler.name, () => {
     })
 
     it('has a builtin limit of 100', async () => {
+      // Returning a non-zero address keeps the original "raise maxLength"
+      // suggestion. A zero address would trip the mapping-read heuristic.
+      const nonZero = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress.from('0x1111111111111111111111111111111111111111'),
+      )
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>() {
-          return ChainSpecificAddress.ZERO('ethereum') as T
+          return nonZero as T
         },
       })
 
@@ -354,16 +360,20 @@ describe(ArrayHandler.name, () => {
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
-        value: new Array(100).fill(ChainSpecificAddress.ZERO('ethereum')),
+        value: new Array(100).fill(nonZero),
       })
     })
 
     it('can have a different maxLength', async () => {
+      const nonZero = ChainSpecificAddress.fromLong(
+        'ethereum',
+        EthereumAddress.from('0x1111111111111111111111111111111111111111'),
+      )
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>() {
-          return ChainSpecificAddress.ZERO('ethereum') as T
+          return nonZero as T
         },
       })
 
@@ -377,8 +387,36 @@ describe(ArrayHandler.name, () => {
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
-        value: new Array(15).fill(ChainSpecificAddress.ZERO('ethereum')),
+        value: new Array(15).fill(nonZero),
       })
+    })
+
+    it('reports a mapping-read hint when the last value is the zero address', async () => {
+      // Mocks a contract whose getter is a mapping read: returns the zero
+      // address for all keys. The handler should suggest setting `length`
+      // explicitly instead of raising maxLength.
+      const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
+        async callMethod<T>() {
+          return ChainSpecificAddress.ZERO('ethereum') as T
+        },
+      })
+
+      const handler = new ArrayHandler(
+        'owners',
+        { type: 'array', method, maxLength: 5 },
+        [],
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(typeof result.error).toEqual('string')
+      // biome-ignore lint/style/noNonNullAssertion: just asserted
+      expect(result.error!.includes('mapping read')).toEqual(true)
+      // biome-ignore lint/style/noNonNullAssertion: just asserted
+      expect(result.error!.includes('Set `length`')).toEqual(true)
+      expect(result.value).toEqual(
+        new Array(5).fill(ChainSpecificAddress.ZERO('ethereum')),
+      )
     })
 
     it('calls indices if present', async () => {

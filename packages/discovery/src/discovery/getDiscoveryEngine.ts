@@ -4,7 +4,10 @@ import type { DiscoveryChainConfig } from '../config/types'
 import { AddressAnalyzer } from './analysis/AddressAnalyzer'
 import { TemplateService } from './analysis/TemplateService'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
-import { DiscoveryEngine } from './engine/DiscoveryEngine'
+import {
+  DiscoveryEngine,
+  type DiscoveryEngineOptions,
+} from './engine/DiscoveryEngine'
 import { HandlerExecutor } from './handlers/HandlerExecutor'
 import { AllProviders } from './provider/AllProviders'
 import type { DiscoveryCache } from './provider/DiscoveryCache'
@@ -18,6 +21,7 @@ export function getDiscoveryEngine(
   http: HttpClient,
   logger: Logger,
   rpcMetricsAggregator?: RpcMetricsAggregator,
+  options: DiscoveryEngineOptions = {},
 ) {
   const allProviders = new AllProviders(
     chainConfigs,
@@ -38,7 +42,7 @@ export function getDiscoveryEngine(
     templateService,
   )
 
-  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger)
+  const discoveryEngine = new DiscoveryEngine(addressAnalyzer, logger, options)
   return {
     allProviders,
     discoveryEngine,

@@ -46,7 +46,13 @@ import {
   trimTrailingDots,
 } from './utils'
 
-const paths = getDiscoveryPaths()
+// Lazily resolve the discovery paths only when ProjectDiscovery is actually
+// instantiated. Doing this at module load time used to break any tool that
+// imported this file from outside a discovery root (e.g. `l2b inspect` run
+// from /).
+function defaultConfigReader(): ConfigReader {
+  return new ConfigReader(getDiscoveryPaths().discovery)
+}
 
 interface ProjectDiscoveryOptions {
   reachableEntries?: {
@@ -63,7 +69,7 @@ export class ProjectDiscovery {
 
   constructor(
     public readonly projectName: string,
-    public readonly configReader = new ConfigReader(paths.discovery),
+    public readonly configReader: ConfigReader = defaultConfigReader(),
     public readonly options?: ProjectDiscoveryOptions,
   ) {
     // TODO: Legacy behavior - we blindly create new ProjectDiscovery instances in tests

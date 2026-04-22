@@ -13,10 +13,10 @@ import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
-import type { AddressStats } from './engine/DiscoveryEngine'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
+import { printDiscoverySummary } from './output/printDiscoverySummary'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
 import { toDiscoveryOutput } from './output/toDiscoveryOutput'
@@ -59,16 +59,23 @@ export async function runDiscovery(
 
   const timestampDate = getTimestamp(configReader, config)
 
-  const { result, timestamp, usedBlockNumbers, providerStats, addressStats } =
-    await discover(
-      paths,
-      chainConfigs,
-      projectConfig,
-      logger,
-      timestampDate,
-      http,
-      config.overwriteCache,
-    )
+  const {
+    result,
+    timestamp,
+    usedBlockNumbers,
+    providerStats,
+    skippedDueToCap,
+    timedOut,
+  } = await discover(
+    paths,
+    chainConfigs,
+    projectConfig,
+    logger,
+    timestampDate,
+    http,
+    config.overwriteCache,
+    config.analyzeTimeoutMs,
+  )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
@@ -118,10 +125,12 @@ export async function runDiscovery(
     templateService,
   )
 
-  if (addressStats.skipped > 0) {
+  printDiscoverySummary(logger, result, timedOut)
+
+  if (skippedDueToCap.length > 0) {
     printMaxAddressesWarning(
       logger,
-      addressStats.skipped,
+      skippedDueToCap.length,
       projectConfig.structure.maxAddresses,
     )
   }
@@ -233,12 +242,14 @@ export async function discover(
   timestampDate: Date | undefined,
   http: HttpClient,
   overwriteCache: boolean,
+  analyzeTimeoutMs?: number,
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
   usedBlockNumbers: Record<string, number>
   providerStats: Record<string, AllProviderStats>
-  addressStats: AddressStats
+  skippedDueToCap: ChainSpecificAddress[]
+  timedOut: ChainSpecificAddress[]
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
@@ -252,10 +263,15 @@ export async function discover(
     cache,
     http,
     logger,
+    undefined,
+    { analyzeTimeoutMs },
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
-  const { analyses: result, stats: addressStats } =
-    await discoveryEngine.discover(allProviders, config.structure, timestamp)
+  const { analyses: result } = await discoveryEngine.discover(
+    allProviders,
+    config.structure,
+    timestamp,
+  )
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
@@ -271,6 +287,7 @@ export async function discover(
     timestamp,
     usedBlockNumbers,
     providerStats: allProviders.getStats(),
-    addressStats,
+    skippedDueToCap: discoveryEngine.skippedDueToCap,
+    timedOut: discoveryEngine.timedOut,
   }
 }

@@ -437,13 +437,13 @@ export class TemplateService {
         : // biome-ignore lint/style/noNonNullAssertion: just checked
           Hash256(hashes[0]!)
 
-    const hashAlreadyExists = Object.values(shapes).some(
-      (s) => s.hash === masterHash,
+    const existingMatch = Object.entries(shapes).find(
+      ([, s]) => s.hash === masterHash,
     )
 
     assert(
-      !hashAlreadyExists,
-      `Shape for '${fileName}' with hash '${masterHash.toString().slice(0, 10)}...${masterHash.toString().slice(-10)}' already exists in '${templateId}'`,
+      existingMatch === undefined,
+      `Template '${templateId}' already covers this implementation under shape entry '${existingMatch?.[0]}'. The bytecode you passed flattens to the same hash, so no new shape is needed.`,
     )
 
     assert(

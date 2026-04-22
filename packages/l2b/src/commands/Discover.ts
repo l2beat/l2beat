@@ -32,16 +32,15 @@ const args = {
   }),
 }
 
-const paths = getDiscoveryPaths()
-const configReader = new ConfigReader(paths.discovery)
-
 export const Discover = command({
   name: 'discover',
   description: 'User interface to discover projects located in discovery.',
   args,
   handler: async (args) => {
+    const paths = getDiscoveryPaths()
+    const configReader = new ConfigReader(paths.discovery)
     const logger = getPlainLogger()
-    const matchingProjects = resolveProjects(args.projectQuery)
+    const matchingProjects = resolveProjects(configReader, args.projectQuery)
 
     logProjectsToDiscover(matchingProjects, logger)
 
@@ -69,7 +68,10 @@ function logProjectsToDiscover(projects: string[], logger: Logger) {
   }
 }
 
-function resolveProjects(projectQuery: string): string[] {
+function resolveProjects(
+  configReader: ConfigReader,
+  projectQuery: string,
+): string[] {
   const entries = configReader.readAllConfiguredProjects()
 
   const isChainSpecificAddressPredicate =
@@ -77,9 +79,9 @@ function resolveProjects(projectQuery: string): string[] {
   const isAddressPredicate = EthereumAddress.check(projectQuery)
 
   const predicate: Predicate = isChainSpecificAddressPredicate
-    ? chainSpecificAddressPredicate
+    ? (n, p) => chainSpecificAddressPredicate(configReader, n, p)
     : isAddressPredicate
-      ? addressPredicate
+      ? (n, p) => addressPredicate(configReader, n, p)
       : projectPredicate
 
   const matchingProjects: string[] = []
@@ -114,11 +116,12 @@ function projectPredicate(
 }
 
 function addressPredicate(
+  configReader: ConfigReader,
   needleAddress: string,
   haystackProject: string,
 ): boolean {
   const address = EthereumAddress(needleAddress)
-  const entries = getEntries(haystackProject)
+  const entries = getEntries(configReader, haystackProject)
 
   return (
     entries.find((c) => ChainSpecificAddress.address(c.address) === address) !==
@@ -127,16 +130,20 @@ function addressPredicate(
 }
 
 function chainSpecificAddressPredicate(
+  configReader: ConfigReader,
   needleAddress: string,
   haystackProject: string,
 ): boolean {
   const address = ChainSpecificAddress(needleAddress)
-  const entries = getEntries(haystackProject)
+  const entries = getEntries(configReader, haystackProject)
 
   return entries.find((c) => c.address === address) !== undefined
 }
 
-function getEntries(project: string): EntryParameters[] {
+function getEntries(
+  configReader: ConfigReader,
+  project: string,
+): EntryParameters[] {
   try {
     const discovery = configReader.readDiscovery(project)
     return discovery.entries
