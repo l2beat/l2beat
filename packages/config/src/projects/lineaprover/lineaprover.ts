@@ -102,24 +102,56 @@ In the end the Linea proof is wrapped in a [gnark](https://github.com/Consensys/
     ],
     verifierHashes: [
       {
-        hash: '0x4434516bbfeb1e4fca34d295be3926880f0a918360f218ce78bbecbd6095eb6f',
+        hash: '0x29483dd4b0cd0a98968ab25795ae2363ed422fe575a20f55ac331519c3e846e1',
         name: 'Linea Plonk Type 0',
+        sourceLink: 'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xC83ed08E2262fBa264D528C749c051f8fC526897',
+              '0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc',
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps: `
+The regeneration process requires approximately 1 TiB of memory and approximately 400 GiB of disk space for trusted setup files and generated artifacts. It takes around 2 hours, excluding fetching 132 GiB of trusted setup assets.
+We have verified the steps below on an Ubuntu machine.
+
+1. Install build prerequesits: \`build-essential\` and the latest version of go.
+2. Optionally, set up additional swap RAM. We used:
+\`\`\`
+sudo apt install zram-tools
+vim /etc/default/zramswap   # set algo to zstd, % to 20 and priority to 100
+sudo systemctl stop zramswap
+sudo systemctl start zramswap
+\`\`\`
+3. Check out the correct version of [linea-monorepo](https://github.com/Consensys/linea-monorepo):
+\`\`\`
+git clone https://github.com/Consensys/linea-monorepo.git
+cd linea-monorepo
+git checkout b90a3c0b6735ba39dc19356628c09c03e42c016d
+\`\`\`
+4. Download trusted setup files (132 GiB) from the L2BEAT hosting server into the \`prover/prover-assets/kzgsrs\` dir:
+\`\`\`
+cd prover/prover-assets/kzgsrs
+wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.l2beat.com/files/
+\`\`\`
+5. Build the circuits and the verifier contract, this step takes several hours:
+\`\`\`
+# from the linea-monorepo/provers dir
+make setup
+\`\`\`
+The build artifacts will be places into \`prover/prover-assets/6.2.1/\` dir, the generated verifier smart contract could be found in \`prover/prover-assets/6.2.1/emulation/Verifier.sol\`.
+        `,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
       {
         hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
         name: 'Linea Plonk Type 1',
+        sourceLink: 'https://github.com/Consensys/linea-monorepo/tree/988bbce27b61a5e5a29913468d06d0a124dea8e4/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -129,31 +161,40 @@ In the end the Linea proof is wrapped in a [gnark](https://github.com/Consensys/
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
+        verificationSteps: `
+The regeneration process requires approximately 1 TiB of memory and approximately 400 GiB of disk space for trusted setup files and generated artifacts. It takes around 2 hours, excluding fetching 132 GiB of trusted setup assets.
+We have verified the steps below on an Ubuntu machine.
+
+1. Install build prerequesits: \`build-essential\` and the latest version of go.
+2. Optionally, set up additional swap RAM. We used:
+\`\`\`
+sudo apt install zram-tools
+vim /etc/default/zramswap   # set algo to zstd, % to 20 and priority to 100
+sudo systemctl stop zramswap
+sudo systemctl start zramswap
+\`\`\`
+3. Check out the correct version of [linea-monorepo](https://github.com/Consensys/linea-monorepo):
+\`\`\`
+git clone https://github.com/Consensys/linea-monorepo.git
+cd linea-monorepo
+git checkout 988bbce27b61a5e5a29913468d06d0a124dea8e4
+\`\`\`
+4. Download trusted setup files (132 GiB) from the L2BEAT hosting server into the \`prover/prover-assets/kzgsrs\` dir:
+\`\`\`
+cd prover/prover-assets/kzgsrs
+wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.l2beat.com/files/
+\`\`\`
+5. Build the circuits and the verifier contract, this step takes several hours:
+\`\`\`
+# from the linea-monorepo/provers dir
+make setup
+\`\`\`
+The build artifacts will be places into \`prover/prover-assets/7.0.1/\` dir, the generated verifier smart contract could be found in \`prover/prover-assets/7.0.1/emulation/Verifier.sol\`.
+        `,        
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
-      // {
-      //   hash: '0xa2d1e02fe3b174b3b039ed8e33e7d9cb57b2b4990b5e4b22d634872e4d9e9325',
-      //   name: 'Linea Plonk v6.1.1',
-      //   sourceLink:
-      //     'https://github.com/Consensys/linea-monorepo/blob/456c3a8b8c4c1dd0659057237476bf507bae1860/prover',
-      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-      //   knownDeployments: [
-      //     {
-      //       address: EthereumAddress(
-      //         '0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
-      //       ),
-      //       chain: 'ethereum',
-      //     },
-      //   ],
-      //   verificationStatus: 'unsuccessful',
-      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      //   verificationSteps: `The steps provided by the Linea team [here](https://github.com/Consensys/linea-monorepo/blob/94d0554912ab9f570b8b60e985a788ac7f78f96d/prover/prover-assets/Readme.md) do
-      //   not produce the same verifier smart contract as deployed onchain. According to the Linea team, this is caused by nondeterminism in one of the optimization routine that is used for the vanishing constraints verifier of Vortex.`,
-      //   description:
-      //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      // },
     ],
   },
 }
