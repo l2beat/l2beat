@@ -1,9 +1,8 @@
 import { Address32 } from '@l2beat/shared-pure'
-import { DEBRIDGE_NETWORKS } from './debridge'
+import { findDeBridgeChain } from './debridge'
 import {
   createEventParser,
   createInteropEventType,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPlugin,
@@ -103,11 +102,7 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           toToken,
           fromAmount: createdOrder.order.giveAmount,
           fillAmount: createdOrder.order.takeAmount,
-          $dstChain: findChain(
-            DEBRIDGE_NETWORKS,
-            (x) => x.chainId,
-            createdOrder.order.takeChainId.toString(),
-          ),
+          $dstChain: findDeBridgeChain(createdOrder.order.takeChainId),
         }),
       ]
     }
@@ -132,11 +127,7 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
           toToken,
           fromAmount: fulfilledOrder.order.giveAmount,
           fillAmount: fulfilledOrder.order.takeAmount,
-          $srcChain: findChain(
-            DEBRIDGE_NETWORKS,
-            (x) => x.chainId,
-            fulfilledOrder.order.giveChainId.toString(),
-          ),
+          $srcChain: findDeBridgeChain(fulfilledOrder.order.giveChainId),
         }),
       ]
     }
