@@ -3388,6 +3388,7 @@
     }
   },
   "hyperlane": {
+    "loadConfigs": ["hyperlane"],
     "txs": [
       {
         "chain": "base",
@@ -3402,6 +3403,7 @@
     "messages": ["hyperlane.Message"]
   },
   "hyperlane-merkly": {
+    "loadConfigs": ["hyperlane"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -3422,6 +3424,7 @@
     ]
   },
   "hyperlane-eco": {
+    "loadConfigs": ["hyperlane"],
     // 7 intent settlements via eco (2 in legacy format, 2 using new format, 2 using multicall, 1 using hyperinstantfill path)
     "txs": [
       {
@@ -3481,6 +3484,7 @@
     ]
   },
   "hyperlane-mix": {
+    "loadConfigs": ["hyperlane"],
     "txs": [
       // renzo price update
       {
@@ -3536,7 +3540,7 @@
   },
   "hwr": {
     // 4 hwr transfers, one is USDC via cctp
-    // "loadConfigs": ["cctp-v2"],
+    "loadConfigs": ["hyperlane"],
     "txs": [
       {
         "chain": "base",
@@ -3644,6 +3648,40 @@
         {
           "type": "hyperlane.Message",
           "app": "cctp"
+        }
+      ]
+    }
+  },
+  "hwr-onesided": {
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x3d7012d0091f6031d04231a442ab49d68113475454836faae60e27e842c3afbf"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x34e73552a8e0f49b095ee92fce3d58313ed62b93a6ec450eca1408dcc70ad2da"
+      }
+    ],
+    "expects": {
+      "events": [
+        "hyperlane.Process",
+        "hyperlane-hwr.TransferReceived",
+        "hyperlane-hwr.TransferSent",
+        "hyperlane.Dispatch"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
         }
       ]
     }

@@ -31,6 +31,7 @@ import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
 import { HyperlanePlugIn } from './hyperlane'
+import { HyperlaneConfigPlugin } from './hyperlane.config'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
@@ -130,6 +131,14 @@ export function createInteropPlugins(
         deps.logger,
         deps.httpClient,
         rpcs,
+        deps.configIntervalMs,
+      ),
+      new HyperlaneConfigPlugin(
+        deps.chains,
+        deps.oneSidedChains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
         deps.configIntervalMs,
       ),
       new CCIPConfigPlugin(
@@ -238,11 +247,14 @@ export function createInteropPlugins(
       {
         name: 'hyperlane',
         plugins: [
-          new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
-          new HyperlaneHwrPlugin(), // should be run before Hyperlane
-          new HyperlaneEcoPlugin(), // should be run before Hyperlane
-          new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
-          new HyperlanePlugIn(),
+          new HyperlaneMerklyTokenBridgePlugin(
+            deps.configs,
+            deps.oneSidedChains,
+          ), // should be run before HyperlaneHWR
+          new HyperlaneHwrPlugin(deps.configs, deps.oneSidedChains), // should be run before Hyperlane
+          new HyperlaneEcoPlugin(deps.configs), // should be run before Hyperlane
+          new HyperlaneSimpleAppsPlugIn(deps.configs), // should be run before Hyperlane
+          new HyperlanePlugIn(deps.configs),
         ],
       },
       new OneinchFusionPlusPlugin(),
