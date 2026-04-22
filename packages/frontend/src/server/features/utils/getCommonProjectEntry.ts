@@ -19,6 +19,7 @@ export interface CommonProjectEntry {
         verificationWarnings?: {
           contracts: string | undefined
           programHashes: string | undefined
+          programHashesDescription: string | undefined
         }
         underReview?: UnderReviewStatus
         syncWarning?: string
@@ -33,4 +34,5 @@ export interface CommonProjectEntry {
 export interface ProjectVerificationWarnings {
   contracts: string | undefined
   programHashes: string | undefined
+  programHashesDescription: string | undefined
 }
