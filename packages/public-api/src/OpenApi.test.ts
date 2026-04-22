@@ -211,7 +211,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
 
       expect(schema).toEqual({
-        openapi: '3.0.0',
+        openapi: '3.1.0',
         info: {
           title: 'L2BEAT API',
           version: '1.0.0',
@@ -616,7 +616,7 @@ function getRouteHandler(app: Application) {
 }
 
 const baseSchema: BaseOpenApiSchema = {
-  openapi: '3.0.0' as const,
+  openapi: '3.1.0' as const,
   info: {
     title: 'L2BEAT API',
     version: '1.0.0',
