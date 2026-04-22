@@ -136,7 +136,6 @@ export function createInteropPlugins(
       ),
       new HyperlaneConfigPlugin(
         deps.chains,
-        deps.oneSidedChains,
         deps.configs,
         deps.logger,
         deps.httpClient,
@@ -158,7 +157,6 @@ export function createInteropPlugins(
       ),
       new RelayConfigPlugin(
         deps.chains,
-        deps.oneSidedChains,
         deps.configs,
         deps.logger,
         deps.httpClient,

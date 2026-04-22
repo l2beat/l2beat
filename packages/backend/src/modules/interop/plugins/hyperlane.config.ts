@@ -26,14 +26,6 @@ const HYPERLANE_CHAIN_NAME_OVERRIDES = {
   zksync: 'zksync2',
 } as const
 
-const HYPERLANE_ONE_SIDED_CHAIN_FALLBACKS = [
-  {
-    chain: 'solana',
-    chainId: 1_399_811_149,
-    domain: 1_399_811_149,
-  },
-] as const satisfies HyperlaneNetwork[]
-
 interface HyperlaneRegistryEntry {
   name: string
   domain: number
@@ -129,7 +121,6 @@ export function parseHyperlaneRegistryMetadata(
 
 export function buildHyperlaneBootstrapNetworks(
   chains: { id: number; name: string }[],
-  oneSidedChains: string[],
 ): HyperlaneNetwork[] {
   const result: HyperlaneNetwork[] = []
   const seen = new Set<string>()
@@ -143,13 +134,6 @@ export function buildHyperlaneBootstrapNetworks(
       domain: chain.id,
     })
     seen.add(chain.name)
-  }
-
-  for (const chain of HYPERLANE_ONE_SIDED_CHAIN_FALLBACKS) {
-    if (!oneSidedChains.includes(chain.chain) || seen.has(chain.chain)) continue
-
-    result.push({ ...chain })
-    seen.add(chain.chain)
   }
 
   return result
@@ -191,7 +175,6 @@ export class HyperlaneConfigPlugin
 
   constructor(
     chains: { id: number; name: string }[],
-    oneSidedChains: string[],
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
@@ -199,10 +182,7 @@ export class HyperlaneConfigPlugin
   ) {
     super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: HyperlaneConfig.key })
-    this.bootstrapNetworks = buildHyperlaneBootstrapNetworks(
-      chains,
-      oneSidedChains,
-    )
+    this.bootstrapNetworks = buildHyperlaneBootstrapNetworks(chains)
     this.bootstrapChainNamesByChainId = new Map(
       this.bootstrapNetworks
         .filter((network) => network.chainId !== undefined)
