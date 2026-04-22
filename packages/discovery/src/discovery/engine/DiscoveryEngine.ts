@@ -20,10 +20,39 @@ import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
+export interface DiscoveryEngineOptions {
+  /**
+   * Hard timeout per contract analysis, in milliseconds. If a single
+   * `addressAnalyzer.analyze()` call doesn't complete within this many ms,
+   * it is aborted and the address is marked as errored. This protects the
+   * BFS from a single misbehaving RPC call (e.g. a contract that returns
+   * "invalid jump destination" and triggers an infinite retry loop).
+   *
+   * Set to `undefined` (default) to disable.
+   */
+  analyzeTimeoutMs?: number
+}
+
 export class DiscoveryEngine {
+  /**
+   * Addresses that the BFS wanted to analyze but had to skip because the
+   * `maxAddresses` cap was already reached. Populated by `discover()` and
+   * read by callers that want to surface a "you may be missing things"
+   * warning at the end of a run.
+   */
+  public skippedDueToCap: ChainSpecificAddress[] = []
+
+  /**
+   * Addresses whose analysis was aborted because it exceeded
+   * `analyzeTimeoutMs`. Surfaced in the end-of-run summary so the user can
+   * see what was lost.
+   */
+  public timedOut: ChainSpecificAddress[] = []
+
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
     private readonly logger: Logger,
+    private readonly options: DiscoveryEngineOptions = {},
   ) {}
 
   async discover(
@@ -32,6 +61,8 @@ export class DiscoveryEngine {
     timestamp: UnixTime,
     counter: DiscoveryCounter = new SimpleDiscoveryCounter(),
   ): Promise<Analysis[]> {
+    this.timedOut = []
+    this.skippedDueToCap = []
     const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
@@ -113,12 +144,18 @@ export class DiscoveryEngine {
               return
             }
           }
+          // Atomically reserve a slot before any work happens. This makes
+          // `maxAddresses` a strict cap: only N successful analyses ever
+          // start, regardless of parallel overshoot. Pre-cap skip reasons
+          // (depth, ignored, sharedModule) still consume a slot for X/Y
+          // display continuity.
+          const slot = counter.increment()
           const skipReason = shouldSkip(
             address,
             config,
             sharedModuleIndex,
             depth,
-            counter.getCount(),
+            slot,
           )
           if (skipReason !== undefined) {
             const info = `↓${depth} ${counter.increment()}/${total}`
@@ -135,12 +172,24 @@ export class DiscoveryEngine {
           const chain = ChainSpecificAddress.longChain(address)
           const provider = await allProviders.get(chain, timestamp)
           try {
-            const analysis = await this.addressAnalyzer.analyze(
+            const analysis = await this.runAnalyzeWithTimeout(
               provider,
               address,
               makeEntryStructureConfig(config, address),
               templates,
             )
+            if (analysis === 'TIMED_OUT') {
+              this.timedOut.push(address)
+              const info = `${slot}/${total}`
+              const entries = [
+                chalk.gray(info),
+                chalk.gray(address),
+                chalk.redBright('TIMEOUT'),
+                chalk.gray(`> ${this.options.analyzeTimeoutMs}ms`),
+              ]
+              this.logger.info(entries.join(' '))
+              return
+            }
             resolved[address.toString()] = analysis
             if (analysis.type === 'Contract') {
               for (const [address, suggestedTemplates] of Object.entries(
@@ -169,6 +218,45 @@ export class DiscoveryEngine {
     this.checkErrors(result)
 
     return result
+  }
+
+  /**
+   * Wraps `addressAnalyzer.analyze()` in a hard timeout. Returns
+   * `'TIMED_OUT'` instead of throwing so the BFS can record the address and
+   * continue with the rest of the queue. The unresolved analyze promise is
+   * left to detach (we cannot reliably cancel an in-flight RPC call), but
+   * the BFS no longer waits for it.
+   */
+  private async runAnalyzeWithTimeout(
+    provider: import('../provider/IProvider').IProvider,
+    address: ChainSpecificAddress,
+    structureConfig: ReturnType<typeof makeEntryStructureConfig>,
+    templates: Set<string>,
+  ): Promise<Analysis | 'TIMED_OUT'> {
+    const analyzePromise = this.addressAnalyzer.analyze(
+      provider,
+      address,
+      structureConfig,
+      templates,
+    )
+
+    const timeoutMs = this.options.analyzeTimeoutMs
+    if (timeoutMs === undefined) {
+      return analyzePromise
+    }
+
+    let timeoutHandle: NodeJS.Timeout | undefined
+    const timeoutPromise = new Promise<'TIMED_OUT'>((resolve) => {
+      timeoutHandle = setTimeout(() => resolve('TIMED_OUT'), timeoutMs)
+    })
+
+    try {
+      return await Promise.race([analyzePromise, timeoutPromise])
+    } finally {
+      if (timeoutHandle !== undefined) {
+        clearTimeout(timeoutHandle)
+      }
+    }
   }
 
   private logObject(

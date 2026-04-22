@@ -26,6 +26,8 @@ import { GetConfig } from './GetConfig'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
+import { Inspect } from './Inspect'
+import { Leaks } from './Leaks'
 import { MatchFlat } from './MatchFlat'
 import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
@@ -39,6 +41,7 @@ import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
+import { Why } from './Why'
 import { ZkGovProposal } from './ZkGovProposal'
 
 export function getSubcommands() {
@@ -73,6 +76,8 @@ export function getSubcommands() {
     GetTokenMinters,
     Init,
     InitTemplate,
+    Inspect,
+    Leaks,
     MatchFlat,
     Minters,
     ModelPermissions,
@@ -85,6 +90,7 @@ export function getSubcommands() {
     StarknetProgramHashes,
     TVL,
     UI,
+    Why,
     ZkGovProposal,
   ]
 }
