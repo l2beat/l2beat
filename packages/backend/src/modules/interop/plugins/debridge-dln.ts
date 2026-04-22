@@ -83,6 +83,8 @@ export const ClaimedOrderCancel = createInteropEventType<{
 export class DeBridgeDlnPlugin implements InteropPlugin {
   readonly name = 'debridge-dln'
 
+  constructor(private oneSidedChains: string[] = []) {}
+
   capture(input: LogToCapture) {
     const createdOrder = parseCreatedOrder(input.log, null)
     if (createdOrder) {
@@ -189,35 +191,73 @@ export class DeBridgeDlnPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [FulfilledOrder, ClaimedUnlock]
-  match(
-    fulfilledOrder_claimedUnlock: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
-    if (FulfilledOrder.checkType(fulfilledOrder_claimedUnlock)) {
+  matchTypes = [CreatedOrder, FulfilledOrder, ClaimedUnlock]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (FulfilledOrder.checkType(event)) {
       const orderCreated = db.find(CreatedOrder, {
-        orderId: fulfilledOrder_claimedUnlock.args.orderId,
+        orderId: event.args.orderId,
       })
-      if (!orderCreated) return
+      if (!orderCreated) {
+        const srcChain = event.args.$srcChain
+        if (!this.oneSidedChains.includes(srcChain)) return
+
+        return [
+          Result.Transfer('debridge-dln.Transfer', {
+            srcChain,
+            srcTokenAddress: event.args.fromToken,
+            srcAmount: event.args.fromAmount,
+            srcWasBurned: false,
+            dstEvent: event,
+            dstTokenAddress: event.args.toToken,
+            dstAmount: event.args.fillAmount,
+            dstWasMinted: false,
+            bridgeType: 'nonMinting',
+          }),
+        ]
+      }
 
       return [
         Result.Message('debridge-dln.Message', {
           app: 'debridge-dln',
           srcEvent: orderCreated,
-          dstEvent: fulfilledOrder_claimedUnlock,
+          dstEvent: event,
         }),
         Result.Transfer('debridge-dln.Transfer', {
           srcEvent: orderCreated,
           srcTokenAddress: orderCreated.args.fromToken,
           srcAmount: orderCreated.args.fromAmount,
           srcWasBurned: false,
-          dstEvent: fulfilledOrder_claimedUnlock,
-          dstTokenAddress: fulfilledOrder_claimedUnlock.args.toToken,
-          dstAmount: fulfilledOrder_claimedUnlock.args.fillAmount,
+          dstEvent: event,
+          dstTokenAddress: event.args.toToken,
+          dstAmount: event.args.fillAmount,
           dstWasMinted: false,
           bridgeType: 'nonMinting',
         }),
       ]
     }
+
+    if (!CreatedOrder.checkType(event)) return
+
+    const fulfilledOrder = db.find(FulfilledOrder, {
+      orderId: event.args.orderId,
+    })
+    if (fulfilledOrder) return
+
+    const dstChain = event.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
+
+    return [
+      Result.Transfer('debridge-dln.Transfer', {
+        srcEvent: event,
+        srcTokenAddress: event.args.fromToken,
+        srcAmount: event.args.fromAmount,
+        srcWasBurned: false,
+        dstChain,
+        dstTokenAddress: event.args.toToken,
+        dstAmount: event.args.fillAmount,
+        dstWasMinted: false,
+        bridgeType: 'nonMinting',
+      }),
+    ]
   }
 }

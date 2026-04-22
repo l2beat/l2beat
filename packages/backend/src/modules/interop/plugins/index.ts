@@ -172,8 +172,8 @@ export function createInteropPlugins(
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
-      new DeBridgePlugin(),
-      new DeBridgeDlnPlugin(),
+      new DeBridgePlugin(deps.oneSidedChains),
+      new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),

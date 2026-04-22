@@ -1573,6 +1573,46 @@
       }
     ]
   },
+  "debridgedln-onesided": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x661e9e0a5f1681784db55db86732e97edf2baf0d5fe4aa8017808dbcc7991dd3"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd78a7c54848edfba5600752971bf4475a04b14682b1d7e5ed4e8a84fafdf7f5e"
+      }
+    ],
+    "expects": {
+      "events": [
+        "debridge-dln.CreatedOrder",
+        "debridge-dln.FulfilledOrder",
+        "debridge-dln.FulfilledOrder"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "event": { "ctx": { "chain": "base" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        },
+        {
+          "type": "debridge-dln.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
   "centrifuge-wormhole-axelar": {
     "txs": [
       {
