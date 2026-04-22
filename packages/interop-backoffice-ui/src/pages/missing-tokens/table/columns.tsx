@@ -23,12 +23,13 @@ export function createMissingTokensColumns(options: {
     columnHelper.display({
       id: 'select',
       header: ({ table }) => {
-        const selectableRowCount = table
-          .getFilteredRowModel()
-          .flatRows.filter((row) => row.getCanSelect()).length
-        const selectedSelectableRowCount = table
-          .getFilteredSelectedRowModel()
-          .flatRows.filter((row) => row.getCanSelect()).length
+        const selectableRows = table
+          .getRowModel()
+          .flatRows.filter((row) => row.getCanSelect())
+        const selectableRowCount = selectableRows.length
+        const selectedSelectableRowCount = selectableRows.filter((row) =>
+          row.getIsSelected(),
+        ).length
         const allSelected =
           selectableRowCount > 0 &&
           selectedSelectableRowCount === selectableRowCount
@@ -41,9 +42,28 @@ export function createMissingTokensColumns(options: {
               allSelected ? true : someSelected ? 'indeterminate' : false
             }
             disabled={selectableRowCount === 0}
-            onCheckedChange={(checked) =>
-              table.toggleAllRowsSelected(checked === true)
-            }
+            onCheckedChange={(checked) => {
+              const shouldSelect = checked === true
+              const selectableRowIds = new Set(
+                selectableRows.map((row) => row.id),
+              )
+              const currentSelection = table.getState().rowSelection
+              const nextEntries = Object.entries(currentSelection).filter(
+                ([rowId, isSelected]) =>
+                  isSelected && !selectableRowIds.has(rowId),
+              )
+
+              if (shouldSelect) {
+                nextEntries.push(
+                  ...selectableRows.map((row): [string, boolean] => [
+                    row.id,
+                    true,
+                  ]),
+                )
+              }
+
+              table.setRowSelection(Object.fromEntries(nextEntries))
+            }}
           />
         )
       },
