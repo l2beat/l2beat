@@ -89,7 +89,7 @@ export class InteropNotifier {
         const remainingSuffix =
           remainingReasons > 0 ? `; +${remainingReasons} more` : ''
 
-        return `- \`${group.id}\` \`${group.bridgeType}\` \`${group.srcChain} -> ${group.dstChain}\`: ${reasons}${remainingSuffix}`
+        return `- ${group.id} ${group.bridgeType} transfers on the ${group.srcChain} -> ${group.dstChain} path: ${reasons}${remainingSuffix}`
       })
 
     const remainingGroups =

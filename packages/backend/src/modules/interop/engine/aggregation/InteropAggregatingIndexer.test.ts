@@ -502,7 +502,9 @@ describe(InteropAggregatingIndexer.name, () => {
               bridgeType: 'nonMinting',
               srcChain: 'ethereum',
               dstChain: 'arbitrum',
-              reasons: ['Count z-score=12.34'],
+              reasons: [
+                'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
+              ],
             },
           ],
         }),
@@ -539,7 +541,9 @@ describe(InteropAggregatingIndexer.name, () => {
             bridgeType: 'nonMinting',
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
-            reasons: ['Count z-score=12.34'],
+            reasons: [
+              'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
+            ],
           },
         ],
       })
@@ -641,13 +645,12 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledTimes(1)
 
       const analysis = notifier.notifySuspiciousAggregates.calls[0]?.args[1]
-      console.dir({ analysis }, { depth: null })
       expect(analysis?.checkedGroups).toEqual(1)
       expect(analysis?.suspiciousGroups).toHaveLength(1)
       expect(analysis?.suspiciousGroups[0]?.id).toEqual('stargate')
       expect(
         analysis?.suspiciousGroups[0]?.reasons.some((reason) =>
-          reason.includes('Count z-score='),
+          reason.includes('significant decrease in transfer count'),
         ),
       ).toEqual(true)
     })
