@@ -8,6 +8,8 @@ interface TestTransfer {
   type: string
   srcChain: string
   dstChain: string
+  srcEventId: string | undefined
+  dstEventId: string | undefined
   srcWasBurned: boolean | undefined
   dstWasMinted: boolean | undefined
   srcAbstractTokenId: string | undefined
@@ -100,6 +102,35 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.nonMinting).toEqual([])
     expect(result.unknown).toEqual([])
   })
+
+  it('bypasses plugin bridge type matching for one-sided transfers', () => {
+    const result = classifier.classifyTransfers(
+      [
+        transfer({
+          id: 'one-sided',
+          bridgeType: undefined,
+          srcEventId: 'src-event',
+          dstEventId: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+        transfer({
+          id: 'two-sided',
+          bridgeType: undefined,
+          srcEventId: 'src-event',
+          dstEventId: 'dst-event',
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+      ],
+      [{ plugin: 'plugin-a', bridgeType: 'lockAndMint' }],
+    )
+
+    expect(result.lockAndMint).toEqual([])
+    expect(result.burnAndMint).toEqual([])
+    expect(result.nonMinting).toEqual([])
+    expect(result.unknown.map((x) => x.id)).toEqual(['one-sided'])
+  })
 })
 
 function transfer(override: Partial<TestTransfer>): TestTransfer {
@@ -110,6 +141,8 @@ function transfer(override: Partial<TestTransfer>): TestTransfer {
     type: 'transfer',
     srcChain: 'ethereum',
     dstChain: 'arbitrum',
+    srcEventId: 'src-event',
+    dstEventId: 'dst-event',
     srcWasBurned: false,
     dstWasMinted: false,
     srcAbstractTokenId: 'eth',

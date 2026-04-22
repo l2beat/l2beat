@@ -23,6 +23,18 @@ describe(createAggregatesRouter.name, () => {
         dstValueUsd: 20,
       }),
       createTransfer({
+        transferId: 'included-one-sided',
+        plugin: 'across',
+        type: 'deposit',
+        bridgeType: undefined,
+        srcEventId: 'src-only-event',
+        dstEventId: undefined,
+        srcWasBurned: false,
+        dstWasMinted: undefined,
+        srcValueUsd: 15,
+        dstValueUsd: undefined,
+      }),
+      createTransfer({
         transferId: 'missing-relay',
         plugin: 'relay',
         type: 'send',
@@ -72,8 +84,8 @@ describe(createAggregatesRouter.name, () => {
     const result = await caller.latest()
 
     expect(result.latestTimestamp).toEqual(latestTimestamp)
-    expect(result.latestTransfersCount).toEqual(3)
-    expect(result.includedTransfersCount).toEqual(2)
+    expect(result.latestTransfersCount).toEqual(4)
+    expect(result.includedTransfersCount).toEqual(3)
     expect(result.notIncludedTransfers).toHaveLength(1)
     expect(result.notIncludedTransfers[0]?.transferId).toEqual('missing-relay')
     expect(result.notIncludedByPlugin).toEqual([
