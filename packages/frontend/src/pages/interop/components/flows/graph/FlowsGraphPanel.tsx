@@ -38,32 +38,34 @@ export function FlowsGraphPanel({
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
-      <div
-        id="flows-graph"
-        className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6"
-        ref={containerRef}
-      >
-        {!size ? (
-          <Skeleton className="h-full w-full rounded-lg" />
-        ) : !hasEnoughChains ? (
-          <SelectionOverlay
-            message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
-          />
-        ) : !hasEnoughProtocols ? (
-          <SelectionOverlay
-            message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
-          />
-        ) : isLoading || !data ? (
-          <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
-        ) : (
-          <FlowsGraph
-            interopChains={activeChains}
-            visibleChainIds={activeChains.map((chain) => chain.id)}
-            data={data}
-            size={size}
-            isSmallScreen={isSmallScreen}
-          />
-        )}
+      <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center pb-6">
+        <div
+          id="flows-graph"
+          className="flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center"
+          ref={containerRef}
+        >
+          {!size ? (
+            <Skeleton className="h-full w-full rounded-lg" />
+          ) : !hasEnoughChains ? (
+            <SelectionOverlay
+              message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
+            />
+          ) : !hasEnoughProtocols ? (
+            <SelectionOverlay
+              message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
+            />
+          ) : isLoading || !data ? (
+            <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
+          ) : (
+            <FlowsGraph
+              interopChains={activeChains}
+              visibleChainIds={activeChains.map((chain) => chain.id)}
+              data={data}
+              size={size}
+              isSmallScreen={isSmallScreen}
+            />
+          )}
+        </div>
       </div>
       {shouldRenderInactiveChainsInfo && (
         <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1">
