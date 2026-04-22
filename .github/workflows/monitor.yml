@@ -48,6 +48,7 @@ jobs:
             sh -c "cd packages/database && npx prisma migrate deploy"
 
       - name: Run monitor cycle
+        timeout-minutes: 30
         run: |
           docker run --rm \
             --user $(id -u):$(id -g) \
