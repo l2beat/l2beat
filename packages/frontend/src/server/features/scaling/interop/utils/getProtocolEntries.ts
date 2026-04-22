@@ -64,7 +64,7 @@ export function getProtocolEntries(
     // Show zeros for projects that don't have data but have plugins for the given type
     if (!data && (!type || bridgeTypes.includes(type))) {
       zeroTransferProtocols.push({
-        name: project.interopConfig.name ?? project.name,
+        name: project.name,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       })
       continue
@@ -103,7 +103,7 @@ export function getProtocolEntries(
       id: project.id,
       slug: project.slug,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-      name: project.interopConfig.name ?? project.name,
+      name: project.name,
       shortName: project.interopConfig.shortName,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,

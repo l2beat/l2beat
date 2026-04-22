@@ -1,8 +1,4 @@
-import {
-  DiscordClient,
-  HttpClient,
-  InteropTransferClassifier,
-} from '@l2beat/shared'
+import { HttpClient, InteropTransferClassifier } from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
@@ -13,24 +9,13 @@ import {
   flattenClusters,
   pluginsAsClusters,
 } from '../plugins'
-import { RelayApiClient } from '../plugins/relay/RelayApiClient'
-import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { isPluginResyncable } from '../plugins/types'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { DefaultInteropAggregationAnalyzer } from './aggregation/InteropAggregationAnalyzer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
-import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
-import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
-import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
-import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringConfigStoreProxy'
-import { createInteropRouter } from './dashboard/InteropRouter'
-import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
-import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
-import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
-import { InteropMatchingLoop } from './match/InteropMatchingLoop'
-import { InteropNotifier } from './notifications/InteropNotifier'
+import type { InteropNotifier } from './notifications/InteropNotifier'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
@@ -47,22 +32,9 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  let configStore = new InteropConfigStore(db)
+  const configStore = new InteropConfigStore(db)
 
   let notificationClient: InteropNotifier | undefined
-  let transferAnalyzer: InteropTransferAnalyzer | undefined
-
-  if (config.notifications && config.notifications.interop) {
-    const discordClient = new DiscordClient(
-      config.notifications.interop.discordWebhookUrl,
-    )
-    notificationClient = new InteropNotifier(discordClient, logger)
-    transferAnalyzer = new InteropTransferAnalyzer(notificationClient)
-    configStore = new InteropMonitoringConfigStoreProxy(
-      configStore,
-      notificationClient,
-    )
-  }
 
   const tokenDbClient = getTokenDbClient({
     apiUrl: config.interop.financials.tokenDbApiUrl,
@@ -97,79 +69,9 @@ export function createInteropModule({
     logger,
   )
 
-  const processors = []
-  if (config.interop.capture.enabled) {
-    for (const chain of config.interop.capture.chains) {
-      const processor = new InteropBlockProcessor(
-        chain.id,
-        eventPlugins,
-        eventStore,
-        logger,
-      )
-      blockProcessors.push(processor)
-      blockProcessors.push(
-        syncersManager.getBlockProcessor(chain.id as LongChainName),
-      )
-      processors.push(processor)
-    }
-  }
-
-  const matcher = new InteropMatchingLoop(
-    eventStore,
-    db,
-    tokenDbClient,
-    eventPlugins,
-    config.interop.capture.chains.map((c) => c.id),
-    logger,
-  )
-
-  const router = createInteropRouter(
-    db,
-    config.interop,
-    processors,
-    syncersManager,
-    logger.for('InteropRouter'),
-  )
-
-  const compareLoops = plugins.comparePlugins.map(
-    (c) => new InteropCompareLoop(db, c, logger),
-  )
-
   const indexerService = new IndexerService(db)
-  const cleaner = new InteropCleanerLoop(eventStore, db, plugins, logger)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const recentPricesIndexer = new InteropRecentPricesIndexer(
-    {
-      db,
-      priceProvider: providers.price,
-      parents: [hourlyIndexer],
-      minHeight: 1,
-      indexerService,
-    },
-    logger,
-  )
-
-  const financialsService = new InteropFinancialsLoop(
-    config.interop.capture.chains,
-    db,
-    tokenDbClient,
-    logger,
-    { analyzer: transferAnalyzer },
-  )
-
-  const relayApiClient = new RelayApiClient(new HttpClient())
-  const relayRootIndexer = new RelayRootIndexer(logger)
-  const relayIndexer = new RelayIndexer(
-    config.interop.config.chains,
-    config.interop.capture.chains.map((c) => c.id),
-    relayApiClient,
-    db,
-    eventStore,
-    relayRootIndexer,
-    indexerService,
-    logger,
-  )
 
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
@@ -195,38 +97,11 @@ export function createInteropModule({
     logger = logger.for('InteropModule')
     logger.info('Starting')
 
-    await eventStore.start()
-
-    if (config.interop && config.interop.matching) {
-      matcher.start()
-      await relayRootIndexer.start()
-      await relayIndexer.start()
-    }
-    if (config.interop && config.interop.compare.enabled) {
-      for (const compareLoop of compareLoops) {
-        compareLoop.start()
-      }
-    }
-    if (config.interop && config.interop.cleaner) {
-      cleaner.start()
-    }
-    if (config.interop && config.interop.capture.enabled) {
-      syncersManager.start()
-    }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
       await interopAggregatingIndexer?.start()
     }
-    if (config.interop && config.interop.financials.enabled) {
-      await recentPricesIndexer.start()
-      financialsService.start()
-    }
-    if (config.interop && config.interop.config.enabled) {
-      await configStore.start()
-      for (const configLoop of plugins.configPlugins) {
-        configLoop.start()
-      }
-    }
+
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
@@ -234,5 +109,5 @@ export function createInteropModule({
     })
   }
 
-  return { routers: [router], start }
+  return { routers: [], start }
 }

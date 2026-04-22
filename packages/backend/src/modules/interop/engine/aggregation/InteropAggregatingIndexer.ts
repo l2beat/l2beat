@@ -36,15 +36,6 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
   }
 
   override async update(_: number, to: number): Promise<number> {
-    if (!this.$.syncersManager.areAllSyncersFollowing()) {
-      this.logger.info(
-        'Skipping aggregation - not all syncers are following the tip',
-      )
-      // This is a deliberate no-op: aggregates are best-effort hourly snapshots.
-      // If syncers are behind, we leave this hour empty and try again next hour.
-      return to
-    }
-
     const from = to - UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)

@@ -8,7 +8,6 @@ export const avalancheCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1773227777), // 2026-03-11T11:16:17Z
   interopConfig: {
-    name: 'Avalanche Canonical',
     durationSplit: {
       lockAndMint: [
         {

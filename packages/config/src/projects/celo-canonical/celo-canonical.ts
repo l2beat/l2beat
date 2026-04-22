@@ -8,7 +8,6 @@ export const celoCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1772615885), // 2026-03-04T09:18:05Z
   interopConfig: {
-    name: 'Celo Canonical',
     durationSplit: {
       lockAndMint: [
         {
