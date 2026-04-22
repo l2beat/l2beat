@@ -240,9 +240,9 @@ export function AggregatesPage() {
                 </CardTitle>
                 <CardDescription>
                   Latest-window transfers grouped by plugin and bridge type when
-                  they are not covered by aggregate configs. One-sided
-                  transfers are treated as covered even if their observed bridge
-                  type does not match the plugin config.
+                  they are not covered by aggregate configs. One-sided transfers
+                  are treated as covered even if their observed bridge type does
+                  not match the plugin config.
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-0">
