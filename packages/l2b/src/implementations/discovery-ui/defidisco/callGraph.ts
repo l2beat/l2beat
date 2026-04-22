@@ -1385,7 +1385,8 @@ function parseSlithirForContract(
 /**
  * Run slither on a contract and parse the output
  */
-const SLITHER_TIMEOUT_MS = Number(process.env.SLITHER_TIMEOUT_MS) || 2 * 60 * 1000
+const SLITHER_TIMEOUT_MS =
+  Number(process.env.SLITHER_TIMEOUT_MS) || 2 * 60 * 1000
 
 async function runSlitherOnContract(
   address: string,
