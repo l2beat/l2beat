@@ -1,6 +1,6 @@
 import { v } from '@l2beat/validate'
 import type { RowSelectionState } from '@tanstack/react-table'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import { Checkbox } from '~/components/core/Checkbox'
 import { TanStackTable } from '~/components/table/TanStackTable'
@@ -38,6 +38,7 @@ export function MissingTokensTable({
     [],
     v.array(v.string()),
   )
+  const clickedActionIdsSetRef = useRef(new Set(clickedActionIds))
   const [hideUnsupported, setHideUnsupported] = useState(false)
 
   const selectableRowIds = useMemo(
@@ -83,6 +84,10 @@ export function MissingTokensTable({
   }, [selectableRowIds])
 
   useEffect(() => {
+    clickedActionIdsSetRef.current = new Set(clickedActionIds)
+  }, [clickedActionIds])
+
+  useEffect(() => {
     const nextIds = clickedActionIds.filter((rowId) => currentRowIds.has(rowId))
     if (nextIds.length !== clickedActionIds.length) {
       setClickedActionIds(nextIds)
@@ -94,18 +99,19 @@ export function MissingTokensTable({
       createMissingTokensColumns({
         getExplorerUrl,
         isActionVisited: (row) =>
-          clickedActionIds.includes(getMissingTokensSelectionId(row)),
+          clickedActionIdsSetRef.current.has(getMissingTokensSelectionId(row)),
         onActionVisited: (row) => {
           const rowId = getMissingTokensSelectionId(row)
+          const clickedActionIdsSet = clickedActionIdsSetRef.current
 
-          if (clickedActionIds.includes(rowId)) {
+          if (clickedActionIdsSet.has(rowId)) {
             return
           }
 
-          setClickedActionIds([...clickedActionIds, rowId])
+          setClickedActionIds([...clickedActionIdsSet, rowId])
         },
       }),
-    [clickedActionIds, getExplorerUrl, setClickedActionIds],
+    [getExplorerUrl, setClickedActionIds],
   )
 
   const {

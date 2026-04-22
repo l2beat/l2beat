@@ -64,8 +64,13 @@ export async function getMissingTokenStatuses(
   const statuses = new Map<string, MissingTokenDbStatus>()
   const deployedTokenIdsByKey = new Map<string, DeployedTokenId>()
 
-  for (const token of dedupeMissingTokens(tokens)) {
+  for (const token of tokens) {
     const key = getMissingTokenKey(token)
+
+    if (statuses.has(key) || deployedTokenIdsByKey.has(key)) {
+      continue
+    }
+
     const deployedTokenId = toDeployedId(
       deps.chains,
       token.chain,
