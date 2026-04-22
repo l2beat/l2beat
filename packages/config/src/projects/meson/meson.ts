@@ -16,5 +16,4 @@ export const meson: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

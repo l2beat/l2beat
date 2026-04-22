@@ -24,7 +24,7 @@ export async function getScalingRiskEntries() {
         'scalingTechnology',
       ],
       optional: ['customDa', 'scalingDa', 'contracts'],
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])

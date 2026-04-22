@@ -24,5 +24,4 @@ export const ccip: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

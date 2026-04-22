@@ -1,4 +1,5 @@
 import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -296,7 +297,7 @@ function mergeFlowsData(
   record: AggregatedInteropTransferWithTokens,
 ): Map<string, number> {
   const result = new Map(currentFlows)
-  const key = `${record.srcChain}::${record.dstChain}`
+  const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
   const current = result.get(key) ?? 0
   result.set(key, current + (getInteropTransferValue(record) ?? 0))
   return result

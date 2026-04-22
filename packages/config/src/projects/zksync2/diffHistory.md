@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xec69535c84a60d812b9d8cc45c4296daedd1d4eb
+
+# Diff at Mon, 20 Apr 2026 10:41:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1772635080
+- current timestamp: 1776681649
+
+## Description
+
+wstETH bridge resumed after being paused because of a potential vulnerability. Its implementation was upgraded adding one small check: https://disco.l2beat.com/diff/eth:0x9a810469F4a451Ebb7ef53672142053b4971587c/eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge_wstETH (eth:0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      sourceHashes.1:
+-        "0x8d6377528b46831d215e352a53f276acbd18ec4bc66c04894dd72dad36288c4d"
++        "0x887b9d27b8b5ffb156d6a159bc56c0b8bb6e24d70f3568550066b1f247acf4fe"
+      values.$implementation:
+-        "eth:0x9a810469F4a451Ebb7ef53672142053b4971587c"
++        "eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd"
+      values.$pastUpgrades.1:
++        ["2026-04-17T16:42:11.000Z","0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",["eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.isDepositsEnabled:
+-        false
++        true
+      values.proxy__getImplementation:
+-        "eth:0x9a810469F4a451Ebb7ef53672142053b4971587c"
++        "eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd"
+      implementationNames.eth:0x9a810469F4a451Ebb7ef53672142053b4971587c:
+-        "L1ERC20Bridge"
+      implementationNames.eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd:
++        "L1ERC20Bridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1772635080 => .flat}/L1ERC20Bridge_wstETH/L1ERC20Bridge.sol  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xfa8c6eb0cb5950c39bdec261ea694673ed6ab72e
 
 # Diff at Wed, 04 Mar 2026 14:39:05 GMT:

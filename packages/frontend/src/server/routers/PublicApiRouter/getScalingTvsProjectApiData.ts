@@ -17,7 +17,7 @@ export async function getScalingTvsProjectApiData({
 }: Params) {
   const project = await ps.getProject({
     slug,
-    where: ['tvsConfig', 'isScaling'],
+    where: ['tvsConfig', 'scalingInfo'],
   })
 
   if (!project) {

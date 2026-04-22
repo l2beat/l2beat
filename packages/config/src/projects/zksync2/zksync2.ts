@@ -24,6 +24,7 @@ export const zksync2: ScalingProject = zkStackL2({
   discovery,
   display: {
     name: 'ZKsync Era',
+    aliases: ['ZKsync 2.0'],
     slug: 'zksync-era',
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',

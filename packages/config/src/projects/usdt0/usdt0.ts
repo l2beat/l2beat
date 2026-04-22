@@ -26,5 +26,4 @@ export const usdt0: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

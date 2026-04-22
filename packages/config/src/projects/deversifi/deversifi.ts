@@ -61,6 +61,7 @@ export const deversifi: ScalingProject = {
   display: {
     architectureImage: 'starkex',
     name: 'rhino.fi',
+    aliases: ['DeversiFi'],
     slug: 'rhinofi',
     headerWarning:
       'The [RhinoFi StarkEx Validium is being deprecated](https://support.rhino.fi/en/article/important-upgrade-rhino-revamp-is-coming-cuks7m/). The RhinofiAdminMultisig upgraded the implementation of the core contract and subsequently [withdrew all funds](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754). The Validium is no longer operational and funds are currently held in a multisig on Ethereum (2025/03/10).',

@@ -104,7 +104,8 @@ In the end the Linea proof is wrapped in a [gnark](https://github.com/Consensys/
       {
         hash: '0x29483dd4b0cd0a98968ab25795ae2363ed422fe575a20f55ac331519c3e846e1',
         name: 'Linea Plonk Type 0',
-        sourceLink: 'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/tree/b90a3c0b6735ba39dc19356628c09c03e42c016d/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -151,7 +152,8 @@ The build artifacts will be places into \`prover/prover-assets/6.2.1/\` dir, the
       {
         hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
         name: 'Linea Plonk Type 1',
-        sourceLink: 'https://github.com/Consensys/linea-monorepo/tree/988bbce27b61a5e5a29913468d06d0a124dea8e4/prover',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/tree/988bbce27b61a5e5a29913468d06d0a124dea8e4/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -191,7 +193,7 @@ wget -r -np -nH --cut-dirs=1 -R "index.html*" https://trusted-setup-hosting.l2be
 make setup
 \`\`\`
 The build artifacts will be places into \`prover/prover-assets/7.0.1/\` dir, the generated verifier smart contract could be found in \`prover/prover-assets/7.0.1/emulation/Verifier.sol\`.
-        `,        
+        `,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

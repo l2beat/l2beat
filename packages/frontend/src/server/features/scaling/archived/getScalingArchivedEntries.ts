@@ -24,7 +24,7 @@ export async function getScalingArchivedEntries() {
       ps.getProjects({
         select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
         optional: ['contracts'],
-        where: ['isScaling', 'archivedAt'],
+        where: ['scalingInfo', 'archivedAt'],
       }),
       ps.getProjects({
         select: ['zkCatalogInfo'],

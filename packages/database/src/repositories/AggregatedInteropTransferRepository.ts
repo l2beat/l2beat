@@ -457,12 +457,16 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     sourceChains: string[],
     destinationChains: string[],
     type?: InteropBridgeType,
-    protocolId?: string,
+    protocolIds?: string[],
     options?: {
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTransferRecord[]> {
-    if (sourceChains.length === 0 || destinationChains.length === 0) {
+    if (
+      sourceChains.length === 0 ||
+      destinationChains.length === 0 ||
+      protocolIds?.length === 0
+    ) {
       return []
     }
 
@@ -473,8 +477,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
 
-    if (protocolId) {
-      query = query.where('id', '=', protocolId)
+    if (protocolIds) {
+      query = query.where('id', 'in', protocolIds)
     }
 
     if (!options?.includeSameChainTransfers) {

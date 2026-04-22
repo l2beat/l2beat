@@ -1,4 +1,5 @@
 import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
@@ -21,7 +22,7 @@ export function getFlows(
     // Skip projects that are part of other projects to not double count
     if (subgroupProjects?.has(record.id as ProjectId)) continue
 
-    const key = `${record.srcChain}::${record.dstChain}`
+    const key = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
     const current = map.get(key) ?? 0
     map.set(key, current + (getInteropTransferValue(record) ?? 0))
   }
@@ -78,5 +79,5 @@ function getSelectedFlowPairs(
 }
 
 function toFlowKey(srcChain: string, dstChain: string) {
-  return `${srcChain}::${dstChain}`
+  return `${srcChain}${INTEROP_PAIR_SEPARATOR}${dstChain}`
 }

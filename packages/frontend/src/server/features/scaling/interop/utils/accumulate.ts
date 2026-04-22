@@ -3,6 +3,7 @@ import type {
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
 import { manifest } from '~/utils/Manifest'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -41,7 +42,7 @@ export function accumulateTokens(
     protocols: current.protocols,
   }
 
-  const flowKey = `${chainInfo.srcChain}::${chainInfo.dstChain}`
+  const flowKey = `${chainInfo.srcChain}${INTEROP_PAIR_SEPARATOR}${chainInfo.dstChain}`
   const currentFlow = current.flows.get(flowKey)
   if (currentFlow) {
     currentFlow.volume += token.volume

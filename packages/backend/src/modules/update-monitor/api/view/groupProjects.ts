@@ -13,14 +13,14 @@ export interface Group {
 
 export function groupProjects(
   projects: DashboardProject[],
-  projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[],
+  projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[],
 ): Group[] {
   const projectMap = new Map(
     projectConfigs.map((c) => [
       c.id.toString(),
       {
         stacks: c.scalingInfo?.stacks ?? [],
-        isDaLayer: c.isDaLayer ?? false,
+        isDaLayer: !!c.daLayer,
       },
     ]),
   )

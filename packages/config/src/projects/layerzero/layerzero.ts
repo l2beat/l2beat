@@ -21,5 +21,4 @@ export const layerzero: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

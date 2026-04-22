@@ -21,5 +21,4 @@ export const squid: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

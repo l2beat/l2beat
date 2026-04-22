@@ -11,11 +11,11 @@ async function main() {
     zkCatalogProjects,
   ] = await Promise.all([
     ps.getProjects({
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       optional: ['tvsConfig'],
     }),
     ps.getProjects({
-      where: ['isDaLayer'],
+      where: ['daLayer'],
       select: ['daLayer'],
     }),
     ps.getProjects({
