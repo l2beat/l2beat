@@ -130,6 +130,10 @@ import {
   CCIPRateLimitHandler,
   CCIPRateLimitHandlerDefinition,
 } from '../defidisco/CCIPRateLimitHandler'
+import {
+  LayerZeroOAppConfigHandler,
+  LayerZeroOAppConfigHandlerDefinition,
+} from '../defidisco/LayerZeroOAppConfigHandler'
 
 const DEFINITIONS = [
   StorageHandlerDefinition,
@@ -168,6 +172,7 @@ const DEFINITIONS = [
   AddressMappingHandlerDefinition,
   EnumerableRolesHandlerDefinition,
   CCIPRateLimitHandlerDefinition,
+  LayerZeroOAppConfigHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -215,6 +220,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   addressMapping: AddressMappingHandlerDefinition,
   enumerableRoles: EnumerableRolesHandlerDefinition,
   ccipRateLimit: CCIPRateLimitHandlerDefinition,
+  layerZeroOAppConfig: LayerZeroOAppConfigHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -295,5 +301,7 @@ export function getUserHandler(
       return new EnumerableRolesHandler(field, definition, abi)
     case 'ccipRateLimit':
       return new CCIPRateLimitHandler(field, definition)
+    case 'layerZeroOAppConfig':
+      return new LayerZeroOAppConfigHandler(field, definition)
   }
 }

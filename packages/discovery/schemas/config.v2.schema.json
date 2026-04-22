@@ -781,6 +781,20 @@
                       },
                       "additionalProperties": false,
                       "required": ["type", "direction", "chainSelector"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "layerZeroOAppConfig" },
+                        "endpoint": { "type": "string" },
+                        "includeEnforcedOptions": { "type": "boolean" },
+                        "extraEids": {
+                          "type": "array",
+                          "items": { "type": "number" }
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type", "endpoint"]
                     }
                   ]
                 },

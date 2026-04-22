@@ -1,3 +1,342 @@
+Generated with discovered.json: 0x2344663d41b1d5d68e9aa03af2af09eeaefc44be
+
+# Diff at Wed, 22 Apr 2026 11:44:22 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@9f6ef61ffbc1570472cddaaa628cad0c781ce23e block: 1776762035
+- current timestamp: 1776858023
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264"
+      values.$members.1:
++        "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract EtherfiOFTAdapterUpgradeable (eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63) {
+    +++ description: None
+      values.layerZeroConfig.perEid.30102.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30106.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30111.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30165.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30183.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30184.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30214.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30243.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30260.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30320.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30322.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30332.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30335.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30339.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30362.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30367.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30383.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30390.receiveLibraryIsDefault:
+-        true
++        false
+      values.layerZeroConfig.perEid.30396.receiveLibraryIsDefault:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776762035 (main branch discovery), not current.
+
+```diff
+    contract AuctionManager (eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      values.admins.1:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.2:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract EtherFiRestaker (eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    }
+```
+
+```diff
+    contract MembershipManager (eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      values.admins.1:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.2:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract EtherFiOracle (eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      values.admins.1:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.2:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract RoleRegistry (eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9) {
+    +++ description: None
+      values.roles.0x0e8d94121b3383f03d9ae60b39295aa793469d7230d51a3f62cbf47cd45481d9:
+-        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.0xf63b1ce674d2cec0dbfcdcc7e504ce31a335c457c363b9fafb6ca524addf1775:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.0xdf341d2a9af804fa0099198f83a0a0611aa273a03b36d576993f914e695dff2a:
+-        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.0x1fa5f863eb8a62c868fa7eb98a4e47ded14913e6885050cfd9090d04516345b0:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.0xb72d40a29b0ca5ab6e0b32830618dfdcae56fae676396ff1f7c3fede659935c8:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"]
+      values.roles.0xe6ff4398839854a2087720a46165c7be195bc9de6f7a3c5a977d3b6917b76af2:
+-        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0x9AF1298993DC1f397973C62A5D47a284CF76844D","eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0xe9d356a03911100a5418b1829f363128136c30112754cb3dbe73b1674abe2ac8:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0x4fb62203ff7abbe51d8c53865ac09965620ebfa150bfb9e0d3c26869f5c43935:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0xa9e662c125cda0e0d367a277c57f51ca0b3a9ddb823ca7717301532d10b2b0f8:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0xa2a38b453c00b96e25a6611741c0fa71b17f9f21f28c0d5e77c008a31c1949ba:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.0x25f713693dd3e84995d0d9964722b195ad1b60efe6253e8fa19b8e74f9a6602a:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"]
+      values.roles.0x59182b0a43541702fc3e73f22a962f8f868277e76091a99c516d2982b9df2f90:
+-        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F","eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"]
+      values.roles.0xc6ace799356a5a236ccaa6708c68b77b7de838b1700b6e0c40f48a1407a5eef0:
+-        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"]
+      values.roles.0x06b452e947f709c0549c7a2e857f0d57f53a00c27bb826a3340a48774a76512f:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0x140ee46da08400488949dfb48bdfc7c0502610f6a6203d169743d6b9e776a0be:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0xf2c32172f8adc08057d18fb6422b871bd95592f20a6ab72ebf7963209047f50c:
+-        ["eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"]
+      values.roles.0xeb260b9ff913fc1877c5f4dad9a2de53d4add5c5bf95e630342a54ad228cdb5f:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0xb56db3e3aaf390cabc1ed5bc88c1fb620c033c618c569e3902254bcef71cf54c:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0x20e7d93f475a4a8dd621285797dd2d68da59e4450b89aea5ca9bf079e95c1db5:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0xcae8f60415c61e4b3a46975038089b058a1a802ec6912db2cb8b95d5d09dcb74:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0x623ac534141a3de3d1e20f924b4a3b115aa68dc5b00452321cda0323932459ab:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0x8c7b9778e52066fde8fbd3e25c5180a9726e067622ca2cb96db1c1225b4c827b:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.0x756a7536f06e7e4456636342cf02e0825db97b9bbbcbe5142795cc76b4eeea14:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0x9fad9ee19c69fc6a5f3a9ebfef13b0ed2faeb808252a4bb01f970bb4012ffa15:
+-        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.0x39730a843a472e74e79db13c62de74d1602801e7cfce5acb9837f64a50ff5f4b:
+-        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.LIQUIDITY_POOL_ADMIN_ROLE:
++        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.WITHDRAW_REQUEST_NFT_ADMIN_ROLE:
++        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.PROTOCOL_UNPAUSER:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"]
+      values.roles.PROTOCOL_PAUSER:
++        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705","eth:0x9AF1298993DC1f397973C62A5D47a284CF76844D","eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.IMPLICIT_FEE_CLAIMER_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.STAKING_MANAGER_NODE_CREATOR_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"]
+      values.roles.ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"]
+      values.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE:
++        ["eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F","eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"]
+      values.roles.LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE:
++        ["eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"]
+      values.roles.EETH_OPERATING_ADMIN_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.ETHERFI_NODES_MANAGER_EL_TRIGGER_EXIT_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.ETHERFI_NODES_MANAGER_POD_PROVER_ROLE:
++        ["eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"]
+      values.roles.STAKING_MANAGER_ADMIN_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.STAKING_MANAGER_VALIDATOR_INVALIDATOR_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.ETHERFI_NODES_MANAGER_EL_CONSOLIDATION_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC","eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.ETHERFI_NODES_MANAGER_LEGACY_LINKER_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+      values.roles.PRIORITY_WITHDRAWAL_QUEUE_ADMIN_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.PRIORITY_WITHDRAWAL_QUEUE_WHITELIST_MANAGER_ROLE:
++        ["eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"]
+      values.roles.PRIORITY_WITHDRAWAL_QUEUE_REQUEST_MANAGER_ROLE:
++        ["eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"]
+    }
+```
+
+```diff
+    contract Liquifier (eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      values.admins.1:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.2:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract MembershipNFT (eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.1:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract EtherfiOFTAdapterUpgradeable (eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63) {
+    +++ description: None
+      values.layerZeroConfig:
++        {"perEid":{"30102":{"peer":"0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30106":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30111":{"peer":"0x0000000000000000000000005a7facb970d094b6c7ff1df0ea68d99e6e73cbff","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30165":{"peer":"0x000000000000000000000000c1fa6e2e8667d9be0ca938a54c7e0285e9df924a","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30183":{"peer":"0x0000000000000000000000001bf74c010e6320bab11e2e5a532b5ac15e0b8aa6","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30184":{"peer":"0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30214":{"peer":"0x00000000000000000000000001f0a31698c4d065659b9bdc21b3610292a1c506","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30243":{"peer":"0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30260":{"peer":"0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30320":{"peer":"0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30322":{"peer":"0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30332":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30335":{"peer":"0x000000000000000000000000a6cb988942610f6731e664379d15ffcfbf282b44","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30339":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30362":{"peer":"0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30367":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30383":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30390":{"peer":"0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}},"30396":{"peer":"0x00000000000000000000000060a08269e5f3406d8fd7892567d53188c7f75009","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"45","requiredDVNCount":4,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D","eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"enforcedOptions":{"send":"0x00030100110100000000000000000000000000029810","sendAndCall":"0x00030100110100000000000000000000000000029810"}}},"delegate":"eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"}
+    }
+```
+
+```diff
+    contract NodeOperatorManager (eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E) {
+    +++ description: None
+      values.admins.0:
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.admins.1:
++        "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    }
+```
+
+```diff
+    contract EtherfiL1SyncPoolETH (eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146) {
+    +++ description: None
+      values.layerZeroConfig:
++        {"perEid":{"30111":{"peer":"0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"15","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"64","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}},"30183":{"peer":"0x000000000000000000000000823106e745a62d0c2fc4d27644c62ade946d9cca","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"10","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"10","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}},"30184":{"peer":"0x000000000000000000000000c38e046dfdadf15f7f56853674242888301208a5","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"15","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"10","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"],"optionalDVNs":[]}},"30214":{"peer":"0x000000000000000000000000750cf0fd3bc891d8d864b732bc4ad340096e5e68","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"15","requiredDVNCount":1,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x747C741496a507E4B404b50463e691A8d692f6Ac"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"64","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}},"30243":{"peer":"0x00000000000000000000000052c4221cb805479954cde5accff8c4dcaf96623b","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"64","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"64","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}},"30362":{"peer":"0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e","sendLibrary":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","sendUlnConfig":{"confirmations":"15","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]},"executorConfig":{"maxMessageSize":10000,"executor":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"},"receiveLibrary":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","receiveLibraryIsDefault":true,"receiveUlnConfig":{"confirmations":"10","requiredDVNCount":2,"optionalDVNCount":0,"optionalDVNThreshold":0,"requiredDVNs":["eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b","eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"],"optionalDVNs":[]}}},"delegate":"eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract DeadDVN (eth:0x747C741496a507E4B404b50463e691A8d692f6Ac)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierNetwork (eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
 Generated with discovered.json: 0x6c78b1de78b1595fd402dc4f78812956c5c84bda
 
 # Diff at Wed, 08 Apr 2026 08:42:32 GMT:

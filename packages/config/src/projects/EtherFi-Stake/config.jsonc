@@ -91,9 +91,18 @@
     "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9": {
       "fields": { "roles": { "handler": { "type": "enumerableRoles", "flatDir": "src/projects/EtherFi-Stake/.flat" } } }
     },
-    // AccessControl: EtherfiOFTAdapterUpgradeable
+    // AccessControl + LayerZero OApp config: EtherfiOFTAdapterUpgradeable (weETH OFT)
     "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63": {
-      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+      "fields": {
+        "accessControl": { "handler": { "type": "accessControl" } },
+        "layerZeroConfig": {
+          "handler": {
+            "type": "layerZeroOAppConfig",
+            "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+            "includeEnforcedOptions": true
+          }
+        }
+      }
     },
     // AccessControl: EtherFiTimelock
     "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": {
@@ -195,9 +204,17 @@
     "eth:0x7B5ae07E2AF1C861BcC4736D23f5f66A61E0cA5e": {
       "ignoreInWatchMode": ["getApproved", "ownerOf", "tokenURI"]
     },
-    // EtherfiL1SyncPoolETH
+    // EtherfiL1SyncPoolETH (receive-only OApp, no enforcedOptions)
     "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146": {
-      "ignoreInWatchMode": ["getTotalUnbackedTokens"]
+      "ignoreInWatchMode": ["getTotalUnbackedTokens"],
+      "fields": {
+        "layerZeroConfig": {
+          "handler": {
+            "type": "layerZeroOAppConfig",
+            "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c"
+          }
+        }
+      }
     }
   }
 }
