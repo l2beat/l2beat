@@ -8,6 +8,7 @@ export const polygonPosCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
+    name: 'Polygon PoS Canonical',
     durationSplit: {
       lockAndMint: [
         {

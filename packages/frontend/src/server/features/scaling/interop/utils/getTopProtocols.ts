@@ -47,7 +47,7 @@ export function getTopProtocols(
     assert(project, `Project not found: ${key}`)
 
     return {
-      name: project.name,
+      name: project.interopConfig.name ?? project.name,
       volume: {
         value: data.volume,
         share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,

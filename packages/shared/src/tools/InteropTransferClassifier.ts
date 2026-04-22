@@ -104,9 +104,7 @@ export class InteropTransferClassifier {
           InteropTransferClassifier.inferBridgeType(transfer)
         return (
           plugin.plugin === transfer.plugin &&
-          // Allow one-sided transfers to be matched by the plugin if the bridge type is unknown
-          (plugin.bridgeType === transferBridgeType ||
-            this.isTransferOneSided(transfer))
+          plugin.bridgeType === transferBridgeType
         )
       })
 
@@ -157,13 +155,5 @@ export class InteropTransferClassifier {
       return 'nonMinting'
     }
     return 'unknown'
-  }
-
-  private isTransferOneSided(
-    transfer: InteropTransferForClassification,
-  ): boolean {
-    return (
-      transfer.dstWasMinted === undefined || transfer.srcWasBurned === undefined
-    )
   }
 }

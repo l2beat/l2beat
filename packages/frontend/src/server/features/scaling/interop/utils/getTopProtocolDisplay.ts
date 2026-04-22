@@ -14,7 +14,7 @@ export function getTopProtocolDisplay(
   if (!protocolProject) return undefined
 
   return {
-    name: protocolProject.name,
+    name: protocolProject.interopConfig.name ?? protocolProject.name,
     iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
   }
 }

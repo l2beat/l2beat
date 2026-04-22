@@ -8,6 +8,7 @@ export const baseCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768312035), // 2026-01-13T13:47:15Z
   interopConfig: {
+    name: 'Base Canonical',
     durationSplit: {
       lockAndMint: [
         {

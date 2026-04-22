@@ -8,6 +8,7 @@ export const abstractCanonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
+    name: 'Abstract Canonical',
     plugins: [
       {
         plugin: 'zkstack',

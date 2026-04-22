@@ -8,6 +8,7 @@ export const zksync2Canonical: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
+    name: 'ZKsync Era Canonical',
     plugins: [
       {
         plugin: 'zkstack',
