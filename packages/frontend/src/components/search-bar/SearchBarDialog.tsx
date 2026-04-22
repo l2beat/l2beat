@@ -1,7 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { Command as CommandPrimitive } from 'cmdk'
-import fuzzysort from 'fuzzysort'
-import groupBy from 'lodash/groupBy'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Command,
@@ -25,6 +23,7 @@ import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
+import { groupSearchResults, searchEntries } from './searchBarResults'
 import type { AnySearchBarEntry } from './types'
 
 interface Props {
@@ -56,22 +55,14 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   }, [debouncedValue, track])
 
   const filteredPages = useMemo(
-    () =>
-      fuzzysort
-        .go(debouncedValue, searchBarPages, {
-          keys: ['name', (e) => e.tags?.join() ?? ''],
-        })
-        .flatMap((match) => match.obj)
-        .sort((a, b) => a.index - b.index),
-
+    () => searchEntries(debouncedValue, searchBarPages),
     [debouncedValue],
   )
 
   const grouped = useMemo(() => {
     if (!allProjects) return []
-    return Object.entries(
-      groupBy([...allProjects, ...filteredPages], (p) => p.category),
-    )
+
+    return groupSearchResults([...allProjects, ...filteredPages])
   }, [allProjects, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {

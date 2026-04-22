@@ -9,12 +9,20 @@ import {
   flattenClusters,
   pluginsAsClusters,
 } from '../plugins'
+import { RelayApiClient } from '../plugins/relay/RelayApiClient'
+import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
 import { isPluginResyncable } from '../plugins/types'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { DefaultInteropAggregationAnalyzer } from './aggregation/InteropAggregationAnalyzer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
+import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
 import { InteropEventStore } from './capture/InteropEventStore'
+import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
+import { createInteropRouter } from './dashboard/InteropRouter'
+import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
+import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import type { InteropNotifier } from './notifications/InteropNotifier'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
@@ -69,9 +77,80 @@ export function createInteropModule({
     logger,
   )
 
+  const processors = []
+  if (config.interop.capture.enabled) {
+    for (const chain of config.interop.capture.chains) {
+      const processor = new InteropBlockProcessor(
+        chain.id,
+        eventPlugins,
+        eventStore,
+        logger,
+      )
+      blockProcessors.push(processor)
+      blockProcessors.push(
+        syncersManager.getBlockProcessor(chain.id as LongChainName),
+      )
+      processors.push(processor)
+    }
+  }
+
+  const matcher = new InteropMatchingLoop(
+    eventStore,
+    db,
+    tokenDbClient,
+    eventPlugins,
+    config.interop.capture.chains.map((c) => c.id),
+    logger,
+  )
+
+  const router = createInteropRouter(
+    db,
+    config.interop,
+    tokenDbClient,
+    processors,
+    syncersManager,
+    logger.for('InteropRouter'),
+  )
+
+  const compareLoops = plugins.comparePlugins.map(
+    (c) => new InteropCompareLoop(db, c, logger),
+  )
+
   const indexerService = new IndexerService(db)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const recentPricesIndexer = new InteropRecentPricesIndexer(
+    {
+      db,
+      priceProvider: providers.price,
+      parents: [hourlyIndexer],
+      minHeight: 1,
+      indexerService,
+    },
+    logger,
+  )
+
+  const financialsService = new InteropFinancialsLoop(
+    config.interop.capture.chains,
+    db,
+    tokenDbClient,
+    logger,
+    { analyzer: transferAnalyzer },
+  )
+
+  const relayApiClient = new RelayApiClient(new HttpClient())
+  const relayRootIndexer = new RelayRootIndexer(logger)
+  const relayIndexer = new RelayIndexer(
+    config.interop.config.chains,
+    configStore,
+    config.interop.capture.chains.map((c) => c.id),
+    relayApiClient,
+    db,
+    eventStore,
+    relayRootIndexer,
+    indexerService,
+    logger,
+  )
 
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()

@@ -152,6 +152,15 @@ export function ProjectNameMobileStatusIcons({
             {project.statuses.verificationWarnings.programHashes && (
               <>
                 <p>{project.statuses.verificationWarnings.programHashes}</p>
+                {project.statuses.verificationWarnings
+                  .programHashesDescription && (
+                  <Markdown ignoreGlossary>
+                    {
+                      project.statuses.verificationWarnings
+                        .programHashesDescription
+                    }
+                  </Markdown>
+                )}
                 <CustomLink
                   href={`/scaling/projects/${project.slug}#program-hashes`}
                   className="inline-block text-label-value-13"
@@ -324,6 +333,7 @@ export function ProjectNameInfoTooltip({
               href={section.href}
               variant={section.variant}
               icon={section.icon}
+              description={section.description}
             >
               {section.text}
             </TooltipSection>
@@ -352,6 +362,7 @@ interface TooltipSectionProps {
   variant: 'negative' | 'warning' | 'muted'
   icon: React.ReactNode
   children: string
+  description?: string
 }
 
 function TooltipSection({
@@ -359,6 +370,7 @@ function TooltipSection({
   variant,
   icon,
   children,
+  description,
 }: TooltipSectionProps) {
   return (
     <div className={tooltipSectionVariants({ variant })}>
@@ -368,6 +380,11 @@ function TooltipSection({
           <Markdown inline ignoreGlossary>
             {children}
           </Markdown>
+          {description && (
+            <Markdown ignoreGlossary className="mt-1">
+              {description}
+            </Markdown>
+          )}
           {href && (
             <CustomLink
               href={href}
@@ -386,6 +403,7 @@ function getTooltipWarningSections(project: ProjectCellProject) {
   const sections: Array<{
     id: string
     text: string
+    description?: string
     href?: string
     variant: 'negative' | 'warning' | 'muted'
     icon: React.ReactNode
@@ -414,6 +432,8 @@ function getTooltipWarningSections(project: ProjectCellProject) {
     sections.push({
       id: 'program-hashes',
       text: project.statuses.verificationWarnings.programHashes,
+      description:
+        project.statuses.verificationWarnings.programHashesDescription,
       href: `/scaling/projects/${project.slug}#program-hashes`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,

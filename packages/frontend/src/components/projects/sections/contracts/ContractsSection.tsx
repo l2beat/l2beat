@@ -1,5 +1,6 @@
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/DiagramImage'
+import { Markdown } from '~/components/markdown/Markdown'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { DiscoUiBanner } from '../../DiscoUiBanner'
 import type { TechnologyContract } from '../ContractEntry'
@@ -31,6 +32,7 @@ export interface ContractsSectionProps {
     images: { desktop: string; mobile: string }
   }
   programHashes?: StateValidationProgramHashData[]
+  programHashesDescription?: string
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -115,6 +117,11 @@ export function ContractsSection(props: ContractsSectionProps) {
             <div className="w-full border-divider border-b-2" />
           </div>
           <ProgramHashesTable entries={props.programHashes} />
+          {props.programHashesDescription && (
+            <Markdown className="text-paragraph-15 md:text-paragraph-16">
+              {props.programHashesDescription}
+            </Markdown>
+          )}
         </div>
       )}
     </ProjectSection>

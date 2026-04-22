@@ -64,6 +64,10 @@ function getCommonColumns<T extends CommonRow>(
             </div>
           )
         },
+        meta: {
+          tooltip:
+            'The protocol with the highest total transfer volume for this token over the past 24 hours.',
+        },
       }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
@@ -78,6 +82,8 @@ function getCommonColumns<T extends CommonRow>(
       },
       meta: {
         align: 'right',
+        tooltip:
+          'The total USD value of all token transfers completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor((row) => row.transferCount, {
@@ -89,6 +95,8 @@ function getCommonColumns<T extends CommonRow>(
       ),
       meta: {
         align: 'right',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor(
@@ -112,6 +120,8 @@ function getCommonColumns<T extends CommonRow>(
         },
         meta: {
           align: 'right',
+          tooltip:
+            'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
         },
       },
     ),
@@ -172,6 +182,10 @@ function getCommonColumns<T extends CommonRow>(
           </Tooltip>
         )
       },
+      meta: {
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
+      },
     }),
     columnHelper.accessor(
       (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
@@ -183,6 +197,10 @@ function getCommonColumns<T extends CommonRow>(
           if (!flows || flows.length === 0) return EM_DASH
 
           return <TokenFlowsCell flows={flows} />
+        },
+        meta: {
+          tooltip:
+            'The distribution of this token volume across source and destination chains over the past 24 hours.',
         },
       },
     ),
@@ -242,6 +260,8 @@ export const getTopTokensColumns = ({
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => {
           if (ctx.row.original.netMintedValue === undefined) return EM_DASH

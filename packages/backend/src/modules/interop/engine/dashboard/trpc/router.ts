@@ -1,3 +1,4 @@
+import type { TokenDbClient } from '@l2beat/token-backend'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { InteropAggregationConfig } from '../../../../../config/features/interop'
 import type { PluginSyncStatus } from '../../sync/InteropSyncersManager'
@@ -15,13 +16,17 @@ import { createStatusRouter } from './routers/status'
 import { createTransfersRouter } from './routers/transfers'
 import { router } from './trpc'
 
-export function createInteropTrpcRouter(deps: {
+export interface InteropTrpcRouterDeps {
   aggregationConfigs: InteropAggregationConfig[]
   getExplorerUrl: (chain: string) => string | undefined
   getChainsForPlugin: (pluginName: string) => string[]
   getPluginSyncStatuses: () => Promise<PluginSyncStatus[]>
   getProcessorStatuses: () => ProcessorStatus[]
-}) {
+  chains: readonly { id: string; type: 'evm' }[]
+  tokenDbClient: TokenDbClient
+}
+
+export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
   return router({
     aggregates: createAggregatesRouter(deps),
     anomalies: createAnomaliesRouter(),
@@ -31,7 +36,7 @@ export function createInteropTrpcRouter(deps: {
     financials: createFinancialsRouter(),
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
-    missingTokens: createMissingTokensRouter(),
+    missingTokens: createMissingTokensRouter(deps),
     status: createStatusRouter(deps),
     transfers: createTransfersRouter(),
   })

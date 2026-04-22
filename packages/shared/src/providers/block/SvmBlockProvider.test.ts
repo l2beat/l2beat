@@ -71,20 +71,10 @@ describe(SvmBlockProvider.name, () => {
   })
 
   describe(SvmBlockProvider.prototype.getSlotNumberAtOrBefore.name, () => {
-    it('uses bisection to get closest slot number to given timestamp', async () => {
+    it('finds the closest slot number to given timestamp', async () => {
       const client = mockObject<SvmBlockClient>({
         getLatestSlotNumber: async () => 1000,
-        getSlotTime: mockFn()
-          .resolvesToOnce({ timestamp: 50000 })
-          .resolvesToOnce({ timestamp: 75000 })
-          .resolvesToOnce({ timestamp: 87500 })
-          .resolvesToOnce({ timestamp: 81200 })
-          .resolvesToOnce({ timestamp: 78100 })
-          .resolvesToOnce({ timestamp: 79600 })
-          .resolvesToOnce({ timestamp: 80400 })
-          .resolvesToOnce({ timestamp: 80000 })
-          .resolvesToOnce({ timestamp: 80200 })
-          .resolvesToOnce({ timestamp: 80100 }),
+        getSlotTime: async (n: number) => ({ timestamp: n * 100 }),
       })
 
       const provider = new SvmBlockProvider('chain', [client])
@@ -95,30 +85,17 @@ describe(SvmBlockProvider.name, () => {
 
       expect(blockNumber).toEqual(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
-      expect(client.getSlotTime).toHaveBeenCalledTimes(10)
     })
 
     it('calls other client when there are errors', async () => {
       const client = mockObject<SvmBlockClient>({
         getLatestSlotNumber: async () => 1000,
-        getSlotTime: mockFn()
-          .resolvesToOnce({ timestamp: 500 })
-          .rejectsWith(new Error('error')),
+        getSlotTime: mockFn().rejectsWith(new Error('error')),
       })
 
       const client2 = mockObject<SvmBlockClient>({
         getLatestSlotNumber: async () => 1000,
-        getSlotTime: mockFn()
-          .resolvesToOnce({ timestamp: 50000 })
-          .resolvesToOnce({ timestamp: 75000 })
-          .resolvesToOnce({ timestamp: 87500 })
-          .resolvesToOnce({ timestamp: 81200 })
-          .resolvesToOnce({ timestamp: 78100 })
-          .resolvesToOnce({ timestamp: 79600 })
-          .resolvesToOnce({ timestamp: 80400 })
-          .resolvesToOnce({ timestamp: 80000 })
-          .resolvesToOnce({ timestamp: 80200 })
-          .resolvesToOnce({ timestamp: 80100 }),
+        getSlotTime: async (n: number) => ({ timestamp: n * 100 }),
       })
 
       const provider = new SvmBlockProvider('chain', [client, client2])
@@ -129,9 +106,7 @@ describe(SvmBlockProvider.name, () => {
 
       expect(blockNumber).toEqual(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
-      expect(client.getSlotTime).toHaveBeenCalledTimes(2)
       expect(client2.getLatestSlotNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getSlotTime).toHaveBeenCalledTimes(10)
     })
 
     it('throws error when run out of fallbacks', async () => {

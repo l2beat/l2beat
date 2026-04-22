@@ -36,17 +36,16 @@ export function getSearchBarProjectEntries<
     | 'daLayer'
     | 'daBridge'
     | 'interopConfig'
-    | 'isScaling'
-    | 'isDaLayer'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'contracts'
     | 'permissions'
+    | 'aliases'
   >,
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
   if (
-    !project.isScaling &&
+    !project.scalingInfo &&
     !project.daLayer &&
     !project.daBridge &&
     !project.ecosystemConfig &&
@@ -56,7 +55,12 @@ export function getSearchBarProjectEntries<
     return []
   }
 
-  const commonTags = dedupeTags([project.slug, project.name, project.shortName])
+  const commonTags = dedupeTags([
+    project.slug,
+    project.name,
+    project.shortName,
+    ...(project.aliases ?? []),
+  ])
 
   const common = {
     type: 'project',
@@ -71,7 +75,7 @@ export function getSearchBarProjectEntries<
     tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
 
-  if (project.isScaling) {
+  if (project.scalingInfo) {
     results.push({
       ...common,
       href: `/scaling/projects/${project.slug}`,

@@ -1,9 +1,15 @@
 export function assert(
   condition: unknown,
   message?: string,
+  cause?: unknown,
 ): asserts condition {
   if (!condition) {
-    throw new Error(message ? `Assertion Error: ${message}` : 'Assertion Error')
+    throw new Error(
+      message ? `Assertion Error: ${message}` : 'Assertion Error',
+      {
+        cause,
+      },
+    )
   }
 }
 

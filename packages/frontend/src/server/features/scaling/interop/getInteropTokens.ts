@@ -28,7 +28,7 @@ export async function getInteropTokens({
   const { records } = await getLatestAggregatedInteropTransferWithTokens(
     { from, to },
     type,
-    id,
+    id ? [id] : undefined,
   )
 
   const counts = {

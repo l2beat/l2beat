@@ -25,6 +25,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
+  SidebarTrigger,
 } from '~/components/core/Sidebar'
 
 const items = [
@@ -119,10 +121,16 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader>
-        <SidebarGroupLabel className="font-bold text-black text-xs">
-          Interop Back Office
-        </SidebarGroupLabel>
+      <SidebarHeader className="gap-3">
+        <div className="flex min-h-8 items-center gap-2 group-data-[collapsible=icon]:justify-center">
+          <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+            <p className="truncate font-semibold text-sidebar-foreground text-sm">
+              Interop Back Office
+            </p>
+          </div>
+          <SidebarTrigger className="size-8 shrink-0" />
+        </div>
+        <SidebarSeparator className="mx-0" />
       </SidebarHeader>
       <SidebarContent>
         {items.map((item) => (
@@ -132,7 +140,7 @@ export function AppSidebar() {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild tooltip={item.title}>
                       <Link to={item.url}>
                         <item.icon />
                         <span>{item.title}</span>

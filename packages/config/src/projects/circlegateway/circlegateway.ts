@@ -17,5 +17,4 @@ export const circlegateway: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

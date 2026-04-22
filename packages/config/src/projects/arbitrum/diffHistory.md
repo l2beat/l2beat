@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x77c2af1f52ba8a10da3a6f921536df4d1506ff09
+
+# Diff at Wed, 22 Apr 2026 07:38:46 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@e169a8dbd6b24449d7e1ced71c73ddedca6e5d65 block: 1775599335
+- current timestamp: 1776843192
+
+## Description
+
+Recovery of KelpDAO stolen fund.
+
+## Watched changes
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      values.$pastUpgrades.10:
++        ["2026-04-21T03:26:47.000Z","0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770",["eth:0x980D1F93FC5809c828539c46084801673FA6A859"]]
+      values.$pastUpgrades.11:
++        ["2026-04-21T03:26:47.000Z","0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770",["eth:0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]]
+      values.$upgradeCount:
+-        10
++        12
+    }
+```
+
 Generated with discovered.json: 0x6ece204d5bee1fbcaeab65f3aabc1b7c3c9a530d
 
 # Diff at Wed, 01 Apr 2026 07:37:58 GMT:

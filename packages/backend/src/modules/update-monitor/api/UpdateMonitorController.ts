@@ -14,7 +14,7 @@ import { renderDashboardPage } from './view/DashboardPage'
 export class UpdateMonitorController {
   private readonly onDiskConfigs: ConfigRegistry[] = []
   private projectConfigs:
-    | Project<never, 'scalingInfo' | 'isDaLayer'>[]
+    | Project<never, 'scalingInfo' | 'daLayer'>[]
     | undefined
 
   constructor(
@@ -74,7 +74,7 @@ export class UpdateMonitorController {
 
     const ps = new ProjectService()
     this.projectConfigs = await ps.getProjects({
-      optional: ['scalingInfo', 'isDaLayer'],
+      optional: ['scalingInfo', 'daLayer'],
       whereNot: ['isUpcoming'],
     })
 
@@ -83,7 +83,7 @@ export class UpdateMonitorController {
 
   private async getDiscoveryDashboardData(): Promise<{
     projects: DashboardProject[]
-    projectConfigs: Project<never, 'scalingInfo' | 'isDaLayer'>[]
+    projectConfigs: Project<never, 'scalingInfo' | 'daLayer'>[]
     projectsWithHighSeverityChanges: Set<string>
   }> {
     const projects: DashboardProject[] = await getDashboardProjects(

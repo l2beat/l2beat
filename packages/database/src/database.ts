@@ -32,6 +32,7 @@ import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
+import { TokenFactInputRepository } from './repositories/TokenFactInputRepository'
 import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
@@ -108,6 +109,10 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    // #endregion
+
+    // #region Token Knowledge
+    tokenFactInput: new TokenFactInputRepository(db),
     // #endregion
 
     // #region Tvs
