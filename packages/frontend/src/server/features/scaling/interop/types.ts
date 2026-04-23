@@ -45,6 +45,7 @@ export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
   burnAndMint: BurnAndMintProtocolData | undefined
+  unknown: BridgeTypeCommonData | undefined
 }
 
 type BridgeTypeCommonData = {

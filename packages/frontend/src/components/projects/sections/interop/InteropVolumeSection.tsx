@@ -1,6 +1,6 @@
 import {
   assert,
-  type KnownInteropBridgeType,
+  type InteropBridgeType,
   type ProjectId,
 } from '@l2beat/shared-pure'
 import times from 'lodash/times'
@@ -9,6 +9,7 @@ import { Badge } from '~/components/badge/Badge'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { BridgeTypeBadge } from '~/pages/interop/components/table/BridgeTypeBadge'
 import { FlowItem } from '~/pages/interop/components/widgets/FlowsWidget'
+import { INTEROP_TYPE_TO_BG_COLOR } from '~/pages/interop/utils/display'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import type { ByBridgeTypeData } from '~/server/features/scaling/interop/types'
 import type { InteropFlowData } from '~/server/features/scaling/interop/utils/getFlows'
@@ -29,13 +30,12 @@ const bridgeTypeLabels: Record<keyof ByBridgeTypeData, string> = {
   lockAndMint: 'Lock & Mint',
   nonMinting: 'Non-minting',
   burnAndMint: 'Burn & Mint',
+  unknown: 'Unknown',
 }
 
-const bridgeTypeColors: Record<KnownInteropBridgeType | 'total', string> = {
+const bridgeTypeColors: Record<InteropBridgeType | 'total', string> = {
   total: 'bg-purple-100',
-  burnAndMint: 'bg-burn-and-mint',
-  nonMinting: 'bg-non-minting',
-  lockAndMint: 'bg-lock-and-mint',
+  ...INTEROP_TYPE_TO_BG_COLOR,
 }
 
 export function InteropVolumeSection({
@@ -57,7 +57,9 @@ export function InteropVolumeSection({
     return chain
   }
 
-  const bridgeTypesWithFlows = availableBridgeTypes.filter((type) => {
+  const bridgeTypesWithFlows = (
+    [...availableBridgeTypes, 'unknown'] as const
+  ).filter((type) => {
     const flows = entry?.byBridgeType?.[type]?.flows
     return flows !== undefined && flows.length > 0
   })
