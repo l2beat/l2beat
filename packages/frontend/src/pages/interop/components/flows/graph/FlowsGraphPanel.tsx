@@ -8,14 +8,12 @@ import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
-import { InactiveChainsDialog } from './InactiveChainsDialog'
 
 interface FlowsGraphPanelProps {
   activeChains: InteropChainWithIcon[]
   data: InteropFlowsData | undefined
   hasEnoughChains: boolean
   hasEnoughProtocols: boolean
-  inactiveChains: InteropChainWithIcon[]
   isLoading: boolean
 }
 
@@ -24,7 +22,6 @@ export function FlowsGraphPanel({
   data,
   hasEnoughChains,
   hasEnoughProtocols,
-  inactiveChains,
   isLoading,
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -32,9 +29,6 @@ export function FlowsGraphPanel({
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false
-  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
-  const shouldShowInactiveChainsInfo =
-    !!data && inactiveChains.length > 0 && !isLoading
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
@@ -67,20 +61,6 @@ export function FlowsGraphPanel({
           )}
         </div>
       </div>
-      {shouldRenderInactiveChainsInfo && (
-        <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1">
-          {shouldShowInactiveChainsInfo ? (
-            <>
-              <span className="font-normal text-secondary text-xs leading-none md:text-base">
-                No transfers detected for
-              </span>
-              <InactiveChainsDialog chains={inactiveChains} />
-            </>
-          ) : isLoading ? (
-            <Skeleton className="h-4 w-40 md:h-5" />
-          ) : null}
-        </div>
-      )}
     </div>
   )
 }
