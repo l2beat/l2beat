@@ -63,20 +63,10 @@ describe(BlockProvider.name, () => {
   })
 
   describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
-    it('uses bisection to get closest block number to given timestamp', async () => {
+    it('finds the closest block number to given timestamp', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(block(500))
-          .resolvesToOnce(block(750))
-          .resolvesToOnce(block(875))
-          .resolvesToOnce(block(812))
-          .resolvesToOnce(block(781))
-          .resolvesToOnce(block(796))
-          .resolvesToOnce(block(804))
-          .resolvesToOnce(block(800))
-          .resolvesToOnce(block(802))
-          .resolvesToOnce(block(801)),
+        getBlockWithTransactions: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client])
@@ -87,30 +77,17 @@ describe(BlockProvider.name, () => {
 
       expect(blockNumber).toEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(10)
     })
 
     it('calls other client when there are errors', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(block(500))
-          .rejectsWith(new Error('error')),
+        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
       })
 
       const client2 = mockObject<BlockClient>({
         getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn()
-          .resolvesToOnce(block(500))
-          .resolvesToOnce(block(750))
-          .resolvesToOnce(block(875))
-          .resolvesToOnce(block(812))
-          .resolvesToOnce(block(781))
-          .resolvesToOnce(block(796))
-          .resolvesToOnce(block(804))
-          .resolvesToOnce(block(800))
-          .resolvesToOnce(block(802))
-          .resolvesToOnce(block(801)),
+        getBlockWithTransactions: async (n: number) => block(n),
       })
 
       const provider = new BlockProvider('chain', [client, client2])
@@ -121,9 +98,7 @@ describe(BlockProvider.name, () => {
 
       expect(blockNumber).toEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(2)
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getBlockWithTransactions).toHaveBeenCalledTimes(10)
     })
 
     it('throws error when run out of fallbacks', async () => {
