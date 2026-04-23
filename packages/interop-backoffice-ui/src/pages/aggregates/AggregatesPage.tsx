@@ -87,8 +87,8 @@ export function AggregatesPage() {
               <CardTitle>Aggregates</CardTitle>
               <CardDescription>
                 Legacy aggregate coverage diagnostics for the latest daily
-                snapshot. One-sided transfers bypass plugin bridge type
-                matching.
+                snapshot. One-sided transfers with unknown bridge type bypass
+                plugin bridge type matching.
               </CardDescription>
             </div>
             <Button
@@ -241,8 +241,8 @@ export function AggregatesPage() {
                 <CardDescription>
                   Latest-window transfers grouped by plugin and bridge type when
                   they are not covered by aggregate configs. One-sided transfers
-                  are treated as covered even if their observed bridge type does
-                  not match the plugin config.
+                  with unknown observed bridge type are treated as covered even
+                  if the plugin config expects a concrete bridge type.
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-0">
@@ -259,7 +259,7 @@ export function AggregatesPage() {
                 <CardDescription>
                   Raw transfer rows from the latest aggregate window that were
                   not matched by any aggregate config after one-sided transfers
-                  bypass plugin bridge type matching.
+                  with unknown bridge type bypass plugin bridge type matching.
                 </CardDescription>
               </CardHeader>
               <CardContent className="px-0">

@@ -309,6 +309,42 @@ describe(InteropAggregationService.name, () => {
       expect(result.aggregatedTokens).toHaveLength(1)
       expect(result.aggregatedTokensPairs).toHaveLength(1)
     })
+
+    it('does not aggregate one-sided transfers when they carry a mismatched bridge type', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          bridgeType: 'nonMinting',
+          srcChain: 'ethereum',
+          dstChain: 'solana',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+          srcEventId: 'src-only-event',
+          dstEventId: undefined,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedTransfers).toEqual([])
+      expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
+    })
   })
 })
 
@@ -320,6 +356,7 @@ function createTransfer(
   type: string,
   timestamp: UnixTime,
   overrides: {
+    bridgeType?: 'lockAndMint' | 'burnAndMint' | 'nonMinting'
     srcChain: string
     dstChain: string
     srcAbstractTokenId: string
@@ -337,7 +374,7 @@ function createTransfer(
     plugin,
     transferId,
     type,
-    bridgeType: undefined,
+    bridgeType: overrides.bridgeType,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',

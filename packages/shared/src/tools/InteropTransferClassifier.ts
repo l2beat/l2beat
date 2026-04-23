@@ -104,10 +104,13 @@ export class InteropTransferClassifier {
         const transferBridgeType =
           transfer.bridgeType ??
           InteropTransferClassifier.inferBridgeType(transfer)
+        const isOneSidedWithUnknownBridgeType =
+          InteropTransferClassifier.isOneSided(transfer) &&
+          transferBridgeType === 'unknown'
 
         return (
           plugin.plugin === transfer.plugin &&
-          (InteropTransferClassifier.isOneSided(transfer) ||
+          (isOneSidedWithUnknownBridgeType ||
             plugin.bridgeType === transferBridgeType)
         )
       })

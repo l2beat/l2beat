@@ -103,11 +103,11 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.unknown).toEqual([])
   })
 
-  it('bypasses plugin bridge type matching for one-sided transfers', () => {
+  it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {
     const result = classifier.classifyTransfers(
       [
         transfer({
-          id: 'one-sided',
+          id: 'one-sided-unknown',
           bridgeType: undefined,
           srcEventId: 'src-event',
           dstEventId: undefined,
@@ -115,7 +115,15 @@ describe(InteropTransferClassifier.name, () => {
           dstWasMinted: undefined,
         }),
         transfer({
-          id: 'two-sided',
+          id: 'one-sided-known',
+          bridgeType: 'nonMinting',
+          srcEventId: 'src-event',
+          dstEventId: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+        }),
+        transfer({
+          id: 'two-sided-unknown',
           bridgeType: undefined,
           srcEventId: 'src-event',
           dstEventId: 'dst-event',
@@ -129,7 +137,7 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.lockAndMint).toEqual([])
     expect(result.burnAndMint).toEqual([])
     expect(result.nonMinting).toEqual([])
-    expect(result.unknown.map((x) => x.id)).toEqual(['one-sided'])
+    expect(result.unknown.map((x) => x.id)).toEqual(['one-sided-unknown'])
   })
 })
 
