@@ -20,7 +20,6 @@ describe(BlobPriceProvider.name, () => {
       gasUsedRatio: blobBaseFees.map(() => 0),
       baseFeePerBlobGas: blobBaseFees,
       blobGasUsedRatio: blobBaseFees.map(() => 0),
-      reward: [],
     }
   }
 
