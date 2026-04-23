@@ -621,6 +621,62 @@ describe('flatten', () => {
     )
   })
 
+  it('file-level constant referencing a renamed type', () => {
+    // Two libraries share the name `Lib`. The file-level constant in
+    // Globals.sol references `Lib`, so renameIdentifiers runs on the
+    // FileLevelConstant node when flattening.
+    const files = [
+      sol(
+        'Root.sol',
+        `
+        import { Lib } from "OtherLib.sol";
+        import { VALUE } from "Globals.sol";
+
+        contract R1 {
+            function f() public pure returns (uint256) {
+                return Lib.value() + VALUE;
+            }
+        }
+      `,
+      ),
+      sol(
+        'Globals.sol',
+        `
+        import { Lib } from "MainLib.sol";
+        uint256 constant VALUE = Lib.value() + 1;
+      `,
+      ),
+      sol(
+        'MainLib.sol',
+        'library Lib { function value() internal pure returns (uint256) { return 1; } }',
+      ),
+      sol(
+        'OtherLib.sol',
+        'library Lib { function value() internal pure returns (uint256) { return 2; } }',
+      ),
+    ]
+
+    const flattened = flattenStartingFrom('R1', files, [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+      library Lib { function value() internal pure returns (uint256) { return 2; } }
+
+      library Lib_1 { function value() internal pure returns (uint256) { return 1; } }
+
+      uint256 constant VALUE = Lib_1.value() + 1;
+
+      contract R1 {
+          function f() public pure returns (uint256) {
+              return Lib.value() + VALUE;
+          }
+      }
+    `),
+    )
+  })
+
   it('contracts which are called with new are not turned into interfaces', () => {
     const file = sol(
       'Root.sol',
