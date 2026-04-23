@@ -42,16 +42,10 @@ export function InteropTokensSection({
       id: projectId,
     })
 
-  const resolvedType =
-    protocolData?.entry?.bridgeTypes?.length === 1
-      ? protocolData.entry.bridgeTypes[0]
-      : undefined
-
   const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
     {
       ...selectionForApi,
       id: projectId,
-      type: resolvedType,
     },
     {
       enabled: protocolData !== undefined,

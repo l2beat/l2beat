@@ -39,8 +39,6 @@ export function InteropTransfersSection({
     })
   const entry = protocolData?.entry
   const totalCount = entry?.transferCount ?? 0
-  const resolvedType =
-    entry?.bridgeTypes.length === 1 ? entry.bridgeTypes[0] : undefined
 
   const {
     data: transfersData,
@@ -52,7 +50,6 @@ export function InteropTransfersSection({
     {
       ...selectionForApi,
       id: projectId,
-      type: resolvedType,
       expectedTransferCount: totalCount,
       expectedVolume: entry?.volume ?? 0,
       snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
