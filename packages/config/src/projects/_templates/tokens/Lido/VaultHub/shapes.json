@@ -4,5 +4,11 @@
     "address": "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50",
     "chain": "ethereum",
     "blockNumber": 24231160
+  },
+  "VaultHub_new": {
+    "hash": "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5",
+    "address": "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70",
+    "chain": "ethereum",
+    "blockNumber": 24935917
   }
 }

@@ -43,5 +43,6 @@ export function getStateValidationSection(
       allProjectsWithContracts,
       tvs,
     ),
+    programHashesDescription: project.contracts?.programHashesDescription,
   }
 }

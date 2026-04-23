@@ -1075,6 +1075,7 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  programHashesDescription?: string
   zkVerifiers?: ChainSpecificAddress[]
 }
 

@@ -42,12 +42,6 @@ const RELAY_CHAIN_NAME_OVERRIDES = {
   zksync: 'zksync2',
 } as const
 
-const RELAY_ONE_SIDED_CHAIN_FALLBACKS = [
-  { chain: 'bitcoin', chainId: 8_253_038 },
-  { chain: 'solana', chainId: 792_703_809 },
-  { chain: 'tron', chainId: 728_126_428 },
-] as const satisfies RelayNetwork[]
-
 function getRelayChainNameOverride(normalizedRelayName: string) {
   return RELAY_CHAIN_NAME_OVERRIDES[
     normalizedRelayName as keyof typeof RELAY_CHAIN_NAME_OVERRIDES
@@ -77,17 +71,11 @@ function toRelayNetwork(
 
 export function buildRelayBootstrapChainNamesById(
   chains: { id: number; name: string }[],
-  oneSidedChains: string[],
 ): Map<number, string> {
   const result = new Map<number, string>()
 
   for (const chain of chains) {
     result.set(chain.id, chain.name)
-  }
-
-  for (const chain of RELAY_ONE_SIDED_CHAIN_FALLBACKS) {
-    if (!oneSidedChains.includes(chain.chain)) continue
-    result.set(chain.chainId, chain.chain)
   }
 
   return result
@@ -100,7 +88,6 @@ export class RelayConfigPlugin extends TimeLoop implements InteropConfigPlugin {
 
   constructor(
     chains: { id: number; name: string }[],
-    oneSidedChains: string[],
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
@@ -108,10 +95,7 @@ export class RelayConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   ) {
     super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: RelayConfig.key })
-    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(
-      chains,
-      oneSidedChains,
-    )
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(chains)
   }
 
   async run() {

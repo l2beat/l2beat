@@ -3,8 +3,8 @@
  * good API available at https://backend.gas.zip/v2/search/TXHASH for checking
  */
 
-import type { Logger } from '@l2beat/backend-tools'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import {
   createEventParser,
   createInteropEventType,
@@ -64,7 +64,10 @@ export const GasZipFill = createInteropEventType<GasZipFillArgs>(
 export class GasZipPlugin implements InteropPlugin {
   readonly name = 'gaszip'
 
-  constructor(private logger: Logger) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   captureTx(input: TxToCapture) {
     if (input.tx.kind !== 'canonical') {
@@ -86,7 +89,7 @@ export class GasZipPlugin implements InteropPlugin {
 
       const destinationChains = decoded.destinationChainIds.map((gaszipId) => ({
         gaszipId,
-        chain: getChainNameByGaszipId(gaszipId),
+        chain: getChainNameByGaszipId(gaszipId, this.configs),
       }))
 
       const destinationAddress =
@@ -142,7 +145,7 @@ export class GasZipPlugin implements InteropPlugin {
 
     const destinationChains = chainIds.map((gaszipId) => ({
       gaszipId,
-      chain: getChainNameByGaszipId(gaszipId),
+      chain: getChainNameByGaszipId(gaszipId, this.configs),
     }))
 
     const events = []
@@ -161,27 +164,44 @@ export class GasZipPlugin implements InteropPlugin {
     }
     return events
   }
-  matchTypes = [GasZipFill]
-  match(gasZipFill: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (!GasZipFill.checkType(gasZipFill)) return
+  matchTypes = [GasZipFill, GasZipDeposit]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (GasZipFill.checkType(event)) {
+      const gasZipDeposit = findMatchingDeposit(event, db)
+      if (!gasZipDeposit) return
 
-    const gasZipDeposit = findMatchingDeposit(gasZipFill, db)
-    if (!gasZipDeposit) return
+      return [
+        Result.Message('gaszip.Message', {
+          app: 'gaszip',
+          srcEvent: gasZipDeposit,
+          dstEvent: event,
+        }),
+        Result.Transfer('gaszip.Transfer', {
+          srcEvent: gasZipDeposit,
+          srcTokenAddress: gasZipDeposit.args.tokenAddress,
+          srcAmount: BigInt(gasZipDeposit.args.amount),
+          srcWasBurned: false,
+          dstEvent: event,
+          dstTokenAddress: event.args.tokenAddress,
+          dstAmount: BigInt(event.args.amount),
+          dstWasMinted: false,
+        }),
+      ]
+    }
 
+    if (!GasZipDeposit.checkType(event)) return
+    if (!this.oneSidedChains.includes(event.args.$dstChain)) return
+
+    // Gas.zip fills do not encode a source chain, so one-sided support is
+    // only possible from the deposit side.
     return [
-      Result.Message('gaszip.Message', {
-        app: 'gaszip',
-        srcEvent: gasZipDeposit,
-        dstEvent: gasZipFill,
-      }),
       Result.Transfer('gaszip.Transfer', {
-        srcEvent: gasZipDeposit,
-        srcTokenAddress: gasZipDeposit.args.tokenAddress,
-        srcAmount: BigInt(gasZipDeposit.args.amount),
+        srcEvent: event,
+        dstChain: event.args.$dstChain,
+        srcTokenAddress: event.args.tokenAddress,
+        srcAmount: BigInt(event.args.amount),
         srcWasBurned: false,
-        dstEvent: gasZipFill,
-        dstTokenAddress: gasZipFill.args.tokenAddress,
-        dstAmount: BigInt(gasZipFill.args.amount),
+        dstTokenAddress: Address32.NATIVE,
         dstWasMinted: false,
       }),
     ]

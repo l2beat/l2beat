@@ -3,12 +3,12 @@
  * matches 'unknown' messages that we cannot identify as any tracked hyperlane app
  */
 import { keccak256 } from 'viem'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  defineNetworks,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -41,32 +41,10 @@ export const Process = createInteropEventType<{
   $srcChain: string
 }>('hyperlane.Process')
 
-// https://github.com/hyperlane-xyz/hyperlane-registry
-// chainconfeeg
-export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
-  { chain: 'ethereum', chainId: 1 },
-  { chain: 'arbitrum', chainId: 42161 },
-  { chain: 'base', chainId: 8453 },
-  { chain: 'optimism', chainId: 10 },
-  { chain: 'apechain', chainId: 33139 },
-  { chain: 'polygonpos', chainId: 137 },
-  { chain: 'zksync2', chainId: 324 },
-  { chain: 'abstract', chainId: 2741 },
-  { chain: 'katana', chainId: 747474 },
-  { chain: 'forknet', chainId: 8338 },
-  { chain: 'bsc', chainId: 56 },
-  { chain: 'celo', chainId: 42220 },
-  { chain: 'avalanche', chainId: 43114 },
-  { chain: 'linea', chainId: 59144 },
-  { chain: 'unichain', chainId: 130 },
-  { chain: 'ink', chainId: 57073 },
-  { chain: 'hyperevm', chainId: 999 },
-  { chain: 'monad', chainId: 143 },
-  // tempo unsupported
-])
-
 export class HyperlanePlugIn implements InteropPluginResyncable {
   readonly name = 'hyperlane'
+
+  constructor(private configs: InteropConfigStore) {}
 
   getDataRequests(): DataRequest[] {
     return [
@@ -78,6 +56,8 @@ export class HyperlanePlugIn implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const networks = this.configs.get(HyperlaneConfig) ?? []
+
     const process = parseProcess(input.log, null)
     if (process) {
       const nextLog = input.txLogs.find(
@@ -89,11 +69,7 @@ export class HyperlanePlugIn implements InteropPluginResyncable {
       return [
         Process.create(input, {
           messageId: processId.messageId,
-          $srcChain: findChain(
-            HYPERLANE_NETWORKS,
-            (x) => x.chainId,
-            process.origin,
-          ),
+          $srcChain: findHyperlaneChain(networks, Number(process.origin)),
         }),
       ]
     }
@@ -103,11 +79,7 @@ export class HyperlanePlugIn implements InteropPluginResyncable {
       return [
         Dispatch.create(input, {
           messageId: keccak256(dispatch.message),
-          $dstChain: findChain(
-            HYPERLANE_NETWORKS,
-            (x) => x.chainId,
-            dispatch.destination,
-          ),
+          $dstChain: findHyperlaneChain(networks, Number(dispatch.destination)),
         }),
       ]
   }

@@ -144,6 +144,7 @@ export function getContractsSection(
       allProjects,
       tvs,
     ),
+    programHashesDescription: projectParams.contracts.programHashesDescription,
   }
 }
 

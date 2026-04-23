@@ -46,13 +46,18 @@ export const TransferRedeemed = createInteropEventType<{
 export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
   readonly name = 'wormhole-token-bridge'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(WormholeConfig) ?? []
     const tokenBridgeAddresses: ChainSpecificAddress[] = []
     for (const network of networks) {
-      if (!network.tokenBridge) continue
+      if (!network.tokenBridge || this.oneSidedChains.includes(network.chain)) {
+        continue
+      }
       try {
         tokenBridgeAddresses.push(
           ChainSpecificAddress.fromLong(network.chain, network.tokenBridge),
@@ -115,19 +120,27 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     ]
   }
 
-  matchTypes = [TransferRedeemed]
-  match(
-    transferRedeemed: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
-    if (TransferRedeemed.checkType(transferRedeemed)) {
+  matchTypes = [TransferRedeemed, LogMessagePublished]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (TransferRedeemed.checkType(event)) {
       const logMessagePublished = db.find(LogMessagePublished, {
-        sequence: transferRedeemed.args.sequence,
-        wormholeChainId: transferRedeemed.args.srcWormholeChainId,
-        sender: transferRedeemed.args.sender,
+        sequence: event.args.sequence,
+        wormholeChainId: event.args.srcWormholeChainId,
+        sender: event.args.sender,
       })
       if (!logMessagePublished) {
-        return
+        const srcChain = event.args.$srcChain
+        if (!this.oneSidedChains.includes(srcChain)) return
+
+        return [
+          Result.Transfer('wormhole-tokenbridge.Transfer', {
+            srcChain,
+            dstEvent: event,
+            dstTokenAddress: event.args.dstTokenAddress,
+            dstAmount: event.args.dstAmount,
+            dstWasMinted: event.args.dstWasMinted,
+          }),
+        ]
       }
 
       const tokenChain = extractTokenChain(logMessagePublished.args.payload)
@@ -140,17 +153,51 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
         Result.Message('wormhole.Message', {
           app: 'wormhole-tokenbridge',
           srcEvent: logMessagePublished,
-          dstEvent: transferRedeemed,
+          dstEvent: event,
         }),
         Result.Transfer('wormhole-tokenbridge.Transfer', {
           srcEvent: logMessagePublished,
-          dstEvent: transferRedeemed,
+          dstEvent: event,
           srcTokenAddress: logMessagePublished.args.srcTokenAddress,
           srcAmount: logMessagePublished.args.srcAmount,
-          dstTokenAddress: transferRedeemed.args.dstTokenAddress,
-          dstAmount: transferRedeemed.args.dstAmount,
+          dstTokenAddress: event.args.dstTokenAddress,
+          dstAmount: event.args.dstAmount,
           srcWasBurned,
-          dstWasMinted: transferRedeemed.args.dstWasMinted,
+          dstWasMinted: event.args.dstWasMinted,
+        }),
+      ]
+    }
+
+    if (LogMessagePublished.checkType(event)) {
+      const networks = this.configs.get(WormholeConfig) ?? []
+      const network = networks.find((n) => n.chain === event.ctx.chain)
+      if (!network?.tokenBridge || event.args.sender !== network.tokenBridge) {
+        return
+      }
+
+      const dstChain = event.args.$dstChain
+      if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
+
+      const hasCounterpart = db.find(TransferRedeemed, {
+        sequence: event.args.sequence,
+        srcWormholeChainId: event.args.wormholeChainId,
+        sender: event.args.sender,
+      })
+      if (hasCounterpart) return
+
+      const tokenChain = extractTokenChain(event.args.payload)
+      const srcWasBurned =
+        tokenChain !== undefined
+          ? tokenChain !== event.args.wormholeChainId
+          : undefined
+
+      return [
+        Result.Transfer('wormhole-tokenbridge.Transfer', {
+          srcEvent: event,
+          dstChain,
+          srcTokenAddress: event.args.srcTokenAddress,
+          srcAmount: event.args.srcAmount,
+          srcWasBurned,
         }),
       ]
     }

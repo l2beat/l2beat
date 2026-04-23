@@ -746,6 +746,147 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(
+    InteropTransferRepository.prototype.markAsUnprocessedByTokens.name,
+    () => {
+      it('matches source-side rows', async () => {
+        const target = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        target.isProcessed = true
+        target.srcChain = 'ethereum'
+        target.srcTokenAddress = '0xsrc-target'
+
+        const other = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+        other.isProcessed = true
+        other.srcChain = 'ethereum'
+        other.srcTokenAddress = '0xother-token'
+
+        await repository.insertMany([target, other])
+
+        const updatedRows = await repository.markAsUnprocessedByTokens([
+          { chain: 'ethereum', tokenAddress: '0xsrc-target' },
+        ])
+
+        expect(updatedRows).toEqual(1)
+
+        const result = await repository.getAll()
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.isProcessed,
+        ).toEqual(false)
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.isProcessed,
+        ).toEqual(true)
+      })
+
+      it('matches destination-side rows', async () => {
+        const target = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        target.isProcessed = true
+        target.dstChain = 'arbitrum'
+        target.dstTokenAddress = '0xdst-target'
+
+        const other = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+        other.isProcessed = true
+        other.dstChain = 'arbitrum'
+        other.dstTokenAddress = '0xother-token'
+
+        await repository.insertMany([target, other])
+
+        const updatedRows = await repository.markAsUnprocessedByTokens([
+          { chain: 'arbitrum', tokenAddress: '0xdst-target' },
+        ])
+
+        expect(updatedRows).toEqual(1)
+
+        const result = await repository.getAll()
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.isProcessed,
+        ).toEqual(false)
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.isProcessed,
+        ).toEqual(true)
+      })
+
+      it('does not affect unrelated rows', async () => {
+        const target = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        target.isProcessed = true
+        target.srcChain = 'ethereum'
+        target.srcTokenAddress = '0xsrc-target'
+
+        const other = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+        other.isProcessed = true
+        other.dstChain = 'base'
+        other.dstTokenAddress = '0xdst-target'
+
+        await repository.insertMany([target, other])
+
+        const updatedRows = await repository.markAsUnprocessedByTokens([
+          { chain: 'optimism', tokenAddress: '0xmissing-token' },
+        ])
+
+        expect(updatedRows).toEqual(0)
+
+        const result = await repository.getAll()
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.isProcessed,
+        ).toEqual(true)
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.isProcessed,
+        ).toEqual(true)
+      })
+
+      it('only updates already-processed rows', async () => {
+        const processed = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        processed.isProcessed = true
+        processed.srcChain = 'ethereum'
+        processed.srcTokenAddress = '0xshared-token'
+
+        const unprocessed = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+        )
+        unprocessed.isProcessed = false
+        unprocessed.srcChain = 'ethereum'
+        unprocessed.srcTokenAddress = '0xshared-token'
+
+        await repository.insertMany([processed, unprocessed])
+
+        const updatedRows = await repository.markAsUnprocessedByTokens([
+          { chain: 'ethereum', tokenAddress: '0xshared-token' },
+        ])
+
+        expect(updatedRows).toEqual(1)
+
+        const result = await repository.getAll()
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.isProcessed,
+        ).toEqual(false)
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.isProcessed,
+        ).toEqual(false)
+      })
+
+      it('handles duplicate token filters safely', async () => {
+        const target = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+        target.isProcessed = true
+        target.srcChain = 'ethereum'
+        target.srcTokenAddress = '0xduplicate-token'
+
+        await repository.insertMany([target])
+
+        const updatedRows = await repository.markAsUnprocessedByTokens([
+          { chain: 'ethereum', tokenAddress: '0xduplicate-token' },
+          { chain: 'ethereum', tokenAddress: '0xduplicate-token' },
+        ])
+
+        expect(updatedRows).toEqual(1)
+
+        const result = await repository.getAll()
+        expect(result[0]?.isProcessed).toEqual(false)
+      })
+    },
+  )
+
   describe(InteropTransferRepository.prototype.getByRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([

@@ -29,8 +29,10 @@ import { CentriFugePlugin } from './centrifuge'
 import { CircleGatewayPlugIn } from './circle-gateway'
 import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
+import { GasZipConfigPlugin } from './gaszip/gaszip.config'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
 import { HyperlanePlugIn } from './hyperlane'
+import { HyperlaneConfigPlugin } from './hyperlane.config'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
@@ -132,6 +134,13 @@ export function createInteropPlugins(
         rpcs,
         deps.configIntervalMs,
       ),
+      new HyperlaneConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
       new CCIPConfigPlugin(
         deps.chains,
         deps.configs,
@@ -148,7 +157,6 @@ export function createInteropPlugins(
       ),
       new RelayConfigPlugin(
         deps.chains,
-        deps.oneSidedChains,
         deps.configs,
         deps.logger,
         deps.httpClient,
@@ -160,11 +168,18 @@ export function createInteropPlugins(
         rpcs,
         deps.configIntervalMs,
       ),
+      new GasZipConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
+      ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
-      new DeBridgePlugin(),
-      new DeBridgeDlnPlugin(),
+      new DeBridgePlugin(deps.oneSidedChains),
+      new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
@@ -184,16 +199,16 @@ export function createInteropPlugins(
         plugins: [
           // Mayan plugins (use both Wormhole messaging and CCTP for transfers)
           new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
-          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+          new MayanSwiftPlugin(deps.configs, deps.oneSidedChains), // should be run before CCTP
           new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
           new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
           // Wormhole-specific plugins
-          new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
-          new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
+          new WormholeNTTPlugin(deps.configs, deps.oneSidedChains), // should be run before WormholeCore and WormholeRelayer
+          new WormholeTokenBridgePlugin(deps.configs, deps.oneSidedChains), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
           // CCTP plugins (Circle's cross-chain USDC)
-          new CCTPV1Plugin(deps.configs),
-          new CCTPV2Plugin(deps.configs),
+          new CCTPV1Plugin(deps.configs, deps.oneSidedChains),
+          new CCTPV2Plugin(deps.configs, deps.oneSidedChains),
           // Core Wormhole messaging (most generic, runs last)
           new WormholePlugin(deps.configs),
         ],
@@ -238,16 +253,19 @@ export function createInteropPlugins(
       {
         name: 'hyperlane',
         plugins: [
-          new HyperlaneMerklyTokenBridgePlugin(), // should be run before HyperlaneHWR
-          new HyperlaneHwrPlugin(), // should be run before Hyperlane
-          new HyperlaneEcoPlugin(), // should be run before Hyperlane
-          new HyperlaneSimpleAppsPlugIn(), // should be run before Hyperlane
-          new HyperlanePlugIn(),
+          new HyperlaneMerklyTokenBridgePlugin(
+            deps.configs,
+            deps.oneSidedChains,
+          ), // should be run before HyperlaneHWR
+          new HyperlaneHwrPlugin(deps.configs, deps.oneSidedChains), // should be run before Hyperlane
+          new HyperlaneEcoPlugin(deps.configs), // should be run before Hyperlane
+          new HyperlaneSimpleAppsPlugIn(deps.configs), // should be run before Hyperlane
+          new HyperlanePlugIn(deps.configs),
         ],
       },
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(deps.oneSidedChains),
-      new GasZipPlugin(deps.logger),
+      new GasZipPlugin(deps.configs, deps.oneSidedChains),
       new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
     ],

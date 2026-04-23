@@ -156,6 +156,15 @@ export function ProjectNameMobileStatusIcons({
             {project.statuses.verificationWarnings.programHashes && (
               <>
                 <p>{project.statuses.verificationWarnings.programHashes}</p>
+                {project.statuses.verificationWarnings
+                  .programHashesDescription && (
+                  <Markdown ignoreGlossary>
+                    {
+                      project.statuses.verificationWarnings
+                        .programHashesDescription
+                    }
+                  </Markdown>
+                )}
                 <CustomLink
                   href={`/scaling/projects/${project.slug}#program-hashes`}
                   className="inline-block text-label-value-13"
@@ -353,24 +362,22 @@ export function ProjectNameInfoTooltip({
   }
 
   return (
-    <>
-      <div className="flex h-full items-center max-md:hidden">
-        <Tooltip disableHoverableContent={false}>
-          <TooltipTrigger asChild>{children}</TooltipTrigger>
-          <TooltipPortal>
-            <TooltipContent sideOffset={16} className="flex flex-col gap-2">
-              <ProjectTooltipContent
-                projectName={projectName}
-                description={project.description}
-                sections={sections}
-                badges={project.badges}
-              />
-            </TooltipContent>
-          </TooltipPortal>
-        </Tooltip>
-      </div>
-      <div className="md:hidden">{children}</div>
-    </>
+    <Tooltip disableHoverableContent={false}>
+      <TooltipTrigger disabledOnMobile asChild>
+        {children}
+      </TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent sideOffset={16} className="flex flex-col gap-2">
+          <ProjectTooltipContent
+            projectName={projectName}
+            description={project.description}
+            sections={sections}
+            badges={project.badges}
+            sectionsFirst
+          />
+        </TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
   )
 }
 
@@ -404,6 +411,8 @@ function getTooltipSections(project: ProjectCellProject) {
     sections.push({
       id: 'program-hashes',
       text: project.statuses.verificationWarnings.programHashes,
+      textDetail:
+        project.statuses.verificationWarnings.programHashesDescription,
       href: `/scaling/projects/${project.slug}#program-hashes`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,

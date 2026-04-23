@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x6096f32d959ffe393c0f919bfd2ecc4f4a8a6249
+
+# Diff at Wed, 22 Apr 2026 14:13:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0c9883f4f9da8504a0490bf6e80c8c08daa0cb0 block: 1775562114
+- current timestamp: 1776866286
+
+## Description
+
+GatewayWallet upgraded: support clearing txs against each other with 'batches' (no changes for interop)
+
+small Lido upgrades.
+
+## Watched changes
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      sourceHashes.1:
+-        "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e"
++        "0x506e625ba860a14389c9a084a8c4fd214f27c61d2748b95699be952eb3ff6af0"
+      values.$implementation:
+-        "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762"
++        "base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8"
+      values.$pastUpgrades.2:
++        ["2026-04-20T21:25:29.000Z","0x5b88031141c02320ecac344cd7802df1af80a0e1f030c33a44fcbb2f5d1e0509",["base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.contractSignersAllowlister:
++        "base:0x0000000000000000000000000000000000000000"
+      implementationNames.base:0x899a4f5f5422cC5E8183280182e7096Fb923C762:
+-        "GatewayWallet"
+      implementationNames.base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8:
++        "GatewayWallet"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x1dd4ca17f1d07d16fc3bc5c4f5373e5ce36f59220db6cb3f08e93e90300455ad"
++        "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5"
+      values.$implementation:
+-        "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"
++        "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"
+      values.$pastUpgrades.1:
++        ["2026-04-17T16:42:11.000Z","0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",["eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"
++        "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"
+      implementationNames.eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50:
+-        "VaultHub"
+      implementationNames.eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70:
++        "VaultHub"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xb435a1c81fa691bd4ab244f90b03bb5ce2c1a97f0a4ff9c39dabf062c0b0bb5c"
++        "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291"
+      values.$implementation:
+-        "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B"
++        "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"
+      values.$pastUpgrades.1:
++        ["2026-04-17T16:42:11.000Z","0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",["eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.proxy__getImplementation:
+-        "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B"
++        "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"
+      implementationNames.eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B:
+-        "LazyOracle"
+      implementationNames.eth:0x96c9a897D116ef660086d3aA67b3af653324aB37:
++        "LazyOracle"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37) {
+    +++ description: None
+      values.stagedBalance:
+-        "62000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD) {
+    +++ description: None
+      values.getGuardians.2:
+-        "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f"
++        "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
+      values.getGuardians.5:
+-        "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
++        "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GatewayWallet/GatewayWallet.sol                | 598 +++++++++++++++++++--
+ .../LazyOracle/LazyOracle.sol                      |  19 +-
+ .../VaultHub/VaultHub.sol                          |  27 +-
+ 3 files changed, 586 insertions(+), 58 deletions(-)
+```
+
 Generated with discovered.json: 0xfd4c27042d6a952c323df8bdfc649d31c9419000
 
 # Diff at Tue, 07 Apr 2026 11:43:39 GMT:

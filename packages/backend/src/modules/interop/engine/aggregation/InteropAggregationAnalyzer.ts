@@ -10,6 +10,14 @@ import {
 } from '../zScore'
 
 const MIN_VOLUME_IDENTIFICATION_RATE = 0.5
+const dollarsFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2,
+})
+const countFormatter = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 0,
+})
 
 export interface SnapshotTotals {
   transferCount: number
@@ -130,7 +138,7 @@ export function evaluateQualitySignals(input: {
     history,
   )
   const reasons = analyzeZScore(
-    'Count',
+    'count',
     dailySeries.map((point) => point.transferCount),
   )
 
@@ -140,7 +148,7 @@ export function evaluateQualitySignals(input: {
 
   reasons.push(
     ...analyzeZScore(
-      'Src volume',
+      'srcVolume',
       dailySeries.map((point) =>
         isVolumeReliable(point) ? point.srcVolumeUsd : 0,
       ),
@@ -148,7 +156,7 @@ export function evaluateQualitySignals(input: {
   )
   reasons.push(
     ...analyzeZScore(
-      'Dst volume',
+      'dstVolume',
       dailySeries.map((point) =>
         isVolumeReliable(point) ? point.dstVolumeUsd : 0,
       ),
@@ -269,7 +277,10 @@ function safeDivide(a: number, b: number) {
   return a / b
 }
 
-function analyzeZScore(label: string, values: number[]): string[] {
+function analyzeZScore(
+  metric: 'count' | 'srcVolume' | 'dstVolume',
+  values: number[],
+): string[] {
   // Route-level daily histories are often flat. In those cases robust z-score
   // returns null because MAD is zero, so alerting uses the shared classic score.
   const zScore = getWindowedLogZScore(values).classic
@@ -281,7 +292,61 @@ function analyzeZScore(label: string, values: number[]): string[] {
     return []
   }
 
-  return [`${label} z-score=${zScore.toFixed(2)}`]
+  const current = values.at(-1) ?? 0
+  const baselineValues = values.slice(0, -1)
+  const baseline =
+    baselineValues.reduce((sum, value) => sum + value, 0) /
+    baselineValues.length
+
+  return [formatReadableReason(metric, baseline, current)]
+}
+
+function formatReadableReason(
+  metric: 'count' | 'srcVolume' | 'dstVolume',
+  baseline: number,
+  current: number,
+): string {
+  const direction = current >= baseline ? 'increase' : 'decrease'
+  const formattedChange = formatChange(
+    baseline,
+    current,
+    metric === 'count' ? formatCount : formatDollars,
+  )
+
+  if (metric === 'count') {
+    return `significant ${direction} in transfer count (${formattedChange})`
+  }
+
+  const label = metric === 'srcVolume' ? 'src volume' : 'dst volume'
+  return `${label} ${direction === 'increase' ? 'increased' : 'decreased'} ${formattedChange}`
+}
+
+function formatChange(
+  baseline: number,
+  current: number,
+  formatter: (value: number) => string,
+): string {
+  const changePercent = getChangePercent(baseline, current)
+  const changePrefix =
+    changePercent === null ? '' : `${Math.abs(changePercent).toFixed(2)}%, `
+
+  return `${changePrefix}from ${formatter(baseline)} to ${formatter(current)}`
+}
+
+function getChangePercent(baseline: number, current: number): number | null {
+  if (baseline === 0) {
+    return current === 0 ? 0 : null
+  }
+
+  return ((current - baseline) / baseline) * 100
+}
+
+function formatDollars(value: number): string {
+  return dollarsFormatter.format(value)
+}
+
+function formatCount(value: number): string {
+  return countFormatter.format(Math.round(value))
 }
 
 function isVolumeReliable(point: SnapshotTotals): boolean {

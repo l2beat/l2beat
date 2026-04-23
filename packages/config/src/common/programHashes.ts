@@ -2528,12 +2528,18 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
   },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
     title: 'Nitro TEE Aggregated Verifer',
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-aggregator',
     description:
       'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
     verificationStatus: 'notVerified',
   },
   '0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322': {
     title: 'Nitro TEE Verifer',
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-verifier',
     description:
       'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
     verificationStatus: 'notVerified',
