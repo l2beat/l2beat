@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776873936,
-  "lastConsumedUpdateNotifierId": 122,
+  "lastReconciledAt": 1776935385,
+  "lastConsumedUpdateNotifierId": 124,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1689,6 +1689,22 @@
           "field": "values.getRageQuitSupport",
           "before": 1210268,
           "after": 1210016
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-23T09:01:52.000Z",
+      "updateNotifierId": 124,
+      "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+      "contractName": "Escrow",
+      "entity": null,
+      "id": "124:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getRageQuitSupport",
+          "before": 1210016,
+          "after": 1209906
         }
       ]
     }
