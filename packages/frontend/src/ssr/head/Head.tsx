@@ -42,20 +42,28 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
-      {env.DEPLOYMENT_ENV === 'production' && (
-        <>
-          <script
-            async
-            src="https://plausible.devops-035.workers.dev/static/processing/script.js"
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html:
-                'window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}}; plausible.init({ endpoint: "https://plausible.devops-035.workers.dev/api/processing/event" })',
-            }}
-          />
-        </>
-      )}
+      {env.DEPLOYMENT_ENV === 'production' &&
+        env.CLIENT_SIDE_OPENPANEL_CLIENT_ID && (
+          <>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.op=window.op||function(){var n=[];return new Proxy(function(){arguments.length&&n.push([].slice.call(arguments))},{get:function(t,r){return"q"===r?n:function(){n.push([r].concat([].slice.call(arguments)))}} ,has:function(t,r){return"q"===r}}) }();
+                  window.op('init', {
+                    clientId: '${env.CLIENT_SIDE_OPENPANEL_CLIENT_ID}',
+                    apiUrl: 'https://opapi-cjlczqt8recxif3rqucmvjbg.zygmunt.xyz',
+                    trackScreenViews: true,
+                    trackOutgoingLinks: true,
+                    trackAttributes: true,
+                  });`,
+              }}
+            />
+            <script
+              src="https://openpanel-l2beat.zygmunt.xyz/op1.js"
+              defer
+              async
+            />
+          </>
+        )}
     </>
   )
 }
