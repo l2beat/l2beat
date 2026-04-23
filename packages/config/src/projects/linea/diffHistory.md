@@ -1,3 +1,114 @@
+Generated with discovered.json: 0x343660c1cc7a486664c9920e1cb08bee3338a34b
+
+# Diff at Wed, 22 Apr 2026 11:31:09 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@f66126aa8fe736c462a5f9a4879a81733bce88d9 block: 1776683677
+- current timestamp: 1776857404
+
+## Description
+
+Prover upgraded to the new version. I have regenerated it from the sources.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0xC83ed08E2262fBa264D528C749c051f8fC526897)
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds.
+      values.limitInWei:
+-        "30000000000000000000000"
++        "10000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
+-        "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897"
++        "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: Value relative to TVS, part of the computation of target rollup ETH reserve.
+      values.targetWithdrawalReservePercentageBps:
+-        9985
++        9980
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb.sol} |   0
+ ...0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc.sol} | 812 ++++++++++++++++++++-
+ 2 files changed, 789 insertions(+), 23 deletions(-)
+```
+
+Generated with discovered.json: 0x730e83d95d7679b2f415665fe0a4954bc6241507
+
+# Diff at Mon, 20 Apr 2026 14:15:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1775561168
+- current timestamp: 1776683677
+
+## Description
+
+Added Lido yield provider for Linea native yield. Currently there is total of 1 ETH (exactly) deployed via Lido Yield Provider, the contracts are fully ready for wider usage of the yield feature.
+
+## Watched changes
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      values.yieldProviderByIndex.0:
++        "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3"
++++ severity: HIGH
+      values.yieldProviderCount:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/.flat/LidoStVaultYieldProvider.sol       | 938 +++++++++++++++++++++
+ 1 file changed, 938 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561168 (main branch discovery), not current.
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      values.yieldProviderByIndex:
++        []
+    }
+```
+
 Generated with discovered.json: 0x506dc6dc6e784aeda0696c193e708085ac60a85a
 
 # Diff at Tue, 07 Apr 2026 11:27:14 GMT:

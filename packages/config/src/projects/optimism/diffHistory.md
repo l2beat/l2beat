@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4b38a42511ff42f1863438ce08a22b59dc664065
+
+# Diff at Thu, 16 Apr 2026 09:33:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1775721846
+- current timestamp: 1776331867
+
+## Description
+
+One signer rotation on the 6-of-9 SafeL2 (0x3F3Cd7) that controls MintManagerOwner: member 0xc222ab replaced with 0x2eFd8F. Threshold unchanged.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2) {
+    +++ description: None
+      values.$members.3:
+-        "oeth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
++        "oeth:0x2eFd8FCbF4a120372e94baFaaA2E12783e1062A5"
+    }
+```
+
 Generated with discovered.json: 0x845a974b7e99efaa571448fcf5e555a7c3f2e4d9
 
 # Diff at Thu, 09 Apr 2026 08:07:35 GMT:

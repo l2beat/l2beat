@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SystemConfig",
+  "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
+  "fields": {
+    // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+    "batcherHash": {
+      "permissions": [{ "type": "sequence" }],
+      "handler": {
+        "type": "call",
+        "method": "function batcherHash() view returns (address)",
+        "args": []
+      }
+    },
+    "opStackDA": {
+      "handler": {
+        "type": "opStackDA",
+        "sequencerAddress": "{{ batcherHash }}"
+      }
+    },
+    "sequencerInbox": {
+      "handler": {
+        "type": "opStackSequencerInbox",
+        "sequencerAddress": "{{ batcherHash }}"
+      }
+    },
+    "gasLimit": {
+      "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage.",
+      "severity": "LOW"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`."
+        }
+      ]
+    },
+    "eip1559Denominator": {
+      "description": "volatility param: lower denominator -> quicker fee changes on L2"
+    }
+  },
+  "ignoreInWatchMode": ["scalar", "overhead"],
+  "ignoreRelatives": ["gasPayingToken"],
+  "category": "core"
+}

@@ -1,8 +1,9 @@
 import type { Database } from '@l2beat/database'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import type { InteropFeatureConfig } from '../../../../../../config/Config'
 import type { InteropSyncersManager } from '../../../sync/InteropSyncersManager'
 import type { ProcessorStatus } from '../../impls/processors'
-import { createInteropTrpcRouter } from '../router'
+import { createInteropTrpcRouter, type InteropTrpcRouterDeps } from '../router'
 import { createTRPCContext } from '../trpc'
 import { createKoaMiddleware } from './koa-middleware'
 
@@ -13,13 +14,17 @@ type Dependencies = {
   syncersManager: InteropSyncersManager
   getProcessorStatuses: () => ProcessorStatus[]
   dashboard: InteropFeatureConfig['dashboard']
+  chains: readonly { id: string; type: 'evm' }[]
+  tokenDbClient: TokenDbClient
 }
 
 type Options = {
   prefix?: `/${string}`
 }
 
-export function getInteropTrpcRouterDeps(deps: Dependencies) {
+export function getInteropTrpcRouterDeps(
+  deps: Dependencies,
+): InteropTrpcRouterDeps {
   return {
     aggregationConfigs: deps.aggregationConfigs
       ? deps.aggregationConfigs.configs
@@ -29,6 +34,8 @@ export function getInteropTrpcRouterDeps(deps: Dependencies) {
       deps.syncersManager.getChainsForPlugin(pluginName),
     getPluginSyncStatuses: () => deps.syncersManager.getPluginSyncStatuses(),
     getProcessorStatuses: deps.getProcessorStatuses,
+    chains: deps.chains,
+    tokenDbClient: deps.tokenDbClient,
   }
 }
 

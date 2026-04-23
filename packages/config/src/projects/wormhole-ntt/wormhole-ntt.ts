@@ -20,5 +20,4 @@ export const wormholeNtt: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

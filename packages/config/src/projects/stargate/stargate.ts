@@ -45,5 +45,4 @@ export const stargate: BaseProject = {
     },
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

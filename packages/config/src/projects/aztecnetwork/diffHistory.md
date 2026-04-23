@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4f701faaf630d166ba07c681058fb6a8db703e6f
+
+# Diff at Wed, 22 Apr 2026 13:53:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0c9883f4f9da8504a0490bf6e80c8c08daa0cb0 block: 1776071799
+- current timestamp: 1776865911
+
+## Description
+
+slashing is back after a slashveto council pause.
+
+## Watched changes
+
+```diff
+    contract Slasher (eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb) {
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+      values.isSlashingEnabled:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xf1cc5eb6e31d7af45d5272b52e5ca985fcf89551
 
 # Diff at Mon, 13 Apr 2026 09:17:59 GMT:

@@ -568,6 +568,46 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
   `,
   },
+  '0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/aggregation',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) repo:  \`git checkout v2.2.0-beta.5\` . Commit hash should be  \`c269e9b792d762889f869c4526bba1bfe016036e\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
+  '0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) repo:  \`git checkout v2.2.0-beta.5\` . Commit hash should be  \`c269e9b792d762889f869c4526bba1bfe016036e\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1741,6 +1781,20 @@ git checkout v0.13.5
       verificationSteps:
         'We were not able to identify the sources of this program.',
     },
+  '2571508110958925737463010241874806654058743535666147712534445437599630018294':
+    {
+      ...SHARP_AGG('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator/main.cairo#L15',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout c294a8ba263834d45cf525217d8700f5de24a260\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"aggregator_with_prefix"\` value of this file will be equivalent to dec value of the hash.
+      `,
+    },
   '1701025211190912681772481128523426351562426117847395998223683709327746845867':
     {
       ...SHARP_AGG('stwo'),
@@ -1776,6 +1830,20 @@ from starkware.python.utils import from_bytes
 program_hash = {use the value obtained in step 6}
 print(pedersen_hash(from_bytes(b"AGGREGATOR"), program_hash))\`
 The output should be the aggregation program hash in dec.
+      `,
+    },
+  '2733003247060056328192560178934419513655729851806095615814023997114795707702':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os.cairo#L69',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout c294a8ba263834d45cf525217d8700f5de24a260\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"os"\` value of this file will be equivalent to dec value of the hash.
       `,
     },
   '918745833886511857768061986591752808672496300091957204265383861063635175685':
@@ -2131,21 +2199,22 @@ Verify:
     programUrl:
       'https://github.com/morph-l2/morph/tree/v0.5.3/prover/bin/client',
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
-    //     verificationSteps: `
-    // Prepare:
+    verificationStatus: 'successful',
+    verificationSteps: `
+The steps below should be done on a Linux machine to reproduce the program hash. To prepare:
 
-    // 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
-    // 2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
-    // 3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain version \`v5.2.4\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up --version v5.2.4\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
-    // Verify:
+Verify:
 
-    // 1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.3\`. Commit hash should be \`a20bbfa25014a20ba229ca0c9621001d6b334b44\`
-    // 2. Make sure docker is running by running \`docker ps\`
-    // 3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v5.2.4\`
-    // 4. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.  // I get 0x00ace704070ae2713399584c269c502f5b30e2a983659f41cf4d1968e653a916
-    //   `,
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.3\`. Commit hash should be \`a20bbfa25014a20ba229ca0c9621001d6b334b44\`
+2. Make sure docker is running by running \`docker ps\`
+3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v5.2.4\`
+4. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\`.
+5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
@@ -2459,12 +2528,18 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
   },
   '0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922': {
     title: 'Nitro TEE Aggregated Verifer',
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-aggregator',
     description:
       'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
     verificationStatus: 'notVerified',
   },
   '0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322': {
     title: 'Nitro TEE Verifer',
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-verifier',
     description:
       'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
     verificationStatus: 'notVerified',

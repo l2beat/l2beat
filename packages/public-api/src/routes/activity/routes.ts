@@ -93,7 +93,7 @@ export function addActivityRoutes(
 async function getActivityProjects(ps: ProjectService): Promise<ProjectId[]> {
   const projects = await ps.getProjects({
     select: ['activityConfig'],
-    where: ['isScaling'],
+    where: ['scalingInfo'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 

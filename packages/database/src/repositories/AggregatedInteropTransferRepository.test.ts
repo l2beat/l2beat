@@ -1086,7 +1086,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqualUnsorted([record1, record3])
       })
 
-      it('filters by protocolId when provided', async () => {
+      it('filters by protocolIds when provided', async () => {
         const record1 = record({
           id: 'protocol1',
           timestamp: UnixTime(300),
@@ -1103,17 +1103,25 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           transferCount: 3,
           identifiedCount: 2000,
         })
-        await repository.insertMany([record1, record2])
+        const record3 = record({
+          id: 'protocol3',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 7,
+          identifiedCount: 3000,
+        })
+        await repository.insertMany([record1, record2, record3])
 
         const result = await repository.getByChainsAndTimestamp(
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
           undefined,
-          'protocol1',
+          ['protocol1', 'protocol3'],
         )
 
-        expect(result).toEqual([record1])
+        expect(result).toEqualUnsorted([record1, record3])
       })
 
       it('returns all matching records when bridgeType is undefined', async () => {

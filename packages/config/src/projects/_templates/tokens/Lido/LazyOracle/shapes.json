@@ -4,5 +4,11 @@
     "address": "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B",
     "chain": "ethereum",
     "blockNumber": 24183468
+  },
+  "LazyOracle_new": {
+    "hash": "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291",
+    "address": "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
+    "chain": "ethereum",
+    "blockNumber": 24935917
   }
 }

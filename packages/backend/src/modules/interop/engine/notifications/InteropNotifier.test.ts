@@ -73,7 +73,10 @@ describe(InteropNotifier.name, () => {
           bridgeType: 'nonMinting',
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          reasons: ['Count z-score=12.34', 'Src volume z-score=10.00'],
+          reasons: [
+            'significant increase in transfer count (1900.00%, from 1,000 to 20,000)',
+            'src volume increased 2900.00%, from $2,000,000.00 to $60,000,000.00',
+          ],
         },
       ],
     })
@@ -84,8 +87,12 @@ describe(InteropNotifier.name, () => {
 
     expect(message.includes('Interop aggregate analysis flagged')).toEqual(true)
     expect(message.includes('stargate')).toEqual(true)
-    expect(message.includes('ethereum -> arbitrum')).toEqual(true)
-    expect(message.includes('Count z-score=12.34')).toEqual(true)
+    expect(
+      message.includes('nonMinting transfers on the ethereum -> arbitrum path'),
+    ).toEqual(true)
+    expect(message.includes('significant increase in transfer count')).toEqual(
+      true,
+    )
   })
 
   it('queues and sends suspicious transfer notifications', async () => {

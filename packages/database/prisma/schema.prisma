@@ -581,6 +581,15 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model TokenFactInput {
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(255)
+  arguments String @db.Text
+  context   Json?
+
+  @@index([name])
+}
+
 model AggregatedInteropTokensPair {
   timestamp                  DateTime @db.Timestamp(6)
   id                         String   @db.VarChar(255)

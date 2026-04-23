@@ -81,6 +81,7 @@ export interface BaseProject {
   name: string
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
+  aliases?: string[]
   addedAt: UnixTime
 
   // common data
@@ -131,9 +132,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isScaling?: true
-  isInteropProtocol?: true
-  isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
@@ -1076,6 +1074,7 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  programHashesDescription?: string
   zkVerifiers?: ChainSpecificAddress[]
 }
 

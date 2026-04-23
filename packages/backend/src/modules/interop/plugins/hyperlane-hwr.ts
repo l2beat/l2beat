@@ -6,12 +6,12 @@
  */
 
 import { Address32 } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
   dispatchIdLog,
   dispatchLog,
-  HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
@@ -20,13 +20,13 @@ import {
   processIdLog,
   processLog,
 } from './hyperlane'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import { findParsedAround, type ParsedTransferLog } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -88,6 +88,11 @@ const HwrTransferReceived = createInteropEventType<{
 export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-hwr'
 
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
+
   getDataRequests(): DataRequest[] {
     return [
       {
@@ -108,6 +113,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const networks = this.configs.get(HyperlaneConfig) ?? []
+
     if (input.tx.kind !== 'canonical') {
       return
     }
@@ -136,9 +143,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       )
       if (!messageId) return
 
-      const $dstChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $dstChain = findHyperlaneChain(
+        networks,
         Number(sentTransferRemote.destination),
       )
 
@@ -218,9 +224,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       )
       if (!messageId) return
 
-      const $srcChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $srcChain = findHyperlaneChain(
+        networks,
         Number(receivedTransferRemote.origin),
       )
 
@@ -256,74 +261,109 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [HwrTransferReceived]
+  matchTypes = [HwrTransferSent, HwrTransferReceived]
   match(
     event: InteropEvent,
     db: InteropEventDb,
     tokenMap: TokenMap,
   ): MatchResult | undefined {
-    if (!HwrTransferReceived.checkType(event)) return
+    if (HwrTransferReceived.checkType(event)) {
+      const hwrSent = db.find(HwrTransferSent, {
+        messageId: event.args.messageId,
+      })
+      if (!hwrSent) {
+        // The CCTP-wrapped send path is only detectable on the source side, so
+        // destination-only one-sided receives are best-effort HWR transfers.
+        const srcChain = event.args.$srcChain
+        if (!srcChain || !this.oneSidedChains.includes(srcChain)) return
 
-    const hwrSent = db.find(HwrTransferSent, {
-      messageId: event.args.messageId,
-    })
-    if (!hwrSent) return
+        return [
+          Result.Transfer('hyperlaneHwr.Transfer', {
+            srcChain,
+            dstEvent: event,
+            dstTokenAddress: event.args.tokenAddress,
+            dstAmount: event.args.amount,
+            dstWasMinted: event.args.minted,
+          }),
+        ]
+      }
 
-    const dispatch = db.find(Dispatch, {
-      messageId: event.args.messageId,
-    })
-    if (!dispatch) {
-      return
-    }
+      const dispatch = db.find(Dispatch, {
+        messageId: event.args.messageId,
+      })
+      if (!dispatch) {
+        return
+      }
 
-    const process = db.find(Process, {
-      messageId: event.args.messageId,
-    })
-    if (!process) {
-      return
-    }
+      const process = db.find(Process, {
+        messageId: event.args.messageId,
+      })
+      if (!process) {
+        return
+      }
 
-    if (hwrSent.args.cctp) {
+      if (hwrSent.args.cctp) {
+        return [
+          Result.Message('hyperlane.Message', {
+            app: 'cctp',
+            srcEvent: hwrSent,
+            dstEvent: process,
+            extraEvents: [dispatch, event],
+          }),
+        ]
+      }
+
+      const srcTokenAddress = hwrSent.args.tokenAddress
+      const dstTokenAddress = event.args.tokenAddress
+      const srcWasBurned = hwrSent.args.burned
+      const dstWasMinted = event.args.minted
+      const bridgeType = getBridgeType({
+        srcTokenAddress,
+        dstTokenAddress,
+        srcWasBurned,
+        dstWasMinted,
+        srcChain: hwrSent.ctx.chain,
+        dstChain: event.ctx.chain,
+        tokenMap,
+      })
+
       return [
         Result.Message('hyperlane.Message', {
-          app: 'cctp',
-          srcEvent: hwrSent,
+          app: 'hwr',
+          srcEvent: dispatch,
           dstEvent: process,
-          extraEvents: [dispatch, event],
+        }),
+        Result.Transfer('hyperlaneHwr.Transfer', {
+          srcEvent: hwrSent,
+          srcTokenAddress,
+          srcAmount: hwrSent.args.amount,
+          dstEvent: event,
+          dstTokenAddress,
+          dstAmount: event.args.amount,
+          srcWasBurned,
+          dstWasMinted,
+          bridgeType,
         }),
       ]
     }
 
-    const srcTokenAddress = hwrSent.args.tokenAddress
-    const dstTokenAddress = event.args.tokenAddress
-    const srcWasBurned = hwrSent.args.burned
-    const dstWasMinted = event.args.minted
-    const bridgeType = getBridgeType({
-      srcTokenAddress,
-      dstTokenAddress,
-      srcWasBurned,
-      dstWasMinted,
-      srcChain: hwrSent.ctx.chain,
-      dstChain: event.ctx.chain,
-      tokenMap,
+    if (!HwrTransferSent.checkType(event)) return
+
+    const hwrReceived = db.find(HwrTransferReceived, {
+      messageId: event.args.messageId,
     })
+    if (hwrReceived || event.args.cctp) return
+
+    const dstChain = event.args.$dstChain
+    if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
 
     return [
-      Result.Message('hyperlane.Message', {
-        app: 'hwr',
-        srcEvent: dispatch,
-        dstEvent: process,
-      }),
       Result.Transfer('hyperlaneHwr.Transfer', {
-        srcEvent: hwrSent,
-        srcTokenAddress,
-        srcAmount: hwrSent.args.amount,
-        dstEvent: event,
-        dstTokenAddress,
-        dstAmount: event.args.amount,
-        srcWasBurned,
-        dstWasMinted,
-        bridgeType,
+        srcEvent: event,
+        srcTokenAddress: event.args.tokenAddress,
+        srcAmount: event.args.amount,
+        srcWasBurned: event.args.burned,
+        dstChain,
       }),
     ]
   }

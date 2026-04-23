@@ -21,6 +21,7 @@ export const optimism: ScalingProject = opStackL2({
   genesisTimestamp,
   display: {
     name: 'OP Mainnet',
+    aliases: ['Optimism'],
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
     stacks: ['OP Stack'],

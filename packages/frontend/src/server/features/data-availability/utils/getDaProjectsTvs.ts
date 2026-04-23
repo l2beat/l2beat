@@ -44,7 +44,7 @@ export function pickTvsForProjects(
 }
 
 async function getMockDaProjectsTvsData(): Promise<DaProjectsTvs> {
-  const projects = await ps.getProjects({ where: ['isScaling'] })
+  const projects = await ps.getProjects({ where: ['scalingInfo'] })
   return projects.map((project) => ({
     projectId: project.id,
     tvs: 100000,

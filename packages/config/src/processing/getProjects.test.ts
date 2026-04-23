@@ -274,7 +274,7 @@ describe('getProjects', () => {
     }
 
     for (const project of projects) {
-      if (!project.isScaling || !project.contracts?.zkVerifiers) continue
+      if (!project.scalingInfo || !project.contracts?.zkVerifiers) continue
       for (const verifier of project.contracts.zkVerifiers) {
         it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
           expect(zkCatalogAddresses.has(verifier)).toEqual(true)
@@ -719,9 +719,7 @@ describe('getProjects', () => {
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
       return (
-        p.isScaling === true &&
-        p.archivedAt === undefined &&
-        p.isUpcoming !== true
+        p.scalingInfo && p.archivedAt === undefined && p.isUpcoming !== true
       )
     }
 
@@ -791,7 +789,8 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
+    if (!(project.scalingInfo || project.daBridge) || !project.contracts)
+      continue
 
     for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {

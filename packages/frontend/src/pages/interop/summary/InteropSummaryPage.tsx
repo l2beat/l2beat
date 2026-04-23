@@ -9,7 +9,7 @@ import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import { InitialChainSelector } from '../components/InitialChainSelector'
+import { FlowsView } from '../components/flows/FlowsView'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
@@ -34,15 +34,15 @@ interface Props extends AppLayoutProps {
   mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  onboardingInteropChains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
   initialSelection: InteropSelection
 }
 
 export function InteropSummaryPage({
   mode,
   interopChains,
-  onboardingInteropChains,
   queryState,
   initialSelection,
   protocols,
@@ -61,7 +61,6 @@ export function InteropSummaryPage({
             <Content
               mode={mode}
               interopChains={interopChains}
-              onboardingInteropChains={onboardingInteropChains}
               protocols={protocols}
             />
           </SideNavLayout>
@@ -74,28 +73,21 @@ export function InteropSummaryPage({
 function Content({
   mode,
   interopChains,
-  onboardingInteropChains,
   protocols,
 }: {
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
-  onboardingInteropChains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
 }) {
-  const { selectedChains, selectChain } = useInteropSelectedChains()
+  const { selectedChains } = useInteropSelectedChains()
 
   if (
     mode === 'public' &&
     (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
   ) {
-    return (
-      <InitialChainSelector
-        interopChains={onboardingInteropChains}
-        selectedChains={selectedChains}
-        selectChain={selectChain}
-        type={undefined}
-      />
-    )
+    return <FlowsView interopChains={interopChains} protocols={protocols} />
   }
 
   return (

@@ -11,6 +11,7 @@ const UNSUCCESSFUL_PROGRAM_HASHES_WARNING =
 interface ProjectVerificationWarnings {
   contracts: string | undefined
   programHashes: string | undefined
+  programHashesDescription: string | undefined
 }
 
 export function getProjectVerificationWarnings(
@@ -28,6 +29,11 @@ export function getProjectVerificationWarnings(
       (hash) => hash.verificationStatus === 'unsuccessful',
     )
       ? UNSUCCESSFUL_PROGRAM_HASHES_WARNING
+      : undefined,
+    programHashesDescription: project.contracts?.programHashes?.some(
+      (hash) => hash.verificationStatus === 'unsuccessful',
+    )
+      ? project.contracts?.programHashesDescription
       : undefined,
   }
 }

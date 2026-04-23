@@ -35,7 +35,7 @@ export async function getMonthlyUpdateEntry(
   const to = UnixTime.fromDate(entry.data.endDate)
 
   const allScalingProjects = await ps.getProjects({
-    select: ['isScaling'],
+    select: ['scalingInfo'],
   })
 
   const [tvs, activity] = await Promise.all([

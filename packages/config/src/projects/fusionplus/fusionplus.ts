@@ -16,5 +16,4 @@ export const fusionplus: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

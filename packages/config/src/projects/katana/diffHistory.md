@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x3dabedc1e0d35c0eb02aead7964f84dd156ecb50
+
+# Diff at Wed, 22 Apr 2026 13:08:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2164a3ed7ae404dbff0f676d052e9bf58c88f761 block: 1775809429
+- current timestamp: 1776863221
+
+## Description
+
+fee and multisig changes.
+
+## Watched changes
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (eth:0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        0
++        1000000
+      values.operatorFeeConstant:
+-        1351351351351
++        0
+      values.operatorFeeScalar:
+-        0
++        100000
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xd5330447b7517fadfe067dcefe4d35ee9fe67c54
 
 # Diff at Fri, 10 Apr 2026 08:24:59 GMT:

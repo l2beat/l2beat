@@ -69,6 +69,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     id: p.id,
     name: p.display.name,
     shortName: p.display.shortName,
+    aliases: p.display.aliases,
     slug: p.display.slug,
     addedAt: p.addedAt,
 
@@ -158,8 +159,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
     // tags
-    isScaling: true,
-    isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,
