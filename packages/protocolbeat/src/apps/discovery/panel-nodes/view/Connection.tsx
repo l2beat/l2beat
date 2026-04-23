@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 export interface ConnectionProps {
   from: { x: number; y: number; direction: 'left' | 'right' }
   to: { x: number; y: number; direction: 'left' | 'right' }
@@ -7,7 +9,7 @@ export interface ConnectionProps {
   isGrayedOut?: boolean
 }
 
-export function Connection({ from, to, isDashed, ...rest }: ConnectionProps) {
+function ConnectionInner({ from, to, isDashed, ...rest }: ConnectionProps) {
   const controlA = {
     x: from.x + (from.direction === 'left' ? -50 : 50),
     y: from.y,
@@ -40,6 +42,8 @@ export function Connection({ from, to, isDashed, ...rest }: ConnectionProps) {
     />
   )
 }
+
+export const Connection = memo(ConnectionInner)
 
 function toStrokeClass(
   props: Pick<ConnectionProps, 'isHighlighted' | 'isDimmed' | 'isGrayedOut'>,

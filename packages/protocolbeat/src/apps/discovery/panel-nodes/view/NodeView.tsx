@@ -1,9 +1,9 @@
 import clsx from 'clsx'
+import { memo } from 'react'
 
 import { AddressIcon } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
 import type { Field, Node } from '../store/State'
-import { useStore } from '../store/store'
 import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
@@ -14,15 +14,22 @@ import { getColor } from './colors/colors'
 export interface NodeViewProps {
   node: Node
   selected: boolean
+  selectedSet: ReadonlySet<string>
+  hiddenSet: ReadonlySet<string>
   isDimmed?: boolean
   isGrayedOut?: boolean
 }
 
-export function NodeView(props: NodeViewProps) {
+function NodeViewInner(props: NodeViewProps) {
   const { isDark } = getColor(props.node)
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
+
+  const hiddenFieldNameSet =
+    props.node.hiddenFields.length > 0
+      ? new Set(props.node.hiddenFields)
+      : EMPTY_SET
 
   return (
     <div
@@ -61,16 +68,18 @@ export function NodeView(props: NodeViewProps) {
           )}
         </div>
       </div>
-      {props.node.fields
-        .filter((field) => !props.node.hiddenFields.includes(field.name))
-        .map((field, i) => (
+      {props.node.fields.map((field, i) =>
+        hiddenFieldNameSet.has(field.name) ? null : (
           <NodeField
             key={i}
             field={field}
             selected={props.selected}
+            isHighlighted={props.selectedSet.has(field.target)}
+            targetHidden={props.hiddenSet.has(field.target)}
             isDimmed={props.isDimmed}
           />
-        ))}
+        ),
+      )}
       {props.node.hiddenFields.length > 0 && (
         <div
           className="flex items-end justify-center text-center text-coffee-200/40 text-xs italic"
@@ -83,6 +92,10 @@ export function NodeView(props: NodeViewProps) {
     </div>
   )
 }
+
+const EMPTY_SET: ReadonlySet<string> = new Set()
+
+export const NodeView = memo(NodeViewInner)
 
 function getTitleBackground(node: Node): string {
   const { color, isDark } = getColor(node)
@@ -103,18 +116,15 @@ function getTitleBackground(node: Node): string {
   )`
 }
 
-function NodeField(props: {
+interface NodeFieldProps {
   field: Field
   selected: boolean
+  isHighlighted: boolean
+  targetHidden: boolean
   isDimmed?: boolean
-}) {
-  const isHighlighted = useStore((state) =>
-    state.selected.includes(props.field.target),
-  )
-  const targetHidden = useStore((state) =>
-    state.hidden.includes(props.field.target),
-  )
+}
 
+const NodeField = memo(function NodeField(props: NodeFieldProps) {
   const isLeft = props.field.connection.from.direction === 'left'
 
   return (
@@ -122,7 +132,7 @@ function NodeField(props: {
       <div
         className={clsx(
           'w-full truncate rounded-full px-2 font-mono text-xs',
-          isHighlighted && 'bg-autumn-300 text-black',
+          props.isHighlighted && 'bg-autumn-300 text-black',
         )}
         style={{
           height: FIELD_HEIGHT,
@@ -131,11 +141,13 @@ function NodeField(props: {
       >
         {props.field.name}
       </div>
-      {!targetHidden && (
+      {!props.targetHidden && (
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
-            isHighlighted || props.selected ? 'bg-autumn-300' : 'bg-coffee-400',
+            props.isHighlighted || props.selected
+              ? 'bg-autumn-300'
+              : 'bg-coffee-400',
           )}
           style={{
             left: isLeft ? -5 : undefined,
@@ -146,4 +158,4 @@ function NodeField(props: {
       )}
     </div>
   )
-}
+})

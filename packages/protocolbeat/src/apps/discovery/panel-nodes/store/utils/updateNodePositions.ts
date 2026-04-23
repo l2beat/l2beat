@@ -17,73 +17,148 @@ export function updateNodePositions(state: State): State {
     }
   }
 
-  const nodeDimensions: Record<string, Box> = {}
+  // Compute new box for every node. If the node isn't being dragged/resized
+  // (no entry in positionsBeforeMove), we may still end up with the same box
+  // as before — preserve identity when that happens.
+  const newBoxById = new Map<string, Box>()
+  const movedIds = new Set<string>()
   for (const node of state.nodes) {
     const start = state.positionsBeforeMove[node.id]
     const hiddenFieldsHeight =
       node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-    nodeDimensions[node.id] = {
-      width: node.box.width,
-      height:
-        HEADER_HEIGHT +
-        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-        BOTTOM_PADDING +
-        hiddenFieldsHeight,
-      x: start ? start.x + dx : node.box.x,
-      y: start ? start.y + dy : node.box.y,
+    const height =
+      HEADER_HEIGHT +
+      (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+      BOTTOM_PADDING +
+      hiddenFieldsHeight
+
+    let nextBox: Box
+    if (start !== undefined) {
+      nextBox = {
+        width: node.box.width,
+        height,
+        x: start.x + dx,
+        y: start.y + dy,
+      }
+    } else if (node.box.height !== height) {
+      // Height changed (e.g. hiddenFields toggled) — keep x/y, update height.
+      nextBox = {
+        width: node.box.width,
+        height,
+        x: node.box.x,
+        y: node.box.y,
+      }
+    } else {
+      nextBox = node.box
+    }
+    newBoxById.set(node.id, nextBox)
+    if (nextBox !== node.box) {
+      movedIds.add(node.id)
     }
   }
 
-  const newState = {
-    ...state,
-    nodes: state.nodes.map((node) => {
-      const box = nodeDimensions[node.id]
-      if (!box) {
-        // this should never happen
-        throw new Error('missing dimensions for node ' + node.id)
+  // Detect nodes whose fields have never been laid out (initial load case).
+  // Such fields have a connection without a nodeId set (see processConnection).
+  const nodesNeedingInitialLayout = new Set<string>()
+  for (const node of state.nodes) {
+    for (const field of node.fields) {
+      if ((field.connection as { nodeId?: string }).nodeId === undefined) {
+        nodesNeedingInitialLayout.add(node.id)
+        break
       }
-
-      const hiddenFieldsSet = new Set(node.hiddenFields)
-
-      let visibleIndex = 0
-
-      const processedFields = node.fields.map((field, index) => {
-        const to = nodeDimensions[field.target]
-        if (!to) {
-          // this should never happen
-          throw new Error('missing dimensions for node ' + field.target)
-        }
-
-        const currentVisibleIndex = visibleIndex
-
-        if (!hiddenFieldsSet.has(field.name)) {
-          visibleIndex++
-        }
-
-        return {
-          ...field,
-          box: {
-            x: box.x,
-            y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-            width: box.width,
-            height: FIELD_HEIGHT,
-          },
-          connection: {
-            nodeId: field.target,
-            ...processConnection(currentVisibleIndex, box, to),
-          },
-        }
-      })
-
-      return {
-        ...node,
-        box,
-        fields: processedFields,
-      }
-    }),
+    }
   }
 
-  return newState
+  if (movedIds.size === 0 && nodesNeedingInitialLayout.size === 0) {
+    // Nothing actually changed — keep identity of the whole nodes array.
+    return state
+  }
+
+  const nextNodes = state.nodes.map((node) => {
+    const nextBox = newBoxById.get(node.id) as Box
+
+    const nodeMoved = movedIds.has(node.id)
+    const nodeNeedsInitial = nodesNeedingInitialLayout.has(node.id)
+    // Does any field on this node point to a moved target?
+    let anyTargetMoved = false
+    for (const f of node.fields) {
+      if (movedIds.has(f.target)) {
+        anyTargetMoved = true
+        break
+      }
+    }
+
+    if (!nodeMoved && !anyTargetMoved && !nodeNeedsInitial) {
+      // Neither this node nor any of its targets moved and the node has
+      // already been laid out — keep identity.
+      return node
+    }
+
+    const hiddenFieldsSet = new Set(node.hiddenFields)
+
+    const processedFields = node.fields.map((field, index) => {
+      const toBox = newBoxById.get(field.target)
+      if (!toBox) {
+        // This should never happen, but keep old field as a safe fallback.
+        return field
+      }
+      const targetMoved = movedIds.has(field.target)
+      const fieldNeedsInitial =
+        (field.connection as { nodeId?: string }).nodeId === undefined
+      if (!nodeMoved && !targetMoved && !fieldNeedsInitial) {
+        return field
+      }
+
+      const nextFieldBox =
+        nodeMoved || fieldNeedsInitial
+          ? {
+              x: nextBox.x,
+              y: nextBox.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
+              width: nextBox.width,
+              height: FIELD_HEIGHT,
+            }
+          : field.box
+
+      return {
+        ...field,
+        box: nextFieldBox,
+        connection: {
+          nodeId: field.target,
+          ...processConnection(
+            getVisibleIndex(node.fields, hiddenFieldsSet, index),
+            nextBox,
+            toBox,
+          ),
+        },
+      }
+    })
+
+    return {
+      ...node,
+      box: nextBox,
+      fields: processedFields,
+    }
+  })
+
+  return {
+    ...state,
+    nodes: nextNodes,
+  }
+}
+
+function getVisibleIndex(
+  fields: readonly { name: string }[],
+  hiddenFieldsSet: Set<string>,
+  index: number,
+): number {
+  let visible = 0
+  for (let i = 0; i < index; i++) {
+    const f = fields[i]
+    if (f !== undefined && !hiddenFieldsSet.has(f.name)) {
+      visible++
+    }
+  }
+  return visible
 }
 
 function processConnection(
