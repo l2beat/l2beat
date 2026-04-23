@@ -59,11 +59,7 @@ async function generateProjectOgImage(
     <ProjectOpengraphImage
       baseUrl={'http://localhost:6464'}
       slug={project.slug}
-      name={
-        type === 'interop'
-          ? (project.interopConfig?.name ?? project.name)
-          : project.name
-      }
+      name={project.name}
       size={size}
     >
       {`${type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}

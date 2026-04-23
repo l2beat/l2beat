@@ -129,11 +129,7 @@ export function getSearchBarProjectEntries<
       href: `/interop/protocols/${project.slug}`,
       category: 'interop',
       kind: 'interop',
-      tags: dedupeTags([
-        ...commonTags,
-        project.shortName,
-        'interop',
-      ]),
+      tags: dedupeTags([...commonTags, project.shortName, 'interop']),
     })
   }
 

@@ -127,7 +127,7 @@ export async function getInteropFlows(
       .map((p) => [
         p.id,
         {
-          name: p.interopConfig.name ?? p.name,
+          name: p.name,
           iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
         },
       ]),

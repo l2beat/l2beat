@@ -15,6 +15,8 @@ import type { FeatureFlags } from '../FeatureFlags'
 
 export interface InteropAggregationConfig extends InteropConfig {
   id: string
+  name?: string
+  shortName?: string
 }
 
 export async function getInteropFeatureConfig(
@@ -93,5 +95,10 @@ export async function getInteropAggregationConfigs(
   ps: ProjectService,
 ): Promise<InteropAggregationConfig[]> {
   const projects = await ps.getProjects({ select: ['interopConfig'] })
-  return projects.map((p) => ({ ...p.interopConfig, id: p.id }))
+  return projects.map((p) => ({
+    ...p.interopConfig,
+    id: p.id,
+    name: p.name,
+    shortName: p.shortName,
+  }))
 }
