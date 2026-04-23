@@ -1,0 +1,4501 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-21T14:09:45.417Z",
+  "contracts": {
+    "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4": {
+      "functions": [
+        {
+          "functionName": "createManagedLockFor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.allowedManager"
+            },
+            {
+              "path": "@voter.governor"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.294Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.294Z"
+          }
+        },
+        {
+          "functionName": "depositManaged",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.295Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.295Z"
+          }
+        },
+        {
+          "functionName": "withdrawManaged",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.296Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.296Z"
+          }
+        },
+        {
+          "functionName": "setAllowedManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@voter.governor"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.611Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.611Z"
+          }
+        },
+        {
+          "functionName": "setManagedState",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Toggles deactivation of a managed-type veNFT. Can target any managed NFT. Has no effect on AERO balances — users retain full withdrawManaged() rights at any time. Blocks new deposits into the deactivated mNFT and voting by users currently parked in it; both resolvable by withdrawing.",
+          "ownerDefinitions": [
+            {
+              "path": "@voter.emergencyCouncil"
+            },
+            {
+              "path": "@voter.governor"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Does not touch already-committed funds: withdrawManaged() remains available, so users can always reclaim their locked AERO. The effect is limited to blocking new deposits into the deactivated managed NFT and preventing voting by users currently parked in it."
+            }
+          ],
+          "timestamp": "2026-04-21T13:46:41.398Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:46:41.398Z"
+          }
+        },
+        {
+          "functionName": "setTeam",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.team"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.622Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.622Z"
+          }
+        },
+        {
+          "functionName": "setArtProxy",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.team"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.298Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.298Z"
+          }
+        },
+        {
+          "functionName": "depositFor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.distributor"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.301Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.301Z"
+          }
+        },
+        {
+          "functionName": "toggleSplit",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.team"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.305Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.305Z"
+          }
+        },
+        {
+          "functionName": "setVoterAndDistributor",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.306Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.306Z"
+          }
+        },
+        {
+          "functionName": "voting",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:04.307Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:04.307Z"
+          }
+        }
+      ]
+    },
+    "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "One-time init, already called. Sets whitelisted tokens and minter address.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "setGovernor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Changes governor address. Pure access-control swap, no fund flows depend on it.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "setEpochGovernor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Changes epochGovernor address. Only read as access control for Minter.nudge().",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "setEmergencyCouncil",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Changes emergencyCouncil address. Pure access-control swap for killGauge/reviveGauge.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emergencyCouncil"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "setMaxVotingNum",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Changes max pools per vote. Only read in vote(), doesn't affect existing votes or rewards.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "whitelistToken",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Toggles token whitelist for gauge creation. Doesn't affect existing gauges or funds.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "whitelistNFT",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Toggles late-voting privilege for a veNFT. No effect on accrued rewards or positions.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "killGauge",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Kills a gauge: sets isAlive=false and claws back undistributed claimable rewards to minter. LPs in the gauge lose pending epoch rewards. Already-distributed rewards inside the gauge are unaffected.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emergencyCouncil"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Users can always withdraw their LP NFTs from a killed gauge (withdraw() has no isAlive check) and claim rewards already accrued on the pool side. Only blocks new deposits and returns unclaimed voter-side emissions for the current epoch back to the minter (which re-enter next week's weekly). No LP principal is at risk."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.186Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.186Z"
+          }
+        },
+        {
+          "functionName": "reviveGauge",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Re-enables a killed gauge for future voting and distribution. Does not restore clawed-back rewards.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emergencyCouncil"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardAmount",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Adds new AERO emissions to global index. Only allocates new tokens proportionally; existing distributed rewards unaffected.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-24T12:00:00.000Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T12:00:00.000Z"
+          }
+        }
+      ]
+    },
+    "base:0xe9970892455e54Bab465A398fa575Fef2B187546": {
+      "functions": [
+        {
+          "functionName": "topUp",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.forwarderAddress"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.085Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.085Z"
+          }
+        },
+        {
+          "functionName": "performUpkeep",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.forwarderAddress"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.086Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.086Z"
+          }
+        },
+        {
+          "functionName": "withdraw",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.087Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.087Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.087Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.087Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.088Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.088Z"
+          }
+        },
+        {
+          "functionName": "setTrustedForwarder",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.088Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.088Z"
+          }
+        },
+        {
+          "functionName": "grantWatchlistManagerRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.089Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.089Z"
+          }
+        },
+        {
+          "functionName": "revokeWatchlistManagerRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.089Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.089Z"
+          }
+        },
+        {
+          "functionName": "addToWatchList",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            },
+            {
+              "path": "$self.accessControl.WATCHLIST_MANAGER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.090Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.090Z"
+          }
+        },
+        {
+          "functionName": "addMultipleToWatchList",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.090Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.090Z"
+          }
+        },
+        {
+          "functionName": "removeFromWatchList",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            },
+            {
+              "path": "$self.accessControl.WATCHLIST_MANAGER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.091Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.091Z"
+          }
+        },
+        {
+          "functionName": "removeMultipleFromWatchList",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.091Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.091Z"
+          }
+        },
+        {
+          "functionName": "setConfig",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.092Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.092Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.093Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.093Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.093Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.093Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.094Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.094Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:40.095Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:40.095Z"
+          }
+        }
+      ]
+    },
+    "base:0x227f65131A261548b057215bB1D5Ab2997964C7d": {
+      "functions": [
+        {
+          "functionName": "checkpointToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:45.314Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:45.314Z"
+          }
+        },
+        {
+          "functionName": "setMinter",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-24T07:53:30.856Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T07:53:30.856Z"
+          }
+        }
+      ]
+    },
+    "base:0x11a53f31Bf406de59fCf9613E1922bd3E283A4B4": {
+      "functions": [
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:54.902Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:54.902Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.627Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.627Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardWithoutClaim",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:53:24.749Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:53:24.749Z"
+          }
+        },
+        {
+          "functionName": "setUpkeepManager",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.631Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.631Z"
+          }
+        },
+        {
+          "functionName": "setKeeper",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.635Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.635Z"
+          }
+        },
+        {
+          "functionName": "setArtProxy",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:54.906Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:54.906Z"
+          }
+        },
+        {
+          "functionName": "toggleSplit",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:07:54.908Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:07:54.908Z"
+          }
+        },
+        {
+          "functionName": "transferPermissions",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.639Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.639Z"
+          }
+        }
+      ]
+    },
+    "base:0x4B364C2B5fe67B8566CDe8D0C5335F791030bECC": {
+      "functions": [
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.429Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.429Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.430Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.430Z"
+          }
+        },
+        {
+          "functionName": "performUpkeep",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.trustedForwarder"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.431Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.431Z"
+          }
+        },
+        {
+          "functionName": "registerGauges",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.432Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.432Z"
+          }
+        },
+        {
+          "functionName": "deregisterGauges",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.432Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.432Z"
+          }
+        },
+        {
+          "functionName": "withdrawCancelledUpkeeps",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.433Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.433Z"
+          }
+        },
+        {
+          "functionName": "withdrawLinkBalance",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.433Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.433Z"
+          }
+        },
+        {
+          "functionName": "setNewUpkeepGasLimit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.434Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.434Z"
+          }
+        },
+        {
+          "functionName": "setNewUpkeepFundAmount",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.434Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.434Z"
+          }
+        },
+        {
+          "functionName": "setBatchSize",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.435Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.435Z"
+          }
+        },
+        {
+          "functionName": "setTrustedForwarder",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.435Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.435Z"
+          }
+        },
+        {
+          "functionName": "setUpkeepBalanceMonitor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.436Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.436Z"
+          }
+        },
+        {
+          "functionName": "setExcludedGaugeFactory",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:11.436Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:11.436Z"
+          }
+        }
+      ]
+    },
+    "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da": {
+      "functions": [
+        {
+          "functionName": "setVoter",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-23T08:11:28.205Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-23T08:11:28.205Z"
+          }
+        },
+        {
+          "functionName": "setPauser",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.642Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.642Z"
+          }
+        },
+        {
+          "functionName": "setPauseState",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Pausing blocks only Pool.swap(); existing LPs can still burn() their liquidity positions at any time. Effect is limited to halting future swaps."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.282Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.282Z"
+          }
+        },
+        {
+          "functionName": "setFeeManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeManager"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.647Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.647Z"
+          }
+        },
+        {
+          "functionName": "setFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default stable/volatile swap fee capped at MAX_FEE (3%) and must be > 0. Caller cannot tax swaps above 3%."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.220Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.220Z"
+          }
+        },
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-pool base swap fee capped at MAX_FEE (3%). 420 = sentinel for explicit 0%. Caller cannot tax swaps above 3%."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.192Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.192Z"
+          }
+        }
+      ]
+    },
+    "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7": {
+      "functions": [
+        {
+          "functionName": "setName",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@_voter.emergencyCouncil"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:34.624Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:34.624Z"
+          }
+        },
+        {
+          "functionName": "setSymbol",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@_voter.emergencyCouncil"
+            }
+          ],
+          "timestamp": "2026-03-18T11:08:34.624Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:08:34.624Z"
+          }
+        }
+      ]
+    },
+    "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "isPermissioned": false,
+          "checked": true,
+          "score": "no-impact",
+          "description": "already initialized",
+          "ownerDefinitions": [],
+          "timestamp": "2026-03-19T06:37:43.909Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:37:43.909Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:37:43.909Z"
+          }
+        },
+        {
+          "functionName": "setTeam",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Allows to change the ownership.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.team"
+            }
+          ],
+          "timestamp": "2026-03-19T06:38:53.892Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:38:53.892Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:38:53.892Z"
+          }
+        },
+        {
+          "functionName": "acceptTeam",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Concludes the of ownership.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.pendingTeam"
+            }
+          ],
+          "timestamp": "2026-03-19T06:37:39.805Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:37:39.805Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:37:39.805Z"
+          }
+        },
+        {
+          "functionName": "setTeamRate",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Changes the emission rate for the team.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.team"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Team emission rate capped at MAXIMUM_TEAM_RATE (500 bps = 5% of weekly emissions). Caller cannot redirect more than 5% of weekly mint to the team."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.358Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.358Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:46:39.186Z"
+          }
+        },
+        {
+          "functionName": "nudge",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "This function allows to change the tail emission by 1bps per week.",
+          "ownerDefinitions": [
+            {
+              "path": "@voter.epochGovernor"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "relativeValue",
+              "description": "Tail emission rate can change by at most 1 bps per call."
+            },
+            {
+              "type": "other",
+              "description": "Rate limited to once per epoch (1 week)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.308Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.308Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:38:26.143Z"
+          }
+        },
+        {
+          "functionName": "updatePeriod",
+          "isPermissioned": false,
+          "checked": true,
+          "score": "no-impact",
+          "description": "A permissionless function that allows anyone to mint the weekly emissions and transfer it to the team, rewardsDistributor and voter contract.",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Rate limited to once per week (epoch)."
+            },
+            {
+              "type": "other",
+              "description": "Weekly emission amount is formula-driven (weekly * WEEKLY_DECAY/GROWTH during schedule, or totalSupply * tailEmissionRate / MAX_BPS after TAIL_START). Caller cannot mint an arbitrary amount."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.329Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.329Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:50:18.855Z"
+          }
+        }
+      ]
+    },
+    "base:0x5C3F18F06CC09CA1910767A34a20F771039E37C0": {
+      "functions": [
+        {
+          "functionName": "approve",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self._owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.139Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.139Z"
+          }
+        },
+        {
+          "functionName": "unapprove",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self._owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.169Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.169Z"
+          }
+        },
+        {
+          "functionName": "setManagedRewardsFactory",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self._owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.651Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.651Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self._owner"
+            }
+          ],
+          "timestamp": "2026-03-24T06:56:19.788Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-24T06:56:19.788Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self._owner"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.655Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.655Z"
+          }
+        }
+      ]
+    },
+    "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Base fee cannot exceed MAX_BASE_FEE (3%) or must be ZERO_FEE_INDICATOR",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_BASE_FEE"
+                },
+                "unit": "pips"
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.764Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.764Z"
+          }
+        },
+        {
+          "functionName": "setDefaultScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Scaling factor cannot exceed MAX_SCALING_FACTOR (1e18)",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_SCALING_FACTOR"
+                }
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.765Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.765Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default fee cap cannot exceed MAX_FEE_CAP (5%)",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_FEE_CAP"
+                },
+                "unit": "pips"
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.766Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.766Z"
+          }
+        },
+        {
+          "functionName": "setScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Scaling factor cannot exceed MAX_SCALING_FACTOR (1e18)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.867Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.867Z"
+          }
+        },
+        {
+          "functionName": "setFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Fee cap must be > 0 and cannot exceed MAX_FEE_CAP (5%)",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "1"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_FEE_CAP"
+                },
+                "unit": "pips"
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.767Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.767Z"
+          }
+        },
+        {
+          "functionName": "resetDynamicFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.767Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.767Z"
+          }
+        },
+        {
+          "functionName": "setSecondsAgo",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "TWAP lookback must be >= MIN_SECONDS_AGO (2s) and < MAX_SECONDS_AGO (131070s)",
+              "valueRange": {
+                "min": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MIN_SECONDS_AGO"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_SECONDS_AGO"
+                },
+                "unit": "seconds"
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.768Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.768Z"
+          }
+        },
+        {
+          "functionName": "registerDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Discount cannot exceed MAX_DISCOUNT (50%)",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x00cB12a1c84dfC1b9c70734C0385E769Bc86e9Ef",
+                  "fieldName": "MAX_DISCOUNT"
+                },
+                "unit": "pips"
+              }
+            }
+          ],
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.769Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.769Z"
+          }
+        },
+        {
+          "functionName": "deregisterDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:18.769Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:18.769Z"
+          }
+        },
+        {
+          "functionName": "bulkUpdateFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-20T06:39:22.944Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T06:39:22.944Z"
+          }
+        }
+      ]
+    },
+    "base:0xCCC21f4750E8B3E9C095BCB5d2fF59247A2CCD35": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@factory.unstakedFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:09:28.638Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:09:28.638Z"
+          }
+        }
+      ]
+    },
+    "base:0x0AD08370c76Ff426F534bb2AFFD9b5555338ee68": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-pool unstaked-fee redirect capped at MAX_FEE (500000 / 1000000 = 50%). 420 = sentinel for explicit 0%. Caller cannot redirect more than 50% of newly-accrued swap fees from unstaked to staked LPs."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.421Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.421Z"
+          }
+        }
+      ]
+    },
+    "base:0xeC8E5342B19977B4eF8892e02D8DAEcfa1315831": {
+      "functions": [
+        {
+          "functionName": "stake",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "onlyGauge callback — not callable by humans or admins. Invoked by the CLGauge contract during user deposit/withdraw to update the pool's staked-liquidity accounting. No fund-movement path."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.242Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.242Z"
+          }
+        },
+        {
+          "functionName": "updateRewardsGrowthGlobal",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "onlyGauge callback — ticks the reward accumulator; cannot transfer tokens. Invoked by the CLGauge contract during regular user interactions."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.300Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.300Z"
+          }
+        },
+        {
+          "functionName": "syncReward",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "onlyGauge callback — invoked by the CLGauge contract after notifyRewardAmount (itself driven by Voter) to set the next epoch's reward schedule on the pool. Not an admin lever."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.360Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.360Z"
+          }
+        },
+        {
+          "functionName": "collectFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "onlyGauge callback — transfers only the accumulated gaugeFees storage balance (fees levied on unstaked liquidity) to the CLGauge for distribution to staked LPs. Cannot extract LP reserves."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.392Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.392Z"
+          }
+        },
+        {
+          "functionName": "setGaugeAndPositionManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factoryRegistry.factoriesToPoolFactory(factory).gaugeFactory"
+            }
+          ],
+          "timestamp": "2026-04-21T13:42:12.659Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:42:12.659Z"
+          }
+        }
+      ]
+    },
+    "base:0x942e97a4c6FdC38B4CD1c0298D37d81fDD8E5A16": {
+      "functions": [
+        {
+          "functionName": "stake",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:14.852Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:14.852Z"
+          }
+        },
+        {
+          "functionName": "updateRewardsGrowthGlobal",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:14.854Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:14.854Z"
+          }
+        },
+        {
+          "functionName": "syncReward",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:14.855Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:14.855Z"
+          }
+        },
+        {
+          "functionName": "collectFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:14.855Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:14.855Z"
+          }
+        },
+        {
+          "functionName": "setGaugeAndPositionManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factoryRegistry.factoriesToPoolFactory(factory).gaugeFactory"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:14.856Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:14.856Z"
+          }
+        }
+      ]
+    },
+    "base:0xD30677bd8dd15132F251Cb54CbDA552d2A05Fb08": {
+      "functions": [
+        {
+          "functionName": "setNotifyAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.notifyAdmin"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:20.134Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:20.134Z"
+          }
+        },
+        {
+          "functionName": "setNonfungiblePositionManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:20.135Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:20.135Z"
+          }
+        },
+        {
+          "functionName": "createGauge",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:20.135Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:20.135Z"
+          }
+        }
+      ]
+    },
+    "base:0xB630227a79707D517320b6c0f885806389dFcbB3": {
+      "functions": [
+        {
+          "functionName": "setEmissionAdmin",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "timestamp": "2026-03-20T05:43:17.674Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:43:17.674Z"
+          }
+        },
+        {
+          "functionName": "setNotifyAdmin",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "New administrator that will be able to call `notifyRewardWithoutClaim` on gauges.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.notifyAdmin"
+            }
+          ],
+          "timestamp": "2026-03-20T05:45:29.015Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:45:29.015Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:45:14.413Z"
+          }
+        },
+        {
+          "functionName": "setNonfungiblePositionManager",
+          "isPermissioned": true,
+          "checked": true,
+          "description": "Only callable once",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-20T05:36:57.167Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:36:57.167Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:36:57.167Z"
+          }
+        },
+        {
+          "functionName": "setEmissionCap",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the emission cap for a Gauge",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Emission cap cannot exceed MAX_BPS (10000 bps)",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0xB630227a79707D517320b6c0f885806389dFcbB3",
+                  "fieldName": "MAX_BPS"
+                },
+                "unit": "bps"
+              }
+            }
+          ],
+          "timestamp": "2026-03-20T05:55:34.815Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:55:34.815Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:55:34.815Z"
+          }
+        },
+        {
+          "functionName": "setRedistributor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "timestamp": "2026-03-20T06:04:02.169Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T06:04:02.169Z"
+          }
+        },
+        {
+          "functionName": "setDefaultCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Sets the default emission cap for the gauge.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default cap must be between 1 and MAX_BPS (10000)",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "1"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0xB630227a79707D517320b6c0f885806389dFcbB3",
+                  "fieldName": "MAX_BPS"
+                },
+                "unit": "bps"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0xB630227a79707D517320b6c0f885806389dFcbB3",
+                "fieldName": "MAX_BPS"
+              }
+            }
+          ],
+          "timestamp": "2026-03-20T05:43:54.690Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:43:54.690Z"
+          }
+        },
+        {
+          "functionName": "createGauge",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-20T05:13:02.834Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-20T05:13:02.834Z"
+          },
+          "comments": [
+            {
+              "author": "yvesboutellier",
+              "date": "2026-03-20T05:13:02.834Z",
+              "text": "admins are just to bypass additional whitelist checks"
+            }
+          ]
+        }
+      ]
+    },
+    "base:0xC0d2086B6f70C0C40423626167096c6196cFA0c8": {
+      "functions": [
+        {
+          "functionName": "notifyRewardAmount",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:53.016Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:53.016Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardWithoutClaim",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@gaugeFactory.notifyAdmin"
+            },
+            {
+              "path": "@gaugeFactory.redistributor"
+            }
+          ],
+          "timestamp": "2026-03-18T11:10:53.017Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:10:53.017Z"
+          }
+        }
+      ]
+    },
+    "base:0xaDe65c38CD4849aDBA595a4323a8C7DdfE89716a": {
+      "functions": [
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Changes the owner of the contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-19T07:56:41.997Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:41.997Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:41.997Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "The new `swapFeeManager` can update the swapFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-19T07:56:43.137Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:43.137Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:43.137Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "unstakedFeeManager can set defaultUnstakedFee and unstakedFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-19T08:01:13.508Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T08:01:13.508Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T08:00:23.363Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeModule",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the fee module which is queried by pools. The getSwapFee function enforces the mitigation. It cannot be higher than 1000bps (10%).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-19T07:56:46.160Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:46.160Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:56:46.160Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeModule",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Swaps in the module used to split newly-accrued swap fees. Existing LP principal and already-collected fees are unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.892Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.892Z"
+          }
+        },
+        {
+          "functionName": "setDefaultUnstakedFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Sets the amount of the collected fees that are redistributed from unstaked to staked LPs (staked in Gauges).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only the split of future swap fees between unstaked LPs and gauges (staked LPs). Existing LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Unstaked-fee share capped at 50% (500000 bps). Caller cannot redirect more than half of future swap fees."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.916Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.916Z"
+          }
+        },
+        {
+          "functionName": "enableTickSpacing",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Allow new tick spacing.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default fee for the new tick spacing must be > 0 and capped at 10% (100000 / 1000000). Only applies to future pools created with this tick spacing."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.931Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.931Z"
+          }
+        }
+      ]
+    },
+    "base:0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A": {
+      "functions": [
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Changes the owner of the contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-19T07:27:59.243Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:27:59.243Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:27:59.243Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "The new `swapFeeManager` can update the swapFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-19T07:32:19.178Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:32:19.178Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:32:17.366Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "unstakedFeeManager can set defaultUnstakedFee and unstakedFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:07.735Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:07.735Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:07.735Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeModule",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the fee module which is queried by pools. The getSwapFee function enforces the mitigation. It cannot be higher than 1000bps (10%).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:07.736Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:07.736Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:07.736Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeModule",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Swaps in the module used to split newly-accrued swap fees. Existing LP principal and already-collected fees are unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.955Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.955Z"
+          }
+        },
+        {
+          "functionName": "setDefaultUnstakedFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Sets the amount of the collected fees that are redistributed from unstaked to staked LPs (staked in Gauges).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only the split of future swap fees between unstaked LPs and gauges (staked LPs). Existing LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Unstaked-fee share capped at 50% (500000 bps). Caller cannot redirect more than half of future swap fees."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.984Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.984Z"
+          }
+        },
+        {
+          "functionName": "enableTickSpacing",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Allow new tick spacing.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default fee for the new tick spacing must be > 0 and capped at 10% (100000 / 1000000). Only applies to future pools created with this tick spacing."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.997Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.997Z"
+          }
+        }
+      ]
+    },
+    "base:0xf4bAb6A129164aBa9B113cB96BA4266dF49f8743": {
+      "functions": [
+        {
+          "functionName": "transmit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_transmitters"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:22.825Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:22.825Z"
+          }
+        },
+        {
+          "functionName": "setConfig",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:22.826Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:22.826Z"
+          }
+        },
+        {
+          "functionName": "setConfigTypeSafe",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:22.827Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:22.827Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:22.828Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:22.828Z"
+          }
+        },
+        {
+          "functionName": "acceptOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_pendingOwner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:22.828Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:22.828Z"
+          }
+        }
+      ]
+    },
+    "base:0xE28Adc50c7551CFf69FCF32D45d037e5F6554264": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.876Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.876Z"
+          }
+        },
+        {
+          "functionName": "acceptOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_pendingOwner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.878Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.878Z"
+          }
+        },
+        {
+          "functionName": "approve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.879Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.879Z"
+          }
+        },
+        {
+          "functionName": "cancel",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_pendingRequests.admin"
+            },
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.880Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.880Z"
+          }
+        },
+        {
+          "functionName": "setConfig",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.880Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.880Z"
+          }
+        },
+        {
+          "functionName": "setTriggerConfig",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.881Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.881Z"
+          }
+        },
+        {
+          "functionName": "setAutoApproveAllowedSender",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.881Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.881Z"
+          }
+        },
+        {
+          "functionName": "onTokenTransfer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.i_LINK"
+            }
+          ],
+          "timestamp": "2026-03-18T11:11:32.882Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-18T11:11:32.882Z"
+          }
+        }
+      ]
+    },
+    "base:0xF4171B0953b52Fa55462E4d76ecA1845Db69af00": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets a custom fee for a specific pool.",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-pool custom swap fee capped at factory MAX_FEE. Caller cannot tax swaps above this cap."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.390Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.390Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:32:18.928Z"
+          }
+        }
+      ]
+    },
+    "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631": {
+      "functions": [
+        {
+          "functionName": "setMinter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "This function was executd once, Minter contract does not have any function to call this and is the only allowed caller.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-19T07:10:49.649Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:10:49.649Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:10:49.649Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Mitigations on minting amount are on the Minter contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-03-19T07:52:06.347Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:52:06.347Z"
+          },
+          "completedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T07:08:36.036Z"
+          }
+        }
+      ]
+    },
+    "base:0xC7150B9909DFfCB5e12E4Be6999D6f4b827eE497": {
+      "functions": [
+        {
+          "functionName": "executeNudge",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "",
+          "ownerDefinitions": [
+            {
+              "path": "@voter.governor"
+            }
+          ],
+          "timestamp": "2026-03-19T06:34:43.349Z",
+          "lastChangedBy": {
+            "author": "yvesboutellier",
+            "date": "2026-03-19T06:34:43.349Z"
+          }
+        },
+        {
+          "functionName": "setResult",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Records the outcome of the current epoch's tail-rate nudge vote (Expired / Succeeded / Defeated). The result is only read by Minter.nudge(), which adjusts tailEmissionRate by ±1 bps per epoch within the [MINIMUM_TAIL_RATE, MAXIMUM_TAIL_RATE] band. Only affects next-epoch emissions — never touches existing AERO balances.",
+          "ownerDefinitions": [
+            {
+              "path": "@voter.governor"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Does not touch already-minted AERO. Affects only the next epoch's tail emission rate via Minter.nudge(), capped at ±1 bps per epoch and bounded by MINIMUM_TAIL_RATE / MAXIMUM_TAIL_RATE on Minter."
+            }
+          ],
+          "timestamp": "2026-04-21T14:09:45.412Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T14:09:45.412Z"
+          }
+        }
+      ]
+    },
+    "base:0xf8f2eB4940CFE7d13603DDDD87f123820Fc061Ef": {
+      "functions": [
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Changes the owner of the contract.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T07:40:44.061Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.061Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.061Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "The new `swapFeeManager` can update the swapFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-04-21T07:40:44.066Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.066Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.066Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeManager",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "unstakedFeeManager can set defaultUnstakedFee and unstakedFeeModule.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "timestamp": "2026-04-21T07:40:44.070Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.070Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.070Z"
+          }
+        },
+        {
+          "functionName": "setSwapFeeModule",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the fee module which is queried by pools. The getSwapFee function enforces the mitigation. It cannot be higher than 1000bps (10%).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.swapFeeManager"
+            }
+          ],
+          "timestamp": "2026-04-21T07:40:44.074Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.074Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T07:40:44.074Z"
+          }
+        },
+        {
+          "functionName": "setUnstakedFeeModule",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Swaps in the module used to split newly-accrued swap fees. Existing LP principal and already-collected fees are unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.031Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.031Z"
+          }
+        },
+        {
+          "functionName": "setDefaultUnstakedFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Sets the amount of the collected fees that are redistributed from unstaked to staked LPs (staked in Gauges).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only the split of future swap fees between unstaked LPs and gauges (staked LPs). Existing LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Unstaked-fee share capped at 50% (500000 bps). Caller cannot redirect more than half of future swap fees."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.073Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.073Z"
+          }
+        },
+        {
+          "functionName": "enableTickSpacing",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Allow new tick spacing.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Default fee for the new tick spacing must be > 0 and capped at 10% (100000 / 1000000). Only applies to future pools created with this tick spacing."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.101Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.101Z"
+          }
+        }
+      ]
+    },
+    "base:0x434BCcaB043311a20b16021C137EA81702790f7B": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "timestamp": "2026-04-21T08:02:21.767Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.767Z"
+          }
+        },
+        {
+          "functionName": "getReward(address)",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.784Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.784Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardAmount",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.800Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.800Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardWithoutClaim",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@gaugeFactory.notifyAdmin"
+            },
+            {
+              "path": "@gaugeFactory.redistributor"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.815Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.815Z"
+          }
+        }
+      ]
+    },
+    "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB": {
+      "functions": [
+        {
+          "functionName": "setEmissionAdmin",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.830Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.830Z"
+          }
+        },
+        {
+          "functionName": "setNotifyAdmin",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.notifyAdmin"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.845Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.845Z"
+          }
+        },
+        {
+          "functionName": "setNonfungiblePositionManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "timestamp": "2026-04-21T08:02:21.861Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.861Z"
+          }
+        },
+        {
+          "functionName": "setEmissionCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "The per-gauge emission cap is expressed in basis points and capped at 100% (10,000 bps = MAX_BPS).",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                  "fieldName": "MAX_BPS"
+                },
+                "unit": "bps"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "MAX_BPS"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.872Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.872Z"
+          }
+        },
+        {
+          "functionName": "setRedistributor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "Sets the redistributor address that receives over-cap emissions excess from CLGauges. Only affects future voter distributions (the excess portion when a gauge's voted emissions exceed its per-epoch cap) — no path to existing AERO balances. The redistributor also gains the right to call notifyRewardWithoutClaim on CLGauges, but that function pulls tokens from msg.sender and can only add (not drain) rewards.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Only routes future over-cap emission excess from CLGauges; cannot touch already-committed AERO in gauges, VotingEscrow, or user wallets. The redistributor's notifyRewardWithoutClaim access pulls tokens from the caller and can only add rewards, not drain them."
+            },
+            {
+              "type": "other",
+              "label": "not VE team",
+              "description": "The redistributor cannot equal the current VotingEscrow team or the legacy gauge factory's notifyAdmin — those permissions must be transferred out first.",
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "redistributor"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T14:09:45.417Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T14:09:45.417Z"
+          }
+        },
+        {
+          "functionName": "setDefaultCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.emissionAdmin"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "The default emission cap must be non-zero and is capped at 100% (10,000 bps = MAX_BPS).",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "1"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                  "fieldName": "MAX_BPS"
+                },
+                "unit": "bps"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "MAX_BPS"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.904Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.904Z"
+          }
+        },
+        {
+          "functionName": "createGauge",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.voter"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.918Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.918Z"
+          }
+        },
+        {
+          "functionName": "setGaugeStakeManager",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gaugeStakeManager"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.929Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.929Z"
+          }
+        },
+        {
+          "functionName": "setDefaultMinStakeTime",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gaugeStakeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "The default minimum stake time before penalty-free unstake/claim is bounded at 1 week (MAX_MIN_STAKE_TIME).",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                  "fieldName": "MAX_MIN_STAKE_TIME"
+                },
+                "unit": "raw"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "MAX_MIN_STAKE_TIME"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.941Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.941Z"
+          }
+        },
+        {
+          "functionName": "setMinStakeTime",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gaugeStakeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "The per-pool minimum stake time before penalty-free unstake/claim is bounded at 1 week (MAX_MIN_STAKE_TIME).",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                  "fieldName": "MAX_MIN_STAKE_TIME"
+                },
+                "unit": "raw"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "MAX_MIN_STAKE_TIME"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.958Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.958Z"
+          }
+        },
+        {
+          "functionName": "setPenaltyRate",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gaugeStakeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "The early-unstake penalty rate is capped at 100% (10,000 bps = MAX_BPS). A 100% rate would zero out rewards claimed before the minimum stake time elapses.",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "discovered",
+                  "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                  "fieldName": "MAX_BPS"
+                },
+                "unit": "bps"
+              },
+              "mitigatedField": {
+                "contractAddress": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+                "fieldName": "MAX_BPS"
+              }
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.977Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.977Z"
+          }
+        }
+      ]
+    },
+    "base:0xc770898522D2A9c8Da7A10D63989b6b58305B665": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "timestamp": "2026-04-21T08:02:21.578Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.578Z"
+          }
+        },
+        {
+          "functionName": "collect(address,int24,int24,uint128,uint128,address)",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.nft"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.610Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.610Z"
+          }
+        },
+        {
+          "functionName": "burn(int24,int24,uint128,address)",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.nft"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.642Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.642Z"
+          }
+        },
+        {
+          "functionName": "stake",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.671Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.671Z"
+          }
+        },
+        {
+          "functionName": "updateRewardsGrowthGlobal",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.697Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.697Z"
+          }
+        },
+        {
+          "functionName": "syncReward",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.720Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.720Z"
+          }
+        },
+        {
+          "functionName": "collectFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.gauge"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.737Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.737Z"
+          }
+        },
+        {
+          "functionName": "setGaugeAndPositionManager",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "timestamp": "2026-04-21T08:02:21.752Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.752Z"
+          }
+        }
+      ]
+    },
+    "base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.unstakedFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Only affects how newly-accrued swap fees are split between unstaked LPs and gauges (staked LPs). Existing LP principal and already-collected fees are not touched."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool unstaked-fee share capped at 50% (500000 / 1000000). Caller cannot redirect more than half of future swap fees."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.474Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.474Z"
+          }
+        }
+      ]
+    },
+    "base:0x090b2A6bb475c00e2256e2095A60887cD710803b": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool base fee capped at 3% (30000 / 1000000). 420 = sentinel for explicit 0%."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.561Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.561Z"
+          }
+        },
+        {
+          "functionName": "setDefaultScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default scaling factor K (dynamic-fee sensitivity to volatility) capped at 1e18."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.593Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.593Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default fee cap itself capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.629Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.629Z"
+          }
+        },
+        {
+          "functionName": "setScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool scaling factor K capped at 1e18. A fee cap must be set first."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.683Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.683Z"
+          }
+        },
+        {
+          "functionName": "setFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool maximum total fee cap must be non-zero and capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.725Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.725Z"
+          }
+        },
+        {
+          "functionName": "resetDynamicFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.958Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.958Z"
+          }
+        },
+        {
+          "functionName": "setSecondsAgo",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "TWAP window bounded between 2 seconds and 131068 seconds (~36.4 hours)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.770Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.770Z"
+          }
+        },
+        {
+          "functionName": "registerDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-address fee discount capped at 50% (500000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.813Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.813Z"
+          }
+        },
+        {
+          "functionName": "deregisterDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.008Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.008Z"
+          }
+        },
+        {
+          "functionName": "bulkUpdateFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Every fee in the bulk update capped at 3% (30000 / 1000000), matching setCustomFee."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.852Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.852Z"
+          }
+        },
+        {
+          "functionName": "setInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool initial fee (used before the first swap observation each block) capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:08.908Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:08.908Z"
+          }
+        },
+        {
+          "functionName": "disableInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.046Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.046Z"
+          }
+        }
+      ]
+    },
+    "base:0x87D8f999BBa9343E8099552426775B51C338E8CB": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool base fee capped at 3% (30000 / 1000000). 420 = sentinel for explicit 0%."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.076Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.076Z"
+          }
+        },
+        {
+          "functionName": "setDefaultScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default scaling factor K (dynamic-fee sensitivity to volatility) capped at 1e18."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.125Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.125Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default fee cap itself capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.180Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.180Z"
+          }
+        },
+        {
+          "functionName": "setScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool scaling factor K capped at 1e18. A fee cap must be set first."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.226Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.226Z"
+          }
+        },
+        {
+          "functionName": "setFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool maximum total fee cap must be non-zero and capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.260Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.260Z"
+          }
+        },
+        {
+          "functionName": "resetDynamicFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.419Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.419Z"
+          }
+        },
+        {
+          "functionName": "setSecondsAgo",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "TWAP window bounded between 2 seconds and 131068 seconds (~36.4 hours)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.285Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.285Z"
+          }
+        },
+        {
+          "functionName": "registerDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-address fee discount capped at 50% (500000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.322Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.322Z"
+          }
+        },
+        {
+          "functionName": "deregisterDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.447Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.447Z"
+          }
+        },
+        {
+          "functionName": "bulkUpdateFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Every fee in the bulk update capped at 3% (30000 / 1000000), matching setCustomFee."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.355Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.355Z"
+          }
+        },
+        {
+          "functionName": "setInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool initial fee (used before the first swap observation each block) capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.386Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.386Z"
+          }
+        },
+        {
+          "functionName": "disableInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.471Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.471Z"
+          }
+        }
+      ]
+    },
+    "base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785": {
+      "functions": [
+        {
+          "functionName": "setCustomFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool base fee capped at 3% (30000 / 1000000). 420 = sentinel for explicit 0%."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.498Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.498Z"
+          }
+        },
+        {
+          "functionName": "setDefaultScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default scaling factor K (dynamic-fee sensitivity to volatility) capped at 1e18."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.568Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.568Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Default fee cap itself capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.607Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.607Z"
+          }
+        },
+        {
+          "functionName": "setScalingFactor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool scaling factor K capped at 1e18. A fee cap must be set first."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.636Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.636Z"
+          }
+        },
+        {
+          "functionName": "setFeeCap",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool maximum total fee cap must be non-zero and capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.661Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.661Z"
+          }
+        },
+        {
+          "functionName": "resetDynamicFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.787Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.787Z"
+          }
+        },
+        {
+          "functionName": "setSecondsAgo",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "TWAP window bounded between 2 seconds and 131068 seconds (~36.4 hours)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.684Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.684Z"
+          }
+        },
+        {
+          "functionName": "registerDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-address fee discount capped at 50% (500000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.710Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.710Z"
+          }
+        },
+        {
+          "functionName": "deregisterDiscounted",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.816Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.816Z"
+          }
+        },
+        {
+          "functionName": "bulkUpdateFees",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Every fee in the bulk update capped at 3% (30000 / 1000000), matching setCustomFee."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.735Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.735Z"
+          }
+        },
+        {
+          "functionName": "setInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            },
+            {
+              "type": "valueRange",
+              "description": "Per-pool initial fee (used before the first swap observation each block) capped at 5% (50000 / 1000000)."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.760Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.760Z"
+          }
+        },
+        {
+          "functionName": "disableInitialFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "@factory.swapFeeManager"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "future-only",
+              "description": "Changes only affect swap fees charged on future swaps; LP principal is unaffected."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:09.854Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:09.854Z"
+          }
+        }
+      ]
+    },
+    "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": {
+      "functions": [
+        {
+          "functionName": "setTokenDescriptor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.460Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.460Z"
+          }
+        },
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "NPM owner controls only setTokenDescriptor (NFT metadata URI). No access to position funds, fees, or transfers. LP principal is never at risk."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.416Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.416Z"
+          }
+        }
+      ]
+    },
+    "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53": {
+      "functions": [
+        {
+          "functionName": "setTokenDescriptor",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:21.527Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:21.527Z"
+          }
+        },
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "NPM owner controls only setTokenDescriptor (NFT metadata URI). No access to position funds, fees, or transfers. LP principal is never at risk."
+            }
+          ],
+          "timestamp": "2026-04-21T13:55:10.450Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T13:55:10.450Z"
+          }
+        }
+      ]
+    },
+    "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15": {
+      "functions": [
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.000Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.000Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.012Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.012Z"
+          }
+        },
+        {
+          "functionName": "deposit",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "timestamp": "2026-04-21T08:02:22.040Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.040Z"
+          }
+        },
+        {
+          "functionName": "redistribute(address[])",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.keeper"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.072Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.072Z"
+          }
+        },
+        {
+          "functionName": "redistribute(uint256,uint256)",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.keeper"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.105Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.105Z"
+          }
+        },
+        {
+          "functionName": "notifyRewardWithoutClaim",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.133Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.133Z"
+          }
+        },
+        {
+          "functionName": "setUpkeepManager",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.162Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.162Z"
+          }
+        },
+        {
+          "functionName": "setKeeper",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.195Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.195Z"
+          }
+        },
+        {
+          "functionName": "setArtProxy",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.216Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.216Z"
+          }
+        },
+        {
+          "functionName": "toggleSplit",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.230Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.230Z"
+          }
+        },
+        {
+          "functionName": "transferPermissions",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-21T08:02:22.247Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-21T08:02:22.247Z"
+          }
+        }
+      ]
+    }
+  }
+}

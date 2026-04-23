@@ -206,6 +206,109 @@ class VariableChainHeuristic implements ResolutionHeuristic {
 }
 
 /**
+ * Dependency Field Heuristic
+ *
+ * Catches the case where the caller's `storageVariable` is not a stored field
+ * on the caller itself but a public getter that forwards to a dependency — e.g.
+ * `Voter.rewardToken()` returns `minter.rewardToken()` at runtime. Slither sees
+ * it as a read against `rewardToken` on the caller, but discovery only ever
+ * persists stored state, so the name won't appear in the caller's values.
+ *
+ * Resolution: if `storageVariable` is NOT a key in the caller's values, walk
+ * the caller's dependency addresses (the addresses held in other value fields)
+ * and see whether any of THEM have a matching field. A single hop is enough in
+ * practice; most forwarded getters point one contract away.
+ *
+ * Confidence: 1 match → 90%, 2 matches → 65%, 3+ matches → 45%.
+ */
+class DependencyFieldHeuristic implements ResolutionHeuristic {
+  name = 'dependency-field'
+  description = 'Follow caller dependency addresses to find the storage field'
+
+  apply(context: HeuristicContext): HeuristicResult | null {
+    const { call, callerContractAddress, discovered } = context
+
+    const callerContract = discovered.entries.find(
+      (e) =>
+        addressesEqual(e.address, callerContractAddress) &&
+        e.type === 'Contract',
+    )
+    if (
+      !callerContract ||
+      !('values' in callerContract) ||
+      !callerContract.values
+    ) {
+      return null
+    }
+
+    // If the name IS a direct field on the caller, VariableChainHeuristic will
+    // handle it — don't compete.
+    if (call.storageVariable in callerContract.values) {
+      return null
+    }
+
+    // Collect dependency addresses held in the caller's values (one level deep
+    // into nested objects to match DiscoveredValuesScan's reach).
+    const depAddresses = new Set<string>()
+    for (const value of Object.values(callerContract.values)) {
+      for (const addr of extractChainAddresses(value)) {
+        depAddresses.add(normalizeChainAddress(addr))
+      }
+    }
+    if (depAddresses.size === 0) {
+      return null
+    }
+
+    // For each dependency, check if its discovered values contain a field with
+    // the same name as the storageVariable, and that field resolves to an
+    // address whose contract has the called function in its ABI.
+    const matches: HeuristicMatch[] = []
+    const seen = new Set<string>()
+
+    for (const depEntry of discovered.entries) {
+      if (depEntry.type !== 'Contract') continue
+      if (!depAddresses.has(normalizeChainAddress(depEntry.address))) continue
+      if (!('values' in depEntry) || !depEntry.values) continue
+
+      const depValue = depEntry.values[call.storageVariable]
+      if (depValue === undefined) continue
+
+      for (const addr of extractChainAddresses(depValue)) {
+        const normalized = normalizeChainAddress(addr)
+        if (seen.has(normalized)) continue
+        seen.add(normalized)
+
+        const targetEntry = discovered.entries.find((e) =>
+          addressesEqual(e.address, addr),
+        )
+        if (
+          !targetEntry ||
+          targetEntry.type !== 'Contract' ||
+          !contractHasFunction(discovered, targetEntry, call.calledFunction)
+        ) {
+          continue
+        }
+
+        matches.push({
+          address: addr,
+          contractName: targetEntry.name,
+        })
+      }
+    }
+
+    if (matches.length === 0) {
+      return null
+    }
+
+    let confidence = 45
+    if (matches.length === 1) confidence = 90
+    else if (matches.length === 2) confidence = 65
+
+    return { matches, confidence }
+  }
+}
+
+/**
  * Interface Name to Contract Name Heuristic
  *
  * Matches interface name to contract names by stripping the `I` prefix.
@@ -637,6 +740,7 @@ export function createHeuristicEngine(): HeuristicEngine {
 
   // Register heuristics (engine selects by highest confidence, order only affects tiebreaking)
   engine.register(new VariableChainHeuristic())
+  engine.register(new DependencyFieldHeuristic())
   engine.register(new DiscoveredValuesScanHeuristic())
   engine.register(new InterfaceNameHeuristic())
   engine.register(new FunctionSignatureHeuristic())

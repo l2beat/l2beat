@@ -1,0 +1,83 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-20T12:00:00.000Z",
+  "protocolSlug": "aerodrome",
+  "protocolName": "Aerodrome Finance",
+  "tokenName": "AERO",
+  "chain": "Base",
+  "projectType": "dex",
+  "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of {{aeroMarketCap}}.",
+  "admins": {
+    "base:0xe6a41fe61e7a1996b59d508661e3f524d6a32075": {
+      "name": "Aerodrome Governor 3/7 Multisig",
+      "description": "Primary protocol admin controlling 17 contracts. Can set the governor and epoch governor on Voter, manage factory registrations via FactoryRegistry (approve, unapprove, setManagedRewardsFactory, transferOwnership), configure swap fees on CLFactory and PoolFactory (setSwapFeeManager, setUnstakedFeeManager, setSwapFeeModule, setUnstakedFeeModule), pause the v1 PoolFactory, whitelist tokens and NFTs for voting, set the maximum voting number, and manage the Redistributor (transferOwnership, setUpkeepManager, setKeeper). Also controls NonfungiblePositionManager ownership. Swap fee changes are bounded by on-chain maximums (3% base fee, 5% fee cap, 50% unstaked fee) but the multisig can replace the fee module contract entirely."
+    },
+    "base:0x99249b10593fca1ae9dae6d4819f1a6dae5c013d": {
+      "name": "Emergency Council 3/5 Multisig",
+      "description": "Emergency role that can kill and revive gauges on the Voter contract, deactivate managed veNFTs via setManagedState on VotingEscrow, and transfer the emergency council role to a new address. Killing a gauge stops its emissions but does not affect LP funds in pools."
+    },
+    "base:0xbde0c70bdc242577c52dfad53389f82fd149ea5a": {
+      "name": "Aerodrome Foundation 4/7 Multisig",
+      "description": "Controls the team role on VotingEscrow (setTeam) and Minter (setTeam, acceptTeam). On VotingEscrow, the team can set the art proxy (cosmetic) and toggle NFT splitting permissions. On Minter, the team can adjust the team emission rate (bounded to max 5% via MAXIMUM_TEAM_RATE) and nudge the tail emission rate (max 1 bps change per epoch, bounded by MAXIMUM_TAIL_RATE). Reached via the Redistributor contract which holds the current VotingEscrow team role."
+    },
+    "base:0x16613524e02ad97edfef371bc883f2f5d6c480a5": {
+      "name": "Voter",
+      "description": "Immutable protocol contract that serves as the central coordination point. Can set the voter and distributor addresses on VotingEscrow (setVoterAndDistributor), set the voter on PoolFactory, and create gauges. These are internal protocol operations triggered by governance actions or epoch transitions, not direct human-controlled permissions."
+    },
+    "base:0xeb018363f0a9af8f91f06fee6613a751b2a33fe5": {
+      "name": "Minter",
+      "description": "Immutable contract that manages weekly AERO token emissions. Can initialize the Voter, notify reward amounts to the Voter for distribution, checkpoint the RewardsDistributor for rebase calculations, and set itself as minter on the RewardsDistributor. These are automated epoch-based operations."
+    },
+    "base:0x11a53f31bf406de59fcf9613e1922bd3e283a4b4": {
+      "name": "Redistributor",
+      "description": "Immutable contract that handles excess gauge emissions exceeding per-gauge caps. Holds the VotingEscrow team role and can transfer it. Controlled by the Governor multisig (ownership) and a keeper EOA for automated redistribution operations."
+    },
+    "base:0x227f65131a261548b057215bb1d5ab2997964c7d": {
+      "name": "RewardsDistributor",
+      "description": "Immutable contract that distributes AERO rebases to veNFT holders. Its only permissioned function (checkpointToken) is called by the Minter during epoch transitions. No human-controlled admin."
+    },
+    "base:0xc7150b9909dffcb5e12e4be6999d6f4b827ee497": {
+      "name": "SimpleEpochGovernor",
+      "description": "Immutable contract that can call the Minter's nudge function once per epoch to adjust the tail emission rate. The nudge is bounded to a maximum change of 1 bps per epoch. No human-controlled admin; operates via on-chain governance voting."
+    }
+  },
+  "dependencies": {},
+  "funds": {
+    "base:0x940181a94a35a4569e4529a3cdfb74e38fd98631": {
+      "name": "Aerodrome Token (AERO)",
+      "description": "The AERO governance and utility token with a market cap of {{aeroMarketCap}}. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+              ],
+              "filters": { "excludeExternal": true }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            { "type": "text", "content": "" }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "aeroMarketCap": "fundsdata.contracts[\"base:0x940181a94A35A4569E4529A3CDfB74e38FD98631\"].tokenInfo.tokenValue"
+  }
+}

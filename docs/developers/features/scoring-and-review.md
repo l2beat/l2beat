@@ -120,9 +120,16 @@ Components consume `AdminEntry` and `AdminFunctionEntry` directly — there are 
 **Admin capital:**
 
 ```
-totalDirectCapital    = Σ (balances + positions) for each contract where the admin has permissions
-totalReachableCapital = totalDirectCapital + Σ reachable contract funds (where fundsAtRisk = true)
+totalDirectCapital    = Σ min(funds(contract), directContractCaps[contract]) for each contract where the admin has permissions
+totalReachableCapital = totalDirectCapital + Σ min(funds(contract), contractCaps[contract]) for reachable contracts (where fundsAtRisk = true)
 ```
+
+`directContractCaps[contract]` is the max `impactCapUsd` across the admin's functions on that contract (least restrictive wins); `undefined` (uncapped) if any impactful function on that contract is uncapped. Same rule applies per-contract for reachable totals, aggregated across all functions in the admin's traversal.
+
+**Cap propagation through BFS** (`traverseForward`):
+- Each edge's effective cap = `min(pathCap, targetFunctionCap)` — i.e. both the source-side cap chain **and** the target function's own `impactCapUsd` constrain what calling that edge can do. Without the target-cap term a transitive reacher (e.g. Governor → Timelock → UNI.setMinter) would miss the cap on `setMinter` and show full UNI market cap.
+- View-call edges (`isViewCall === true`) contribute `edgeReachCap = 0`. Since reads cannot move funds, a view edge is a no-op in the per-contract `max` merge — it doesn't flip a capped contract to uncapped (the UNI `balanceOf` scenario), and a contract reached only via view calls ends up with `effectiveCapUsd = 0` (correctly shows $0 at risk).
+- Per-contract cap merging uses `max` across edges: the least-restrictive reach wins, and `undefined` (uncapped) dominates any numeric cap.
 
 ### Upgrade Function Detection
 
@@ -294,7 +301,7 @@ type GovernanceDuration =
 - **Template variables**: `{{variableName}}` in descriptions is resolved against `dataKeys` at compile time
 - **Cross-entity totals**: `adminTotals` and `dependencyTotals` carry deduplicated capital (each contract counted at most once, using `Math.max`) so the frontend can render an accurate "Impacted TVS" stat
 - **Mitigations**: each compiled function carries `mitigations?: Mitigation[]` resolved by `ProjectAnalysis.getMitigationsForOwner()` (direct + transitive). The compiler passes them through as-is. Mitigations with an `impactCap` have their `impactCapUsd` pre-resolved
-- **Impact caps**: `CompiledReachableContract.effectiveCapUsd?: number` is set during capital analysis. Frontend fund sums apply `Math.min(fundsUsd, effectiveCapUsd)` per reachable contract
+- **Impact caps**: `CompiledReachableContract.effectiveCapUsd?: number` is set during capital analysis. Frontend fund sums apply `Math.min(fundsUsd, effectiveCapUsd)` per reachable contract. Unified shape `{ value, unit, multiplier? }` — `value` is hardcoded|fieldRef, `unit` is `usd`|`scaler{factor}`|`token{tokenAddress}`, `multiplier` is a decimal (default 1). Examples: hardcoded USD `{ value:{mode:'hardcoded',amount:5e6}, unit:{kind:'usd'} }`; hardcoded 1M ZCHF priced via funds-data `{ value:{mode:'hardcoded',amount:1e6}, unit:{kind:'token',tokenAddress:ZCHF} }`; 2% of UNI supply `{ value:{mode:'fieldRef',contractAddress:UNI,fieldName:'totalSupply'}, unit:{kind:'token',tokenAddress:UNI}, multiplier:0.02 }`. Legacy shapes accepted via `normalizeImpactCap()` for backward compat
 
 If admin or dependency data needs to change, modify `ProjectAnalysis` — not the compiler.
 
@@ -307,7 +314,49 @@ If admin or dependency data needs to change, modify `ProjectAnalysis` — not th
 
 ### Key Findings
 
-`getKeyFindings()` in `src/utils/narrative.ts` generates info cards on the Report view:
+`getKeyFindings()` in `src/utils/keyFindings.ts` generates info cards on the Report view. Each finding is produced by a self-contained detector in the `DETECTORS` array (`detectImmutability`, `detectEOAs`, `detectMultisigs`, `detectTotalValueSecured`, `detectDependencies`, `detectMitigations`) — add a new finding type by writing a new detector and appending it to the array. Shared helpers (`isProtocolCodeImmutable`, `collectMitigations`, `deduplicateMitigations`, `formatMitigationTypeList`) live in the same file.
 
 - **Mitigations** — shown when any admin or dependency function carries mitigations. Reports coverage (all / some) and distinct mitigation type labels (Timelocks, Value Ranges, Relative Value Caps, Other Constraints)
 - **TVS (Total Value Secured)** — replaces the old TVL-only finding. Title is the combined TVS (e.g. "$220M TVS"). Detail text breaks the value down into TVL + token market cap, or either one alone. `TVS = totalCapitalAtRisk + (totalTokenValue ?? totalTokenValueAtRisk)`
+
+## Radar Scoring
+
+`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100.
+
+Axes: `CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `ABILITY TO EXIT`.
+
+### CONTROL
+
+Cascades by worst-case admin severity. Per-admin impact = `totalReachableCapital + totalReachableTokenValue`. Only admins with impact > 0 are considered.
+
+- **90** — no admin has reachable fund impact
+- **25** — any admin with impact is an `EOA` or `EOAPermissioned` (dominates everything else)
+- **75 / 55** — any `Multisig` has impact. Score depends on the sum of multisig impact as a share of TVS (`totalCapitalAtRisk + totalTokenValue`): `< 30%` → **75**, otherwise **55**. If TVS is `0`, the share is treated as 100%
+- **80** — only contract-type admins (Timelock, governance contracts, etc.) have impact
+
+Cascade order is strict: EOA > Multisig > contract-only > none. EOA presence dominates regardless of multisig share.
+
+### DEPENDENCIES
+
+Count-based: `0 → 90`, `1–2 → 70`, `3–5 → 50`, `6+ → 30`.
+
+### ACCESS
+
+Count of `resources[].type === 'frontend'`: `0 → 20`, `1 → 50`, `2–3 → 75`, `4+ → 90`.
+
+### VERIFIABILITY
+
+Additive, four components, total clamped to 100 and rounded.
+
+| Component | Weight | Tiers |
+|---|---|---|
+| **Coverage** | 50 | `100% → 50`, `95–100% → 40`, `90–95% → 20`, `<90% → 5`, **missing → 40** (default when `totals.coverage` is `undefined`, distinct from a real `0`) |
+| **Audits** | 25 | `0 → 0`, `1 → 10`, `2 → 18`, `3 → 22`, `4+ → 25` |
+| **LoC** (inverse — smaller = more auditable) | 15 | `≤5k → 15`, `≤10k → 12`, `≤20k → 8`, `≤50k → 4`, `>50k → 1`, **missing (0) → neutral 8** |
+| **Bug bounty** (`max(audits[].bounty)` USD) | 10 | `$0 → 0`, `<$100k → 2`, `<$500k → 5`, `<$1M → 7`, `≥$1M → 10` |
+
+Coverage uses `>=` at bucket edges, so exactly `0.95` → 40 and exactly `0.90` → 20.
+
+### ABILITY TO EXIT
+
+Currently a constant `65` placeholder — not yet derived from compiled data.

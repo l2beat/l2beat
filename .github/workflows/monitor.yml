@@ -48,6 +48,7 @@ jobs:
             sh -c "cd packages/database && npx prisma migrate deploy"
 
       - name: Run monitor cycle
+        timeout-minutes: 30
         run: |
           docker run --rm \
             --user $(id -u):$(id -g) \
@@ -59,6 +60,8 @@ jobs:
             -e DISCORD_CHANNEL_ID="${{ secrets.DISCORD_CHANNEL_ID }}" \
             -e ETHEREUM_RPC_URL_FOR_DISCOVERY="${{ secrets.ETHEREUM_RPC_URL_FOR_DISCOVERY }}" \
             -e ETHEREUM_RPC_URL="${{ secrets.ETHEREUM_RPC_URL }}" \
+            -e BASE_RPC_URL_FOR_DISCOVERY="${{ secrets.BASE_RPC_URL_FOR_DISCOVERY }}" \
+            -e BASE_RPC_URL="${{ secrets.BASE_RPC_URL }}" \
             -e ETHERSCAN_API_KEY="${{ secrets.ETHERSCAN_API_KEY }}" \
             -e DEBANK_API_KEY="${{ secrets.DEBANK_API_KEY }}" \
             -e THEGRAPH_API_KEY="${{ secrets.THEGRAPH_API_KEY }}" \

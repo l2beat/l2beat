@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776586718,
-  "lastConsumedUpdateNotifierId": 110,
+  "lastReconciledAt": 1776935009,
+  "lastConsumedUpdateNotifierId": 123,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2182,6 +2182,23 @@
         },
         {
           "field": "values.isWithdrawPaused",
+          "before": false,
+          "after": true
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-23T09:01:52.000Z",
+      "updateNotifierId": 123,
+      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "contractName": "cUSDTv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "123:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.isBuyPaused",
           "before": false,
           "after": true
         }

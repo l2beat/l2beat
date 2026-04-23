@@ -25,7 +25,7 @@ import {
   getResources,
   getResourcesLastModified,
 } from './resources'
-import { getGovernance, getGovernanceLastModified } from './governance'
+import { getGovernance } from './governance'
 import { getActivityEvents } from './activity'
 import type {
   ActivityFileEvent,
@@ -853,18 +853,15 @@ export class ReviewCompiler {
         ? new Date(onchainAtMs).toISOString()
         : new Date().toISOString() // fallback only for discovery outputs missing the field
 
-    // lastModified = latest researcher-initiated edit across review-config,
-    // resources (incl. audits), and governance. Sorted lexicographically,
-    // which works for ISO timestamps.
+    // lastModified = latest researcher-initiated edit across review-config
+    // and resources (incl. audits). Sorted lexicographically, which works
+    // for ISO timestamps. governance.json is intentionally excluded: it has
+    // no explicit lastModified field and its filesystem mtime is unreliable
+    // in CI (container mounts bump mtime on every monitor cycle).
     const resourcesLastModified = getResourcesLastModified(this.paths, project)
-    const governanceLastModified = getGovernanceLastModified(
-      this.paths,
-      project,
-    )
     const lastModifiedCandidates = [
       reviewConfig.lastModified,
       resourcesLastModified,
-      governanceLastModified,
     ].filter((s): s is string => typeof s === 'string' && s.length > 0)
     const lastModified =
       lastModifiedCandidates.length > 0

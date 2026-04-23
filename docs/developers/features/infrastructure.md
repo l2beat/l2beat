@@ -129,6 +129,9 @@ For protocols that deploy many identical child contracts (Uniswap V2 pairs, Fran
 |---|---|---|---|
 | `uniswap-v2-factory` | The Graph subgraph | `THEGRAPH_API_KEY` | Uses factory address in subgraph query |
 | `frankencoin-mintinghub` | Frankencoin public API | None | Filters positions by MintingHub version (V1 vs V2) |
+| `uniswap-v3-factory` | DeFiLlama protocol API | None | Fetches chain-specific TVL from `api.llama.fi/protocol/uniswap-v3`; chain mapped via `CHAIN_ID_TO_DEFILLAMA_NAME` |
+| `aerodrome-v2-factory` | DefiLlama + on-chain `allPoolsLength()` via Base Blockscout RPC | None | Reports Aerodrome V2 TVL (DefiLlama slug `aerodrome-v1`), pool count via `eth_call` |
+| `aerodrome-cl-factory` | DefiLlama + on-chain `allPoolsLength()` via Base Blockscout RPC | None | Reports Slipstream TVL (DefiLlama slug `aerodrome-slipstream`), combines pool counts from both CL factory deployments |
 
 **Adding a new handler:**
 
@@ -163,7 +166,7 @@ The public-facing review website is a separate package at `packages/defiscan-fro
 - **Data model**: static JSON. Reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
 - **Build**: `scripts/compile-data.ts` aggregates all compiled reviews into `public/data/index.json` with global stats, entity-grouped dependency counts, and active admin counts
 - **Pages**: Landing, Gallery (`/gallery`), Review (Report / Explorer / Activity), Compare, About
-- **Explorer tabs**: Overview, Funds, Admins, Governance, Dependencies, Contracts. The Admins tab shows non-governance human admins only; the Governance tab shows governance-tagged contracts only.
+- **Explorer tabs**: Overview, Funds, Admins, Governance, Dependencies, Contracts. The Admins tab shows human admins including governance-tagged contracts (displayed with a **Governance** badge); the Governance tab shows governance-tagged contracts only.
 - **TVS metric**: "Total Value Secured" = TVL (tokens held in contracts) + protocol token market cap. Used consistently across the landing table and the fund charts
 - **Deployment**: Vercel with SPA rewrites (`vercel.json` excludes `/data/` from rewrites)
 - **Commands**: `pnpm dev` (dev), `pnpm build` (builds after `compile-data`)

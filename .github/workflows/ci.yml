@@ -10,8 +10,54 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      protocolbeat: ${{ steps.filter.outputs.protocolbeat }}
+      l2b: ${{ steps.filter.outputs.l2b }}
+      monitor: ${{ steps.filter.outputs.monitor }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590  # v3.0.3
+        id: filter
+        with:
+          filters: |
+            protocolbeat:
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - 'turbo.json'
+              - 'tsconfig*.json'
+              - '.github/workflows/ci.yml'
+              - 'packages/protocolbeat/**'
+              - 'packages/validate/**'
+              - 'packages/discovery/**'
+            l2b:
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - 'turbo.json'
+              - 'tsconfig*.json'
+              - '.github/workflows/ci.yml'
+              - 'packages/l2b/**'
+              - 'packages/backend-tools/**'
+              - 'packages/config/**'
+              - 'packages/database/**'
+              - 'packages/discovery/**'
+              - 'packages/protocolbeat/**'
+              - 'packages/shared/**'
+              - 'packages/shared-pure/**'
+              - 'packages/validate/**'
+            monitor:
+              - '.github/workflows/ci.yml'
+              - 'packages/backend/**'
+
   build-protocolbeat:
     name: Build Protocolbeat
+    needs: changes
+    if: needs.changes.outputs.protocolbeat == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -26,6 +72,8 @@ jobs:
 
   build-l2b:
     name: Build L2B
+    needs: changes
+    if: needs.changes.outputs.l2b == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -40,6 +88,8 @@ jobs:
 
   build-monitor:
     name: Build Monitor
+    needs: changes
+    if: needs.changes.outputs.monitor == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -56,3 +106,15 @@ jobs:
         run: cd packages/backend && npx tsc -p tsconfig.build.json --noEmitOnError false || true
       - name: Verify monitor entry point
         run: test -f packages/backend/build/src/defidisco-monitor.js
+
+  ci:
+    name: CI
+    if: always()
+    needs: [build-protocolbeat, build-l2b, build-monitor]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build jobs
+        run: |
+          results='${{ toJSON(needs) }}'
+          echo "$results"
+          echo "$results" | jq -e 'to_entries | all(.value.result == "success" or .value.result == "skipped")'

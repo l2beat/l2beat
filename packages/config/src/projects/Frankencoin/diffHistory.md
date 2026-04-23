@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xb39663f8e4a2700f218536356f9990ab1b7f5d23
+
+# Diff at Mon, 20 Apr 2026 18:58:42 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@a060f46e94e73d101b01ed9a86446807b8dc9bce block: 1776676610
+- current timestamp: 1776711422
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776676610 (main branch discovery), not current.
+
+```diff
+    contract BurnMintTokenPool (eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79) {
+    +++ description: Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields.
++++ severity: HIGH
+      values.inboundRateLimit_Arbitrum:
++        {"isEnabled":true,"capacity":"200000000000000000000000","rate":"1388888888888888888"}
++++ severity: HIGH
+      values.inboundRateLimit_Avalanche:
++        {"isEnabled":true,"capacity":"100000000000000000000000","rate":"1388888888888888888"}
++++ severity: HIGH
+      values.inboundRateLimit_Base:
++        {"isEnabled":true,"capacity":"500000000000000000000000","rate":"2777777777777777777"}
++++ severity: HIGH
+      values.inboundRateLimit_BSC:
++        {"isEnabled":true,"capacity":"100000000000000000000000","rate":"1388888888888888888"}
++++ severity: HIGH
+      values.inboundRateLimit_Gnosis:
++        {"isEnabled":true,"capacity":"500000000000000000000000","rate":"2777777777777777777"}
++++ severity: HIGH
+      values.inboundRateLimit_Optimism:
++        {"isEnabled":true,"capacity":"100000000000000000000000","rate":"1388888888888888888"}
++++ severity: HIGH
+      values.inboundRateLimit_Polygon:
++        {"isEnabled":true,"capacity":"200000000000000000000000","rate":"1388888888888888888"}
+      description:
++        "Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields."
+      fieldMeta:
++        {"getRateLimitAdmin":{"severity":"HIGH"},"inboundRateLimit_Polygon":{"severity":"HIGH"},"inboundRateLimit_Arbitrum":{"severity":"HIGH"},"inboundRateLimit_Optimism":{"severity":"HIGH"},"inboundRateLimit_Base":{"severity":"HIGH"},"inboundRateLimit_Avalanche":{"severity":"HIGH"},"inboundRateLimit_Gnosis":{"severity":"HIGH"},"inboundRateLimit_BSC":{"severity":"HIGH"}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CCIPAdmin (eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5c1aacbf537701a2790d28b6e5d0c492aabbe460
 
 # Diff at Sun, 15 Mar 2026 08:20:36 GMT:

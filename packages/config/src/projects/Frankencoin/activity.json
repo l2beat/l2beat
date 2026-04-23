@@ -1,6 +1,84 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776179334,
-  "lastConsumedUpdateNotifierId": 97,
-  "events": []
+  "lastReconciledAt": 1776762470,
+  "lastConsumedUpdateNotifierId": 116,
+  "events": [
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 116,
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "contractName": "BurnMintTokenPool",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "116:eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.inboundRateLimit_Arbitrum",
+          "after": {
+            "isEnabled": true,
+            "capacity": "200000000000000000000000",
+            "rate": "1388888888888888888"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_Avalanche",
+          "after": {
+            "isEnabled": true,
+            "capacity": "100000000000000000000000",
+            "rate": "1388888888888888888"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_Base",
+          "after": {
+            "isEnabled": true,
+            "capacity": "500000000000000000000000",
+            "rate": "2777777777777777777"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_BSC",
+          "after": {
+            "isEnabled": true,
+            "capacity": "100000000000000000000000",
+            "rate": "1388888888888888888"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_Gnosis",
+          "after": {
+            "isEnabled": true,
+            "capacity": "500000000000000000000000",
+            "rate": "2777777777777777777"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_Optimism",
+          "after": {
+            "isEnabled": true,
+            "capacity": "100000000000000000000000",
+            "rate": "1388888888888888888"
+          }
+        },
+        {
+          "field": "values.inboundRateLimit_Polygon",
+          "after": {
+            "isEnabled": true,
+            "capacity": "200000000000000000000000",
+            "rate": "1388888888888888888"
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 116,
+      "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+      "contractName": "CCIPAdmin",
+      "entity": null,
+      "id": "116:eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8:contract-added",
+      "type": "contract-added"
+    }
+  ]
 }

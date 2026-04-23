@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-22T07:06:56.603Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-15T21:32:17.125Z"
+    },
+    {
+      "contractAddress": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "isExternal": true,
+      "entity": "Permit2",
+      "timestamp": "2026-04-15T21:35:53.442Z"
+    },
+    {
+      "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-16T14:02:06.648Z"
+    },
+    {
+      "contractAddress": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-16T14:43:30.648Z"
+    },
+    {
+      "contractAddress": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+      "isExternal": false,
+      "fetchAggregate": true,
+      "aggregateHandler": "uniswap-v3-factory",
+      "aggregateLabel": "All Uniswap-v3 Pools",
+      "timestamp": "2026-04-17T10:06:34.490Z"
+    },
+    {
+      "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T07:06:56.602Z"
+    }
+  ]
+}

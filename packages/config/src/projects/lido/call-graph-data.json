@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-20T07:34:08.712Z",
+  "lastModified": "2026-04-21T10:27:03.229Z",
   "contracts": {
     "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A": {
       "address": "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A",
@@ -219,12 +219,41 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.198Z"
+      "generatedAt": "2026-04-21T10:27:00.654Z"
     },
     "eth:0x06A56487494aa080deC7Bf69128EdA9225784553": {
       "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
       "name": "StakingVault",
       "externalCalls": [
+        {
+          "callerFunction": "collectERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
         {
           "callerFunction": "depositFromStaged",
           "storageVariable": "DEPOSIT_CONTRACT",
@@ -265,16 +294,8 @@
               "contractName": "Lido Dao Agent"
             },
             {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
               "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
               "contractName": "UpgradeableBeacon"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
             },
             {
               "address": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
@@ -297,14 +318,6 @@
               "contractName": "WithdrawalVault"
             },
             {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            },
-            {
               "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
               "contractName": "TokenManager"
             }
@@ -312,7 +325,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.202Z"
+      "generatedAt": "2026-04-21T10:27:00.663Z"
     },
     "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193": {
       "address": "eth:0x06cd61045f958A209a0f8D746e103eCc625f4193",
@@ -404,7 +417,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.208Z"
+      "generatedAt": "2026-04-21T10:27:00.669Z"
     },
     "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e": {
       "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
@@ -529,7 +542,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.223Z"
+      "generatedAt": "2026-04-21T10:27:00.686Z"
     },
     "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709": {
       "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
@@ -544,29 +557,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -636,29 +627,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -669,30 +638,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -704,29 +651,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -785,29 +710,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -818,30 +721,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -853,29 +734,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -886,30 +745,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -942,29 +779,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": true
         },
         {
@@ -975,61 +790,15 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
           "callerFunction": "connectVault",
           "storageVariable": "TMP_1520",
           "interfaceType": "IPinnedBeaconProxy",
-          "calledFunction": "isOssified",
-          "resolvedAddress": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-          "resolvedContractName": "StakingVault",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
-          "isViewCall": true
+          "calledFunction": "isOssified"
         },
         {
           "callerFunction": "connectVault",
@@ -1039,30 +808,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1073,30 +820,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1129,30 +854,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -1182,29 +885,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": true
         },
         {
@@ -1215,30 +896,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1258,30 +917,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1321,30 +958,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1365,29 +980,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1417,29 +1010,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1450,30 +1021,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1485,29 +1034,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1538,30 +1065,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1611,29 +1116,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1654,29 +1137,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1687,30 +1148,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1722,29 +1161,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1793,30 +1210,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -1828,29 +1223,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1862,29 +1235,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2114,30 +1465,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2149,29 +1478,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2182,30 +1489,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2286,29 +1571,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2338,29 +1601,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2371,30 +1612,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2406,29 +1625,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2440,29 +1637,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2512,29 +1687,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2545,30 +1698,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2580,29 +1711,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2632,29 +1741,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2665,30 +1752,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2700,29 +1765,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2753,30 +1796,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2806,29 +1827,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2849,29 +1848,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2882,30 +1859,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2917,29 +1872,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2950,30 +1883,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -2995,30 +1906,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3029,30 +1918,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3133,29 +2000,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3166,30 +2011,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3201,29 +2024,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3338,29 +2139,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3371,30 +2150,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3406,29 +2163,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3497,30 +2232,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3532,29 +2245,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3612,30 +2303,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3666,30 +2335,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3710,29 +2357,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3762,29 +2387,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3795,30 +2398,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3830,29 +2411,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3883,30 +2442,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3927,29 +2464,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -3960,30 +2475,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -3998,7 +2491,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.304Z"
+      "generatedAt": "2026-04-21T10:27:00.777Z"
     },
     "eth:0x23ED611be0e1a820978875C0122F92260804cdDf": {
       "address": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf",
@@ -4516,7 +3009,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.329Z"
+      "generatedAt": "2026-04-21T10:27:00.807Z"
     },
     "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9": {
       "address": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
@@ -4535,7 +3028,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.331Z"
+      "generatedAt": "2026-04-21T10:27:00.809Z"
     },
     "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3": {
       "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
@@ -4558,30 +3051,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -4593,29 +3064,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -4736,6 +3185,16 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "burnWstETH",
+          "storageVariable": "WSTETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "resolvedContractName": "Wrapped liquid staked Ether 2.0 Token",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
           "callerFunction": "changeTier",
           "storageVariable": "_tierId",
           "interfaceType": "OperatorGrid",
@@ -4804,29 +3263,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -4889,29 +3326,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -5306,6 +3721,16 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "mintWstETH",
+          "storageVariable": "WSTETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "resolvedContractName": "Wrapped liquid staked Ether 2.0 Token",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
           "callerFunction": "obligations",
           "storageVariable": "VAULT_HUB",
           "interfaceType": "VaultHub",
@@ -5380,30 +3805,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -5435,27 +3838,27 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
+          "resolutionConfidence": 90,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "resolvedContractName": "Wrapped liquid staked Ether 2.0 Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
             {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
             },
             {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
             }
           ],
           "isViewCall": false
@@ -5746,29 +4149,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": true
         },
         {
@@ -5779,30 +4160,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -6035,7 +4394,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.377Z"
+      "generatedAt": "2026-04-21T10:27:00.862Z"
     },
     "eth:0x2e59A20f205bB85a89C53f1936454680651E618e": {
       "address": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
@@ -6120,6 +4479,16 @@
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
           "resolutionConfidence": 90
+        },
+        {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+          "resolvedContractName": "Lido DAO Token",
+          "resolutionType": "deterministic",
+          "isViewCall": false
         },
         {
           "callerFunction": "canPerform",
@@ -6254,7 +4623,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.403Z"
+      "generatedAt": "2026-04-21T10:27:00.876Z"
     },
     "eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353": {
       "address": "eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353",
@@ -6306,12 +4675,33 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.416Z"
+      "generatedAt": "2026-04-21T10:27:00.883Z"
     },
     "eth:0x388C818CA8B9251b393131C08a736A67ccB19297": {
       "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
       "name": "LidoExecutionLayerRewardsVault",
       "externalCalls": [
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
         {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_79",
@@ -6335,7 +4725,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.428Z"
+      "generatedAt": "2026-04-21T10:27:00.886Z"
     },
     "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
       "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -6381,6 +4771,36 @@
           "isViewCall": true
         },
         {
+          "callerFunction": "deposit",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+          "resolvedContractName": "Lido DAO Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+              "contractName": "WithdrawalQueueERC721"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
           "callerFunction": "transferToVault",
           "storageVariable": "TMP_386",
           "interfaceType": "IKernel",
@@ -6390,6 +4810,35 @@
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
           "resolutionConfidence": 90
+        },
+        {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
         },
         {
           "callerFunction": "canPerform",
@@ -6416,6 +4865,35 @@
           "resolutionConfidence": 99,
           "callerIsView": true,
           "isViewCall": true
+        },
+        {
+          "callerFunction": "transfer",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
         },
         {
           "callerFunction": "canForward",
@@ -6464,56 +4942,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.444Z"
-    },
-    "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4": {
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "name": "StakingVault",
-      "externalCalls": [
-        {
-          "callerFunction": "depositFromStaged",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositToBeaconChain",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "ossify",
-          "storageVariable": "TMP_411",
-          "interfaceType": "IBeacon",
-          "calledFunction": "implementation",
-          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "resolvedContractName": "Lido Dao Agent",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 70,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "contractName": "Lido Dao Agent"
-            },
-            {
-              "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
-              "contractName": "UpgradeableBeacon"
-            }
-          ],
-          "isViewCall": true
-        }
-      ],
-      "generatedAt": "2026-04-20T07:34:05.448Z"
+      "generatedAt": "2026-04-21T10:27:00.901Z"
     },
     "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": {
       "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
@@ -6585,6 +5014,17 @@
           "resolutionConfidence": 99
         },
         {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95
+        },
+        {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_992",
           "interfaceType": "IERC721",
@@ -6650,7 +5090,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.463Z"
+      "generatedAt": "2026-04-21T10:27:00.918Z"
     },
     "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": {
       "address": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
@@ -7525,6 +5965,31 @@
           "resolutionConfidence": 99
         },
         {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_1579",
           "interfaceType": "IERC721",
@@ -7632,7 +6097,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.513Z"
+      "generatedAt": "2026-04-21T10:27:00.964Z"
     },
     "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": {
       "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
@@ -7806,26 +6271,8 @@
           "resolvedAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
           "resolvedContractName": "Lido DAO Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
-              "contractName": "Lido DAO Token"
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "contractName": "Wrapped liquid staked Ether 2.0 Token"
-            },
-            {
-              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-              "contractName": "WithdrawalQueueERC721"
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "contractName": "Liquid staked Ether 2.0 Token"
-            }
-          ],
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
           "isViewCall": true
         },
         {
@@ -7833,32 +6280,15 @@
           "storageVariable": "token",
           "interfaceType": "MiniMeToken",
           "calledFunction": "transfer",
-          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "resolvedContractName": "Lido Dao Agent",
+          "resolvedAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+          "resolvedContractName": "Lido DAO Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "contractName": "Lido Dao Agent"
-            },
-            {
-              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
-              "contractName": "Lido DAO Token"
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "contractName": "Wrapped liquid staked Ether 2.0 Token"
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "contractName": "Liquid staked Ether 2.0 Token"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.527Z"
+      "generatedAt": "2026-04-21T10:27:00.974Z"
     },
     "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": {
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
@@ -7896,18 +6326,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
-              "contractName": "LazyOracle"
-            }
-          ],
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
           "callerIsView": true,
           "isViewCall": true
         },
@@ -7943,18 +6363,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ],
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
           "callerIsView": true,
           "isViewCall": true
         },
@@ -7979,30 +6389,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8013,30 +6401,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8047,30 +6413,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8263,30 +6607,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8297,30 +6619,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8331,30 +6631,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -8452,62 +6730,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.557Z"
+      "generatedAt": "2026-04-21T10:27:01.012Z"
     },
     "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789": {
       "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
       "name": "UpgradeableBeacon",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:05.558Z"
-    },
-    "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428": {
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "name": "StakingVault",
-      "externalCalls": [
-        {
-          "callerFunction": "depositFromStaged",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositToBeaconChain",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "ossify",
-          "storageVariable": "TMP_411",
-          "interfaceType": "IBeacon",
-          "calledFunction": "implementation",
-          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "resolvedContractName": "Lido Dao Agent",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 70,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "contractName": "Lido Dao Agent"
-            },
-            {
-              "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
-              "contractName": "UpgradeableBeacon"
-            }
-          ],
-          "isViewCall": true
-        }
-      ],
-      "generatedAt": "2026-04-20T07:34:05.563Z"
+      "generatedAt": "2026-04-21T10:27:01.013Z"
     },
     "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": {
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
@@ -8760,7 +6989,7 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.587Z"
+      "generatedAt": "2026-04-21T10:27:01.049Z"
     },
     "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24": {
       "address": "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24",
@@ -8901,7 +7130,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.592Z"
+      "generatedAt": "2026-04-21T10:27:01.054Z"
     },
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -8988,7 +7217,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.598Z"
+      "generatedAt": "2026-04-21T10:27:01.074Z"
     },
     "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a": {
       "address": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
@@ -9241,7 +7470,7 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.624Z"
+      "generatedAt": "2026-04-21T10:27:01.100Z"
     },
     "eth:0x852deD011285fe67063a08005c71a85690503Cee": {
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
@@ -9529,7 +7758,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.654Z"
+      "generatedAt": "2026-04-21T10:27:01.132Z"
     },
     "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A": {
       "address": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
@@ -9586,6 +7815,35 @@
           "resolutionConfidence": 90
         },
         {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "canPerform",
           "storageVariable": "linkedKernel",
           "interfaceType": "IKernel",
@@ -9612,7 +7870,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.665Z"
+      "generatedAt": "2026-04-21T10:27:01.145Z"
     },
     "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": {
       "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -9762,13 +8020,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.681Z"
+      "generatedAt": "2026-04-21T10:27:01.165Z"
     },
     "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7": {
       "address": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
       "name": "EIP712StETH",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:05.682Z"
+      "generatedAt": "2026-04-21T10:27:01.166Z"
     },
     "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec": {
       "address": "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec",
@@ -9787,7 +8045,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.685Z"
+      "generatedAt": "2026-04-21T10:27:01.167Z"
     },
     "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": {
       "address": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
@@ -9929,13 +8187,13 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.700Z"
+      "generatedAt": "2026-04-21T10:27:01.179Z"
     },
     "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428": {
       "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
       "name": "CSParametersRegistry",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:05.706Z"
+      "generatedAt": "2026-04-21T10:27:01.187Z"
     },
     "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f": {
       "address": "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f",
@@ -9988,7 +8246,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.714Z"
+      "generatedAt": "2026-04-21T10:27:01.194Z"
     },
     "eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6": {
       "address": "eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6",
@@ -10166,7 +8424,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.734Z"
+      "generatedAt": "2026-04-21T10:27:01.202Z"
     },
     "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
       "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -10860,6 +9118,27 @@
           "resolutionConfidence": 90
         },
         {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "canPerform",
           "storageVariable": "linkedKernel",
           "interfaceType": "IKernel",
@@ -10915,7 +9194,7 @@
           "resolvedAddress": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
           "resolvedContractName": "StakingRouter",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
+          "resolutionHeuristic": "dependency-field",
           "resolutionConfidence": 90
         },
         {
@@ -11136,7 +9415,7 @@
           "resolutionConfidence": 90
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.831Z"
+      "generatedAt": "2026-04-21T10:27:01.299Z"
     },
     "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0": {
       "address": "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0",
@@ -11310,6 +9589,17 @@
           "resolutionConfidence": 99
         },
         {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95
+        },
+        {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_748",
           "interfaceType": "IERC721",
@@ -11330,7 +9620,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.846Z"
+      "generatedAt": "2026-04-21T10:27:01.313Z"
     },
     "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc": {
       "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -11346,6 +9636,35 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "hasPermission",
           "storageVariable": "defaultAcl",
           "interfaceType": "IACL",
@@ -11359,12 +9678,33 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.852Z"
+      "generatedAt": "2026-04-21T10:27:01.320Z"
     },
     "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": {
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "name": "WithdrawalVault",
       "externalCalls": [
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
         {
           "callerFunction": "recoverERC721",
           "storageVariable": "_token",
@@ -11386,7 +9726,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.855Z"
+      "generatedAt": "2026-04-21T10:27:01.323Z"
     },
     "eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1": {
       "address": "eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1",
@@ -11564,7 +9904,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.862Z"
+      "generatedAt": "2026-04-21T10:27:01.334Z"
     },
     "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f": {
       "address": "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f",
@@ -11607,7 +9947,7 @@
           "resolvedAddress": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
           "resolvedContractName": "StakingRouter",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
+          "resolutionHeuristic": "dependency-field",
           "resolutionConfidence": 90
         },
         {
@@ -11658,7 +9998,7 @@
           "resolvedAddress": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
           "resolvedContractName": "StakingRouter",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
+          "resolutionHeuristic": "dependency-field",
           "resolutionConfidence": 90
         },
         {
@@ -11673,19 +10013,19 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.870Z"
+      "generatedAt": "2026-04-21T10:27:01.344Z"
     },
     "eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09": {
       "address": "eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09",
       "name": "OracleDaemonConfig",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:05.874Z"
+      "generatedAt": "2026-04-21T10:27:01.346Z"
     },
     "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb": {
       "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
       "name": "LidoLocator",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:05.875Z"
+      "generatedAt": "2026-04-21T10:27:01.347Z"
     },
     "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f": {
       "address": "eth:0xC52fC3081123073078698F1EAc2f1Dc7Bd71880f",
@@ -11737,7 +10077,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.881Z"
+      "generatedAt": "2026-04-21T10:27:01.355Z"
     },
     "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d": {
       "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
@@ -11751,30 +10091,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -11796,18 +10114,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "changeTier",
@@ -11817,18 +10125,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "changeTier",
@@ -11858,18 +10156,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ],
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
           "callerIsView": true,
           "isViewCall": true
         },
@@ -11881,18 +10169,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ],
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90,
           "callerIsView": true,
           "isViewCall": true
         },
@@ -11990,18 +10268,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "syncTier",
@@ -12011,30 +10279,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -12065,18 +10311,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "updateVaultFees",
@@ -12106,18 +10342,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "updateVaultShareLimit",
@@ -12149,18 +10375,8 @@
           "resolvedAddress": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
           "resolvedContractName": "VaultHub",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-              "contractName": "VaultHub"
-            },
-            {
-              "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-              "contractName": "Dashboard"
-            }
-          ]
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         },
         {
           "callerFunction": "updateVaultShareLimit",
@@ -12170,30 +10386,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -12206,7 +10400,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.913Z"
+      "generatedAt": "2026-04-21T10:27:01.398Z"
     },
     "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C": {
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
@@ -12311,6 +10505,35 @@
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 99
+        },
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+              "contractName": "Lido DAO Token"
+            },
+            {
+              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "contractName": "Wrapped liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
         },
         {
           "callerFunction": "recoverERC721",
@@ -12508,7 +10731,7 @@
           "resolutionConfidence": 90
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.944Z"
+      "generatedAt": "2026-04-21T10:27:01.421Z"
     },
     "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316": {
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
@@ -12516,7 +10739,7 @@
       "externalCalls": [
         {
           "callerFunction": "emergencyExecute",
-          "storageVariable": "executor",
+          "storageVariable": "TMP_148",
           "interfaceType": "IExternalExecutor",
           "calledFunction": "execute",
           "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -12537,7 +10760,7 @@
         },
         {
           "callerFunction": "execute",
-          "storageVariable": "executor",
+          "storageVariable": "TMP_148",
           "interfaceType": "IExternalExecutor",
           "calledFunction": "execute",
           "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -12576,79 +10799,14 @@
               "contractName": "TokenRateNotifier"
             },
             {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
               "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
               "contractName": "UpgradeableBeacon"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
             }
           ],
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.953Z"
-    },
-    "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711": {
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "name": "StakingVault",
-      "externalCalls": [
-        {
-          "callerFunction": "depositFromStaged",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositToBeaconChain",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "ossify",
-          "storageVariable": "TMP_411",
-          "interfaceType": "IBeacon",
-          "calledFunction": "implementation",
-          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "resolvedContractName": "Lido Dao Agent",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 70,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "contractName": "Lido Dao Agent"
-            },
-            {
-              "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
-              "contractName": "UpgradeableBeacon"
-            }
-          ],
-          "isViewCall": true
-        }
-      ],
-      "generatedAt": "2026-04-20T07:34:05.958Z"
+      "generatedAt": "2026-04-21T10:27:01.429Z"
     },
     "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": {
       "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
@@ -12694,7 +10852,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.961Z"
+      "generatedAt": "2026-04-21T10:27:01.433Z"
     },
     "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288": {
       "address": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
@@ -12947,7 +11105,7 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-04-20T07:34:05.990Z"
+      "generatedAt": "2026-04-21T10:27:01.476Z"
     },
     "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": {
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
@@ -13014,6 +11172,27 @@
           "resolutionConfidence": 99
         },
         {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_691",
           "interfaceType": "IERC721",
@@ -13025,7 +11204,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:06.004Z"
+      "generatedAt": "2026-04-21T10:27:01.488Z"
     },
     "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": {
       "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
@@ -13450,6 +11629,27 @@
           "resolutionConfidence": 99
         },
         {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
+        },
+        {
           "callerFunction": "recoverERC721",
           "storageVariable": "TMP_1127",
           "interfaceType": "IERC721",
@@ -13738,7 +11938,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:06.097Z"
+      "generatedAt": "2026-04-21T10:27:01.584Z"
     },
     "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B": {
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
@@ -13800,7 +12000,7 @@
           "resolutionConfidence": 90
         }
       ],
-      "generatedAt": "2026-04-20T07:34:06.106Z"
+      "generatedAt": "2026-04-21T10:27:01.603Z"
     },
     "eth:0xdC5FE1782B6943f318E05230d688713a560063DC": {
       "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
@@ -13843,63 +12043,14 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:06.111Z"
+      "generatedAt": "2026-04-21T10:27:01.615Z"
     },
     "eth:0xE1686C2E90eb41a48356c1cC7FaA17629af3ADB3": {
       "address": "eth:0xE1686C2E90eb41a48356c1cC7FaA17629af3ADB3",
       "name": "GateSeal",
       "externalCalls": [],
-      "generatedAt": "2026-04-20T07:34:08.388Z",
-      "error": "'solc --standard-json --allow-paths /home/emilien/defidisco/packages/config' running\nTraceback (most recent call last):\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 189, in run_solc_standard_json\n    solc_json_output = json.loads(stdout)\n                       ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 337, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 355, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/emilien/.slither-venv/bin/slither\", line 8, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 776, in main\n    main_impl(all_detector_classes=detectors, all_printer_classes=printers)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 882, in main_impl\n    ) = process_all(filename, args, detector_classes, printer_classes)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 96, in process_all\n    compilations = compile_all(target, **vars(args))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 722, in compile_all\n    compilations.append(CryticCompile(target, **kwargs))\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 211, in __init__\n    self._compile(**kwargs)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 633, in _compile\n    self._platform.compile(self, **kwargs)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/etherscan.py\", line 477, in compile\n    solc_standard_json.standalone_compile(\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 90, in standalone_compile\n    targets_json = run_solc_standard_json(\n                   ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 219, in run_solc_standard_json\n    raise InvalidCompilation(f\"Invalid solc compilation {stderr}\")\ncrytic_compile.platform.exceptions.InvalidCompilation: Invalid solc compilation Traceback (most recent call last):\n  File \"/home/emilien/.slither-venv/bin/solc\", line 8, in <module>\n    sys.exit(solc())\n             ^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/solc_select/__main__.py\", line 100, in solc\n    res = current_version()\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/solc_select/solc_select.py\", line 189, in current_version\n    raise argparse.ArgumentTypeError(\nargparse.ArgumentTypeError: \nVersion '0.3.7' not installed (set by SOLC_VERSION).\nRun `solc-select install 0.3.7`.\nOr use one of the following versions: ['0.4.19', '0.4.23', '0.4.24', '0.4.25', '0.5.14', '0.5.16', '0.5.8', '0.6.0', '0.6.11', '0.6.12', '0.6.6', '0.7.0', '0.7.4', '0.7.6', '0.8.10', '0.8.13', '0.8.15', '0.8.17', '0.8.19', '0.8.20', '0.8.21', '0.8.24', '0.8.25', '0.8.26', '0.8.27', '0.8.28', '0.8.29', '0.8.4', '0.8.6', '0.8.9']\n\n"
-    },
-    "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37": {
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "name": "StakingVault",
-      "externalCalls": [
-        {
-          "callerFunction": "depositFromStaged",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositToBeaconChain",
-          "storageVariable": "DEPOSIT_CONTRACT",
-          "interfaceType": "IDepositContract",
-          "calledFunction": "deposit",
-          "resolvedAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-          "resolvedContractName": "DepositContract",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "ossify",
-          "storageVariable": "TMP_411",
-          "interfaceType": "IBeacon",
-          "calledFunction": "implementation",
-          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-          "resolvedContractName": "Lido Dao Agent",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 70,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "contractName": "Lido Dao Agent"
-            },
-            {
-              "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
-              "contractName": "UpgradeableBeacon"
-            }
-          ],
-          "isViewCall": true
-        }
-      ],
-      "generatedAt": "2026-04-20T07:34:08.396Z"
+      "generatedAt": "2026-04-21T10:27:03.038Z",
+      "error": "'solc --standard-json --allow-paths /home/emilien/defidisco/packages/config' running\nTraceback (most recent call last):\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 189, in run_solc_standard_json\n    solc_json_output = json.loads(stdout)\n                       ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 337, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/decoder.py\", line 355, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/emilien/.slither-venv/bin/slither\", line 8, in <module>\n    sys.exit(main())\n             ^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 776, in main\n    main_impl(all_detector_classes=detectors, all_printer_classes=printers)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 882, in main_impl\n    ) = process_all(filename, args, detector_classes, printer_classes)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/slither/__main__.py\", line 96, in process_all\n    compilations = compile_all(target, **vars(args))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 722, in compile_all\n    compilations.append(CryticCompile(target, **kwargs))\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 211, in __init__\n    self._compile(**kwargs)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/crytic_compile.py\", line 633, in _compile\n    self._platform.compile(self, **kwargs)\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/etherscan.py\", line 477, in compile\n    solc_standard_json.standalone_compile(\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 90, in standalone_compile\n    targets_json = run_solc_standard_json(\n                   ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/crytic_compile/platform/solc_standard_json.py\", line 219, in run_solc_standard_json\n    raise InvalidCompilation(f\"Invalid solc compilation {stderr}\")\ncrytic_compile.platform.exceptions.InvalidCompilation: Invalid solc compilation Traceback (most recent call last):\n  File \"/home/emilien/.slither-venv/bin/solc\", line 8, in <module>\n    sys.exit(solc())\n             ^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/solc_select/__main__.py\", line 100, in solc\n    res = current_version()\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/emilien/.slither-venv/lib/python3.12/site-packages/solc_select/solc_select.py\", line 189, in current_version\n    raise argparse.ArgumentTypeError(\nargparse.ArgumentTypeError: \nVersion '0.3.7' not installed (set by SOLC_VERSION).\nRun `solc-select install 0.3.7`.\nOr use one of the following versions: ['0.4.19', '0.4.23', '0.4.24', '0.4.25', '0.5.14', '0.5.16', '0.5.8', '0.6.0', '0.6.11', '0.6.12', '0.6.6', '0.7.0', '0.7.4', '0.7.6', '0.8.10', '0.8.13', '0.8.15', '0.8.17', '0.8.19', '0.8.20', '0.8.21', '0.8.23', '0.8.24', '0.8.25', '0.8.26', '0.8.27', '0.8.28', '0.8.29', '0.8.4', '0.8.6', '0.8.9']\n\n"
     },
     "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a": {
       "address": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
@@ -13995,6 +12146,27 @@
           "resolvedAddress": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
           "resolvedContractName": "LidoLocator",
           "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "resolvedContractName": "Lido Dao Agent",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "contractName": "Lido Dao Agent"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
         },
         {
           "callerFunction": "recoverERC721",
@@ -14125,7 +12297,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.550Z"
+      "generatedAt": "2026-04-21T10:27:03.057Z"
     },
     "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129": {
       "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
@@ -14275,7 +12447,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.568Z"
+      "generatedAt": "2026-04-21T10:27:03.086Z"
     },
     "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3": {
       "address": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -14289,30 +12461,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14323,30 +12473,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14357,30 +12485,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14391,30 +12497,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14425,30 +12509,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14459,30 +12521,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14493,30 +12533,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14527,30 +12545,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14561,30 +12557,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14595,30 +12569,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14630,29 +12582,7 @@
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionConfidence": 90,
           "isViewCall": true
         },
         {
@@ -14663,30 +12593,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14697,30 +12605,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14731,30 +12617,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14765,30 +12629,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14799,30 +12641,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14833,30 +12653,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14867,30 +12665,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14901,30 +12677,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -14935,30 +12689,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         },
         {
@@ -14969,30 +12701,8 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": true
         },
         {
@@ -15003,34 +12713,12 @@
           "resolvedAddress": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
           "resolvedContractName": "StakingVault",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
-          "resolutionConfidence": 40,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-              "contractName": "StakingVault"
-            },
-            {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-              "contractName": "StakingVault"
-            }
-          ],
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.618Z"
+      "generatedAt": "2026-04-21T10:27:03.135Z"
     },
     "eth:0xf73a1260d222f447210581DDf212D915c09a3249": {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
@@ -15155,6 +12843,16 @@
           "resolutionType": "optimistic",
           "resolutionHeuristic": "interface-name",
           "resolutionConfidence": 90
+        },
+        {
+          "callerFunction": "transferToVault",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+          "resolvedContractName": "Lido DAO Token",
+          "resolutionType": "deterministic",
+          "isViewCall": false
         },
         {
           "callerFunction": "burn",
@@ -15317,7 +13015,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.639Z"
+      "generatedAt": "2026-04-21T10:27:03.155Z"
     },
     "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999": {
       "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
@@ -16073,7 +13771,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.701Z"
+      "generatedAt": "2026-04-21T10:27:03.220Z"
     },
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
@@ -16241,7 +13939,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-04-20T07:34:08.711Z"
+      "generatedAt": "2026-04-21T10:27:03.228Z"
     }
   }
 }

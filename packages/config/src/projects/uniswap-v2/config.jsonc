@@ -35,6 +35,27 @@
     },
     "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
       "ignoreMethods": ["nonce"]
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "fields": {
+        "totalSupply": { "severity": "HIGH" },
+        "mintingAllowedAfter": {
+          "severity": "HIGH"
+        },
+        "minter": {
+          "severity": "HIGH"
+        }
+      },
+      "ignoreInWatchMode": [
+        "decimals",
+        "DELEGATION_TYPEHASH",
+        "DOMAIN_TYPEHASH",
+        "minimumTimeBetweenMints",
+        "mintCap",
+        "name",
+        "PERMIT_TYPEHASH",
+        "symbol"
+      ]
     }
   }
 }

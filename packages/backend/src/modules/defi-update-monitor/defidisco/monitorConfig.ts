@@ -2,9 +2,9 @@ import type { Env } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryChainConfig,
+  getChainConfig,
   getDiscoveryPaths,
   type DiscoveryPaths,
-  getMulticall3Config,
 } from '@l2beat/discovery'
 import type { DefiscanEndpointsConfig } from '@l2beat/defiscan-endpoints/build/config'
 import type { DiscordConfig } from '../../../config/Config'
@@ -65,63 +65,7 @@ function getDiscordConfig(env: Env): DiscordConfig | false {
   }
 }
 
-/**
- * Builds a DiscoveryChainConfig for a given chain name from env vars.
- *
- * For Ethereum (our primary chain), this uses well-known values for
- * multicall3 and etherscan. For other chains in the future, env vars
- * provide the chain-specific RPC URLs and explorer configs.
- */
-function getChainDiscoveryConfig(
-  env: Env,
-  chainName: string,
-): DiscoveryChainConfig {
-  const ENV_NAME = chainName.toUpperCase()
-
-  // Ethereum multicall3 is deployed at a well-known address (default in getMulticall3Config)
-  const multicallConfig =
-    chainName === 'ethereum'
-      ? getMulticall3Config(14353601)
-      : undefined
-
-  return {
-    name: chainName,
-    chainId: chainName === 'ethereum' ? 1 : 0,
-    rpcUrl: env.string([
-      `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
-      `${ENV_NAME}_RPC_URL`,
-    ]),
-    eventRpcUrl: env.optionalString(
-      `${ENV_NAME}_EVENT_RPC_URL_FOR_DISCOVERY`,
-    ),
-    reorgSafeDepth: env.optionalInteger([
-      `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
-      `${ENV_NAME}_REORG_SAFE_DEPTH`,
-    ]),
-    beaconApiUrl: env.optionalString([
-      'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
-      'ETHEREUM_BEACON_API_URL',
-    ]),
-    celestiaApiUrl: env.optionalString([
-      'CELESTIA_API_URL_FOR_DISCOVERY',
-      'CELESTIA_API_URL',
-    ]),
-    coingeckoApiKey: env.optionalString([
-      'COINGECKO_API_KEY_FOR_DISCOVERY',
-      'COINGECKO_API_KEY',
-    ]),
-    multicall: multicallConfig,
-    explorer: {
-      type: 'etherscan' as const,
-      url: 'https://api.etherscan.io/v2/api',
-      apiKey: env.string('ETHERSCAN_API_KEY'),
-      chainId: chainName === 'ethereum' ? 1 : 0,
-    },
-  }
-}
-
 function discoverChains(
-  env: Env,
   projects: string[],
   configReader: ConfigReader,
 ): DiscoveryChainConfig[] {
@@ -144,9 +88,7 @@ function discoverChains(
     chainNames.add('ethereum')
   }
 
-  return Array.from(chainNames).map((chain) =>
-    getChainDiscoveryConfig(env, chain),
-  )
+  return Array.from(chainNames).map((chain) => getChainConfig(chain))
 }
 
 export function getMonitorConfig(env: Env): MonitorConfig {
@@ -163,7 +105,7 @@ export function getMonitorConfig(env: Env): MonitorConfig {
     },
     discord: getDiscordConfig(env),
     discovery: {
-      chains: discoverChains(env, projects, configReader),
+      chains: discoverChains(projects, configReader),
       cacheEnabled: env.boolean('DISCOVERY_CACHE_ENABLED', true),
       cacheUri: env.string('DISCOVERY_CACHE_URI', 'postgres'),
       paths,

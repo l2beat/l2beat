@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
-import { getKeyFindings, type KeyFinding } from '../../../../utils/narrative'
 import type { CompiledReview } from '../../../../types'
+import { getKeyFindings, type KeyFinding } from '../../../../utils/keyFindings'
 
 interface KeyFindingsProps {
   review: CompiledReview
@@ -15,7 +15,7 @@ export function KeyFindings({ review }: KeyFindingsProps) {
 
   return (
     <div>
-      <p className="text-text-secondary mb-6 text-lg leading-relaxed max-w-3xl">
+      <p className="mb-6 max-w-3xl text-lg text-text-secondary leading-relaxed">
         Here are the most important things to know about{' '}
         <span className="font-semibold text-text-primary">
           {review.metadata.protocolName}
@@ -67,24 +67,13 @@ function FindingCallout({ finding }: { finding: KeyFinding }) {
   const s = findingStyles[finding.type]
 
   return (
-    <div
-      className={clsx(
-        'rounded-xl border-l-4 px-6 py-4',
-        s.border,
-        s.bg,
-      )}
-    >
+    <div className={clsx('rounded-xl border-l-4 px-6 py-4', s.border, s.bg)}>
       <div className="flex items-start gap-3">
         <span className={clsx('mt-0.5 shrink-0', s.icon)}>
           <FindingIcon type={finding.type} />
         </span>
         <div>
-          <h3
-            className={clsx(
-              'font-semibold text-base',
-              s.titleColor,
-            )}
-          >
+          <h3 className={clsx('font-semibold text-base', s.titleColor)}>
             {finding.title}
           </h3>
           <p className="mt-1 text-sm text-text-secondary leading-relaxed">

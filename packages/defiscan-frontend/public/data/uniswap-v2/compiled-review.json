@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-20T09:10:53.862Z",
-  "compiledAt": "2026-04-20T09:16:50.000Z",
+  "lastModified": "2026-04-16T15:45:40.573Z",
+  "compiledAt": "2026-04-23T09:01:52.000Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -10,16 +10,16 @@
     "chain": "Ethereum",
     "projectType": "dex",
     "tokenName": "UNI",
-    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $818.90M."
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $840.13M."
   },
   "totals": {
     "contractCount": 12,
-    "permissionedFunctionCount": 0,
-    "scoredFunctionCount": 0,
-    "adminCount": 1,
+    "permissionedFunctionCount": 2,
+    "scoredFunctionCount": 2,
+    "adminCount": 2,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 818896497.1458886,
-    "totalTokenValueAtRisk": 0,
+    "totalCapitalAtRisk": 840131582.2148548,
+    "totalTokenValueAtRisk": 64840000,
     "totalTokenValue": 0,
     "linesOfCode": 1979,
     "verifiedContractCount": 12,
@@ -31,7 +31,7 @@
       "name": "GovernorBravo Governance",
       "description": "On-chain governance contract (GovernorBravoDelegator) that proposes and votes on changes to the Timelock. UNI token holders vote on proposals that, if passed, are queued in the 48-hour Timelock. In practice, the only meaningful action available is controlling the protocol fee switch — all core contracts are immutable.",
       "adminType": "Immutable",
-      "isGovernance": false,
+      "isGovernance": true,
       "functions": [
         {
           "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
@@ -40,18 +40,148 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [
+            {
+              "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+              "name": "Uniswap Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "setMinter",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 64840000,
+              "fundsAtRisk": true,
+              "effectiveCapUsd": 64840000
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 0
+      "totalReachableTokenValue": 64840000
+    },
+    {
+      "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "name": "Governance Timelock (48h)",
+      "description": "Timelock contract with a 48-hour minimum delay, controlled by GovernorBravo (eth:0x408E...24C3). Owns FeeToSetter and FeeTo, giving it the ability to change the protocol fee recipient address and toggle the 0.05% protocol fee on liquidity pools. Cannot modify swap logic, pool contracts, or the factory.",
+      "adminType": "Immutable",
+      "isGovernance": true,
+      "functions": [
+        {
+          "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "contractName": "Uniswap Token",
+          "functionName": "setMinter",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 64840000,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            },
+            {
+              "type": "relativeValue",
+              "description": "New minter cannot mint more than 2% of the supply",
+              "relativeValue": {
+                "maxChangePercent": {
+                  "mode": "hardcoded",
+                  "value": "2"
+                }
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                  "fieldName": "totalSupply"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+                },
+                "multiplier": 0.02
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "minter"
+              },
+              "impactCapUsd": 64840000
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "contractName": "Uniswap Token",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 64840000,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            },
+            {
+              "type": "relativeValue",
+              "description": "Each mint is capped at 2% of current total supply (hardcoded mintCap = 2)",
+              "relativeValue": {
+                "maxChangePercent": {
+                  "mode": "hardcoded",
+                  "value": "2"
+                }
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                  "fieldName": "totalSupply"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+                },
+                "multiplier": 0.02
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "totalSupply"
+              },
+              "impactCapUsd": 64840000
+            },
+            {
+              "type": "delay",
+              "description": "Mints are rate-limited to at most once per year (hardcoded minimumTimeBetweenMints = 365 days)",
+              "delaySeconds": 31536000,
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "mintingAllowedAfter"
+              }
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 64840000,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 64840000
     }
   ],
   "adminTotals": {
     "totalFundsAtRisk": 0,
-    "totalTokenValueAtRisk": 0
+    "totalTokenValueAtRisk": 64840000
   },
   "dependencies": [],
   "dependencyEntityGroups": [],
@@ -63,19 +193,123 @@
     {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "name": "UniswapV2Factory (All Pairs)",
-      "description": "Factory contract that has deployed 495186 liquidity pair contracts holding $818.90M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "description": "Factory contract that has deployed 496377 liquidity pair contracts holding $840.13M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 818896497.1458886,
-        "contractCount": 495186,
+        "totalUsdValue": 840131582.2148548,
+        "contractCount": 496377,
         "handlerName": "uniswap-v2-factory",
         "label": "All Uniswap-v2 Pairs"
       }
     }
   ],
-  "functions": [],
+  "functions": [
+    {
+      "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "contractName": "Timelock",
+      "functionName": "executeTransaction",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "contractName": "Uniswap Token",
+      "functionName": "setMinter",
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "delaySeconds": 172800
+        },
+        {
+          "type": "relativeValue",
+          "description": "New minter cannot mint more than 2% of the supply",
+          "relativeValue": {
+            "maxChangePercent": {
+              "mode": "hardcoded",
+              "value": "2"
+            }
+          },
+          "impactCap": {
+            "value": {
+              "mode": "fieldRef",
+              "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+              "fieldName": "totalSupply"
+            },
+            "unit": {
+              "kind": "token",
+              "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+            },
+            "multiplier": 0.02
+          },
+          "mitigatedField": {
+            "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+            "fieldName": "minter"
+          },
+          "impactCapUsd": 64840000
+        }
+      ]
+    },
+    {
+      "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "contractName": "Uniswap Token",
+      "functionName": "mint",
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "delay",
+          "description": "Delay before execution",
+          "delayRef": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "delaySeconds": 172800
+        },
+        {
+          "type": "relativeValue",
+          "description": "Each mint is capped at 2% of current total supply (hardcoded mintCap = 2)",
+          "relativeValue": {
+            "maxChangePercent": {
+              "mode": "hardcoded",
+              "value": "2"
+            }
+          },
+          "impactCap": {
+            "value": {
+              "mode": "fieldRef",
+              "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+              "fieldName": "totalSupply"
+            },
+            "unit": {
+              "kind": "token",
+              "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+            },
+            "multiplier": 0.02
+          },
+          "mitigatedField": {
+            "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+            "fieldName": "totalSupply"
+          },
+          "impactCapUsd": 64840000
+        },
+        {
+          "type": "delay",
+          "description": "Mints are rate-limited to at most once per year (hardcoded minimumTimeBetweenMints = 365 days)",
+          "delaySeconds": 31536000,
+          "mitigatedField": {
+            "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+            "fieldName": "mintingAllowedAfter"
+          }
+        }
+      ]
+    }
+  ],
   "contracts": [
     {
       "address": "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360",
@@ -89,7 +323,7 @@
       "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
       "name": "GovernorBravoDelegate",
       "isExternal": false,
-      "isGovernance": false,
+      "isGovernance": true,
       "entity": null,
       "proxyType": "immutable"
     },
@@ -97,7 +331,7 @@
       "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
       "name": "GovernorBravo Governance",
       "isExternal": false,
-      "isGovernance": false,
+      "isGovernance": true,
       "entity": null,
       "proxyType": "immutable"
     },
@@ -105,7 +339,7 @@
       "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
       "name": "Governance Timelock (48h)",
       "isExternal": false,
-      "isGovernance": false,
+      "isGovernance": true,
       "entity": null,
       "proxyType": "immutable"
     },

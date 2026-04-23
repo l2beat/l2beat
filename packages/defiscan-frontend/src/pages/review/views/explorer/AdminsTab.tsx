@@ -21,10 +21,7 @@ type SortDir = 'asc' | 'desc'
 
 export function AdminsTab({ review }: AdminsTabProps) {
   const { admins, totals } = review
-  const humanAdmins = useMemo(
-    () => getHumanAdmins(admins).filter((a) => !a.isGovernance),
-    [admins],
-  )
+  const humanAdmins = useMemo(() => getHumanAdmins(admins), [admins])
   const [sortField, setSortField] = useState<SortField>('tvs')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
@@ -202,9 +199,14 @@ function AdminRow({
           </div>
         </td>
         <td className="px-4 py-2.5">
-          <Badge variant="admin-type" adminType={admin.adminType}>
-            {admin.adminType}
-          </Badge>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Badge variant="admin-type" adminType={admin.adminType}>
+              {admin.adminType}
+            </Badge>
+            {admin.isGovernance && (
+              <Badge variant="governance">Governance</Badge>
+            )}
+          </div>
         </td>
         <td className="px-4 py-2.5 text-right tabular-nums">
           {admin.totalReachableCapital + admin.totalReachableTokenValue > 0 ? (

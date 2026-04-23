@@ -1,0 +1,18 @@
+{
+  "framework": "Compound Governor Bravo",
+  "voteExecution": "onchain",
+  "votingUnit": "UNI token",
+  "proposalRequirements": "2.5M UNI",
+  "votingProcess": "Need at least ≥ 40M UNI for the quorum to be reached and the proposal to be considered valid (in addition to having more votes in favor than against)",
+  "proposalPeriod": {
+    "kind": "fixed",
+    "value": "~7 days"
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "fieldName": "delay"
+    }
+  }
+}

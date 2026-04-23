@@ -1,0 +1,1062 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-22T07:55:12.008Z",
+  "contracts": {
+    "eth:0xA5644E29708357803b5A882D272c41cC0dF92B34": {
+      "functions": [
+        {
+          "functionName": "createAndInitializePoolIfNecessary",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.823Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.823Z"
+          }
+        },
+        {
+          "functionName": "migrate",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.824Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.824Z"
+          }
+        },
+        {
+          "functionName": "multicall",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.824Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.824Z"
+          }
+        },
+        {
+          "functionName": "selfPermit",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.825Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.825Z"
+          }
+        },
+        {
+          "functionName": "selfPermitAllowed",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.826Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.826Z"
+          }
+        },
+        {
+          "functionName": "selfPermitAllowedIfNecessary",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.826Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.826Z"
+          }
+        },
+        {
+          "functionName": "selfPermitIfNecessary",
+          "isPermissioned": false,
+          "timestamp": "2026-04-15T21:34:39.827Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-15T21:34:39.827Z"
+          }
+        }
+      ]
+    },
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "functions": [
+        {
+          "functionName": "_setImplementation",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Replaces the active GovernorBravo logic contract (the delegate) with a new implementation, affecting how governance proposals are created, voted on, and executed. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:55.970Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:55.970Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:02:54.787Z"
+          }
+        }
+      ]
+    },
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
+      "functions": [
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Implementation-side initializer for the GovernorBravo logic contract. Reverts unless `initialProposalId == 0`, which the deployed delegator already advanced past during initial setup, so it can never be re-run on the live proxy. Storage and msg.sender checks resolve against the GovernorBravoDelegator (proxy) when invoked via delegatecall — not against the inert implementation slots that read as the zero address.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:55.976Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:55.976Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:00:32.092Z"
+          }
+        },
+        {
+          "functionName": "_setVotingDelay",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the number of blocks between proposal creation and the start of voting. When called via the GovernorBravoDelegator (proxy), the admin check resolves against the proxy's `admin` slot — currently the 48h Timelock — so this is a Timelock-controlled parameter, not a renounced one. Bounded on-chain to MIN_VOTING_DELAY ≤ value ≤ MAX_VOTING_DELAY.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:55.983Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:55.983Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:59:55.674Z"
+          }
+        },
+        {
+          "functionName": "_setVotingPeriod",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the duration of the voting window in blocks. When called via the GovernorBravoDelegator (proxy), the admin check resolves against the proxy's `admin` slot — currently the 48h Timelock — so changes go through standard governance. Bounded on-chain to MIN_VOTING_PERIOD ≤ value ≤ MAX_VOTING_PERIOD.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:55.989Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:55.989Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:00:21.492Z"
+          }
+        },
+        {
+          "functionName": "_setProposalThreshold",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the minimum UNI token balance required to submit a governance proposal. When called via the GovernorBravoDelegator (proxy), the admin check resolves against the proxy's `admin` slot — currently the 48h Timelock — so changes go through standard governance. Bounded on-chain to MIN_PROPOSAL_THRESHOLD ≤ value ≤ MAX_PROPOSAL_THRESHOLD.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:55.995Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:55.995Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:59:37.759Z"
+          }
+        },
+        {
+          "functionName": "_initiate",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "One-time bootstrap that imports the initial proposal count from the prior GovernorAlpha contract. Already executed during GovernorBravo activation; the `initialProposalId == 0` guard makes it permanently un-callable on the live proxy. Owner via the proxy is the 48h Timelock; not renounced.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.001Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.001Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:55:28.151Z"
+          }
+        },
+        {
+          "functionName": "_setPendingAdmin",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Nominates a new admin for the GovernorBravo proxy (two-step transfer; the nominee must then call `_acceptAdmin`). When invoked via the GovernorBravoDelegator, the admin check resolves against the proxy's `admin` slot — currently the 48h Timelock. Transferring this role would hand control of all GovernorBravo-level parameters (voting delay/period, proposal threshold, implementation upgrades) to the new admin, so any change is gated by the standard 48h governance delay.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.008Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.008Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:56:55.995Z"
+          }
+        },
+        {
+          "functionName": "_acceptAdmin",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Completes a two-step admin transfer by promoting the pending admin to admin on the GovernorBravo proxy. Caller must equal the proxy's `pendingAdmin` slot, which is currently the zero address — meaning no transfer is in flight. Becomes callable only after a successful `_setPendingAdmin`, which itself goes through the 48h Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3.pendingAdmin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.015Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.015Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:53:16.617Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "functions": [
+        {
+          "functionName": "setDelay",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Updates the execution delay for all queued governance transactions. The delay is bounded between MINIMUM_DELAY (2 days) and MAXIMUM_DELAY (30 days). Callable only by the governor contract via a queued transaction.",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": 172800
+              },
+              "max": {
+                "mode": "hardcoded",
+                "value": 2592000
+              },
+              "description": "Delay must be between MINIMUM_DELAY (2 days) and MAXIMUM_DELAY (30 days)"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.021Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.021Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:35:57.740Z"
+          }
+        },
+        {
+          "functionName": "acceptAdmin",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Completes a Timelock admin transfer by accepting the pending admin role. The Timelock admin controls which contracts can queue and execute transactions across the entire protocol. Callable only by the pending admin.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.pendingAdmin"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.027Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.027Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:33:30.189Z"
+          }
+        },
+        {
+          "functionName": "setPendingAdmin",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Nominates a new admin for the Timelock, which would transfer control over all governance execution rights. Callable only by the governor contract via a queued transaction, subject to the current execution delay.",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.033Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.033Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:36:58.761Z"
+          }
+        },
+        {
+          "functionName": "queueTransaction",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Schedules a transaction for delayed execution after the current timelock delay (currently 48 hours). Only the governor contract can queue transactions.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.040Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.040Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:35:45.663Z"
+          }
+        },
+        {
+          "functionName": "cancelTransaction",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Cancels a previously queued transaction before it is executed. Only the governor contract can cancel queued transactions.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.047Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.047Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:36:26.045Z"
+          }
+        },
+        {
+          "functionName": "executeTransaction",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Executes a previously queued transaction after its timelock delay has elapsed (currently 48 hours). Only the governor contract can execute queued transactions.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.053Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.053Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:35:39.668Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": {
+      "functions": [
+        {
+          "functionName": "setOwner",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers the V3 factory owner role to a new address. The factory owner can enable new LP fee tiers and, via the fee adapter, configure protocol fees on V3 pools. Callable only by the current owner (V3OpenFeeAdapter).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.060Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.060Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:48:50.721Z"
+          }
+        },
+        {
+          "functionName": "enableFeeAmount",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Enables a new LP fee tier on the V3 factory with an associated tick spacing. Irreversible — fee tiers cannot be removed once enabled. Callable only by the factory owner (V3OpenFeeAdapter).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.066Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.066Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:48:31.759Z"
+          }
+        }
+      ]
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers ownership of the Firepit contract to a new address. The owner can update the burn threshold and threshold setter. Callable only by the current owner (the governance Timelock).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.153Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.153Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:52:20.633Z"
+          }
+        },
+        {
+          "functionName": "setThresholdSetter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Sets which address is authorized to call setThreshold, which controls the minimum UNI balance required in the Firepit before a TokenJar release can be triggered. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.159Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.159Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:51:06.197Z"
+          }
+        },
+        {
+          "functionName": "setThreshold",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Sets the minimum UNI balance that must accumulate in the Firepit before release() can be called on the TokenJar, sending tokens to the burn address (0xdEaD). Callable only by the designated threshold setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.thresholdSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.165Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.165Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T08:25:15.412Z"
+          }
+        }
+      ]
+    },
+    "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers ownership of the TokenJar contract, which controls the releaser address and token release configuration. Callable only by the governance Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.172Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.172Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:41:27.737Z"
+          }
+        },
+        {
+          "functionName": "setReleaser",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Sets which address is authorized to call release(), triggering the transfer of accumulated UNI tokens to the burn address (0xdEaD). Currently set to the Firepit contract. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.178Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.178Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:41:03.094Z"
+          }
+        },
+        {
+          "functionName": "release",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers accumulated UNI tokens from the TokenJar to the RESOURCE_RECIPIENT (0xdEaD burn address), effectively burning them. Only callable by the designated releaser, currently the Firepit contract, which gates execution behind a configurable UNI threshold.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.releaser"
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.184Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.184Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:40:49.618Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "functions": [
+        {
+          "functionName": "setMinter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Sets the address authorized to mint new UNI tokens. Changing the minter to a malicious address could allow unbounded token inflation. Callable only by the current minter (the Timelock via governance).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "relativeValue",
+              "description": "New minter cannot mint more than 2% of the supply",
+              "relativeValue": {
+                "maxChangePercent": {
+                  "mode": "hardcoded",
+                  "value": "2"
+                }
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                  "fieldName": "totalSupply"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+                },
+                "multiplier": 0.02
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "minter"
+              }
+            }
+          ],
+          "timestamp": "2026-04-22T07:55:12.008Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-22T07:55:12.008Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:47:48.128Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Mints new UNI tokens to a specified address. Capped at 2% of current total supply per mint, with a mandatory minimum of 1 year between mints (hardcoded constants). Callable only by the authorized minter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "relativeValue",
+              "description": "Each mint is capped at 2% of current total supply (hardcoded mintCap = 2)",
+              "relativeValue": {
+                "maxChangePercent": {
+                  "mode": "hardcoded",
+                  "value": "2"
+                }
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                  "fieldName": "totalSupply"
+                },
+                "unit": {
+                  "kind": "token",
+                  "tokenAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+                },
+                "multiplier": 0.02
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "totalSupply"
+              }
+            },
+            {
+              "type": "delay",
+              "description": "Mints are rate-limited to at most once per year (hardcoded minimumTimeBetweenMints = 365 days)",
+              "delaySeconds": 31536000,
+              "mitigatedField": {
+                "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+                "fieldName": "mintingAllowedAfter"
+              }
+            }
+          ],
+          "timestamp": "2026-04-22T07:41:32.323Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-22T07:41:32.323Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:41:55.529Z"
+          }
+        }
+      ]
+    },
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers ownership of the V3OpenFeeAdapter, changing who can reconfigure V3 factory fees and the fee setter role. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.206Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.206Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T10:01:18.479Z"
+          }
+        },
+        {
+          "functionName": "enableFeeAmount",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Enables a new LP fee tier on the V3 factory by calling through to UniswapV3Factory.enableFeeAmount. Irreversible — fee tiers cannot be removed. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.215Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.215Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:55:45.761Z"
+          }
+        },
+        {
+          "functionName": "setFactoryOwner",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Transfers the V3 factory owner role (currently held by this adapter) to a new address. Once transferred, the adapter loses control over V3 fee configuration. Callable only by the Timelock.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.222Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.222Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:59:54.994Z"
+          }
+        },
+        {
+          "functionName": "setFeeSetter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Sets which address is authorized to call the fee configuration functions (setDefaultFee, setFeeTierDefault, setPoolOverride, etc.). Callable only by the adapter owner (Timelock).",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.229Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.229Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T10:00:04.562Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFee",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the global default protocol fee for all V3 pools without a pool or tier-specific override. The fee is a packed uint8 divisor, capped such that the protocol take cannot exceed 25% of LP fees per direction. Callable only by the designated fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-direction fee divisor must be 0 or in [4, 10] — protocol take capped at 25% of LP fees per swap direction (packed uint8: each 4-bit half ∈ {0, 4..10})",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "170"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.237Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.237Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:55:59.114Z"
+          }
+        },
+        {
+          "functionName": "setFeeTierDefault",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets a default protocol fee for all pools within a specific LP fee tier, overriding the global default for that tier. Capped at 25% of LP fees per direction. Callable only by the fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-direction fee divisor must be 0 or in [4, 10] — protocol take capped at 25% of LP fees per swap direction (packed uint8: each 4-bit half ∈ {0, 4..10})",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "170"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.243Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.243Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T10:00:19.619Z"
+          }
+        },
+        {
+          "functionName": "setPoolOverride",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets a pool-specific protocol fee override for an individual V3 pool, overriding any tier or global defaults. Capped at 25% of LP fees per direction. Callable only by the fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-direction fee divisor must be 0 or in [4, 10] — protocol take capped at 25% of LP fees per swap direction (packed uint8: each 4-bit half ∈ {0, 4..10})",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "170"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.251Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.251Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T10:00:36.324Z"
+          }
+        },
+        {
+          "functionName": "clearFeeTierDefault",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Removes a previously set fee tier default, reverting pools in that tier to the global default fee. Callable only by the fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.257Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.257Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:55:01.742Z"
+          }
+        },
+        {
+          "functionName": "clearPoolOverride",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Removes a pool-specific protocol fee override, reverting the pool to its tier or global default fee. Callable only by the fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-04-17T12:05:56.263Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.263Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:55:12.341Z"
+          }
+        },
+        {
+          "functionName": "setDefaultFeeByFeeTier",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sets the default protocol fee for all pools in a specified fee tier. Equivalent to setFeeTierDefault but accepts the fee tier value directly. Capped at 25% of LP fees per direction. Callable only by the fee setter.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.feeSetter"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+            "fieldName": "delay"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Per-direction fee divisor must be 0 or in [4, 10] — protocol take capped at 25% of LP fees per swap direction (packed uint8: each 4-bit half ∈ {0, 4..10})",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "170"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-17T12:05:56.270Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T12:05:56.270Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-04-17T09:59:36.174Z"
+          }
+        }
+      ]
+    }
+  }
+}

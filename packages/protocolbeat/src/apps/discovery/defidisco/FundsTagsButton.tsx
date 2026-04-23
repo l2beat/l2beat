@@ -6,8 +6,11 @@ import { findByAddress } from './addressUtils'
 import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
 const KNOWN_AGGREGATE_HANDLERS = [
+  'aerodrome-cl-factory',
+  'aerodrome-v2-factory',
   'frankencoin-mintinghub',
   'uniswap-v2-factory',
+  'uniswap-v3-factory',
 ]
 
 export function FundsTagsButton() {
@@ -34,7 +37,7 @@ export function FundsTagsButton() {
       const tag = findByAddress(
         contractTags?.tags ?? [],
         (t) => t.contractAddress,
-        selectedNodes[0].address,
+        selectedNodes[0].id,
       )
       return {
         fetchBalances: tag?.fetchBalances ?? false,
@@ -95,7 +98,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           fetchBalances: newValue,
         })
       }),
@@ -108,7 +111,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           fetchPositions: newValue,
         })
       }),
@@ -121,7 +124,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           isToken: newValue,
         })
       }),
@@ -134,7 +137,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           fetchAggregate: newValue,
           aggregateHandler: newValue ? currentSettings.aggregateHandler : null,
           aggregateLabel: newValue
@@ -149,7 +152,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           aggregateHandler: handler,
         })
       }),
@@ -163,7 +166,7 @@ export function FundsTagsButton() {
     await Promise.all(
       selectedNodes.map((node) => {
         return updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           aggregateLabel: trimmed || null,
         })
       }),
@@ -175,7 +178,7 @@ export function FundsTagsButton() {
     const tag = findByAddress(
       contractTags?.tags ?? [],
       (t) => t.contractAddress,
-      node.address,
+      node.id,
     )
     return (
       tag?.fetchBalances ||

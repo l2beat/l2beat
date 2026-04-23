@@ -138,9 +138,30 @@ Example: `XCHF → StablecoinBridge.mint() → Frankencoin.mint()` where `Franke
 
 ### Impact Cap
 
-A mitigation may carry `impactCap` to bound the maximum potentially impacted TVL of a function. Two modes:
+A mitigation may carry `impactCap` to bound the maximum potentially impacted TVL of a function. **One unified shape:**
 
-- **Field reference** — `{ contractAddress, fieldName, unit }` where `unit` is one of `'raw' | '1e6' | '1e8' | '1e18' | 'bps' | 'percent'`. The raw field value is scaled to USD using the unit denominator
-- **Hardcoded USD** — `{ hardcodedUsd: number }` derived from code analysis
+```ts
+impactCap: {
+  value:
+    | { mode: 'hardcoded'; amount: number }
+    | { mode: 'fieldRef'; contractAddress: string; fieldName: string }
+  unit:
+    | { kind: 'usd' }
+    | { kind: 'scaler'; factor: '1e6'|'1e8'|'1e18'|'bps'|'percent' }
+    | { kind: 'token'; tokenAddress: string }  // decimals+price from funds-data.json
+  multiplier?: number  // applied to final USD; default 1
+}
+```
 
-`resolveStructuredImpactCap()` emits a resolved `impactCapUsd: number` on the mitigation during `getMitigationsForOwner()`. Capital analysis applies per-contract caps (`effectiveCapUsd` on `ReachableContract`) so fund sums never exceed the cap. In the public frontend, capped mitigations display an emerald "$XM Max Impact" badge.
+**Formula**: `raw = value.amount (hardcoded) | on-chain field (fieldRef)`; then `usd = { usd: raw, scaler: raw/factor, token: tokenAmount × price }`; finally `final = usd × (multiplier ?? 1)`. In `unit.kind === 'token'`, hardcoded amounts are interpreted as whole tokens (researcher-friendly) while fieldRef amounts are raw on-chain units (divided by `10^decimals`).
+
+**Examples:**
+
+- Hardcoded $5M cap: `{ value: { mode: 'hardcoded', amount: 5_000_000 }, unit: { kind: 'usd' } }`
+- 1M ZCHF hardcoded cap (dynamically priced): `{ value: { mode: 'hardcoded', amount: 1_000_000 }, unit: { kind: 'token', tokenAddress: 'eth:0xB58E...21cB' } }` — resolves to `1e6 × zchf_price`.
+- 2% of UNI totalSupply: `{ value: { mode: 'fieldRef', contractAddress: 'eth:0x1f98…F984', fieldName: 'totalSupply' }, unit: { kind: 'token', tokenAddress: 'eth:0x1f98…F984' }, multiplier: 0.02 }` — resolves to `(totalSupply / 1e18) × uni_price × 0.02`.
+- USD-native field-ref (price oracle returning 1e8-scaled USD): `{ value: { mode: 'fieldRef', contractAddress, fieldName }, unit: { kind: 'scaler', factor: '1e8' } }`.
+
+**Legacy shapes** (pre-unification: `hardcodedUsd`, `tokenAddress+fieldName+multiplier+fieldContractAddress?`, `contractAddress+fieldName+unit`) are still accepted at read time via `normalizeImpactCap()` in [types.ts](packages/l2b/src/implementations/discovery-ui/defidisco/types.ts). All persisted files (`functions.json`) were migrated to the unified shape.
+
+`resolveImpactCap()` in [projectAnalysis.ts](packages/l2b/src/implementations/discovery-ui/defidisco/projectAnalysis.ts) emits a resolved `impactCapUsd: number` on the mitigation during `getMitigationsForOwner()`. Capital analysis applies per-contract caps (`effectiveCapUsd` on `ReachableContract`) so fund sums never exceed the cap. In the public frontend, capped mitigations display an emerald "$XM Max Impact" badge.

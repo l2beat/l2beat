@@ -31,8 +31,122 @@ export type Impact = 'critical' | 'no-impact'
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
 
-// Unit for impact cap field — describes how to scale the raw on-chain value to USD
-export type ImpactCapUnit = 'raw' | '1e6' | '1e8' | '1e18' | 'bps' | 'percent'
+// Scaler denominator used when an impactCap's unit.kind === 'scaler'.
+// Applied to raw on-chain values that already express USD under a fixed scaling
+// (e.g. price feeds returning 1e8-scaled USD).
+export type ImpactCapScaler = '1e6' | '1e8' | '1e18' | 'bps' | 'percent'
+
+// Unified impactCap value — where the amount comes from.
+export type ImpactCapValue =
+  | { mode: 'hardcoded'; amount: number }
+  | { mode: 'fieldRef'; contractAddress: string; fieldName: string }
+
+// Unified impactCap unit — how to interpret the amount to yield USD.
+//   - 'usd':    amount is already USD
+//   - 'scaler': amount is a raw USD-scaled number, divide by `factor`
+//   - 'token':  amount is a token quantity. Price & decimals come from funds-data.json.
+//               For 'hardcoded' values: amount is whole tokens (researcher-friendly).
+//               For 'fieldRef' values:  amount is raw on-chain units (divided by 10^decimals).
+export type ImpactCapUnit =
+  | { kind: 'usd' }
+  | { kind: 'scaler'; factor: ImpactCapScaler }
+  | { kind: 'token'; tokenAddress: string }
+
+export interface ImpactCap {
+  value: ImpactCapValue
+  unit: ImpactCapUnit
+  multiplier?: number // applied to final USD; default 1
+}
+
+// Legacy persisted shape (pre-unification). Kept for backward-compat reads.
+// Three historical modes were inferred from populated keys:
+//   A) { hardcodedUsd }
+//   B) { contractAddress, fieldName, unit: 'raw'|'1e6'|'1e8'|'1e18'|'bps'|'percent' }
+//   C) { tokenAddress, fieldName, multiplier, fieldContractAddress? }
+export interface LegacyImpactCap {
+  hardcodedUsd?: number
+  contractAddress?: string
+  fieldName?: string
+  unit?: 'raw' | '1e6' | '1e8' | '1e18' | 'bps' | 'percent'
+  tokenAddress?: string
+  fieldContractAddress?: string
+  multiplier?: number
+}
+
+function isNewShape(raw: unknown): raw is ImpactCap {
+  if (!raw || typeof raw !== 'object') return false
+  const r = raw as Record<string, unknown>
+  const v = r.value as Record<string, unknown> | undefined
+  const u = r.unit as Record<string, unknown> | undefined
+  return (
+    !!v &&
+    typeof v === 'object' &&
+    (v.mode === 'hardcoded' || v.mode === 'fieldRef') &&
+    !!u &&
+    typeof u === 'object' &&
+    (u.kind === 'usd' || u.kind === 'scaler' || u.kind === 'token')
+  )
+}
+
+/**
+ * Normalize a persisted impactCap (new or legacy shape) to the unified ImpactCap.
+ * Returns undefined for invalid / empty entries. Callers should always pipe raw
+ * file values through this before resolving.
+ */
+export function normalizeImpactCap(
+  raw: ImpactCap | LegacyImpactCap | null | undefined,
+): ImpactCap | undefined {
+  if (!raw) return undefined
+  if (isNewShape(raw)) return raw
+
+  const legacy = raw as LegacyImpactCap
+
+  // Legacy Mode A: hardcoded USD
+  if (legacy.hardcodedUsd !== undefined) {
+    return {
+      value: { mode: 'hardcoded', amount: legacy.hardcodedUsd },
+      unit: { kind: 'usd' },
+    }
+  }
+
+  // Legacy Mode C: token-denominated (tokenAddress present)
+  if (legacy.tokenAddress !== undefined) {
+    if (!legacy.fieldName || legacy.multiplier === undefined) return undefined
+    return {
+      value: {
+        mode: 'fieldRef',
+        contractAddress: legacy.fieldContractAddress ?? legacy.tokenAddress,
+        fieldName: legacy.fieldName,
+      },
+      unit: { kind: 'token', tokenAddress: legacy.tokenAddress },
+      multiplier: legacy.multiplier,
+    }
+  }
+
+  // Legacy Mode B: scaler field-ref
+  if (legacy.contractAddress && legacy.fieldName && legacy.unit) {
+    if (legacy.unit === 'raw') {
+      return {
+        value: {
+          mode: 'fieldRef',
+          contractAddress: legacy.contractAddress,
+          fieldName: legacy.fieldName,
+        },
+        unit: { kind: 'usd' },
+      }
+    }
+    return {
+      value: {
+        mode: 'fieldRef',
+        contractAddress: legacy.contractAddress,
+        fieldName: legacy.fieldName,
+      },
+      unit: { kind: 'scaler', factor: legacy.unit },
+    }
+  }
+
+  return undefined
+}
 
 // A mitigation value can be either a hardcoded literal or a reference to a contract field
 export interface MitigationValue {
@@ -72,14 +186,11 @@ export interface Mitigation {
   // When absent, mitigation is global (applies to all callers).
   scopedTo?: { address: string; type: 'admin' | 'dependency' }
   // Optional: the maximum fund impact this constraint produces.
-  // Either a hardcoded USD value or a reference to an on-chain field + scaling unit.
   // Bounds (directFundsUsd + totalReachableFundsUsd) in capital analysis.
-  impactCap?: {
-    hardcodedUsd?: number
-    contractAddress?: string
-    fieldName?: string
-    unit?: ImpactCapUnit
-  }
+  // Unified shape (see ImpactCap): a value (hardcoded or fieldRef), a unit
+  // (usd | scaler | token), and an optional multiplier. Legacy shapes are
+  // accepted via normalizeImpactCap() at read time.
+  impactCap?: ImpactCap | LegacyImpactCap
   // Resolved USD value of impactCap (set during analysis for display)
   impactCapUsd?: number
 }

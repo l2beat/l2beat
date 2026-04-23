@@ -1,0 +1,77 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-19T09:31:22.607Z",
+  "protocolSlug": "uniswap-v3",
+  "protocolName": "Uniswap V3",
+  "tokenName": "UNI",
+  "chain": "Ethereum",
+  "projectType": "dex",
+  "description": "Uniswap V3 is an automated market maker built around concentrated liquidity, where LP positions are issued as NFTs by the NonfungiblePositionManager and traded against pools deployed by the UniswapV3Factory. Governance runs through Compound Governor Bravo: UNI holders propose and vote on-chain (2.5M UNI to propose, 40M UNI quorum, ~7-day voting window), and successful proposals execute after a 48-hour Timelock delay. The minter role on the UNI token is held by the Timelock, with minting limited to 2% of supply per year and a 365-day minimum interval between mints — both limits are hardcoded in the token contract.",
+  "admins": {
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "name": "Governance Timelock (48h)",
+      "description": "The central execution hub for all governance decisions, enforcing a 48-hour on-chain delay (adjustable within a 2–30 day range via setDelay). Owns the V3OpenFeeAdapter (which in turn owns UniswapV3Factory and controls fee configuration), both V3 ProxyAdmin contracts, Firepit, and TokenJar — making governance the single authority over V3 fee tiers, NFT descriptor upgrades, and the UNI burn mechanism. Also holds the UNI minter role (mint, setMinter)."
+    },
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "name": "Uniswap Governance (GovernorBravo)",
+      "description": "The on-chain governance proxy (GovernorBravoDelegator) that UNI holders use to propose and vote on protocol changes. Proposals require 2.5M UNI to submit and 40M UNI quorum to pass; the voting window is approximately 7 days. Approved proposals are forwarded to the Timelock for a mandatory 48-hour delay. The proxy is immutable; its implementation contract (GovernorBravoDelegate at 0x53a3…3026, which holds only ABI — its slots read as the zero address because storage lives on the proxy) can be replaced by the Timelock via _setImplementation. All admin-gated functions on the implementation (voting delay/period, proposal threshold, admin transfer) are likewise controlled by the Timelock when invoked through the proxy."
+    },
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": {
+      "name": "V3OpenFeeAdapter",
+      "description": "Intermediate owner of UniswapV3Factory. Can enable new fee tiers (enableFeeAmount), set per-tier and per-pool protocol fee overrides (setDefaultFee, setPoolOverride), and transfer factory ownership (setOwner, setFactoryOwner). The protocol fee take is hard-capped: each per-direction fee divisor must be 0 or in [4, 10], bounding the protocol's share to at most 25% of LP swap fees. V3OpenFeeAdapter is itself Timelock-owned, routing all V3 fee governance through the standard 48-hour delay."
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "name": "Firepit",
+      "description": "Accumulates UNI tokens from the TokenJar and periodically burns them by sending to the dead address (0x...dEaD) once a configurable threshold is reached. Firepit is Timelock-owned; governance controls the threshold amount (setThreshold) and the thresholdSetter role. It holds no LP or user funds."
+    }
+  },
+  "dependencies": {},
+  "funds": {},
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {},
+  "publishedAt": "2026-04-17T11:50:00.000Z"
+}

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-01-09T09:48:39.844Z",
+  "lastModified": "2026-04-22T09:46:18.623Z",
   "contracts": {
     "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A": {
       "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
@@ -10,61 +10,121 @@
           "callerFunction": "burn",
           "storageVariable": "TMP_190",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "burn",
           "storageVariable": "TMP_193",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "burn",
           "storageVariable": "TMP_210",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "burn",
           "storageVariable": "TMP_213",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "burn",
-          "storageVariable": "TMP_144",
+          "storageVariable": "_reserve0",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "feeTo"
+          "calledFunction": "feeTo",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "mint",
           "storageVariable": "TMP_162",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "mint",
           "storageVariable": "TMP_165",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "mint",
-          "storageVariable": "TMP_144",
+          "storageVariable": "_reserve0",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "feeTo"
+          "calledFunction": "feeTo",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "skim",
           "storageVariable": "TMP_274",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "skim",
           "storageVariable": "TMP_279",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swap",
@@ -76,28 +136,69 @@
           "callerFunction": "swap",
           "storageVariable": "TMP_240",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swap",
           "storageVariable": "TMP_243",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "sync",
           "storageVariable": "TMP_285",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "sync",
           "storageVariable": "TMP_288",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-09T09:48:24.706Z"
+      "generatedAt": "2026-04-22T09:46:17.404Z"
+    },
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": {
+      "address": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+      "name": "Firepit",
+      "externalCalls": [
+        {
+          "callerFunction": "release",
+          "storageVariable": "TOKEN_JAR",
+          "interfaceType": "ITokenJar",
+          "calledFunction": "release",
+          "resolvedAddress": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "resolvedContractName": "TokenJar",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-04-22T09:46:17.409Z"
     },
     "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360": {
       "address": "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360",
@@ -107,34 +208,58 @@
           "callerFunction": "setFeeToSetter",
           "storageVariable": "TMP_8",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "setFeeToSetter"
+          "calledFunction": "setFeeToSetter",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "toggleFees",
           "storageVariable": "TMP_14",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "setFeeTo"
+          "calledFunction": "setFeeTo",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "toggleFees",
           "storageVariable": "TMP_16",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "setFeeTo"
+          "calledFunction": "setFeeTo",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-09T09:48:26.133Z"
+      "generatedAt": "2026-04-22T09:46:17.414Z"
     },
     "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
       "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
       "name": "Timelock",
       "externalCalls": [],
-      "generatedAt": "2026-01-09T09:48:27.873Z"
+      "generatedAt": "2026-04-22T09:46:17.416Z"
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "name": "Uniswap Token",
+      "externalCalls": [],
+      "generatedAt": "2026-04-22T09:46:17.418Z"
     },
     "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
       "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
       "name": "GovernorBravoDelegator",
       "externalCalls": [],
-      "generatedAt": "2026-01-09T09:48:29.490Z"
+      "generatedAt": "2026-04-22T09:46:17.419Z"
     },
     "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": {
       "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
@@ -145,126 +270,144 @@
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "acceptAdmin",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "cancel",
           "storageVariable": "uni",
           "interfaceType": "UniInterface",
           "calledFunction": "getPriorVotes",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "cancel",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "cancelTransaction",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "cancel",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVote",
           "storageVariable": "uni",
           "interfaceType": "UniInterface",
           "calledFunction": "getPriorVotes",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVote",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVoteBySig",
           "storageVariable": "uni",
           "interfaceType": "UniInterface",
           "calledFunction": "getPriorVotes",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVoteBySig",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVoteWithReason",
           "storageVariable": "uni",
           "interfaceType": "UniInterface",
           "calledFunction": "getPriorVotes",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "castVoteWithReason",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "execute",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "executeTransaction",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "execute",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "propose",
           "storageVariable": "uni",
           "interfaceType": "UniInterface",
           "calledFunction": "getPriorVotes",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "propose",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "queue",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "delay",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "queue",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "queue",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "queuedTransactions",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "queue",
           "storageVariable": "timelock",
           "interfaceType": "TimelockInterface",
           "calledFunction": "queueTransaction",
-          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000"
+          "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "state",
@@ -272,11 +415,12 @@
           "interfaceType": "TimelockInterface",
           "calledFunction": "GRACE_PERIOD",
           "resolvedAddress": "eth:0x0000000000000000000000000000000000000000",
+          "resolutionType": "deterministic",
           "callerIsView": true,
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-01-09T09:48:31.613Z"
+      "generatedAt": "2026-04-22T09:46:17.424Z"
     },
     "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
@@ -286,10 +430,16 @@
           "callerFunction": "createPair",
           "storageVariable": "TMP_284",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "initialize"
+          "calledFunction": "initialize",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-09T09:48:33.905Z"
+      "generatedAt": "2026-04-22T09:46:18.597Z"
     },
     "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": {
       "address": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
@@ -299,75 +449,135 @@
           "callerFunction": "addLiquidity",
           "storageVariable": "TMP_23",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "mint"
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidity",
           "storageVariable": "TMP_2",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "getPair"
+          "calledFunction": "getPair",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "addLiquidity",
           "storageVariable": "TMP_6",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "createPair"
+          "calledFunction": "createPair",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidity",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "addLiquidityETH",
           "storageVariable": "TMP_28",
           "interfaceType": "IWETH",
-          "calledFunction": "deposit"
+          "calledFunction": "deposit",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidityETH",
           "storageVariable": "TMP_30",
           "interfaceType": "IWETH",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidityETH",
           "storageVariable": "TMP_33",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "mint"
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidityETH",
           "storageVariable": "TMP_2",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "getPair"
+          "calledFunction": "getPair",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "addLiquidityETH",
           "storageVariable": "TMP_6",
           "interfaceType": "IUniswapV2Factory",
-          "calledFunction": "createPair"
+          "calledFunction": "createPair",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "addLiquidityETH",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "getAmountsIn",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
           "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic",
           "callerIsView": true,
           "isViewCall": true
         },
         {
           "callerFunction": "getAmountsOut",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
           "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic",
           "callerIsView": true,
           "isViewCall": true
         },
@@ -375,346 +585,664 @@
           "callerFunction": "removeLiquidity",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidity",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETH",
           "storageVariable": "TMP_51",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETH",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETH",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_68",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_72",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermit",
           "storageVariable": "TMP_62",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "permit"
+          "calledFunction": "permit",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermit",
           "storageVariable": "TMP_51",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermit",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermit",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_77",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "permit"
+          "calledFunction": "permit",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_68",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_72",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityWithPermit",
           "storageVariable": "TMP_56",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "permit"
+          "calledFunction": "permit",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityWithPermit",
           "storageVariable": "TMP_40",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transferFrom"
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "removeLiquidityWithPermit",
           "storageVariable": "TMP_42",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapETHForExactTokens",
           "storageVariable": "TMP_167",
           "interfaceType": "IWETH",
-          "calledFunction": "deposit"
+          "calledFunction": "deposit",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapETHForExactTokens",
           "storageVariable": "TMP_169",
           "interfaceType": "IWETH",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapETHForExactTokens",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapETHForExactTokens",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "swapExactETHForTokens",
           "storageVariable": "TMP_121",
           "interfaceType": "IWETH",
-          "calledFunction": "deposit"
+          "calledFunction": "deposit",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactETHForTokens",
           "storageVariable": "TMP_123",
           "interfaceType": "IWETH",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactETHForTokens",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactETHForTokens",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_215",
           "interfaceType": "IWETH",
-          "calledFunction": "deposit"
+          "calledFunction": "deposit",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_217",
           "interfaceType": "IWETH",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_222",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_226",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_183",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactETHForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForETH",
           "storageVariable": "TMP_156",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForETH",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForETH",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_239",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_244",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_183",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForETHSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForTokens",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapExactTokensForTokens",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_203",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_207",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "TMP_183",
           "interfaceType": "IERC20",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
         },
         {
           "callerFunction": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
           "storageVariable": "pair",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapTokensForExactETH",
           "storageVariable": "TMP_139",
           "interfaceType": "IWETH",
-          "calledFunction": "withdraw"
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapTokensForExactETH",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapTokensForExactETH",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         },
         {
           "callerFunction": "swapTokensForExactTokens",
           "storageVariable": "TMP_88",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "swap"
+          "calledFunction": "swap",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         },
         {
           "callerFunction": "swapTokensForExactTokens",
-          "storageVariable": "TMP_280",
+          "storageVariable": "factory",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "getReserves"
+          "calledFunction": "getReserves",
+          "resolvedAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+          "resolvedContractName": "UniswapV2Factory",
+          "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-01-09T09:48:36.975Z"
+      "generatedAt": "2026-04-22T09:46:18.616Z"
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "name": "Wrapped Ether Token",
       "externalCalls": [],
-      "generatedAt": "2026-01-09T09:48:38.462Z"
+      "generatedAt": "2026-04-22T09:46:18.617Z"
     },
     "eth:0xDAF819c2437a82f9e01f6586207ebF961a7f0970": {
       "address": "eth:0xDAF819c2437a82f9e01f6586207ebF961a7f0970",
@@ -724,58 +1252,145 @@
           "callerFunction": "claim",
           "storageVariable": "TMP_31",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "token0"
+          "calledFunction": "token0",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "claim",
           "storageVariable": "TMP_33",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "token1"
+          "calledFunction": "token1",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "claim",
           "storageVariable": "TMP_43",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": true
         },
         {
           "callerFunction": "claim",
           "storageVariable": "TMP_47",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "renounce",
           "storageVariable": "TMP_12",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "token0"
+          "calledFunction": "token0",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "renounce",
           "storageVariable": "TMP_14",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "token1"
+          "calledFunction": "token1",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
         },
         {
           "callerFunction": "renounce",
           "storageVariable": "TMP_23",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "balanceOf"
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": true
         },
         {
           "callerFunction": "renounce",
           "storageVariable": "TMP_27",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "transfer"
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
         },
         {
           "callerFunction": "renounce",
           "storageVariable": "TMP_30",
           "interfaceType": "IUniswapV2Pair",
-          "calledFunction": "burn"
+          "calledFunction": "burn",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
         }
       ],
-      "generatedAt": "2026-01-09T09:48:39.843Z"
+      "generatedAt": "2026-04-22T09:46:18.620Z"
+    },
+    "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": {
+      "address": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+      "name": "TokenJar",
+      "externalCalls": [
+        {
+          "callerFunction": "release",
+          "storageVariable": "asset",
+          "interfaceType": "IERC20Minimal",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+          "resolvedContractName": "UniswapV2Pair",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+              "contractName": "UniswapV2Pair"
+            },
+            {
+              "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+              "contractName": "Uniswap Token"
+            },
+            {
+              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "contractName": "Wrapped Ether Token"
+            }
+          ],
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-04-22T09:46:18.622Z"
     }
   }
 }

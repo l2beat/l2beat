@@ -1,37 +1,12 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-16T12:42:13.745Z",
+  "lastModified": "2026-04-21T10:07:21.876Z",
   "contracts": {
-    "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": {
-      "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-      "name": "MessageTransmitter",
-      "externalCalls": [
-        {
-          "callerFunction": "receiveMessage",
-          "storageVariable": "TMP_778",
-          "interfaceType": "IMessageHandler",
-          "calledFunction": "handleReceiveMessage",
-          "resolvedAddress": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-          "resolvedContractName": "TokenMessenger",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99,
-          "isViewCall": false
-        }
-      ],
-      "generatedAt": "2026-03-16T12:38:40.679Z"
-    },
     "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3": {
       "address": "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3",
       "name": "CometExtAssetList",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:38:47.386Z"
-    },
-    "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614": {
-      "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
-      "name": "AssetList",
-      "externalCalls": [],
-      "generatedAt": "2026-03-16T12:38:54.026Z"
+      "generatedAt": "2026-04-21T10:06:21.173Z"
     },
     "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779": {
       "address": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
@@ -42,23 +17,15 @@
           "storageVariable": "proxy",
           "interfaceType": "TransparentUpgradeableProxy",
           "calledFunction": "changeAdmin",
-          "resolvedAddress": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "resolvedContractName": "TokenMessengerV2",
+          "resolvedAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+          "resolvedContractName": "cWETHv3",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "contractName": "TokenMessengerV2"
-            },
-            {
               "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
               "contractName": "cWETHv3"
-            },
-            {
-              "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-              "contractName": "MessageTransmitterV2"
             },
             {
               "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -91,23 +58,15 @@
           "storageVariable": "cometProxy",
           "interfaceType": "TransparentUpgradeableProxy",
           "calledFunction": "upgradeTo",
-          "resolvedAddress": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "resolvedContractName": "TokenMessengerV2",
+          "resolvedAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+          "resolvedContractName": "cWETHv3",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "contractName": "TokenMessengerV2"
-            },
-            {
               "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
               "contractName": "cWETHv3"
-            },
-            {
-              "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-              "contractName": "MessageTransmitterV2"
             },
             {
               "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -140,27 +99,15 @@
           "storageVariable": "cometProxy",
           "interfaceType": "TransparentUpgradeableProxy",
           "calledFunction": "upgradeToAndCall",
-          "resolvedAddress": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "resolvedContractName": "GatewayMinter",
+          "resolvedAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+          "resolvedContractName": "cWETHv3",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "contractName": "GatewayMinter"
-            },
-            {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "contractName": "TokenMessengerV2"
-            },
-            {
               "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
               "contractName": "cWETHv3"
-            },
-            {
-              "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-              "contractName": "MessageTransmitterV2"
             },
             {
               "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -174,30 +121,23 @@
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "contractName": "cUSDCv3"
             }
-          ]
+          ],
+          "isViewCall": false
         },
         {
           "callerFunction": "upgrade",
           "storageVariable": "proxy",
           "interfaceType": "TransparentUpgradeableProxy",
           "calledFunction": "upgradeTo",
-          "resolvedAddress": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "resolvedContractName": "TokenMessengerV2",
+          "resolvedAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+          "resolvedContractName": "cWETHv3",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "contractName": "TokenMessengerV2"
-            },
-            {
               "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
               "contractName": "cWETHv3"
-            },
-            {
-              "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-              "contractName": "MessageTransmitterV2"
             },
             {
               "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -219,29 +159,17 @@
           "storageVariable": "proxy",
           "interfaceType": "TransparentUpgradeableProxy",
           "calledFunction": "upgradeToAndCall",
-          "resolvedAddress": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "resolvedContractName": "GatewayMinter",
+          "resolvedAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+          "resolvedContractName": "cWETHv3",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 30,
           "resolutionCandidates": [
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "contractName": "GatewayMinter"
-            },
-            {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "contractName": "TokenMessengerV2"
-            },
             {
               "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
               "contractName": "cWETHv3"
             },
             {
-              "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-              "contractName": "MessageTransmitterV2"
-            },
-            {
               "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
               "contractName": "USD Coin Token"
             },
@@ -253,196 +181,11 @@
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "contractName": "cUSDCv3"
             }
-          ]
-        }
-      ],
-      "generatedAt": "2026-03-16T12:39:00.262Z"
-    },
-    "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205": {
-      "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-      "name": "GatewayMinter",
-      "externalCalls": [
-        {
-          "callerFunction": "gatewayMint",
-          "storageVariable": "spec",
-          "interfaceType": "IMintableToken",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        },
-        {
-          "callerFunction": "upgradeToAndCall",
-          "storageVariable": "TMP_458",
-          "interfaceType": "IERC1822Proxiable",
-          "calledFunction": "proxiableUUID",
-          "resolvedAddress": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-          "resolvedContractName": "GatewayMinter",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99
-        }
-      ],
-      "generatedAt": "2026-03-16T12:39:08.462Z"
-    },
-    "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": {
-      "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-      "name": "TokenMessengerV2",
-      "externalCalls": [
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "TMP_851",
-          "interfaceType": "IRelayerV2",
-          "calledFunction": "sendMessage",
-          "resolvedAddress": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "resolvedContractName": "MessageTransmitterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95
-        },
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "_mintBurnToken",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-              "contractName": "cUSDTv3"
-            },
-            {
-              "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
-              "contractName": "Compound Token"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            },
-            {
-              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-              "contractName": "cUSDCv3"
-            }
-          ]
-        },
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "_localMinter",
-          "interfaceType": "ITokenMinterV2",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "resolvedContractName": "TokenMinterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurnWithHook",
-          "storageVariable": "TMP_851",
-          "interfaceType": "IRelayerV2",
-          "calledFunction": "sendMessage",
-          "resolvedAddress": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-          "resolvedContractName": "MessageTransmitterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95
-        },
-        {
-          "callerFunction": "depositForBurnWithHook",
-          "storageVariable": "_mintBurnToken",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-              "contractName": "cUSDTv3"
-            },
-            {
-              "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
-              "contractName": "Compound Token"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            },
-            {
-              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-              "contractName": "cUSDCv3"
-            }
-          ]
-        },
-        {
-          "callerFunction": "depositForBurnWithHook",
-          "storageVariable": "_localMinter",
-          "interfaceType": "ITokenMinterV2",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "resolvedContractName": "TokenMinterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "handleReceiveFinalizedMessage",
-          "storageVariable": "_minter",
-          "interfaceType": "ITokenMinterV2",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "resolvedContractName": "TokenMinterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "handleReceiveUnfinalizedMessage",
-          "storageVariable": "_minter",
-          "interfaceType": "ITokenMinterV2",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-          "resolvedContractName": "TokenMinterV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
+          ],
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-16T12:39:13.060Z"
+      "generatedAt": "2026-04-21T10:06:21.177Z"
     },
     "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0": {
       "address": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
@@ -868,7 +611,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-16T12:39:28.161Z"
+      "generatedAt": "2026-04-21T10:06:21.244Z"
     },
     "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": {
       "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
@@ -881,19 +624,19 @@
           "calledFunction": "clone"
         }
       ],
-      "generatedAt": "2026-03-16T12:40:12.442Z"
+      "generatedAt": "2026-04-21T10:06:21.253Z"
     },
     "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E": {
       "address": "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E",
       "name": "AssetListFactory",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:40:23.460Z"
+      "generatedAt": "2026-04-21T10:06:21.256Z"
     },
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "address": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "name": "Timelock",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:40:26.942Z"
+      "generatedAt": "2026-04-21T10:06:21.257Z"
     },
     "eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A": {
       "address": "eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A",
@@ -925,36 +668,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-16T12:40:28.803Z"
+      "generatedAt": "2026-04-21T10:06:21.261Z"
     },
-    "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": {
-      "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
-      "name": "MessageTransmitterV2",
-      "externalCalls": [
-        {
-          "callerFunction": "receiveMessage",
-          "storageVariable": "TMP_1025",
-          "interfaceType": "IMessageHandlerV2",
-          "calledFunction": "handleReceiveUnfinalizedMessage",
-          "resolvedAddress": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "resolvedContractName": "TokenMessengerV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99
-        },
-        {
-          "callerFunction": "receiveMessage",
-          "storageVariable": "TMP_1028",
-          "interfaceType": "IMessageHandlerV2",
-          "calledFunction": "handleReceiveFinalizedMessage",
-          "resolvedAddress": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-          "resolvedContractName": "TokenMessengerV2",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99
-        }
-      ],
-      "generatedAt": "2026-03-16T12:40:33.494Z"
+    "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40": {
+      "address": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
+      "name": "AssetList",
+      "externalCalls": [],
+      "generatedAt": "2026-04-21T10:06:28.294Z"
     },
     "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": {
       "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
@@ -975,7 +695,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1081,7 +801,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1139,7 +859,7 @@
           "storageVariable": "TMP_284",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1151,7 +871,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1209,7 +929,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1243,7 +963,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1267,7 +987,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1337,7 +1057,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1385,7 +1105,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1433,7 +1153,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1455,7 +1175,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1489,7 +1209,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1523,7 +1243,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1557,7 +1277,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1591,7 +1311,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1637,7 +1357,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1707,7 +1427,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+          "resolvedAddress": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -1739,19 +1459,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-16T12:41:06.513Z"
+      "generatedAt": "2026-04-21T10:06:52.389Z"
     },
     "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC": {
       "address": "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC",
       "name": "CometExtAssetList",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:41:12.488Z"
-    },
-    "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae": {
-      "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
-      "name": "AssetList",
-      "externalCalls": [],
-      "generatedAt": "2026-03-16T12:41:20.045Z"
+      "generatedAt": "2026-04-21T10:06:52.397Z"
     },
     "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c": {
       "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
@@ -1800,172 +1514,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-16T12:41:22.686Z"
-    },
-    "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": {
-      "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
-      "name": "TokenMessenger",
-      "externalCalls": [
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "_mintBurnToken",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-              "contractName": "cUSDTv3"
-            },
-            {
-              "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
-              "contractName": "Compound Token"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            },
-            {
-              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-              "contractName": "cUSDCv3"
-            }
-          ]
-        },
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "_localMinter",
-          "interfaceType": "ITokenMinter",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "resolvedContractName": "TokenMinter",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "localMessageTransmitter",
-          "interfaceType": "IMessageTransmitter",
-          "calledFunction": "sendMessage",
-          "resolvedAddress": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "resolvedContractName": "MessageTransmitter",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurn",
-          "storageVariable": "localMessageTransmitter",
-          "interfaceType": "IMessageTransmitter",
-          "calledFunction": "sendMessageWithCaller",
-          "resolvedAddress": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "resolvedContractName": "MessageTransmitter",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurnWithCaller",
-          "storageVariable": "_mintBurnToken",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-              "contractName": "cUSDTv3"
-            },
-            {
-              "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
-              "contractName": "Compound Token"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            },
-            {
-              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-              "contractName": "cUSDCv3"
-            }
-          ]
-        },
-        {
-          "callerFunction": "depositForBurnWithCaller",
-          "storageVariable": "_localMinter",
-          "interfaceType": "ITokenMinter",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "resolvedContractName": "TokenMinter",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurnWithCaller",
-          "storageVariable": "localMessageTransmitter",
-          "interfaceType": "IMessageTransmitter",
-          "calledFunction": "sendMessage",
-          "resolvedAddress": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "resolvedContractName": "MessageTransmitter",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "depositForBurnWithCaller",
-          "storageVariable": "localMessageTransmitter",
-          "interfaceType": "IMessageTransmitter",
-          "calledFunction": "sendMessageWithCaller",
-          "resolvedAddress": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "resolvedContractName": "MessageTransmitter",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "handleReceiveMessage",
-          "storageVariable": "_minter",
-          "interfaceType": "ITokenMinter",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-          "resolvedContractName": "TokenMinter",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "replaceDepositForBurn",
-          "storageVariable": "localMessageTransmitter",
-          "interfaceType": "IMessageTransmitter",
-          "calledFunction": "replaceMessage",
-          "resolvedAddress": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
-          "resolvedContractName": "MessageTransmitter",
-          "resolutionType": "deterministic",
-          "isViewCall": false
-        }
-      ],
-      "generatedAt": "2026-03-16T12:41:26.509Z"
+      "generatedAt": "2026-04-21T10:06:52.408Z"
     },
     "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": {
       "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "name": "Compound Token",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:41:28.251Z"
+      "generatedAt": "2026-04-21T10:06:52.412Z"
     },
     "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3": {
       "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
@@ -1986,7 +1541,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2087,7 +1642,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2143,7 +1698,7 @@
           "storageVariable": "TMP_284",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2155,7 +1710,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2215,7 +1770,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2249,7 +1804,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2273,7 +1828,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2340,7 +1895,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2385,7 +1940,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2430,7 +1985,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2452,7 +2007,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2486,7 +2041,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2520,7 +2075,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2554,7 +2109,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2588,7 +2143,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2633,7 +2188,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2700,7 +2255,7 @@
           "storageVariable": "i",
           "interfaceType": "IAssetList",
           "calledFunction": "getAssetInfo",
-          "resolvedAddress": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+          "resolvedAddress": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
           "resolvedContractName": "AssetList",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
@@ -2731,245 +2286,19 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-03-16T12:42:01.553Z"
-    },
-    "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": {
-      "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-      "name": "TokenMinter",
-      "externalCalls": [
-        {
-          "callerFunction": "burn",
-          "storageVariable": "_token",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        },
-        {
-          "callerFunction": "mint",
-          "storageVariable": "_token",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        }
-      ],
-      "generatedAt": "2026-03-16T12:42:05.320Z"
+      "generatedAt": "2026-04-21T10:07:15.330Z"
     },
     "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2": {
       "address": "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2",
       "name": "AssetListFactory",
       "externalCalls": [],
-      "generatedAt": "2026-03-16T12:42:05.321Z"
+      "generatedAt": "2026-04-21T10:07:15.337Z"
     },
-    "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627": {
-      "address": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627",
-      "name": "Safe",
-      "externalCalls": [
-        {
-          "callerFunction": "checkNSignatures",
-          "storageVariable": "TMP_355",
-          "interfaceType": "ISignatureValidator",
-          "calledFunction": "isValidSignature",
-          "resolvedAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "resolvedContractName": "GnosisSafe",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-              "contractName": "GnosisSafe"
-            },
-            {
-              "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-              "contractName": "GnosisSafe"
-            }
-          ]
-        },
-        {
-          "callerFunction": "checkSignatures",
-          "storageVariable": "TMP_355",
-          "interfaceType": "ISignatureValidator",
-          "calledFunction": "isValidSignature",
-          "resolvedAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "resolvedContractName": "GnosisSafe",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-              "contractName": "GnosisSafe"
-            },
-            {
-              "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-              "contractName": "GnosisSafe"
-            }
-          ]
-        },
-        {
-          "callerFunction": "execTransaction",
-          "storageVariable": "TMP_275",
-          "interfaceType": "Guard",
-          "calledFunction": "checkTransaction"
-        },
-        {
-          "callerFunction": "execTransaction",
-          "storageVariable": "TMP_299",
-          "interfaceType": "Guard",
-          "calledFunction": "checkAfterExecution"
-        },
-        {
-          "callerFunction": "execTransaction",
-          "storageVariable": "TMP_355",
-          "interfaceType": "ISignatureValidator",
-          "calledFunction": "isValidSignature",
-          "resolvedAddress": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "resolvedContractName": "GnosisSafe",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-              "contractName": "GnosisSafe"
-            },
-            {
-              "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-              "contractName": "GnosisSafe"
-            }
-          ]
-        },
-        {
-          "callerFunction": "setGuard",
-          "storageVariable": "TMP_2",
-          "interfaceType": "Guard",
-          "calledFunction": "supportsInterface",
-          "resolvedAddress": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
-          "resolvedContractName": "CompoundGovernor",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99
-        }
-      ],
-      "generatedAt": "2026-03-16T12:42:09.571Z"
-    },
-    "eth:0xfd78EE919681417d192449715b2594ab58f5D002": {
-      "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-      "name": "TokenMinterV2",
-      "externalCalls": [
-        {
-          "callerFunction": "burn",
-          "storageVariable": "_token",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "burn",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        },
-        {
-          "callerFunction": "mint",
-          "storageVariable": "_token",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        },
-        {
-          "callerFunction": "mint",
-          "storageVariable": "_token",
-          "interfaceType": "IMintBurnToken",
-          "calledFunction": "mint",
-          "resolvedAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "resolvedContractName": "USD Coin Token",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "contractName": "USD Coin Token"
-            },
-            {
-              "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-              "contractName": "TokenMinter"
-            },
-            {
-              "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-              "contractName": "TokenMinterV2"
-            }
-          ]
-        }
-      ],
-      "generatedAt": "2026-03-16T12:42:13.744Z"
+    "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016": {
+      "address": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
+      "name": "AssetList",
+      "externalCalls": [],
+      "generatedAt": "2026-04-21T10:07:21.875Z"
     }
   }
 }

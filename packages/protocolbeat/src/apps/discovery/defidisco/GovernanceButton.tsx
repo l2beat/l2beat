@@ -22,7 +22,7 @@ export function GovernanceButton() {
     const tag = findByAddress(
       contractTags?.tags ?? [],
       (t) => t.contractAddress,
-      node.address,
+      node.id,
     )
     return tag?.isGovernance
   })
@@ -31,7 +31,7 @@ export function GovernanceButton() {
     const newValue = !hasGovernanceContract
     const promises = selectedNodes.map((node) =>
       updateContractTag.mutateAsync({
-        contractAddress: node.address,
+        contractAddress: node.id,
         isGovernance: newValue,
       }),
     )

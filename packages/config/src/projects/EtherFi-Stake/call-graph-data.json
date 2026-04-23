@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-24T12:26:10.057Z",
+  "lastModified": "2026-04-21T10:06:11.318Z",
   "contracts": {
     "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9": {
       "address": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
@@ -92,13 +92,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:01.394Z"
+      "generatedAt": "2026-04-21T10:06:10.502Z"
     },
     "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46": {
       "address": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
       "name": "DummyTokenUpgradeable",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:01.401Z"
+      "generatedAt": "2026-04-21T10:06:10.507Z"
     },
     "eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA": {
       "address": "eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA",
@@ -201,7 +201,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.549Z"
+      "generatedAt": "2026-04-21T10:06:10.517Z"
     },
     "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705": {
       "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
@@ -1158,7 +1158,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.599Z"
+      "generatedAt": "2026-04-21T10:06:10.542Z"
     },
     "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": {
       "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
@@ -1204,12 +1204,22 @@
           "callerFunction": "depositIntoStrategy",
           "storageVariable": "token",
           "interfaceType": "IERC20",
-          "calledFunction": "allowance",
-          "resolvedAddress": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-          "resolvedContractName": "Liquid staked Ether 2.0 Token",
+          "calledFunction": "approve",
+          "resolvedAddress": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+          "resolvedContractName": "WithdrawalQueueERC721",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "discovered-values-scan",
-          "resolutionConfidence": 95
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+              "contractName": "WithdrawalQueueERC721"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            }
+          ]
         },
         {
           "callerFunction": "getAmountInEigenLayerPendingForWithdrawals",
@@ -1847,6 +1857,15 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "transferStETH",
+          "storageVariable": "lido",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+          "resolvedContractName": "Liquid staked Ether 2.0 Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "undelegate",
           "storageVariable": "eigenLayerDelegationManager",
           "interfaceType": "IDelegationManager",
@@ -1915,7 +1934,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.650Z"
+      "generatedAt": "2026-04-21T10:06:10.593Z"
     },
     "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d": {
       "address": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
@@ -2266,7 +2285,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.675Z"
+      "generatedAt": "2026-04-21T10:06:10.630Z"
     },
     "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC": {
       "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
@@ -2303,7 +2322,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.691Z"
+      "generatedAt": "2026-04-21T10:06:10.637Z"
     },
     "eth:0x2f5301a3D59388c509C65f8698f521377D41Fd0F": {
       "address": "eth:0x2f5301a3D59388c509C65f8698f521377D41Fd0F",
@@ -2406,7 +2425,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.706Z"
+      "generatedAt": "2026-04-21T10:06:10.645Z"
     },
     "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216": {
       "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
@@ -2745,6 +2764,15 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "requestMembershipNFTWithdraw",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "requestWithdraw",
           "storageVariable": "withdrawRequestNFT",
           "interfaceType": "IWithdrawRequestNFT",
@@ -2758,6 +2786,15 @@
           "storageVariable": "eETH",
           "interfaceType": "IeETH",
           "calledFunction": "totalShares",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "requestWithdraw",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
           "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
           "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
@@ -2785,6 +2822,15 @@
           "storageVariable": "eETH",
           "interfaceType": "IeETH",
           "calledFunction": "totalShares",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "requestWithdrawWithPermit",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
           "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
           "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
@@ -3052,7 +3098,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.752Z"
+      "generatedAt": "2026-04-21T10:06:10.676Z"
     },
     "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA": {
       "address": "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA",
@@ -3128,6 +3174,15 @@
           "calledFunction": "amountForShare",
           "resolvedAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
           "resolvedContractName": "LiquidityPool",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "cancelWithdraw",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -3234,12 +3289,30 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "handleRemainder",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "invalidateRequests",
           "storageVariable": "liquidityPool",
           "interfaceType": "ILiquidityPool",
           "calledFunction": "amountForShare",
           "resolvedAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
           "resolvedContractName": "LiquidityPool",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "invalidateRequests",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -3285,6 +3358,15 @@
           "calledFunction": "sharesForAmount",
           "resolvedAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
           "resolvedContractName": "LiquidityPool",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "requestWithdraw",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -3336,6 +3418,15 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "requestWithdrawWithPermit",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "requestWithdrawWithWeETH",
           "storageVariable": "weETH",
           "interfaceType": "IWeETH",
@@ -3360,6 +3451,15 @@
           "calledFunction": "sharesForAmount",
           "resolvedAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
           "resolvedContractName": "LiquidityPool",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "requestWithdrawWithWeETH",
+          "storageVariable": "weETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -3417,6 +3517,15 @@
           "calledFunction": "sharesForAmount",
           "resolvedAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
           "resolvedContractName": "LiquidityPool",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "requestWithdrawWithWeETHAndPermit",
+          "storageVariable": "weETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -3514,7 +3623,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.774Z"
+      "generatedAt": "2026-04-21T10:06:10.693Z"
     },
     "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2": {
       "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
@@ -3612,6 +3721,63 @@
             {
               "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
               "contractName": "MembershipNFT"
+            },
+            {
+              "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+              "contractName": "Coinbase Wrapped Staked ETH Token"
+            },
+            {
+              "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+              "contractName": "Vyper_contract"
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "contractName": "Wrapped eETH Token"
+            },
+            {
+              "address": "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3",
+              "contractName": "DummyTokenUpgradeable"
+            }
+          ]
+        },
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
+          "resolvedContractName": "DummyTokenUpgradeable",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
+              "contractName": "DummyTokenUpgradeable"
+            },
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "contractName": "ether.fi ETH Token"
+            },
+            {
+              "address": "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf",
+              "contractName": "DummyTokenUpgradeable"
+            },
+            {
+              "address": "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3",
+              "contractName": "DummyTokenUpgradeable"
+            },
+            {
+              "address": "eth:0x83998e169026136760bE6AF93e776C2F352D4b28",
+              "contractName": "DummyTokenUpgradeable"
+            },
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "contractName": "WrapTokenV3ETH"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
             },
             {
               "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
@@ -3793,13 +3959,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.797Z"
+      "generatedAt": "2026-04-21T10:06:10.706Z"
     },
     "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
       "address": "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F",
       "name": "UpgradeableBeacon",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:02.800Z"
+      "generatedAt": "2026-04-21T10:06:10.709Z"
     },
     "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000": {
       "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
@@ -4714,7 +4880,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.851Z"
+      "generatedAt": "2026-04-21T10:06:10.743Z"
     },
     "eth:0x4B8DF85d5BE4DF1e4D89840E5c7bd3F9D6361D48": {
       "address": "eth:0x4B8DF85d5BE4DF1e4D89840E5c7bd3F9D6361D48",
@@ -4751,7 +4917,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.861Z"
+      "generatedAt": "2026-04-21T10:06:10.751Z"
     },
     "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41": {
       "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
@@ -4998,7 +5164,7 @@
           "resolutionConfidence": 99
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.882Z"
+      "generatedAt": "2026-04-21T10:06:10.763Z"
     },
     "eth:0x5836152812568244760ba356B5f3838Aa5B672e0": {
       "address": "eth:0x5836152812568244760ba356B5f3838Aa5B672e0",
@@ -5035,7 +5201,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.893Z"
+      "generatedAt": "2026-04-21T10:06:10.771Z"
     },
     "eth:0x59a5518aCE8e3d60C740503639B94bD86F7CEDF0": {
       "address": "eth:0x59a5518aCE8e3d60C740503639B94bD86F7CEDF0",
@@ -5099,13 +5265,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.898Z"
+      "generatedAt": "2026-04-21T10:06:10.774Z"
     },
     "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf": {
       "address": "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf",
       "name": "DummyTokenUpgradeable",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:02.901Z"
+      "generatedAt": "2026-04-21T10:06:10.778Z"
     },
     "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9": {
       "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
@@ -5306,19 +5472,19 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.911Z"
+      "generatedAt": "2026-04-21T10:06:10.787Z"
     },
     "eth:0x6329004E903B7F420245E7aF3f355186f2432466": {
       "address": "eth:0x6329004E903B7F420245E7aF3f355186f2432466",
       "name": "Treasury",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:02.913Z"
+      "generatedAt": "2026-04-21T10:06:10.789Z"
     },
     "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3": {
       "address": "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3",
       "name": "DummyTokenUpgradeable",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:02.919Z"
+      "generatedAt": "2026-04-21T10:06:10.793Z"
     },
     "eth:0x670F3818Fe5B1144e361A9A44EcbEA8231cCD32a": {
       "address": "eth:0x670F3818Fe5B1144e361A9A44EcbEA8231cCD32a",
@@ -5552,7 +5718,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.940Z"
+      "generatedAt": "2026-04-21T10:06:10.809Z"
     },
     "eth:0x6C7c54cfC2225fA985cD25F04d923B93c60a02F8": {
       "address": "eth:0x6C7c54cfC2225fA985cD25F04d923B93c60a02F8",
@@ -5635,7 +5801,7 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.952Z"
+      "generatedAt": "2026-04-21T10:06:10.817Z"
     },
     "eth:0x7B5ae07E2AF1C861BcC4736D23f5f66A61E0cA5e": {
       "address": "eth:0x7B5ae07E2AF1C861BcC4736D23f5f66A61E0cA5e",
@@ -5719,7 +5885,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.972Z"
+      "generatedAt": "2026-04-21T10:06:10.831Z"
     },
     "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c": {
       "address": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c",
@@ -5856,6 +6022,15 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "handleRemainder",
+          "storageVariable": "eETH",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "pauseContract",
           "storageVariable": "roleRegistry",
           "interfaceType": "RoleRegistry",
@@ -5986,13 +6161,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:02.996Z"
+      "generatedAt": "2026-04-21T10:06:10.851Z"
     },
     "eth:0x83998e169026136760bE6AF93e776C2F352D4b28": {
       "address": "eth:0x83998e169026136760bE6AF93e776C2F352D4b28",
       "name": "DummyTokenUpgradeable",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:02.999Z"
+      "generatedAt": "2026-04-21T10:06:10.854Z"
     },
     "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F": {
       "address": "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F",
@@ -7036,7 +7211,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.081Z"
+      "generatedAt": "2026-04-21T10:06:10.912Z"
     },
     "eth:0x915B16B555872A084B3512169b1F1dC089C3ca9A": {
       "address": "eth:0x915B16B555872A084B3512169b1F1dC089C3ca9A",
@@ -7100,7 +7275,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.086Z"
+      "generatedAt": "2026-04-21T10:06:10.917Z"
     },
     "eth:0x95E10c0978c2e5eC52e89e7E97e1B52FF3A13bcb": {
       "address": "eth:0x95E10c0978c2e5eC52e89e7E97e1B52FF3A13bcb",
@@ -7164,7 +7339,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.091Z"
+      "generatedAt": "2026-04-21T10:06:10.921Z"
     },
     "eth:0x96a226ad7c14870502f9794fB481EE102E595fFa": {
       "address": "eth:0x96a226ad7c14870502f9794fB481EE102E595fFa",
@@ -7228,7 +7403,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.099Z"
+      "generatedAt": "2026-04-21T10:06:10.925Z"
     },
     "eth:0x977c26Ce24036FA66EE2bFAeAd9556BC2b8A9AeA": {
       "address": "eth:0x977c26Ce24036FA66EE2bFAeAd9556BC2b8A9AeA",
@@ -7265,13 +7440,13 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.114Z"
+      "generatedAt": "2026-04-21T10:06:10.932Z"
     },
     "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": {
       "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
       "name": "EtherFiTimelock",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:03.119Z"
+      "generatedAt": "2026-04-21T10:06:10.936Z"
     },
     "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": {
       "address": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
@@ -7575,6 +7750,39 @@
             }
           ],
           "isViewCall": true
+        },
+        {
+          "callerFunction": "depositWithERC20",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+          "resolvedContractName": "WithdrawalQueueERC721",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+              "contractName": "WithdrawalQueueERC721"
+            },
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "contractName": "WrapTokenV3ETH"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+              "contractName": "Coinbase Wrapped Staked ETH Token"
+            },
+            {
+              "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+              "contractName": "Vyper_contract"
+            }
+          ]
         },
         {
           "callerFunction": "depositWithERC20WithPermit",
@@ -7903,6 +8111,39 @@
             }
           ],
           "isViewCall": true
+        },
+        {
+          "callerFunction": "depositWithERC20WithPermit",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+          "resolvedContractName": "WithdrawalQueueERC721",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+              "contractName": "WithdrawalQueueERC721"
+            },
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "contractName": "WrapTokenV3ETH"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+              "contractName": "Coinbase Wrapped Staked ETH Token"
+            },
+            {
+              "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+              "contractName": "Vyper_contract"
+            }
+          ]
         },
         {
           "callerFunction": "getTotalPooledEther",
@@ -8412,6 +8653,35 @@
           "calledFunction": "underlyingToken"
         },
         {
+          "callerFunction": "sendToEtherFiRestaker",
+          "storageVariable": "_token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "resolvedContractName": "WrapTokenV3ETH",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "contractName": "WrapTokenV3ETH"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+              "contractName": "Coinbase Wrapped Staked ETH Token"
+            },
+            {
+              "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+              "contractName": "Vyper_contract"
+            }
+          ]
+        },
+        {
           "callerFunction": "unwrapL2Eth",
           "storageVariable": "_l2Eth",
           "interfaceType": "IERC20",
@@ -8455,6 +8725,35 @@
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
               "contractName": "WithdrawalQueueERC721"
             },
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "contractName": "WrapTokenV3ETH"
+            },
+            {
+              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+              "contractName": "Liquid staked Ether 2.0 Token"
+            },
+            {
+              "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+              "contractName": "Coinbase Wrapped Staked ETH Token"
+            },
+            {
+              "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+              "contractName": "Vyper_contract"
+            }
+          ]
+        },
+        {
+          "callerFunction": "unwrapL2Eth",
+          "storageVariable": "_l2Eth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "resolvedContractName": "WrapTokenV3ETH",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
             {
               "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
               "contractName": "WrapTokenV3ETH"
@@ -8525,7 +8824,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.211Z"
+      "generatedAt": "2026-04-21T10:06:11.003Z"
     },
     "eth:0xA91F8a52F0C1b4D3fDC256fC5bEBCA4D627da392": {
       "address": "eth:0xA91F8a52F0C1b4D3fDC256fC5bEBCA4D627da392",
@@ -8719,7 +9018,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.234Z"
+      "generatedAt": "2026-04-21T10:06:11.016Z"
     },
     "eth:0xaa249a01a3D73611a27B735130Ab77fd6b0f5a3e": {
       "address": "eth:0xaa249a01a3D73611a27B735130Ab77fd6b0f5a3e",
@@ -8783,7 +9082,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.239Z"
+      "generatedAt": "2026-04-21T10:06:11.020Z"
     },
     "eth:0xAfBD66706F90BC56D29c39A260930b34B2757ed8": {
       "address": "eth:0xAfBD66706F90BC56D29c39A260930b34B2757ed8",
@@ -8886,7 +9185,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.251Z"
+      "generatedAt": "2026-04-21T10:06:11.030Z"
     },
     "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": {
       "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
@@ -9132,7 +9431,7 @@
           "resolvedAddress": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
           "resolvedContractName": "MembershipManager",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "interface-name",
+          "resolutionHeuristic": "dependency-field",
           "resolutionConfidence": 90,
           "callerIsView": true,
           "isViewCall": true
@@ -9621,7 +9920,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.345Z"
+      "generatedAt": "2026-04-21T10:06:11.117Z"
     },
     "eth:0xB6C9125584A1A28cCafd31056D4aF29014862536": {
       "address": "eth:0xB6C9125584A1A28cCafd31056D4aF29014862536",
@@ -9658,7 +9957,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.359Z"
+      "generatedAt": "2026-04-21T10:06:11.126Z"
     },
     "eth:0xBd23fF26197Eda06a930641Ac13ED5F3dB35f4DE": {
       "address": "eth:0xBd23fF26197Eda06a930641Ac13ED5F3dB35f4DE",
@@ -9859,7 +10158,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.367Z"
+      "generatedAt": "2026-04-21T10:06:11.133Z"
     },
     "eth:0xcD12F7F1747Aaca69C61b7Af23FB5D5691191562": {
       "address": "eth:0xcD12F7F1747Aaca69C61b7Af23FB5D5691191562",
@@ -9896,7 +10195,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.374Z"
+      "generatedAt": "2026-04-21T10:06:11.144Z"
     },
     "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63": {
       "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
@@ -9969,6 +10268,17 @@
         },
         {
           "callerFunction": "send",
+          "storageVariable": "innerToken",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95
+        },
+        {
+          "callerFunction": "send",
           "storageVariable": "TMP_1652",
           "interfaceType": "IOAppMsgInspector",
           "calledFunction": "inspect"
@@ -9994,6 +10304,17 @@
           "isViewCall": true
         },
         {
+          "callerFunction": "send",
+          "storageVariable": "lzToken",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95
+        },
+        {
           "callerFunction": "setDelegate",
           "storageVariable": "endpoint",
           "interfaceType": "ILayerZeroEndpointV2",
@@ -10004,13 +10325,13 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-24T12:26:03.398Z"
+      "generatedAt": "2026-04-21T10:06:11.172Z"
     },
     "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a": {
       "address": "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
       "name": "EtherFiTimelock",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:09.825Z"
+      "generatedAt": "2026-04-21T10:06:11.178Z"
     },
     "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
       "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
@@ -10063,6 +10384,17 @@
           "storageVariable": "TMP_915",
           "interfaceType": "IERC20",
           "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95
+        },
+        {
+          "callerFunction": "recoverERC20",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
           "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
           "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "optimistic",
@@ -10273,7 +10605,7 @@
           "resolutionType": "deterministic"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:09.858Z"
+      "generatedAt": "2026-04-21T10:06:11.202Z"
     },
     "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21": {
       "address": "eth:0xcdd57D11476c22d265722F68390b036f3DA48c21",
@@ -10310,7 +10642,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:09.879Z"
+      "generatedAt": "2026-04-21T10:06:11.211Z"
     },
     "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E": {
       "address": "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E",
@@ -10339,7 +10671,7 @@
           "resolutionConfidence": 95
         }
       ],
-      "generatedAt": "2026-03-24T12:26:09.899Z"
+      "generatedAt": "2026-04-21T10:06:11.223Z"
     },
     "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146": {
       "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
@@ -10360,6 +10692,27 @@
           "storageVariable": "tokenOut",
           "interfaceType": "IERC20",
           "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "contractName": "ether.fi ETH Token"
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "contractName": "Wrapped eETH Token"
+            }
+          ]
+        },
+        {
+          "callerFunction": "lzReceive",
+          "storageVariable": "tokenOut",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
           "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
           "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "optimistic",
@@ -10429,9 +10782,20 @@
           "resolvedContractName": "EndpointV2",
           "resolutionType": "deterministic",
           "isViewCall": false
+        },
+        {
+          "callerFunction": "sweep",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "dependency-field",
+          "resolutionConfidence": 90
         }
       ],
-      "generatedAt": "2026-03-24T12:26:09.917Z"
+      "generatedAt": "2026-04-21T10:06:11.239Z"
     },
     "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0": {
       "address": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
@@ -10672,6 +11036,24 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "redeemEEth",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemEEth",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "redeemEEthWithPermit",
           "storageVariable": "eEth",
           "interfaceType": "IeETH",
@@ -10804,6 +11186,24 @@
           "calledFunction": "transferStETH",
           "resolvedAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
           "resolvedContractName": "EtherFiRestaker",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemEEthWithPermit",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemEEthWithPermit",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -10951,6 +11351,24 @@
           "resolutionType": "deterministic"
         },
         {
+          "callerFunction": "redeemWeEth",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemWeEth",
+          "storageVariable": "weEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
           "callerFunction": "redeemWeEthWithPermit",
           "storageVariable": "weEth",
           "interfaceType": "IWeETH",
@@ -11101,6 +11519,24 @@
           "calledFunction": "transferStETH",
           "resolvedAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
           "resolvedContractName": "EtherFiRestaker",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemWeEthWithPermit",
+          "storageVariable": "eEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+          "resolvedContractName": "ether.fi ETH Token",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "redeemWeEthWithPermit",
+          "storageVariable": "weEth",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "resolvedContractName": "Wrapped eETH Token",
           "resolutionType": "deterministic"
         },
         {
@@ -11249,7 +11685,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:09.986Z"
+      "generatedAt": "2026-04-21T10:06:11.285Z"
     },
     "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D": {
       "address": "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D",
@@ -11313,13 +11749,13 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:10.000Z"
+      "generatedAt": "2026-04-21T10:06:11.289Z"
     },
     "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3": {
       "address": "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3",
       "name": "DummyTokenUpgradeable",
       "externalCalls": [],
-      "generatedAt": "2026-03-24T12:26:10.006Z"
+      "generatedAt": "2026-04-21T10:06:11.292Z"
     },
     "eth:0xdC8Ddd3416d101304072b5a6CedecA8fBedb6EF5": {
       "address": "eth:0xdC8Ddd3416d101304072b5a6CedecA8fBedb6EF5",
@@ -11356,7 +11792,7 @@
           "calledFunction": "isValidSignature"
         }
       ],
-      "generatedAt": "2026-03-24T12:26:10.026Z"
+      "generatedAt": "2026-04-21T10:06:11.301Z"
     },
     "eth:0xfE8A8FC74B2fdD3D745AbFc4940DD858BA60696c": {
       "address": "eth:0xfE8A8FC74B2fdD3D745AbFc4940DD858BA60696c",
@@ -11562,7 +11998,7 @@
           ]
         }
       ],
-      "generatedAt": "2026-03-24T12:26:10.054Z"
+      "generatedAt": "2026-04-21T10:06:11.318Z"
     }
   }
 }

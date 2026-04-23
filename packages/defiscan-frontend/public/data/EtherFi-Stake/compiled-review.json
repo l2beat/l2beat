@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-20T09:10:53.661Z",
-  "compiledAt": "2026-04-20T09:16:50.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
+  "compiledAt": "2026-04-23T09:01:52.000Z",
   "project": "EtherFi-Stake",
   "metadata": {
     "protocolName": "EtherFi Stake",
@@ -10,20 +10,20 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "eETH",
-    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $938.05M."
+    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $875.97M."
   },
   "totals": {
-    "contractCount": 64,
+    "contractCount": 71,
     "permissionedFunctionCount": 494,
     "scoredFunctionCount": 84,
-    "adminCount": 43,
+    "adminCount": 41,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 938046591.1138402,
-    "totalTokenValueAtRisk": 6326970188.080215,
-    "totalTokenValue": 6326970188.080215,
+    "totalCapitalAtRisk": 875968679.6264344,
+    "totalTokenValueAtRisk": 6288693692.093442,
+    "totalTokenValue": 6288693692.093442,
     "linesOfCode": 18031,
-    "verifiedContractCount": 63,
-    "coverage": 98
+    "verifiedContractCount": 70,
+    "coverage": 99
   },
   "admins": [
     {
@@ -145,7 +145,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -204,7 +204,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -233,7 +233,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -248,7 +248,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -515,7 +515,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -574,7 +574,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -603,7 +603,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -618,7 +618,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -885,7 +885,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -944,7 +944,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -973,7 +973,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -988,7 +988,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -1255,7 +1255,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1314,7 +1314,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1343,7 +1343,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1358,7 +1358,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -1636,7 +1636,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1695,7 +1695,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1724,7 +1724,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1739,7 +1739,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -2003,13 +2003,13 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 938046591.1138402,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableCapital": 875968679.6264344,
+      "totalReachableTokenValue": 6288693692.093442
     },
     {
       "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
       "name": "EtherFi Main Timelock (3d)",
-      "description": "Primary governance timelock with a 3-day delay. Controls upgrades to the majority of protocol contracts (LiquidityPool, EtherFiNodesManager, StakingManager, TNFT, WithdrawRequestNFT, Liquifier, MembershipManager, and others), manages EtherFiRestaker EigenLayer operations (delegation, strategy deposits, withdrawals), and governs protocol parameters across AuctionManager, EtherFiOracle, ProtocolRevenueManager, and MembershipNFT. Holds proposer/executor roles shared with the 4/7 multisig. Controls $938.05M in direct capital exposure across 155 permissioned functions.",
+      "description": "Primary governance timelock with a 3-day delay. Controls upgrades to the majority of protocol contracts (LiquidityPool, EtherFiNodesManager, StakingManager, TNFT, WithdrawRequestNFT, Liquifier, MembershipManager, and others), manages EtherFiRestaker EigenLayer operations (delegation, strategy deposits, withdrawals), and governs protocol parameters across AuctionManager, EtherFiOracle, ProtocolRevenueManager, and MembershipNFT. Holds proposer/executor roles shared with the 4/7 multisig. Controls $875.97M in direct capital exposure across 155 permissioned functions.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -2030,7 +2030,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2089,7 +2089,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2118,7 +2118,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2133,7 +2133,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -2400,7 +2400,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2459,7 +2459,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2488,7 +2488,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2503,7 +2503,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -2770,7 +2770,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22528.571093306557,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2829,7 +2829,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2858,7 +2858,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2873,7 +2873,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -3128,7 +3128,7 @@
           "contractName": "Treasury",
           "functionName": "withdraw",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22528.571093306557,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3137,7 +3137,7 @@
           "contractName": "Treasury",
           "functionName": "renounceOwnership",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22528.571093306557,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3146,7 +3146,7 @@
           "contractName": "Treasury",
           "functionName": "transferOwnership",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22528.571093306557,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -4626,10 +4626,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 938046591.1138402,
-      "totalDirectTokenValue": 6326970188.080215,
-      "totalReachableCapital": 938046591.1138402,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalDirectCapital": 875968679.6264344,
+      "totalDirectTokenValue": 6288693692.093442,
+      "totalReachableCapital": 875968679.6264344,
+      "totalReachableTokenValue": 6288693692.093442
     },
     {
       "address": "eth:0xDEd1F5e7Fb71c1740AEBc09b6b0a5E24b0cB71d1",
@@ -5267,7 +5267,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5321,7 +5321,7 @@
                 "burnShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -5450,7 +5450,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5476,7 +5476,7 @@
                 "burnShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -5597,8 +5597,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableCapital": 16806274.28546567,
+      "totalReachableTokenValue": 6288693692.093442
     },
     {
       "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
@@ -5881,9 +5881,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 938024204.9239454,
+      "totalDirectCapital": 875946151.0553411,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 938024204.9239454,
+      "totalReachableCapital": 875946151.0553411,
       "totalReachableTokenValue": 0
     },
     {
@@ -5967,14 +5967,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 6326970188.080215,
+      "totalDirectTokenValue": 6288693692.093442,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableTokenValue": 6288693692.093442
     },
     {
       "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
       "name": "EtherFiAdmin Contract",
-      "description": "An upgradeable admin contract that aggregates multiple protocol operations behind a single caller. Manages validator lifecycle (approval, confirmation, funding), LiquidityPool parameters (validator size, fee recipient, restaking config), pause/unpause, and protocol fee payments. Owned by the main 3-day timelock. Controls $10.42M in direct capital.",
+      "description": "An upgradeable admin contract that aggregates multiple protocol operations behind a single caller. Manages validator lifecycle (approval, confirmation, funding), LiquidityPool parameters (validator size, fee recipient, restaking config), pause/unpause, and protocol fee payments. Owned by the main 3-day timelock. Controls $16.81M in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -6015,9 +6015,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 16806274.28546567,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 16806274.28546567,
       "totalReachableTokenValue": 0
     },
     {
@@ -6055,9 +6055,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 16806274.28546567,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 16806274.28546567,
       "totalReachableTokenValue": 0
     },
     {
@@ -6077,9 +6077,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 16806274.28546567,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 16806274.28546567,
       "totalReachableTokenValue": 0
     },
     {
@@ -6108,9 +6108,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 16806274.28546567,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 16806274.28546567,
       "totalReachableTokenValue": 0
     },
     {
@@ -6139,9 +6139,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 16806274.28546567,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 16806274.28546567,
       "totalReachableTokenValue": 0
     },
     {
@@ -6482,7 +6482,7 @@
     {
       "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
       "name": "RoleRegistry Contract",
-      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $5.80B in reachable capital through withdrawal and weETH management.",
+      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $5.62B in reachable capital through withdrawal and weETH management.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -6588,9 +6588,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 5795922451.191509,
+      "totalDirectCapital": 5617464941.7134,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5795922451.191509,
+      "totalReachableCapital": 5617464941.7134,
       "totalReachableTokenValue": 0
     },
     {
@@ -7371,8 +7371,8 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 938046591.1138402,
-    "totalTokenValueAtRisk": 6326970188.080215
+    "totalFundsAtRisk": 875968679.6264344,
+    "totalTokenValueAtRisk": 6288693692.093442
   },
   "dependencies": [
     {
@@ -7411,7 +7411,7 @@
               "calledFunctions": [
                 "batchApproveRegistration"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7435,7 +7435,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -7454,7 +7454,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7478,7 +7478,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -7497,7 +7497,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7553,7 +7553,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchApproveRegistration",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7562,7 +7562,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchCreateBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7571,7 +7571,7 @@
           "contractName": "LiquidityPool",
           "functionName": "confirmAndFundBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7580,7 +7580,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7592,11 +7592,12 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             }
           ]
@@ -7606,7 +7607,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7618,11 +7619,12 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             }
           ]
@@ -7637,8 +7639,8 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 16806274.28546567,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -7668,7 +7670,7 @@
               "calledFunctions": [
                 "batchApproveRegistration"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7692,7 +7694,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -7711,7 +7713,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7735,7 +7737,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -7754,7 +7756,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7819,7 +7821,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchApproveRegistration",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7828,7 +7830,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchCreateBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7837,7 +7839,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchRegister",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7846,7 +7848,7 @@
           "contractName": "LiquidityPool",
           "functionName": "confirmAndFundBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7855,7 +7857,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7867,11 +7869,12 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             }
           ]
@@ -7881,7 +7884,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 16806274.28546567,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7893,11 +7896,12 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             }
           ]
@@ -8034,7 +8038,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8055,7 +8059,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8134,8 +8138,8 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 16806274.28546567,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -8258,7 +8262,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "completeQueuedWithdrawals",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8267,7 +8271,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "delegateTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8276,7 +8280,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "queueWithdrawals",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8285,7 +8289,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "undelegate",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8294,7 +8298,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8305,7 +8309,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8316,7 +8320,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8327,7 +8331,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8348,7 +8352,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8396,7 +8400,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8444,7 +8448,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8465,7 +8469,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8486,7 +8490,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8520,14 +8524,14 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
+      "totalFundsAtRisk": 875946151.0553411,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
     {
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "name": "EigenLayer StrategyManager",
-      "description": "Manages EtherFi's restaking strategy deposits into EigenLayer. EtherFiRestaker deposits stETH into EigenLayer strategies via this contract. The restaker holds $927.60M in total positions across EigenLayer and Lido combined.",
+      "description": "Manages EtherFi's restaking strategy deposits into EigenLayer. EtherFiRestaker deposits stETH into EigenLayer strategies via this contract. The restaker holds $859.14M in total positions across EigenLayer and Lido combined.",
       "entity": "EigenLayer",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -8540,7 +8544,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "depositIntoStrategy",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8549,7 +8553,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8560,7 +8564,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8571,7 +8575,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8582,14 +8586,393 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+      "name": "Lido WithdrawalQueueERC721",
+      "description": "Lido's withdrawal queue. EtherFiRestaker requests stETH-to-ETH withdrawals through this contract when rebalancing or exiting Lido positions.",
+      "entity": "Lido",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "approve",
+        "claimWithdrawals",
+        "MIN_STETH_WITHDRAWAL_AMOUNT",
+        "MAX_STETH_WITHDRAWAL_AMOUNT",
+        "requestWithdrawals",
+        "getWithdrawalRequests",
+        "getWithdrawalStatus",
+        "balanceOf",
+        "transferFrom"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "depositIntoStrategy",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "stEthClaimWithdrawals",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "stEthRequestWithdrawal",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "depositWithERC20",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintShares",
+                "totalShares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6288693692.093442,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "depositToRecipient",
+                "amountForShare"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "depositWithERC20WithPermit",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintShares",
+                "totalShares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6288693692.093442,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "depositToRecipient",
+                "amountForShare"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "unwrapL2Eth",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintShares",
+                "totalShares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6288693692.093442,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "proxiableUUID"
+              ],
+              "fundsUsd": 859139876.7698754,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "depositToRecipient",
+                "totalValueOutOfLp",
+                "amountForShare"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mintShares",
+                "totalShares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6288693692.093442,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "proxiableUUID"
+              ],
+              "fundsUsd": 859139876.7698754,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "depositToRecipient",
+                "totalValueOutOfLp",
+                "amountForShare"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+          "contractName": "EtherfiL1SyncPoolETH",
+          "functionName": "onMessageReceived",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "totalShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6288693692.093442,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "name": "EigenLayer RewardsCoordinator",
+      "description": "Distributes restaking rewards to EtherFi's restaker contract. EtherFiRestaker sets its rewards claimer through the DelegationManager which interacts with this coordinator.",
+      "entity": "EigenLayer",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "setClaimerFor"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "setRewardsClaimer",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 859139876.7698754,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 16806274.28546567,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 875946151.0553411,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -8601,26 +8984,17 @@
       "isAutoDetected": true,
       "viewOnlyPath": false,
       "calledFunctions": [
-        "allowance",
         "balanceOf",
-        "approve"
+        "approve",
+        "transfer"
       ],
       "functions": [
         {
           "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
           "contractName": "EtherFiRestaker",
-          "functionName": "depositIntoStrategy",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
           "functionName": "stEthRequestWithdrawal",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8629,7 +9003,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "transferStETH",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8638,7 +9012,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8649,7 +9023,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8660,7 +9034,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8671,7 +9045,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8692,11 +9066,13 @@
               "calledFunctions": [
                 "balanceOf",
                 "totalShares",
+                "transfer",
+                "transferFrom",
                 "burnShares",
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -8706,7 +9082,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8726,7 +9102,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8748,11 +9124,13 @@
                 "permit",
                 "balanceOf",
                 "totalShares",
+                "transfer",
+                "transferFrom",
                 "burnShares",
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -8762,7 +9140,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8782,7 +9160,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8808,7 +9186,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -8818,9 +9196,10 @@
               "calledFunctions": [
                 "getEETHByWeETH",
                 "balanceOf",
-                "unwrap"
+                "unwrap",
+                "transferFrom"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5617464941.7134,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8831,7 +9210,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8851,7 +9230,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8877,7 +9256,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -8888,9 +9267,10 @@
                 "permit",
                 "getEETHByWeETH",
                 "balanceOf",
-                "unwrap"
+                "unwrap",
+                "transferFrom"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5617464941.7134,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8901,7 +9281,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8921,7 +9301,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8942,13 +9322,14 @@
               "calledFunctions": [
                 "balanceOf",
                 "totalShares",
+                "transfer",
+                "transferFrom",
                 "permit",
                 "burnShares",
-                "transfer",
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -8959,9 +9340,10 @@
                 "getEETHByWeETH",
                 "balanceOf",
                 "unwrap",
+                "transferFrom",
                 "permit"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5617464941.7134,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8973,7 +9355,7 @@
                 "transferStETH",
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8993,7 +9375,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9014,13 +9396,14 @@
               "calledFunctions": [
                 "balanceOf",
                 "totalShares",
+                "transfer",
+                "transferFrom",
                 "permit",
                 "burnShares",
-                "transfer",
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9031,9 +9414,10 @@
                 "getEETHByWeETH",
                 "balanceOf",
                 "unwrap",
+                "transferFrom",
                 "permit"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5617464941.7134,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9045,7 +9429,7 @@
                 "transferStETH",
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9065,383 +9449,15 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 6733946656.115455,
-      "totalTokenValueAtRisk": 6326970188.080215,
-      "dependencyType": "callgraph"
-    },
-    {
-      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-      "name": "EigenLayer RewardsCoordinator",
-      "description": "Distributes restaking rewards to EtherFi's restaker contract. EtherFiRestaker sets its rewards claimer through the DelegationManager which interacts with this coordinator.",
-      "entity": "EigenLayer",
-      "isAutoDetected": true,
-      "viewOnlyPath": false,
-      "calledFunctions": [
-        "setClaimerFor"
-      ],
-      "functions": [
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "setRewardsClaimer",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        }
-      ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 0,
-      "dependencyType": "callgraph"
-    },
-    {
-      "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-      "name": "Lido WithdrawalQueueERC721",
-      "description": "Lido's withdrawal queue. EtherFiRestaker requests stETH-to-ETH withdrawals through this contract when rebalancing or exiting Lido positions.",
-      "entity": "Lido",
-      "isAutoDetected": true,
-      "viewOnlyPath": false,
-      "calledFunctions": [
-        "claimWithdrawals",
-        "MIN_STETH_WITHDRAWAL_AMOUNT",
-        "MAX_STETH_WITHDRAWAL_AMOUNT",
-        "requestWithdrawals",
-        "getWithdrawalRequests",
-        "getWithdrawalStatus",
-        "balanceOf"
-      ],
-      "functions": [
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "stEthClaimWithdrawals",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "stEthRequestWithdrawal",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
-          "contractName": "Liquifier",
-          "functionName": "depositWithERC20",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "mintShares",
-                "totalShares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "depositToRecipient",
-                "amountForShare"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
-          "contractName": "Liquifier",
-          "functionName": "depositWithERC20WithPermit",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "mintShares",
-                "totalShares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "depositToRecipient",
-                "amountForShare"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
-          "contractName": "Liquifier",
-          "functionName": "unwrapL2Eth",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
-          "contractName": "Liquifier",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "mintShares",
-                "totalShares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "proxiableUUID"
-              ],
-              "fundsUsd": 927604432.0512552,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "depositToRecipient",
-                "totalValueOutOfLp",
-                "amountForShare"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
-          "contractName": "Liquifier",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "mintShares",
-                "totalShares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "proxiableUUID"
-              ],
-              "fundsUsd": 927604432.0512552,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "depositToRecipient",
-                "totalValueOutOfLp",
-                "amountForShare"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
-          "contractName": "EtherfiL1SyncPoolETH",
-          "functionName": "onMessageReceived",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "balanceOf",
-                "totalShares",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 10419772.872690236,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        }
-      ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 6493411092.768741,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -9460,7 +9476,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9471,7 +9487,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9482,7 +9498,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9493,7 +9509,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9516,7 +9532,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9527,7 +9543,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9550,7 +9566,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9561,7 +9577,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9584,7 +9600,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9594,7 +9610,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9607,7 +9623,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9630,7 +9646,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9640,7 +9656,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9653,15 +9669,15 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -9674,7 +9690,8 @@
       "calledFunctions": [
         "exchangeRate",
         "totalSupply",
-        "permit"
+        "permit",
+        "transfer"
       ],
       "functions": [
         {
@@ -9682,7 +9699,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9693,7 +9710,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9704,7 +9721,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 859139876.7698754,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9715,7 +9732,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9738,7 +9755,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9749,7 +9766,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9772,7 +9789,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9783,11 +9800,20 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "sendToEtherFiRestaker",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
@@ -9815,7 +9841,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9825,7 +9851,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9838,7 +9864,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9861,7 +9887,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9871,7 +9897,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9884,7 +9910,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9908,7 +9934,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9918,15 +9944,15 @@
               "calledFunctions": [
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -9957,7 +9983,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -9968,7 +9994,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9991,7 +10017,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -10002,7 +10028,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10025,7 +10051,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -10035,7 +10061,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10048,7 +10074,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10071,7 +10097,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -10081,7 +10107,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 859139876.7698754,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10094,15 +10120,15 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     },
     {
@@ -10163,7 +10189,19 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom"
+              ],
+              "fundsUsd": 5617464941.7134,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
@@ -10201,7 +10239,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6288693692.093442,
               "fundsAtRisk": true
             },
             {
@@ -10211,7 +10249,7 @@
               "calledFunctions": [
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 16806274.28546567,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10227,59 +10265,59 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 5634271215.998865,
+      "totalTokenValueAtRisk": 6288693692.093442,
       "dependencyType": "callgraph"
     }
   ],
   "dependencyEntityGroups": [
     {
       "entity": "Ethereum",
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 16806274.28546567,
+      "totalTokenValueAtRisk": 6288693692.093442
     },
     {
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442
     },
     {
       "entity": "LayerZero",
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215
-    },
-    {
-      "entity": "Lido stETH",
-      "totalFundsAtRisk": 6733946656.115455,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 5634271215.998865,
+      "totalTokenValueAtRisk": 6288693692.093442
     },
     {
       "entity": "Lido",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442
+    },
+    {
+      "entity": "Lido stETH",
+      "totalFundsAtRisk": 6493411092.768741,
+      "totalTokenValueAtRisk": 6288693692.093442
     },
     {
       "entity": "Coinbase cbETH",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442
     },
     {
       "entity": "Curve",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 875946151.0553411,
+      "totalTokenValueAtRisk": 6288693692.093442
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 6733946656.115455,
-    "totalTokenValueAtRisk": 6326970188.080215
+    "totalFundsAtRisk": 6493411092.768741,
+    "totalTokenValueAtRisk": 6288693692.093442
   },
   "funds": [
     {
       "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
       "name": "LiquidityPool (ETH)",
-      "description": "The main liquidity pool holding user-deposited ETH awaiting validator deployment or withdrawal processing. Holds $10.42M primarily in ETH, representing the protocol's liquid reserves available for staking and redemptions.",
+      "description": "The main liquidity pool holding user-deposited ETH awaiting validator deployment or withdrawal processing. Holds $16.81M primarily in ETH, representing the protocol's liquid reserves available for staking and redemptions.",
       "balances": {
-        "totalUsdValue": 10419772.872690236
+        "totalUsdValue": 16806274.28546567
       },
       "positions": null,
       "tokenInfo": null,
@@ -10288,9 +10326,9 @@
     {
       "address": "eth:0x6329004E903B7F420245E7aF3f355186f2432466",
       "name": "Treasury (ETH)",
-      "description": "Protocol treasury holding accumulated fees and reserves. Contains $22.39K in ETH, controlled by the main 3-day timelock.",
+      "description": "Protocol treasury holding accumulated fees and reserves. Contains $22.53K in ETH, controlled by the main 3-day timelock.",
       "balances": {
-        "totalUsdValue": 22386.18989482656
+        "totalUsdValue": 22528.571093306557
       },
       "positions": null,
       "tokenInfo": null,
@@ -10299,23 +10337,23 @@
     {
       "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
       "name": "eETH Token",
-      "description": "The ether.fi ETH rebasing token contract. eETH represents staked ETH positions with a current market capitalization of $6.33B.",
+      "description": "The ether.fi ETH rebasing token contract. eETH represents staked ETH positions with a current market capitalization of $6.29B.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "eETH",
-        "price": 2304.95,
-        "totalSupply": "2744948.9958915445",
-        "tokenValue": 6326970188.080215
+        "price": 2319.61,
+        "totalSupply": "2711099577986576083744109",
+        "tokenValue": 6288693692.093442
       },
       "aggregate": null
     },
     {
       "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
       "name": "Wrapped eETH (weETH)",
-      "description": "The non-rebasing wrapped eETH token. Holds $5.80B in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging.",
+      "description": "The non-rebasing wrapped eETH token. Holds $5.62B in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging.",
       "balances": {
-        "totalUsdValue": 5795922451.191509
+        "totalUsdValue": 5617464941.7134
       },
       "positions": null,
       "tokenInfo": null,
@@ -10324,10 +10362,10 @@
     {
       "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
       "name": "EtherFiRestaker (EigenLayer Positions)",
-      "description": "Holds EtherFi's restaked positions in EigenLayer and Lido. $927.60M in DeFi positions split between EigenLayer deposits/yield (stETH restaked) and Lido staked ETH. This is the largest single concentration of protocol capital.",
+      "description": "Holds EtherFi's restaked positions in EigenLayer and Lido. $859.14M in DeFi positions split between EigenLayer deposits/yield (stETH restaked) and Lido staked ETH. This is the largest single concentration of protocol capital.",
       "balances": null,
       "positions": {
-        "totalUsdValue": 927604432.0512552
+        "totalUsdValue": 859139876.7698754
       },
       "tokenInfo": null,
       "aggregate": null
@@ -10889,14 +10927,6 @@
       "proxyType": "gnosis safe"
     },
     {
-      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-      "name": "EtherFi Operations 3/5 Multisig",
-      "isExternal": false,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": "gnosis safe"
-    },
-    {
       "address": "eth:0x4B8DF85d5BE4DF1e4D89840E5c7bd3F9D6361D48",
       "name": "3/6 Multisig",
       "isExternal": false,
@@ -10915,6 +10945,14 @@
     {
       "address": "eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA",
       "name": "3/8 Multisig",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "name": "EtherFi Operations 3/5 Multisig",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -10943,6 +10981,14 @@
       "isGovernance": false,
       "entity": "Coinbase cbETH",
       "proxyType": "ZeppelinOS proxy"
+    },
+    {
+      "address": "eth:0x747C741496a507E4B404b50463e691A8d692f6Ac",
+      "name": "DeadDVN",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
     },
     {
       "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -10999,6 +11045,22 @@
       "isGovernance": false,
       "entity": null,
       "proxyType": "EIP1967 proxy"
+    },
+    {
+      "address": "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+      "name": "DVN",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "name": "DVN",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
     },
     {
       "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
@@ -11113,6 +11175,14 @@
       "proxyType": "immutable"
     },
     {
+      "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "name": "Executor",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EIP1967 proxy"
+    },
+    {
       "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "name": "Lido stETH Token",
       "isExternal": true,
@@ -11225,6 +11295,14 @@
       "proxyType": "immutable"
     },
     {
+      "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "name": "ReceiveUln302",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "LayerZero",
+      "proxyType": "immutable"
+    },
+    {
       "address": "eth:0xBd23fF26197Eda06a930641Ac13ED5F3dB35f4DE",
       "name": "RegulationsManager",
       "isExternal": false,
@@ -11247,6 +11325,14 @@
       "isGovernance": false,
       "entity": null,
       "proxyType": "EIP1967 proxy"
+    },
+    {
+      "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "name": "SendUln302",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "LayerZero",
+      "proxyType": "immutable"
     },
     {
       "address": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
@@ -11283,6 +11369,14 @@
     {
       "address": "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F",
       "name": "UpgradeableBeacon",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "name": "VerifierNetwork",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -11566,6 +11660,1129 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.multisigThreshold",
+          "before": "3 of 5 (60%)",
+          "after": "4 of 7 (57%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.0",
+          "after": "eth:0xDE3bf1FA3B3829342bC4356592Bb7CF3BAAD8264"
+        },
+        {
+          "field": "values.$members.1",
+          "after": "eth:0xE63794CF405678382764A4dEc1e56C43B45605C9"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "120:eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC:role:Safe.threshold",
+      "type": "role-update",
+      "roleName": "Safe.threshold",
+      "changes": [
+        {
+          "field": "values.$threshold",
+          "before": 3,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+      "contractName": "EtherfiOFTAdapterUpgradeable",
+      "entity": null,
+      "id": "120:eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.layerZeroConfig",
+          "after": {
+            "perEid": {
+              "30102": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30106": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30111": {
+                "peer": "0x0000000000000000000000005a7facb970d094b6c7ff1df0ea68d99e6e73cbff",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30165": {
+                "peer": "0x000000000000000000000000c1fa6e2e8667d9be0ca938a54c7e0285e9df924a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30183": {
+                "peer": "0x0000000000000000000000001bf74c010e6320bab11e2e5a532b5ac15e0b8aa6",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30184": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30214": {
+                "peer": "0x00000000000000000000000001f0a31698c4d065659b9bdc21b3610292a1c506",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30243": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30260": {
+                "peer": "0x00000000000000000000000004c0599ae5a44757c0af6f9ec3b93da8976c150a",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30320": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30322": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30332": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30335": {
+                "peer": "0x000000000000000000000000a6cb988942610f6731e664379d15ffcfbf282b44",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30339": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30362": {
+                "peer": "0x0000000000000000000000007dcc39b4d1c53cb31e1abc0e358b43987fef80f7",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30367": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30383": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30390": {
+                "peer": "0x000000000000000000000000a3d68b74bf0528fdd07263c60d6488749044914b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              },
+              "30396": {
+                "peer": "0x00000000000000000000000060a08269e5f3406d8fd7892567d53188c7f75009",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": false,
+                "receiveUlnConfig": {
+                  "confirmations": "45",
+                  "requiredDVNCount": 4,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "enforcedOptions": {
+                  "send": "0x00030100110100000000000000000000000000029810",
+                  "sendAndCall": "0x00030100110100000000000000000000000000029810"
+                }
+              }
+            },
+            "delegate": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+      "contractName": "EtherfiL1SyncPoolETH",
+      "entity": null,
+      "id": "120:eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.layerZeroConfig",
+          "after": {
+            "perEid": {
+              "30111": {
+                "peer": "0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30183": {
+                "peer": "0x000000000000000000000000823106e745a62d0c2fc4d27644c62ade946d9cca",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30184": {
+                "peer": "0x000000000000000000000000c38e046dfdadf15f7f56853674242888301208a5",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30214": {
+                "peer": "0x000000000000000000000000750cf0fd3bc891d8d864b732bc4ad340096e5e68",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 1,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x747C741496a507E4B404b50463e691A8d692f6Ac"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30243": {
+                "peer": "0x00000000000000000000000052c4221cb805479954cde5accff8c4dcaf96623b",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "64",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              },
+              "30362": {
+                "peer": "0x000000000000000000000000c9475e18e2c5c26ea6adcd55fabe07920bea887e",
+                "sendLibrary": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+                "sendUlnConfig": {
+                  "confirmations": "15",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                },
+                "executorConfig": {
+                  "maxMessageSize": 10000,
+                  "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+                },
+                "receiveLibrary": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+                "receiveLibraryIsDefault": true,
+                "receiveUlnConfig": {
+                  "confirmations": "10",
+                  "requiredDVNCount": 2,
+                  "optionalDVNCount": 0,
+                  "optionalDVNThreshold": 0,
+                  "requiredDVNs": [
+                    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+                    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5"
+                  ],
+                  "optionalDVNs": []
+                }
+              }
+            },
+            "delegate": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "contractName": "Executor",
+      "entity": null,
+      "id": "120:eth:0x173272739Bd7Aa6e4e214714048a9fE699453059:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+      "contractName": "DVN",
+      "entity": null,
+      "id": "120:eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0x747C741496a507E4B404b50463e691A8d692f6Ac",
+      "contractName": "DeadDVN",
+      "entity": null,
+      "id": "120:eth:0x747C741496a507E4B404b50463e691A8d692f6Ac:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "contractName": "DVN",
+      "entity": null,
+      "id": "120:eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "contractName": "SendUln302",
+      "isDependency": true,
+      "entity": "LayerZero",
+      "id": "120:eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "contractName": "ReceiveUln302",
+      "isDependency": true,
+      "entity": "LayerZero",
+      "id": "120:eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-22T13:01:33.000Z",
+      "updateNotifierId": 120,
+      "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "contractName": "VerifierNetwork",
+      "entity": null,
+      "id": "120:eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 117,
+      "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+      "contractName": "EtherfiOFTAdapterUpgradeable",
+      "entity": null,
+      "id": "117:eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.paused",
+          "before": true,
+          "after": false
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-19T08:15:14.000Z",
       "updateNotifierId": 112,
@@ -12840,6 +14057,18 @@
     },
     {
       "type": "upgrade",
+      "timestamp": "2024-11-01T19:07:23.000Z",
+      "contractAddress": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "contractName": "Executor",
+      "txHash": "0x8714871659f7ff2feb7968256c3baf39e5cdbe9160f36649f8a530a536456ed5",
+      "implementations": [
+        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
       "timestamp": "2024-10-28T05:06:35.000Z",
       "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
       "contractName": "EtherFiRestaker",
@@ -13029,6 +14258,18 @@
       ],
       "isDependency": true,
       "entity": "EigenLayer"
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2024-07-04T23:54:35.000Z",
+      "contractAddress": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "contractName": "Executor",
+      "txHash": "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4",
+      "implementations": [
+        "eth:0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -13362,6 +14603,18 @@
       "txHash": "0x072e16fd0ed21041860f110d64b6aab783044899a4bfd83f6dd6e53545114153",
       "implementations": [
         "eth:0x11858bCaC85832aCDda0BDe9B867830f7D21cF63"
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2024-01-26T22:27:23.000Z",
+      "contractAddress": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "contractName": "Executor",
+      "txHash": "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b",
+      "implementations": [
+        "eth:0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"
       ],
       "isDependency": false,
       "entity": null

@@ -29,7 +29,7 @@ export function ExternalButton() {
   const selectionExists = selected.length > 0
 
   const targets = selectedNodes.map((n) => ({
-    address: n.address,
+    address: n.id,
     name: n.name,
   }))
 
@@ -130,7 +130,7 @@ function AttributePicker({
       const tag = findByAddress(
         contractTags?.tags ?? [],
         (t) => t.contractAddress,
-        selectedNodes[0].address,
+        selectedNodes[0].id,
       )
       return tag?.entity
     }
@@ -144,7 +144,7 @@ function AttributePicker({
     await Promise.all(
       selectedNodes.map((node) =>
         updateContractTag.mutateAsync({
-          contractAddress: node.address,
+          contractAddress: node.id,
           entity: newEntity ?? null,
         }),
       ),

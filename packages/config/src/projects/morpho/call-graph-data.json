@@ -1,24 +1,50 @@
 {
   "version": "1.0",
-  "lastModified": "2026-02-20T16:24:58.829Z",
+  "lastModified": "2026-04-21T10:18:28.698Z",
   "contracts": {
     "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24": {
       "address": "eth:0x1897A8997241C1cD4bD0698647e4EB7213535c24",
       "name": "MetaMorphoV1_1Factory",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.795Z"
+      "generatedAt": "2026-04-21T10:18:17.165Z"
     },
     "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb": {
       "address": "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb",
       "name": "UniversalRewardsDistributor",
-      "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.799Z"
+      "externalCalls": [
+        {
+          "callerFunction": "claim",
+          "storageVariable": "reward",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
+            },
+            {
+              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+              "contractName": "MorphoToken"
+            },
+            {
+              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "contractName": "Wrapped Ether Token"
+            }
+          ]
+        }
+      ],
+      "generatedAt": "2026-04-21T10:18:17.169Z"
     },
     "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766": {
       "address": "eth:0x3A7bB36Ee3f3eE32A60e9f2b33c1e5f2E83ad766",
       "name": "MorphoChainlinkOracleV2Factory",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.801Z"
+      "generatedAt": "2026-04-21T10:18:17.171Z"
     },
     "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077": {
       "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
@@ -33,11 +59,15 @@
           "resolvedContractName": "EthereumBundlerV2",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
               "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
               "contractName": "EthereumBundlerV2"
+            },
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
             },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
@@ -51,21 +81,11 @@
           "storageVariable": "TMP_1349",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -73,21 +93,11 @@
           "storageVariable": "TMP_1358",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -107,21 +117,11 @@
           "storageVariable": "underlying",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -138,24 +138,14 @@
         },
         {
           "callerFunction": "erc20WrapperDepositFor",
-          "storageVariable": "TMP_486",
+          "storageVariable": "TMP_1035",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -163,21 +153,11 @@
           "storageVariable": "TMP_1045",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -203,21 +183,11 @@
           "storageVariable": "TMP_1251",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -234,24 +204,14 @@
         },
         {
           "callerFunction": "erc4626Deposit",
-          "storageVariable": "TMP_486",
+          "storageVariable": "asset",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -265,33 +225,32 @@
           "storageVariable": "TMP_1241",
           "interfaceType": "IERC4626",
           "calledFunction": "mint",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
-          "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99,
-          "isViewCall": false
-        },
-        {
-          "callerFunction": "erc4626Mint",
-          "storageVariable": "TMP_486",
-          "interfaceType": "ERC20",
-          "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
           "resolutionConfidence": 50,
           "resolutionCandidates": [
             {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
             },
             {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
+              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
+              "contractName": "MorphoToken"
             }
-          ],
+          ]
+        },
+        {
+          "callerFunction": "erc4626Mint",
+          "storageVariable": "TMP_1239",
+          "interfaceType": "ERC20",
+          "calledFunction": "allowance",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -299,21 +258,11 @@
           "storageVariable": "TMP_1290",
           "interfaceType": "IERC4626",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -330,8 +279,8 @@
           "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
           "resolvedContractName": "Morpho",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
             {
               "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
@@ -366,24 +315,14 @@
         },
         {
           "callerFunction": "morphoFlashLoan",
-          "storageVariable": "TMP_486",
+          "storageVariable": "token",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -391,21 +330,11 @@
           "storageVariable": "TMP_1130",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -420,24 +349,14 @@
         },
         {
           "callerFunction": "morphoRepay",
-          "storageVariable": "TMP_486",
+          "storageVariable": "REF_379",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -455,21 +374,11 @@
           "storageVariable": "TMP_1093",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -484,24 +393,14 @@
         },
         {
           "callerFunction": "morphoSupply",
-          "storageVariable": "TMP_486",
+          "storageVariable": "REF_364",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -509,21 +408,11 @@
           "storageVariable": "TMP_1110",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -538,24 +427,14 @@
         },
         {
           "callerFunction": "morphoSupplyCollateral",
-          "storageVariable": "TMP_486",
+          "storageVariable": "REF_371",
           "interfaceType": "ERC20",
           "calledFunction": "allowance",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -587,11 +466,15 @@
           "resolvedContractName": "EthereumBundlerV2",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
               "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
               "contractName": "EthereumBundlerV2"
+            },
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
             },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
@@ -609,11 +492,15 @@
           "resolvedContractName": "EthereumBundlerV2",
           "resolutionType": "optimistic",
           "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionConfidence": 30,
           "resolutionCandidates": [
             {
               "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
               "contractName": "EthereumBundlerV2"
+            },
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
             },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
@@ -645,21 +532,11 @@
           "storageVariable": "TMP_1308",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -667,21 +544,11 @@
           "storageVariable": "REF_446",
           "interfaceType": "IAllowanceTransfer",
           "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": false
         },
         {
@@ -689,21 +556,11 @@
           "storageVariable": "TMP_1224",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -714,8 +571,8 @@
           "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
           "resolvedContractName": "Morpho",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
             {
               "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
@@ -733,21 +590,11 @@
           "storageVariable": "TMP_1204",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -785,21 +632,11 @@
           "storageVariable": "TMP_1195",
           "interfaceType": "ERC20",
           "calledFunction": "balanceOf",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "resolvedContractName": "Wrapped Ether Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -809,37 +646,49 @@
           "calledFunction": "wrap"
         }
       ],
-      "generatedAt": "2026-02-20T16:24:58.815Z"
+      "generatedAt": "2026-04-21T10:18:17.191Z"
     },
     "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2": {
       "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
       "name": "Morpho Token",
-      "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.816Z"
+      "externalCalls": [
+        {
+          "callerFunction": "upgradeToAndCall",
+          "storageVariable": "TMP_205",
+          "interfaceType": "IERC1822Proxiable",
+          "calledFunction": "proxiableUUID",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99
+        }
+      ],
+      "generatedAt": "2026-04-21T10:18:25.592Z"
     },
     "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476": {
       "address": "eth:0x6FF33615e792E35ed1026ea7cACCf42D9BF83476",
       "name": "PreLiquidationFactory",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.817Z"
+      "generatedAt": "2026-04-21T10:18:25.599Z"
     },
     "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC": {
       "address": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
       "name": "AdaptiveCurveIrm",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.819Z"
+      "generatedAt": "2026-04-21T10:18:25.607Z"
     },
     "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999": {
       "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
       "name": "MorphoToken",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.820Z"
+      "generatedAt": "2026-04-21T10:18:25.613Z"
     },
     "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D": {
       "address": "eth:0x9baA51245CDD28D8D74Afe8B3959b616E9ee7c8D",
       "name": "UrdFactory",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.821Z"
+      "generatedAt": "2026-04-21T10:18:25.618Z"
     },
     "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123": {
       "address": "eth:0x9D03bb2092270648d7480049d0E58d2FcF0E5123",
@@ -850,91 +699,87 @@
           "storageVariable": "TMP_12",
           "interfaceType": "IERC20",
           "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
+            },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
               "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
             }
-          ],
-          "isViewCall": false
+          ]
         },
         {
           "callerFunction": "depositFor",
           "storageVariable": "TMP_15",
           "interfaceType": "IERC20",
           "calledFunction": "transfer",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
+            },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
               "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
             }
-          ],
-          "isViewCall": false
+          ]
         },
         {
           "callerFunction": "withdrawTo",
           "storageVariable": "TMP_25",
           "interfaceType": "IERC20",
           "calledFunction": "transferFrom",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
+            },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
               "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
             }
-          ],
-          "isViewCall": false
+          ]
         },
         {
           "callerFunction": "withdrawTo",
           "storageVariable": "TMP_28",
           "interfaceType": "IERC20",
           "calledFunction": "transfer",
-          "resolvedAddress": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-          "resolvedContractName": "MorphoToken",
+          "resolvedAddress": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+          "resolvedContractName": "Morpho Token",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 50,
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 70,
           "resolutionCandidates": [
+            {
+              "address": "eth:0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+              "contractName": "Morpho Token"
+            },
             {
               "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
               "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "contractName": "Wrapped Ether Token"
             }
-          ],
-          "isViewCall": false
+          ]
         }
       ],
-      "generatedAt": "2026-02-20T16:24:58.822Z"
+      "generatedAt": "2026-04-21T10:18:25.622Z"
     },
     "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
       "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
@@ -1127,25 +972,87 @@
           "calledFunction": "price"
         }
       ],
-      "generatedAt": "2026-02-20T16:24:58.824Z"
+      "generatedAt": "2026-04-21T10:18:25.645Z"
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "name": "Wrapped Ether Token",
       "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.825Z"
+      "generatedAt": "2026-04-21T10:18:25.653Z"
     },
     "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa": {
       "address": "eth:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
       "name": "GnosisSafe",
-      "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.825Z"
+      "externalCalls": [
+        {
+          "callerFunction": "checkNSignatures",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "checkSignatures",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_253",
+          "interfaceType": "Guard",
+          "calledFunction": "checkTransaction"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_277",
+          "interfaceType": "Guard",
+          "calledFunction": "checkAfterExecution"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        }
+      ],
+      "generatedAt": "2026-04-21T10:18:28.679Z"
     },
     "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9": {
       "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
       "name": "GnosisSafe",
-      "externalCalls": [],
-      "generatedAt": "2026-02-20T16:24:58.826Z"
+      "externalCalls": [
+        {
+          "callerFunction": "checkNSignatures",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "checkSignatures",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_253",
+          "interfaceType": "Guard",
+          "calledFunction": "checkTransaction"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_277",
+          "interfaceType": "Guard",
+          "calledFunction": "checkAfterExecution"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_330",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        }
+      ],
+      "generatedAt": "2026-04-21T10:18:28.685Z"
     },
     "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": {
       "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
@@ -1184,25 +1091,11 @@
           "storageVariable": "TMP_262",
           "interfaceType": "IMetaMorpho",
           "calledFunction": "owner",
-          "resolvedAddress": "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb",
-          "resolvedContractName": "UniversalRewardsDistributor",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 30,
-          "resolutionCandidates": [
-            {
-              "address": "eth:0x330eefa8a787552DC5cAd3C3cA644844B1E61Ddb",
-              "contractName": "UniversalRewardsDistributor"
-            },
-            {
-              "address": "eth:0x9994E35Db50125E0DF82e4c2dde62496CE330999",
-              "contractName": "MorphoToken"
-            },
-            {
-              "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-              "contractName": "Morpho"
-            }
-          ],
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
           "isViewCall": true
         },
         {
@@ -1248,7 +1141,7 @@
           "calledFunction": "config"
         }
       ],
-      "generatedAt": "2026-02-20T16:24:58.828Z"
+      "generatedAt": "2026-04-21T10:18:28.697Z"
     }
   }
 }

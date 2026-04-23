@@ -16,13 +16,17 @@ import type {
   ContractFundsData,
   FunctionEntry,
   FunctionTraversalResult,
-  ImpactCapUnit,
+  ImpactCap,
+  ImpactCapScaler,
   Mitigation,
   MitigationType,
   MitigationValue,
   OwnerDefinition,
 } from '../../../api/types'
-import { normalizeMitigationValue } from '../../../api/types'
+import {
+  normalizeImpactCap,
+  normalizeMitigationValue,
+} from '../../../api/types'
 import * as solidity from '../../../components/editor/languages/solidity'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
@@ -530,37 +534,77 @@ export function FunctionFolder({
     return []
   }
 
-  // Resolve an impactCap to a USD number from project data
-  const IMPACT_CAP_DENOMINATORS: Record<string, number> = {
-    raw: 1,
+  // Resolve a unified ImpactCap to USD (mirrors backend resolveImpactCap).
+  // Returns undefined if any piece is missing or invalid.
+  const SCALER_DENOMINATORS: Record<ImpactCapScaler, number> = {
     '1e6': 1e6,
     '1e8': 1e8,
     '1e18': 1e18,
     bps: 10_000,
     percent: 100,
   }
-  const resolveCapUsd = (cap: {
-    contractAddress: string
-    fieldName: string
-    unit: string
-  }): number | undefined => {
-    if (!projectData?.entries) return undefined
-    for (const entry of projectData.entries) {
-      const contracts = [
-        ...entry.initialContracts,
-        ...entry.discoveredContracts,
-      ]
-      const contract = contracts.find((c) =>
-        addressesEqual(c.address, cap.contractAddress),
+  const resolveCapUsd = (cap: ImpactCap): number | undefined => {
+    const multiplier = cap.multiplier ?? 1
+    if (!isFinite(multiplier)) return undefined
+
+    // 1. Raw amount
+    let rawAmount: number
+    const fromField = cap.value.mode === 'fieldRef'
+    if (cap.value.mode === 'hardcoded') {
+      rawAmount = cap.value.amount
+      if (!isFinite(rawAmount)) return undefined
+    } else {
+      if (!projectData?.entries) return undefined
+      const entry = projectData.entries
+        .flatMap((e) => [
+          ...(e.initialContracts ?? []),
+          ...(e.discoveredContracts ?? []),
+        ])
+        .find(
+          (c) =>
+            !!c?.address &&
+            addressesEqual(c.address, cap.value.contractAddress),
+        )
+      const field = entry?.fields?.find(
+        (f) => cap.value.mode === 'fieldRef' && f.name === cap.value.fieldName,
       )
-      const field = contract?.fields?.find((f) => f.name === cap.fieldName)
-      if (field?.value?.type === 'number') {
-        const raw = Number(field.value.value)
-        if (!isFinite(raw)) return undefined
-        return raw / (IMPACT_CAP_DENOMINATORS[cap.unit] ?? 1)
-      }
+      if (field?.value?.type !== 'number') return undefined
+      const n = Number(field.value.value)
+      if (!isFinite(n)) return undefined
+      rawAmount = n
     }
-    return undefined
+
+    // 2. Convert to USD
+    let usd: number
+    if (cap.unit.kind === 'usd') {
+      usd = rawAmount
+    } else if (cap.unit.kind === 'scaler') {
+      const denom = SCALER_DENOMINATORS[cap.unit.factor]
+      if (denom === undefined) return undefined
+      usd = rawAmount / denom
+    } else {
+      // token
+      const tokenEntry = Object.entries(fundsData?.contracts ?? {}).find(
+        ([addr]) =>
+          !!addr &&
+          cap.unit.kind === 'token' &&
+          addressesEqual(addr, cap.unit.tokenAddress),
+      )
+      const info = tokenEntry?.[1]?.tokenInfo
+      if (
+        !info ||
+        typeof info.price !== 'number' ||
+        typeof info.decimals !== 'number'
+      ) {
+        return undefined
+      }
+      const tokenAmount = fromField
+        ? rawAmount / Math.pow(10, info.decimals)
+        : rawAmount
+      usd = tokenAmount * info.price
+    }
+
+    return usd * multiplier
   }
 
   // Get external contracts with their entity attributes
@@ -667,11 +711,14 @@ export function FunctionFolder({
     }
     relativeValue: { maxChangePercent: MitigationValueFormState }
     impactCap: {
-      mode: 'field' | 'hardcoded'
-      hardcodedUsd: string
+      valueMode: 'hardcoded' | 'fieldRef'
+      hardcodedAmount: string
       contractAddress: string
       fieldName: string
-      unit: ImpactCapUnit
+      unitKind: 'usd' | 'scaler' | 'token'
+      scalerFactor: ImpactCapScaler
+      tokenAddress: string
+      multiplierPercent: string
     }
     mitigatedField: {
       contractAddress: string
@@ -685,11 +732,14 @@ export function FunctionFolder({
     valueRange: { min: { ...emptyMitVal }, max: { ...emptyMitVal }, unit: '' },
     relativeValue: { maxChangePercent: { ...emptyMitVal } },
     impactCap: {
-      mode: 'field' as const,
-      hardcodedUsd: '',
+      valueMode: 'fieldRef' as const,
+      hardcodedAmount: '',
       contractAddress: defaultContractAddress,
       fieldName: '',
-      unit: 'raw' as ImpactCapUnit,
+      unitKind: 'usd' as const,
+      scalerFactor: '1e18' as ImpactCapScaler,
+      tokenAddress: '',
+      multiplierPercent: '',
     },
     mitigatedField: {
       contractAddress: defaultContractAddress,
@@ -933,11 +983,14 @@ export function FunctionFolder({
       },
       relativeValue: { maxChangePercent: { ...emptyMitVal } },
       impactCap: {
-        mode: 'field' as const,
-        hardcodedUsd: '',
+        valueMode: 'fieldRef' as const,
+        hardcodedAmount: '',
         contractAddress: defaultContractAddress,
         fieldName: '',
-        unit: 'raw' as ImpactCapUnit,
+        unitKind: 'usd' as const,
+        scalerFactor: '1e18' as ImpactCapScaler,
+        tokenAddress: '',
+        multiplierPercent: '',
       },
       mitigatedField: {
         contractAddress: defaultContractAddress,
@@ -991,24 +1044,46 @@ export function FunctionFolder({
       }
     }
 
-    // Add impact cap if filled (applies to any mitigation type)
-    if (
-      newMitigation.impactCap.mode === 'hardcoded' &&
-      newMitigation.impactCap.hardcodedUsd.trim()
-    ) {
-      const parsed = parseFloat(newMitigation.impactCap.hardcodedUsd.trim())
-      if (isFinite(parsed)) {
-        mitigation.impactCap = { hardcodedUsd: parsed }
+    // Build impactCap in unified shape (if form has enough data)
+    {
+      const ic = newMitigation.impactCap
+
+      // Build value
+      let value: ImpactCap['value'] | undefined
+      if (ic.valueMode === 'hardcoded') {
+        const amount = parseFloat(ic.hardcodedAmount.trim())
+        if (isFinite(amount)) value = { mode: 'hardcoded', amount }
+      } else if (ic.contractAddress && ic.fieldName.trim()) {
+        value = {
+          mode: 'fieldRef',
+          contractAddress: ic.contractAddress,
+          fieldName: ic.fieldName.trim(),
+        }
       }
-    } else if (
-      newMitigation.impactCap.mode === 'field' &&
-      newMitigation.impactCap.contractAddress &&
-      newMitigation.impactCap.fieldName.trim()
-    ) {
-      mitigation.impactCap = {
-        contractAddress: newMitigation.impactCap.contractAddress,
-        fieldName: newMitigation.impactCap.fieldName.trim(),
-        unit: newMitigation.impactCap.unit,
+
+      // Build unit
+      let unit: ImpactCap['unit'] | undefined
+      if (ic.unitKind === 'usd') unit = { kind: 'usd' }
+      else if (ic.unitKind === 'scaler')
+        unit = { kind: 'scaler', factor: ic.scalerFactor }
+      else if (ic.unitKind === 'token' && ic.tokenAddress)
+        unit = { kind: 'token', tokenAddress: ic.tokenAddress }
+
+      // Build multiplier (optional)
+      let multiplier: number | undefined
+      if (ic.multiplierPercent.trim()) {
+        const pct = parseFloat(ic.multiplierPercent.trim())
+        if (isFinite(pct)) multiplier = pct / 100
+      }
+
+      if (value && unit) {
+        mitigation.impactCap = {
+          value,
+          unit,
+          ...(multiplier !== undefined && multiplier !== 1
+            ? { multiplier }
+            : {}),
+        }
       }
     }
 
@@ -1086,27 +1161,52 @@ export function FunctionFolder({
       relativeValue: {
         maxChangePercent: mitValToForm(m.relativeValue?.maxChangePercent),
       },
-      impactCap: m.impactCap
-        ? {
-            mode: (m.impactCap.hardcodedUsd !== undefined
-              ? 'hardcoded'
-              : 'field') as 'field' | 'hardcoded',
-            hardcodedUsd:
-              m.impactCap.hardcodedUsd !== undefined
-                ? String(m.impactCap.hardcodedUsd)
-                : '',
-            contractAddress:
-              m.impactCap.contractAddress ?? defaultContractAddress,
-            fieldName: m.impactCap.fieldName ?? '',
-            unit: (m.impactCap.unit ?? 'raw') as ImpactCapUnit,
-          }
-        : {
-            mode: 'field' as const,
-            hardcodedUsd: '',
-            contractAddress: defaultContractAddress,
-            fieldName: '',
-            unit: 'raw' as ImpactCapUnit,
-          },
+      impactCap: (() => {
+        const defaults = {
+          valueMode: 'fieldRef' as const,
+          hardcodedAmount: '',
+          contractAddress: defaultContractAddress,
+          fieldName: '',
+          unitKind: 'usd' as const,
+          scalerFactor: '1e18' as ImpactCapScaler,
+          tokenAddress: '',
+          multiplierPercent: '',
+        }
+        const normalized = normalizeImpactCap(m.impactCap)
+        if (!normalized) return defaults
+        const valueMode = normalized.value.mode
+        const hardcodedAmount =
+          normalized.value.mode === 'hardcoded'
+            ? String(normalized.value.amount)
+            : ''
+        const contractAddress =
+          normalized.value.mode === 'fieldRef'
+            ? normalized.value.contractAddress
+            : defaultContractAddress
+        const fieldName =
+          normalized.value.mode === 'fieldRef' ? normalized.value.fieldName : ''
+        const unitKind = normalized.unit.kind
+        const scalerFactor =
+          normalized.unit.kind === 'scaler'
+            ? normalized.unit.factor
+            : ('1e18' as ImpactCapScaler)
+        const tokenAddress =
+          normalized.unit.kind === 'token' ? normalized.unit.tokenAddress : ''
+        const multiplierPercent =
+          normalized.multiplier !== undefined
+            ? String(normalized.multiplier * 100)
+            : ''
+        return {
+          valueMode,
+          hardcodedAmount,
+          contractAddress,
+          fieldName,
+          unitKind,
+          scalerFactor,
+          tokenAddress,
+          multiplierPercent,
+        }
+      })(),
       mitigatedField: m.mitigatedField
         ? {
             contractAddress: m.mitigatedField.contractAddress,
@@ -2692,18 +2792,10 @@ export function FunctionFolder({
                       )}
                       {m.impactCap &&
                         (() => {
+                          const normalized = normalizeImpactCap(m.impactCap)
                           const capUsd =
                             m.impactCapUsd ??
-                            m.impactCap.hardcodedUsd ??
-                            (m.impactCap.fieldName
-                              ? resolveCapUsd(
-                                  m.impactCap as {
-                                    contractAddress: string
-                                    fieldName: string
-                                    unit: string
-                                  },
-                                )
-                              : undefined)
+                            (normalized ? resolveCapUsd(normalized) : undefined)
                           if (capUsd === undefined) return null
                           const formatted =
                             capUsd >= 1e9
@@ -2957,156 +3049,265 @@ export function FunctionFolder({
                 </div>
 
                 {/* Impact Cap (optional, applies to any mitigation type) */}
-                <div className="mb-3">
-                  <label className="mb-1 block text-coffee-300 text-xs">
-                    Fund Impact Cap{' '}
-                    <span className="text-coffee-500">(optional)</span>:
-                  </label>
-                  <div className="mb-1 flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setNewMitigation((prev) => ({
-                          ...prev,
-                          impactCap: { ...prev.impactCap, mode: 'field' },
-                        }))
+                {(() => {
+                  const ic = newMitigation.impactCap
+                  const setIc = (patch: Partial<typeof ic>) =>
+                    setNewMitigation((prev) => ({
+                      ...prev,
+                      impactCap: { ...prev.impactCap, ...patch },
+                    }))
+                  const tokenOptions = Object.entries(
+                    fundsData?.contracts ?? {},
+                  )
+                    .filter(([addr, c]) => !!addr && !!c?.tokenInfo)
+                    .map(([addr, c]) => ({
+                      address: addr,
+                      symbol: c.tokenInfo!.symbol,
+                      decimals: c.tokenInfo!.decimals,
+                      price: c.tokenInfo!.price,
+                    }))
+
+                  // Live preview via the same resolver used elsewhere
+                  const previewUsd = (() => {
+                    let value: ImpactCap['value'] | undefined
+                    if (ic.valueMode === 'hardcoded') {
+                      const amount = parseFloat(ic.hardcodedAmount)
+                      if (isFinite(amount))
+                        value = { mode: 'hardcoded', amount }
+                    } else if (ic.contractAddress && ic.fieldName) {
+                      value = {
+                        mode: 'fieldRef',
+                        contractAddress: ic.contractAddress,
+                        fieldName: ic.fieldName,
                       }
-                      className={`rounded px-2 py-0.5 text-xs ${newMitigation.impactCap.mode === 'field' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
-                    >
-                      Contract Field
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setNewMitigation((prev) => ({
-                          ...prev,
-                          impactCap: { ...prev.impactCap, mode: 'hardcoded' },
-                        }))
-                      }
-                      className={`rounded px-2 py-0.5 text-xs ${newMitigation.impactCap.mode === 'hardcoded' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
-                    >
-                      Hardcoded USD
-                    </button>
-                  </div>
-                  {newMitigation.impactCap.mode === 'hardcoded' ? (
-                    <input
-                      type="text"
-                      value={newMitigation.impactCap.hardcodedUsd}
-                      onChange={(e) =>
-                        setNewMitigation((prev) => ({
-                          ...prev,
-                          impactCap: {
-                            ...prev.impactCap,
-                            hardcodedUsd: e.target.value,
-                          },
-                        }))
-                      }
-                      placeholder="e.g. 10000000"
-                      className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
-                    />
-                  ) : (
-                    <div className="flex gap-2">
-                      <div className="flex-1">
-                        <select
-                          value={newMitigation.impactCap.contractAddress}
-                          onChange={(e) =>
-                            setNewMitigation((prev) => ({
-                              ...prev,
-                              impactCap: {
-                                ...prev.impactCap,
-                                contractAddress: e.target.value,
-                                fieldName: '',
-                              },
-                            }))
-                          }
-                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                    }
+                    let unit: ImpactCap['unit'] | undefined
+                    if (ic.unitKind === 'usd') unit = { kind: 'usd' }
+                    else if (ic.unitKind === 'scaler')
+                      unit = { kind: 'scaler', factor: ic.scalerFactor }
+                    else if (ic.unitKind === 'token' && ic.tokenAddress)
+                      unit = { kind: 'token', tokenAddress: ic.tokenAddress }
+                    if (!value || !unit) return undefined
+                    let multiplier: number | undefined
+                    if (ic.multiplierPercent.trim()) {
+                      const pct = parseFloat(ic.multiplierPercent)
+                      if (isFinite(pct)) multiplier = pct / 100
+                    }
+                    return resolveCapUsd({
+                      value,
+                      unit,
+                      ...(multiplier !== undefined ? { multiplier } : {}),
+                    })
+                  })()
+                  const formatUsd = (n: number) =>
+                    n >= 1e9
+                      ? `${(n / 1e9).toFixed(2)}B`
+                      : n >= 1e6
+                        ? `${(n / 1e6).toFixed(2)}M`
+                        : n >= 1e3
+                          ? `${(n / 1e3).toFixed(1)}K`
+                          : n.toFixed(2)
+
+                  return (
+                    <div className="mb-3">
+                      <label className="mb-1 block text-coffee-300 text-xs">
+                        Fund Impact Cap{' '}
+                        <span className="text-coffee-500">(optional)</span>
+                      </label>
+
+                      {/* Row 1: VALUE — where does the amount come from? */}
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="w-14 shrink-0 text-[10px] text-coffee-500 uppercase">
+                          Value
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setIc({ valueMode: 'hardcoded' })}
+                          className={`rounded px-2 py-0.5 text-xs ${ic.valueMode === 'hardcoded' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
                         >
-                          {availableContracts.map((contract) => (
-                            <option
-                              key={contract.address}
-                              value={contract.address}
-                            >
-                              {contract.name} ({contract.address.slice(0, 10)}
-                              ...)
-                            </option>
-                          ))}
-                        </select>
+                          Hardcoded
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIc({ valueMode: 'fieldRef' })}
+                          className={`rounded px-2 py-0.5 text-xs ${ic.valueMode === 'fieldRef' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
+                        >
+                          Contract Field
+                        </button>
                       </div>
-                      <div className="flex-1">
-                        <select
-                          value={newMitigation.impactCap.fieldName}
+                      {ic.valueMode === 'hardcoded' ? (
+                        <input
+                          type="text"
+                          value={ic.hardcodedAmount}
                           onChange={(e) =>
-                            setNewMitigation((prev) => ({
-                              ...prev,
-                              impactCap: {
-                                ...prev.impactCap,
-                                fieldName: e.target.value,
-                              },
-                            }))
+                            setIc({ hardcodedAmount: e.target.value })
                           }
-                          disabled={!newMitigation.impactCap.contractAddress}
-                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs disabled:opacity-50"
-                        >
-                          <option value="">Select field...</option>
-                          {newMitigation.impactCap.contractAddress &&
-                            getAvailableFields(
-                              newMitigation.impactCap.contractAddress,
-                            )
-                              .filter((f) => {
-                                const entry = projectData?.entries
-                                  ?.flatMap((e) => [
-                                    ...e.initialContracts,
-                                    ...e.discoveredContracts,
-                                  ])
-                                  .find((c) =>
-                                    addressesEqual(
-                                      c.address,
-                                      newMitigation.impactCap.contractAddress,
-                                    ),
-                                  )
-                                const field = entry?.fields?.find(
-                                  (ff) => ff.name === f.name,
-                                )
-                                return field?.value?.type === 'number'
-                              })
-                              .map((field) => (
-                                <option key={field.name} value={field.name}>
-                                  {field.name}
-                                  {field.valuePreview &&
-                                    ` (${field.valuePreview})`}
+                          placeholder="e.g. 10000000"
+                          className="mb-2 w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                        />
+                      ) : (
+                        <div className="mb-2 flex gap-2">
+                          <div className="flex-1">
+                            <select
+                              value={ic.contractAddress}
+                              onChange={(e) =>
+                                setIc({
+                                  contractAddress: e.target.value,
+                                  fieldName: '',
+                                })
+                              }
+                              className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                            >
+                              <option value="">Select contract…</option>
+                              {availableContracts.map((contract) => (
+                                <option
+                                  key={contract.address}
+                                  value={contract.address}
+                                >
+                                  {contract.name} (
+                                  {contract.address.slice(0, 10)}…)
                                 </option>
                               ))}
-                        </select>
-                      </div>
-                      <div className="w-44">
-                        <select
-                          value={newMitigation.impactCap.unit}
-                          onChange={(e) =>
-                            setNewMitigation((prev) => ({
-                              ...prev,
-                              impactCap: {
-                                ...prev.impactCap,
-                                unit: e.target.value as ImpactCapUnit,
-                              },
-                            }))
-                          }
-                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                            </select>
+                          </div>
+                          <div className="flex-1">
+                            <select
+                              value={ic.fieldName}
+                              onChange={(e) =>
+                                setIc({ fieldName: e.target.value })
+                              }
+                              disabled={!ic.contractAddress}
+                              className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs disabled:opacity-50"
+                            >
+                              <option value="">Select field…</option>
+                              {ic.contractAddress &&
+                                getAvailableFields(ic.contractAddress)
+                                  .filter((f) => {
+                                    const entry = (projectData?.entries ?? [])
+                                      .flatMap((e) => [
+                                        ...(e.initialContracts ?? []),
+                                        ...(e.discoveredContracts ?? []),
+                                      ])
+                                      .find(
+                                        (c) =>
+                                          !!c?.address &&
+                                          addressesEqual(
+                                            c.address,
+                                            ic.contractAddress,
+                                          ),
+                                      )
+                                    const field = entry?.fields?.find(
+                                      (ff) => ff.name === f.name,
+                                    )
+                                    return field?.value?.type === 'number'
+                                  })
+                                  .map((field) => (
+                                    <option key={field.name} value={field.name}>
+                                      {field.name}
+                                      {field.valuePreview &&
+                                        ` (${field.valuePreview})`}
+                                    </option>
+                                  ))}
+                            </select>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Row 2: UNIT — how to interpret the amount as USD */}
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="w-14 shrink-0 text-[10px] text-coffee-500 uppercase">
+                          Unit
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setIc({ unitKind: 'usd' })}
+                          className={`rounded px-2 py-0.5 text-xs ${ic.unitKind === 'usd' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
                         >
-                          <option value="raw">USD (raw value)</option>
-                          <option value="1e6">
-                            Tokens — 6 dec (USDC, USDT)
-                          </option>
-                          <option value="1e8">Tokens — 8 dec (WBTC)</option>
-                          <option value="1e18">
-                            Tokens — 18 dec (ETH, ERC20)
-                          </option>
-                          <option value="bps">Basis points (÷ 10,000)</option>
-                          <option value="percent">Percent (÷ 100)</option>
+                          USD
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIc({ unitKind: 'scaler' })}
+                          className={`rounded px-2 py-0.5 text-xs ${ic.unitKind === 'scaler' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
+                        >
+                          Scaler
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIc({ unitKind: 'token' })}
+                          className={`rounded px-2 py-0.5 text-xs ${ic.unitKind === 'token' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
+                        >
+                          Token
+                        </button>
+                      </div>
+                      {ic.unitKind === 'scaler' && (
+                        <select
+                          value={ic.scalerFactor}
+                          onChange={(e) =>
+                            setIc({
+                              scalerFactor: e.target.value as ImpactCapScaler,
+                            })
+                          }
+                          className="mb-2 w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                        >
+                          <option value="1e6">÷ 1e6 (6 decimals)</option>
+                          <option value="1e8">÷ 1e8 (8 decimals)</option>
+                          <option value="1e18">÷ 1e18 (18 decimals)</option>
+                          <option value="bps">÷ 10,000 (basis points)</option>
+                          <option value="percent">÷ 100 (percent)</option>
                         </select>
+                      )}
+                      {ic.unitKind === 'token' && (
+                        <>
+                          <select
+                            value={ic.tokenAddress}
+                            onChange={(e) =>
+                              setIc({ tokenAddress: e.target.value })
+                            }
+                            className="mb-2 w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                          >
+                            <option value="">
+                              Select token (price & decimals from funds-data)…
+                            </option>
+                            {tokenOptions.map((t) => (
+                              <option key={t.address} value={t.address}>
+                                {t.symbol} ({t.address.slice(0, 12)}…) — $
+                                {t.price}
+                              </option>
+                            ))}
+                          </select>
+                          {tokenOptions.length === 0 && (
+                            <div className="mb-2 text-coffee-500 text-[10px] italic">
+                              No tokens in funds-data.json — tag a token with{' '}
+                              <code>isToken: true</code> and fetch funds first.
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* Row 3: MULTIPLIER */}
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="w-14 shrink-0 text-[10px] text-coffee-500 uppercase">
+                          Mult.
+                        </span>
+                        <input
+                          type="text"
+                          value={ic.multiplierPercent}
+                          onChange={(e) =>
+                            setIc({ multiplierPercent: e.target.value })
+                          }
+                          placeholder="% e.g. 2 (default 100)"
+                          className="w-32 rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                        />
+                        {previewUsd !== undefined && (
+                          <span className="text-coffee-400 text-[10px]">
+                            Preview: ≈ ${formatUsd(previewUsd)}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  )}
-                </div>
+                  )
+                })()}
 
                 {/* Description */}
                 <div className="mb-3">

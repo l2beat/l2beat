@@ -98,32 +98,3 @@ export function updateGovernance(
 function getGovernancePath(paths: DiscoveryPaths, project: string): string {
   return path.join(paths.discovery, project, 'governance.json')
 }
-
-/**
- * Returns the last modification time of governance.json, derived from
- * filesystem mtime. Used by the review compiler to compute the review's
- * `lastModified` timestamp.
- *
- * governance.json has no compile-time mutation path (the compiler only reads
- * via getGovernance), so mtime is a safe signal — it only bumps when a
- * researcher explicitly saves governance via updateGovernance or the
- * /generate-governance skill.
- *
- * Returns undefined when the file does not exist (legacy projects with
- * governance embedded in review-config.json fall through to this branch).
- */
-export function getGovernanceLastModified(
-  paths: DiscoveryPaths,
-  project: string,
-): string | undefined {
-  const governancePath = getGovernancePath(paths, project)
-  if (!fs.existsSync(governancePath)) {
-    return undefined
-  }
-  try {
-    return fs.statSync(governancePath).mtime.toISOString()
-  } catch (error) {
-    console.error('Error reading governance.json mtime:', error)
-    return undefined
-  }
-}

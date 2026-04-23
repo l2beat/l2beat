@@ -12,7 +12,9 @@
     "liquity-v1",
     "Frankencoin",
     "EtherFi-Stake",
-    "aave-v3"
+    "aave-v3",
+    "uniswap-v3",
+    "aerodrome"
   ],
   "lastUpdated": "2026-04-20"
 }

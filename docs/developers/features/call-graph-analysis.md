@@ -9,6 +9,7 @@ Uses Slither to analyze which external contracts each function calls. The output
 - **Env config**:
   - `SLITHER_VENV_PATH` — default `~/.slither-venv/`
   - `SLITHER_PATH` — default `$SLITHER_VENV_PATH/bin/slither`
+  - `ETHERSCAN_API_KEY_FOR_DISCOVERY` / `L2B_ETHERSCAN_API_KEY` — **only required for Ethereum mainnet**. For L2s routed through Blockscout-style explorers (Base, Arbitrum, Optimism, Polygon, Gnosis, Scroll, Linea, Blast, zkSync, Avalanche, Celo) Slither accepts a placeholder key; the parser runs Slither with `<chain>:0x...` addresses via the `CHAIN_TO_SLITHER_NETWORK` map in `callGraph.ts` and lets the explorer resolve source without an API key. Add new chains to that map as needed.
 
 ### How it works
 
@@ -29,15 +30,41 @@ Uses Slither to analyze which external contracts each function calls. The output
 - **Nested object resolution**: `resolveStorageVariable` extracts addresses from struct-like objects (e.g. `{ aggregator: "eth:0x…", decimals: 8 }`) and resolves when exactly one address is found
 - **REF_ propagation**: parent type substitutions propagate through synthetic Slither `REF_`/`TMP_` references, so the same internal function called with different arguments produces separate call entries
 - **Context-aware deduplication**: the visited-set key includes type substitutions to prevent merging calls with different argument contexts
+- **SafeERC20 wrapper synthesis** — OpenZeppelin's `safeTransfer`/`safeTransferFrom`/`safeApprove`/`forceApprove`/`safeIncreaseAllowance`/`safeDecreaseAllowance` route the underlying token call through `_callOptionalReturn` → `Address.functionCall` (low-level `call`), so Slither emits **no HIGH_LEVEL_CALL** for the real transfer/approve. Without a workaround, any function whose only external call goes through SafeERC20 is dropped entirely (the ABI-driven walker only keeps functions with ≥1 reachable HLC), and `safeApprove` mis-resolves to the `allowance()` pre-check inside the wrapper. `synthesizeSafeERC20Call()` in `callGraph.ts` emits a synthetic HLC per SafeERC20 `LIBRARY_CALL` by mapping `safeTransfer → transfer`, `safeTransferFrom → transferFrom`, `safeApprove/forceApprove → approve`, etc. The first LIBRARY_CALL argument is the token; a `CONVERT TMP_X = CONVERT srcVar to IERC20` alias tracker unwraps the Slither temp back to the caller's state variable name. If the wrapper sits inside another library that forwards its IERC20 param, the caller's `typeSubstitutions.get('IERC20')` is used as a fallback so the synthesized call still carries the real token name.
+- **LIBRARY_CALL argument propagation** — previously library bodies inherited the parent's `typeSubstitutions` unchanged. `collectHighLevelCalls` now builds a fresh `TypeSubstitutionMap` per library call via `buildTypeSubstitutionMap`, which fixes mis-labeled HLCs for any library taking interface-typed parameters (SafeERC20 is the common case; generic protocol libraries benefit too)
+
+### Timeout handling
+
+Each contract gets a fixed window to complete Slither analysis. If it exceeds the limit, the process is SIGKILL-ed (not SIGTERM — Slither can ignore SIGTERM during compile) and the contract is recorded as skipped.
+
+- **Env var**: `SLITHER_TIMEOUT_MS` — override the per-contract timeout (default: `2 * 60 * 1000` ms = 2 minutes)
+- **Effect on output**: skipped contracts are written to `call-graph-data.json` with `skipped: true` instead of an `externalCalls` array
+
+Skipped entry shape:
+```json
+{
+  "contracts": {
+    "eth:0x...": {
+      "skipped": true,
+      "skipReason": "Slither timeout after 120s"
+    }
+  }
+}
+```
+
+**Terminal output** — skipped contracts emit a red warning during the analysis run, and a summary block lists all timed-out contracts at the end. If a contract is missing from the call graph, check `call-graph-data.json` for a `skipped: true` entry on that address.
 
 ### Heuristic Resolution Engine
 
 When a direct `discovered.json` lookup fails, `callGraphHeuristics.ts` runs a set of heuristics in order and picks the highest-confidence result:
 
 1. **VariableChainHeuristic** (100%) — follows Slither variable assignment chains to find state variables, handles nested struct fields
-2. **DiscoveredValuesScanHeuristic** (95 / 70 / 50%) — scans the caller contract's discovered values for `eth:` addresses, matches against contracts whose ABI contains the called function
-3. **InterfaceNameHeuristic** (90 / 60 / 40%) — strips an `I` prefix from the interface name and matches against contract names
-4. **FunctionSignatureHeuristic** (99 / 50 / 30%) — finds every contract whose ABI contains the called function
+2. **DependencyFieldHeuristic** (90 / 65 / 45%) — catches getters that forward to a dependency (e.g. `Voter.rewardToken()` returns `minter.rewardToken()` at runtime) and internal/immutable fields that aren't stored as discovery values. Only fires when `storageVariable` is NOT a key in the caller's own `values`. Walks each dependency address held in the caller's `values` and looks for a field with the same name; if found and its value points at a contract whose ABI contains the called function, returns that as the match. Solves multi-branch disambiguation (Liquity-v2's per-branch `SortedTroves`, per-branch `PriceFeed`) that the interface-name heuristic was resolving by first-match-wins
+3. **DiscoveredValuesScanHeuristic** (95 / 70 / 50%) — scans the caller contract's discovered values for `eth:` addresses, matches against contracts whose ABI contains the called function
+4. **InterfaceNameHeuristic** (90 / 60 / 40%) — strips an `I` prefix from the interface name and matches against contract names
+5. **FunctionSignatureHeuristic** (99 / 50 / 30%) — finds every contract whose ABI contains the called function
+
+**Escape hatch for untracked internal/immutable state variables**: when a field can't be read via any getter (declared `internal` / `immutable` with no public accessor — e.g. Aerodrome's `Voter.rewardToken` = `IVotingEscrow(_ve).token()` captured in the constructor), discovery can't populate it. Add a `fields.<name>.handler` entry in `config.jsonc` (typically `"type": "hardcoded"` with the known address) so the field enters `discovered.json.values` and `VariableChainHeuristic` resolves it at 100%. This is the preferred fix over heuristics when the field-name on the caller doesn't match any name on its dependency chain.
 
 ### `call-graph-data.json` shape
 

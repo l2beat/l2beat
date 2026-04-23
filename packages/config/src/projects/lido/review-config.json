@@ -1,12 +1,12 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-15T00:00:00.000Z",
+  "lastModified": "2026-04-20T00:00:00.000Z",
   "protocolSlug": "lido",
   "protocolName": "Lido",
   "tokenName": "stETH",
   "chain": "Ethereum",
   "projectType": "liquid-staking",
-  "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages {{totalCapitalAtRisk}} in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract.",
+  "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages {{totalCapitalAtRisk}} in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract.",
   "admins": {
     "eth:0x3e40d73eb977dc6a537af587d48316fee66e9c8c": {
       "name": "Lido DAO Agent",
@@ -183,12 +183,68 @@
     "eth:0x4118dad7f348a4063bd15786c299de2f3b1333f3": {
       "name": "Oracle Committee Member (0x4118...3F3)",
       "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x1d201be093d847f6446530efb0e8fb426d176709": {
+      "name": "VaultHub",
+      "description": "Upgradeable central coordinator for all Lido V3 StakingVaults. Connects individual vaults to the core stETH accounting, enforces reserve ratios and force-rebalance thresholds, mints/burns stETH liabilities against vault collateral, and socializes bad debt. Lido DAO Agent holds DEFAULT_ADMIN_ROLE and the proxy admin role. PAUSE_ROLE is held by the Vaults GateSeal and ResealManager; VALIDATOR_EXIT_ROLE and BAD_DEBT_MASTER_ROLE are held by the VaultsAdapter (EasyTrack-gated)."
+    },
+    "eth:0x23ed611be0e1a820978875c0122f92260804cddf": {
+      "name": "Accounting",
+      "description": "Upgradeable V3 Accounting contract that routes oracle reports into the stETH token contract and coordinates vault share accounting with VaultHub and LazyOracle. Proxy admin is the Lido DAO Agent; governance can upgrade the implementation."
+    },
+    "eth:0xc69685e89cefc327b43b7234ac646451b27c544d": {
+      "name": "OperatorGrid",
+      "description": "Upgradeable node operator registry for Lido V3 stVaults. Maintains node operator tiers with configurable collateralization parameters (reserve ratio, rebalance threshold, fees). Lido DAO Agent holds DEFAULT_ADMIN_ROLE; REGISTRY_ROLE is held by the EVMScriptExecutor and VaultsAdapter (both governance-gated via Voting / EasyTrack motions)."
+    },
+    "eth:0xf4bf42c6d6a0e38825785048124dbad6c9eaaac3": {
+      "name": "PredepositGuarantee",
+      "description": "Upgradeable predeposit security module for Lido V3 vaults. Holds ETH as validator predeposit collateral and enforces that node operators prove withdrawal-credential configuration before their vaults can perform full beacon-chain deposits, preventing front-running. Lido DAO Agent holds DEFAULT_ADMIN_ROLE; PAUSE_ROLE held by the Vaults GateSeal and ResealManager; RESUME_ROLE held by the ResealManager."
+    },
+    "eth:0x5fbe8cef9ccc56ad245736d3c5baf82ad54ca789": {
+      "name": "StakingVault UpgradeableBeacon",
+      "description": "Immutable OpenZeppelin UpgradeableBeacon that holds the current StakingVault implementation. Every StakingVault deployed by the VaultFactory is a BeaconProxy that reads its implementation from this beacon. The Lido DAO Agent is the sole owner and can upgrade all StakingVaults atomically by calling upgradeTo(). This is the highest-leverage upgrade key in the V3 system."
+    },
+    "eth:0x02ca7772ff14a9f6c1a08af385aa96bb1b34175a": {
+      "name": "VaultFactory",
+      "description": "Immutable factory that deploys new StakingVault beacon proxies (using the UpgradeableBeacon) and clones of the Dashboard template. Permissionless — any address can deploy a vault; the deployer configures the initial owner, node operator, and fee parameters via the Dashboard."
+    },
+    "eth:0x294825c2764c7d412dc32d87e2242c4f1d989af3": {
+      "name": "Dashboard (template)",
+      "description": "Immutable Dashboard template cloned per-vault by the VaultFactory. Each clone exposes role-based access control for vault operations: FUND_ROLE, WITHDRAW_ROLE, MINT_ROLE, BURN_ROLE, REBALANCE_ROLE, NODE_OPERATOR_MANAGER_ROLE, PAUSE_BEACON_CHAIN_DEPOSITS_ROLE, VAULT_CONFIGURATION_ROLE, and others. The template itself has no members — only the per-vault clones do."
+    },
+    "eth:0x5db427080200c235f2ae8cd17a7be87921f7ad6c": {
+      "name": "LazyOracle",
+      "description": "Upgradeable V3 oracle contract that receives a daily state-root snapshot from the AccountingOracle and allows per-vault Merkle proofs to be submitted permissionlessly to update individual vault reports. Lido DAO Agent holds DEFAULT_ADMIN_ROLE and can call UPDATE_SANITY_PARAMS_ROLE to adjust the maximum Lido fee rate, reward ratio, and quarantine period."
+    },
+    "eth:0x28f9ac198c4e0fa6a9ad2c2f97cb38f1a3120f27": {
+      "name": "VaultsAdapter",
+      "description": "Immutable EasyTrack adapter that exposes vault-management operations to a 4-of-7 trusted-caller Safe. Holds REGISTRY_ROLE on OperatorGrid (tier management) and VALIDATOR_EXIT_ROLE + BAD_DEBT_MASTER_ROLE on VaultHub (force validator exits, socialize bad debt). All calls are mediated by the EVMScriptExecutor and subject to EasyTrack motion timelocks."
+    },
+    "eth:0x18a1065c81b0cc356f1b1c843ddd5e14e4aeffff": {
+      "name": "Vault Operations 4/7 Safe",
+      "description": "4-of-7 GnosisSafe (v1.4.1) that is the trustedCaller on VaultsAdapter. Through the adapter it can register/update/jail node operator tiers on OperatorGrid, force validator exits, and socialize bad debt on VaultHub — all gated by EasyTrack timelocks."
+    },
+    "eth:0x881dad714679a6feaa636446a0499101375a365c": {
+      "name": "Vaults GateSeal",
+      "description": "Immutable one-time-use GateSeal that can pause both VaultHub and PredepositGuarantee for 14 days. Controlled by the existing 4/6 Sealing Committee Safe (0x8772...760C). Expires May 2027; replacement GateSeal must be redeployed by governance."
+    },
+    "eth:0x25e35855783bec3e49355a29e110f02ed8b05ba9": {
+      "name": "TokenRateNotifier",
+      "description": "Immutable contract that pushes the stETH/wstETH exchange rate to L2 token-rate observers. Lido DAO Agent is the owner and can add or remove observers. Currently has one observer (OpStackTokenRatePusher)."
     }
   },
   "dependencies": {
     "eth:0x00000000219ab540356cbb839cbe05303d7705fa": {
       "name": "Ethereum Beacon Chain DepositContract",
-      "description": "The canonical Ethereum 2.0 deposit contract used by Lido to stake ETH with validators. The DepositSecurityModule calls deposit() to stake buffered ETH and reads get_deposit_root() to verify deposit data integrity. This is an immutable Ethereum protocol contract — if it fails or is compromised, Lido cannot process new deposits."
+      "description": "The canonical Ethereum 2.0 deposit contract used by Lido to stake ETH with validators. The DepositSecurityModule and each Lido V3 StakingVault call deposit() to stake ETH; DepositSecurityModule also reads get_deposit_root() to verify deposit data integrity. This is an immutable Ethereum protocol contract — if it fails or is compromised, Lido cannot process new deposits."
+    },
+    "eth:0x000f3df6d732807ef1319fb7b8bb8522d0beac02": {
+      "name": "EIP-4788 BEACON_ROOTS Predeploy",
+      "description": "Ethereum consensus-layer precompile that exposes recent beacon block roots to execution-layer contracts. The ValidatorExitDelayVerifier and CSVerifier read from this precompile to verify validator state proofs for exit-delay penalties and community staking validator accounting."
+    },
+    "eth:0x00000961ef480eb55e80d19ad83579a64c007002": {
+      "name": "EIP-7002 WITHDRAWAL_REQUEST Predeploy",
+      "description": "Ethereum consensus-layer precompile for triggering validator withdrawals from the execution layer. TriggerableWithdrawalsGateway and VaultsAdapter call this predeploy to force-exit validators on behalf of the StakingRouter and V3 staking vaults."
     }
   },
   "funds": {
@@ -262,6 +318,9 @@
     "elRewardsVaultCapital": "v2score.inventory.admins.breakdown[\"eth:0x388c818ca8b9251b393131c08a736a67ccb19297\"].totalDirectCapital",
     "withdrawalVaultCapital": "v2score.inventory.admins.breakdown[\"eth:0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f\"].totalDirectCapital",
     "tokenManagerCapital": "v2score.inventory.admins.breakdown[\"eth:0xf73a1260d222f447210581ddf212d915c09a3249\"].totalDirectCapital",
+    "vaultHubCapital": "v2score.inventory.admins.breakdown[\"eth:0x1d201be093d847f6446530efb0e8fb426d176709\"].totalDirectCapital",
+    "beaconCapital": "v2score.inventory.admins.breakdown[\"eth:0x5fbe8cef9ccc56ad245736d3c5baf82ad54ca789\"].totalReachableCapital",
+    "accountingCapital": "v2score.inventory.admins.breakdown[\"eth:0x23ed611be0e1a820978875c0122f92260804cddf\"].totalReachableCapital",
     "wstethBalance": "fundsdata.contracts[\"eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0\"].balances.totalUsdValue",
     "withdrawalQueueBalance": "fundsdata.contracts[\"eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1\"].balances.totalUsdValue",
     "withdrawalQueuePositions": "fundsdata.contracts[\"eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1\"].positions.totalUsdValue",

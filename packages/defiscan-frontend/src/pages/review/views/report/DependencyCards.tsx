@@ -223,9 +223,24 @@ function DepDistributionChart({
                         if (fn.mitigations) all.push(...fn.mitigations)
                       }
                       const unique = deduplicateMitigations(all)
-                      return unique.map((m, i) => (
-                        <MitigationBadge key={i} mitigation={m} />
-                      ))
+                      const MAX_BADGES = 4
+                      const visible = unique.slice(0, MAX_BADGES)
+                      const remaining = unique.length - visible.length
+                      return (
+                        <>
+                          {visible.map((m, i) => (
+                            <MitigationBadge key={i} mitigation={m} />
+                          ))}
+                          {remaining > 0 && (
+                            <span
+                              className="shrink-0 text-text-muted text-[10px] leading-4 ml-0.5"
+                              title={`${unique.length} unique mitigations total`}
+                            >
+                              +{remaining}
+                            </span>
+                          )}
+                        </>
+                      )
                     })()}
                   </span>
                   {fundsAtRisk > 0 && (
