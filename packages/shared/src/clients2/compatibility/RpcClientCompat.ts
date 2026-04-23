@@ -6,6 +6,7 @@ import type {
   MulticallV3Response,
 } from '../../clients/rpc/multicall/MulticallV3Client'
 import { isLimitExceededError } from '../../clients/rpc/RpcClient'
+import type { RpcMetricsAggregator } from '../../clients/rpc/RpcMetricsAggregator'
 import type {
   CallParameters,
   EVMBlock,
@@ -38,6 +39,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
 }
 
@@ -103,6 +105,10 @@ export class RpcClientCompat implements IRpcClient {
       `${RpcClientCompat.name}:${deps.chain}`,
       deps.generateId,
       deps.timeout,
+      deps.rpcMetricsAggregator?.createRecorder({
+        rpcChain: deps.chain,
+        rpcClient: RpcClientCompat.name,
+      }),
     )
     const retryOptions = toRetryOptions(deps.retryStrategy)
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)

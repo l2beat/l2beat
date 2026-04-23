@@ -4,6 +4,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
 import { RpcClient } from './RpcClient'
+import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
@@ -771,6 +772,21 @@ describe(RpcClient.name, () => {
         timeout: 10_000,
       })
     })
+
+    it('records rpc metrics for single queries', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => 'data-returned-from-api',
+      })
+      const rpcMetrics = {
+        record: mockFn<RpcMetricsRecorder['record']>().returns(undefined),
+      }
+      const rpc = mockClient({ http, rpcMetrics })
+
+      await rpc.query('rpc_method', ['a', 1, true])
+
+      expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
+      expect(rpcMetrics.record.calls[0]?.args[0]?.method).toEqual('rpc_method')
+    })
   })
 
   describe(RpcClient.prototype.batchQuery.name, () => {
@@ -824,6 +840,32 @@ describe(RpcClient.name, () => {
         timeout: 10_000,
       })
     })
+
+    it('records rpc metrics for batch queries', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => [
+          { id: '0x1', result: 'one' },
+          { id: '0x2', result: 'two' },
+        ],
+      })
+      const rpcMetrics = {
+        record: mockFn<RpcMetricsRecorder['record']>().returns(undefined),
+      }
+      const rpc = mockClient({
+        http,
+        rpcMetrics,
+        generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+      })
+
+      await rpc.batchQuery('rpc_method', [
+        ['a', 1, true],
+        ['b', 2, true],
+      ])
+
+      expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
+      expect(rpcMetrics.record.calls[0]?.args[0]?.method).toEqual('rpc_method')
+      expect(rpcMetrics.record.calls[0]?.args[0]?.count).toEqual(2)
+    })
   })
 
   describe(RpcClient.prototype.validateResponse.name, () => {
@@ -853,6 +895,7 @@ describe(RpcClient.name, () => {
 
 function mockClient(deps: {
   http?: HttpClient
+  rpcMetrics?: RpcMetricsRecorder
   url?: string
   generateId?: () => string
 }) {
@@ -864,6 +907,7 @@ function mockClient(deps: {
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     generateId: deps.generateId,
+    rpcMetrics: deps.rpcMetrics,
   })
 }
 

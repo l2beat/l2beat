@@ -11,6 +11,7 @@ import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
 } from '@l2beat/backend-tools/elastic-search'
+import { RpcMetricsAggregator } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
@@ -77,6 +78,7 @@ function createLogger(env: Env): Logger {
 
   const metricsEnabled = env.boolean('CLIENT_METRICS_ENABLED', esEnabled)
   MetricsAggregator.setMetricsEnabled(metricsEnabled)
+  RpcMetricsAggregator.setMetricsEnabled(metricsEnabled)
   Indexer.setMetricsEnabled(metricsEnabled)
 
   return new Logger(options)

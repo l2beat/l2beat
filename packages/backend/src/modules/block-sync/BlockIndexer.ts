@@ -7,6 +7,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
 import type { BlockProcessor } from '../types'
+import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
 
 export interface BlockIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -39,115 +40,137 @@ export class BlockIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    let adjustedFrom = from
-    if (adjustedFrom !== to && from === this.$.minHeight) {
-      adjustedFrom = to
-    }
-    const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
+    return await withBlockSyncRpcMetricsContext(
+      {
+        chain: this.$.source,
+        service: 'blockIndexer',
+      },
+      async () => {
+        let adjustedFrom = from
+        if (adjustedFrom !== to && from === this.$.minHeight) {
+          adjustedFrom = to
+        }
+        const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
 
-    const blockNumbers = []
-    for (
-      let blockNumber = adjustedFrom;
-      blockNumber <= adjustedTo;
-      blockNumber++
-    ) {
-      blockNumbers.push(blockNumber)
-    }
+        const blockNumbers: number[] = []
+        for (
+          let blockNumber = adjustedFrom;
+          blockNumber <= adjustedTo;
+          blockNumber++
+        ) {
+          blockNumbers.push(blockNumber)
+        }
 
-    const start = Date.now()
+        const start = Date.now()
 
-    this.logger.info('Fetching blocks and logs', {
-      blocks: to - adjustedFrom,
-      from: adjustedFrom,
-      to: adjustedTo,
-      count: adjustedTo - adjustedFrom + 1,
-    })
-
-    const [blocks, logs] = await Promise.all([
-      Promise.all(
-        blockNumbers.map((n) =>
-          this.$.blockProvider.getBlockWithTransactions(n),
-        ),
-      ),
-      this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
-    ])
-    const consistentBlocks = onlyConsistent(blocks, logs)
-    if (consistentBlocks.length === 0) {
-      this.logger.info("Couldn't get consistent blocks & logs", {
-        from: adjustedFrom,
-        to: adjustedTo,
-      })
-      throw new Error("Couldn't get consistent blocks & logs")
-    }
-    const actualTo = consistentBlocks[consistentBlocks.length - 1].block.number
-
-    const totalDuration = Date.now() - start
-    this.logger.info('Fetched blocks and logs', {
-      totalDuration,
-      from: adjustedFrom,
-      to: actualTo,
-      count: consistentBlocks.length,
-    })
-
-    const processingStart = Date.now()
-    const stopBlockIndexerAtTimestampMs = this.$.stopBlockIndexerAtTimestampMs
-    let processedBlocks = 0
-    let processedLogs = 0
-    let lastProcessedBlockNumber: number | undefined
-    for (const { block, logs } of consistentBlocks) {
-      const blockTimestampMs = block.timestamp
-      if (
-        stopBlockIndexerAtTimestampMs !== undefined &&
-        blockTimestampMs > stopBlockIndexerAtTimestampMs
-      ) {
-        this.logger.info('Stopping block sync at configured timestamp', {
-          blockNumber: block.number,
-          blockTimestampMs,
-          stopBlockIndexerAtTimestampMs,
+        this.logger.info('Fetching blocks and logs', {
+          blocks: to - adjustedFrom,
+          from: adjustedFrom,
+          to: adjustedTo,
+          count: adjustedTo - adjustedFrom + 1,
         })
-        if (lastProcessedBlockNumber === undefined) {
-          throw new Error(
-            `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
-          )
-        }
-        break
-      }
 
-      for (const processor of this.$.blockProcessors) {
-        try {
-          const start = Date.now()
-          await processor.processBlock(block, logs)
-          const duration = Date.now() - start
-          this.logger.info('Processor finished', {
-            processor: processor.constructor.name,
-            durationMs: Number.parseFloat(duration.toFixed(2)),
+        const [blocks, logs] = await withBlockSyncRpcMetricsContext(
+          {
+            stage: 'fetch',
+          },
+          () =>
+            Promise.all([
+              Promise.all(
+                blockNumbers.map((n) =>
+                  this.$.blockProvider.getBlockWithTransactions(n),
+                ),
+              ),
+              this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
+            ]),
+        )
+        const consistentBlocks = onlyConsistent(blocks, logs)
+        if (consistentBlocks.length === 0) {
+          this.logger.info("Couldn't get consistent blocks & logs", {
+            from: adjustedFrom,
+            to: adjustedTo,
           })
-        } catch (error) {
-          this.logger.error('Processor failed', {
-            processor: processor.constructor.name,
+          throw new Error("Couldn't get consistent blocks & logs")
+        }
+        const actualTo =
+          consistentBlocks[consistentBlocks.length - 1].block.number
+
+        const totalDuration = Date.now() - start
+        this.logger.info('Fetched blocks and logs', {
+          totalDuration,
+          from: adjustedFrom,
+          to: actualTo,
+          count: consistentBlocks.length,
+        })
+
+        const processingStart = Date.now()
+        const stopBlockIndexerAtTimestampMs =
+          this.$.stopBlockIndexerAtTimestampMs
+        let processedBlocks = 0
+        let processedLogs = 0
+        let lastProcessedBlockNumber: number | undefined
+        for (const { block, logs } of consistentBlocks) {
+          const blockTimestampMs = block.timestamp
+          if (
+            stopBlockIndexerAtTimestampMs !== undefined &&
+            blockTimestampMs > stopBlockIndexerAtTimestampMs
+          ) {
+            this.logger.info('Stopping block sync at configured timestamp', {
+              blockNumber: block.number,
+              blockTimestampMs,
+              stopBlockIndexerAtTimestampMs,
+            })
+            if (lastProcessedBlockNumber === undefined) {
+              throw new Error(
+                `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
+              )
+            }
+            break
+          }
+
+          for (const processor of this.$.blockProcessors) {
+            try {
+              const start = Date.now()
+              await withBlockSyncRpcMetricsContext(
+                {
+                  service: 'blockProcessor',
+                  processor: processor.constructor.name,
+                },
+                () => processor.processBlock(block, logs),
+              )
+              const duration = Date.now() - start
+              this.logger.info('Processor finished', {
+                processor: processor.constructor.name,
+                durationMs: Number.parseFloat(duration.toFixed(2)),
+              })
+            } catch (error) {
+              this.logger.error('Processor failed', {
+                processor: processor.constructor.name,
+                blockNumber: block.number,
+                error,
+              })
+            }
+          }
+          this.logger.info('Processed block', {
             blockNumber: block.number,
-            error,
+            logs: logs.length,
           })
+          processedBlocks++
+          processedLogs += logs.length
+          lastProcessedBlockNumber = block.number
         }
-      }
-      this.logger.info('Processed block', {
-        blockNumber: block.number,
-        logs: logs.length,
-      })
-      processedBlocks++
-      processedLogs += logs.length
-      lastProcessedBlockNumber = block.number
-    }
-    const processingDuration = Date.now() - processingStart
-    this.logger.info('Processed blocks', {
-      chain: this.$.source,
-      blocks: processedBlocks,
-      logs: processedLogs,
-      processors: this.$.blockProcessors.length,
-      durationMs: Number.parseFloat(processingDuration.toFixed(2)),
-    })
+        const processingDuration = Date.now() - processingStart
+        this.logger.info('Processed blocks', {
+          chain: this.$.source,
+          blocks: processedBlocks,
+          logs: processedLogs,
+          processors: this.$.blockProcessors.length,
+          durationMs: Number.parseFloat(processingDuration.toFixed(2)),
+        })
 
-    return lastProcessedBlockNumber ?? actualTo
+        return lastProcessedBlockNumber ?? actualTo
+      },
+    )
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
