@@ -46,7 +46,7 @@ type OpenPanelTrack = {
 
 export function useTracking(): { track: OpenPanelTrack } {
   const track: OpenPanelTrack = useCallback((event, ...args) => {
-    window.op?.('track', event, args[0]?.props)
+    window.op?.('track', event, ...args)
   }, [])
 
   return {
