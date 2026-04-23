@@ -43,6 +43,7 @@ describe('getInteropProtocols', () => {
         id: 'stargate',
         slug: 'stargate',
         name: 'Stargate',
+        subgroupId: null,
         totalVolume: 120,
         totalTransferCount: 3,
         avgTransferTime: {
@@ -110,6 +111,100 @@ describe('getInteropProtocols', () => {
         volume: 10,
         transferCount: 1,
         avgTransferTimeSeconds: null,
+      },
+    ])
+  })
+
+  it('includes subgroup protocol records as separate entries', () => {
+    const result = getInteropProtocols(
+      [
+        transfer({
+          id: 'layerzero',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          transferCount: 2,
+          transfersWithDurationCount: 2,
+          totalDurationSum: 200,
+        }),
+        transfer({
+          id: 'usdt0',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          transferCount: 2,
+          transfersWithDurationCount: 2,
+          totalDurationSum: 200,
+        }),
+      ],
+      [
+        interopProject('layerzero', { name: 'LayerZero', slug: 'layerzero' }),
+        interopProject('usdt0', {
+          name: 'USDT0',
+          slug: 'usdt0',
+          subgroupId: 'layerzero',
+        }),
+      ],
+    )
+
+    expect(result).toEqual([
+      {
+        id: 'layerzero',
+        slug: 'layerzero',
+        name: 'LayerZero',
+        subgroupId: null,
+        totalVolume: 100,
+        totalTransferCount: 2,
+        avgTransferTime: {
+          type: 'single',
+          duration: 100,
+        },
+        chainsBreakdown: [
+          {
+            id: 'arbitrum',
+            name: 'Arbitrum One',
+            volume: 100,
+            transferCount: 2,
+            avgTransferTimeSeconds: 100,
+          },
+          {
+            id: 'ethereum',
+            name: 'Ethereum',
+            volume: 100,
+            transferCount: 2,
+            avgTransferTimeSeconds: 100,
+          },
+        ],
+      },
+      {
+        id: 'usdt0',
+        slug: 'usdt0',
+        name: 'USDT0',
+        subgroupId: 'layerzero',
+        totalVolume: 100,
+        totalTransferCount: 2,
+        avgTransferTime: {
+          type: 'single',
+          duration: 100,
+        },
+        chainsBreakdown: [
+          {
+            id: 'arbitrum',
+            name: 'Arbitrum One',
+            volume: 100,
+            transferCount: 2,
+            avgTransferTimeSeconds: 100,
+          },
+          {
+            id: 'ethereum',
+            name: 'Ethereum',
+            volume: 100,
+            transferCount: 2,
+            avgTransferTimeSeconds: 100,
+          },
+        ],
       },
     ])
   })

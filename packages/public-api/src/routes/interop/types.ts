@@ -33,6 +33,7 @@ export const InteropProtocolSchema = v
     id: v.string(),
     slug: v.string(),
     name: v.string(),
+    subgroupId: v.union([v.string(), v.null()]),
     totalVolume: v.number(),
     totalTransferCount: v.number(),
     avgTransferTime: AverageTransferTimeSchema,

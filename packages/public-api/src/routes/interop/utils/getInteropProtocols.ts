@@ -1,7 +1,7 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { getInteropTransferValue } from '@l2beat/shared-pure'
 import type { InteropProtocol } from '../types'
+import { chainMetadata } from './chainMetadata'
 import {
   getAverageTransferTimeSeconds,
   getProtocolAverageTransferTime,
@@ -27,14 +27,11 @@ type ProtocolAccumulator = {
   id: string
   slug: string
   name: string
+  subgroupId: string | null
   project: ProjectMetadata | undefined
   totalVolume: number
   chains: Map<string, ChainBreakdownAccumulator>
 } & CommonInteropData
-
-const chainMetadata = new Map(
-  INTEROP_CHAINS.map((chain) => [chain.id, { id: chain.id, name: chain.name }]),
-)
 
 export function getInteropProtocols(
   records: AggregatedInteropTransferRecord[],
@@ -77,6 +74,7 @@ export function getInteropProtocols(
       id: protocol.id,
       slug: protocol.slug,
       name: protocol.name,
+      subgroupId: protocol.subgroupId,
       totalVolume: protocol.totalVolume,
       totalTransferCount: protocol.transferCount,
       avgTransferTime: getProtocolAverageTransferTime(protocol),
@@ -105,6 +103,7 @@ function createProtocolAccumulator(
     id,
     slug: project?.slug ?? id,
     name: project?.interopConfig.name ?? project?.name ?? id,
+    subgroupId: project?.interopConfig.subgroupId?.toString() ?? null,
     project,
     totalVolume: 0,
     transferCount: 0,

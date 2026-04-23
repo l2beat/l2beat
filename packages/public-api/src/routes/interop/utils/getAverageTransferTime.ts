@@ -7,7 +7,7 @@ import type { InteropTransferTypeStatsMap } from '@l2beat/database'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import isEqual from 'lodash/isEqual'
 
-type CommonInteropData = {
+export type CommonInteropData = {
   transfersWithDurationCount: number
   totalDurationSum: number
   transferTypeStats: InteropTransferTypeStatsMap | undefined

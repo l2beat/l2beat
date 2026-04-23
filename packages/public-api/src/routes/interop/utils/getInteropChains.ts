@@ -1,18 +1,14 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import type { InteropChain } from '../types'
+import { chainMetadata } from './chainMetadata'
 import {
+  type CommonInteropData,
   getAverageTransferTimeSeconds,
+  hasUnknownTransferTime,
   type ProjectMetadata,
 } from './getAverageTransferTime'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
-
-type CommonInteropData = {
-  transferCount: number
-  transfersWithDurationCount: number
-  totalDurationSum: number
-  transferTypeStats: AggregatedInteropTransferRecord['transferTypeStats']
-}
 
 type ProtocolBreakdownAccumulator = {
   id: string
@@ -27,12 +23,9 @@ type ChainAccumulator = {
   name: string
   inflowsUsd: number
   outflowsUsd: number
+  transferCount: number
   protocols: Map<string, ProtocolBreakdownAccumulator>
 } & CommonInteropData
-
-const chainMetadata = new Map(
-  INTEROP_CHAINS.map((chain) => [chain.id, { id: chain.id, name: chain.name }]),
-)
 
 export function getInteropChains(
   records: AggregatedInteropTransferRecord[],
@@ -83,9 +76,10 @@ function accumulateChain(
   projectsMap: Map<string, ProjectMetadata>,
 ) {
   const metadata = chainMetadata.get(chainId)
+  assert(metadata, `Missing interop chain metadata for ${chainId}`)
   const chain = chains.get(chainId) ?? {
     id: chainId,
-    name: metadata?.name ?? chainId,
+    name: metadata.name,
     inflowsUsd: 0,
     outflowsUsd: 0,
     transferCount: 0,
@@ -101,9 +95,12 @@ function accumulateChain(
     chain.outflowsUsd += record.srcValueUsd ?? 0
   }
 
-  accumulateCommon(chain, record)
-
   const project = projectsMap.get(record.id)
+  chain.transferCount += record.transferCount
+  if (!hasUnknownTransferTime(project)) {
+    accumulateTransferTime(chain, record)
+  }
+
   const protocol = chain.protocols.get(record.id) ?? {
     id: record.id,
     slug: project?.slug ?? record.id,
@@ -121,11 +118,10 @@ function accumulateChain(
   chains.set(chainId, chain)
 }
 
-function accumulateCommon(
+function accumulateTransferTime(
   accumulator: CommonInteropData,
   record: AggregatedInteropTransferRecord,
 ) {
-  accumulator.transferCount += record.transferCount
   accumulator.transfersWithDurationCount += record.transfersWithDurationCount
   accumulator.totalDurationSum += record.totalDurationSum
   accumulator.transferTypeStats = mergeTransferTypeStats(

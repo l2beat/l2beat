@@ -175,6 +175,94 @@ describe('getInteropChains', () => {
     ])
   })
 
+  it('excludes unknown-mode protocols from chain average transfer time', () => {
+    const result = getInteropChains(
+      [
+        transfer({
+          id: 'relay',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcValueUsd: 100,
+          dstValueUsd: 100,
+          transferCount: 2,
+          transfersWithDurationCount: 2,
+          totalDurationSum: 200,
+        }),
+        transfer({
+          id: 'unknown-bridge',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcValueUsd: 50,
+          dstValueUsd: 50,
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 999,
+        }),
+      ],
+      [
+        interopProject('relay', { name: 'Relay', slug: 'relay' }),
+        interopProject('unknown-bridge', {
+          name: 'Unknown Bridge',
+          slug: 'unknown-bridge',
+          transfersTimeMode: 'unknown',
+        }),
+      ],
+    )
+
+    expect(result).toEqual([
+      {
+        id: 'arbitrum',
+        name: 'Arbitrum One',
+        totalVolume: 150,
+        totalTransferCount: 3,
+        inflowsUsd: 150,
+        outflowsUsd: 0,
+        avgTransferTimeSeconds: 100,
+        protocolsBreakdown: [
+          {
+            id: 'relay',
+            slug: 'relay',
+            name: 'Relay',
+            volume: 100,
+            transferCount: 2,
+          },
+          {
+            id: 'unknown-bridge',
+            slug: 'unknown-bridge',
+            name: 'Unknown Bridge',
+            volume: 50,
+            transferCount: 1,
+          },
+        ],
+      },
+      {
+        id: 'ethereum',
+        name: 'Ethereum',
+        totalVolume: 150,
+        totalTransferCount: 3,
+        inflowsUsd: 0,
+        outflowsUsd: 150,
+        avgTransferTimeSeconds: 100,
+        protocolsBreakdown: [
+          {
+            id: 'relay',
+            slug: 'relay',
+            name: 'Relay',
+            volume: 100,
+            transferCount: 2,
+          },
+          {
+            id: 'unknown-bridge',
+            slug: 'unknown-bridge',
+            name: 'Unknown Bridge',
+            volume: 50,
+            transferCount: 1,
+          },
+        ],
+      },
+    ])
+  })
+
   it('returns an empty array when there is no data', () => {
     expect(getInteropChains([], [])).toEqual([])
   })
@@ -216,11 +304,13 @@ function interopProject(
     name: string
     slug: string
     subgroupId?: string
+    transfersTimeMode?: 'unknown'
   },
 ): ProjectMetadata {
   const interopConfig: InteropConfig = {
     name: overrides.name,
     type: 'canonical',
+    transfersTimeMode: overrides.transfersTimeMode,
     subgroupId: overrides.subgroupId
       ? ProjectId(overrides.subgroupId)
       : undefined,
