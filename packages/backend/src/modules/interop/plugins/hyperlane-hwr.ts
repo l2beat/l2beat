@@ -284,6 +284,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
             dstTokenAddress: event.args.tokenAddress,
             dstAmount: event.args.amount,
             dstWasMinted: event.args.minted,
+            bridgeType: 'burnAndMint',
           }),
         ]
       }
@@ -364,6 +365,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         srcAmount: event.args.amount,
         srcWasBurned: event.args.burned,
         dstChain,
+        bridgeType: 'burnAndMint',
       }),
     ]
   }

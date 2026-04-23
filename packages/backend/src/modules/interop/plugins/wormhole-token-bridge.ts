@@ -139,6 +139,7 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
             dstTokenAddress: event.args.dstTokenAddress,
             dstAmount: event.args.dstAmount,
             dstWasMinted: event.args.dstWasMinted,
+            bridgeType: 'lockAndMint',
           }),
         ]
       }
@@ -198,6 +199,7 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
           srcTokenAddress: event.args.srcTokenAddress,
           srcAmount: event.args.srcAmount,
           srcWasBurned,
+          bridgeType: 'lockAndMint',
         }),
       ]
     }

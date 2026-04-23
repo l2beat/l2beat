@@ -643,6 +643,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
+          "bridgeType": "burnAndMint",
           "src": {
             "tokenAddress": "0x000000000000000000000000243c9be13faba09f945ccc565547293337da0ad7",
             "wasBurned": false,
@@ -654,6 +655,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": {
             "tokenAddress": "0x00000000000000000000000080ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
@@ -1768,12 +1770,14 @@
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
+          "bridgeType": "burnAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
         }
@@ -1895,6 +1899,7 @@
       "transfers": [
         {
           "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "wasBurned": false },
           "dst": { "chain": "solana" }
         }
@@ -3757,11 +3762,13 @@
       "transfers": [
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "base" } } }
         }
@@ -3885,7 +3892,23 @@
         "chain": "ethereum",
         "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
