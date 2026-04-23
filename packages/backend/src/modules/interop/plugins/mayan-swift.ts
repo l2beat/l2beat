@@ -3,10 +3,10 @@ Mayan Swift source data comes either from the surrounding MayanForwarder event
 or directly from MayanSwift calldata. The protocol itself is lock/release, so it never burns or mints.
 */
 
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { Address32 } from '@l2beat/shared-pure'
 import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { findParsedAround } from './logScan'
+import { findParsedAround, findTransferLogBefore } from './logScan'
 import {
   decodeMayanData,
   findNativeAmountInTx,
@@ -24,8 +24,10 @@ import {
   toChainSpecificAddresses,
 } from './mayan-shared'
 import {
+  extractMayanSwiftFulfillDestTokenFromTxData,
   extractMayanSwiftFulfillSourceChainFromTxData,
   extractMayanSwiftSettlementDestChain,
+  extractMayanSwiftSettlementUnlockKey,
   getMayanSwiftSettlementMsgType,
   MAYAN_SWIFT_MSG_TYPE_UNLOCK,
 } from './mayan-swift.utils'
@@ -50,6 +52,8 @@ const orderFulfilledLog =
 const orderRefundedLog = 'event OrderRefunded(bytes32 key, uint256 netAmount)'
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 const parseOrderCreated = createEventParser(orderCreatedLog)
 
@@ -58,6 +62,7 @@ const parseOrderFulfilled = createEventParser(orderFulfilledLog)
 const parseOrderRefunded = createEventParser(orderRefundedLog)
 
 const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
+const parseTransfer = createEventParser(transferLog)
 
 export const OrderCreated = createInteropEventType<{
   key: string
@@ -71,6 +76,7 @@ export const OrderFulfilled = createInteropEventType<{
   key: string
   dstAmount: bigint
   $srcChain?: string
+  dstTokenAddress?: Address32
 }>('mayan-swift.OrderFulfilled')
 
 export const OrderRefunded = createInteropEventType<{
@@ -89,6 +95,7 @@ type FulfilledOrderEvent = InteropEvent<{
   key: string
   dstAmount: bigint
   $srcChain?: string
+  dstTokenAddress?: Address32
 }>
 type RefundedOrderEvent = InteropEvent<{
   key: string
@@ -150,6 +157,22 @@ function captureOrderFulfilled(
       extractMayanSwiftFulfillSourceChainFromTxData(txData as `0x${string}`),
     )
     .find((srcChainId): srcChainId is number => srcChainId !== undefined)
+  const dstTokenAddress = getInteropTransactionDataCandidates(input.tx)
+    .map((txData) =>
+      extractMayanSwiftFulfillDestTokenFromTxData(txData as `0x${string}`),
+    )
+    .find(
+      (tokenAddress): tokenAddress is Address32 => tokenAddress !== undefined,
+    )
+  const transferMatch =
+    input.log.logIndex === null
+      ? undefined
+      : findTransferLogBefore(
+          input.txLogs,
+          input.log.logIndex,
+          (log) => parseTransfer(log, null),
+          (transfer) => transfer.value === orderFulfilled.netAmount,
+        )
   const $srcChain =
     settlementSent?.args.$dstChain ??
     (fulfilledSrcChainId === undefined || wormholeNetworks.length === 0
@@ -167,6 +190,7 @@ function captureOrderFulfilled(
       key: orderFulfilled.key,
       dstAmount: orderFulfilled.netAmount,
       $srcChain,
+      dstTokenAddress: dstTokenAddress ?? transferMatch?.transfer?.logAddress,
     }),
   ]
   if (settlementSent) {
@@ -183,20 +207,17 @@ function findSingleSettlementSentInTx(
 ) {
   for (const log of input.txLogs) {
     const logMsg = parseLogMessagePublished(log, null)
-    if (
-      !logMsg ||
-      EthereumAddress(logMsg.sender) !== MAYAN_PROTOCOLS.mayanSwift ||
-      logMsg.sequence !== sequence
-    ) {
+    if (!logMsg || logMsg.sequence !== sequence) {
       continue
     }
 
     // Only single UNLOCK is captured here. BATCH_UNLOCK is handled in mayan-swift-settlement plugin.
     if (
       getMayanSwiftSettlementMsgType(logMsg.payload) !==
-      MAYAN_SWIFT_MSG_TYPE_UNLOCK
+        MAYAN_SWIFT_MSG_TYPE_UNLOCK ||
+      extractMayanSwiftSettlementUnlockKey(logMsg.payload) !== orderKey
     ) {
-      return
+      continue
     }
 
     const srcChainId = extractMayanSwiftSettlementDestChain(logMsg.payload)
@@ -289,7 +310,9 @@ function matchFulfilledOrder(
   const srcTokenAddress =
     mayanForwarded?.args.tokenIn ?? orderCreated.args.srcTokenAddress
   const dstTokenAddress =
-    mayanForwarded?.args.tokenOut ?? orderCreated.args.dstTokenAddress
+    mayanForwarded?.args.tokenOut ??
+    orderCreated.args.dstTokenAddress ??
+    orderFulfilled.args.dstTokenAddress
 
   // Settlement messages (LogMessagePublished → OrderUnlocked) are matched separately
   // by the mayan-swift-settlement plugin.
@@ -417,6 +440,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         Result.Transfer('mayan-swift.Transfer', {
           srcChain,
           dstEvent: orderEvent,
+          dstTokenAddress: orderEvent.args.dstTokenAddress,
           dstAmount: orderEvent.args.dstAmount,
           bridgeType: 'nonMinting',
         }),

@@ -1,3 +1,4 @@
+import { Address32 } from '@l2beat/shared-pure'
 import { decodeFunctionData, parseAbi } from 'viem'
 import { BinaryReader } from '../../../tools/BinaryReader'
 
@@ -24,15 +25,65 @@ const mayanSwiftUnlockAbi = parseAbi([
   'function unlockBatch(bytes encodedVm)',
 ])
 
-const mayanSwiftFulfillAbi = parseAbi([
+const mayanSwiftFulfillLegacyAbi = parseAbi([
   'function fulfillOrder(uint256 fulfillAmount, bytes encodedVm, bytes32 recepient, bool batch)',
   'function fulfillSimple(uint256 fulfillAmount, bytes32 orderHash, uint16 srcChainId, bytes32 tokenIn, uint8 protocolBps, (bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, bytes32, uint16, bytes32, uint8, uint8, bytes32), bytes32 recepient, bool batch)',
+])
+
+const mayanSwiftFulfillCurrentAbi = parseAbi([
+  'function fulfillOrder(uint256 fulfillAmount, bytes encodedVm, (uint8, bytes32, bytes32, uint16, bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, uint8, uint8, bytes32), (uint16, bytes32, uint8, bytes32), (bytes32, bytes32, bool), (uint256, uint256, uint8, bytes32, bytes32))',
+  'function fulfillSimple(uint256 fulfillAmount, bytes32 orderHash, (uint8, bytes32, bytes32, uint16, bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, uint8, uint8, bytes32), (uint16, bytes32, uint8, bytes32), (bytes32, bytes32, bool), (uint256, uint256, uint8, bytes32, bytes32))',
 ])
 
 const mayanSwiftFulfillWrapperAbi = parseAbi([
   'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   'function directFulfill(address tokenIn, uint256 amountIn, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
 ])
+
+interface MayanSwiftFulfillDetails {
+  srcChainId?: number
+  dstTokenAddress?: Address32
+}
+
+type MayanSwiftCurrentOrderParams = readonly [
+  number,
+  `0x${string}`,
+  `0x${string}`,
+  number,
+  `0x${string}`,
+  `0x${string}`,
+  bigint,
+  bigint,
+  bigint,
+  bigint,
+  bigint,
+  number,
+  number,
+  `0x${string}`,
+]
+
+type MayanSwiftCurrentExtraParams = readonly [
+  number,
+  `0x${string}`,
+  number,
+  `0x${string}`,
+]
+
+type MayanSwiftLegacyOrderParams = readonly [
+  `0x${string}`,
+  `0x${string}`,
+  bigint,
+  bigint,
+  bigint,
+  bigint,
+  bigint,
+  `0x${string}`,
+  number,
+  `0x${string}`,
+  number,
+  number,
+  `0x${string}`,
+]
 
 // Message format:
 // - UNLOCK: 0x02 + orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)
@@ -94,6 +145,14 @@ export function extractMayanSwiftSettlementDestChain(
   return decoded.dstChainId
 }
 
+export function extractMayanSwiftSettlementUnlockKey(
+  payload: string,
+): string | undefined {
+  const decoded = decodeMayanSwiftSettlementPayload(payload)
+  if (!decoded || decoded.msgType !== MAYAN_SWIFT_MSG_TYPE_UNLOCK) return
+  return decoded.key
+}
+
 export function extractMayanSwiftBatchOrderKeys(
   payload: string,
 ): Array<{ key: string; dstChainId: number }> | undefined {
@@ -133,35 +192,34 @@ export function extractWormholeEmitterChainFromTxData(
 export function extractMayanSwiftFulfillSourceChainFromTxData(
   txData: string | undefined,
 ): number | undefined {
+  return extractMayanSwiftFulfillDetailsFromTxData(txData)?.srcChainId
+}
+
+export function extractMayanSwiftFulfillDestTokenFromTxData(
+  txData: string | undefined,
+): Address32 | undefined {
+  return extractMayanSwiftFulfillDetailsFromTxData(txData)?.dstTokenAddress
+}
+
+function extractMayanSwiftFulfillDetailsFromTxData(
+  txData: string | undefined,
+): MayanSwiftFulfillDetails | undefined {
   try {
     if (!txData) return undefined
-    return extractMayanSwiftFulfillSourceChainFromCallData(
-      txData as `0x${string}`,
-    )
+    return extractMayanSwiftFulfillDetailsFromCallData(txData as `0x${string}`)
   } catch {
     return undefined
   }
 }
 
-function extractMayanSwiftFulfillSourceChainFromCallData(
+function extractMayanSwiftFulfillDetailsFromCallData(
   txData: `0x${string}`,
-): number | undefined {
-  try {
-    const decoded = decodeFunctionData({
-      abi: mayanSwiftFulfillAbi,
-      data: txData,
-    })
+): MayanSwiftFulfillDetails | undefined {
+  const current = extractMayanSwiftCurrentFulfillDetailsFromCallData(txData)
+  if (current) return current
 
-    if (decoded.functionName === 'fulfillOrder') {
-      const encodedVm = decoded.args[1]
-      if (typeof encodedVm !== 'string') return undefined
-      return extractMayanSwiftFulfillSourceChainFromVaa(encodedVm)
-    }
-
-    if (decoded.functionName === 'fulfillSimple') {
-      return decoded.args[2]
-    }
-  } catch {}
+  const legacy = extractMayanSwiftLegacyFulfillDetailsFromCallData(txData)
+  if (legacy) return legacy
 
   try {
     const decoded = decodeFunctionData({
@@ -180,7 +238,62 @@ function extractMayanSwiftFulfillSourceChainFromCallData(
         ? decoded.args[6]
         : decoded.args[3]
     if (typeof mayanCalldata !== 'string') return undefined
-    return extractMayanSwiftFulfillSourceChainFromCallData(mayanCalldata)
+    return extractMayanSwiftFulfillDetailsFromCallData(mayanCalldata)
+  } catch {
+    return undefined
+  }
+}
+
+function extractMayanSwiftCurrentFulfillDetailsFromCallData(
+  txData: `0x${string}`,
+): MayanSwiftFulfillDetails | undefined {
+  try {
+    const decoded = decodeFunctionData({
+      abi: mayanSwiftFulfillCurrentAbi,
+      data: txData,
+    })
+    if (
+      decoded.functionName !== 'fulfillOrder' &&
+      decoded.functionName !== 'fulfillSimple'
+    ) {
+      return undefined
+    }
+
+    const params = decoded.args[2] as unknown as MayanSwiftCurrentOrderParams
+    const extraParams = decoded
+      .args[3] as unknown as MayanSwiftCurrentExtraParams
+
+    return {
+      srcChainId: extraParams[0],
+      dstTokenAddress: toMayanTokenAddress(params[5]),
+    }
+  } catch {
+    return undefined
+  }
+}
+
+function extractMayanSwiftLegacyFulfillDetailsFromCallData(
+  txData: `0x${string}`,
+): MayanSwiftFulfillDetails | undefined {
+  try {
+    const decoded = decodeFunctionData({
+      abi: mayanSwiftFulfillLegacyAbi,
+      data: txData,
+    })
+
+    if (decoded.functionName === 'fulfillOrder') {
+      const encodedVm = decoded.args[1]
+      if (typeof encodedVm !== 'string') return undefined
+      return extractMayanSwiftFulfillDetailsFromVaa(encodedVm)
+    }
+
+    if (decoded.functionName === 'fulfillSimple') {
+      const order = decoded.args[5] as unknown as MayanSwiftLegacyOrderParams
+      return {
+        srcChainId: decoded.args[2],
+        dstTokenAddress: toMayanTokenAddress(order[1]),
+      }
+    }
   } catch {
     return undefined
   }
@@ -201,9 +314,9 @@ function extractWormholeEmitterChainFromVaa(
   }
 }
 
-function extractMayanSwiftFulfillSourceChainFromVaa(
+function extractMayanSwiftFulfillDetailsFromVaa(
   encodedVm: `0x${string}`,
-): number | undefined {
+): MayanSwiftFulfillDetails | undefined {
   try {
     const payload = extractWormholePayloadFromVaa(encodedVm)
     if (!payload) return undefined
@@ -213,7 +326,19 @@ function extractMayanSwiftFulfillSourceChainFromVaa(
     const action = reader.readUint8()
     if (action !== 1) return undefined
     reader.skipBytes(32)
-    return reader.readUint16()
+    const srcChainId = reader.readUint16()
+
+    // Payload layout matches fulfillSimple:
+    // action + orderHash + srcChainId + tokenIn + protocolBps + trader + tokenOut + ...
+    if (reader.length < 32 + 1 + 32 + 32) {
+      return { srcChainId }
+    }
+
+    reader.skipBytes(32 + 1 + 32)
+    return {
+      srcChainId,
+      dstTokenAddress: toMayanTokenAddress(reader.readBytes(32)),
+    }
   } catch {
     return undefined
   }
@@ -232,4 +357,9 @@ function extractWormholePayloadFromVaa(
   } catch {
     return undefined
   }
+}
+
+function toMayanTokenAddress(token: string): Address32 {
+  const address = Address32.from(token)
+  return address === Address32.ZERO ? Address32.NATIVE : address
 }

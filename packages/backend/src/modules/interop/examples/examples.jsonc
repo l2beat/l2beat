@@ -1188,6 +1188,48 @@
       ]
     }
   },
+  "mayan-swift-solana-ethereum-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Single Mayan Swift fulfill from Solana to Ethereum",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x4157f42d0f0cf65efaa529dfa826ebad230c16f084e81178fc20c680d9edc927"
+      }
+    ],
+    "expects": {
+      "events": ["mayan-swift.OrderFulfilled", "mayan-swift.SettlementSent"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
+  "mayan-swift-solana-bsc-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Single Mayan Swift fulfill from Solana to BSC",
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0x4be43ab7e60b2502bfc5980d6d1b333649f4b8628a9b4167646f706357011f68"
+      }
+    ],
+    "expects": {
+      "events": ["mayan-swift.OrderFulfilled"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "bsc" } } }
+        }
+      ]
+    }
+  },
   "mayan-swift-settlement-non-batched": {
     "loadConfigs": ["wormhole"],
     "txs": [

@@ -7,9 +7,13 @@ import {
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAfter, findTransferLogBefore } from '../logScan'
 import {
+  getMayanSwiftSettlementMsgType,
+  MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
+  MAYAN_SWIFT_MSG_TYPE_UNLOCK,
+} from '../mayan-swift.utils'
+import {
   findMayanCircleDestinationChain,
   isMayanCircleSender,
-  isMayanSwiftSender,
   MAYAN_FORWARDER_TX_EVENT_SIGNATURES,
 } from '../mayan-wormhole'
 import {
@@ -104,9 +108,13 @@ export class WormholePlugin implements InteropPluginResyncable {
 
     // Skip Mayan Swift settlement messages - they are handled by mayan-swift.ts and
     // mayan-swift-settlement.ts which create SettlementSent events with extracted order keys
-    // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
-    // they would remain unmatched since the settlement matching uses SettlementSent.
-    if (isMayanSwiftSender(senderAddress)) {
+    // for matching with OrderUnlocked. Sender-based detection is insufficient because
+    // fulfillment wrappers can emit the Wormhole message via helper contracts.
+    const mayanSwiftMsgType = getMayanSwiftSettlementMsgType(parsed.payload)
+    if (
+      mayanSwiftMsgType === MAYAN_SWIFT_MSG_TYPE_UNLOCK ||
+      mayanSwiftMsgType === MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK
+    ) {
       return
     }
 
