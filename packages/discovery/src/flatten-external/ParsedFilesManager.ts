@@ -331,7 +331,16 @@ export class ParsedFilesManager {
 
     for (const node of subNodes) {
       const ids = getASTIdentifiers(node, (n, i) => {
-        if (n.type === 'NewExpression') {
+        // NOTE(radomski): You can only _new_ arrays or contracts.
+        //
+        // - new [], creates an array and uses the signature but not the implementation
+        // - new Ident, creates a new contract and Ident has to be a contract
+        //
+        // We only care about contracts here, so it's fine to drop all arrays
+        if (
+          n.type === 'NewExpression' &&
+          (n as AST.NewExpression).typeName.type !== 'ArrayTypeName'
+        ) {
           implementationReferences.push(...i)
         }
       })

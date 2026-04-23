@@ -677,6 +677,83 @@ describe('flatten', () => {
     )
   })
 
+  it('regression - dynamic contract referencing its own nested struct becomes an interface', () => {
+    const files = [
+      sol(
+        'Root.sol',
+        `
+      import * as Imported from "./Imported.sol";
+      import { Imported } from "./Imported.sol";
+
+      contract Namespace {
+          struct NewingStruct {
+              uint256 x;
+          }
+      }
+
+      contract ToBeInterface {
+          struct UsageStruct {
+              uint256 x;
+              address owner;
+          }
+
+          function f() public view returns (uint256) {
+              UsageStruct[] memory x = new UsageStruct[](1, msg.sender);
+              Namespace.NewingStruct[] memory y = new Namespace.NewingStruct[](1);
+              Imported.NewingStruct[] memory z = new Imported.NewingStruct[](msg.sender);
+              return s.x;
+          }
+      }
+
+      contract Root {
+          function z(address a) {
+              ToBeInterface(a).f();
+          }
+      }
+      `,
+      ),
+      sol(
+        'Imported.sol',
+        `
+        struct NewingStruct {
+              address owner;
+        }
+      `,
+      ),
+    ]
+
+    const flattened = flattenStartingFrom('Root', files, [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface Namespace {
+          struct NewingStruct {
+              uint256 x;
+          }
+      }
+
+      // NOTE(l2beat): This is an interface, generated from the contract source code.
+      interface ToBeInterface {
+          struct UsageStruct {
+              uint256 x;
+              address owner;
+          }
+
+          function f() external view returns (uint256);
+      }
+
+      contract Root {
+          function z(address a) {
+              ToBeInterface(a).f();
+          }
+      }
+    `),
+    )
+  })
+
   it('contracts which are called with new are not turned into interfaces', () => {
     const file = sol(
       'Root.sol',
