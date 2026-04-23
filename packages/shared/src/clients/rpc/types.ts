@@ -140,7 +140,6 @@ export const EVMFeeHistory = z.object({
   baseFeePerBlobGas: z.array(Quantity.decode),
   blobGasUsedRatio: z.array(z.number()),
   oldestBlock: Quantity.decode.transform((n) => Number(n)),
-  reward: z.array(z.array(Quantity.decode)),
 })
 
 export const EVMFeeHistoryResponse = z.object({
