@@ -21,6 +21,7 @@ export const QUANTUM_RESISTANCE_TOOLTIP =
 export interface ProjectTooltipSectionData {
   id: string
   text: string
+  textDetail?: string
   href?: string
   variant: 'negative' | 'warning' | 'muted'
   icon: React.ReactNode
@@ -38,49 +39,70 @@ export function ProjectTooltipContent({
   description,
   sections = [],
   badges,
+  sectionsFirst = false,
 }: {
   projectName: string
   description?: string
   sections?: ProjectTooltipSectionData[]
   badges?: BadgeWithParams[]
+  sectionsFirst?: boolean
 }) {
+  const sectionList = sections.map((section) => (
+    <TooltipSection
+      key={section.id}
+      href={section.href}
+      textDetail={section.textDetail}
+      variant={section.variant}
+      icon={section.icon}
+    >
+      {section.text}
+    </TooltipSection>
+  ))
+
+  const badgeList =
+    badges && badges.length > 0 ? (
+      <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
+        {badges.map((badge) => (
+          <ProjectBadge
+            key={badge.id}
+            badge={badge}
+            className="h-16!"
+            disableTooltip
+          />
+        ))}
+      </div>
+    ) : null
+
+  if (sectionsFirst) {
+    return (
+      <>
+        <span className="text-heading-18">What is {projectName}?</span>
+        {sectionList}
+        {description && <p>{description}</p>}
+        {badgeList}
+      </>
+    )
+  }
+
   return (
     <>
       <span className="text-heading-18">What is {projectName}?</span>
       {description && <p>{description}</p>}
-      {sections.map((section) => (
-        <TooltipSection
-          key={section.id}
-          href={section.href}
-          variant={section.variant}
-          icon={section.icon}
-        >
-          {section.text}
-        </TooltipSection>
-      ))}
-      {badges && badges.length > 0 && (
-        <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
-          {badges.map((badge) => (
-            <ProjectBadge
-              key={badge.id}
-              badge={badge}
-              className="h-16!"
-              disableTooltip
-            />
-          ))}
-        </div>
-      )}
+      {sectionList}
+      {badgeList}
     </>
   )
 }
 
 function TooltipSection({
   href,
+  textDetail,
   variant,
   icon,
   children,
 }: {
   href?: string
+  textDetail?: string
   variant: 'negative' | 'warning' | 'muted'
   icon: React.ReactNode
   children: string
@@ -93,6 +115,11 @@ function TooltipSection({
           <Markdown inline ignoreGlossary>
             {children}
           </Markdown>
+          {textDetail && (
+            <Markdown ignoreGlossary className="mt-1">
+              {textDetail}
+            </Markdown>
+          )}
           {href && (
             <CustomLink
               href={href}
