@@ -1,6 +1,5 @@
 import { cva } from 'class-variance-authority'
 import type React from 'react'
-import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { CustomLink } from '../link/CustomLink'
 import { Markdown } from '../markdown/Markdown'
 import { type BadgeWithParams, ProjectBadge } from './ProjectBadge'
@@ -25,13 +24,6 @@ export interface ProjectTooltipSectionData {
   href?: string
   variant: 'negative' | 'warning' | 'muted'
   icon: React.ReactNode
-}
-
-export const QUANTUM_RESISTANCE_SECTION: ProjectTooltipSectionData = {
-  id: 'quantum-resistance',
-  text: QUANTUM_RESISTANCE_TOOLTIP,
-  variant: 'muted',
-  icon: <QuantumResistanceIcon className="size-4" />,
 }
 
 export function ProjectTooltipContent({

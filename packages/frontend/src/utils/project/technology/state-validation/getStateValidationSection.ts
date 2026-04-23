@@ -14,7 +14,10 @@ export function getStateValidationSection(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   allProjectsWithContracts: Project<'contracts'>[],
 ):
   | Omit<StateValidationSectionProps, 'id' | 'title' | 'sectionOrder'>

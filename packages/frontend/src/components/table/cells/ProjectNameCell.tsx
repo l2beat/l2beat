@@ -16,7 +16,6 @@ import { Markdown } from '~/components/markdown/Markdown'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
-  QUANTUM_RESISTANCE_SECTION,
   QUANTUM_RESISTANCE_TOOLTIP,
 } from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
@@ -385,7 +384,12 @@ function getTooltipSections(project: ProjectCellProject) {
   const sections: ProjectTooltipSectionData[] = []
 
   if (project.quantumResistant) {
-    sections.push(QUANTUM_RESISTANCE_SECTION)
+    sections.push({
+      id: 'quantum-resistance',
+      text: QUANTUM_RESISTANCE_TOOLTIP,
+      variant: 'muted',
+      icon: <QuantumResistanceIcon className="size-4" />,
+    })
   }
 
   if (project.ecosystemInfo?.isPartOfSuperchain) {

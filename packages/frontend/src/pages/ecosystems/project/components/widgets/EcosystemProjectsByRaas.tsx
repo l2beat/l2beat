@@ -6,10 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import {
-  ProjectTooltipContent,
-  QUANTUM_RESISTANCE_SECTION,
-} from '~/components/projects/ProjectTooltipContent'
+import { ProjectTooltipContent } from '~/components/projects/ProjectTooltipContent'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { ProjectByRaas } from '~/server/features/ecosystems/getProjectsByRaas'
 import { cn } from '~/utils/cn'
@@ -123,9 +120,6 @@ function ProjectLinkWithTooltip({
         <ProjectTooltipContent
           projectName={project.name}
           description={project.description}
-          sections={
-            project.quantumResistant ? [QUANTUM_RESISTANCE_SECTION] : undefined
-          }
         />
       </TooltipContent>
     </Tooltip>

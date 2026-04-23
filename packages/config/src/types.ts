@@ -782,7 +782,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
-  quantumResistant?: boolean
+  quantumResistant?: true
   formalVerificationLinks?: {
     name: string
     url: string

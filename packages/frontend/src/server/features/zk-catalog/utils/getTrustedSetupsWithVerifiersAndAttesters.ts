@@ -70,7 +70,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -147,7 +150,10 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -161,7 +167,10 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -292,7 +301,10 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
@@ -315,7 +327,7 @@ export function getProjectsUsedIn(
         slug: project.slug,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
         url,
-        description: project.display.description,
+        description: project.display?.description,
       }
     })
     .filter(notUndefined)
@@ -323,7 +335,10 @@ export function getProjectsUsedIn(
 
 export function addProjectsUsedInDisplayInfo(
   usedIn: UsedInProject[],
-  allProjects: Project<'display', 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ): UsedInProjectWithIcon[] {
   return usedIn.map((project) => ({
     id: project.id,
@@ -332,6 +347,6 @@ export function addProjectsUsedInDisplayInfo(
     icon: project.icon,
     url: project.url,
     description: allProjects.find((p) => p.id === project.id)?.display
-      .description,
+      ?.description,
   }))
 }

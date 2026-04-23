@@ -5,10 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import {
-  ProjectTooltipContent,
-  QUANTUM_RESISTANCE_SECTION,
-} from '~/components/projects/ProjectTooltipContent'
 import { useRouter } from '~/hooks/useRouter'
 import { cn } from '~/utils/cn'
 import {
@@ -25,7 +21,6 @@ export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
   url: string
   description?: string
-  quantumResistant?: boolean
 }
 interface Props {
   usedIn: UsedInProjectWithIcon[]
@@ -95,16 +90,13 @@ export function ProjectsUsedIn({
                   </a>
                 </TooltipTrigger>
               )}
-              <TooltipContent className="flex max-w-xs flex-col gap-2">
-                <ProjectTooltipContent
-                  projectName={project.name}
-                  description={project.description}
-                  sections={
-                    project.quantumResistant
-                      ? [QUANTUM_RESISTANCE_SECTION]
-                      : undefined
-                  }
-                />
+              <TooltipContent>
+                <p className="font-bold">{project.name}</p>
+                {!noLink && (
+                  <p className="text-secondary text-xs">
+                    Click to view project page
+                  </p>
+                )}
               </TooltipContent>
             </Tooltip>
           )
