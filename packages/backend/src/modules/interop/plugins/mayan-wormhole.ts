@@ -28,10 +28,6 @@ const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
   '0x1c59b7fc', // mayanCircle.createOrder (legacy)
 ])
 
-export function isMayanSwiftSender(sender: EthereumAddress): boolean {
-  return sender === MAYAN_PROTOCOLS.mayanSwift
-}
-
 export function isMayanCircleSender(sender: EthereumAddress): boolean {
   return sender === MAYAN_PROTOCOLS.mayanCircle
 }
