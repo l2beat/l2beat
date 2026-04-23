@@ -25,7 +25,6 @@ export function getProjectsByRaas(
       icon: manifest.getUrl(`/icons/${curr.slug}.png`),
       name: curr.name,
       url: `/scaling/projects/${curr.slug}`,
-      description: curr.display.description,
     })
     return acc
   }, {} as ProjectByRaas)

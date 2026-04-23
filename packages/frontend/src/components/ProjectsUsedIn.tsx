@@ -20,7 +20,6 @@ import {
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
   url: string
-  description?: string
 }
 interface Props {
   usedIn: UsedInProjectWithIcon[]

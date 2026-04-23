@@ -179,13 +179,12 @@ function getVerifiersWithProcessedUsedIn(
         deployment,
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
-          : addProjectsUsedInDisplayInfo(
+          : mapUsedInProjects(
               contractUtils.getUsedIn(
                 project.id,
                 ChainSpecificAddress.longChain(deployment.address),
                 toPlainAddress(deployment.address),
               ),
-              allProjects,
             ),
       }))
 
@@ -327,18 +326,13 @@ export function getProjectsUsedIn(
         slug: project.slug,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
         url,
-        description: project.display?.description,
       }
     })
     .filter(notUndefined)
 }
 
-export function addProjectsUsedInDisplayInfo(
+export function mapUsedInProjects(
   usedIn: UsedInProject[],
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
 ): UsedInProjectWithIcon[] {
   return usedIn.map((project) => ({
     id: project.id,
@@ -346,7 +340,5 @@ export function addProjectsUsedInDisplayInfo(
     slug: project.slug,
     icon: project.icon,
     url: project.url,
-    description: allProjects.find((p) => p.id === project.id)?.display
-      ?.description,
   }))
 }
