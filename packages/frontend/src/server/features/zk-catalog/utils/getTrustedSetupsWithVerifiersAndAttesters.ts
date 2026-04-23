@@ -13,7 +13,6 @@ import {
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
@@ -179,12 +178,10 @@ function getVerifiersWithProcessedUsedIn(
         deployment,
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
-          : mapUsedInProjects(
-              contractUtils.getUsedIn(
-                project.id,
-                ChainSpecificAddress.longChain(deployment.address),
-                toPlainAddress(deployment.address),
-              ),
+          : contractUtils.getUsedIn(
+              project.id,
+              ChainSpecificAddress.longChain(deployment.address),
+              toPlainAddress(deployment.address),
             ),
       }))
 
@@ -329,16 +326,4 @@ export function getProjectsUsedIn(
       }
     })
     .filter(notUndefined)
-}
-
-export function mapUsedInProjects(
-  usedIn: UsedInProject[],
-): UsedInProjectWithIcon[] {
-  return usedIn.map((project) => ({
-    id: project.id,
-    name: project.name,
-    slug: project.slug,
-    icon: project.icon,
-    url: project.url,
-  }))
 }
