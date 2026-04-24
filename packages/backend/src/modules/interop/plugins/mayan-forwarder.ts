@@ -21,6 +21,7 @@ import { findParsedBefore } from './logScan'
 import {
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
+  MAYAN_PROTOCOLS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
   toChainSpecificAddresses,
 } from './mayan-shared'
@@ -29,6 +30,7 @@ import {
   createInteropEventType,
   type DataRequest,
   findChain,
+  type InteropEvent,
   type InteropPluginResyncable,
   type LogToCapture,
 } from './types'
@@ -61,17 +63,26 @@ export const parseSwapAndForwardedERC20 = createEventParser(
 
 export const MayanForwarded = createInteropEventType<{
   methodSignature: `0x${string}`
+  mayanProtocol?: EthereumAddress
   tokenIn: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  $dstChain: string
+  $dstChain?: string
 }>('mayan-forwarder.MayanForwarded')
 
 interface NormalizedForwarderLog {
   protocolData: `0x${string}`
+  mayanProtocol: EthereumAddress
   tokenIn: Address32
   amountIn?: bigint
 }
+
+interface MayanProtocolData {
+  methodSignature: `0x${string}`
+  mayanProtocol?: EthereumAddress
+}
+
+type MayanForwardedEvent = InteropEvent<MayanProtocolData>
 
 export class MayanForwarderPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-forwarder'
@@ -116,7 +127,6 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       ...(this.configs.get(CCTPV1Config) ?? []),
       ...(this.configs.get(CCTPV2Config) ?? []),
     ]
-    if (wormholeNetworks.length === 0 && cctpNetworks.length === 0) return
 
     const parsed = parseForwarderLog(input.log)
     if (!parsed) return
@@ -126,18 +136,23 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       wormholeNetworks,
       cctpNetworks,
     )
-    if (!decodedData) return
 
     const tokenIn = parsed.tokenIn
-    const amountIn = parsed.amountIn ?? resolveForwardedEthAmount(input)
+    const amountIn =
+      parsed.amountIn ??
+      decodedData?.amountIn ??
+      resolveForwardedEthAmount(input)
 
     return [
       MayanForwarded.create(input, {
-        methodSignature: decodedData.methodSignature,
+        methodSignature:
+          decodedData?.methodSignature ??
+          getMethodSignature(parsed.protocolData),
+        mayanProtocol: parsed.mayanProtocol,
         tokenIn,
         amountIn,
-        tokenOut: decodedData.tokenOut,
-        $dstChain: decodedData.dstChain,
+        tokenOut: decodedData?.tokenOut,
+        $dstChain: decodedData?.dstChain,
       }),
     ]
   }
@@ -148,6 +163,7 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   if (forwardedEth) {
     return {
       protocolData: forwardedEth.protocolData,
+      mayanProtocol: EthereumAddress(forwardedEth.mayanProtocol),
       tokenIn: Address32.NATIVE,
     }
   }
@@ -156,6 +172,7 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   if (forwardedERC20) {
     return {
       protocolData: forwardedERC20.protocolData,
+      mayanProtocol: EthereumAddress(forwardedERC20.mayanProtocol),
       tokenIn: Address32.from(forwardedERC20.token),
       amountIn: forwardedERC20.amount,
     }
@@ -165,6 +182,7 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   if (swapAndForwardedEth) {
     return {
       protocolData: swapAndForwardedEth.mayanData,
+      mayanProtocol: EthereumAddress(swapAndForwardedEth.mayanProtocol),
       tokenIn: Address32.from(swapAndForwardedEth.middleToken),
       amountIn: swapAndForwardedEth.middleAmount,
     }
@@ -174,10 +192,15 @@ function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   if (swapAndForwardedERC20) {
     return {
       protocolData: swapAndForwardedERC20.mayanData,
+      mayanProtocol: EthereumAddress(swapAndForwardedERC20.mayanProtocol),
       tokenIn: zeroAddressToNative(swapAndForwardedERC20.middleToken),
       amountIn: swapAndForwardedERC20.middleAmount,
     }
   }
+}
+
+function getMethodSignature(data: `0x${string}`): `0x${string}` {
+  return data.slice(0, 10) as `0x${string}`
 }
 
 function resolveForwardedEthAmount(input: LogToCapture): bigint | undefined {
@@ -295,9 +318,12 @@ export function logToProtocolData(
   const decoded = decodeMayanData(parsed.protocolData, wormholeNetworks, [])
   if (!decoded) return
 
-  decoded.tokenIn = parsed.tokenIn
-  if (parsed.amountIn !== undefined) decoded.amountIn = parsed.amountIn
-  return decoded
+  return {
+    ...decoded,
+    mayanProtocol: parsed.mayanProtocol,
+    tokenIn: parsed.tokenIn,
+    amountIn: parsed.amountIn ?? decoded.amountIn,
+  }
 }
 
 function zeroAddressToNative(address: string): Address32 {
@@ -350,12 +376,73 @@ const SELECTOR_BRIDGE_FAST_MCTP = '0xf58b6de8'
 const SELECTOR_SWAP = '0x6111ad25'
 const SELECTOR_WRAP_AND_SWAP_ETH = '0x1eb1cff0'
 
+const MAYAN_SWIFT_METHODS = new Set([
+  SELECTOR_CREATE_ORDER_WITH_TOKEN,
+  SELECTOR_CREATE_ORDER_WITH_TOKEN_V2,
+  SELECTOR_CREATE_ORDER_WITH_ETH,
+  SELECTOR_CREATE_ORDER_WITH_SIG,
+])
+
+const MAYAN_CIRCLE_METHODS = new Set([
+  SELECTOR_CREATE_ORDER_MAYAN_CIRCLE,
+  SELECTOR_BRIDGE_WITH_FEE,
+  SELECTOR_BRIDGE_WITH_LOCKED_FEE,
+])
+
+const MAYAN_FAST_MCTP_METHODS = new Set([
+  SELECTOR_CREATE_ORDER_FAST_MCTP,
+  SELECTOR_BRIDGE_FAST_MCTP,
+])
+
 interface DecodedData {
   methodSignature: `0x${string}`
+  mayanProtocol?: EthereumAddress
   dstChain: string
   tokenIn?: Address32
   amountIn?: bigint
   tokenOut?: Address32
+}
+
+export function isMayanSwiftForwarded(event: MayanForwardedEvent): boolean {
+  return isForwardedToProtocolOrMethods(
+    event.args,
+    MAYAN_PROTOCOLS.mayanSwift,
+    MAYAN_SWIFT_METHODS,
+  )
+}
+
+export function isMayanCircleForwarded(event: MayanForwardedEvent): boolean {
+  return isMayanCircleProtocolData(event.args)
+}
+
+export function isMayanCircleProtocolData(data: MayanProtocolData): boolean {
+  return isForwardedToProtocolOrMethods(
+    data,
+    MAYAN_PROTOCOLS.mayanCircle,
+    MAYAN_CIRCLE_METHODS,
+  )
+}
+
+export function isMayanCctpForwarded(event: MayanForwardedEvent): boolean {
+  return (
+    isMayanCircleProtocolData(event.args) ||
+    isForwardedToProtocolOrMethods(
+      event.args,
+      MAYAN_PROTOCOLS.fastMCTP,
+      MAYAN_FAST_MCTP_METHODS,
+    )
+  )
+}
+
+function isForwardedToProtocolOrMethods(
+  data: MayanProtocolData,
+  protocol: EthereumAddress,
+  methodSignatures: Set<string>,
+): boolean {
+  return (
+    data.mayanProtocol === protocol ||
+    methodSignatures.has(data.methodSignature)
+  )
 }
 
 export function decodeMayanData(

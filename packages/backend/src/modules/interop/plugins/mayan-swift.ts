@@ -3,7 +3,7 @@ Mayan Swift source data comes either from the surrounding MayanForwarder event
 or directly from MayanSwift calldata. The protocol itself is lock/release, so it never burns or mints.
 */
 
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { findParsedAround, findTransferLogBefore } from './logScan'
@@ -12,12 +12,14 @@ import {
   findNativeAmountInTx,
   forwardedERC20Log,
   forwardedEthLog,
+  isMayanSwiftForwarded,
   logToProtocolData,
   MayanForwarded,
   swapAndForwardedERC20Log,
   swapAndForwardedEthLog,
 } from './mayan-forwarder'
 import {
+  isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
   MAYAN_PROTOCOLS,
@@ -43,7 +45,10 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
+import {
+  WormholeConfig,
+  type WormholeNetwork,
+} from './wormhole/wormhole.config'
 
 // Event signatures
 const orderCreatedLog = 'event OrderCreated(bytes32 key)'
@@ -90,7 +95,6 @@ export const SettlementSent = createInteropEventType<{
   $dstChain?: string
 }>('mayan-swift.SettlementSent')
 
-type WormholeNetwork = { chain: string; wormholeChainId: number }
 type FulfilledOrderEvent = InteropEvent<{
   key: string
   dstAmount: bigint
@@ -111,10 +115,11 @@ type OrderCreatedEvent = InteropEvent<{
 }>
 type MayanForwardedEvent = InteropEvent<{
   methodSignature: `0x${string}`
+  mayanProtocol?: EthereumAddress
   tokenIn: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  $dstChain: string
+  $dstChain?: string
 }>
 
 function findOrderData(
@@ -205,9 +210,17 @@ function findSingleSettlementSentInTx(
   orderKey: string,
   sequence: bigint,
 ) {
+  const network = wormholeNetworks.find((n) => n.chain === input.chain)
   for (const log of input.txLogs) {
-    const logMsg = parseLogMessagePublished(log, null)
-    if (!logMsg || logMsg.sequence !== sequence) {
+    const logMsg = parseLogMessagePublished(
+      log,
+      network?.coreContract ? [network.coreContract] : null,
+    )
+    if (
+      !logMsg ||
+      logMsg.sequence !== sequence ||
+      !isMayanSwiftSettlementSender(EthereumAddress(logMsg.sender))
+    ) {
       continue
     }
 
@@ -284,6 +297,15 @@ function asTerminalOrderEvent(
   if (OrderFulfilled.checkType(event) || OrderRefunded.checkType(event)) {
     return event
   }
+}
+
+function findMayanSwiftForwardedAfter(
+  db: InteropEventDb,
+  event: InteropEvent,
+): MayanForwardedEvent | undefined {
+  return db
+    .findAll(MayanForwarded, { sameTxAfter: event })
+    .find(isMayanSwiftForwarded) as MayanForwardedEvent | undefined
 }
 
 function matchRefundedOrder(
@@ -378,8 +400,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    const wormholeNetworks = this.configs.get(WormholeConfig)
-    if (!wormholeNetworks) return
+    const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
 
     return (
       captureOrderFulfilled(input, wormholeNetworks) ??
@@ -396,9 +417,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
         db.find(OrderRefunded, { key: event.args.key })
       if (hasTerminalEvent) return
 
-      const mayanForwarded = db.find(MayanForwarded, {
-        sameTxAfter: event,
-      }) as MayanForwardedEvent | undefined
+      const mayanForwarded = findMayanSwiftForwardedAfter(db, event)
       const dstChain = mayanForwarded?.args.$dstChain ?? event.args.$dstChain
       if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
 
@@ -426,9 +445,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
 
     if (OrderRefunded.checkType(orderEvent)) {
       if (!orderCreated) return
-      const mayanForwarded = db.find(MayanForwarded, {
-        sameTxAfter: orderCreated,
-      }) as MayanForwardedEvent | undefined
+      const mayanForwarded = findMayanSwiftForwardedAfter(db, orderCreated)
       return matchRefundedOrder(orderCreated, orderEvent, mayanForwarded)
     }
 
@@ -447,9 +464,7 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
       ]
     }
 
-    const mayanForwarded = db.find(MayanForwarded, {
-      sameTxAfter: orderCreated,
-    }) as MayanForwardedEvent | undefined
+    const mayanForwarded = findMayanSwiftForwardedAfter(db, orderCreated)
     return matchFulfilledOrder(orderCreated, orderEvent, mayanForwarded)
   }
 }

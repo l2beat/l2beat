@@ -57,7 +57,7 @@ import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
-import { MayanForwarded } from '../mayan-forwarder'
+import { isMayanCctpForwarded, MayanForwarded } from '../mayan-forwarder'
 import { OrderFulfilled } from '../mayan-mctp-fast'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
@@ -269,9 +269,9 @@ export class CCTPV2Plugin implements InteropPluginResyncable {
       )[0]
 
       const wrappers: MatchResult = []
-      const mayanForwarded = db.find(MayanForwarded, {
-        sameTxAfter: messageSent,
-      })
+      const mayanForwarded = db
+        .findAll(MayanForwarded, { sameTxAfter: messageSent })
+        .find(isMayanCctpForwarded)
       const orderFulfilled = db.find(OrderFulfilled, {
         sameTxAfter: event,
       })

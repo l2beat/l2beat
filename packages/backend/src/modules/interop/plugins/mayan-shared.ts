@@ -15,6 +15,16 @@ export const MAYAN_PROTOCOLS = {
   mayanSwap2: EthereumAddress('0x238856DE6d9d32EA3Dd4e9e7dbfe08b23cD5048c'),
 } as const satisfies Record<string, EthereumAddressValue>
 
+const MAYAN_SWIFT_DEST = EthereumAddress(
+  '0xD78D199f8C402e7B5Cc2abE278dF0412400a3BAe',
+)
+
+export function isMayanSwiftSettlementSender(
+  sender: EthereumAddressValue,
+): boolean {
+  return sender === MAYAN_PROTOCOLS.mayanSwift || sender === MAYAN_SWIFT_DEST
+}
+
 // Chains where Mayan contracts are deployed
 // https://docs.mayan.finance/integration/forwarder-contract
 // chainconfeeg
