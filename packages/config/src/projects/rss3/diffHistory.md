@@ -1,16 +1,16 @@
-Generated with discovered.json: 0x44adf49cd411fd4b0578afb5912ae8ca2c5d6653
+Generated with discovered.json: 0xe3c4f697cc5a58557e3f7a99a5ff66be4209303b
 
-# Diff at Fri, 24 Apr 2026 18:57:32 GMT:
+# Diff at Fri, 24 Apr 2026 20:57:51 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1760307209
-- current timestamp: 1777056986
+- current timestamp: 1777064207
 
 ## Description
 
 **L1StandardBridge operator backdoor added** (on-chain upgrade). New implementation (`0x12665984...`) sets `operator = RSS3Multisig (0x8AC80fa0)` and exposes an operator-only `sweep(token, to, amount)` that transfers any ERC-20 held by the bridge to an arbitrary address — no proof, no delay, no correlation with a user withdrawal. A single RSS3 Multisig call can drain the entire bridge ERC-20 escrow. This mirrors the pre-existing `operator` on the OptimismPortal (WithdrawalOverwriterMultisig) which can already rewrite withdrawal calldata to steal funds on finalization; the bridge now has the equivalent escape hatch for its own escrow.
 
-**SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). The standard `opStackSequencerInbox` handler requires ≥80% of the batcher's last 10 outgoing txs to go to a single address; RSS3's batcher (`0xC1805743...`) posts to multiple addresses so the threshold fails and `sequencerInbox` errors out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to the predeploy `0xfFFF...12553` (RSS3's previously-discovered sequencer inbox).
+**SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). The standard `opStackSequencerInbox` handler resolves `sequencerInbox` by taking the top destination of the batcher's last 10 outgoing txs and requires that address to account for ≥80% of them. Over a 50-tx window RSS3's batcher (`0xC1805743...`) sends 47/50 (94%) to the inbox at `0xfFFF...12553`, but its most recent 10 txs include 3 transfers to the RSS3 Multisig (one of 33.45 ETH) — i.e. the batcher EOA is being drained ahead of the wind-down, same pattern as the bridge `sweep` and the portal operator. That drops the ratio to 7/10 = 0.70, below the threshold, so the handler throws "Sequencer posts too many different addresses" and the field errors out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to `0xfFFF...12553` (the pre-upgrade discovered value; the suffix `012553` also matches RSS3's chainId 12553 under the standard OP Stack predeploy convention).
 
 L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486/eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83)
 
@@ -86,13 +86,13 @@ discovery. Values are for block 1760307209 (main branch discovery), not current.
 
 ```diff
     contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded (the RSS3 batcher posts to multiple addresses so the standard opStackSequencerInbox handler fails the qualification threshold).
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the batcher EOA is being drained to the RSS3 Multisig ahead of wind-down, which drags its top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold.
       template:
 -        "opstack/SystemConfig"
 +        "opstack/SystemConfig_rss3"
       description:
 -        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded (the RSS3 batcher posts to multiple addresses so the standard opStackSequencerInbox handler fails the qualification threshold)."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the batcher EOA is being drained to the RSS3 Multisig ahead of wind-down, which drags its top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold."
     }
 ```
 
