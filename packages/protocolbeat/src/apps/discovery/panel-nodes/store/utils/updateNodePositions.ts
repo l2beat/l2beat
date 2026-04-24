@@ -1,3 +1,4 @@
+import { perfStats } from '../../perf/perfStats'
 import type { Box, Connection, State } from '../State'
 import {
   BOTTOM_PADDING,
@@ -7,83 +8,85 @@ import {
 } from './constants'
 
 export function updateNodePositions(state: State): State {
-  let dx = state.input.mouseX - state.input.mouseStartX
-  let dy = state.input.mouseY - state.input.mouseStartY
-  if (state.input.shiftPressed) {
-    if (Math.abs(dx) > Math.abs(dy)) {
-      dy = 0
-    } else {
-      dx = 0
-    }
-  }
-
-  const nodeDimensions: Record<string, Box> = {}
-  for (const node of state.nodes) {
-    const start = state.positionsBeforeMove[node.id]
-    const hiddenFieldsHeight =
-      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-    nodeDimensions[node.id] = {
-      width: node.box.width,
-      height:
-        HEADER_HEIGHT +
-        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-        BOTTOM_PADDING +
-        hiddenFieldsHeight,
-      x: start ? start.x + dx : node.box.x,
-      y: start ? start.y + dy : node.box.y,
-    }
-  }
-
-  const newState = {
-    ...state,
-    nodes: state.nodes.map((node) => {
-      const box = nodeDimensions[node.id]
-      if (!box) {
-        // this should never happen
-        throw new Error('missing dimensions for node ' + node.id)
+  return perfStats.time('updateNodePositions', () => {
+    let dx = state.input.mouseX - state.input.mouseStartX
+    let dy = state.input.mouseY - state.input.mouseStartY
+    if (state.input.shiftPressed) {
+      if (Math.abs(dx) > Math.abs(dy)) {
+        dy = 0
+      } else {
+        dx = 0
       }
+    }
 
-      const hiddenFieldsSet = new Set(node.hiddenFields)
+    const nodeDimensions: Record<string, Box> = {}
+    for (const node of state.nodes) {
+      const start = state.positionsBeforeMove[node.id]
+      const hiddenFieldsHeight =
+        node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+      nodeDimensions[node.id] = {
+        width: node.box.width,
+        height:
+          HEADER_HEIGHT +
+          (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+          BOTTOM_PADDING +
+          hiddenFieldsHeight,
+        x: start ? start.x + dx : node.box.x,
+        y: start ? start.y + dy : node.box.y,
+      }
+    }
 
-      let visibleIndex = 0
-
-      const processedFields = node.fields.map((field, index) => {
-        const to = nodeDimensions[field.target]
-        if (!to) {
+    const newState = {
+      ...state,
+      nodes: state.nodes.map((node) => {
+        const box = nodeDimensions[node.id]
+        if (!box) {
           // this should never happen
-          throw new Error('missing dimensions for node ' + field.target)
+          throw new Error('missing dimensions for node ' + node.id)
         }
 
-        const currentVisibleIndex = visibleIndex
+        const hiddenFieldsSet = new Set(node.hiddenFields)
 
-        if (!hiddenFieldsSet.has(field.name)) {
-          visibleIndex++
-        }
+        let visibleIndex = 0
+
+        const processedFields = node.fields.map((field, index) => {
+          const to = nodeDimensions[field.target]
+          if (!to) {
+            // this should never happen
+            throw new Error('missing dimensions for node ' + field.target)
+          }
+
+          const currentVisibleIndex = visibleIndex
+
+          if (!hiddenFieldsSet.has(field.name)) {
+            visibleIndex++
+          }
+
+          return {
+            ...field,
+            box: {
+              x: box.x,
+              y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
+              width: box.width,
+              height: FIELD_HEIGHT,
+            },
+            connection: {
+              nodeId: field.target,
+              ...processConnection(currentVisibleIndex, box, to),
+            },
+          }
+        })
 
         return {
-          ...field,
-          box: {
-            x: box.x,
-            y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-            width: box.width,
-            height: FIELD_HEIGHT,
-          },
-          connection: {
-            nodeId: field.target,
-            ...processConnection(currentVisibleIndex, box, to),
-          },
+          ...node,
+          box,
+          fields: processedFields,
         }
-      })
+      }),
+    }
 
-      return {
-        ...node,
-        box,
-        fields: processedFields,
-      }
-    }),
-  }
-
-  return newState
+    return newState
+  })
 }
 
 function processConnection(
