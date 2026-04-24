@@ -190,7 +190,7 @@ export function deriveRadarData(review: CompiledReview) {
   const governance = computeGovernance(review)
 
   return [
-    { axis: 'CONTROL', value: control },
+    { axis: 'ADMIN CONTROL', value: control },
     { axis: 'DEPENDENCIES', value: deps },
     { axis: 'ACCESS', value: access },
     { axis: 'VERIFIABILITY', value: verifiability },

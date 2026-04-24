@@ -332,11 +332,11 @@ If admin or dependency data needs to change, modify `ProjectAnalysis` — not th
 
 ## Radar Scoring
 
-`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100 (individual axes cap their effective max below 100 — e.g. CONTROL tops at 90, GOVERNANCE at 95).
+`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100 (individual axes cap their effective max below 100 — e.g. ADMIN CONTROL tops at 90, GOVERNANCE at 95).
 
-Axes: `CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `GOVERNANCE`.
+Axes: `ADMIN CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `GOVERNANCE`.
 
-### CONTROL
+### ADMIN CONTROL
 
 Cascades by worst-case admin severity. Per-admin impact = `totalReachableCapital + totalReachableTokenValue`. Only admins with impact > 0 are considered.
 

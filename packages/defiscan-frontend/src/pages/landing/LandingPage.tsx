@@ -21,7 +21,7 @@ import { ProtocolLogo } from '../../components/ProtocolLogo'
 import { useSearchModal } from '../../contexts/SearchModalContext'
 
 const trustPostureData = [
-  { axis: 'CONTROL', value: 85 },
+  { axis: 'ADMIN CONTROL', value: 85 },
   { axis: 'DEPENDENCIES', value: 70 },
   { axis: 'GOVERNANCE', value: 65 },
   { axis: 'VERIFIABILITY', value: 70 },
@@ -31,7 +31,7 @@ const trustPostureData = [
 const methodologyItems = [
   {
     icon: KeyIcon,
-    title: 'Control',
+    title: 'Admin Control',
     desc: 'Exhaustive mapping of upgradeability, administrative privileges, protections, and privilege ownership.',
   },
   {

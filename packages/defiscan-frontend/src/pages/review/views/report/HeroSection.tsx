@@ -18,7 +18,7 @@ interface HeroSectionProps {
   onSubscribe: () => void
 }
 
-const RADAR_AXES = ['CONTROL', 'DEPENDENCIES', 'ACCESS', 'VERIFIABILITY', 'GOVERNANCE']
+const RADAR_AXES = ['ADMIN CONTROL', 'DEPENDENCIES', 'ACCESS', 'VERIFIABILITY', 'GOVERNANCE']
 
 export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionProps) {
   const { metadata } = review
