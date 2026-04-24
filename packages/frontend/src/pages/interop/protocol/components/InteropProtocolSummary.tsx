@@ -15,6 +15,7 @@ import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/ut
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
@@ -81,10 +82,14 @@ export function InteropProtocolSummary({
         <StatsItem
           title="Last 24h volume"
           isLoading={isLoading}
-          value={formatCurrency(data?.entry?.volume ?? 0, 'usd')}
+          value={
+            data?.entry?.volume
+              ? formatCurrency(data.entry.volume, 'usd')
+              : EM_DASH
+          }
         />
         <StatsItem
-          title="Last 24 transfer count"
+          title="Last 24h transfer count"
           isLoading={isLoading}
           value={formatInteger(data?.entry?.transferCount ?? 0)}
         />
@@ -93,21 +98,25 @@ export function InteropProtocolSummary({
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
           value={
-            <AvgDurationCell
-              className="font-bold text-label-value-16"
-              splitClassName="flex-row text-label-value-16 font-bold"
-              averageDuration={
-                data?.entry?.averageDuration ?? {
-                  type: 'unknown',
-                }
-              }
-            />
+            data?.entry?.averageDuration ? (
+              <AvgDurationCell
+                className="font-bold text-label-value-16"
+                splitClassName="flex-row text-label-value-16 font-bold"
+                averageDuration={data?.entry?.averageDuration}
+              />
+            ) : (
+              <InteropNoDataBadge size="extraSmall" />
+            )
           }
         />
         <StatsItem
           title="Last 24 avg. transfer value"
           isLoading={isLoading}
-          value={formatCurrency(data?.entry?.averageValue ?? 0, 'usd')}
+          value={
+            data?.entry?.averageValue
+              ? formatCurrency(data.entry.averageValue, 'usd')
+              : EM_DASH
+          }
         />
         <StatsItem
           title="Tokens by volume"

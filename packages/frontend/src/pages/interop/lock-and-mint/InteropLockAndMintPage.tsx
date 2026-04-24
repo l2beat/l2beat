@@ -121,11 +121,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     type: 'lockAndMint',
   })
 
-  if (
-    data?.entries.length === 0 &&
-    data.flows.length === 0 &&
-    data.topProtocols.length === 0
-  ) {
+  if (data === null) {
     return (
       <InteropEmptyState
         showResetButton={mode === 'internal' && isDirty}

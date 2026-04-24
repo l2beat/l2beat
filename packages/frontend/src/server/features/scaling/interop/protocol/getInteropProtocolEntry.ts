@@ -3,6 +3,8 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { InteropSelection } from '~/pages/interop/utils/types'
+import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import {
@@ -29,9 +31,11 @@ export interface InteropProtocolEntry {
   sections: ProjectDetailsSection[]
 }
 
-export function getInteropProtocolEntry(
+export async function getInteropProtocolEntry(
   project: Project<'interopConfig', 'display' | 'statuses'>,
-): InteropProtocolEntry {
+  helpers: SsrHelpers,
+  apiSelection: InteropSelection,
+): Promise<InteropProtocolEntry> {
   const header: InteropProtocolEntry['header'] = {
     description: project.display?.description,
     warning: project.statuses?.yellowWarning,
@@ -57,14 +61,20 @@ export function getInteropProtocolEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  sections.push({
-    type: 'InteropVolumeSection',
-    props: {
-      id: 'interop-volume',
-      projectId: project.id,
-      title: 'Volume and flows',
-    },
+  const data = await helpers.interop.protocol.fetch({
+    id: project.id,
+    ...apiSelection,
   })
+  if (data.flows.length > 0) {
+    sections.push({
+      type: 'InteropVolumeSection',
+      props: {
+        id: 'interop-volume',
+        projectId: project.id,
+        title: 'Volume and flows',
+      },
+    })
+  }
 
   sections.push({
     type: 'InteropTokensSection',

@@ -106,11 +106,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.dashboard.useQuery(selectionForApi)
 
-  if (
-    data?.entries.length === 0 &&
-    data.flows.length === 0 &&
-    data.topProtocols.length === 0
-  ) {
+  if (data === null) {
     return (
       <InteropEmptyState
         showResetButton={mode === 'internal' && isDirty}
