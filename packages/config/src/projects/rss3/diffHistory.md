@@ -8,9 +8,9 @@ Generated with discovered.json: 0xcfc2d5e2d87b850416658b18198144868c613325
 
 ## Description
 
-**L1StandardBridge patched with an operator-controlled sweep.** New implementation (0x12665984...) adds `operator = RSS3Multisig (0x8AC80fa0)` and an operator-only `sweep(token, to, amount)` that can transfer any ERC-20 held by the bridge to an arbitrary address. The RSS3 Multisig gains direct drain control over the bridge escrow.
+**L1StandardBridge patched with an operator-controlled sweep** (on-chain upgrade). New implementation (0x12665984...) adds `operator = RSS3Multisig (0x8AC80fa0)` and an operator-only `sweep(token, to, amount)` that can transfer any ERC-20 held by the bridge to an arbitrary address. The RSS3 Multisig gains direct drain control over the bridge escrow.
 
-**SystemConfig upgraded** to an impl (0x164883d4...) that no longer exposes `sequencerInbox()` — the field is now hardcoded to the predeploy (`0xfFFF...12553`) via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`).
+**SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). The standard `opStackSequencerInbox` handler requires ≥80% of the batcher's last 10 outgoing txs to go to a single address; RSS3's batcher (`0xC1805743...`) posts to multiple addresses so the threshold fails and `sequencerInbox` errors out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to the predeploy `0xfFFF...12553` (RSS3's previously-discovered sequencer inbox).
 
 L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486/eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83)
 
