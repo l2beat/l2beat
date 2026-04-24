@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3c1d650d30e35bc107663c7573d3b22015fd3be6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+New opsuccinct config.
 
 ## Watched changes
 
