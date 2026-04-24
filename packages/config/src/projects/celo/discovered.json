@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1776433625,
+  "timestamp": 1777038237,
   "configHash": "0x5f6a42276cf8f372c3a6eef5a1675fdb096f62c32011d6406f791d8d919ed61b",
   "entries": [
     {
@@ -239,7 +239,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621203",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621212",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1403,7 +1403,7 @@
         "l1StandardBridge": "eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
         "l2ChainId": 42220,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 50000000000,
+        "minBaseFee": 100000000000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -1506,12 +1506,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xbbd3d355348436b1F0357e79352a79e1909BF784",
+        "anchorGame": "eth:0x86db918E197fa560bfFF5C6DCA97DDE91f3E5AB2",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xa6fa5313f81267352b6698503ac81966484ef715e145c8b43f79b69df880ee72",
-          63925698
+          "0x7c9560397d2aeaca0729d9a185c28fc6246ecf23bd3ae6accdb7f4697ec6f21c",
+          64530498
         ],
         "initVersion": 1,
         "paused": false,
@@ -1734,7 +1734,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2090,7 +2090,7 @@
         ],
         "$upgradeCount": 6,
         "anchorStateRegistry": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
-        "balance": "999849267240488482991621832",
+        "balance": "999849267242488482991621832",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "ethLockbox": "eth:0x0000000000000000000000000000000000000000",
@@ -2100,7 +2100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24895370
+          "prevBlockNum": 24945635
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2435,7 +2435,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1776433151,
+        "getLastProposalTimestamp": 1777037507,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2501,7 +2501,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
-        "gameCount": 32229,
+        "gameCount": 32565,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3873,6 +3873,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24899966 },
+  "usedBlockNumbers": { "ethereum": 24950202 },
   "permissionsConfigHash": "0xbbf69680b43e5ab646c03408a33a865ac0f34249efebd4621d33cf64ac871937"
 }
