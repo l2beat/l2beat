@@ -14,6 +14,11 @@ import {
 
 const columnHelper = createColumnHelper<MissingTokenRow>()
 
+export function getMissingTokenAddressSearchValue(row: MissingTokenRow) {
+  const displayAddress = getMissingTokenAddressDisplay(row.tokenAddress)
+  return `${row.tokenAddress} ${displayAddress}`
+}
+
 export function createMissingTokensColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
   isActionVisited: (row: MissingTokenRow) => boolean
@@ -86,7 +91,7 @@ export function createMissingTokensColumns(options: {
         csvHeader: 'Chain',
       },
     }),
-    columnHelper.accessor('tokenAddress', {
+    columnHelper.accessor(getMissingTokenAddressSearchValue, {
       id: 'address',
       header: 'Address',
       cell: ({ row }) => {

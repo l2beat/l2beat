@@ -36,6 +36,7 @@ export function createSuspiciousTransfersColumns(options: {
       cell: ({ row }) => (
         <span className="font-mono text-xs">{row.original.transferId}</span>
       ),
+      enableSorting: false,
       meta: {
         csvHeader: 'Transfer ID',
       },
