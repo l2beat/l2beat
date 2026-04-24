@@ -1,6 +1,6 @@
 {
   "name": "mint",
-  "timestamp": 1765382149,
+  "timestamp": 1777043298,
   "configHash": "0x5d40751398c9fdd805dd59f19d930e672a247b9c0c315d3899717973beec95ef",
   "entries": [
     {
@@ -40,18 +40,16 @@
       "name": "L1StandardBridge",
       "address": "eth:0x2b3F201543adF73160bA42E1a5b7750024F30420",
       "type": "Contract",
-      "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x4e15d99844dc5a4304c2396a66c95ec41218ea311c8e524b118fad7beed0bb53"
+        "0xc8d5e683491427e9263869a1ea42ae938fe1ea1c6a8cdccd7a86a13140b3c22d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "sinceTimestamp": 1715609063,
       "sinceBlock": 19861572,
       "values": {
         "$admin": "eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
-        "$implementation": "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A",
+        "$implementation": "eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
@@ -60,14 +58,14 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "otherBridge": "eth:0x4200000000000000000000000000000000000010",
         "paused": false,
+        "RECIPIENT": "eth:0x757952e6374619b6F8B45CD6c143A756A2fbe8f6",
         "superchainConfig": "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad",
         "version": "2.3.0"
       },
       "implementationNames": {
         "eth:0x2b3F201543adF73160bA42E1a5b7750024F30420": "L1ChugSplashProxy",
-        "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": "L1StandardBridge"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E": "EmergencyBridgeA1"
+      }
     },
     {
       "name": "SuperchainConfig",
@@ -150,8 +148,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x2b3F201543adF73160bA42E1a5b7750024F30420",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
+          "role": "admin",
           "via": [
             { "address": "eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF" }
           ]
@@ -257,13 +254,18 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0x4200000000000000000000000000000000000010",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4e31448a098393727b786e25B54E59DcA1b77FE1",
@@ -286,19 +288,16 @@
       "name": "OptimismPortal2",
       "address": "eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
       "type": "Contract",
-      "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b"
+        "0x77a056b7a1c5ddb643a0168b7b9436ee0c2d7edf89da2f7c4bf674100a9fc4b5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1715609063,
       "sinceBlock": 19861572,
       "values": {
         "$admin": "eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
-        "$implementation": "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4",
+        "$implementation": "eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776",
         "$pastUpgrades": [
           [
             "2024-05-13T14:04:47.000Z",
@@ -344,49 +343,37 @@
             "2025-12-08T17:26:23.000Z",
             "0x4946776c2d4568490d0280564f07c06afb9080b3e69af8d1db72321c6148cf55",
             ["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]
+          ],
+          [
+            "2026-04-17T05:45:47.000Z",
+            "0x21527f22e677f2737632f3090b51d2fe36d74df7461dc6ee8e49baa6218ac2e6",
+            ["eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
         "disputeGameFactory": "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b",
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 23977848
+          "prevBoughtGas": 300000,
+          "prevBlockNum": 24897909
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
-        "RespectedGameString": "PermissionedDisputeGame",
+        "RECIPIENT": "eth:0x757952e6374619b6F8B45CD6c143A756A2fbe8f6",
         "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1753370939,
+        "SAFE_MULTISIG": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b",
         "superchainConfig": "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad",
         "systemConfig": "eth:0xC975862927797812371A9Fb631f83F8f5e2240D5",
         "version": "3.14.0"
       },
-      "fieldMeta": {
-        "respectedGameType": { "severity": "HIGH" },
-        "paused": {
-          "severity": "HIGH",
-          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
-        }
-      },
       "implementationNames": {
         "eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781": "Proxy",
-        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4": "OptimismPortal2"
-      },
-      "usedTypes": [
-        {
-          "typeCaster": "Mapping",
-          "arg": {
-            "0": "FaultDisputeGame",
-            "1": "PermissionedDisputeGame",
-            "1337": "KailuaGame"
-          }
-        }
-      ],
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+        "eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776": "EmergencyPortalPatch"
+      }
     },
     {
       "name": "DelayedWETH",
@@ -441,6 +428,11 @@
         "eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a": "Proxy",
         "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e": "DelayedWETH"
       }
+    },
+    {
+      "address": "eth:0x757952e6374619b6F8B45CD6c143A756A2fbe8f6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7fa31d53Aaa649Bbf08ba2fEa0aE5B6b71cd2ccd",
@@ -612,8 +604,7 @@
         {
           "permission": "upgrade",
           "from": "eth:0x2b3F201543adF73160bA42E1a5b7750024F30420",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -932,7 +923,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 150,
+        "gameCount": 315,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7",
@@ -946,7 +937,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 150,
+        "permissionedGamesTotal": 315,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.1",
         "wethFromDGF": "UNRESOLVED"
@@ -1175,7 +1166,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634258",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634307",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1202,40 +1193,6 @@
     }
   ],
   "abis": {
-    "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": [
-      "constructor()",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event Initialized(uint8 version)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
-      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function initialize(address _messenger, address _superchainConfig)",
-      "function l2TokenBridge() view returns (address)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function paused() view returns (bool)",
-      "function superchainConfig() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": [
       "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
       "error ActiveProposal()",
@@ -1603,8 +1560,43 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4": [
-      "constructor(uint256 _proofMaturityDelaySeconds, uint256 _disputeGameFinalityDelaySeconds)",
+    "eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E": [
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function RECIPIENT() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function emergencyWithdraw(address _token)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _messenger, address _superchainConfig)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function superchainConfig() view returns (address)",
+      "function version() view returns (string)"
+    ],
+    "eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776": [
+      "constructor()",
       "error AlreadyFinalized()",
       "error BadTarget()",
       "error Blacklisted()",
@@ -1635,6 +1627,8 @@
       "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
       "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
       "event WithdrawalProvenExtension1(bytes32 indexed withdrawalHash, address indexed proofSubmitter)",
+      "function RECIPIENT() view returns (address)",
+      "function SAFE_MULTISIG() view returns (address)",
       "function blacklistDisputeGame(address _disputeGame)",
       "function checkWithdrawal(bytes32 _withdrawalHash, address _proofSubmitter) view",
       "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
@@ -1642,6 +1636,7 @@
       "function disputeGameFactory() view returns (address)",
       "function disputeGameFinalityDelaySeconds() view returns (uint256)",
       "function donateETH() payable",
+      "function emergencyWithdrawETH()",
       "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
       "function finalizeWithdrawalTransactionExternalProof(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, address _proofSubmitter)",
       "function finalizedWithdrawals(bytes32) view returns (bool)",
@@ -1877,15 +1872,13 @@
     "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23983339 },
-  "permissionsConfigHash": "0x4736611520a64f9408a48fef086b9dbb880ce2cc74f0dce8ed7d35fe57aca982"
+  "usedBlockNumbers": { "ethereum": 24950622 },
+  "permissionsConfigHash": "0x4210f098eef4ae95d9c35972050d6b5a1164493c351e987441c14178ce7701d0"
 }
