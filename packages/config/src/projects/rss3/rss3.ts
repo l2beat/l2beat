@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: ScalingProject = opStackL2({
   addedAt: UnixTime(1705391231), // 2024-01-16T07:47:11Z
+  archivedAt: UnixTime(1777021149), // 2026-04-24T08:59:09Z (last VSL block before halt)
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
     riskView: {
@@ -89,6 +90,7 @@ export const rss3: ScalingProject = opStackL2({
     name: 'rss3',
     chainId: 12553,
     explorerUrl: 'https://scan.rss3.io',
+    untilTimestamp: UnixTime(1777021149), // 2026-04-24T08:59:09Z (L2 halted)
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
