@@ -19,6 +19,7 @@ import type {
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
 
@@ -113,7 +114,8 @@ function getCommonColumns<T extends CommonRow>(
       {
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
-          if (ctx.row.original.avgDuration === null) return EM_DASH
+          if (ctx.row.original.avgDuration === null)
+            return <InteropNoDataBadge />
           return (
             <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
           )
@@ -264,7 +266,8 @@ export const getTopTokensColumns = ({
             "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => {
-          if (ctx.row.original.netMintedValue === undefined) return EM_DASH
+          if (ctx.row.original.netMintedValue === undefined)
+            return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
               {formatCurrency(ctx.row.original.netMintedValue, 'usd')}

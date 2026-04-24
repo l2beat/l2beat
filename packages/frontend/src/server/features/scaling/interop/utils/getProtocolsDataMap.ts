@@ -12,7 +12,7 @@ import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
   nonMinting?: {
-    averageValueInFlight: number
+    averageValueInFlight: number | undefined
   } & ProtocolDataByBridgeTypeCommon
   burnAndMint?: ProtocolDataByBridgeTypeCommon
   unknown?: ProtocolDataByBridgeTypeCommon
@@ -89,11 +89,15 @@ export function getProtocolsDataMapByBridgeType(
             record.transferTypeStats,
           ),
           mintedValueUsd:
-            (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
-            (record.mintedValueUsd ?? 0),
+            record.mintedValueUsd !== undefined
+              ? (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
+                record.mintedValueUsd
+              : bridgeTypeMap.lockAndMint?.mintedValueUsd,
           burnedValueUsd:
-            (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
-            (record.burnedValueUsd ?? 0),
+            record.burnedValueUsd !== undefined
+              ? (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
+                record.burnedValueUsd
+              : bridgeTypeMap.lockAndMint?.burnedValueUsd,
         }
         break
       }
@@ -101,8 +105,10 @@ export function getProtocolsDataMapByBridgeType(
         bridgeTypeMap.nonMinting = {
           ...common,
           averageValueInFlight:
-            (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
-            (record.avgValueInFlight ?? 0),
+            record.avgValueInFlight !== undefined
+              ? (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
+                record.avgValueInFlight
+              : bridgeTypeMap.nonMinting?.averageValueInFlight,
         }
         break
       }
