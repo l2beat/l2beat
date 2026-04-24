@@ -1,6 +1,6 @@
 {
   "name": "katana",
-  "timestamp": 1776863221,
+  "timestamp": 1777024331,
   "configHash": "0x806d8fc8262f28a519f8a7e4b860ccc2f7c1c9095d0f2d67132045670c079946",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -118,12 +118,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 30114858,
-        "latestOutputIndex": 6871,
+        "latestBlockNumber": 30277926,
+        "latestOutputIndex": 6911,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 30114859,
-        "nextOutputIndex": 6872,
+        "nextBlockNumber": 30277927,
+        "nextOutputIndex": 6912,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -134,11 +134,11 @@
         "rollupConfigHash": "0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "selectedOpSuccinctConfig": {
-          "aggregationVkey": "0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337",
-          "rangeVkeyCommitment": "0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330",
+          "aggregationVkey": "0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152",
+          "rangeVkeyCommitment": "0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229",
           "rollupConfigHash": "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
         },
-        "selectedOpSuccinctConfigName": "0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00",
+        "selectedOpSuccinctConfigName": "0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde",
         "startingBlockNumber": 4102088,
         "startingTimestamp": 1750844899,
         "SUBMISSION_INTERVAL": 1,
@@ -304,7 +304,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3209,
+        "nonce": 3212,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -753,7 +753,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 12181 },
+        "backingDifference": { "positive": true, "difference": 34530 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -778,13 +778,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 89860047846,
+        "stakedAssets": 77509849466,
         "symbol": "vbWBTC",
-        "totalAssets": 89860047846,
-        "totalSupply": 89860035665,
+        "totalAssets": 77509849466,
+        "totalSupply": 77509814936,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 12181,
+        "yield": 34530,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -856,7 +856,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "1062994710638201652"
+          "difference": "524112636211006470"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -882,13 +882,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "9072076317660138782364",
+        "stakedAssets": "9072632376188473746098",
         "symbol": "vbETH",
-        "totalAssets": "9072076317660138782364",
-        "totalSupply": "9071013322949500580712",
+        "totalAssets": "9072632376188473746098",
+        "totalSupply": "9072108263552262739628",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "1062994710638201652",
+        "yield": "524112636211006470",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -1343,7 +1343,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 13 (31%)",
-        "nonce": 256,
+        "nonce": 257,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1468,7 +1468,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 2107221670 },
+        "backingDifference": { "positive": true, "difference": 3012568137 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1493,13 +1493,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 16189231583587,
+        "stakedAssets": 43822490004016,
         "symbol": "vbUSDC",
-        "totalAssets": 16189231583587,
-        "totalSupply": 16187124361917,
+        "totalAssets": 43822490004016,
+        "totalSupply": 43819477435879,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 2107221670,
+        "yield": 3012568137,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1699,7 +1699,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 2797424027 },
+        "backingDifference": { "positive": true, "difference": 2350220676 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1724,13 +1724,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 25092443007141,
+        "stakedAssets": 22183402121359,
         "symbol": "vbUSDT",
-        "totalAssets": 25092443007141,
-        "totalSupply": 25089645583114,
+        "totalAssets": 22183402121359,
+        "totalSupply": 22181051900683,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 2797424027,
+        "yield": 2350220676,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1796,7 +1796,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 201,
+        "nonce": 208,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1924,7 +1924,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2598,7 +2598,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 44,
+        "nonce": 45,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4550,7 +4550,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "katana/AggchainFEP_post035": "0x87c1eb3b24e0651fdc77fa28dbc72e1a25b7122667807ef164e97af360d3b0c8",
+    "katana/AggchainFEP_post035": "0x428b3edaf13fa3a14d448eeef5e3718dd7f95d5a299666a436ce66a0def4d9d9",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -4568,6 +4568,6 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 24935662 },
+  "usedBlockNumbers": { "ethereum": 24949047 },
   "permissionsConfigHash": "0xb73172452cab31adea26f7c243f8346934e70192f9b7b6c6084153157ba05efa"
 }
