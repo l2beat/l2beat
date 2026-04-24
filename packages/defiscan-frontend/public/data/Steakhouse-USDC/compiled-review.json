@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
   "lastModified": "2026-04-15T00:00:00.000Z",
-  "compiledAt": "2026-04-23T09:01:52.000Z",
+  "compiledAt": "2026-04-24T09:08:51.000Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -18,7 +18,7 @@
     "scoredFunctionCount": 14,
     "adminCount": 6,
     "dependencyCount": 9,
-    "totalCapitalAtRisk": 167401154.1278938,
+    "totalCapitalAtRisk": 123413216.28396663,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
     "linesOfCode": 8842,
@@ -153,7 +153,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -187,7 +187,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -266,9 +266,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 167401154.1278938,
+      "totalDirectCapital": 123413216.28396663,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 167401154.1278938,
+      "totalReachableCapital": 123413216.28396663,
       "totalReachableTokenValue": 0
     },
     {
@@ -283,7 +283,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -317,7 +317,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -378,9 +378,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 167401154.1278938,
+      "totalDirectCapital": 123413216.28396663,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 167401154.1278938,
+      "totalReachableCapital": 123413216.28396663,
       "totalReachableTokenValue": 0
     },
     {
@@ -594,7 +594,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 167401154.1278938,
+    "totalFundsAtRisk": 123413216.28396663,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -755,7 +755,7 @@
               "calledFunctions": [
                 "reallocate"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -776,7 +776,7 @@
               "calledFunctions": [
                 "reallocate"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -800,7 +800,7 @@
                 "updateWithdrawQueue",
                 "config"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -821,7 +821,7 @@
               "calledFunctions": [
                 "updateWithdrawQueue"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -832,7 +832,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -841,7 +841,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -850,7 +850,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -868,7 +868,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -916,7 +916,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -945,7 +945,7 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 167401154.1278938,
+          "directFundsUsd": 123413216.28396663,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -965,14 +965,14 @@
                 "config",
                 "reallocate"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 167401154.1278938,
+      "totalFundsAtRisk": 123413216.28396663,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -1005,7 +1005,7 @@
                 "updateWithdrawQueue",
                 "config"
               ],
-              "fundsUsd": 167401154.1278938,
+              "fundsUsd": 123413216.28396663,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1021,7 +1021,7 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 167401154.1278938,
+      "totalFundsAtRisk": 123413216.28396663,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -1161,17 +1161,17 @@
   "dependencyEntityGroups": [
     {
       "entity": "Chainlink",
-      "totalFundsAtRisk": 167401154.1278938,
+      "totalFundsAtRisk": 123413216.28396663,
       "totalTokenValueAtRisk": 0
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 167401154.1278938,
+      "totalFundsAtRisk": 123413216.28396663,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 167401154.1278938,
+    "totalFundsAtRisk": 123413216.28396663,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
@@ -1180,10 +1180,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006687396173772083
+        "totalUsdValue": 0.0066792522425338135
       },
       "positions": {
-        "totalUsdValue": 167401154.1212064
+        "totalUsdValue": 123413216.27728738
       },
       "tokenInfo": null,
       "aggregate": null
@@ -1558,6 +1558,56 @@
   "resources": [],
   "audits": [],
   "activity": [
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 128,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "128:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.supplyQueue.2",
+          "before": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd"
+        },
+        {
+          "field": "values.supplyQueue.3",
+          "after": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd"
+        },
+        {
+          "field": "values.marketParams.2",
+          "before": {
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000",
+            "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+            "marketId": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+          }
+        },
+        {
+          "field": "values.marketParams.3",
+          "after": {
+            "marketId": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.marketOracles.2",
+          "before": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580"
+        },
+        {
+          "field": "values.marketOracles.3",
+          "after": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580"
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-23T09:01:52.000Z",
       "updateNotifierId": 125,

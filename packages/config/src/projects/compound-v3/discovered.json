@@ -1,6 +1,6 @@
 {
   "name": "compound-v3",
-  "timestamp": 1776934912,
+  "timestamp": 1777021731,
   "configHash": "0x7adb18c8899a16d2bca5647a972f2b6b17b002c1d72a57394e049470212434bb",
   "entries": [
     {
@@ -20,6 +20,11 @@
           "role": ".blacklister"
         }
       ]
+    },
+    {
+      "address": "eth:0x0FFf5FeC65b98c556C8baEd531d93507C132ee4f",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CometExtAssetList",
@@ -309,6 +314,41 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Safe",
+      "address": "eth:0x55bea483873291eB3ded185c9962676F107cB4D6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1776886559,
+      "sinceBlock": 24937598,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x0FFf5FeC65b98c556C8baEd531d93507C132ee4f",
+          "eth:0xC0ffeE04fFF1c6A23351b55dd3925aBcad5b670b",
+          "eth:0xBaDF00d8D9Abe9bAcB5a123FC762D1F9A6EC12E7",
+          "eth:0xA049290eaE17454b64e3728BE261AD748368f30b"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x56b66b44d4e18421eee276c6d2a281d413a226e0cfce5f22992ea9f525dbb1b0",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x55bea483873291eB3ded185c9962676F107cB4D6": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "name": "Timelock",
       "address": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "type": "Contract",
@@ -449,6 +489,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xA049290eaE17454b64e3728BE261AD748368f30b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "USD Coin Token",
       "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "type": "Contract",
@@ -496,7 +541,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54957370215795519",
+        "totalSupply": "54838299150427853",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -810,9 +855,9 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "953274561200155709992",
+        "getReserves": "954383575610797580285",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "951868680792733527",
+        "getUtilization": "951882635013918980",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": true,
@@ -827,8 +872,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 35673515981,
         "supplyPerSecondInterestRateSlopeLow": 684931506,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "53141261198431243604523",
-        "totalSupply": "55828246384698344730692",
+        "totalBorrow": "53154328786111745297354",
+        "totalSupply": "55840920967968204553230",
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -893,6 +938,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xBaDF00d8D9Abe9bAcB5a123FC762D1F9A6EC12E7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
       "type": "Contract",
@@ -909,6 +959,7 @@
         "$immutable": false,
         "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "$members": [
+          "eth:0x55bea483873291eB3ded185c9962676F107cB4D6",
           "eth:0x4A3a60ee1007A477EDFccB7182ee7F4Ef876fa25",
           "eth:0xa1bB2061FEbaF91738f104a19073C84589B92b53",
           "eth:0xd2A79F263eC55DBC7B724eCc20FC7448D4795a0C",
@@ -922,9 +973,9 @@
         "domainSeparator": "0x19db57bc900b9dfc81378e58048948ee685c92f5b7b7800213940128e3fc74db",
         "getModules": [],
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 8 (63%)",
+        "multisigThreshold": "5 of 9 (56%)",
         "NAME": "Gnosis Safe",
-        "nonce": 87,
+        "nonce": 88,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -972,11 +1023,16 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1812570869588086124175574"
+        "totalSupply": "1820915011398079125772002"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
       }
+    },
+    {
+      "address": "eth:0xC0ffeE04fFF1c6A23351b55dd3925aBcad5b670b",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "cUSDCv3",
@@ -1309,9 +1365,9 @@
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 13957907592267,
+        "getReserves": 13956373696502,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "680758297364903642",
+        "getUtilization": "680555268274855309",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1326,8 +1382,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 266139289764095,
-        "totalSupply": 390944808511314,
+        "totalBorrow": 266119033477182,
+        "totalSupply": 391032170876748,
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -1369,8 +1425,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1776934895,
-          "updatedAt": 1776934895,
+          "startedAt": 1777021715,
+          "updatedAt": 1777021715,
           "answeredInRound": 1
         },
         "version": 1
@@ -1578,6 +1634,54 @@
     "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E": [
       "event AssetListCreated(address indexed assetList, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
       "function createAssetList(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) returns (address assetList)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E": [
       "constructor(tuple(address governor, address pauseGuardian, address baseToken, address baseTokenPriceFeed, address extensionDelegate, uint64 supplyKink, uint64 supplyPerYearInterestRateSlopeLow, uint64 supplyPerYearInterestRateSlopeHigh, uint64 supplyPerYearInterestRateBase, uint64 borrowKink, uint64 borrowPerYearInterestRateSlopeLow, uint64 borrowPerYearInterestRateSlopeHigh, uint64 borrowPerYearInterestRateBase, uint64 storeFrontPriceFactor, uint64 trackingIndexScale, uint64 baseTrackingSupplySpeed, uint64 baseTrackingBorrowSpeed, uint104 baseMinForRewards, uint104 baseBorrowMin, uint104 targetReserves, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) config)",
@@ -1877,6 +1981,9 @@
       "function votingPeriod() view returns (uint256)",
       "function whitelistAccountExpirations(address account) view returns (uint256 timestamp)",
       "function whitelistGuardian() view returns (address)"
+    ],
+    "eth:0x55bea483873291eB3ded185c9962676F107cB4D6": [
+      "constructor(address _singleton)"
     ],
     "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": [
       "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",
@@ -2281,6 +2388,6 @@
     "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb"
   },
-  "usedBlockNumbers": { "ethereum": 24941615 },
-  "permissionsConfigHash": "0x51a19a14b5f3e5515041c3bdfcb96e5c115f4be56119d8c36d9befd0ec0c3a3c"
+  "usedBlockNumbers": { "ethereum": 24948829 },
+  "permissionsConfigHash": "0xb6daab5971ce79c99b34f3a5cad6f8ff5bd1827c7697e1a5075a884ccbfe6acf"
 }

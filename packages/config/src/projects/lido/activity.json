@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776935385,
-  "lastConsumedUpdateNotifierId": 124,
+  "lastReconciledAt": 1777021964,
+  "lastConsumedUpdateNotifierId": 127,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1705,6 +1705,67 @@
           "field": "values.getRageQuitSupport",
           "before": 1210016,
           "after": 1209906
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 127,
+      "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+      "contractName": "Escrow",
+      "entity": null,
+      "id": "127:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getRageQuitSupport",
+          "before": 1209906,
+          "after": 1211266
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 127,
+      "address": "eth:0x8E0a538081BA1d7f41b7c594F0a2Afe7aE558494",
+      "entity": null,
+      "id": "127:eth:0x8E0a538081BA1d7f41b7c594F0a2Afe7aE558494:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "proxyType",
+          "before": "EOA",
+          "after": "EIP7702 EOA"
+        },
+        {
+          "field": "sourceHashes",
+          "after": [
+            "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+          ]
+        },
+        {
+          "field": "values",
+          "after": {
+            "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+            "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+            "DOMAIN_VERSION": "1",
+            "eip712Domain": {
+              "fields": "0x0f",
+              "name": "EIP7702StatelessDeleGator",
+              "version": "1",
+              "chainId": 1,
+              "verifyingContract": "eth:0x8E0a538081BA1d7f41b7c594F0a2Afe7aE558494",
+              "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "extensions": []
+            },
+            "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "getDeposit": 0,
+            "getDomainHash": "0x6bab099d881cc6491c0e4896918d8d337c3100b686f3dcca98460d3036b86d37",
+            "getNonce": 0,
+            "NAME": "EIP7702StatelessDeleGator",
+            "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+            "VERSION": "1.3.0"
+          }
         }
       ]
     }

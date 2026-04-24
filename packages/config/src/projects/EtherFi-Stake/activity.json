@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776874310,
-  "lastConsumedUpdateNotifierId": 120,
+  "lastReconciledAt": 1777022046,
+  "lastConsumedUpdateNotifierId": 129,
   "events": [
     {
       "timestamp": "2026-03-26T08:10:03.000Z",
@@ -1653,6 +1653,22 @@
       "entity": null,
       "id": "120:eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 129,
+      "address": "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
+      "contractName": "DVN",
+      "entity": null,
+      "id": "129:eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.signerSize",
+          "before": 5,
+          "after": 1
+        }
+      ]
     }
   ]
 }

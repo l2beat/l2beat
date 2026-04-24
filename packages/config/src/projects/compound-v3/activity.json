@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776935009,
-  "lastConsumedUpdateNotifierId": 123,
+  "lastReconciledAt": 1777021877,
+  "lastConsumedUpdateNotifierId": 126,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2203,6 +2203,49 @@
           "after": true
         }
       ]
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 126,
+      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+      "contractName": "GnosisSafe",
+      "isDependency": false,
+      "entity": null,
+      "id": "126:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.multisigThreshold",
+          "before": "5 of 8 (63%)",
+          "after": "5 of 9 (56%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 126,
+      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+      "contractName": "GnosisSafe",
+      "isDependency": false,
+      "entity": null,
+      "id": "126:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.0",
+          "after": "eth:0x55bea483873291eB3ded185c9962676F107cB4D6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-24T09:08:51.000Z",
+      "updateNotifierId": 126,
+      "address": "eth:0x55bea483873291eB3ded185c9962676F107cB4D6",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "126:eth:0x55bea483873291eB3ded185c9962676F107cB4D6:contract-added",
+      "type": "contract-added"
     }
   ]
 }
