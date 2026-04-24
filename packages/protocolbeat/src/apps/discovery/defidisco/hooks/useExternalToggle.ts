@@ -349,12 +349,16 @@ export function useExternalToggle(
 
     const currentDependencies = currentFunc?.dependencies || []
 
-    // Check for duplicates and add new dependencies
+    // Check for duplicates and add new dependencies.
+    // Path-form deps are left alone — they don't pin a single address, so the
+    // external-contract dedup check can't meaningfully compare them.
     const newDependencies = externalContracts
       .filter(
         (ext) =>
-          !currentDependencies.some((dep) =>
-            addressesEqual(dep.contractAddress, ext.address),
+          !currentDependencies.some(
+            (dep) =>
+              'contractAddress' in dep &&
+              addressesEqual(dep.contractAddress, ext.address),
           ),
       )
       .map((ext) => ({ contractAddress: ext.address }))
@@ -383,9 +387,12 @@ export function useExternalToggle(
       return // No dependencies to remove
     }
 
-    // Remove specified external contracts from dependencies
+    // Remove specified external contracts from dependencies.
+    // Path-form deps are preserved — they're not addressable by a single
+    // address, so the external-contract removal doesn't apply to them.
     const newDependencies = currentFunc.dependencies.filter(
       (dep) =>
+        !('contractAddress' in dep) ||
         !externalContracts.some((ext) =>
           addressesEqual(dep.contractAddress, ext.address),
         ),

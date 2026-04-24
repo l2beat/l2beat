@@ -86,6 +86,8 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 **Data Pipeline**: See `docs/developers/architecture.md` § "Data Pipeline: From Discovery to Frontend" for the end-to-end transformation chain (5 stages) covering how admins, dependencies, and funds flow from source data through scoring, compilation, and into the frontend.
 
+**Forward BFS through deps and upgrades**: manual `dependencies` in `functions.json` and upgrade functions are non-leaf — forward BFS continues through them for auto-detected dep surfaces, capital reachability, and transitive mitigation collection. `edgeType: 'dependency'` edges emitted by `buildEnhancedGraph` (excluded from backward ownership-chain traversal). Full semantics, seeding rules, and perf notes in `docs/developers/features/permissions.md` § "Manual dependency transitive reachability" and "Mitigations".
+
 ### Permissions — `docs/developers/features/permissions.md`
 - AI-Based Permission Detection (GPT-4 / Claude, endpoint + prompt engineering)
 - Interactive Permission Management (ValuesPanelExtensions, 4 attributes, delay field)
@@ -109,6 +111,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - ProjectAnalysis API (`/admins`, `/dependencies` endpoints — single source of truth for admin/dependency computation)
 - Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
 - Upgrade Function Capital (`isUpgrade` flag in data pipeline, UPGRADE badges in UI — upgrade functions seed BFS with all contract functions for full capital exposure)
+- Shared-Implementation Fan-Out (factory-deployed proxy patterns — Aave ATokens, debt tokens, etc. — treated as templates: one impl-keyed entry in `functions.json` fans out to N admin/dependency rows at read time, one per proxy, with `$self` rebinding per proxy and funds/permissions resolved against each proxy. Handled via `buildImplToProxiesMap`/`buildProxyToImplsMap` in `addressUtils.ts`, threaded through `getAdmins` / `getDependencies` / `buildEnhancedGraph` / `buildFunctionsMetadataLookup` / `CapitalAnalysisCalculator`. Storage stays impl-keyed — researcher writes once. Full design + verification in `docs/developers/designs/shared-impl-fan-out.md`.)
 - Review Builder (`review-config.json`, entity descriptions, templates)
 - Resources (`resources.json` — wrapper object `{ resources, audits, linesOfCode? }` per project, auto-saves independently)
 - Audits (`audits` array in `resources.json` — `AuditEntry[]` with `url`, `author`, `date`, `scope?`, `bounty?`; `bounty` = max bug bounty USD amount; separate from `ResourceEntry[]`)
@@ -120,7 +123,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint, `adminTotals`/`dependencyTotals` for cross-entity deduplicated capital. `totals.coverage` / `totals.verifiedContractCount` are computed by `computeCoverage(discovery)` from `discovered.json.entries[].unverified` — non-EOA entries are verified when `unverified !== true`)
 - Impact Cap (`impactCap` on mitigations — structured field reference or hardcoded USD, `ImpactCapUnit` scaling, `effectiveCapUsd` on reachable contracts, "$X Max Impact" badge display. `traverseForward` folds both source path cap and target-function cap into each edge; view-call edges contribute 0 so reads never uncap a capped target. `analyzeAdminCapital` applies the same max-per-contract cap to `directContracts` so direct totals respect per-function caps.)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
-- Radar Scoring (`deriveRadarData()` in `packages/defiscan-frontend/src/utils/radar.ts` — 5-axis 0-100 scores driving the Report hero and Gallery radar charts; full per-axis tiers in the scoring-and-review doc)
+- Radar Scoring (`deriveRadarData()` in `packages/defiscan-frontend/src/utils/radar.ts` — 5-axis scores for CONTROL / DEPENDENCIES / ACCESS / VERIFIABILITY / GOVERNANCE driving the Report hero, Gallery radar charts, and Landing Trust Posture; full per-axis tiers in the scoring-and-review doc)
 
 ### Infrastructure — `docs/developers/features/infrastructure.md`
 - DeFiScan Panel (contract analysis dashboard)
@@ -192,6 +195,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Fields are stored on the **proxy contract**, not implementations
 - Use `findContractForAddress()` helper in `FunctionFolder.tsx` - automatically resolves implementation addresses to their parent proxy
 - Backend converts all `contract.values` to `contract.fields[]` array, so always use fields (no need for values fallback)
+- **Shared-impl fan-out**: when a single implementation is used by N proxies (factory-deployed token patterns like Aave ATokens — 18 proxies sharing one impl), function metadata stored at the impl address is treated as a **template** and fanned out to N virtual rows at analysis time — one per proxy, with `$self` rebinding to each specific proxy. This is read-time expansion only: storage stays impl-keyed, researcher edits remain in one place. The fan-out happens in `buildImplToProxiesMap` / `buildProxyToImplsMap` (`addressUtils.ts`) and is threaded through `getAdmins`, `getDependencies`, `buildEnhancedGraph` (permission edges), `buildFunctionsMetadataLookup`, `buildMitigationsLookup`, `buildResolvedImpactCaps`, and `CapitalAnalysisCalculator`. Because of this, **`$self.FIELD` paths on impl-stored metadata correctly rebind per proxy** — use them for AccessControl roles, per-proxy admin fields, etc. Full design in `docs/developers/designs/shared-impl-fan-out.md`.
 
 ### Data Access Patterns
 

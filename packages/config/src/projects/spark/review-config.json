@@ -1,0 +1,380 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-23T16:30:00.000Z",
+  "protocolSlug": "spark",
+  "protocolName": "Spark",
+  "tokenName": "SPK",
+  "chain": "Ethereum",
+  "projectType": "lending",
+  "description": "Spark is a lending protocol built on an Aave V3 fork (SparkLend) with an integrated savings layer that routes deposits through the Sky (formerly MakerDAO) DAI Savings Rate (DSR) via the Pot contract. Governance decisions execute through the Sky governance stack — DSPause enforces a 24-hour delay before DSPauseProxy forwards calls to SubProxy, which holds admin rights on every SparkLend contract. An Asset Liability Management (ALM) layer controlled by three separate multisigs lets the protocol rebalance capital via arbitrary external calls. Price data comes from a mix of Chainlink, Chronicle, RedStone, and protocol-specific exchange-rate oracles for liquid staking and restaking tokens. The protocol currently secures {{totalCapitalAtRisk}} across SparkLend markets and the savings module.",
+  "admins": {
+    "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB": {
+      "name": "DSPauseProxy (Sky Governance Executor)",
+      "description": "The execution endpoint of the Sky governance stack. DSPause plots a governance spell here after the 24-hour delay, and DSPauseProxy then delegatecalls it — effectively routing every governance action against Spark contracts. It is the root admin of SubProxy, SDAO, ESM, and StarGuard. Because every upgrade and parameter change in SparkLend ultimately resolves to this contract, it controls {{dsPauseProxyReachableCapital}} in reachable capital and the {{spkTokenValue}} SPK token supply."
+    },
+    "eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4": {
+      "name": "SubProxy (Sky Governance Relay)",
+      "description": "Owned by DSPauseProxy and registered as the admin, owner, or `PoolAdmin`/`EmergencyAdmin` role-holder on virtually every Spark contract. Through its 116 permissioned entry points it can add/drop reserves, change interest rate strategies, upgrade ATokens via PoolConfigurator, change the price oracle, reassign access-control roles, and move treasury funds in Collector. Controls {{subProxyDirectCapital}} in directly held contracts and {{subProxyReachableCapital}} in reachable capital — essentially the full protocol."
+    },
+    "eth:0xbE286431454714F511008713973d3B053A2d38f3": {
+      "name": "DSPause (Sky Governance Timelock)",
+      "description": "Immutable contract enforcing a hardcoded 86,400-second (24-hour) delay on every governance action before it can execute. Spells are plotted by the DSPause owner (the Sky/MKR voting Chief), wait 24 hours, and are then fired through DSPauseProxy. The delay itself can be changed only by executing a spell through DSPause."
+    },
+    "eth:0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9": {
+      "name": "Sky Governance Chief (DSPause Owner)",
+      "description": "The on-chain voting contract that owns DSPause and is authorised to plot and drop governance spells. Control is held by MKR/SKY token voters through the Sky governance system; any address with sufficient delegated votes can propose actions, which then execute after the 24-hour DSPause delay. From Spark's perspective this is the ultimate source of governance authority."
+    },
+    "eth:0x44efFc473e81632B12486866AA1678edbb7BEeC3": {
+      "name": "SparkLend Freezer 3/5 Multisig",
+      "description": "A 3-of-5 GnosisSafe that owns SparkLendFreezerMom and can instantly freeze or pause any SparkLend market without waiting for the 24-hour governance delay. Through SparkLendFreezerMom it calls `setReserveFreeze`, `setReservePause`, `freezeAllMarkets`, and `pauseAllMarkets`, blocking new borrows/supplies on all 22 reachable contracts (covering {{freezerMultisigReachableCapital}} in reachable capital). It cannot drain funds, only halt market activity."
+    },
+    "eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27": {
+      "name": "Emission Admin 2/3 Multisig",
+      "description": "A 2-of-3 GnosisSafe registered as the emission admin on the EmissionManager. It configures reward distribution parameters — `configureAssets`, `setTransferStrategy`, `setRewardOracle`, `setDistributionEnd`, `setEmissionPerSecond` — affecting a limited reward-distribution scope ({{emissionMultisigReachableCapital}} in reachable capital). Cannot affect collateral or debt markets."
+    },
+    "eth:0x8a25A24EDE9482C4Fc0738F99611BE58F1c839AB": {
+      "name": "ALM Controller 1/2 Multisig",
+      "description": "A 1-of-2 Safe registered as a controller on ALMProxyFreezable, giving it `doCall`, `doCallWithValue`, and `doDelegateCall` — the ability to execute arbitrary calls and delegatecalls from the ALM proxy. The ALM proxy is a controller on 23 downstream contracts reaching {{almController12ReachableCapital}} in capital; the 1-of-2 threshold means a single signer can trigger these calls."
+    },
+    "eth:0x8Cc0Cb0cfB6B7e548cfd395B833c05C346534795": {
+      "name": "ALM Controller 2/5 Multisig",
+      "description": "A 2-of-5 Safe registered as a second controller on ALMProxyFreezable with the same arbitrary-call powers as the 1/2 Safe — `doCall`, `doCallWithValue`, `doDelegateCall` — reaching {{almController25ReachableCapital}} in downstream capital. Two signers out of five are sufficient."
+    },
+    "eth:0x90D8c80C028B4C09C0d8dcAab9bbB057F0513431": {
+      "name": "ALM Controller Manager 1/4 Multisig",
+      "description": "A 1-of-4 Safe that can call `removeController` on ALMProxyFreezable, removing the other ALM multisigs from the controller set. A single signer is sufficient to execute this action, affecting {{almManagerReachableCapital}} in reachable capital."
+    },
+    "eth:0x237e3985dD7E373F2ec878EC1Ac48A228Cf2e7a3": {
+      "name": "SparkLendFreezerMom (Emergency Freeze Contract)",
+      "description": "An immutable protocol contract owned by the 3/5 Emergency Freezer multisig. It is registered as `EmergencyAdmin` and `RiskAdmin` on the ACLManager, letting it bypass standard governance delays to freeze or pause SparkLend markets. It is a relay — the real authority is the owner multisig."
+    },
+    "eth:0x909A86f78e1cdEd68F9c2Fe2c9CD922c401abe82": {
+      "name": "KillSwitchOracle (Oracle Watchdog)",
+      "description": "An immutable contract owned by SubProxy (Sky governance) that is registered as `RiskAdmin` on ACLManager. It can trigger market freezes when a monitored oracle feed deviates beyond a configured threshold. Limited to market-freeze operations; cannot move funds."
+    },
+    "eth:0x4C1341636721b8B687647920B2E9481f3AB1F2eE": {
+      "name": "CapAutomator (Dynamic Caps)",
+      "description": "An immutable, permissionless contract registered as `RiskAdmin` on ACLManager. It lets anyone push pre-configured supply/borrow cap adjustments for listed reserves, within bounds set by governance. The per-reserve configuration itself is set by SubProxy."
+    },
+    "eth:0x02C3eA4e34C0cBd694D2adFa2c690EECbC1793eE": {
+      "name": "PoolAddressesProvider (SparkLend Upgrader)",
+      "description": "Immutable registry contract owned by SubProxy. It is the direct admin of the Pool and PoolConfigurator EIP-1967 proxies — calling `setPoolImpl`/`setPoolConfiguratorImpl` triggers the proxy upgrade. Effective authority therefore sits with Sky governance through SubProxy."
+    },
+    "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738": {
+      "name": "PoolConfigurator (AToken Upgrader)",
+      "description": "The upgradeable SparkLend configurator contract, itself administered by SubProxy. Internally it is registered as the admin on all 18 AToken proxies, meaning it can upgrade the AToken implementation backing any reserve — giving it direct control of {{poolConfiguratorDirectCapital}} in AToken capital. A protocol-internal access-control relay, not a human-controlled admin."
+    },
+    "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987": {
+      "name": "Pool (AToken Mint/Burn)",
+      "description": "The upgradeable SparkLend Pool contract. Its implementation is set by PoolAddressesProvider, so it is governed by SubProxy via upgrade. Internally it is the only contract allowed to `mint`/`burn`/`transferUnderlyingTo` on ATokens — the standard Aave V3 architecture. Direct capital: {{poolDirectCapital}}."
+    },
+    "eth:0x9Ad87668d49ab69EEa0AF091de970EF52b0D5178": {
+      "name": "ALMProxyFreezable",
+      "description": "The ALM execution proxy. It can call CapAutomator's `execSupply`/`execBorrow`/`exec` entry points, and serves as the contract through which the three ALM multisigs execute arbitrary calls. Protocol-internal — the real authority belongs to its controller multisigs."
+    },
+    "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58": {
+      "name": "ESM (Emergency Shutdown Module)",
+      "description": "Sky's Emergency Shutdown Module. When enough MKR/SKY is burned into the ESM to cross a configured threshold, it can call `exec` on SubProxy to trigger Sky governance. In Spark's permission graph it appears as an admin of SubProxy, but it is only activated during a system-wide Sky emergency shutdown."
+    },
+    "eth:0x6605aa120fe8b656482903E7757BaBF56947E45E": {
+      "name": "StarGuard (Sky Authority Registry)",
+      "description": "Sky's authority contract registered as admin of SubProxy via the `can` access-control pattern. It whitelists which addresses may call which functions on SubProxy, and is itself administered by DSPauseProxy."
+    }
+  },
+  "dependencies": {
+    "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7": {
+      "name": "Sky Pot (DSR)",
+      "description": "The Sky (MakerDAO) Dai Savings Rate contract. Spark reads `chi` to accrue savings yield inside its Savings module; any change to the DSR parameters propagates directly into Spark user balances. Controlled by Sky governance (separate from Spark governance, though both share DSPauseProxy)."
+    },
+    "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39": {
+      "name": "WSTETHExchangeRateOracle",
+      "description": "Exchange-rate oracle used to price the wstETH reserve in SparkLend — the largest single collateral position ({{wstethATokenBalance}}). Combines the on-chain stETH/wstETH exchange rate with an external ETH/USD feed."
+    },
+    "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777": {
+      "name": "FixedPriceOracle",
+      "description": "A static-price oracle used for stablecoin reserves (USDC, USDT, DAI, USDS, PYUSD) priced at $1. Any depeg of a stablecoin is not reflected in SparkLend's prices, which is a known stablecoin-oracle trade-off also present in Aave V3."
+    },
+    "eth:0xBE21C54Dff3b2F1708970d185aa5b0eEB70556f1": {
+      "name": "WEETHExchangeRateOracle",
+      "description": "Exchange-rate oracle pricing the weETH collateral reserve using the on-chain eETH/weETH rate plus an external ETH/USD feed."
+    },
+    "eth:0x230E0321Cf38F09e247e50Afc7801EA2351fe56F": {
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "description": "A Chainlink-based price adapter used for pegged-to-base asset pricing in SparkLend. Reads from the underlying Chainlink aggregator proxies."
+    },
+    "eth:0x5c29868C58b6e15e2b962943278969Ab6a7D3212": {
+      "name": "Chainlink ETH/USD Aggregator Proxy",
+      "description": "The Chainlink aggregator proxy providing the ETH/USD price feed used by several Spark exchange-rate oracles (wstETH, weETH, rsETH, ezETH). Operated by Chainlink and outside of Spark's control."
+    },
+    "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6": {
+      "name": "Chronicle Aggor ETH/USD",
+      "description": "Chronicle's aggregated ETH/USD oracle used alongside Chainlink for redundancy. Operated by the Chronicle Labs feed network."
+    },
+    "eth:0x27f3A665c75aFdf43CfbF6B3A859B698f46ef656": {
+      "name": "SavingsDaiOracle (sDAI)",
+      "description": "Oracle pricing the sDAI reserve based on the live Pot DSR rate."
+    },
+    "eth:0x0c0864837C7e65458aCD3C665222203217019436": {
+      "name": "SavingsDaiOracle (sUSDS)",
+      "description": "Oracle pricing the sUSDS reserve based on the Sky USDS Savings Rate."
+    },
+    "eth:0x4A7Ad931cb40b564A1C453545059131B126BC828": {
+      "name": "Fig (Chronicle Oracle Wrapper)",
+      "description": "Chronicle-family oracle wrapper used by SparkLend for additional price feeds."
+    },
+    "eth:0x70942D6b580741CF50A7906f4100063EE037b8eb": {
+      "name": "RSETHExchangeRateOracle",
+      "description": "Oracle pricing the rsETH (Kelp) collateral reserve using the on-chain ETH/rsETH rate plus an external ETH/USD feed."
+    },
+    "eth:0xFDdf8D19D092839A26b31365c927cA236B5086cf": {
+      "name": "RETHExchangeRateOracle",
+      "description": "Oracle pricing the rETH (Rocket Pool) collateral reserve using Rocket Pool's ETH/rETH rate plus an external ETH/USD feed."
+    },
+    "eth:0x4219aA1A99f3fe90C2ACB97fCbc1204f6485B537": {
+      "name": "Chronicle Aggor BTC/USD",
+      "description": "Chronicle's aggregated BTC/USD oracle used for the WBTC, cbBTC, tBTC, and LBTC reserves."
+    },
+    "eth:0x52E85eB49e07dF74c8A9466D2164b4C4cA60014A": {
+      "name": "EZETHExchangeRateOracle",
+      "description": "Oracle pricing the ezETH (Renzo) collateral reserve using the on-chain ETH/ezETH rate plus an external ETH/USD feed."
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "name": "USDC (Circle)",
+      "description": "Circle's USDC stablecoin, listed as a SparkLend reserve. Admin-upgradeable and pausable by Circle; any Circle action (blacklisting, freezing) propagates into Spark."
+    },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      "name": "USDT (Tether)",
+      "description": "Tether's USDT stablecoin, listed as a SparkLend reserve. Admin-controlled by Tether Limited."
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "name": "WETH",
+      "description": "Canonical wrapped ETH used as a SparkLend reserve. Immutable."
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "name": "DAI (Sky)",
+      "description": "Sky's DAI stablecoin, the largest debt-side asset on SparkLend. Immutable at the token level; issuance controlled by Sky governance through upstream collateral modules."
+    },
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      "name": "WBTC (BitGo)",
+      "description": "Wrapped Bitcoin used as a SparkLend collateral reserve. Minting is controlled off-chain by the WBTC DAO / BitGo."
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "name": "rETH (Rocket Pool)",
+      "description": "Rocket Pool's liquid staking token used as a SparkLend collateral reserve. Its exchange rate is driven by Rocket Pool's consensus layer."
+    },
+    "eth:0x6810e776880C02933D47DB1b9fc05908e5386b96": {
+      "name": "GNO (Gnosis)",
+      "description": "Gnosis token, listed as a SparkLend reserve. Immutable."
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "name": "wstETH (Lido)",
+      "description": "Lido's wrapped staked ETH — the single largest collateral asset on SparkLend ({{wstethTokenMarketCap}} protocol-wide market cap). Price is driven by Lido's consensus layer and the stETH/wstETH exchange rate."
+    },
+    "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": {
+      "name": "cbBTC (Coinbase)",
+      "description": "Coinbase-issued wrapped BTC used as a SparkLend collateral reserve. Upgradeable and pausable by Coinbase."
+    },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+      "name": "USDS (Sky)",
+      "description": "Sky's USDS stablecoin — the rebrand of DAI. Upgradeable EIP-1967 proxy controlled by Sky governance."
+    },
+    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": {
+      "name": "sUSDS (Sky Savings USDS)",
+      "description": "Sky's yield-bearing USDS token, used both as a SparkLend reserve and as the destination for Spark savings deposits. Upgradeable by Sky governance."
+    },
+    "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA": {
+      "name": "sDAI (Savings DAI)",
+      "description": "Sky's yield-bearing DAI wrapper. Immutable at the token level; yield rate is controlled by the Pot contract."
+    },
+    "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+      "name": "PYUSD (PayPal USD)",
+      "description": "PayPal's stablecoin listed as a SparkLend reserve. Admin-upgradeable and pausable by PayPal / Paxos."
+    },
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      "name": "rsETH (Kelp)",
+      "description": "Kelp's liquid restaking token, used as a SparkLend collateral reserve. Upgradeable proxy controlled by Kelp."
+    },
+    "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
+      "name": "ezETH (Renzo)",
+      "description": "Renzo's liquid restaking token, used as a SparkLend collateral reserve. Upgradeable proxy controlled by Renzo."
+    },
+    "eth:0x8236a87084f8B84306f72007F36F2618A5634494": {
+      "name": "LBTC (Lombard)",
+      "description": "Lombard's liquid-staked BTC, used as a SparkLend collateral reserve. Upgradeable proxy controlled by Lombard."
+    },
+    "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": {
+      "name": "tBTC (Threshold)",
+      "description": "Threshold Network's tBTC v2 used as a SparkLend collateral reserve. Immutable at the token level; minting controlled by the Threshold bridge."
+    },
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
+      "name": "weETH (Ether.fi)",
+      "description": "Ether.fi's wrapped eETH restaking token, used as a SparkLend collateral reserve. Upgradeable proxy controlled by Ether.fi."
+    },
+    "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": {
+      "name": "Chainlink BTC/USD Aggregator Proxy",
+      "description": "The Chainlink BTC/USD aggregator proxy used by SparkLend's BTC-family oracles. Operated by Chainlink."
+    },
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+      "name": "Chainlink ETH/USD Aggregator Proxy (secondary)",
+      "description": "Secondary Chainlink ETH/USD aggregator proxy consumed by Spark's price adapters."
+    },
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
+      "name": "Chainlink DAI/USD Aggregator Proxy",
+      "description": "Chainlink's DAI/USD price feed aggregator proxy."
+    },
+    "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": {
+      "name": "Chainlink wstETH/ETH Aggregator Proxy",
+      "description": "Chainlink's wstETH/ETH exchange-rate feed used by Spark's wstETH pricing path."
+    },
+    "eth:0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E": {
+      "name": "Chronicle ETH/USD Median",
+      "description": "Chronicle's third-generation ETH/USD median oracle, consumed by Aggor aggregation."
+    },
+    "eth:0x24C392CDbF32Cf911B258981a66d5541d85269ce": {
+      "name": "Chronicle BTC/USD Median",
+      "description": "Chronicle's third-generation BTC/USD median oracle, consumed by Aggor aggregation."
+    },
+    "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4": {
+      "name": "RedStone ETH Price Feed (Without Rounds)",
+      "description": "RedStone's ETH price feed used in Spark's oracle stack."
+    },
+    "eth:0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc": {
+      "name": "RedStone BTC Price Feed (Without Rounds)",
+      "description": "RedStone's BTC price feed used in Spark's oracle stack."
+    },
+    "eth:0x31BFA908637C29707e155Cfac3a50C9823bF8723": {
+      "name": "MedianGNOUSD (Sky)",
+      "description": "Sky-operated median GNO/USD oracle, used for the GNO SparkLend reserve."
+    }
+  },
+  "funds": {
+    "eth:0xc20059e0317DE91738d13af027DfC4a50781b066": {
+      "name": "SDAO — SPK Protocol Token",
+      "description": "The SPK governance token. Current market cap: {{spkTokenValue}}. Minting is controlled by DSPauseProxy via the `mint` entrypoint."
+    },
+    "eth:0x12B54025C112Aa61fAce2CDB7118740875A566E9": {
+      "name": "spwstETH AToken",
+      "description": "SparkLend's wstETH AToken — holds {{wstethATokenBalance}} of deposited wstETH collateral, the single largest position in the protocol. Upgradeable by PoolConfigurator (itself governed by SubProxy)."
+    },
+    "eth:0xa9d4EcEBd48C282a70CfD3c469d6C8F178a5738E": {
+      "name": "spLBTC AToken",
+      "description": "SparkLend's LBTC AToken — holds {{lbtcATokenBalance}} of deposited Lombard Staked Bitcoin. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x4197ba364AE6698015AE5c1468f54087602715b2": {
+      "name": "spWBTC AToken",
+      "description": "SparkLend's WBTC AToken — holds {{wbtcATokenBalance}} of deposited WBTC. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x3CFd5C0D4acAA8Faee335842e4f31159fc76B008": {
+      "name": "spweETH AToken",
+      "description": "SparkLend's weETH AToken — holds {{weethATokenBalance}} of deposited Ether.fi wrapped eETH. Upgradeable by PoolConfigurator."
+    },
+    "eth:0xb3973D459df38ae57797811F2A1fd061DA1BC123": {
+      "name": "spcbBTC AToken",
+      "description": "SparkLend's cbBTC AToken — holds {{cbbtcATokenBalance}} of deposited Coinbase Wrapped BTC. Upgradeable by PoolConfigurator."
+    },
+    "eth:0xe7dF13b8e3d6740fe17CBE928C7334243d86c92f": {
+      "name": "spDAI AToken (Collector)",
+      "description": "SparkLend AToken holding {{daiCollectorBalance}} of DAI reserves routed to the protocol treasury. Upgradeable by PoolConfigurator."
+    },
+    "eth:0xC02aB1A5eaA8d1B114EF786D9bde108cD4364359": {
+      "name": "spUSDS AToken",
+      "description": "SparkLend's USDS AToken — holds {{usdsATokenBalance}} of deposited Sky USDS. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x779224df1c756b4EDD899854F32a53E8c2B2ce5d": {
+      "name": "spPYUSD AToken",
+      "description": "SparkLend's PYUSD AToken — holds {{pyusdATokenBalance}} of deposited PayPal USD. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x4DEDf26112B3Ec8eC46e7E31EA5e123490B05B8B": {
+      "name": "spUSDC AToken",
+      "description": "SparkLend's USDC AToken — holds {{usdcATokenBalance}} of deposited USDC. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x59cD1C87501baa753d0B5B5Ab5D8416A45cD71DB": {
+      "name": "spUSDT AToken",
+      "description": "SparkLend's USDT AToken — holds {{usdtATokenBalance}} of deposited Tether USDT. Upgradeable by PoolConfigurator."
+    },
+    "eth:0xB131cD463d83782d4DE33e00e35EF034F0869bA1": {
+      "name": "spezETH AToken",
+      "description": "SparkLend's ezETH AToken — holds {{ezethATokenBalance}} of deposited Renzo restaking token. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x9985dF20D7e9103ECBCeb16a84956434B6f06ae8": {
+      "name": "sprETH AToken",
+      "description": "SparkLend's rETH AToken — holds {{rethATokenBalance}} of deposited Rocket Pool ETH. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x6715bc100A183cc65502F05845b589c1919ca3d3": {
+      "name": "spsUSDS AToken",
+      "description": "SparkLend's sUSDS AToken — holds {{susdsATokenBalance}} of deposited Savings USDS. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x377C3bd93f2a2984E1E7bE6A5C22c525eD4A4815": {
+      "name": "spWETH AToken",
+      "description": "SparkLend's WETH AToken — holds {{wethATokenBalance}} of miscellaneous tokens swept into this reserve. Upgradeable by PoolConfigurator."
+    },
+    "eth:0xce6Ca9cDce00a2b0c0d1dAC93894f4Bd2c960567": {
+      "name": "sptBTC AToken",
+      "description": "SparkLend's tBTC AToken — holds {{tbtcATokenBalance}} of deposited Threshold tBTC. Upgradeable by PoolConfigurator."
+    },
+    "eth:0x856f1Ea78361140834FDCd0dB0b08079e4A45062": {
+      "name": "sprsETH AToken",
+      "description": "SparkLend's rsETH AToken — holds {{rsethATokenBalance}} of deposited Kelp restaking token. Upgradeable by PoolConfigurator."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+              ],
+              "filters": { "excludeExternal": true }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            { "type": "text", "content": "" }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "totalCapitalAtRisk": "v2score.inventory.admins.totalCapitalAtRisk",
+    "spkTokenValue": "fundsdata.contracts[\"eth:0xc20059e0317DE91738d13af027DfC4a50781b066\"].tokenInfo.tokenValue",
+    "wstethTokenMarketCap": "fundsdata.contracts[\"eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0\"].tokenInfo.tokenValue",
+    "dsPauseProxyReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB\"].totalReachableCapital",
+    "subProxyDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4\"].totalDirectCapital",
+    "subProxyReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4\"].totalReachableCapital",
+    "freezerMultisigReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x44efFc473e81632B12486866AA1678edbb7BEeC3\"].totalReachableCapital",
+    "emissionMultisigReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27\"].totalReachableCapital",
+    "almController12ReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x8a25A24EDE9482C4Fc0738F99611BE58F1c839AB\"].totalReachableCapital",
+    "almController25ReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x8Cc0Cb0cfB6B7e548cfd395B833c05C346534795\"].totalReachableCapital",
+    "almManagerReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x90D8c80C028B4C09C0d8dcAab9bbB057F0513431\"].totalReachableCapital",
+    "poolConfiguratorDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738\"].totalDirectCapital",
+    "poolDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987\"].totalDirectCapital",
+    "wstethATokenBalance": "fundsdata.contracts[\"eth:0x12B54025C112Aa61fAce2CDB7118740875A566E9\"].balances.totalUsdValue",
+    "lbtcATokenBalance": "fundsdata.contracts[\"eth:0xa9d4EcEBd48C282a70CfD3c469d6C8F178a5738E\"].balances.totalUsdValue",
+    "wbtcATokenBalance": "fundsdata.contracts[\"eth:0x4197ba364AE6698015AE5c1468f54087602715b2\"].balances.totalUsdValue",
+    "weethATokenBalance": "fundsdata.contracts[\"eth:0x3CFd5C0D4acAA8Faee335842e4f31159fc76B008\"].balances.totalUsdValue",
+    "cbbtcATokenBalance": "fundsdata.contracts[\"eth:0xb3973D459df38ae57797811F2A1fd061DA1BC123\"].balances.totalUsdValue",
+    "daiCollectorBalance": "fundsdata.contracts[\"eth:0xe7dF13b8e3d6740fe17CBE928C7334243d86c92f\"].balances.totalUsdValue",
+    "usdsATokenBalance": "fundsdata.contracts[\"eth:0xC02aB1A5eaA8d1B114EF786D9bde108cD4364359\"].balances.totalUsdValue",
+    "pyusdATokenBalance": "fundsdata.contracts[\"eth:0x779224df1c756b4EDD899854F32a53E8c2B2ce5d\"].balances.totalUsdValue",
+    "usdcATokenBalance": "fundsdata.contracts[\"eth:0x4DEDf26112B3Ec8eC46e7E31EA5e123490B05B8B\"].balances.totalUsdValue",
+    "usdtATokenBalance": "fundsdata.contracts[\"eth:0x59cD1C87501baa753d0B5B5Ab5D8416A45cD71DB\"].balances.totalUsdValue",
+    "ezethATokenBalance": "fundsdata.contracts[\"eth:0xB131cD463d83782d4DE33e00e35EF034F0869bA1\"].balances.totalUsdValue",
+    "rethATokenBalance": "fundsdata.contracts[\"eth:0x9985dF20D7e9103ECBCeb16a84956434B6f06ae8\"].balances.totalUsdValue",
+    "susdsATokenBalance": "fundsdata.contracts[\"eth:0x6715bc100A183cc65502F05845b589c1919ca3d3\"].balances.totalUsdValue",
+    "wethATokenBalance": "fundsdata.contracts[\"eth:0x377C3bd93f2a2984E1E7bE6A5C22c525eD4A4815\"].balances.totalUsdValue",
+    "tbtcATokenBalance": "fundsdata.contracts[\"eth:0xce6Ca9cDce00a2b0c0d1dAC93894f4Bd2c960567\"].balances.totalUsdValue",
+    "rsethATokenBalance": "fundsdata.contracts[\"eth:0x856f1Ea78361140834FDCd0dB0b08079e4A45062\"].balances.totalUsdValue"
+  }
+}

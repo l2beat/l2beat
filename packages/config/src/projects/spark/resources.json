@@ -1,0 +1,443 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://spark.fi"
+    },
+    {
+      "type": "frontend",
+      "url": "https://app.spark.fi",
+      "frontendSubtype": "official"
+    },
+    {
+      "type": "docs",
+      "url": "https://docs.spark.fi"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sparkdotfi"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/sparkdotfi"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/LICENSE.md",
+      "label": "BUSL-1.1",
+      "licenseScope": "SparkLend Core"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/LICENSE",
+      "label": "AGPL-3.0",
+      "licenseScope": "Spark Liquidity Layer"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/sparkdotfi/spark-interface/blob/spark/LICENSE.md",
+      "label": "BSD-3-Clause",
+      "licenseScope": "Frontend"
+    },
+    {
+      "type": "defiscan-v1",
+      "url": "https://www.defiscan.info/protocols/spark/ethereum"
+    },
+    {
+      "type": "other",
+      "url": "https://forum.sky.money/c/spark-subdao/84",
+      "label": "Governance Forum"
+    },
+    {
+      "type": "other",
+      "url": "https://snapshot.box/#/s:sparkfi.eth",
+      "label": "Snapshot Governance"
+    },
+    {
+      "type": "other",
+      "url": "https://data.spark.fi",
+      "label": "Data Dashboard"
+    },
+    {
+      "type": "other",
+      "url": "https://discord.gg/sparkdotfi",
+      "label": "Discord"
+    },
+    {
+      "type": "other",
+      "url": "https://blog.spark.fi",
+      "label": "Blog"
+    },
+    {
+      "url": "https://app.defisaver.com/spark/account/v1/default/manage",
+      "type": "frontend",
+      "label": "DeFiSaver",
+      "frontendSubtype": "third-party"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://immunefi.com/bug-bounty/sparklend/information/",
+      "author": "Immunefi",
+      "date": "2023-11",
+      "scope": "Bug Bounty Program",
+      "bounty": 5000000
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/ChainSecurity_Sparklend_Core_Updates_audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-03",
+      "scope": "SparkLend Core updates"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/19-04-2023_SigmaPrime_AaveV3-0-2.pdf",
+      "author": "Sigma Prime",
+      "date": "2023-04-19",
+      "scope": "Aave V3 base v0.2"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/23-12-2022_SigmaPrime_AaveV3-0-1.pdf",
+      "author": "Sigma Prime",
+      "date": "2022-12-23",
+      "scope": "Aave V3 base v0.1"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/09-12-2022_PeckShield_AaveV3-0-1.pdf",
+      "author": "PeckShield",
+      "date": "2022-12-09",
+      "scope": "Aave V3 base v0.1"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/07-01-2022_TrailOfBits_AaveV3.pdf",
+      "author": "Trail of Bits",
+      "date": "2022-01-07",
+      "scope": "Aave V3 base"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/14-01-2022_PeckShield_AaveV3.pdf",
+      "author": "PeckShield",
+      "date": "2022-01-14",
+      "scope": "Aave V3 base"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/27-01-2022_ABDK_AaveV3.pdf",
+      "author": "ABDK",
+      "date": "2022-01-27",
+      "scope": "Aave V3 base"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/27-01-2022_SigmaPrime_AaveV3.pdf",
+      "author": "Sigma Prime",
+      "date": "2022-01-27",
+      "scope": "Aave V3 base"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-v1-core/blob/master/audits/01-11-2021_OpenZeppelin_AaveV3.pdf",
+      "author": "OpenZeppelin",
+      "date": "2021-11-01",
+      "scope": "Aave V3 base"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-advanced/blob/master/audits/v160-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2026-03",
+      "scope": "SparkLend Advanced v1.6.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-advanced/blob/master/audits/v160-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2026-03",
+      "scope": "SparkLend Advanced v1.6.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-advanced/blob/master/audits/v150-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-03",
+      "scope": "SparkLend Advanced v1.5.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-cap-automator/blob/master/audits/v110-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2026-03",
+      "scope": "Cap Automator v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-cap-automator/blob/master/audits/v110-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2026-03",
+      "scope": "Cap Automator v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/sparklend-cap-automator/blob/master/audits/v100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-02",
+      "scope": "Cap Automator v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v1100-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2026-03",
+      "scope": "ALM Controller v1.10.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v1100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2026-03",
+      "scope": "ALM Controller v1.10.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v190-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2026-01",
+      "scope": "ALM Controller v1.9.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v190-certora-audit.pdf",
+      "author": "Certora",
+      "date": "2026-01",
+      "scope": "ALM Controller v1.9.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v180-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-11",
+      "scope": "ALM Controller v1.8.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v180-certora-audit.pdf",
+      "author": "Certora",
+      "date": "2025-11",
+      "scope": "ALM Controller v1.8.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v170-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-09",
+      "scope": "ALM Controller v1.7.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v170-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-09",
+      "scope": "ALM Controller v1.7.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v160-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-08",
+      "scope": "ALM Controller v1.6.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v160-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-07",
+      "scope": "ALM Controller v1.6.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v150-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-07",
+      "scope": "ALM Controller v1.5.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v150-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-07",
+      "scope": "ALM Controller v1.5.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v140-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-04",
+      "scope": "ALM Controller v1.4.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v140-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-04",
+      "scope": "ALM Controller v1.4.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v130-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-04",
+      "scope": "ALM Controller v1.3.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v130-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-04",
+      "scope": "ALM Controller v1.3.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v110-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-03",
+      "scope": "ALM Controller v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v110-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-03",
+      "scope": "ALM Controller v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v100-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-10",
+      "scope": "ALM Controller v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v100-cantina-beta-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-10",
+      "scope": "ALM Controller v1.0.0 beta"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-alm-controller/blob/master/audits/v100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-10",
+      "scope": "ALM Controller v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-helpers/blob/master/audits/v110-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2025-10",
+      "scope": "xChain Helpers v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-helpers/blob/master/audits/v110-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-10",
+      "scope": "xChain Helpers v1.1.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-helpers/blob/master/audits/v100-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-07",
+      "scope": "xChain Helpers v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-helpers/blob/master/audits/v100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-09",
+      "scope": "xChain Helpers v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-ssr-oracle/blob/master/audits/ChainSecurity_SparkDAO_XChain_SSR_Oracle_audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-09",
+      "scope": "xChain SSR Oracle"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-ssr-oracle/blob/master/audits/report-maker-review-0916-xchain-ssr-oracle.pdf",
+      "author": "Spearbit",
+      "date": "2024-09-16",
+      "scope": "xChain SSR Oracle"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/xchain-ssr-oracle/blob/master/audits/report-review-makerdao-xchain-dsr-oracle.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-04",
+      "scope": "xChain DSR Oracle"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-gov-relay/blob/master/audits/v100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-07",
+      "scope": "Gov Relay v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-gov-relay/blob/master/audits/v101-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-09",
+      "scope": "Gov Relay v1.0.1"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-psm/blob/master/audits/20240909-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-09-09",
+      "scope": "Spark PSM"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-psm/blob/master/audits/20241022-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-10-22",
+      "scope": "Spark PSM"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-psm/blob/master/audits/20241023-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2024-10-23",
+      "scope": "Spark PSM"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-vaults-v2/blob/dev/audits/v101-cantina.pdf",
+      "author": "Cantina",
+      "date": "2025-10",
+      "scope": "Spark Vaults v2 v1.0.1"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-vaults-v2/blob/dev/audits/v101-chainsecurity.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-10",
+      "scope": "Spark Vaults v2 v1.0.1"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-vaults-v2/blob/dev/audits/v100-cantina.pdf",
+      "author": "Cantina",
+      "date": "2025-09",
+      "scope": "Spark Vaults v2 v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-vaults-v2/blob/dev/audits/v100-chainsecurity.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-09",
+      "scope": "Spark Vaults v2 v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-savings-intents/blob/master/audits/v100-cantina-audit.pdf",
+      "author": "Cantina",
+      "date": "2026-03",
+      "scope": "Savings Intents v1.0.0"
+    },
+    {
+      "url": "https://github.com/sparkdotfi/spark-savings-intents/blob/master/audits/v100-chainsecurity-audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2026-03",
+      "scope": "Savings Intents v1.0.0"
+    },
+    {
+      "url": "https://github.com/sky-ecosystem/sdai/blob/master/audits/ChainSecurity_Oazo_Apps_Limited_Savings_Dai_audit_1.pdf",
+      "author": "ChainSecurity",
+      "date": "2023-03",
+      "scope": "sDAI"
+    },
+    {
+      "url": "https://github.com/sky-ecosystem/sdai/blob/susds/audit/20240926-cantina-report-maker-susds.pdf",
+      "author": "Cantina",
+      "date": "2024-09-26",
+      "scope": "sUSDS"
+    },
+    {
+      "url": "https://github.com/sky-ecosystem/sdai/blob/susds/audit/20240930-ChainSecurity_MakerDAO_Savings_USDS_audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-09-30",
+      "scope": "sUSDS"
+    },
+    {
+      "url": "https://github.com/sky-ecosystem/stusds/blob/master/audit/20250812-ChainSecurity_Sky_stUSDS_audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2025-08-12",
+      "scope": "stUSDS"
+    },
+    {
+      "url": "https://github.com/sky-ecosystem/stusds/blob/master/audit/20250818-cantina-report-sky-stusds.pdf",
+      "author": "Cantina",
+      "date": "2025-08-18",
+      "scope": "stUSDS"
+    }
+  ],
+  "linesOfCode": 14735,
+  "lastModified": "2026-04-22T15:38:07.509Z"
+}

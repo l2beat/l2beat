@@ -1,10 +1,15 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
-import { addressesEqual, normalizeChainAddress } from './addressUtils'
+import {
+  addressesEqual,
+  buildProxyToImplsMap,
+  normalizeChainAddress,
+} from './addressUtils'
 import {
   buildExternalAddressSet,
   buildTagsByAddress,
+  findContractGraph,
   findTag,
   getCallGraphContractName,
   getCallGraphData,
@@ -18,7 +23,7 @@ import {
   resolveOwnersWithDataAccess,
 } from './functions'
 import { getFundsData } from './fundsData'
-import { DiscoveredDataAccess } from './ownerResolution'
+import { DiscoveredDataAccess, resolvePathExpression } from './ownerResolution'
 import type {
   ApiCallGraphResponse,
   ApiContractTagsResponse,
@@ -29,6 +34,7 @@ import type {
   ContractTag,
   FunctionAnalysis,
   FunctionDependencyEntry,
+  FunctionDependencyRef,
   FunctionEntry,
   FunctionImpactEntry,
 } from './types'
@@ -243,9 +249,6 @@ export function computeFunctionAnalysis(
   // Build normalized funds lookup for O(1) access
   const fundsLookup = buildFundsLookup(fundsData)
 
-  // Build a normalized lookup for functions.json metadata
-  const functionsMetadata = buildFunctionsMetadataLookup(functionsData)
-
   const contracts: Record<string, Record<string, FunctionAnalysis>> = {}
 
   // Load discovered.json once for both ABI extraction and owner resolution
@@ -260,6 +263,17 @@ export function computeFunctionAnalysis(
   } catch {
     return { version: '1.0', lastModified: new Date().toISOString(), contracts }
   }
+
+  // Build shared-impl map so metadata stored at an impl address can also be
+  // looked up by each proxy that uses it (Aave AToken pattern, etc.).
+  const proxyToImpls = buildProxyToImplsMap(discovered)
+
+  // Build a normalized lookup for functions.json metadata, fanned out across
+  // proxies of shared implementations.
+  const functionsMetadata = buildFunctionsMetadataLookup(
+    functionsData,
+    proxyToImpls,
+  )
 
   const writeFunctionsByContract = buildWriteFunctionsFromParsed(discovered)
 
@@ -293,6 +307,23 @@ export function computeFunctionAnalysis(
         functionName,
       )
 
+      // Manual dependencies are stored as terminal leaves (see
+      // computeDependencies below). On their own they show the declared
+      // address but BFS does not continue through them, so transitive
+      // reachables (e.g. oracle wrapper → Chronicle aggregator → underlying
+      // token) stay invisible. Seed an additional BFS from each resolved
+      // manual-dep target (from every caller function on that target) and
+      // merge the reachables into the primary traversal, so both
+      // /dependencies and /admins reachable-contracts see the full depth.
+      augmentTraversalWithManualDepSeeds(
+        traversalResult,
+        metadata?.dependencies,
+        contractAddress,
+        functionName,
+        dataAccess,
+        callGraphData,
+      )
+
       // --- Dependencies (all functions) ---
       const lookupKey = `${normalizeChainAddress(contractAddress)}:${functionName}`
       const writeDeps = writeDependencyLookup.get(lookupKey) ?? []
@@ -306,6 +337,7 @@ export function computeFunctionAnalysis(
         tagsByAddress,
         callGraphData,
         writeDeps,
+        dataAccess,
       )
 
       // --- Impact (permissioned functions OR functions with dependencies) ---
@@ -357,17 +389,53 @@ type FunctionsMetadataMap = Map<string, Map<string, FunctionEntry>>
 
 /**
  * Build a normalized lookup: contractAddress -> functionName -> FunctionEntry
+ *
+ * Shared-impl fan-out: when `proxyToImpls` is provided (preferred), entries
+ * stored at an impl address used by N proxies are ALSO indexed under each
+ * proxy's key so that lookups by proxy address find the metadata. This lets
+ * us support one stored entry serving N proxies (the Aave AToken pattern)
+ * without duplicating storage.
  */
 function buildFunctionsMetadataLookup(
   functionsData: ApiFunctionsResponse,
+  proxyToImpls?: Map<string, Set<string>>,
 ): FunctionsMetadataMap {
   const lookup: FunctionsMetadataMap = new Map()
   if (!functionsData.contracts) return lookup
+
+  // Build the inverse: impl → proxies using it, for fast fan-out.
+  const implToProxies = new Map<string, Set<string>>()
+  if (proxyToImpls) {
+    for (const [proxy, impls] of proxyToImpls) {
+      for (const impl of impls) {
+        let set = implToProxies.get(impl)
+        if (!set) {
+          set = new Set()
+          implToProxies.set(impl, set)
+        }
+        set.add(proxy)
+      }
+    }
+  }
+
+  // Two-pass build so per-proxy overrides always win over impl templates
+  // regardless of JSON insertion order in functions.json:
+  //   Pass 1 — every entry NOT stored at a shared-impl address (proxy-direct,
+  //            standalone, unique-impl) writes unconditionally. A per-proxy
+  //            override lands here.
+  //   Pass 2 — every entry stored at a shared-impl address fans out to
+  //            { impl, ...proxies }, but only fills function slots that are
+  //            still empty — so a proxy override from pass 1 is preserved.
+  //
+  // Single-pass with a has() guard was ambiguous: if the impl entry appeared
+  // before its proxy override in iteration order, the template populated the
+  // proxy slot first and the subsequent override was silently dropped.
 
   for (const [contractAddress, contractData] of Object.entries(
     functionsData.contracts,
   )) {
     const normalized = normalizeChainAddress(contractAddress)
+    if (implToProxies.has(normalized)) continue // pass 2 handles impls
     let funcMap = lookup.get(normalized)
     if (!funcMap) {
       funcMap = new Map()
@@ -375,6 +443,28 @@ function buildFunctionsMetadataLookup(
     }
     for (const func of contractData.functions) {
       funcMap.set(func.functionName, func)
+    }
+  }
+
+  for (const [contractAddress, contractData] of Object.entries(
+    functionsData.contracts,
+  )) {
+    const normalized = normalizeChainAddress(contractAddress)
+    const proxies = implToProxies.get(normalized)
+    if (!proxies) continue
+    // Fan out: index entry under the impl itself AND each proxy using it.
+    const targets = new Set<string>([normalized, ...proxies])
+    for (const target of targets) {
+      let funcMap = lookup.get(target)
+      if (!funcMap) {
+        funcMap = new Map()
+        lookup.set(target, funcMap)
+      }
+      for (const func of contractData.functions) {
+        if (!funcMap.has(func.functionName)) {
+          funcMap.set(func.functionName, func)
+        }
+      }
     }
   }
   return lookup
@@ -464,8 +554,157 @@ function computeImpact(
 // Dependencies Computation
 // ============================================================================
 
+/**
+ * Seed BFS from each resolved manual-dep target and merge the reachable
+ * contracts back into the primary traversal result. Without this, the
+ * dep-target is added as a terminal leaf by computeDependencies and BFS
+ * stops there — anything the target itself reaches (e.g. Chronicle aggregator
+ * called by an oracle wrapper) never surfaces.
+ *
+ * Semantics: "if this dep breaks, everything it touches is at risk." Matches
+ * the upgrade-function seeding pattern — every caller function on the target
+ * is a valid entry point, so BFS seeds with all of them. Each merged
+ * reachable inherits `path = depEdge → targetSubPath` for display.
+ *
+ * Self-merge: the dep target itself is also recorded as reachable (from any
+ * `calledFunction` seen on it) so that funds on the target are counted by
+ * computeImpact, not only by computeDependencies.
+ */
+function augmentTraversalWithManualDepSeeds(
+  traversalResult: ReturnType<typeof traverseWithPaths>,
+  manualDeps: FunctionDependencyRef[] | undefined,
+  startContractAddress: string,
+  startFunctionName: string,
+  dataAccess: DiscoveredDataAccess,
+  callGraphData: ApiCallGraphResponse,
+): void {
+  if (!manualDeps || manualDeps.length === 0) return
+
+  for (const dep of manualDeps) {
+    const depAddresses = resolveManualDepAddresses(
+      dep,
+      startContractAddress,
+      dataAccess,
+    )
+
+    for (const depAddr of depAddresses) {
+      // Skip self-reference — a dep pointing back at the starting contract
+      // would double-count paths.
+      if (addressesEqual(depAddr, startContractAddress)) continue
+
+      const targetGraph = findContractGraph(callGraphData, depAddr)
+      // No call graph entry → target is a leaf (e.g. Chronicle aggregator
+      // which Slither couldn't analyse). computeDependencies already emits
+      // the leaf in its manual-deps branch, so nothing extra to do.
+      if (!targetGraph) continue
+
+      // Every distinct caller function on the target is a valid entry point.
+      const callerFns = new Set<string>()
+      for (const call of targetGraph.externalCalls) {
+        callerFns.add(call.callerFunction)
+      }
+
+      // Record the dep target itself as reachable. Use every caller function
+      // we found, plus 'latestAnswer' as a default if the call graph has it —
+      // this way computeImpact sees the target (for funds accounting) and
+      // computeDependencies' auto-detected branch doesn't duplicate it
+      // (shortest-path fields set to minimum).
+      const existingSelf = traversalResult.reachableContracts.get(depAddr)
+      if (!existingSelf) {
+        traversalResult.reachableContracts.set(depAddr, {
+          contractName: targetGraph.name ?? 'Unknown',
+          viewOnlyPath: true, // we treat dep-edges as view by convention
+          calledFunctions: new Set(callerFns),
+          shortestPath: [
+            {
+              contractAddress: startContractAddress,
+              contractName: '',
+              functionName: startFunctionName,
+              isViewCall: true,
+            },
+          ],
+        })
+      } else {
+        for (const fn of callerFns) existingSelf.calledFunctions.add(fn)
+      }
+
+      // BFS from every caller function on the dep target and merge.
+      for (const fn of callerFns) {
+        const sub = traverseWithPaths(callGraphData, depAddr, fn)
+        for (const [addr, entry] of sub.reachableContracts) {
+          if (addressesEqual(addr, startContractAddress)) continue
+          const existing = traversalResult.reachableContracts.get(addr)
+          if (!existing) {
+            traversalResult.reachableContracts.set(addr, {
+              contractName: entry.contractName,
+              viewOnlyPath: entry.viewOnlyPath,
+              calledFunctions: new Set(entry.calledFunctions),
+              shortestPath: entry.shortestPath,
+            })
+          } else {
+            for (const cf of entry.calledFunctions) {
+              existing.calledFunctions.add(cf)
+            }
+            // If any path is non-view, the merged entry is non-view.
+            if (!entry.viewOnlyPath) existing.viewOnlyPath = false
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resolve a manual dependency reference to a concrete address list.
+ * - Literal form: pins exactly one address.
+ * - Path form: resolves against `currentContractAddress` via the shared path
+ *   resolver. Multiple addresses are possible (e.g. arrays); all are returned.
+ * Resolution failures are logged and treated as empty so a single bad entry
+ * cannot break the rest of the analysis.
+ */
+function resolveManualDepAddresses(
+  dep: FunctionDependencyRef,
+  currentContractAddress: string,
+  dataAccess: DiscoveredDataAccess,
+): string[] {
+  if ('contractAddress' in dep) {
+    return [dep.contractAddress]
+  }
+  const resolved = resolvePathExpression(
+    dataAccess,
+    currentContractAddress,
+    dep.path,
+  )
+  if (resolved.error) {
+    console.warn(
+      `Failed to resolve dependency path "${dep.path}" on ${currentContractAddress}: ${resolved.error}`,
+    )
+    return []
+  }
+  return resolved.addresses
+}
+
+/**
+ * Read a contract's declared name from discovered.json via the existing
+ * data-access helper. Returns undefined if the address isn't a contract in
+ * discovered data or has no name. Used as a fallback when the call graph is
+ * missing a contract so path-resolved deps still render with a readable name.
+ */
+function buildContractNameFromDataAccess(
+  dataAccess: DiscoveredDataAccess,
+  address: string,
+): string | undefined {
+  try {
+    const contract = dataAccess.findContract(address)
+    const name = contract?.name
+    return typeof name === 'string' && name.length > 0 ? name : undefined
+  } catch {
+    return undefined
+  }
+}
+
 function computeDependencies(
-  manualDeps: { contractAddress: string }[] | undefined,
+  manualDeps: FunctionDependencyRef[] | undefined,
   startContractAddress: string,
   functionName: string,
   traversalResult: ReturnType<typeof traverseWithPaths>,
@@ -473,6 +712,7 @@ function computeDependencies(
   tagsByAddress: Map<string, ContractTag>,
   callGraphData: ApiCallGraphResponse,
   writeDeps: WriteDependencyInfo[],
+  dataAccess: DiscoveredDataAccess,
 ): { entries: FunctionDependencyEntry[] } {
   const entries: FunctionDependencyEntry[] = []
   const seenAddresses = new Set<string>()
@@ -508,27 +748,44 @@ function computeDependencies(
     })
   }
 
-  // 2. Manual dependencies (from functions.json)
+  // 2. Manual dependencies (from functions.json).
+  // Two forms supported:
+  //   - { contractAddress } — literal pin
+  //   - { path } — path expression resolved against the current proxy so the
+  //     dep tracks mutable on-chain state (e.g. oracle registry mapping).
   if (manualDeps) {
     for (const dep of manualDeps) {
-      const normalized = normalizeChainAddress(dep.contractAddress)
-      if (seenAddresses.has(normalized)) continue
-      seenAddresses.add(normalized)
+      const resolvedAddresses = resolveManualDepAddresses(
+        dep,
+        startContractAddress,
+        dataAccess,
+      )
 
-      const tag = findTag(tagsByAddress, dep.contractAddress)
+      for (const addr of resolvedAddresses) {
+        const normalized = normalizeChainAddress(addr)
+        if (seenAddresses.has(normalized)) continue
+        seenAddresses.add(normalized)
 
-      entries.push({
-        contractAddress: dep.contractAddress,
-        contractName:
-          getCallGraphContractName(callGraphData, dep.contractAddress) ??
-          'Unknown',
-        isAutoDetected: false,
-        viewOnlyPath: false,
-        calledFunctions: [],
-        entity: tag?.entity,
-        mitigations: undefined,
-        callPath: [], // No path info for manual deps
-      })
+        const tag = findTag(tagsByAddress, addr)
+        const nameFromDiscovered = buildContractNameFromDataAccess(
+          dataAccess,
+          addr,
+        )
+
+        entries.push({
+          contractAddress: addr,
+          contractName:
+            nameFromDiscovered ??
+            getCallGraphContractName(callGraphData, addr) ??
+            'Unknown',
+          isAutoDetected: false,
+          viewOnlyPath: false,
+          calledFunctions: [],
+          entity: tag?.entity,
+          mitigations: undefined,
+          callPath: [], // No path info for manual deps
+        })
+      }
     }
   }
 

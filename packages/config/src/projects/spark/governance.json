@@ -1,0 +1,18 @@
+{
+  "framework": "Sky (MakerDAO)",
+  "voteExecution": "onchain",
+  "votingUnit": "SKY",
+  "proposalRequirements": "permissionless",
+  "votingProcess": "Sky Executive Spell ratified via SKY approval voting in Chief V3. SPK snapshot governance is signal-only",
+  "proposalPeriod": {
+    "kind": "fixed",
+    "value": "Continuous approval"
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0xbE286431454714F511008713973d3B053A2d38f3",
+      "fieldName": "delay"
+    }
+  }
+}

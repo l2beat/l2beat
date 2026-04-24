@@ -1,4 +1,11 @@
-import type { CompiledAdmin, CompiledReview } from '../types'
+import type {
+  CompiledAdmin,
+  CompiledGovernanceDuration,
+  CompiledReview,
+} from '../types'
+
+const DAY = 86_400
+const HOUR = 3_600
 
 function adminImpact(a: CompiledAdmin): number {
   return (a.totalReachableCapital ?? 0) + (a.totalReachableTokenValue ?? 0)
@@ -63,6 +70,83 @@ function computeVerifiability(review: CompiledReview): number {
   )
 }
 
+const FIXED_UNIT_SECONDS: Record<string, number> = {
+  second: 1,
+  minute: 60,
+  hour: HOUR,
+  day: DAY,
+  week: 7 * DAY,
+}
+
+function parseFixedDuration(value: string | undefined): number {
+  if (!value) return 0
+  const re = /(\d+(?:\.\d+)?)\s*(second|minute|hour|day|week)s?/gi
+  let total = 0
+  for (const m of value.matchAll(re)) {
+    const n = Number.parseFloat(m[1])
+    const factor = FIXED_UNIT_SECONDS[m[2].toLowerCase()]
+    if (!Number.isNaN(n) && factor) total += n * factor
+  }
+  return total
+}
+
+function durationSeconds(d: CompiledGovernanceDuration | undefined): number {
+  if (!d) return 0
+  if (d.kind === 'none') return 0
+  if (d.kind === 'fieldRef')
+    return d.resolved && typeof d.seconds === 'number' ? d.seconds : 0
+  if (d.kind === 'fixed') return parseFixedDuration(d.value)
+  return 0
+}
+
+function computeGovernance(review: CompiledReview): number {
+  const { admins, totals, governance } = review
+  const tvs = totals.totalCapitalAtRisk + (totals.totalTokenValue ?? 0)
+
+  const govAdmins = admins.filter((a) => a.isGovernance && adminImpact(a) > 0)
+
+  // Short-circuit only when governance is undocumented AND no isGovernance
+  // admin has fund impact — i.e. the protocol genuinely has no governance
+  // layer. If governance is documented but no admin is tagged isGovernance
+  // (e.g. offchain Snapshot + multisig executor), fall through and score it,
+  // using all fund-impacting admins as the impact set.
+  if (govAdmins.length === 0 && governance === undefined) return 95
+
+  const execScore =
+    governance === undefined
+      ? 5
+      : governance.voteExecution === 'onchain'
+        ? 30
+        : 10
+
+  const delay =
+    durationSeconds(governance?.proposalPeriod) +
+    durationSeconds(governance?.executionDelay)
+  const delayScore =
+    delay >= 10 * DAY
+      ? 35
+      : delay >= 7 * DAY
+        ? 28
+        : delay >= 3 * DAY
+          ? 18
+          : delay >= 1 * DAY
+            ? 10
+            : delay >= 12 * HOUR
+              ? 5
+              : 2
+
+  const impactAdmins =
+    govAdmins.length > 0 ? govAdmins : admins.filter((a) => adminImpact(a) > 0)
+  const govImpact = impactAdmins.reduce((s, a) => s + adminImpact(a), 0)
+  // Admins can reach overlapping contracts, so raw sums may exceed TVS.
+  // Cap share at 1.0 — the tier boundaries are what matters, not the ratio.
+  const share = Math.min(1, tvs > 0 ? govImpact / tvs : govImpact > 0 ? 1 : 0)
+  const impactScore =
+    share <= 0.1 ? 30 : share <= 0.3 ? 22 : share <= 0.6 ? 12 : 5
+
+  return Math.min(95, Math.round(execScore + delayScore + impactScore))
+}
+
 function computeControl(review: CompiledReview): number {
   const { admins, totals } = review
   const tvs = totals.totalCapitalAtRisk + (totals.totalTokenValue ?? 0)
@@ -103,13 +187,13 @@ export function deriveRadarData(review: CompiledReview) {
           ? 75
           : 90
   const verifiability = computeVerifiability(review)
-  const exit = 65
+  const governance = computeGovernance(review)
 
   return [
     { axis: 'CONTROL', value: control },
     { axis: 'DEPENDENCIES', value: deps },
     { axis: 'ACCESS', value: access },
     { axis: 'VERIFIABILITY', value: verifiability },
-    { axis: 'ABILITY TO EXIT', value: exit },
+    { axis: 'GOVERNANCE', value: governance },
   ]
 }

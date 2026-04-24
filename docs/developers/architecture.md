@@ -154,6 +154,8 @@ STAGE 4 — Frontend (defiscan-frontend)
 
 Both methods accept an optional `contractFilter` for per-contract queries. The backend still builds the full graph (sub-second) but filters the response, so the same code path serves both project-wide and per-contract consumers.
 
+**Shared-implementation fan-out**: both methods (plus `buildEnhancedGraph`, `buildFunctionsMetadataLookup`, mitigation/cap lookups) treat a `functions.json` entry stored at a shared impl as a template, expanding it into one virtual row per proxy that uses the impl. `$self` rebinds to each proxy during owner resolution, and funds are looked up on the proxy. This is a read-time expansion — storage stays impl-keyed, the researcher writes once. See [Shared-Impl Fan-Out design](designs/shared-impl-fan-out.md).
+
 See [Scoring & Review: ProjectAnalysis](features/scoring-and-review.md#projectanalysis-api) for the full type definitions.
 
 ### Stage 2 — Review Compiler

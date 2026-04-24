@@ -30,6 +30,10 @@ export class CapitalAnalysisCalculator {
   private contractNameMap: Map<string, string>
   private implToProxy: Map<string, string>
   private resolvedImpactCaps: Map<string, number>
+  // Maps a proxy (normalized) to the set of its implementation addresses.
+  // Used to look up function metadata that is stored at an impl address when
+  // the caller is iterating by proxy (shared-impl patterns like Aave AToken).
+  private proxyToImpls: Map<string, Set<string>>
 
   constructor(
     enhancedGraph: EnhancedGraph,
@@ -38,6 +42,7 @@ export class CapitalAnalysisCalculator {
     contractNameMap: Map<string, string>,
     implToProxy?: Map<string, string>,
     resolvedImpactCaps?: Map<string, number>,
+    proxyToImpls?: Map<string, Set<string>>,
   ) {
     this.enhancedGraph = enhancedGraph
     this.fundsData = fundsData
@@ -45,6 +50,36 @@ export class CapitalAnalysisCalculator {
     this.contractNameMap = contractNameMap
     this.implToProxy = implToProxy ?? new Map()
     this.resolvedImpactCaps = resolvedImpactCaps ?? new Map()
+    this.proxyToImpls = proxyToImpls ?? new Map()
+  }
+
+  /**
+   * Resolve a function's metadata by trying the contract's own address first,
+   * then falling back to any implementation addresses it uses. This makes
+   * shared-impl metadata (one entry serving N proxies) visible to lookups
+   * keyed by proxy address.
+   */
+  private findFunctionMeta(
+    contractAddress: string,
+    functionName: string,
+  ): { score?: string } | undefined {
+    const normalized = normalizeChainAddress(contractAddress)
+    const candidates: string[] = [normalized]
+    const impls = this.proxyToImpls.get(normalized)
+    if (impls) {
+      for (const impl of impls) candidates.push(impl)
+    }
+    for (const candidate of candidates) {
+      const contractEntry = Object.entries(
+        this.functionsData.contracts ?? {},
+      ).find(([key]) => normalizeChainAddress(key) === candidate)
+      if (!contractEntry) continue
+      const func = contractEntry[1].functions.find(
+        (f) => f.functionName === functionName,
+      )
+      if (func) return func
+    }
+    return undefined
   }
 
   /**
@@ -86,22 +121,13 @@ export class CapitalAnalysisCalculator {
     contractAddress: string,
     functionName: string,
   ): boolean {
-    // Case-insensitive lookup for the contract
-    const normalizedAddress = normalizeChainAddress(contractAddress)
-    const contractEntry = Object.entries(
-      this.functionsData.contracts ?? {},
-    ).find(([key]) => normalizeChainAddress(key) === normalizedAddress)
+    // Look up via shared-impl aware resolver: a proxy inherits its impl's
+    // metadata (and the impl is still checked directly when stored that way).
+    const func = this.findFunctionMeta(contractAddress, functionName)
 
     // If the contract or function isn't in functions.json, a call graph edge
     // still exists — the relationship is real. Funds data acts as the natural
     // guard: external contracts without fund entries contribute $0 regardless.
-    if (!contractEntry) return true
-    const contractFunctions = contractEntry[1]
-
-    const func = contractFunctions.functions.find(
-      (f) => f.functionName === functionName,
-    )
-
     if (!func) return true
 
     // Only exclude functions explicitly marked as no-impact by a researcher.
@@ -119,18 +145,7 @@ export class CapitalAnalysisCalculator {
     contractAddress: string,
     functionName: string,
   ): boolean {
-    const normalizedAddress = normalizeChainAddress(contractAddress)
-    const contractEntry = Object.entries(
-      this.functionsData.contracts ?? {},
-    ).find(([key]) => normalizeChainAddress(key) === normalizedAddress)
-
-    if (!contractEntry) return false
-    const contractFunctions = contractEntry[1]
-
-    const func = contractFunctions.functions.find(
-      (f) => f.functionName === functionName,
-    )
-
+    const func = this.findFunctionMeta(contractAddress, functionName)
     return func?.score === 'no-impact'
   }
 
@@ -252,14 +267,18 @@ export class CapitalAnalysisCalculator {
 
       for (const edge of edges) {
         const isCallGraph = edge.edgeType === 'callgraph'
+        const isDependency = edge.edgeType === 'dependency'
 
-        // Call graph edges: follow only edges from the current function
-        if (isCallGraph && edge.sourceFunction !== func) continue
+        // Function-scoped edges (callgraph, dependency) only follow from the
+        // current function. Permission edges are contract-level and followed
+        // unconditionally.
+        if ((isCallGraph || isDependency) && edge.sourceFunction !== func)
+          continue
 
-        const isViewCall = isCallGraph && edge.isViewCall === true
-        const newPathIsViewOnly = isCallGraph
-          ? pathIsViewOnly && isViewCall
-          : false // Permission edges are always non-view
+        const isViewCall =
+          (isCallGraph || isDependency) && edge.isViewCall === true
+        const newPathIsViewOnly =
+          isCallGraph || isDependency ? pathIsViewOnly && isViewCall : false // Permission edges are always non-view
 
         // Cap propagation: fold in the source function's cap (pathCapUsd
         // already covers ancestors). Take the minimum (tightest) cap.

@@ -118,9 +118,15 @@ Owner-chain traversal and per-function impact/dependency analysis, built on the 
 
 **Exported utilities:**
 
-- `buildEnhancedGraph(callGraphData, functionsData, dataAccess)` — builds the unified edge array
+- `buildEnhancedGraph(callGraphData, functionsData, dataAccess, discovered?)` — builds the unified edge array. When `discovered` is passed, permission edges whose target is a shared implementation are fanned out to one edge per proxy using the impl (target = proxy, not impl), and `$self` paths are re-resolved per proxy. This lets backward traversal from any proxy find the correct owner chain for factory-deployed patterns like Aave ATokens.
 - `buildIndices(edges)` — produces an `EnhancedGraph` with `forwardIndex` and `backwardIndex` (both keyed by normalized contract address)
-- `EnhancedEdge` — `{ sourceContract, sourceFunction?, targetContract, targetFunction, edgeType: 'permission' | 'callgraph', isViewCall? }`
+- `EnhancedEdge` — `{ sourceContract, sourceFunction?, targetContract, targetFunction, edgeType: 'permission' | 'callgraph' | 'dependency', isViewCall? }`
+
+**Dependency edges.** Each manual `dependencies` entry in `functions.json` (literal or path-form) emits synthetic edges `(target, func) → (depAddr, callerFn)` for every `callerFn` that appears on the dep target in the call graph. The target function is heuristic (all entry points on the dep contract) rather than hardcoded to `latestAnswer`, so any interface works. `isViewCall: true` by convention — dep reads are view; BFS propagates view-only through the hop and any non-view downstream call correctly flips the path.
+
+Without these edges, a manual dep is a terminal leaf: `/dependencies` shows the declared address but transitive reachables (oracle wrapper → Chronicle aggregator → underlying token) stay invisible and per-function capital analysis under-counts reachable capital. Capital analysis's forward BFS filters dep edges by `sourceFunction` like callgraph, and the backward traversal used for ownership chains explicitly **excludes** dep edges — a dep is not ownership.
+
+For leaf targets that Slither couldn't analyse (e.g. bare Chainlink aggregators with no `externalCalls`), no edges are emitted. In that case `functionAnalysis.augmentTraversalWithManualDepSeeds` still surfaces the dep itself as a reachable in `/dependencies`, so nothing is lost.
 
 ### Function Analysis
 

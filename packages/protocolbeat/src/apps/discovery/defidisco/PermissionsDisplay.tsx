@@ -10,6 +10,7 @@ import {
 import type {
   ApiAbi,
   ApiAbiEntry,
+  FunctionDependencyRef,
   FunctionEntry,
   Mitigation,
   OwnerDefinition,
@@ -211,7 +212,7 @@ export function PermissionsDisplay({
   const handleDependenciesUpdate = async (
     contractAddress: string,
     functionName: string,
-    dependencies?: { contractAddress: string }[],
+    dependencies?: FunctionDependencyRef[],
   ) => {
     if (!project) return
 
@@ -522,7 +523,7 @@ function PermissionsCode({
   onDependenciesUpdate: (
     contractAddress: string,
     functionName: string,
-    dependencies?: { contractAddress: string }[],
+    dependencies?: FunctionDependencyRef[],
   ) => void
   onMitigationsUpdate: (
     contractAddress: string,
@@ -628,7 +629,7 @@ function WritePermissionsCodeEntries({
   onDependenciesUpdate: (
     contractAddress: string,
     functionName: string,
-    dependencies?: { contractAddress: string }[],
+    dependencies?: FunctionDependencyRef[],
   ) => void
   onMitigationsUpdate: (
     contractAddress: string,

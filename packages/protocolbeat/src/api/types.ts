@@ -570,10 +570,11 @@ export interface FunctionEntry {
     contractAddress: string
     fieldName: string
   }
-  // External contract dependencies
-  dependencies?: {
-    contractAddress: string
-  }[]
+  // External contract dependencies. Union of literal and path-based refs:
+  //   { contractAddress } — fixed pin
+  //   { path }            — path expression resolved at analysis time
+  //                         (e.g. "eth:0xOracle.assetSources[$self.UNDERLYING]")
+  dependencies?: FunctionDependencyRef[]
   // Mitigations (valueRange, relativeValue, other — delay is stored separately in `delay` field)
   mitigations?: Mitigation[]
   // Attribution tracking
@@ -582,6 +583,14 @@ export interface FunctionEntry {
   // Audit trail comments
   comments?: FunctionComment[]
 }
+
+// Dependency reference used in FunctionEntry.dependencies.
+// Literal form pins a specific external contract. Path form uses the same
+// expression grammar as OwnerDefinition.path and is resolved server-side at
+// analysis time so deps can track mutable on-chain state (e.g. registry maps).
+export type FunctionDependencyRef =
+  | { contractAddress: string }
+  | { path: string }
 
 // Owner definition types - unified path expression approach
 // Path format: <contractRef>.<valuePath>
@@ -609,9 +618,7 @@ export interface ApiFunctionsUpdateRequest {
     contractAddress: string
     fieldName: string
   } | null
-  dependencies?: {
-    contractAddress: string
-  }[]
+  dependencies?: FunctionDependencyRef[]
   // Mitigations (valueRange, relativeValue, other — delay mitigations derived from `delay` field)
   mitigations?: Mitigation[] | null
   // Frontend sends only the text; backend stamps author + date

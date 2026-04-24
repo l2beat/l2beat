@@ -6,14 +6,14 @@ import type {
 import * as fs from 'fs'
 import * as path from 'path'
 import { getProject } from '../getProject'
-import { normalizeChainAddress } from './addressUtils'
+import { buildImplToProxiesMap, normalizeChainAddress } from './addressUtils'
 import { getCallGraphData } from './callGraph'
 import {
   extractAddressesFromResolvedOwners,
   getFunctions,
   resolveOwnersWithDataAccess,
 } from './functions'
-import { DiscoveredDataAccess } from './ownerResolution'
+import { DiscoveredDataAccess, resolvePathExpression } from './ownerResolution'
 import { detectTimelockInChain } from './timelockDetection'
 import type {
   ApiAddressType,
@@ -39,13 +39,21 @@ const MAX_DEPTH = 10
 export interface EnhancedEdge {
   /** Caller contract (call graph) or owner contract (permission) */
   sourceContract: string
-  /** Specific function on source (call graph only, undefined for permission) */
+  /** Specific function on source (call graph / dependency; undefined for permission) */
   sourceFunction?: string
   /** Callee contract (call graph) or owned function's contract (permission) */
   targetContract: string
   /** Function being called (call graph) or owned (permission) */
   targetFunction: string
-  edgeType: 'permission' | 'callgraph'
+  /**
+   * - 'callgraph': Slither-detected external call (caller → callee)
+   * - 'permission': owner has write access to target function
+   * - 'dependency': researcher-declared dep in functions.json. Behaves like
+   *   a call-graph edge during BFS (filtered by sourceFunction), but the
+   *   target is not an actual call — it's a "reach surface" marker so BFS
+   *   continues through any function the dep target itself calls.
+   */
+  edgeType: 'permission' | 'callgraph' | 'dependency'
   isViewCall?: boolean
 }
 
@@ -72,9 +80,19 @@ export function buildEnhancedGraph(
   callGraphData: ApiCallGraphResponse,
   functionsData: ApiFunctionsResponse,
   dataAccess: DiscoveredDataAccess,
+  discovered?: any,
 ): { edges: EnhancedEdge[]; constructionErrors: Map<string, string[]> } {
   const edges: EnhancedEdge[] = []
   const constructionErrors = new Map<string, string[]>()
+
+  // Shared-impl fan-out: when metadata is stored at an impl address used by
+  // multiple proxies, emit one permission edge per proxy (target = proxy,
+  // not impl). This makes backward traversal from any proxy find the chain,
+  // and keeps reachability per-proxy in forward BFS (e.g. "Pool owns burn
+  // on all 18 AToken proxies" rather than "Pool owns burn on IMPL" alone).
+  const implToProxies = discovered
+    ? buildImplToProxiesMap(discovered)
+    : new Map<string, Set<string>>()
 
   // 1. Call graph edges (natural direction: caller → callee)
   for (const [, graph] of Object.entries(callGraphData.contracts)) {
@@ -97,45 +115,154 @@ export function buildEnhancedGraph(
     for (const [contractAddr, contractData] of Object.entries(
       functionsData.contracts,
     )) {
-      for (const func of contractData.functions) {
-        if (
-          !func.isPermissioned ||
-          !func.ownerDefinitions ||
-          func.ownerDefinitions.length === 0
-        ) {
-          continue
-        }
+      // Determine the target proxies for this entry. For impl-keyed shared
+      // entries we emit one edge per proxy; for unique-impl or proxy-keyed
+      // entries this expands to a single target equal to the stored address.
+      const normalizedStored = normalizeChainAddress(contractAddr)
+      const sharedProxies = implToProxies.get(normalizedStored)
+      const targets =
+        sharedProxies && sharedProxies.size > 0
+          ? [...sharedProxies]
+          : [contractAddr]
 
-        const resolved = resolveOwnersWithDataAccess(
-          dataAccess,
-          contractAddr,
-          func.ownerDefinitions,
-        )
+      for (const target of targets) {
+        for (const func of contractData.functions) {
+          if (
+            !func.isPermissioned ||
+            !func.ownerDefinitions ||
+            func.ownerDefinitions.length === 0
+          ) {
+            continue
+          }
 
-        // Track resolution errors
-        const errors: string[] = []
-        for (const r of resolved) {
-          if (!r.isResolved && r.error) {
-            errors.push(r.error)
+          // Resolve owners with the current target as currentContractAddress
+          // so `$self.X` re-binds per proxy (e.g. `$self.accessControl.ROLE.members`).
+          const resolved = resolveOwnersWithDataAccess(
+            dataAccess,
+            target,
+            func.ownerDefinitions,
+          )
+
+          // Track resolution errors — keyed by target (per-proxy key) so a
+          // failure on one proxy doesn't mask success on another.
+          const errors: string[] = []
+          for (const r of resolved) {
+            if (!r.isResolved && r.error) {
+              errors.push(r.error)
+            }
+          }
+          if (errors.length > 0) {
+            const key = `${normalizeChainAddress(target)}:${func.functionName}`
+            constructionErrors.set(key, errors)
+          }
+
+          // Create permission edges for each unique owner address
+          const ownerAddresses = [
+            ...new Set(extractAddressesFromResolvedOwners(resolved)),
+          ]
+          for (const ownerAddr of ownerAddresses) {
+            edges.push({
+              sourceContract: ownerAddr,
+              // sourceFunction: undefined — permission edges are contract-level
+              targetContract: target,
+              targetFunction: func.functionName,
+              edgeType: 'permission',
+            })
           }
         }
-        if (errors.length > 0) {
-          const key = `${normalizeChainAddress(contractAddr)}:${func.functionName}`
-          constructionErrors.set(key, errors)
-        }
+      }
+    }
+  }
 
-        // Create permission edges for each unique owner address
-        const ownerAddresses = [
-          ...new Set(extractAddressesFromResolvedOwners(resolved)),
-        ]
-        for (const ownerAddr of ownerAddresses) {
-          edges.push({
-            sourceContract: ownerAddr,
-            // sourceFunction: undefined — permission edges are contract-level
-            targetContract: contractAddr,
-            targetFunction: func.functionName,
-            edgeType: 'permission',
-          })
+  // 3. Dependency edges. Each manual dep in functions.json becomes edges from
+  //    (target, func) → (depAddr, everyCallerFn on depAddr). This seeds
+  //    forward BFS through the dep, so transitive reachables (e.g. oracle
+  //    wrapper → Chronicle) are correctly explored. Without these edges,
+  //    manual deps are terminal leaves and capitalAnalysis under-counts
+  //    reachable capital whenever a dep target reaches further contracts.
+  //
+  //    Target function heuristic: seed BFS at every function that appears as
+  //    a `callerFunction` in the dep target's call graph. Mirrors how
+  //    `traverseForward` treats an upgrade function (every caller function
+  //    is a valid entry). Works for any interface — no hard-coded function
+  //    names — and stays empty when the dep target is a leaf node that
+  //    Slither couldn't analyse (e.g. Chainlink aggregators), in which case
+  //    `functionAnalysis.augmentTraversalWithManualDepSeeds` handles the
+  //    user-facing dep display and there's nothing more to traverse.
+  if (callGraphData.contracts && functionsData.contracts) {
+    // Pre-index every (target) address in the call graph → its distinct
+    // callerFunctions, for fast lookup per dep.
+    const callerFnsByContract = new Map<string, Set<string>>()
+    for (const [, cg] of Object.entries(callGraphData.contracts)) {
+      const set = new Set<string>()
+      for (const c of cg.externalCalls) set.add(c.callerFunction)
+      callerFnsByContract.set(normalizeChainAddress(cg.address), set)
+    }
+
+    for (const [contractAddr, contractData] of Object.entries(
+      functionsData.contracts,
+    )) {
+      const normalizedStored = normalizeChainAddress(contractAddr)
+      const sharedProxies = implToProxies.get(normalizedStored)
+      const targets =
+        sharedProxies && sharedProxies.size > 0
+          ? [...sharedProxies]
+          : [contractAddr]
+
+      for (const target of targets) {
+        for (const func of contractData.functions) {
+          if (!func.dependencies || func.dependencies.length === 0) continue
+
+          for (const dep of func.dependencies) {
+            // Resolve literal/path dep against the current proxy so `$self`
+            // re-binds per proxy (same semantics as ownerDefinitions).
+            let depAddresses: string[] = []
+            if ('contractAddress' in dep) {
+              depAddresses = [dep.contractAddress]
+            } else {
+              const resolvedDep = resolvePathExpression(
+                dataAccess,
+                target,
+                dep.path,
+              )
+              if (resolvedDep.error || resolvedDep.addresses.length === 0) {
+                // Log as construction error so researcher sees it in the UI.
+                const key = `${normalizeChainAddress(target)}:${func.functionName}`
+                const list = constructionErrors.get(key) ?? []
+                if (resolvedDep.error) list.push(resolvedDep.error)
+                if (list.length > 0) constructionErrors.set(key, list)
+                continue
+              }
+              depAddresses = resolvedDep.addresses
+            }
+
+            for (const depAddr of depAddresses) {
+              const depNorm = normalizeChainAddress(depAddr)
+              // Self-reference guard.
+              if (depNorm === normalizeChainAddress(target)) continue
+
+              const callerFns = callerFnsByContract.get(depNorm)
+              // Dep target is a leaf (no outgoing call-graph edges). Nothing
+              // to walk through — functionAnalysis still surfaces it as a
+              // manual-dep leaf in /dependencies.
+              if (!callerFns || callerFns.size === 0) continue
+
+              for (const depFn of callerFns) {
+                edges.push({
+                  sourceContract: target,
+                  sourceFunction: func.functionName,
+                  targetContract: depAddr,
+                  targetFunction: depFn,
+                  edgeType: 'dependency',
+                  // Dep reads are view by convention (reading oracle prices,
+                  // registry state, etc.). BFS's pathIsViewOnly is honored
+                  // so a downstream non-view call still marks the chain
+                  // non-view.
+                  isViewCall: true,
+                })
+              }
+            }
+          }
         }
       }
     }
@@ -275,12 +402,23 @@ export function traverse(
     const sourceType = lookupType(ctx.contractTypeMap, sourceContract)
     const sourceName = lookupName(ctx.contractNameMap, sourceContract)
 
-    // Prefer call graph edges (more precise) over permission edges from same source
-    const callGraphEdges = sourceEdges.filter((e) => e.edgeType === 'callgraph')
+    // Prefer call graph edges (more precise) over permission edges from same
+    // source. Dependency edges are excluded from ownership chains: they
+    // represent "this function depends on X," not "X owns this function."
+    type OwnershipEdge = EnhancedEdge & {
+      edgeType: 'callgraph' | 'permission'
+    }
+    const isOwnershipEdge = (e: EnhancedEdge): e is OwnershipEdge =>
+      e.edgeType === 'callgraph' || e.edgeType === 'permission'
+    const callGraphEdges = sourceEdges.filter(
+      (e): e is OwnershipEdge => e.edgeType === 'callgraph',
+    )
     const selectedEdges =
       callGraphEdges.length > 0
         ? callGraphEdges
-        : sourceEdges.filter((e) => e.edgeType === 'permission')
+        : sourceEdges
+            .filter(isOwnershipEdge)
+            .filter((e): e is OwnershipEdge => e.edgeType === 'permission')
 
     // Deduplicate by sourceFunction
     const seenFunctions = new Set<string>()
@@ -593,9 +731,10 @@ export function resolveEnhancedTraversal(
     'discovered.json',
   )
   let dataAccess: DiscoveredDataAccess
+  let discovered: any
   try {
     const fileContent = fs.readFileSync(discoveredPath, 'utf8')
-    const discovered = JSON.parse(fileContent)
+    discovered = JSON.parse(fileContent)
     dataAccess = new DiscoveredDataAccess(discovered)
   } catch {
     return {
@@ -632,11 +771,13 @@ export function resolveEnhancedTraversal(
     })
   })
 
-  // Build enhanced graph (permission resolution happens here)
+  // Build enhanced graph (permission resolution happens here).
+  // Pass `discovered` so shared-impl metadata can fan out to per-proxy edges.
   const { edges, constructionErrors } = buildEnhancedGraph(
     callGraphData,
     functionsData,
     dataAccess,
+    discovered,
   )
 
   // Build bidirectional indices

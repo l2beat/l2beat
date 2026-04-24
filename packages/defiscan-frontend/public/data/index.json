@@ -113,7 +113,7 @@
         "scoredFunctionCount": 214,
         "adminCount": 33,
         "dependencyCount": 1,
-        "totalCapitalAtRisk": 21667689080.726692,
+        "totalCapitalAtRisk": 21667688391.207012,
         "totalTokenValueAtRisk": 21772953834.001663,
         "totalTokenValue": 21772953834.001663,
         "linesOfCode": 38231,
@@ -162,6 +162,26 @@
       }
     },
     {
+      "slug": "spark",
+      "name": "Spark",
+      "chain": "Ethereum",
+      "projectType": "lending",
+      "tokenName": "SPK",
+      "totals": {
+        "contractCount": 88,
+        "permissionedFunctionCount": 202,
+        "scoredFunctionCount": 198,
+        "adminCount": 8,
+        "dependencyCount": 13,
+        "totalCapitalAtRisk": 3353337819.6055293,
+        "totalTokenValueAtRisk": 379400000,
+        "totalTokenValue": 379400000,
+        "linesOfCode": 14735,
+        "verifiedContractCount": 88,
+        "coverage": 100
+      }
+    },
+    {
       "slug": "uniswap-v2",
       "name": "Uniswap V2",
       "chain": "Ethereum",
@@ -169,12 +189,12 @@
       "tokenName": "UNI",
       "totals": {
         "contractCount": 12,
-        "permissionedFunctionCount": 0,
-        "scoredFunctionCount": 0,
+        "permissionedFunctionCount": 2,
+        "scoredFunctionCount": 2,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 830049187.2609162,
-        "totalTokenValueAtRisk": 0,
+        "totalCapitalAtRisk": 857874658.03677,
+        "totalTokenValueAtRisk": 68020000,
         "totalTokenValue": 0,
         "linesOfCode": 1979,
         "verifiedContractCount": 12,
@@ -193,21 +213,23 @@
         "scoredFunctionCount": 34,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 1030786876.68355,
-        "totalTokenValueAtRisk": 0,
+        "totalCapitalAtRisk": 1018881031.80181,
+        "totalTokenValueAtRisk": 67560000,
         "totalTokenValue": 0,
-        "linesOfCode": 7933
+        "linesOfCode": 7933,
+        "verifiedContractCount": 12,
+        "coverage": 100
       }
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 25871141366.371937,
-    "totalTokenValueAtRisk": 28948853801.055904,
-    "totalTokenValue": 29074544089.315437,
-    "protocolsReviewed": 10,
-    "totalContractCount": 436,
-    "totalAdminCount": 82,
-    "totalUpdateCount": 617
+    "totalCapitalAtRisk": 29240398122.351894,
+    "totalTokenValueAtRisk": 29463833801.055904,
+    "totalTokenValue": 29589524089.315437,
+    "protocolsReviewed": 11,
+    "totalContractCount": 524,
+    "totalAdminCount": 90,
+    "totalUpdateCount": 652
   },
   "dependencies": [
     {
@@ -231,6 +253,174 @@
         {
           "slug": "EtherFi-Stake",
           "name": "EtherFi Stake"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
+      "name": "FixedPriceOracle",
+      "entity": "Fixed Price Oracle",
+      "totalFundsAtRisk": 3353337819.6055293,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7",
+      "name": "Sky Pot (DSR)",
+      "entity": "Sky",
+      "totalFundsAtRisk": 3353337819.6055293,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4219aA1A99f3fe90C2ACB97fCbc1204f6485B537",
+      "name": "Chronicle Aggor BTC/USD",
+      "entity": "Chronicle",
+      "totalFundsAtRisk": 2333633247.0767074,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x230E0321Cf38F09e247e50Afc7801EA2351fe56F",
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "entity": null,
+      "totalFundsAtRisk": 2137364313.038202,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBE21C54Dff3b2F1708970d185aa5b0eEB70556f1",
+      "name": "WEETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 2100898154.74863,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
+      "name": "Chronicle Aggor ETH/USD",
+      "entity": "Chronicle",
+      "totalFundsAtRisk": 1988222903.7205467,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x52E85eB49e07dF74c8A9466D2164b4C4cA60014A",
+      "name": "EZETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 1940943386.7989862,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xFDdf8D19D092839A26b31365c927cA236B5086cf",
+      "name": "RETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 1933795324.5772417,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x27f3A665c75aFdf43CfbF6B3A859B698f46ef656",
+      "name": "SavingsDaiOracle (sDAI)",
+      "entity": null,
+      "totalFundsAtRisk": 1908116052.7829528,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
+      "name": "SavingsDaiOracle (sUSDS)",
+      "entity": null,
+      "totalFundsAtRisk": 1904728746.5828688,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x70942D6b580741CF50A7906f4100063EE037b8eb",
+      "name": "RSETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 1904723158.0913386,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39",
+      "name": "WSTETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 1904683759.018465,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5c29868C58b6e15e2b962943278969Ab6a7D3212",
+      "name": "Chainlink ETH/USD Aggregator Proxy",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1904683759.018465,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4A7Ad931cb40b564A1C453545059131B126BC828",
+      "name": "Fig (Chronicle Oracle Wrapper)",
+      "entity": null,
+      "totalFundsAtRisk": 1904683759.018465,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
         }
       ]
     },
@@ -498,7 +688,7 @@
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNX Franc (VCHF)",
       "entity": "VCHF",
-      "totalFundsAtRisk": 427612.8807145811,
+      "totalFundsAtRisk": 448771.4422058004,
       "protocols": [
         {
           "slug": "Frankencoin",

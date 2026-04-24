@@ -514,6 +514,7 @@ class AdminInventoryModule {
         data.callGraphData,
         data.functions,
         dataAccess,
+        discovered,
       )
       const enhancedGraph = buildIndices(edges)
 

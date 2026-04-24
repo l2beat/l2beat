@@ -544,10 +544,14 @@ export interface FunctionEntry {
     contractAddress: string
     fieldName: string
   }
-  // External contract dependencies
-  dependencies?: {
-    contractAddress: string
-  }[]
+  // External contract dependencies.
+  // Two forms:
+  //   - { contractAddress } — literal external contract address
+  //   - { path } — path expression resolved against the current contract at
+  //     analysis time (same syntax as ownerDefinitions.path). Use this for
+  //     dependencies whose identity is derived from on-chain data that may
+  //     change (e.g. oracle lookups via a registry mapping).
+  dependencies?: FunctionDependencyRef[]
   // Mitigations (valueRange, relativeValue, other — delay is stored separately in `delay` field)
   mitigations?: Mitigation[]
   // Attribution tracking
@@ -570,6 +574,14 @@ export interface OwnerDefinition {
   path: string // Unified path expression
 }
 
+// Dependency reference. Literal form pins an external contract directly;
+// path form resolves against discovered data (same syntax as OwnerDefinition)
+// and is re-resolved each analysis — use it for links that follow mutable
+// on-chain state (e.g. registry mappings).
+export type FunctionDependencyRef =
+  | { contractAddress: string }
+  | { path: string }
+
 export interface ApiFunctionsUpdateRequest {
   contractAddress: string
   functionName: string
@@ -583,9 +595,7 @@ export interface ApiFunctionsUpdateRequest {
     contractAddress: string
     fieldName: string
   } | null
-  dependencies?: {
-    contractAddress: string
-  }[]
+  dependencies?: FunctionDependencyRef[]
   // Mitigations (valueRange, relativeValue, other — delay mitigations derived from `delay` field)
   mitigations?: Mitigation[] | null
   // Frontend sends only the text; backend stamps author + date

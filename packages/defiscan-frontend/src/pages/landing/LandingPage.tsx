@@ -23,7 +23,7 @@ import { useSearchModal } from '../../contexts/SearchModalContext'
 const trustPostureData = [
   { axis: 'CONTROL', value: 85 },
   { axis: 'DEPENDENCIES', value: 70 },
-  { axis: 'ABILITY TO EXIT', value: 60 },
+  { axis: 'GOVERNANCE', value: 65 },
   { axis: 'VERIFIABILITY', value: 70 },
   { axis: 'ACCESS', value: 75 },
 ]
@@ -41,8 +41,8 @@ const methodologyItems = [
   },
   {
     icon: ShieldIcon,
-    title: 'Exit Protection',
-    desc: 'Verifying withdrawal guarantees in the happy and unhappy case.',
+    title: 'Governance',
+    desc: 'Assessment of the governance process, delays, and potential fund impact governance contracts can exert.',
   },
   {
     icon: CodeIcon,

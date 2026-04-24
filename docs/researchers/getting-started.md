@@ -159,6 +159,21 @@ Proxy contracts have multiple hashes — discovery skips the first (proxy) and m
 
 Once the contract graph looks complete, click **Scan Permissions** in the terminal and pick the contracts whose access-controlled functions you want analyzed. The AI detector uses whichever provider key is set in `.env` (`OPENAI_API_KEY` or `ANTHROPIC_API_KEY`). Results are written to `functions.json` and can be reviewed, corrected, and scored directly in the Values panel.
 
+<details>
+<summary><strong>ℹ️ Shared-implementation patterns (Aave-style factory tokens)</strong></summary>
+
+Some protocols deploy many proxies that all point to the **same** implementation contract (Aave v3 has one AToken implementation shared by every reserve's proxy — 18 on Spark). Slither scans the impl once and writes its metadata under the impl's address.
+
+You don't need to do anything special in the UI. When you annotate a function on the shared impl (e.g. set `burn` as permissioned with `ownerDefinitions: [{path: "$self.POOL"}]`), the analysis pipeline **fans it out to every proxy using that impl at read time**:
+
+- `$self.X` paths re-bind to each specific proxy. `$self.POOL`, `$self.accessControl.MINTER_ROLE.members`, `$self.$admin` all resolve to each proxy's own values — you get correct per-proxy role holders automatically.
+- Funds attribution uses the **proxy's** balance, not the impl's. Tokens sometimes get mistakenly sent to an impl; the analysis ignores those and counts only the actual user deposits on each proxy.
+- One impl-level entry produces N admin rows (one per proxy) in the DeFiScan panel and the compiled review.
+
+If a piece of metadata genuinely differs per proxy (e.g. each AToken has a different price oracle), store that entry at the proxy address directly — each proxy gets its own entry. Path-form dependencies work here: `{path: "eth:0xAaveOracle.assetSources[$self.UNDERLYING_ASSET_ADDRESS]"}` stored on each AToken proxy resolves to that proxy's oracle at analysis time, so oracle rotations (via `setAssetSources`) propagate automatically without editing `functions.json`.
+
+</details>
+
 ## Call Graph Analysis
 
 Call graph generation requires [Slither](https://github.com/crytic/slither) and the Solidity compilers:

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": ["scaledTotalSupply", "totalSupply"],
+  "ignoreRelatives": ["UNDERLYING_ASSET_ADDRESS"],
+  "fields": {
+    "proxyAdmin": {
+      "description": "Immutable admin of the InitializableImmutableAdminUpgradeabilityProxy. Set at deployment by PoolConfigurator._initTokenWithProxy(address(this)) — only PoolConfigurator can call upgradeTo / upgradeToAndCall on the AToken proxy. Hardcoded because the proxy is factory-deployed (no standalone creation tx for constructorArgs to read), and the on-chain admin() getter is gated by ifAdmin.",
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738"
+      }
+    }
+  }
+}

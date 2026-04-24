@@ -1,0 +1,435 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "spark",
+  "import": ["../globalConfig.jsonc"],
+  "maxDepth": 7,
+  "initialAddresses": [
+    "eth:0x02C3eA4e34C0cBd694D2adFa2c690EECbC1793eE",
+    "eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4",
+    "eth:0xbE286431454714F511008713973d3B053A2d38f3",
+    "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+    "eth:0xc20059e0317DE91738d13af027DfC4a50781b066"
+  ],
+  "overrides": {
+    "eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4": {
+      "fields": {
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "usr",
+            "add": { "event": "event Rely(address indexed usr)" },
+            "remove": { "event": "event Deny(address indexed usr)" }
+          }
+        }
+      }
+    },
+    "eth:0xdA135Cd78A086025BcdC87B038a1C462032b510C": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN_ROLE",
+              "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN_ROLE",
+              "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN_ROLE",
+              "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER_ROLE",
+              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE_ROLE",
+              "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x4C1341636721b8B687647920B2E9481f3AB1F2eE": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987": {
+      "fields": { "constructorArgs": { "handler": { "type": "constructorArgs", "nameArgs": true } } }
+    },
+    "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738": {
+      "fields": { "constructorArgs": { "handler": { "type": "constructorArgs", "nameArgs": true } } }
+    },
+    // --- Spark: AaveOracle — surface per-asset price source map (may be direct Chainlink EAC or a Spark ratio oracle that combines two feeds) ---
+    "eth:0x8105f69D9C41644c6A0803fDA7D03Aa70996cFD9": {
+      "fields": {
+        "assetSources": {
+          "handler": {
+            "type": "event",
+            "select": "source",
+            "groupBy": "asset",
+            "set": { "event": "event AssetSourceUpdated(address indexed asset, address indexed source)" }
+          }
+        }
+      }
+    },
+    // --- Spark oracle wrappers: keep visible as leaves, prune feed references to avoid Chronicle/Renzo/Kelp/Lido contagion ---
+    "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39": {
+      "ignoreRelatives": ["steth"]
+    },
+    // EZETHExchangeRateOracle, RSETHExchangeRateOracle: let `oracle` (Renzo/Kelp) be discovered as dep; leaf prunes below
+    // --- Chronicle Aggors: let feeds be discovered as leaves (leaf overrides below prune each) ---
+    // --- SavingsDaiOracle, Fig, CLSynchronicityPriceAdapterPegToBase: same — let references land, prune at each leaf ---
+
+    // --- Leaf: Chainlink main aggregators (same shape as existing 3 EACs) ---
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    // --- Leaf: Chronicle core oracles (authed/feeds/tolled pull full Chronicle infra) ---
+    "eth:0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E": {
+      "ignoreRelatives": ["authed", "feeds", "tolled"]
+    },
+    "eth:0x24C392CDbF32Cf911B258981a66d5541d85269ce": {
+      "ignoreRelatives": ["authed", "feeds", "tolled"]
+    },
+    // --- Leaf: Redstone price feeds (ERC1967 proxies) ---
+    "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4": {
+      "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner", "getPriceFeedAdapter"]
+    },
+    "eth:0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc": {
+      "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner", "getPriceFeedAdapter"]
+    },
+    // --- Leaf: Maker MedianGNOUSD (slot mapping drags Chronicle-style feeders) ---
+    "eth:0x31BFA908637C29707e155Cfac3a50C9823bF8723": {
+      "ignoreRelatives": ["slot"]
+    },
+    // --- Leaf: MakerDAO Pot (vat/vow are Maker core) ---
+    "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7": {
+      "ignoreRelatives": ["vat", "vow"]
+    },
+    // --- Spark: EmissionManager — surface per-reward emission admin via EmissionAdminUpdated events ---
+    // --- and the Rewards Vault's live wstETH balance so reward-system impact caps auto-track on-chain state ---
+    "eth:0xf09e48dd4CA8e76F63a57ADd428bB06fee7932a4": {
+      "fields": {
+        "emissionAdmins": {
+          "handler": {
+            "type": "event",
+            "select": "newAdmin",
+            "groupBy": "reward",
+            "set": { "event": "event EmissionAdminUpdated(address indexed reward, address indexed oldAdmin, address indexed newAdmin)" }
+          }
+        },
+        // Reward distribution uses PullRewardsTransferStrategy (0x11aAC1cA..) which calls
+        // wstETH.transferFrom(vault, user, amount) on each claim, so the absolute maximum
+        // drainable via any reward-system compromise is bounded by the Vault's wstETH balance.
+        // Vault = 2/3 Safe (0x8076...), which is also the emission admin for wstETH.
+        "rewardsVaultWstETHBalance": {
+          "description": "wstETH balance of the Rewards Vault (2/3 Safe 0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27). Used as the impactCap upper bound for reward-system admin functions since PullRewardsTransferStrategy pulls rewards from this vault via transferFrom.",
+          "handler": {
+            "type": "call",
+            "method": "function balanceOf(address) view returns (uint256)",
+            "args": ["0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27"],
+            "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+          }
+        }
+      }
+    },
+    "eth:0x9Ad87668d49ab69EEa0AF091de970EF52b0D5178": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x70546d1c92f8c2132ae23a23f5177aa8526356051c7510df99f50e012d221529": "CONTROLLER",
+              "0x0ac42a08299cbc4428ec38ad4a8e7d7440779fbbb20ea90bd10c094a406cfa6f": "FREEZER"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x237e3985dD7E373F2ec878EC1Ac48A228Cf2e7a3": {
+      "ignoreRelatives": ["authority"],
+      "fields": {
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "usr",
+            "add": { "event": "event Rely(address indexed usr)" },
+            "remove": { "event": "event Deny(address indexed usr)" }
+          }
+        }
+      }
+    },
+    "eth:0x909A86f78e1cdEd68F9c2Fe2c9CD922c401abe82": {
+      "ignoreMethods": ["oracleAt"]
+    },
+    "eth:0xbE286431454714F511008713973d3B053A2d38f3": {
+      "ignoreRelatives": [
+        "authority",
+        "proxy"
+      ],
+      "fields": {
+        "delay": {
+          "severity": "HIGH"
+        }
+      }
+    },
+    // --- Sky ESM (Emergency Shutdown Module): ward on SubProxy; prune `end`/`gem`/`proxy` so we don't pull all of Maker core ---
+    "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58": {
+      "ignoreRelatives": ["end", "gem", "proxy"],
+      "fields": {
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "usr",
+            "add": { "event": "event Rely(address indexed usr)" },
+            "remove": { "event": "event Deny(address indexed usr)" }
+          }
+        }
+      }
+    },
+    // --- Sky StarGuard: ward on SubProxy, spark-adjacent guard ---
+    "eth:0x6605aa120fe8b656482903E7757BaBF56947E45E": {
+      "fields": {
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "usr",
+            "add": { "event": "event Rely(address indexed usr)" },
+            "remove": { "event": "event Deny(address indexed usr)" }
+          }
+        }
+      }
+    },
+    // --- Sky PauseProxy (DSPauseProxy): root executor of Maker governance, added as initial so it resolves to a named node; owner points back to DSPause which we already handle ---
+    "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB": {
+      "ignoreRelatives": ["owner"]
+    },
+    "eth:0xc20059e0317DE91738d13af027DfC4a50781b066": {
+      "fields": {
+        "wards": {
+          "handler": {
+            "type": "event",
+            "select": "usr",
+            "add": { "event": "event Rely(address indexed usr)" },
+            "remove": { "event": "event Deny(address indexed usr)" }
+          }
+        }
+      }
+    },
+    "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": {
+      "ignoreRelatives": [
+        "owner",
+        "aggregator",
+        "accessController",
+        "proposedAggregator"
+      ]
+    },
+    "eth:0x5c29868C58b6e15e2b962943278969Ab6a7D3212": {
+      "ignoreRelatives": [
+        "owner",
+        "aggregator",
+        "accessController",
+        "proposedAggregator"
+      ]
+    },
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
+      "ignoreRelatives": [
+        "owner",
+        "aggregator",
+        "accessController",
+        "proposedAggregator"
+      ]
+    },
+    "eth:0xd0B378dA552D06B6D3497e4b5ba2A83418f78d06": {
+      "ignoreInWatchMode": ["latestAnswer"]
+    },
+    "eth:0x4C805FD3c64B79840d36813Fc90c165bf77bb7E4": {
+      "ignoreInWatchMode": ["latestAnswer"]
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA": {
+      "ignoreMethods": [
+        "convertToAssets",
+        "convertToShares",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "pot",
+        "asset",
+        "dai"
+      ],
+      "ignoreRelatives": ["daiJoin", "vat"],
+      "ignoreInWatchMode": ["totalAssets", "totalSupply"]
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreMethods": ["admin", "implementation"],
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "blacklister",
+        "masterMinter",
+        "owner",
+        "pauser",
+        "rescuer"
+      ]
+    },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      "ignoreRelatives": ["owner", "getOwner", "upgradedAddress"]
+    },
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      "ignoreRelatives": ["owner", "pendingOwner"]
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "ignoreMethods": ["getEthValue", "getRethValue"]
+    },
+    "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
+      "ignoreRelatives": ["$admin", "$implementation", "roleManager"]
+    },
+    "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": {
+      "ignoreRelatives": ["owner"]
+    },
+    "eth:0x8236a87084f8B84306f72007F36F2618A5634494": {
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "Bascule",
+        "consortium",
+        "getAssetRouter",
+        "getTreasury",
+        "operator",
+        "owner",
+        "pauser",
+        "pendingOwner"
+      ]
+    },
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
+      "ignoreMethods": ["getEETHByWeETH", "getWeETHByeETH", "proxiableUUID"],
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "eETH",
+        "getImplementation",
+        "liquidityPool",
+        "owner",
+        "roleRegistry"
+      ]
+    },
+    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": {
+      "ignoreMethods": [
+        "convertToAssets",
+        "convertToShares",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "proxiableUUID"
+      ],
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "asset",
+        "getImplementation",
+        "usds",
+        "usdsJoin",
+        "vat",
+        "vow"
+      ]
+    },
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "custodyAddress",
+        "lrtConfig"
+      ]
+    },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreRelatives": ["$admin", "$implementation", "getImplementation"]
+    },
+    "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": {
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "admin",
+        "blacklister",
+        "implementation",
+        "masterMinter",
+        "owner",
+        "pauser",
+        "rescuer"
+      ]
+    },
+    "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+      "ignoreMethods": ["admin", "implementation"],
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "assetProtectionRoleDeprecated",
+        "betaDelegateWhitelisterDeprecated",
+        "defaultAdmin",
+        "owner",
+        "ownerDeprecated",
+        "proposedOwnerDeprecated",
+        "supplyControl",
+        "supplyControllerDeprecated"
+      ]
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "ignoreRelatives": ["stETH"]
+    },
+    "eth:0xdA0Ab1e0017DEbCd72Be8599041a2aa3bA7e740F": {
+      "ignoreMethods": ["get", "list", "keys"],
+      "ignoreInWatchMode": ["count"]
+    },
+    "eth:0x64B157212C21097002920D57322B671b88DFcCBC": {
+      "ignoreInWatchMode": ["latestAnswer"]
+    },
+    // --- New Chainlink feeds surfaced via ratio oracles (same leaf pattern as existing EACs) ---
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    // --- Renzo RestakeManager (EZETHExchangeRateOracle.oracle): leaf — ignore every internal ref so Renzo's stack stays out ---
+    "eth:0x74a09653A083691711cF8215a6ab074BB4e99ef5": {
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "admin",
+        "implementation",
+        "owner",
+        "collateralTokens",
+        "delegationManager",
+        "depositQueue",
+        "ezETH",
+        "operatorDelegators",
+        "renzoOracle",
+        "riskOracleMiddleware",
+        "roleManager",
+        "strategyManager"
+      ]
+    },
+    // --- Kelp LRTOracle (RSETHExchangeRateOracle.oracle): leaf — ignore lrtConfig so Kelp's stack stays out ---
+    // --- Also surface Spark's rsETH pool balance so dependency impactCap auto-tracks on-chain state ---
+    "eth:0x349A73444b1a310BAe67ef67973022020d70020d": {
+      "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner", "lrtConfig"],
+      "fields": {
+        // Any Kelp compromise (LRTOracle manipulation, rsETH exchange rate fraud) can only
+        // affect Spark's lending pool up to the rsETH held by Spark's rsETH AToken. Over-
+        // valuing rsETH lets attackers over-borrow against it (drain other assets up to
+        // rsETH-collateral-value × LTV); under-valuing unfairly liquidates rsETH positions.
+        // Both paths are bounded by the pool's rsETH balance.
+        "sparkRsETHPoolBalance": {
+          "description": "rsETH balance of Spark's rsETH AToken (0x856f1Ea7...). Bounds the impact of Kelp oracle manipulation since all Kelp oracle calls into Spark go through rsETH-collateralized positions.",
+          "handler": {
+            "type": "call",
+            "method": "function balanceOf(address) view returns (uint256)",
+            "args": ["0x856f1Ea78361140834FDCd0dB0b08079e4A45062"],
+            "address": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
+          }
+        }
+      }
+    }
+  }
+}

@@ -104,6 +104,35 @@ Owner definitions use a unified path expression that navigates any data structur
 
 When a path resolves to an object with properties, the entire object is preserved and rendered in the UI — this lets the UI distinguish role admins from members. Arrays are flattened to avoid redundancy. Multiple owner definitions are supported; functions use `ownerDefinitions !== undefined` (not `??`) so explicit clearing works.
 
+### Shared-implementation fan-out
+
+When a single implementation is used by multiple proxies (factory-deployed token patterns — Aave ATokens are the canonical example, with one impl shared by 18 proxies), function metadata stored at the impl address is treated as a **template**. At analysis time (`getAdmins`, `getDependencies`, permission-edge construction in `buildEnhancedGraph`, mitigation/impactCap lookups) the pipeline emits one virtual row per proxy using the impl — each row binds `$self` to its specific proxy and resolves paths against that proxy's data in `discovered.json`.
+
+Concrete consequences:
+
+- **Write once, applied to all proxies**: store admin entries (e.g. `burn`, `mint`) on the impl with `ownerDefinitions: [{path: "$self.POOL"}]`. The Pool admin relationship is emitted for every proxy automatically.
+- **`$self.X` paths rebind per proxy**: paths like `$self.accessControl.MINTER_ROLE.members` or `$self.$admin` resolve to each proxy's own values — different proxies can have different role holders, and the fan-out surfaces this correctly.
+- **`@fieldName` paths also rebind per proxy**: `@getFundsAdmin.owner` reads `getFundsAdmin` from the current proxy, which may differ per instance.
+- **Funds are per-proxy**: `directFundsUsd` on each fanned-out row reads the specific proxy's own balance (not the impl's, which is often unrelated stranded tokens).
+
+For **per-proxy differentiated metadata** (e.g. each AToken depends on a different oracle), store entries at the proxy address directly — each proxy has its own entry. Path-form dependencies work here too: `dependencies: [{path: "eth:0xOracle.assetSources[$self.UNDERLYING_ASSET_ADDRESS]"}]` stored on each AToken proxy resolves to the correct per-asset oracle without touching storage when oracle configuration changes on-chain.
+
+### Manual dependency transitive reachability
+
+A `dependencies` entry is not a terminal leaf — it seeds BFS through the dep target so transitive reachables surface automatically.
+
+Two layers work together:
+
+1. **User-facing layer** (`computeDependencies` in [functionAnalysis.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/functionAnalysis.ts)): after the primary call-graph traversal, `augmentTraversalWithManualDepSeeds` runs an additional BFS from every resolved dep target, seeded at each `callerFunction` that target exposes. Reachable externals from that sub-traversal merge into the primary traversal and surface in `/dependencies` as auto-detected entries with the expected view/non-view classification.
+
+2. **Capital-analysis layer** (`buildEnhancedGraph` in [enhancedTraversal.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/enhancedTraversal.ts)): each manual dep emits `edgeType: 'dependency'` edges `(target, func) → (depAddr, callerFn)` per caller function on the dep target. `CapitalAnalysisCalculator.traverseForward` filters dep edges by `sourceFunction` (like callgraph) and propagates view-only status. Dep edges are excluded from backward ownership-chain traversal — a dep is "function depends on X," not "X owns function."
+
+Result: adding a manual dep on an oracle wrapper like `EZETHExchangeRateOracle` transparently surfaces Chronicle_Aggor_ETH_USD / RestakeManager / Renzo Restaked ETH Token as transitive reachables on every AToken that depends on that wrapper, without the researcher enumerating them. Per-function capital analysis walks the same dep edge to count funds held by anything downstream of the dep target.
+
+Leaf dep targets that Slither couldn't analyse (e.g. raw Chainlink aggregators with no external-call graph) contribute nothing to transitive reachables. They still appear as manual-dep leaves in the `/dependencies` response.
+
+Implementation in [addressUtils.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/addressUtils.ts) (`buildImplToProxiesMap`, `buildProxyToImplsMap`), fan-out in [projectAnalysis.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/projectAnalysis.ts) (`getAdmins`, `buildMitigationsLookup`, `buildResolvedImpactCaps`), [enhancedTraversal.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/enhancedTraversal.ts) (`buildEnhancedGraph` permission edges), [capitalAnalysis.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/capitalAnalysis.ts) (`findFunctionMeta` shared-impl fallback), [functionAnalysis.ts](../../../packages/l2b/src/implementations/discovery-ui/defidisco/functionAnalysis.ts) (`buildFunctionsMetadataLookup`). Full design + verification in [docs/developers/designs/shared-impl-fan-out.md](../designs/shared-impl-fan-out.md).
+
 ### Score (3-state)
 
 - `unscored` — not yet reviewed (default)
@@ -130,9 +159,20 @@ Each function can carry a `mitigations[]` array describing on-chain constraints 
 **Resolution (`projectAnalysis.ts`, `getMitigationsForOwner`)** runs in two stages:
 
 1. **Direct mitigations** — taken from `functions.json` and filtered per owner (globals pass through, scoped ones must match the owner address)
-2. **Transitive mitigations** — collected via forward BFS through the call graph; for every downstream function reachable from the starting function, global mitigations and scoped mitigations whose `scopedTo.address` matches a contract on the call path are included
+2. **Transitive mitigations** — collected via forward BFS through the enhanced graph; for every downstream function reachable from the starting function, global mitigations and scoped mitigations whose `scopedTo.address` matches a contract on the call path are included
 
 Example: `XCHF → StablecoinBridge.mint() → Frankencoin.mint()` where `Frankencoin.mint` carries a mitigation scoped to `StablecoinBridge`. When viewing `StablecoinBridge.mint` from XCHF's perspective, the minting limit propagates transitively because StablecoinBridge is on the call path.
+
+**BFS seeding — what it walks through.** `collectDownstreamScopedMitigations` follows **both** `'callgraph'` and `'dependency'` edges (mirroring `capitalAnalysis.traverseForward`). Dep-edge traversal is required so a global cap on a manual-dep target (e.g. an oracle reachable via a `dependencies` path expression) propagates back to the permissioned function that names it. Permission edges are NOT followed — a dep is not ownership.
+
+**Upgrade-function seeding.** Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `upgradeBeacon`, ...) are delegatecall stubs with no outgoing edges of their own, so without explicit seeding their transitive-mit BFS would never run. Two complementary mechanisms handle this:
+
+1. `buildTransitiveMitigationsLookup` explicitly iterates `functions.json.contracts` for `isUpgradeFunction(name)` entries and adds them to the seed set, regardless of whether the forward index contains them as edge sources.
+2. When `collectDownstreamScopedMitigations` is called with an upgrade start function, BFS is seeded with **every** non-permission `sourceFunction` that appears in the contract's forward edges — same pattern as `traverseWithPaths` and `capitalAnalysis.traverseForward`. This correctly models "upgrade grants arbitrary code execution on the contract": any function's downstream reach becomes accessible to the upgrader.
+
+Without (2), upgrade admins on ATokens never accumulate transitive mits from oracle wrappers, and researchers have to manually copy a scoped mitigation onto every upgrade function — defeating the point of transitive propagation.
+
+**Performance note.** Both `buildTransitiveMitigationsLookup` and `collectDownstreamScopedMitigations` fast-path out when `mitigationsLookup.size === 0`: projects with no direct mitigations skip the BFS work entirely. For projects with mits (spark, Frankencoin), the BFS still runs per `(contract, function)` seed. The transitive lookup is memoized per `ProjectAnalysis` instance — but each HTTP request constructs a fresh instance, so cross-request caching is a future improvement.
 
 `reviewCompiler.ts` consumes the resolved mitigations directly — it does not compute or filter them itself.
 

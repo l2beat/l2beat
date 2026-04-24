@@ -131,6 +131,17 @@ totalReachableCapital = totalDirectCapital + Σ min(funds(contract), contractCap
 - View-call edges (`isViewCall === true`) contribute `edgeReachCap = 0`. Since reads cannot move funds, a view edge is a no-op in the per-contract `max` merge — it doesn't flip a capped contract to uncapped (the UNI `balanceOf` scenario), and a contract reached only via view calls ends up with `effectiveCapUsd = 0` (correctly shows $0 at risk).
 - Per-contract cap merging uses `max` across edges: the least-restrictive reach wins, and `undefined` (uncapped) dominates any numeric cap.
 
+### Shared-implementation fan-out
+
+Factory-deployed proxy patterns (Aave ATokens, debt tokens, similar shared-impl designs) break the normal "1 impl = 1 proxy" mapping that capital analysis originally assumed. When N proxies share one impl:
+
+- One admin entry on the impl (e.g. `burn` with owner `$self.POOL`) is fanned out to **N admin rows** — one per proxy — at `getAdmins` time. Each row's `contractAddress` is the proxy, and `$self` paths rebind to that proxy for owner resolution.
+- `directFundsUsd` on each fanned-out row reads the **proxy's** balance (via proxy-keyed `getContractFunds`), not the impl's — so dollar amounts reflect actual user deposits, not any tokens mistakenly sent to the impl itself.
+- Permission edges in `buildEnhancedGraph` also fan out (edge target = each proxy, not the single impl), so backward governance-chain resolution from any proxy finds the owner chain correctly.
+- Project-level `totalCapitalAtRisk` dedups across the N rows via `resolveAddr` in `computeAdminTotals`, so shared-impl fan-out never inflates the aggregate — only the per-admin attribution is corrected.
+
+Entries at unique-impl addresses (most of the codebase) pass through unchanged: `implToProxies[IMPL].size == 1` so the fan-out expands to a single proxy row. Full verification across 12 projects in [docs/developers/designs/shared-impl-fan-out.md](../designs/shared-impl-fan-out.md).
+
 ### Upgrade Function Detection
 
 Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `proxy__upgradeTo`, `proxy__upgradeToAndCall`, `upgradeBeacon`) replace the entire contract implementation, giving the caller arbitrary control over every function on the contract. Standard BFS would only follow edges from the upgrade function itself — which misses the point.
@@ -321,9 +332,9 @@ If admin or dependency data needs to change, modify `ProjectAnalysis` — not th
 
 ## Radar Scoring
 
-`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100.
+`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100 (individual axes cap their effective max below 100 — e.g. CONTROL tops at 90, GOVERNANCE at 95).
 
-Axes: `CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `ABILITY TO EXIT`.
+Axes: `CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `GOVERNANCE`.
 
 ### CONTROL
 
@@ -357,6 +368,25 @@ Additive, four components, total clamped to 100 and rounded.
 
 Coverage uses `>=` at bucket edges, so exactly `0.95` → 40 and exactly `0.90` → 20.
 
-### ABILITY TO EXIT
+### GOVERNANCE
 
-Currently a constant `65` placeholder — not yet derived from compiled data.
+Measures governance risk using three signals on `CompiledReview`: on-chain vs off-chain execution, total proposal-to-execution delay, and the fund impact governance contracts exert. Additive, max **95**, rounded, clamped.
+
+**Short-circuit:** return **95** only when `review.governance` is undefined AND no admin has `isGovernance === true && impact > 0` (where `impact = totalReachableCapital + totalReachableTokenValue`). This is the "no governance layer at all" case — the protocol is immutable or purely EOA/Multisig-controlled. If governance is documented but no admin carries the `isGovernance` tag (e.g. offchain Snapshot + multisig executor), the formula still runs, using **all fund-impacting admins** as the impact set.
+
+Otherwise sum the three components:
+
+| Component | Weight | Tiers |
+|---|---|---|
+| **Vote execution** (`review.governance.voteExecution`) | 30 | `onchain` → 30, `offchain` → 10, `review.governance` undefined → **5** (governance admins exist but no documented process) |
+| **Total delay** (`proposalPeriod + executionDelay`, summed seconds) | 35 | `≥10d → 35`, `≥7d → 28`, `≥3d → 18`, `≥1d → 10`, `≥12h → 5`, `<12h → 2` |
+| **Governance fund share** (sum impact / TVS, capped at 100%; TVS = `totalCapitalAtRisk + totalTokenValue`; TVS `0` with impact > 0 treated as 100%) | 30 | `≤10% → 30`, `≤30% → 22`, `≤60% → 12`, `>60% → 5` |
+
+Max achievable: **95** (30 + 35 + 30).
+
+**Duration handling:** `durationSeconds(d)` resolves a `CompiledGovernanceDuration` to seconds:
+- `kind === 'none'` → 0
+- `kind === 'fieldRef'` → `d.seconds` when `d.resolved === true`, else 0
+- `kind === 'fixed'` → parsed from `d.value` via regex `(\d+)\s*(second|minute|hour|day|week)s?` (all matches summed; handles strings like `"4 days"`, `"2 days 6 hours"`)
+
+**Impact cap:** raw admin impact sums can exceed TVS because admins often reach overlapping contracts. The share is clamped to `min(1, govImpact/tvs)` so the tier boundaries remain meaningful.

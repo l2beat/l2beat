@@ -14,6 +14,7 @@ import type {
   ApiAbiEntry,
   ApiAddressType,
   ContractFundsData,
+  FunctionDependencyRef,
   FunctionEntry,
   FunctionTraversalResult,
   ImpactCap,
@@ -142,7 +143,7 @@ interface FunctionFolderProps {
   onDependenciesUpdate: (
     contractAddress: string,
     functionName: string,
-    dependencies?: { contractAddress: string }[],
+    dependencies?: FunctionDependencyRef[],
   ) => void
   onMitigationsUpdate: (
     contractAddress: string,
@@ -2391,7 +2392,12 @@ export function FunctionFolder({
               </div>
             )}
 
-            {/* Manual dependencies */}
+            {/* Manual dependencies.
+                Two shapes coexist:
+                  - Literal { contractAddress } — rendered with name + ✕
+                  - Path { path } — rendered as the path template plus the
+                    addresses the backend resolved to (from functionDeps) so
+                    the researcher can still click through */}
             {currentFunction?.dependencies &&
               currentFunction.dependencies.length > 0 && (
                 <div className="mb-3">
@@ -2401,38 +2407,82 @@ export function FunctionFolder({
 
                   <div className="space-y-2">
                     {currentFunction.dependencies.map((dependency, index) => {
-                      const depInfo = getDependencyInfo(
-                        dependency.contractAddress,
-                      )
+                      if ('contractAddress' in dependency) {
+                        const depInfo = getDependencyInfo(
+                          dependency.contractAddress,
+                        )
+                        return (
+                          <div
+                            key={index}
+                            className="rounded bg-coffee-800 p-2"
+                          >
+                            <div className="mb-1 flex items-center justify-between">
+                              <div className="flex flex-1 items-center gap-2">
+                                <button
+                                  onClick={() =>
+                                    usePanelStore
+                                      .getState()
+                                      .select(dependency.contractAddress)
+                                  }
+                                  className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
+                                  title={`Select ${dependency.contractAddress}`}
+                                >
+                                  {depInfo?.name ||
+                                    dependency.contractAddress.slice(0, 10) +
+                                      '...'}
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    usePanelStore
+                                      .getState()
+                                      .select(dependency.contractAddress)
+                                  }
+                                  className="text-coffee-400 hover:text-coffee-300"
+                                  title="Select this contract"
+                                >
+                                  <IconOpen />
+                                </button>
+                              </div>
+                              <button
+                                onClick={() => handleRemoveDependency(index)}
+                                className="ml-2 flex-shrink-0 text-aux-red hover:opacity-80"
+                                title="Remove this dependency"
+                              >
+                                ✕
+                              </button>
+                            </div>
 
+                            {depInfo?.entity && (
+                              <div className="mt-1 flex items-center gap-1 text-xs">
+                                <span className="text-coffee-400">Entity:</span>
+                                <span className="font-semibold text-coffee-200">
+                                  {depInfo.entity}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      }
+
+                      // Path-form dependency: the backend resolves it at
+                      // analysis time and returns the resolved addresses in
+                      // the /dependencies API as non-auto-detected entries.
+                      const resolvedFromApi = functionDeps.filter(
+                        (d) => !d.isAutoDetected,
+                      )
                       return (
                         <div key={index} className="rounded bg-coffee-800 p-2">
                           <div className="mb-1 flex items-center justify-between">
-                            <div className="flex flex-1 items-center gap-2">
-                              <button
-                                onClick={() =>
-                                  usePanelStore
-                                    .getState()
-                                    .select(dependency.contractAddress)
-                                }
-                                className="font-mono text-aux-cyan text-xs hover:text-aux-cyan-light"
-                                title={`Select ${dependency.contractAddress}`}
+                            <div className="flex flex-1 flex-col">
+                              <span className="text-coffee-300 text-[10px] uppercase tracking-wide">
+                                Path
+                              </span>
+                              <span
+                                className="break-all font-mono text-aux-cyan text-xs"
+                                title={dependency.path}
                               >
-                                {depInfo?.name ||
-                                  dependency.contractAddress.slice(0, 10) +
-                                    '...'}
-                              </button>
-                              <button
-                                onClick={() =>
-                                  usePanelStore
-                                    .getState()
-                                    .select(dependency.contractAddress)
-                                }
-                                className="text-coffee-400 hover:text-coffee-300"
-                                title="Select this contract"
-                              >
-                                <IconOpen />
-                              </button>
+                                {dependency.path}
+                              </span>
                             </div>
                             <button
                               onClick={() => handleRemoveDependency(index)}
@@ -2442,13 +2492,24 @@ export function FunctionFolder({
                               ✕
                             </button>
                           </div>
-
-                          {depInfo?.entity && (
-                            <div className="mt-1 flex items-center gap-1 text-xs">
-                              <span className="text-coffee-400">Entity:</span>
-                              <span className="font-semibold text-coffee-200">
-                                {depInfo.entity}
-                              </span>
+                          {resolvedFromApi.length > 0 && (
+                            <div className="mt-1 space-y-1">
+                              <div className="text-coffee-500 text-[10px]">
+                                Resolves to:
+                              </div>
+                              {resolvedFromApi.map((r) => (
+                                <button
+                                  key={r.address}
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    usePanelStore.getState().select(r.address)
+                                  }}
+                                  className="block font-mono text-[11px] text-aux-cyan hover:text-aux-cyan-light"
+                                  title={`Select ${r.address}`}
+                                >
+                                  {r.name} ({r.address.slice(0, 10)}...)
+                                </button>
+                              ))}
                             </div>
                           )}
                         </div>
@@ -3398,21 +3459,26 @@ export function FunctionFolder({
                     )}
                     {(currentFunction?.dependencies?.length ?? 0) > 0 && (
                       <optgroup label="Dependencies">
-                        {(currentFunction?.dependencies ?? []).map((dep) => {
-                          const info = availableContracts.find((c) =>
-                            addressesEqual(c.address, dep.contractAddress),
+                        {(currentFunction?.dependencies ?? [])
+                          .filter(
+                            (dep): dep is { contractAddress: string } =>
+                              'contractAddress' in dep,
                           )
-                          return (
-                            <option
-                              key={`dependency:${dep.contractAddress}`}
-                              value={`dependency:${dep.contractAddress}`}
-                            >
-                              {info?.name ??
-                                dep.contractAddress.slice(0, 12) + '...'}{' '}
-                              ({dep.contractAddress.slice(0, 10)}...)
-                            </option>
-                          )
-                        })}
+                          .map((dep) => {
+                            const info = availableContracts.find((c) =>
+                              addressesEqual(c.address, dep.contractAddress),
+                            )
+                            return (
+                              <option
+                                key={`dependency:${dep.contractAddress}`}
+                                value={`dependency:${dep.contractAddress}`}
+                              >
+                                {info?.name ??
+                                  dep.contractAddress.slice(0, 12) + '...'}{' '}
+                                ({dep.contractAddress.slice(0, 10)}...)
+                              </option>
+                            )
+                          })}
                       </optgroup>
                     )}
                   </select>

@@ -231,6 +231,62 @@ export function navigateValuePath(
 }
 
 /**
+ * Substitute sub-expressions inside bracket keys with their resolved string
+ * values. Recognised when bracket content starts with "$self" or "@" — the
+ * content is resolved recursively against `currentContractAddress` (not the
+ * navigated target) and its resulting string is substituted in as the key.
+ * Literal bracket keys (e.g. "[eth:0x123]", "[ROLE]", "[0]") are untouched.
+ */
+function substituteSubExpressions(
+  path: string,
+  dataAccess: IContractDataAccess,
+  currentContractAddress: string,
+): string {
+  let out = ''
+  let i = 0
+  while (i < path.length) {
+    const ch = path[i]
+    if (ch !== '[') {
+      out += ch
+      i++
+      continue
+    }
+    const close = path.indexOf(']', i)
+    if (close === -1) {
+      throw new Error(`Unclosed bracket in path: ${path}`)
+    }
+    const content = path.substring(i + 1, close)
+    const isSubExpr = content.startsWith('$self') || content.startsWith('@')
+    if (!isSubExpr) {
+      out += path.substring(i, close + 1)
+      i = close + 1
+      continue
+    }
+    const resolved = resolvePathExpression(
+      dataAccess,
+      currentContractAddress,
+      content,
+    )
+    if (resolved.error) {
+      throw new Error(
+        `Sub-expression "${content}" failed to resolve: ${resolved.error}`,
+      )
+    }
+    const key = resolved.structuredValue
+    if (typeof key !== 'string' || key.length === 0) {
+      throw new Error(
+        `Sub-expression "${content}" must resolve to a non-empty string key, got: ${JSON.stringify(
+          key,
+        )}`,
+      )
+    }
+    out += '[' + key + ']'
+    i = close + 1
+  }
+  return out
+}
+
+/**
  * Resolves a path expression to owner data (addresses + structured value)
  *
  * Path format: <contractRef>.<valuePath>
@@ -311,8 +367,17 @@ export function resolvePathExpression(
       throw new Error(`Contract ${targetContractAddress} not found`)
     }
 
+    // Resolve any sub-expressions inside bracket keys against the ORIGINAL
+    // current contract (not the target we just navigated to) so that
+    // "[$self.FIELD]" reads FIELD from the contract the caller is analysing.
+    const resolvedValuePath = substituteSubExpressions(
+      valuePath,
+      dataAccess,
+      currentContractAddress,
+    )
+
     // Navigate value path in contract data
-    return navigateValuePath(dataAccess, targetContract, valuePath)
+    return navigateValuePath(dataAccess, targetContract, resolvedValuePath)
   } catch (error) {
     return {
       addresses: [],
