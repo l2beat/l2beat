@@ -10,7 +10,7 @@ Generated with discovered.json: 0x374ea1a79e3c9d9cce4f42a0e7bc229ecc004105
 
 Arsia fee mechanics activated: owner populated the Arsia-era SystemConfig fields that had been zero since the v1.4.0 upgrade. `basefeeScalar` set to 169019, `daFootprintGasScalar` to 400, `eip1559Denominator` to 50, `eip1559Elasticity` to 4, `minBaseFee` to 50 gwei, `operatorFeeScalar` to 100000000. `gasLimit` decreased from 200B (a pre-Arsia placeholder above the 500M cap) to a normal 60M.
 
-OPSuccinctL2OutputOracle rotated SP1 verification keys: `aggregationVkey` → `0x0022379400ea3157...`, `rangeVkeyCommitment` → `0x08666bcf03c2240b...`. Program hash entries added to `programHashes.ts` as `notVerified`, pointing at [mantle-xyz/op-succinct@v2.2.0](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0) as the candidate source (latest tag after the previously-verified v2.2.0-beta.5); a local rebuild is still required to confirm the match.
+OPSuccinctL2OutputOracle rotated SP1 verification keys: `aggregationVkey` → `0x0022379400ea3157...`, `rangeVkeyCommitment` → `0x08666bcf03c2240b...`. Program hashes regenerated from [mantle-xyz/op-succinct@v2.2.0-beta.8](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) (commit `8542b244fac50b3db2cb027c6282b9f42fd81af9`) and added to `programHashes.ts` as `successful`.
 
 ## Watched changes
 
