@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xcfc2d5e2d87b850416658b18198144868c613325
+Generated with discovered.json: 0x44adf49cd411fd4b0578afb5912ae8ca2c5d6653
 
-# Diff at Fri, 24 Apr 2026 16:16:10 GMT:
+# Diff at Fri, 24 Apr 2026 18:57:32 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1760307209
-- current timestamp: 1777047305
+- current timestamp: 1777056986
 
 ## Description
 
-**L1StandardBridge patched with an operator-controlled sweep** (on-chain upgrade). New implementation (0x12665984...) adds `operator = RSS3Multisig (0x8AC80fa0)` and an operator-only `sweep(token, to, amount)` that can transfer any ERC-20 held by the bridge to an arbitrary address. The RSS3 Multisig gains direct drain control over the bridge escrow.
+**L1StandardBridge operator backdoor added** (on-chain upgrade). New implementation (`0x12665984...`) sets `operator = RSS3Multisig (0x8AC80fa0)` and exposes an operator-only `sweep(token, to, amount)` that transfers any ERC-20 held by the bridge to an arbitrary address — no proof, no delay, no correlation with a user withdrawal. A single RSS3 Multisig call can drain the entire bridge ERC-20 escrow. This mirrors the pre-existing `operator` on the OptimismPortal (WithdrawalOverwriterMultisig) which can already rewrite withdrawal calldata to steal funds on finalization; the bridge now has the equivalent escape hatch for its own escrow.
 
 **SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). The standard `opStackSequencerInbox` handler requires ≥80% of the batcher's last 10 outgoing txs to go to a single address; RSS3's batcher (`0xC1805743...`) posts to multiple addresses so the threshold fails and `sequencerInbox` errors out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to the predeploy `0xfFFF...12553` (RSS3's previously-discovered sequencer inbox).
 
@@ -29,14 +29,12 @@ L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f
 
 ```diff
     contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
-    +++ description: None
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This fork of the L1StandardBridge also allows an 'operator' address to call sweep(token, to, amount) to transfer any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay — functionally a backdoor that lets the operator drain the bridge escrow.
       template:
 -        "opstack/L1StandardBridge"
       sourceHashes.1:
 -        "0x6799eb37a55a04ec21fc5819a2f479c30a69b3e79258d12ac41c10342b9f76b1"
 +        "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
-      description:
--        "The main entry point to deposit ERC20 tokens from host chain to this chain."
       values.$implementation:
 -        "eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486"
 +        "eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83"
@@ -54,6 +52,8 @@ L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f
 ```diff
     contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
     +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438","description":"can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address, effectively allowing it to drain the bridge escrow at will.","role":".operator"}
       receivedPermissions.3.role:
 -        ".$admin"
 +        "admin"
@@ -74,6 +74,15 @@ L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1760307209 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This fork of the L1StandardBridge also allows an 'operator' address to call sweep(token, to, amount) to transfer any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay — functionally a backdoor that lets the operator drain the bridge escrow.
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This fork of the L1StandardBridge also allows an 'operator' address to call sweep(token, to, amount) to transfer any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay — functionally a backdoor that lets the operator drain the bridge escrow."
+    }
+```
 
 ```diff
     contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {

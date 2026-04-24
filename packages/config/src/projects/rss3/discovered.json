@@ -1,7 +1,7 @@
 {
   "name": "rss3",
-  "timestamp": 1777047305,
-  "configHash": "0x25d9172d55ae0c33c0365865d9acb0e28665a1327258fbd31c859952e3f6e493",
+  "timestamp": 1777056986,
+  "configHash": "0x5d50695d137da2799f880c7cc54f07809e626d6a1684e5ae0a3a0c0d388aebb7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -158,6 +158,7 @@
         "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This fork of the L1StandardBridge also allows an 'operator' address to call sweep(token, to, amount) to transfer any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay — functionally a backdoor that lets the operator drain the bridge escrow.",
       "sinceTimestamp": 1709859947,
       "sinceBlock": 19387057,
       "values": {
@@ -410,6 +411,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
+          "description": "can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address, effectively allowing it to drain the bridge escrow at will.",
+          "role": ".operator"
+        },
         {
           "permission": "interact",
           "from": "eth:0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03",
@@ -1151,6 +1158,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig_rss3": "0xa1334b06652e047b9d4bd797bb81c5e603151f939921696a7cde6f23f6d5aca5"
   },
-  "usedBlockNumbers": { "ethereum": 24950954 },
-  "permissionsConfigHash": "0x7685da0d966209b1d9906a37321c1d5934de96761292df5f18f858b787d37420"
+  "usedBlockNumbers": { "ethereum": 24951761 },
+  "permissionsConfigHash": "0x8767aa2983a85b9d60cd76068273c3d3278bc0b27ef05c7c349343494f4fc1ad"
 }
