@@ -8,13 +8,12 @@ Generated with discovered.json: 0xf1f4bac73c3651e6ac18b47bec3426ac264487ff
 
 ## Description
 
-**Mint Blockchain shutdown (announced 2026-04-17)**. L1 bridge/portal implementations upgraded to emergency drain contracts ahead of the October 20, 2026 withdrawal deadline ([announcement](https://mintchain.io/withdraw)).
+**Mint Blockchain shutdown (announced 2026-04-17, withdrawal deadline 2026-10-20).** Bridge and portal implementations upgraded to add emergency drain functions for the Mint Multisig (`0x3c54Be30`):
 
-- L1StandardBridge → **EmergencyBridgeA1** (impl 0x824C9465...). Adds `emergencyWithdraw(token)` callable only by Mint Multisig (0x3c54Be30), transferring any ERC-20 balance to hardcoded `RECIPIENT = 0x757952e6`.
-- OptimismPortal2 → **EmergencyPortalPatch** (impl 0x8953eCB2...). Adds `emergencyWithdrawETH()` callable only by `SAFE_MULTISIG = 0x3c54Be30`, sending ETH balance to same `RECIPIENT = 0x757952e6`.
-- DisputeGameFactory state untouched: `respectedGameType = 1`, `gameImpls[1] = PermissionedDisputeGame (0xC7Ab73aE)`, `permissionedGameArgs = EXPECT_REVERT` still set. The `RespectedGameString` / fieldMeta entries drop out of discovery because the new EmergencyPortalPatch ABI differs from the standard OptimismPortal2 (the mapping typecaster is not re-declared in the chain-specific contract), not because the dispute path was disabled.
+- **L1StandardBridge → EmergencyBridgeA1**: adds `emergencyWithdraw(token)` — drains any ERC-20 to hardcoded `RECIPIENT = 0x757952e6`.
+- **OptimismPortal2 → EmergencyPortalPatch**: adds `emergencyWithdrawETH()` — drains ETH to the same `RECIPIENT`.
 
-Contracts are renamed in config.jsonc (`EmergencyBridgeA1`→`L1StandardBridge`, `EmergencyPortalPatch`→`OptimismPortal2`) so the opStack template still resolves them; the new emergency functions and hardcoded `RECIPIENT` / `SAFE_MULTISIG` constants are visible in `.flat/*.sol`.
+Dispute game state is unchanged (`respectedGameType = 1`, `PermissionedDisputeGame` still active).
 
 EmergencyBridgeA1: [diff](https://disco.l2beat.com/diff/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A/eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E)
 EmergencyPortalPatch: [diff](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776)
