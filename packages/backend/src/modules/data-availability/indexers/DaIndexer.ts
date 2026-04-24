@@ -4,6 +4,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -54,73 +55,85 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
     to: number,
     configurations: Configuration<BlockDaIndexedConfig>[],
   ) {
-    const adjustedTo =
-      from + this.$.batchSize < to ? from + this.$.batchSize : to
+    return await withCoreFeatureRpcMetricsContext(
+      'dataAvailability.metrics',
+      {
+        daLayer: this.$.daLayer,
+      },
+      async () => {
+        const adjustedTo =
+          from + this.$.batchSize < to ? from + this.$.batchSize : to
 
-    this.logger.info('Fetching blobs', {
-      from,
-      to: adjustedTo,
-    })
+        this.logger.info('Fetching blobs', {
+          from,
+          to: adjustedTo,
+        })
 
-    let blobs: DaBlob[] = []
-    if (this.$.blobService) {
-      blobs = await this.$.blobService.get(this.daLayer, from, adjustedTo)
+        let blobs: DaBlob[] = []
+        if (this.$.blobService) {
+          blobs = await this.$.blobService.get(this.daLayer, from, adjustedTo)
 
-      this.logger.info('Fetched blobs from cache', {
-        blobs: blobs.length,
-      })
-    } else {
-      blobs = await this.$.daProvider.getBlobs(this.daLayer, from, adjustedTo)
+          this.logger.info('Fetched blobs from cache', {
+            blobs: blobs.length,
+          })
+        } else {
+          blobs = await this.$.daProvider.getBlobs(
+            this.daLayer,
+            from,
+            adjustedTo,
+          )
 
-      this.logger.info('Fetched blobs from provider', {
-        blobs: blobs.length,
-      })
-    }
+          this.logger.info('Fetched blobs from provider', {
+            blobs: blobs.length,
+          })
+        }
 
-    if (blobs.length === 0) {
-      this.logger.info('Empty blobs response received', {
-        from,
-        to: adjustedTo,
-      })
-      return () => {
-        return Promise.resolve(adjustedTo)
-      }
-    }
+        if (blobs.length === 0) {
+          this.logger.info('Empty blobs response received', {
+            from,
+            to: adjustedTo,
+          })
+          return () => {
+            return Promise.resolve(adjustedTo)
+          }
+        }
 
-    const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
+        const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
 
-    this.logger.info('Loaded previous records', {
-      previousRecords: previousRecords.length,
-    })
+        this.logger.info('Loaded previous records', {
+          previousRecords: previousRecords.length,
+        })
 
-    const { records, latestTimestamp } = this.$.daService.generateRecords(
-      blobs,
-      previousRecords,
-      configurations.map((c) => c.properties),
-    )
-
-    return async () => {
-      await this.$.db.transaction(async () => {
-        await this.$.db.dataAvailability.upsertMany(records)
-        await this.$.db.syncMetadata.updateSyncedUntil(
-          'dataAvailability',
-          // There might be multiple configurations for the same project
-          // so we need to uniq them
-          uniq(this.$.configurations.map((c) => c.properties.projectId)),
-          UnixTime.toEndOf(latestTimestamp, 'hour'),
-          adjustedTo,
+        const { records, latestTimestamp } = this.$.daService.generateRecords(
+          blobs,
+          previousRecords,
+          configurations.map((c) => c.properties),
         )
-      })
 
-      this.logger.info('Saved DA metrics into DB', {
-        from,
-        to: adjustedTo,
-        configurations: configurations.length,
-        records: records.length,
-      })
+        return async () => {
+          await this.$.db.transaction(async () => {
+            await this.$.db.dataAvailability.upsertMany(records)
+            await this.$.db.syncMetadata.updateSyncedUntil(
+              'dataAvailability',
+              // There might be multiple configurations for the same project
+              // so we need to uniq them
+              uniq(this.$.configurations.map((c) => c.properties.projectId)),
+              UnixTime.toEndOf(latestTimestamp, 'hour'),
+              adjustedTo,
+            )
+          })
 
-      return adjustedTo
-    }
+          this.logger.info('Saved DA metrics into DB', {
+            from,
+            to: adjustedTo,
+            configurations: configurations.length,
+            records: records.length,
+          })
+
+          return adjustedTo
+        }
+      },
+    )
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {

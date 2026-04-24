@@ -25,6 +25,18 @@ interface AggregatedRpcMetric {
   key: Record<string, string | number | boolean>
 }
 
+const FIELD_ORDER = [
+  'coreFeature',
+  'chain',
+  'daLayer',
+  'mode',
+  'plugin',
+  'pluginCluster',
+  'rpcChain',
+  'rpcClient',
+  'rpcMethod',
+] as const
+
 export class RpcMetricsAggregator {
   static metricsEnabled = true
 
@@ -81,11 +93,13 @@ export class RpcMetricsAggregator {
       return
     }
 
-    const key = sanitizeFields({
-      ...(getRpcMetricsContext() ?? {}),
-      ...staticFields,
-      rpcMethod: metric.method,
-    })
+    const key = orderFields(
+      sanitizeFields({
+        ...(getRpcMetricsContext() ?? {}),
+        ...staticFields,
+        rpcMethod: metric.method,
+      }),
+    )
     const serializedKey = serializeKey(key)
     const aggregated = this.groups.get(serializedKey) ?? {
       count: 0,
@@ -117,9 +131,34 @@ function sanitizeFields(
   return sanitized
 }
 
+function orderFields(
+  fields: Record<string, string | number | boolean>,
+): Record<string, string | number | boolean> {
+  return Object.fromEntries(
+    Object.entries(fields).sort(([a], [b]) => compareFieldNames(a, b)),
+  )
+}
+
 function serializeKey(key: Record<string, string | number | boolean>): string {
   return Object.entries(key)
-    .sort(([a], [b]) => a.localeCompare(b))
+    .sort(([a], [b]) => compareFieldNames(a, b))
     .map(([field, value]) => `${field}:${String(value)}`)
     .join('|')
+}
+
+function compareFieldNames(a: string, b: string): number {
+  const aOrder = FIELD_ORDER.indexOf(a as (typeof FIELD_ORDER)[number])
+  const bOrder = FIELD_ORDER.indexOf(b as (typeof FIELD_ORDER)[number])
+
+  if (aOrder !== -1 && bOrder !== -1) {
+    return aOrder - bOrder
+  }
+  if (aOrder !== -1) {
+    return -1
+  }
+  if (bOrder !== -1) {
+    return 1
+  }
+
+  return a.localeCompare(b)
 }

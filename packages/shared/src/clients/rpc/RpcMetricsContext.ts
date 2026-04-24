@@ -3,8 +3,7 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 type RpcMetricsContextValue = string | number | boolean
 
 export interface RpcMetricsContext {
-  module?: string
-  service?: string
+  coreFeature?: string
   [key: string]: RpcMetricsContextValue | undefined
 }
 

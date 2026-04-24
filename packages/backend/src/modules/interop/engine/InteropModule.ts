@@ -126,8 +126,7 @@ export function createInteropModule({
   )
 
   const configLoops = plugins.configPlugins.map((plugin) =>
-    instrumentInteropRpcMetricsRun(plugin, {
-      service: 'config',
+    instrumentInteropRpcMetricsRun(plugin, 'interop.config', {
       plugin: plugin.provides.map((config) => config.key).join(','),
     }),
   )

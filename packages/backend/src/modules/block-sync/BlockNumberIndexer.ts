@@ -27,9 +27,9 @@ export class BlockNumberIndexer extends RootIndexer {
 
   async tick(): Promise<number> {
     return await withBlockSyncRpcMetricsContext(
+      'blockSync.tip',
       {
         chain: this.blockProvider.chain,
-        service: 'blockNumberIndexer',
       },
       async () => {
         const timestamp = UnixTime.now() - this.delayFromTipInSeconds

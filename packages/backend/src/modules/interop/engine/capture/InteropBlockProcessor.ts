@@ -1,5 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { withRpcMetricsContext } from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { BlockProcessor } from '../../../types'
 import {
@@ -25,8 +24,8 @@ export class InteropBlockProcessor implements BlockProcessor {
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     await withInteropRpcMetricsContext(
+      'interop.capture',
       {
-        service: 'capture',
         chain: this.chain,
       },
       async () => {
@@ -42,13 +41,7 @@ export class InteropBlockProcessor implements BlockProcessor {
         for (const txToCapture of toCapture.txsToCapture) {
           for (const plugin of nonResyncablePlugins) {
             try {
-              const captured = withRpcMetricsContext(
-                {
-                  plugin: plugin.name,
-                  stage: 'captureTx',
-                },
-                () => plugin.captureTx?.(txToCapture),
-              )
+              const captured = plugin.captureTx?.(txToCapture)
               if (captured) {
                 events.push(
                   ...captured.map((c) => ({ ...c, plugin: plugin.name })),
@@ -70,13 +63,7 @@ export class InteropBlockProcessor implements BlockProcessor {
         for (const logToDecode of toCapture.logsToCapture) {
           for (const plugin of nonResyncablePlugins) {
             try {
-              const captured = withRpcMetricsContext(
-                {
-                  plugin: plugin.name,
-                  stage: 'captureLog',
-                },
-                () => plugin.capture?.(logToDecode),
-              )
+              const captured = plugin.capture?.(logToDecode)
               if (captured) {
                 events.push(
                   ...captured.map((c) => ({ ...c, plugin: plugin.name })),

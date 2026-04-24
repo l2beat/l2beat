@@ -1,18 +1,19 @@
 import { getRpcMetricsContext } from '@l2beat/shared'
 import { expect } from 'earl'
 import {
-  instrumentInteropRpcMetricsRun,
-  withInteropRpcMetricsContext,
-} from './interopRpcMetrics'
+  instrumentCoreFeatureRpcMetricsRun,
+  withCoreFeatureRpcMetricsContext,
+} from './coreFeatureRpcMetrics'
 
-describe(withInteropRpcMetricsContext.name, () => {
+describe(withCoreFeatureRpcMetricsContext.name, () => {
   it('sets coreFeature and merges extra tags', async () => {
     let context: ReturnType<typeof getRpcMetricsContext> | undefined
 
-    await withInteropRpcMetricsContext(
+    await withCoreFeatureRpcMetricsContext(
       'interop.sync',
       {
         chain: 'ethereum',
+        pluginCluster: 'across',
       },
       async () => {
         context = getRpcMetricsContext()
@@ -22,12 +23,13 @@ describe(withInteropRpcMetricsContext.name, () => {
     expect(context).toEqual({
       coreFeature: 'interop.sync',
       chain: 'ethereum',
+      pluginCluster: 'across',
     })
   })
 })
 
-describe(instrumentInteropRpcMetricsRun.name, () => {
-  it('wraps run() with interop rpc metrics context', async () => {
+describe(instrumentCoreFeatureRpcMetricsRun.name, () => {
+  it('wraps run() with coreFeature rpc metrics context', async () => {
     let context: ReturnType<typeof getRpcMetricsContext> | undefined
     const target = {
       async run() {
@@ -35,7 +37,7 @@ describe(instrumentInteropRpcMetricsRun.name, () => {
       },
     }
 
-    instrumentInteropRpcMetricsRun(target, 'interop.config', {
+    instrumentCoreFeatureRpcMetricsRun(target, 'interop.config', {
       plugin: 'across',
     })
 

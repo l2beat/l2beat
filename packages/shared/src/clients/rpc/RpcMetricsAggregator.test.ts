@@ -25,8 +25,7 @@ describe(RpcMetricsAggregator.name, () => {
 
     await withRpcMetricsContext(
       {
-        module: 'interop',
-        service: 'sync',
+        coreFeature: 'interop.sync',
         pluginCluster: 'across',
         chain: 'ethereum',
         syncerState: 'catchingUp',
@@ -48,15 +47,14 @@ describe(RpcMetricsAggregator.name, () => {
       level: 'INFO',
       message: 'Rpc metrics',
       parameters: {
+        coreFeature: 'interop.sync',
         chain: 'ethereum',
         count: 2,
         intervalMs: 1_000,
-        module: 'interop',
         pluginCluster: 'across',
         rpcChain: 'ethereum',
         rpcClient: 'EthRpcClient',
         rpcMethod: 'eth_getLogs',
-        service: 'sync',
         syncerState: 'catchingUp',
       },
       time: new Date(0),

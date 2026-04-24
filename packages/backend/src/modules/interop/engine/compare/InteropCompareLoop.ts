@@ -28,8 +28,8 @@ export class InteropCompareLoop extends TimeLoop {
 
   async run() {
     await withInteropRpcMetricsContext(
+      'interop.compare',
       {
-        service: 'compare',
         plugin: this.plugin.name,
       },
       async () => {

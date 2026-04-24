@@ -1,10 +1,17 @@
-import { type RpcMetricsContext, withRpcMetricsContext } from '@l2beat/shared'
+import type { CoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
+import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
 
-type BlockSyncRpcMetricsContext = Omit<RpcMetricsContext, 'module'>
+type BlockSyncCoreFeature =
+  | 'blockSync.tip'
+  | 'blockSync.fetch'
+  | 'blockSync.process'
+
+type BlockSyncRpcMetricsContext = CoreFeatureRpcMetricsContext
 
 export function withBlockSyncRpcMetricsContext<T>(
+  coreFeature: BlockSyncCoreFeature,
   context: BlockSyncRpcMetricsContext,
   fn: () => T,
 ): T {
-  return withRpcMetricsContext({ module: 'blockSync', ...context }, fn)
+  return withCoreFeatureRpcMetricsContext(coreFeature, context, fn)
 }

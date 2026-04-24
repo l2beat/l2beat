@@ -174,7 +174,8 @@ export class InteropEventSyncer extends TimeLoop {
   ) {
     try {
       await withInteropRpcMetricsContext(
-        this.getRpcMetricsContext(state),
+        'interop.sync',
+        this.getRpcMetricsContext(),
         async () => {
           if (options?.clearError ?? true) {
             await this.clearChainSyncError()
@@ -410,12 +411,10 @@ export class InteropEventSyncer extends TimeLoop {
     return getItemsToCapture(this.chain, block, logs)
   }
 
-  private getRpcMetricsContext(state: SyncerState) {
+  private getRpcMetricsContext() {
     return {
-      service: 'sync',
       pluginCluster: this.cluster.name,
       chain: this.chain,
-      syncerState: state.name,
     }
   }
 }

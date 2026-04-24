@@ -84,146 +84,141 @@ export async function match(
   logger: Logger,
   tokenMap: TokenMap,
 ) {
-  return await withInteropRpcMetricsContext(
-    {
-      service: 'matching',
-    },
-    async () => {
+  return await withInteropRpcMetricsContext('interop.match', {}, async () => {
+    const start = Date.now()
+    logger.debug('Matching started', {
+      plugins: plugins.length,
+      events: count,
+      chains: supportedChains.length,
+    })
+
+    const matched = new Set<InteropEvent>()
+    const unsupported = new Set<InteropEvent>()
+    const allMessages: InteropMessage[] = []
+    const allTransfers: InteropTransfer[] = []
+    const isExcluded = (event: InteropEvent) =>
+      matched.has(event) || unsupported.has(event)
+    const filteredDb = createFilteredDb(db, isExcluded)
+
+    for (const plugin of plugins) {
+      if (!plugin.matchTypes || !plugin.match) {
+        continue
+      }
+
+      const matchTypes = plugin.matchTypes
+      await new Promise((r) => setTimeout(r)) // Unblock event loop
       const start = Date.now()
-      logger.debug('Matching started', {
-        plugins: plugins.length,
-        events: count,
-        chains: supportedChains.length,
-      })
+      const stats = {
+        events: 0,
+        matchedEvents: 0,
+        messages: 0,
+        transfers: 0,
+      }
 
-      const matched = new Set<InteropEvent>()
-      const unsupported = new Set<InteropEvent>()
-      const allMessages: InteropMessage[] = []
-      const allTransfers: InteropTransfer[] = []
-      const isExcluded = (event: InteropEvent) =>
-        matched.has(event) || unsupported.has(event)
-      const filteredDb = createFilteredDb(db, isExcluded)
+      await withRpcMetricsContext(
+        {
+          plugin: plugin.name,
+        },
+        async () => {
+          for (const type of matchTypes) {
+            const events = getEvents(type.type)
+            stats.events += events.length
+            for (const event of events) {
+              if (matched.has(event) || unsupported.has(event)) {
+                continue
+              }
+              let result: MatchResult | undefined
+              try {
+                result = await plugin.match?.(event, filteredDb, tokenMap)
+              } catch (e) {
+                logger.error('Matching failed', e, {
+                  plugin: plugin.name,
+                  eventId: event.eventId,
+                  eventType: event.type,
+                  eventTxHash: event.ctx.txHash,
+                })
+              }
+              if (!result) {
+                continue
+              }
 
-      for (const plugin of plugins) {
-        if (!plugin.matchTypes || !plugin.match) {
-          continue
-        }
-
-        const matchTypes = plugin.matchTypes
-        await new Promise((r) => setTimeout(r)) // Unblock event loop
-        const start = Date.now()
-        const stats = {
-          events: 0,
-          matchedEvents: 0,
-          messages: 0,
-          transfers: 0,
-        }
-
-        await withRpcMetricsContext(
-          {
-            plugin: plugin.name,
-          },
-          async () => {
-            for (const type of matchTypes) {
-              const events = getEvents(type.type)
-              stats.events += events.length
-              for (const event of events) {
-                if (matched.has(event) || unsupported.has(event)) {
-                  continue
-                }
-                let result: MatchResult | undefined
-                try {
-                  result = await plugin.match?.(event, filteredDb, tokenMap)
-                } catch (e) {
-                  logger.error('Matching failed', e, {
-                    plugin: plugin.name,
-                    eventId: event.eventId,
-                    eventType: event.type,
-                    eventTxHash: event.ctx.txHash,
-                  })
-                }
-                if (!result) {
-                  continue
-                }
-
-                matched.add(event)
-                for (const item of result) {
-                  if (item.kind === 'InteropMessage') {
-                    allMessages.push({ ...item, plugin: plugin.name })
-                    stats.messages++
-                    stats.matchedEvents += item.events.length
-                    for (const event of item.events) {
-                      matched.add(event)
-                    }
-                  } else if (item.kind === 'InteropTransfer') {
-                    allTransfers.push({ ...item, plugin: plugin.name })
-                    stats.transfers++
-                    stats.matchedEvents += item.events.length
-                    for (const event of item.events) {
-                      matched.add(event)
-                    }
-                  } else if (item.kind === 'InteropIgnore') {
-                    for (const event of item.events) {
-                      unsupported.add(event)
-                    }
+              matched.add(event)
+              for (const item of result) {
+                if (item.kind === 'InteropMessage') {
+                  allMessages.push({ ...item, plugin: plugin.name })
+                  stats.messages++
+                  stats.matchedEvents += item.events.length
+                  for (const event of item.events) {
+                    matched.add(event)
+                  }
+                } else if (item.kind === 'InteropTransfer') {
+                  allTransfers.push({ ...item, plugin: plugin.name })
+                  stats.transfers++
+                  stats.matchedEvents += item.events.length
+                  for (const event of item.events) {
+                    matched.add(event)
+                  }
+                } else if (item.kind === 'InteropIgnore') {
+                  for (const event of item.events) {
+                    unsupported.add(event)
                   }
                 }
               }
             }
-          },
-        )
+          }
+        },
+      )
 
-        logger.info('Plugin executed', {
-          name: plugin.name,
-          duration: Date.now() - start,
-          events: stats.events,
-          matchedEvents: stats.matchedEvents,
-          messages: stats.messages,
-          transfers: stats.transfers,
-        })
-      }
+      logger.info('Plugin executed', {
+        name: plugin.name,
+        duration: Date.now() - start,
+        events: stats.events,
+        matchedEvents: stats.matchedEvents,
+        messages: stats.messages,
+        transfers: stats.transfers,
+      })
+    }
 
-      for (const type of eventTypes) {
-        for (const event of getEvents(type)) {
-          if (matched.has(event)) {
-            continue
-          }
-          const $srcChain = (event.args as Record<string, unknown>).$srcChain
-          if (
-            typeof $srcChain === 'string' &&
-            !supportedChains.includes($srcChain)
-          ) {
-            unsupported.add(event)
-          }
-          const $dstChain = (event.args as Record<string, unknown>).$dstChain
-          if (
-            typeof $dstChain === 'string' &&
-            !supportedChains.includes($dstChain)
-          ) {
-            unsupported.add(event)
-          }
+    for (const type of eventTypes) {
+      for (const event of getEvents(type)) {
+        if (matched.has(event)) {
+          continue
+        }
+        const $srcChain = (event.args as Record<string, unknown>).$srcChain
+        if (
+          typeof $srcChain === 'string' &&
+          !supportedChains.includes($srcChain)
+        ) {
+          unsupported.add(event)
+        }
+        const $dstChain = (event.args as Record<string, unknown>).$dstChain
+        if (
+          typeof $dstChain === 'string' &&
+          !supportedChains.includes($dstChain)
+        ) {
+          unsupported.add(event)
         }
       }
+    }
 
-      logger.info('Matching finished', {
-        duration: Date.now() - start,
-        plugins: plugins.length,
-        events: count,
-        chains: supportedChains.length,
-        matchedEvents: matched.size,
-        unsupportedEvents: unsupported.size,
-        messages: allMessages.length,
-        transfers: allTransfers.length,
-      })
+    logger.info('Matching finished', {
+      duration: Date.now() - start,
+      plugins: plugins.length,
+      events: count,
+      chains: supportedChains.length,
+      matchedEvents: matched.size,
+      unsupportedEvents: unsupported.size,
+      messages: allMessages.length,
+      transfers: allTransfers.length,
+    })
 
-      return {
-        matched: Array.from(matched),
-        unsupported: Array.from(unsupported),
-        messages: allMessages,
-        transfers: allTransfers,
-      }
-    },
-  )
+    return {
+      matched: Array.from(matched),
+      unsupported: Array.from(unsupported),
+      messages: allMessages,
+      transfers: allTransfers,
+    }
+  })
 }
 
 function createFilteredDb(
