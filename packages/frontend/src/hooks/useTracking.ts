@@ -38,15 +38,13 @@ export type OpenPanelEvents = v.infer<typeof OpenPanelEvents>
 type OpenPanelTrack = {
   <T extends keyof OpenPanelEvents>(
     event: T,
-    ...args: OpenPanelEvents[T] extends undefined
-      ? []
-      : [{ props: OpenPanelEvents[T] }]
+    ...args: OpenPanelEvents[T] extends undefined ? [] : [OpenPanelEvents[T]]
   ): void
 }
 
 export function useTracking(): { track: OpenPanelTrack } {
   const track: OpenPanelTrack = useCallback((event, ...args) => {
-    window.plausible?.(event, ...args)
+    window.plausible?.(event, args[0] ? { props: args[0] } : undefined)
     window.op?.('track', event, ...args)
   }, [])
 

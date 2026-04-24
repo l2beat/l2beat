@@ -18,10 +18,8 @@ function Switch({
       onCheckedChange={(checked) => {
         props.onCheckedChange?.(checked)
         track('switchChanged', {
-          props: {
-            name: props.name,
-            value: checked.toString(),
-          },
+          name: props.name,
+          value: checked.toString(),
         })
       }}
     >
