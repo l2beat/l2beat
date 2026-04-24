@@ -277,7 +277,7 @@ packages/
 │   ├── WriteFunctionPermissionHandler.ts
 │   ├── AddressMappingHandler.ts          # Maps addresses via method call against discovered.json candidates
 │   ├── EnumerableRolesHandler.ts         # Enumerates roles and their holders via RoleSet events
-│   └── LayerZeroOAppConfigHandler.ts     # Captures a LayerZero V2 OApp's cross-chain security stack: peers, endpoint delegate, send/receive MessageLibs, ABI-decoded UlnConfig (DVN set + threshold + confirmations) and ExecutorConfig per remote EID. EIDs auto-enumerated from PeerSet events. Handler type: `layerZeroOAppConfig`, config: `{ endpoint, includeEnforcedOptions?, extraEids? }`
+│   └── LayerZeroOAppConfigHandler.ts     # Captures a LayerZero V2 OApp's cross-chain security stack: peers, endpoint delegate, send/receive MessageLibs, ABI-decoded UlnConfig (DVN set + threshold + confirmations) and ExecutorConfig per remote EID. EIDs auto-enumerated from PeerSet events. Handler type: `layerZeroOAppConfig`, config: `{ endpoint, includeEnforcedOptions?, includeRateLimits?, extraEids? }`
 ├── protocolbeat/src/defidisco/
 │   ├── ValuesPanelExtensions.tsx
 │   ├── TerminalExtensions.tsx

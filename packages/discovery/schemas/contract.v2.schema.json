@@ -742,6 +742,7 @@
                   "type": { "const": "layerZeroOAppConfig" },
                   "endpoint": { "type": "string" },
                   "includeEnforcedOptions": { "type": "boolean" },
+                  "includeRateLimits": { "type": "boolean" },
                   "extraEids": {
                     "type": "array",
                     "items": { "type": "number" }

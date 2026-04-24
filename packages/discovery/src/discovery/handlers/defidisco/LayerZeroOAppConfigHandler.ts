@@ -12,6 +12,11 @@ export const LayerZeroOAppConfigHandlerDefinition = v.strictObject({
   type: v.literal('layerZeroOAppConfig'),
   endpoint: v.string(),
   includeEnforcedOptions: v.boolean().optional(),
+  // EtherFi-style pair-wise rate limits on the OApp itself:
+  // inboundRateLimits(uint32) / outboundRateLimits(uint32).
+  // Custom ABI, opt-in. Only `limit` and `window` are surfaced
+  // (the volatile `amountInFlight` and `lastUpdated` are dropped).
+  includeRateLimits: v.boolean().optional(),
   extraEids: v.array(v.number()).optional(),
 })
 
@@ -33,6 +38,12 @@ const getReceiveLibraryFragment = utils.FunctionFragment.from(
 )
 const getConfigFragment = utils.FunctionFragment.from(
   'getConfig(address, address, uint32, uint32) view returns (bytes)',
+)
+const inboundRateLimitsFragment = utils.FunctionFragment.from(
+  'inboundRateLimits(uint32) view returns (uint256 amountInFlight, uint256 lastUpdated, uint256 limit, uint256 window)',
+)
+const outboundRateLimitsFragment = utils.FunctionFragment.from(
+  'outboundRateLimits(uint32) view returns (uint256 amountInFlight, uint256 lastUpdated, uint256 limit, uint256 window)',
 )
 
 const ULN_CONFIG_TYPE = 2
@@ -153,6 +164,23 @@ export class LayerZeroOAppConfigHandler implements Handler {
           }
         }
 
+        if (this.definition.includeRateLimits) {
+          const inbound = await readRateLimit(
+            provider,
+            address,
+            inboundRateLimitsFragment,
+            eid,
+          )
+          if (inbound) entry.inboundRateLimit = inbound
+          const outbound = await readRateLimit(
+            provider,
+            address,
+            outboundRateLimitsFragment,
+            eid,
+          )
+          if (outbound) entry.outboundRateLimit = outbound
+        }
+
         if (this.definition.includeEnforcedOptions) {
           const [send, sendAndCall] = await Promise.all([
             provider
@@ -244,4 +272,21 @@ function decodeExecutorConfig(hex: string, chain: string) {
 
 function prefixAddress(chain: string, addr: string): string {
   return ChainSpecificAddress.from(chain, EthereumAddress(addr)).toString()
+}
+
+async function readRateLimit(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+  fragment: utils.FunctionFragment,
+  eid: number,
+): Promise<{ limit: string; window: string } | undefined> {
+  const result = await provider
+    .callMethod<[BigNumber, BigNumber, BigNumber, BigNumber]>(
+      address,
+      fragment,
+      [eid],
+    )
+    .catch(() => undefined)
+  if (!result) return undefined
+  return { limit: result[2].toString(), window: result[3].toString() }
 }

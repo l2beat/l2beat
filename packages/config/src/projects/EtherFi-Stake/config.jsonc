@@ -99,7 +99,8 @@
           "handler": {
             "type": "layerZeroOAppConfig",
             "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
-            "includeEnforcedOptions": true
+            "includeEnforcedOptions": true,
+            "includeRateLimits": true
           }
         }
       }

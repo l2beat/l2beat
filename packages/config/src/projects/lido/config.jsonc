@@ -262,5 +262,10 @@
         "getCurrentDayTime"
       ]
     },
+    "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c": {
+      "ignoreInWatchMode": [
+        "getRageQuitSupport"
+      ]
+    },
   }
 }

@@ -7,8 +7,18 @@ import type {
 const DAY = 86_400
 const HOUR = 3_600
 
+// Trace capital under $1 USD is ignored — upstream capital math occasionally
+// leaks sub-cent floating-point dust (e.g. Lido Oracle Committee EOAs show
+// ~$3e-5 reachable capital each), which should not trigger EOA detection or
+// inflate governance impact share.
+const DUST_USD = 1
+
 function adminImpact(a: CompiledAdmin): number {
   return (a.totalReachableCapital ?? 0) + (a.totalReachableTokenValue ?? 0)
+}
+
+function hasMeaningfulImpact(a: CompiledAdmin): boolean {
+  return adminImpact(a) >= DUST_USD
 }
 
 function computeVerifiability(review: CompiledReview): number {
@@ -103,7 +113,7 @@ function computeGovernance(review: CompiledReview): number {
   const { admins, totals, governance } = review
   const tvs = totals.totalCapitalAtRisk + (totals.totalTokenValue ?? 0)
 
-  const govAdmins = admins.filter((a) => a.isGovernance && adminImpact(a) > 0)
+  const govAdmins = admins.filter((a) => a.isGovernance && hasMeaningfulImpact(a))
 
   // Short-circuit only when governance is undocumented AND no isGovernance
   // admin has fund impact — i.e. the protocol genuinely has no governance
@@ -136,7 +146,7 @@ function computeGovernance(review: CompiledReview): number {
               : 2
 
   const impactAdmins =
-    govAdmins.length > 0 ? govAdmins : admins.filter((a) => adminImpact(a) > 0)
+    govAdmins.length > 0 ? govAdmins : admins.filter(hasMeaningfulImpact)
   const govImpact = impactAdmins.reduce((s, a) => s + adminImpact(a), 0)
   // Admins can reach overlapping contracts, so raw sums may exceed TVS.
   // Cap share at 1.0 — the tier boundaries are what matters, not the ratio.
@@ -151,7 +161,7 @@ function computeControl(review: CompiledReview): number {
   const { admins, totals } = review
   const tvs = totals.totalCapitalAtRisk + (totals.totalTokenValue ?? 0)
 
-  const impacting = admins.filter((a) => adminImpact(a) > 0)
+  const impacting = admins.filter(hasMeaningfulImpact)
   if (impacting.length === 0) return 90
 
   const hasEOA = impacting.some(
