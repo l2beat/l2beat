@@ -1,3 +1,92 @@
+Generated with discovered.json: 0xcfc2d5e2d87b850416658b18198144868c613325
+
+# Diff at Fri, 24 Apr 2026 16:16:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1760307209
+- current timestamp: 1777047305
+
+## Description
+
+**L1StandardBridge patched with an operator-controlled sweep.** New implementation (0x12665984...) adds `operator = RSS3Multisig (0x8AC80fa0)` and an operator-only `sweep(token, to, amount)` that can transfer any ERC-20 held by the bridge to an arbitrary address. The RSS3 Multisig gains direct drain control over the bridge escrow.
+
+**SystemConfig upgraded** to an impl (0x164883d4...) that no longer exposes `sequencerInbox()` — the field is now hardcoded to the predeploy (`0xfFFF...12553`) via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`).
+
+L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486/eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83)
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x1075B29e5F7a911128C77F3989702E150C988904) {
+    +++ description: None
+      directlyReceivedPermissions.3.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: None
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x6799eb37a55a04ec21fc5819a2f479c30a69b3e79258d12ac41c10342b9f76b1"
++        "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      values.$implementation:
+-        "eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486"
++        "eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83"
+      values.operator:
++        "eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
+      implementationNames.eth:0xE27083804bFf17Ec05f4300a43b7c40F3E01e486:
+-        "L1StandardBridge"
+      implementationNames.eth:0x12665984Ba38943C74D8504d4E8a41a96dE25E83:
++        "L1StandardBridge"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      receivedPermissions.3.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol             | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760307209 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded (the RSS3 batcher posts to multiple addresses so the standard opStackSequencerInbox handler fails the qualification threshold).
+      template:
+-        "opstack/SystemConfig"
++        "opstack/SystemConfig_rss3"
+      description:
+-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded (the RSS3 batcher posts to multiple addresses so the standard opStackSequencerInbox handler fails the qualification threshold)."
+    }
+```
+
 Generated with discovered.json: 0x8fcd1236fe0bb02124f1863b1987ea1275be0273
 
 # Diff at Sun, 12 Oct 2025 22:14:34 GMT:
