@@ -1,7 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Router",
+  "category": "core",
+  "description": "User-facing CCIP entry point. ccipSend routes outbound messages to the destination-chain OnRamp registered for the destination chain selector. Inbound messages are delivered by OffRamps via routeMessage. Owner can replace the OnRamp for any destination (outbound attack surface) and add or remove OffRamps (inbound attack surface). The wrappedNative field names the WETH-like token users pay native fees in.",
   "fields": {
     "onRamps": {
+      "description": "destinationChainSelector → OnRamp address. One OnRamp per destination (swapped when a lane is upgraded).",
+      "severity": "HIGH",
+      "type": "PERMISSION",
       "handler": {
         "type": "event",
         "select": "onRamp",
@@ -10,13 +16,29 @@
       }
     },
     "offRamps": {
+      "description": "List of (sourceChainSelector, offRamp) the Router accepts inbound messages from. An attacker who adds a malicious OffRamp can deliver arbitrary messages to any receiver as if they came from CCIP.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
       "handler": { "type": "call", "args": [], "method": "getOffRamps" },
       "edit": [
         "map",
         ["shape", ["sourceChainSelector", ["format", "ChainIdMap"]], "offRamp"]
       ]
+    },
+    "getArmProxy": {
+      "description": "RMN proxy consulted implicitly through OnRamp/OffRamp. Not queried by Router directly.",
+      "severity": "LOW"
+    },
+    "getWrappedNative": {
+      "description": "Wrapped native (WETH). Users sending CCIP messages can pay fees in native via this contract.",
+      "severity": "LOW"
+    },
+    "owner": {
+      "description": "Address that can replace any OnRamp, add or remove OffRamps, and change wrappedNative.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
     }
   },
   "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative", "owner", "onRamps", "offRamps"]
+  "ignoreRelatives": ["getWrappedNative", "owner"]
 }

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NonceManager",
+  "category": "core",
+  "description": "CCIP v1.6 per-chain NonceManager. Tracks per-sender outbound/inbound nonces across all v1.6 CCIP ramps on this chain, enforcing in-order delivery per (sender, destination, source) tuple. Authorized OnRamps and OffRamps are granted permission to bump and consume nonces. Owner manages that authorization list.",
+  "fields": {
+    "getAllAuthorizedCallers": {
+      "description": "Contracts allowed to bump/consume nonces (the v1.6 OnRamp and OffRamp).",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "owner": {
+      "description": "Address that can grant or revoke authorized-caller status.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ARMProxy",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Immutable proxy for the CCIP Risk Management Network (RMN). Forwards blessing/cursing calls to the active ARM implementation (getARM). Its owner can atomically swap the underlying ARM implementation, effectively rotating the entire risk-validation system with no delay at the proxy level (any delay comes from whatever contract holds the owner role).",
+  "fields": {
+    "getARM": {
+      "description": "Current RMN (ARM) implementation. Swapped by the owner to rotate risk validation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "owner": {
+      "description": "Address that can swap the ARM implementation.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

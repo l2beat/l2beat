@@ -14,7 +14,9 @@
     "getAllowList",
     "getNopFeesJuels",
     "owner",
-    "tokenPools"
+    "tokenPools",
+    "staticConfigAddresses",
+    "getStaticConfig"
   ],
   "ignoreInWatchMode": [
     "getExpectedNextSequenceNumber",

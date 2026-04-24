@@ -10,7 +10,10 @@
     "getSupportedTokens",
     "tokenAddresses",
     "linkToken",
-    "owner"
+    "owner",
+    "tokenPools",
+    "staticConfigAddresses",
+    "getStaticConfig"
   ],
   "ignoreInWatchMode": [
     "getExpectedNextSequenceNumber",

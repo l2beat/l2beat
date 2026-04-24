@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TokenAdminRegistry",
+  "category": "core",
+  "description": "Registry that maps each ERC20 token to its CCIP TokenPool. Every v1.5+ OnRamp / OffRamp consults this mapping to find the pool for an attached token. Each registered token has its own administrator (distinct from this contract's owner) who can call setPool to redirect the pool for that token, which effectively controls minting/releasing behavior for cross-chain transfers of that token. This contract's owner can appoint or revoke administrators and toggle whether outsiders can self-register tokens.",
+  "fields": {
+    "poolsMap": {
+      "description": "token → TokenPool mapping. One pool is the current authorized handler for each registered token's cross-chain transfers. Values are not BFS-walked (the per-token pool set is outside the shared-infra scope).",
+      "handler": {
+        "type": "event",
+        "select": "newPool",
+        "set": { "event": "PoolSet" },
+        "groupBy": "token",
+        "ignoreRelative": true
+      }
+    },
+    "pools": {
+      "description": "Flat list of currently-registered TokenPool addresses (values of poolsMap).",
+      "handler": {
+        "type": "event",
+        "select": "newPool",
+        "set": { "event": "PoolSet" },
+        "groupBy": "token",
+        "ignoreRelative": true
+      },
+      "edit": ["pipe", ["to_entries"], ["map", ["get", 1]]]
+    },
+    "owner": {
+      "description": "Address that can appoint/revoke per-token administrators and toggle self-registration.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

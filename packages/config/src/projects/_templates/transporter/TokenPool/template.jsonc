@@ -15,7 +15,12 @@
     "getOnRamps",
     "getOffRamps",
     "adapter",
-    "bridge"
+    "bridge",
+    "getPreviousPool",
+    "i_previousPool",
+    "feeRecipient",
+    "getFeeProcessors",
+    "BURN_ADDRESS"
   ],
   "ignoreInWatchMode": [
     "getOnRamps",

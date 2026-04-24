@@ -1,0 +1,95 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EVM2EVMOffRamp",
+  "category": "core",
+  "description": "v1.2 CCIP inbound ramp — one instance per source chain it serves. Still active for sources whose lane has not been migrated to v1.5. A Chainlink OCR DON signs execution reports (a list of messages to execute + their merkle proofs); a transmitter submits the report on-chain; the OffRamp verifies each message against the commit root in its paired CommitStore, consults RMN for curse state, and delivers the message to the Router. Owner can rotate OCR signers/transmitters, change dynamic config, and change rate limits.",
+  "ignoreMethods": [
+    "getTransmitters",
+    "getSupportedTokens",
+    "getDestinationTokens",
+    "getAllowList",
+    "currentRateLimiterState",
+    "lastUpdated"
+  ],
+  "ignoreRelatives": ["owner", "getStaticConfig"],
+  "fields": {
+    "commitStore": {
+      "description": "Paired CommitStore that holds the blessed merkle roots this OffRamp verifies proofs against.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "call",
+        "method": "getStaticConfig",
+        "args": []
+      },
+      "edit": ["get", "commitStore"]
+    },
+    "getStaticConfig": {
+      "description": "Immutable: chainSelector (local), sourceChainSelector, onRamp (source-chain OnRamp, not walkable from this chain), commitStore, prevOffRamp, armProxy.",
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["set", "sourceChainSelector", ["format", "ChainIdMap"]]
+      ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable: permissionLessExecutionThresholdSeconds, router, priceRegistry. Owner can update at any time with no ramp-level delay.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "ocrSigners": {
+      "description": "Oracle DON signer set for execution reports. f+1 of these addresses must co-sign every execution report this OffRamp will process. A compromised quorum can reorder, duplicate, or omit message executions (but cannot forge unknown messages without a bad commit root).",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "signers",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "ocrTransmitters": {
+      "description": "Oracle transmitters. Only these addresses can submit a signed execution report to this OffRamp on-chain.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "transmitters",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "ocrF": {
+      "description": "Fault tolerance. The protocol assumes at most f of the OCR signers are faulty or dishonest; f+1 signatures are required for an execution report to be accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "f",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      }
+    },
+    "ocrConfigDigest": {
+      "description": "Domain-separator that signers mix into every execution-report signature. Changes on each setOCR2Config.",
+      "severity": "LOW",
+      "handler": {
+        "type": "event",
+        "select": "configDigest",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      }
+    },
+    "owner": {
+      "description": "Address that can change dynamic config, rotate OCR signers/transmitters (which rotates who decides execution order and liveness on this lane), change router pointer, and pause the ramp.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

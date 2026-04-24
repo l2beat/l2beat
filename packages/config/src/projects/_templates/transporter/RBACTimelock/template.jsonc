@@ -1,0 +1,119 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RBACTimelock",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "OpenZeppelin AccessControl-based TimelockController. PROPOSER_ROLE schedules arbitrary (target, value, calldata) operations. After minDelay passes, EXECUTOR_ROLE can execute them. CANCELLER_ROLE can cancel pending operations before execution. BYPASSER_ROLE can execute arbitrary operations without any delay, which is the weakest link in the timelock guarantee. ADMIN_ROLE can grant and revoke any of the above roles.",
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "accessControl": {
+      "description": "Snapshot of every AccessControl role and its current members, derived from RoleGranted / RoleRevoked events.",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE",
+          "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d": "BYPASSER_ROLE",
+          "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE",
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+          "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE"
+        }
+      }
+    },
+    "proposers": {
+      "description": "Members of PROPOSER_ROLE. Can schedule any (target, value, calldata) operation to execute after minDelay.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE",
+        "roleNames": {
+          "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule arbitrary calls from this timelock for delayed execution."
+        }
+      ]
+    },
+    "executors": {
+      "description": "Members of EXECUTOR_ROLE. Can execute operations after their minDelay has elapsed.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE",
+        "roleNames": {
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute any scheduled operation once its delay has elapsed."
+        }
+      ]
+    },
+    "cancellers": {
+      "description": "Members of CANCELLER_ROLE. Can cancel any operation that has been scheduled but not yet executed.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE",
+        "roleNames": {
+          "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel any pending scheduled operation, effectively veto-ing proposed changes."
+        }
+      ]
+    },
+    "bypassers": {
+      "description": "Members of BYPASSER_ROLE. Can execute arbitrary operations WITHOUT waiting for the minDelay. This is the weakest link in the delay guarantee.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "BYPASSER_ROLE",
+        "roleNames": {
+          "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d": "BYPASSER_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute any call through the timelock with no delay, bypassing the review window entirely."
+        }
+      ]
+    },
+    "admins": {
+      "description": "Members of ADMIN_ROLE. Can grant or revoke any role on this timelock (except DEFAULT_ADMIN_ROLE which is unused).",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "ADMIN_ROLE",
+        "roleNames": {
+          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": "ADMIN_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke PROPOSER / EXECUTOR / CANCELLER / BYPASSER / ADMIN role to any address."
+        }
+      ]
+    },
+    "getMinDelay": {
+      "description": "Delay (in seconds) between when PROPOSER_ROLE schedules an operation and when EXECUTOR_ROLE can execute it.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

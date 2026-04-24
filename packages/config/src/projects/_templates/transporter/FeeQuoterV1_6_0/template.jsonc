@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeQuoter",
+  "category": "core",
+  "description": "CCIP v1.6 FeeQuoter (replacement for PriceRegistry in v1.5). Stores per-token fee configuration, per-destination-chain gas costs, and the price feeds that update both. Used by the v1.6 OnRamp to compute fees in fee-token (LINK, WETH, native) for any cross-chain message. Owner can change supported fee tokens, set per-token fee config, and rotate authorized callers / price updaters.",
+  "ignoreRelatives": ["getFeeTokens", "getAuthorizedCallers", "owner"],
+  "fields": {
+    "getFeeTokens": {
+      "description": "ERC20 tokens accepted as fee payment when sending CCIP messages.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getAuthorizedCallers": {
+      "description": "Addresses permitted to push price updates into this FeeQuoter (the v1.6 OffRamp / OCR transmitters).",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "owner": {
+      "description": "Address that can change supported fee tokens, fee config, and authorized callers.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

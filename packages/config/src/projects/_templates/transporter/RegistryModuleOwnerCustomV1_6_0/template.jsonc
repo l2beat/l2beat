@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RegistryModuleOwnerCustom",
+  "category": "shared",
+  "description": "Self-service onboarding hook for the TokenAdminRegistry. Anyone can call registerAdminViaOwner(token) or registerAdminViaGetCCIPAdmin(token) here to nominate themselves as the CCIP admin for an ERC20 token they control (proven via owner() or getCCIPAdmin() on the token). The nomination is forwarded to the TokenAdminRegistry, where the caller becomes the administrator who can then call setPool to bind a TokenPool to the token."
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CallProxy",
+  "category": "shared",
+  "canActIndependently": false,
+  "description": "Minimal immutable forwarder that anyone can call to invoke a target with calldata. When granted EXECUTOR_ROLE on a Timelock, it makes timelocked operations publicly executable by any caller once the delay has elapsed (no privileged keeper needed). Grants no delay-skipping power; only serves as the public execution pathway after the delay."
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OnRamp",
+  "category": "core",
+  "description": "v1.6 CCIP outbound ramp — a single per-chain contract that serves every destination (as opposed to the per-destination OnRamp in v1.5). Destination is identified by destChainSelector in the emitted CCIPMessageSent event. Uses the FeeQuoter for fee computation, delegates nonce tracking to the NonceManager, and consults the RMN. Owner can swap the dynamic config (FeeQuoter pointer, fee aggregator, allowlist admin, message interceptor) and per-destination configuration.",
+  "ignoreMethods": ["getStaticConfig"],
+  "ignoreRelatives": ["getSupportedTokens", "owner", "staticConfigAddresses"],
+  "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
+  "fields": {
+    "staticConfigAddresses": {
+      "description": "Immutable: rmnRemote (risk validator), nonceManager, tokenAdminRegistry.",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": ["pick", "rmnRemote", "nonceManager", "tokenAdminRegistry"]
+    },
+    "staticConfigChains": {
+      "description": "Local chain selector.",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["pick", "chainSelector"]
+      ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable: FeeQuoter, fee aggregator, allowlist admin, message interceptor. Owner can update at any time with no ramp-level delay.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "owner": {
+      "description": "Address that can change the dynamic config, update per-destination configs, and pause the ramp.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

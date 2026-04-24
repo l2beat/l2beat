@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EVM2EVMOnRamp",
+  "category": "core",
+  "description": "v1.5 CCIP outbound ramp — one instance per destination chain. Takes ccipSend calls from the Router, computes fees via the PriceRegistry, collects them in the fee token, locks/burns any attached token amounts via their TokenPool, and emits CCIPSendRequested. Owner can change the dynamic config (fee tokens, gas limits, message interceptor) and disable the ramp. Funds do NOT sit here: token custody is in per-token TokenPools; fees in the fee aggregator.",
+  "ignoreMethods": ["getNops", "currentRateLimiterState"],
+  "ignoreRelatives": [
+    "getSupportedTokens",
+    "tokenAddresses",
+    "linkToken",
+    "owner",
+    "staticConfigAddresses",
+    "getStaticConfig"
+  ],
+  "ignoreInWatchMode": [
+    "getNopFeesJuels",
+    "linkAvailableForPayment",
+    "tokenAddresses",
+    "tokenPools",
+    "getExpectedNextSequenceNumber"
+  ],
+  "fields": {
+    "tokenPools": {
+      "handler": {
+        "type": "hardcoded",
+        "value": []
+      }
+    },
+    "linkToken": {
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": ["get", "linkToken"]
+    },
+    "staticConfigAddresses": {
+      "description": "Immutable (set at construction): prevOnRamp is the previous OnRamp for this lane (historical); rmnProxy is the RMN proxy consulted before routing a send.",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": ["pick", "prevOnRamp", "rmnProxy"]
+    },
+    "staticConfigChains": {
+      "description": "Local (Ethereum) chainSelector and the destChainSelector this OnRamp targets.",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getStaticConfig"
+      },
+      "edit": [
+        "pipe",
+        ["set", "chainSelector", ["format", "ChainIdMap"]],
+        ["set", "destChainSelector", ["format", "ChainIdMap"]],
+        ["pick", "chainSelector", "destChainSelector"]
+      ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable config: fee-token pricing, default gas limit, message interceptor, priceRegistry. Owner can update at any time with no delay at the ramp level (delay comes from the Timelock that owns this ramp).",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getTokenLimitAdmin": {
+      "description": "Admin that can change per-lane aggregate rate limits (total value throughput per time window).",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "getFeeAggregator": {
+      "description": "Address that receives accumulated fee tokens from this OnRamp. Owner can change.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "owner": {
+      "description": "Address that can replace the dynamic config, pause the ramp, change fee aggregator, and rotate the rate limit admin.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

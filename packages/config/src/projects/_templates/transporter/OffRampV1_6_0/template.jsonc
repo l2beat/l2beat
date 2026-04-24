@@ -1,0 +1,126 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OffRamp",
+  "category": "core",
+  "description": "v1.6 CCIP inbound ramp — a single per-chain contract that serves every source (as opposed to the per-source OffRamp in v1.5). Combines the v1.5 CommitStore (blessed merkle roots) and OffRamp (message execution) into one. Uses MultiOCR3: two separate Chainlink OCR instances, one per plugin (0=Commit, 1=Execution). Commit OCR signs source-chain merkle roots; Execute OCR signs lists of messages to deliver with their proofs. RMN blesses commit roots, and once blessed anyone can submit proofs to execute individual messages. Owner can rotate OCR signers/transmitters per plugin, change dynamic config, and enable/disable RMN verification per source chain.",
+  "ignoreMethods": ["getAllSourceChainConfigs", "getLatestPriceSequenceNumber"],
+  "ignoreRelatives": ["owner", "getStaticConfig"],
+  "fields": {
+    "getDynamicConfig": {
+      "description": "Mutable: FeeQuoter, message interceptor, permissionLessExecutionThresholdSeconds (how long before manual execution becomes permissionless), isRMNVerificationDisabled (escape hatch).",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "commitOcrSigners": {
+      "description": "OCR DON signer set for COMMIT reports (plugin 0). F+1 of these addresses must co-sign each source-chain merkle root before this OffRamp stores it. Compromising the quorum allows forging roots; RMN blessing is the second line of defence.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "signers",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 0]
+        },
+        "ignoreRelative": true
+      }
+    },
+    "commitOcrTransmitters": {
+      "description": "OCR transmitters for COMMIT reports (plugin 0). Only these addresses can submit a signed commit report to this OffRamp on-chain.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "transmitters",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 0]
+        },
+        "ignoreRelative": true
+      }
+    },
+    "commitOcrF": {
+      "description": "Fault tolerance for the COMMIT plugin. At most F signers may be faulty; F+1 signatures are required for a commit report to be stored.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "F",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 0]
+        }
+      }
+    },
+    "commitOcrConfigDigest": {
+      "description": "Domain-separator for COMMIT-plugin signatures. Changes on each setOCR3Config for plugin 0.",
+      "severity": "LOW",
+      "handler": {
+        "type": "event",
+        "select": "configDigest",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 0]
+        }
+      }
+    },
+    "executeOcrSigners": {
+      "description": "OCR DON signer set for EXECUTION reports (plugin 1). In the v1.6 design this list is typically empty: execution is authorised only by a valid merkle proof against an already-committed (and RMN-blessed) root, so no signature quorum is required per execute report. If this list is non-empty, F+1 of these addresses must additionally co-sign every execution report.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "signers",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 1]
+        },
+        "ignoreRelative": true
+      }
+    },
+    "executeOcrTransmitters": {
+      "description": "OCR transmitters for EXECUTION reports (plugin 1). Only these addresses can submit execution reports to this OffRamp on-chain. In the v1.6 permissionless-execution design this is the primary gate on who can drive message delivery; merkle proofs do the authorisation.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "transmitters",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 1]
+        },
+        "ignoreRelative": true
+      }
+    },
+    "executeOcrF": {
+      "description": "Fault tolerance for the EXECUTION plugin. At most F signers may be faulty; F+1 signatures are required for an execution report to be accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "F",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 1]
+        }
+      }
+    },
+    "executeOcrConfigDigest": {
+      "description": "Domain-separator for EXECUTION-plugin signatures. Changes on each setOCR3Config for plugin 1.",
+      "severity": "LOW",
+      "handler": {
+        "type": "event",
+        "select": "configDigest",
+        "set": {
+          "event": "event ConfigSet(uint8 ocrPluginType, bytes32 configDigest, address[] signers, address[] transmitters, uint8 F)",
+          "where": ["=", "#ocrPluginType", 1]
+        }
+      }
+    },
+    "owner": {
+      "description": "Address that can rotate OCR signers/transmitters per plugin (which rotates who attests commit roots and who orders execution), change dynamic config, and disable RMN verification per source chain.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

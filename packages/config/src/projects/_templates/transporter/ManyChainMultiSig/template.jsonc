@@ -1,5 +1,49 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ManyChainMultiSig",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Chainlink's merkle-root-based multisig (MCMS). Signers are grouped into up to NUM_GROUPS hierarchical groups; each group has a quorum (groupQuorums) and a parent (groupParents) forming a tree. A merkle root of (chain, contract, data) operations is valid once the root of the group tree is signed. Then anyone can execute individual ops under that root via setRoot / execute.",
   "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
-  "ignoreRelatives": ["getRootMetadata"]
+  "ignoreRelatives": ["getRootMetadata", "owner", "pendingOwner"],
+  "fields": {
+    "NUM_GROUPS": {
+      "description": "Maximum number of signer groups (32, capacity limit).",
+      "severity": "LOW"
+    },
+    "MAX_NUM_SIGNERS": {
+      "description": "Maximum number of signers the contract can hold (200). Capacity limit, not a trust parameter.",
+      "severity": "LOW"
+    },
+    "getConfig": {
+      "description": "Current signer roster. Contains signers (addr, index, group), groupQuorums (how many signatures each group needs), and groupParents (tree structure). A root is valid when every non-empty group has its quorum met in the subtree.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "signers": {
+      "description": "Flat list of MCMS signer EOAs. A quorum of these signers across the group tree constitutes the authority this multisig controls.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "getConfig",
+        "args": []
+      },
+      "edit": ["pipe", ["get", "signers"], ["map", ["get", "addr"]]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "together (quorum across the group tree) sign a merkle root that authorizes arbitrary (chain, contract, data) operations to be executed through this multisig."
+        }
+      ]
+    },
+    "getRoot": {
+      "description": "Current signed merkle root. validUntil is the UNIX timestamp after which the root expires and a new signed root is required to act.",
+      "severity": "LOW"
+    },
+    "getOpCount": {
+      "description": "Monotonic counter of operations executed under any past root. Each root carries [preOpCount, postOpCount]; ops outside that range cannot be executed with it.",
+      "severity": "LOW"
+    }
+  }
 }

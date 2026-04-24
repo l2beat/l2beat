@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RMNRemote",
+  "category": "gov",
+  "description": "CCIP v1.6 Risk Management Network on this chain. Holds the curse state (isCursed, getCursedSubjects) that halts CCIP messaging, and the signer set (getVersionedConfig.signers) whose fSign-of-N threshold blesses commit reports off-ramps will execute. A cursed subject (global or per-source-chain) causes the v1.6 OffRamp to refuse execution for any message under that subject. Owner can rotate signers and change the signing threshold.",
+  "fields": {
+    "isCursed": {
+      "description": "Whether ANY subject on this chain is currently cursed. If true, CCIP v1.6 OffRamp refuses to execute messages.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getCursedSubjects": {
+      "description": "Subjects currently cursed. A cursed 'global' subject halts ALL inbound messaging; a per-source curse halts only that lane.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getLocalChainSelector": {
+      "description": "CCIP chain selector for Ethereum. Immutable; if wrong, no lanes resolve.",
+      "severity": "LOW"
+    },
+    "getReportDigestHeader": {
+      "description": "Domain separator mixed into RMN signed digests. Ensures signatures bound to CCIP v1.6 RMN cannot be replayed elsewhere.",
+      "severity": "LOW"
+    },
+    "getVersionedConfig": {
+      "description": "Current RMN signer set and fSign-of-N threshold. fSign signatures over a commit digest are sufficient to bless a commit root that OffRamps will execute.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "owner": {
+      "description": "Address that can rotate the RMN signer set and change the signing threshold.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

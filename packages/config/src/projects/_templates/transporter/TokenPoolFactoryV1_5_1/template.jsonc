@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TokenPoolFactory",
+  "category": "shared",
+  "description": "Factory used to deploy standardized CCIP TokenPool contracts (BurnMint / LockRelease variants). Not part of the runtime message path; holds no funds and has no authority over existing pools. Historical artifact for self-service token onboarding."
+}

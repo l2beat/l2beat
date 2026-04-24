@@ -1,0 +1,94 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CommitStore",
+  "category": "core",
+  "description": "v1.2 CCIP inbound-lane commit root store — one per source chain, paired 1:1 with a v1.2 OffRamp. A Chainlink OCR DON posts signed commit reports (merkle root of messages sent on the source chain + sequence range + token-price updates) here. Once ARM has blessed the root, the paired OffRamp accepts merkle proofs against it to execute messages. Owner can rotate the OCR committee (f, signers, transmitters, configDigest), change the dynamic config, and pause.",
+  "ignoreMethods": ["getTransmitters"],
+  "ignoreRelatives": ["getStaticConfig", "owner"],
+  "ignoreInWatchMode": [
+    "getExpectedNextSequenceNumber",
+    "getLatestPriceEpochAndRound"
+  ],
+  "fields": {
+    "priceRegistry": {
+      "description": "PriceRegistry that this CommitStore pushes fee-token price updates to (pulled from the dynamic config).",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "call",
+        "args": [],
+        "method": "getDynamicConfig"
+      },
+      "edit": ["get", "priceRegistry"]
+    },
+    "getStaticConfig": {
+      "description": "Immutable: chainSelector (local), sourceChainSelector, onRamp (source-chain OnRamp, not walkable), armProxy.",
+      "edit": [
+        "shape",
+        ["chainSelector", ["format", "ChainIdMap"]],
+        ["sourceChainSelector", ["format", "ChainIdMap"]],
+        "onRamp",
+        "armProxy"
+      ]
+    },
+    "getDynamicConfig": {
+      "description": "Mutable: priceRegistry. Owner can point to a new PriceRegistry.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "ocrSigners": {
+      "description": "Oracle DON signer set. f+1 of these addresses must co-sign every commit report this CommitStore will store. Compromising the quorum allows forging merkle roots that the paired OffRamp would then execute; their silence halts new commits.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "signers",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "ocrTransmitters": {
+      "description": "Oracle transmitters. Only these addresses can submit a signed commit report to this CommitStore on-chain.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "transmitters",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "ocrF": {
+      "description": "Fault tolerance. The protocol assumes at most f of the OCR signers are faulty or dishonest; f+1 signatures are required for a commit report to be accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "f",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      }
+    },
+    "ocrConfigDigest": {
+      "description": "Domain-separator that signers mix into every commit-report signature. Changes on each setOCR2Config; watch-mode picks up config rotations through this.",
+      "severity": "LOW",
+      "handler": {
+        "type": "event",
+        "select": "configDigest",
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      }
+    },
+    "owner": {
+      "description": "Address that can rotate OCR signers/transmitters (which rotates who validates messages on this lane), change the priceRegistry, and pause.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}

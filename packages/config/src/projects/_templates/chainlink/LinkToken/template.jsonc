@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LinkToken",
+  "description": "Chainlink's LINK ERC20 on Ethereum. Not part of CCIP; held by CCIP contracts as a fee token. Leaf — its admin chain is outside of CCIP's trust surface.",
+  "ignoreRelatives": ["s_onTokenTransfer", "getChainlinkToken"]
+}

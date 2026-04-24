@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PriceRegistry",
+  "category": "core",
+  "description": "v1.5 CCIP price registry. Holds the current USD price of each fee-token and the current gas price for each supported destination chain. v1.5 OnRamps query it to compute fees; v1.5 CommitStores push fresh prices into it. Owner can change the set of fee tokens and the set of price-updaters (addresses permitted to push prices).",
+  "ignoreRelatives": ["getFeeTokens", "owner", "getPriceUpdaters"],
+  "fields": {
+    "getFeeTokens": {
+      "description": "ERC20 tokens accepted as fee payment for v1.5 CCIP messages.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getPriceUpdaters": {
+      "description": "Addresses permitted to push fee-token USD prices and destination gas prices. Typically the v1.5 CommitStores (via OCR transmitters).",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "owner": {
+      "description": "Address that can change supported fee tokens and authorized price updaters.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  }
+}
