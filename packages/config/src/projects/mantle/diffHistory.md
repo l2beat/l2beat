@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x374ea1a79e3c9d9cce4f42a0e7bc229ecc004105
+
+# Diff at Fri, 24 Apr 2026 13:45:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1776375430
+- current timestamp: 1777038258
+
+## Description
+
+Arsia fee mechanics activated: owner populated the Arsia-era SystemConfig fields that had been zero since the v1.4.0 upgrade. `basefeeScalar` set to 169019, `daFootprintGasScalar` to 400, `eip1559Denominator` to 50, `eip1559Elasticity` to 4, `minBaseFee` to 50 gwei, `operatorFeeScalar` to 100000000. `gasLimit` decreased from 200B (a pre-Arsia placeholder above the 500M cap) to a normal 60M.
+
+OPSuccinctL2OutputOracle rotated SP1 verification keys: `aggregationVkey` → `0x0022379400ea3157...`, `rangeVkeyCommitment` → `0x08666bcf03c2240b...`. Program hashes regenerated from [mantle-xyz/op-succinct@v2.2.0-beta.8](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) (commit `8542b244fac50b3db2cb027c6282b9f42fd81af9`) and added to `programHashes.ts` as `successful`.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654"
++        "0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08"
+      values.rangeVkeyCommitment:
+-        "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a"
++        "0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      values.basefeeScalar:
+-        0
++        169019
+      values.daFootprintGasScalar:
+-        0
++        400
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        50
+      values.eip1559Elasticity:
+-        0
++        4
++++ description: Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage.
++++ severity: LOW
+      values.gasLimit:
+-        200000000000
++        60000000
+      values.minBaseFee:
+-        0
++        50000000000
+      values.operatorFeeScalar:
+-        0
++        100000000
+    }
+```
+
 Generated with discovered.json: 0x73f9634ad29a5b09ba32aa344b854881e170810c
 
 # Diff at Thu, 16 Apr 2026 21:38:17 GMT:

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xcf72f3ec623e57cabbc3e0818c74c522c166ae8d
+
+# Diff at Fri, 24 Apr 2026 13:45:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1776433625
+- current timestamp: 1777038237
+
+## Description
+
+SystemConfig minBaseFee raised from 50 gwei to 100 gwei.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        50000000000
++        100000000000
+    }
+```
+
 Generated with discovered.json: 0x9627ed09d51a483f5ca4bb2f1c17695020f8a249
 
 # Diff at Fri, 17 Apr 2026 13:48:17 GMT:

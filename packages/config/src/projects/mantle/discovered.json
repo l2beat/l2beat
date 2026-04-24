@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1776375430,
+  "timestamp": 1777038258,
   "configHash": "0x4f3ac957f4eae0e424a58d3f3f063a3d53dccb6945b04e474f65dd0c1a6cef23",
   "entries": [
     {
@@ -114,7 +114,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 141,
+        "nonce": 143,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -164,7 +164,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": [],
-        "aggregationVkey": "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654",
+        "aggregationVkey": "0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "FINALIZATION_PERIOD_SECONDS": 43200,
@@ -173,15 +173,15 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 94119146,
-        "latestOutputIndex": 18303,
-        "nextBlockNumber": 94120946,
-        "nextOutputIndex": 18304,
+        "latestBlockNumber": 94452146,
+        "latestOutputIndex": 18488,
+        "nextBlockNumber": 94453946,
+        "nextOutputIndex": 18489,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSER": "eth:0x0000000000000000000000000000000000000000",
-        "rangeVkeyCommitment": "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a",
+        "rangeVkeyCommitment": "0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5",
         "rollupConfigHash": "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -272,18 +272,18 @@
         ],
         "$upgradeCount": 2,
         "baseFee": 20000000,
-        "basefeeScalar": 0,
+        "basefeeScalar": 169019,
         "batcherHash": "eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
         "blobbasefeeScalar": 0,
-        "daFootprintGasScalar": 0,
-        "eip1559Denominator": 0,
-        "eip1559Elasticity": 0,
-        "gasLimit": 200000000000,
+        "daFootprintGasScalar": 400,
+        "eip1559Denominator": 50,
+        "eip1559Elasticity": 4,
+        "gasLimit": 60000000,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 50000000000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
-        "operatorFeeScalar": 0,
+        "operatorFeeScalar": 100000000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -299,7 +299,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 10000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530910831675",
         "sequencerInbox": "eth:0xFFEEDDCcBbAA0000000000000000000000000000",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
@@ -493,7 +493,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 14 (43%)",
-        "nonce": 70,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -634,7 +634,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292703310",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292703406",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -772,8 +772,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 24893563
+          "prevBoughtGas": 593078,
+          "prevBlockNum": 24949137
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1341,6 +1341,6 @@
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24895127 },
+  "usedBlockNumbers": { "ethereum": 24950204 },
   "permissionsConfigHash": "0xcd2699f790bdf31d1292ab304fd22a2e023878e18d4d006a0bc3386d0b72fc62"
 }
