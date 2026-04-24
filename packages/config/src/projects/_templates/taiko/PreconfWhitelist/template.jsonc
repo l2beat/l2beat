@@ -47,10 +47,14 @@
       ]
     }
   },
-  "ignoreMethods": ["epochStartTimestamp", "proxiableUUID"],
+  "ignoreMethods": [
+    "epochStartTimestamp",
+    "proxiableUUID"
+  ],
   "ignoreInWatchMode": [
     "getOperatorForCurrentEpoch",
     "getOperatorForNextEpoch",
-    "operatorCount"
+    "operatorCount",
+    "latestActivationEpoch"
   ]
 }
