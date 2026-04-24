@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SystemConfig",
-  "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the batcher EOA is being drained to the RSS3 Multisig ahead of wind-down, which drags its top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold.",
+  "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the VSL L2 has halted as part of the announced migration to Ethereum — the batcher EOA was swept to the RSS3 Multisig, which drags its last-10-tx top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold.",
   "fields": {
     "batcherHash": {
       "permissions": [{ "type": "sequence" }],

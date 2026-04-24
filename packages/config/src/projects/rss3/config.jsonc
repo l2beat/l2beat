@@ -13,13 +13,13 @@
   },
   "overrides": {
     "eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438": {
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. This fork of the L1StandardBridge also allows an 'operator' address to call sweep(token, to, amount) to transfer any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay — functionally a backdoor that lets the operator drain the bridge escrow.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator is the RSS3 Multisig and is expected to use this to move bridge escrow as part of the announced migration to Ethereum.",
       "fields": {
         "operator": {
           "permissions": [
             {
               "type": "interact",
-              "description": "can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address, effectively allowing it to drain the bridge escrow at will."
+              "description": "can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address — the mechanism RSS3 is using to move bridge escrow during the VSL → Ethereum migration."
             }
           ]
         }

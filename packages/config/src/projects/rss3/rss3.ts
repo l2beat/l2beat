@@ -59,6 +59,9 @@ export const rss3: ScalingProject = opStackL2({
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
+    redWarning: {
+      text: 'RSS3 is retiring the Value Sublayer (VSL) and migrating to Ethereum. The L2 halted on April 24, 2026 and VSL bridge withdrawals have been paused. Previously-initiated withdrawals will be completed as part of the migration; $RSS3 on VSL will be migrated to Ethereum via a claim portal expected in the coming weeks ($POWER converts to $RSS3 at 23:1). See [the official announcement](https://rss3.io/blog/the-next-stage-of-rss3.html).',
+    },
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
@@ -102,6 +105,14 @@ export const rss3: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1709858519),
   isNodeAvailable: false,
   milestones: [
+    {
+      title: 'RSS3 VSL migration to Ethereum',
+      url: 'https://rss3.io/blog/the-next-stage-of-rss3.html',
+      date: '2026-04-24T00:00:00Z',
+      description:
+        'RSS3 retires VSL: L2 halted, bridge withdrawals paused, $RSS3 migrates to Ethereum via portal.',
+      type: 'incident',
+    },
     {
       title: 'RSS3 Mainnet Alpha Launch',
       url: 'https://x.com/rss3_/status/1767370007275851789',
