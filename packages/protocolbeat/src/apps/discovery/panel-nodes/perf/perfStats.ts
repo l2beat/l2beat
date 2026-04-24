@@ -45,7 +45,10 @@ class RollingWindow {
 
 function percentile(sorted: number[], p: number) {
   if (!sorted.length) return 0
-  const idx = Math.min(sorted.length - 1, Math.floor(p * sorted.length))
+  const idx = Math.max(
+    0,
+    Math.min(sorted.length - 1, Math.ceil(p * sorted.length) - 1),
+  )
   return sorted[idx] ?? 0
 }
 

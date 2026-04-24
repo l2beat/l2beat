@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { SHOW_PERFORMANCE } from '../../../../config/perf'
 import { perfStats } from '../perf/perfStats'
 import type { Actions } from './actions/Actions'
 import { loadNodes } from './actions/loadNodes'
@@ -104,12 +105,15 @@ function wrapAction<A extends unknown[]>(
   set: (cb: (state: State) => Partial<State>) => void,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return (...args: A) => {
-    const startedAt = performance.now()
-    try {
-      set((state) => action(state, ...args))
-    } finally {
-      perfStats.recordAction(action.name, performance.now() - startedAt)
+  if (SHOW_PERFORMANCE) {
+    return (...args: A) => {
+      const startedAt = performance.now()
+      try {
+        set((state) => action(state, ...args))
+      } finally {
+        perfStats.recordAction(action.name, performance.now() - startedAt)
+      }
     }
   }
+  return (...args: A) => set((state) => action(state, ...args))
 }
