@@ -7,7 +7,9 @@ export type ProjectByRaas = Record<
   { projects: UsedInProjectWithIcon[]; icon: string }
 >
 
-export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
+export function getProjectsByRaas(
+  ecosystemProjects: Project<'scalingInfo' | 'display'>[],
+) {
   const unsorted = ecosystemProjects.reduce((acc, curr) => {
     const raas = curr.scalingInfo.raas
     if (!raas) return acc

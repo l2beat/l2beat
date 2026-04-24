@@ -1,5 +1,5 @@
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { codeIsEIP7702, codeIsEOA } from '../analysis/codeIsEOA'
+import { assert, type Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { codeIsEIP7702, codeIsEOA } from '../analysis/bytecode'
 import type { ManualProxyType } from '../config/StructureConfig'
 import type { ContractValue } from '../output/types'
 import type { ContractDeployment, IProvider } from '../provider/IProvider'
@@ -36,19 +36,34 @@ type Detector = (
   address: ChainSpecificAddress,
 ) => Promise<ProxyDetails | undefined>
 
-const DEFAULT_AUTO_DETECTORS: Detector[] = [
-  // the order is important, because some proxies are extensions of others
+// NOTE(radomski): 95% of all detected proxies are attributed to these five
+// detectors. Splitting this into "common" and "rare" we get two things. In 95%
+// of cases it's faster because we don't have to wait for others. And also it
+// reduces the amount of RPC calls made by around 1.5-2x
+//
+// Command uses to generate these statistics:
+//
+// jq '.entries | map(.proxyType) | .[]' src/projects/**/discovered.json | \
+// sort | uniq -c | \
+// grep -E 'EIP1167|Arbitrum|Beacon|Axelar|Polygon|resolved delegate|gnosis safe|EIP897|EIP2535|ZeppelinOS|EIP1967|StarkWare' | \
+// sort -rn | \
+// awk '{r[NR]=$0; t+=$1} END{for(i=1;i<=NR;i++){split(r[i],f); c+=f[1]; printf "%6.2f%%  %s\n", 100*c/t, r[i]}}'
+//
+const COMMON_AUTO_DETECTORS: Detector[] = [
   detectResolvedDelegateProxy,
   detectArbitrumProxy,
   detectEip1967Proxy,
+  detectGnosisSafe,
+  detectBeaconProxy,
+]
+
+const RARE_AUTO_DETECTORS: Detector[] = [
   detectPolygonProxy,
   detectStarkWareProxy,
-  detectGnosisSafe,
   detectGnosisSafeZodiacModule,
   detectEip897Proxy,
   detectZeppelinOSProxy,
   detectEip2535proxy,
-  detectBeaconProxy,
   detectEip1167Proxy,
 ]
 
@@ -70,7 +85,8 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
 
 export class ProxyDetector {
   constructor(
-    private readonly autoDetectors = DEFAULT_AUTO_DETECTORS,
+    private readonly commonAutoDetectors = COMMON_AUTO_DETECTORS,
+    private readonly rareAutoDetectors = RARE_AUTO_DETECTORS,
     private readonly manualDetectors = MANUAL_DETECTORS,
   ) {}
 
@@ -79,7 +95,8 @@ export class ProxyDetector {
     address: ChainSpecificAddress,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyResult> {
-    const eoaProxy = await this.getEOAProxy(provider, address)
+    const code = await provider.getBytecode(address)
+    const eoaProxy = this.getEOAProxy(provider, code)
 
     const proxy = manualProxyType
       ? await this.getManualProxy(provider, address, manualProxyType)
@@ -93,11 +110,7 @@ export class ProxyDetector {
     )
   }
 
-  async getEOAProxy(
-    provider: IProvider,
-    address: ChainSpecificAddress,
-  ): Promise<ProxyDetails | undefined> {
-    const code = await provider.getBytecode(address)
+  getEOAProxy(provider: IProvider, code: Bytes): ProxyDetails | undefined {
     const isEOA = codeIsEOA(code)
     if (isEOA) {
       if (codeIsEIP7702(code)) {
@@ -121,12 +134,12 @@ export class ProxyDetector {
     provider: IProvider,
     address: ChainSpecificAddress,
   ): Promise<ProxyDetails | undefined> {
-    const checks = await Promise.all(
-      this.autoDetectors.map((detect) => detect(provider, address)),
-    )
+    const autos = this.commonAutoDetectors.map((fn) => fn(provider, address))
+    const hit = (await Promise.all(autos)).find((x) => x !== undefined)
+    if (hit !== undefined) return hit
 
-    const result = checks.find((x) => x !== undefined)
-    return result
+    const rares = this.rareAutoDetectors.map((fn) => fn(provider, address))
+    return (await Promise.all(rares)).find((x) => x !== undefined)
   }
 
   async getManualProxy(

@@ -161,7 +161,7 @@ export class DiscoveryEngine {
             if (skipReason.startsWith('total ')) {
               this.skippedDueToCap.push(address)
             }
-            const info = `${slot}/${total}`
+            const info = `↓${depth} ${slot}/${total}`
             const entries = [
               chalk.gray(info),
               chalk.gray(address),
@@ -206,7 +206,7 @@ export class DiscoveryEngine {
             }
 
             // counter was already incremented above; do not double-count
-            this.logObject(analysis, total, counter)
+            this.logObject(analysis, total, counter, depth)
           } catch (error) {
             this.logAnalysisError(address, error)
             throw error
@@ -266,8 +266,9 @@ export class DiscoveryEngine {
     analysis: Analysis,
     total: number,
     counter: DiscoveryCounter,
+    depth: number,
   ) {
-    const info = `${counter.getCount()}/${total}`
+    const info = `↓${depth} ${counter.getCount()}/${total}`
     if (analysis.type === 'EOA') {
       const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
       this.logger.info(entries.join(' '))

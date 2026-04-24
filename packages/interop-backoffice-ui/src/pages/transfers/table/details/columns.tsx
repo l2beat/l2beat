@@ -135,12 +135,11 @@ export function createTransferDetailsColumns(options: {
     columnHelper.accessor('srcValueUsd', {
       header: 'Source value',
       cell: ({ row }) => formatDollars(row.original.srcValueUsd),
+      sortUndefined: 'last',
       meta: {
         csvHeader: 'Source value',
         getCsvValue: ({ row }) => formatDollars(row.original.srcValueUsd),
       },
-      sortingFn: (left, right) =>
-        (right.original.srcValueUsd ?? 0) - (left.original.srcValueUsd ?? 0),
     }),
     columnHelper.display({
       id: 'srcFlow',
@@ -248,12 +247,11 @@ export function createTransferDetailsColumns(options: {
     columnHelper.accessor('dstValueUsd', {
       header: 'Destination value',
       cell: ({ row }) => formatDollars(row.original.dstValueUsd),
+      sortUndefined: 'last',
       meta: {
         csvHeader: 'Destination value',
         getCsvValue: ({ row }) => formatDollars(row.original.dstValueUsd),
       },
-      sortingFn: (left, right) =>
-        (right.original.dstValueUsd ?? 0) - (left.original.dstValueUsd ?? 0),
     }),
     columnHelper.display({
       id: 'dstFlow',

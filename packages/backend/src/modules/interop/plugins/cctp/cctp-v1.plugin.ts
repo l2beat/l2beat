@@ -56,7 +56,7 @@ import {
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
-import { MayanForwarded } from '../mayan-forwarder'
+import { isMayanCircleForwarded, MayanForwarded } from '../mayan-forwarder'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createEventParser,
@@ -102,7 +102,10 @@ export const CCTPv1MessageReceived = createInteropEventType<{
 export class CCTPV1Plugin implements InteropPluginResyncable {
   readonly name = 'cctp-v1'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCTPV1Config)
@@ -110,7 +113,12 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
 
     const addresses: ChainSpecificAddress[] = []
     for (const network of networks) {
-      if (!network.messageTransmitter) continue
+      if (
+        !network.messageTransmitter ||
+        this.oneSidedChains.includes(network.chain)
+      ) {
+        continue
+      }
       try {
         addresses.push(
           ChainSpecificAddress.fromLong(
@@ -204,30 +212,43 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [CCTPv1MessageReceived]
-  match(
-    messageReceived: InteropEvent,
-    db: InteropEventDb,
-  ): MatchResult | undefined {
+  matchTypes = [CCTPv1MessageSent, CCTPv1MessageReceived]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     const networks = this.configs.get(CCTPV1Config)
     if (!networks) return
-    const network = networks.find((n) => n.chain === messageReceived.ctx.chain)
-    if (!network) return
-    if (CCTPv1MessageReceived.checkType(messageReceived)) {
+    if (CCTPv1MessageReceived.checkType(event)) {
+      const network = networks.find((n) => n.chain === event.ctx.chain)
+      if (!network) return
+
       // findAll and use oldest for determinism
       // there are bots like https://etherscan.io/address/0xfd62020cee216dc543e29752058ee9f60f7d9ff9#tokentxns
       // who always use the same messageBody
       const messageSentMatches = db.findAll(CCTPv1MessageSent, {
-        messageBody: messageReceived.args.messageBody,
+        messageBody: event.args.messageBody,
       })
-      if (messageSentMatches.length === 0) return
+      if (messageSentMatches.length === 0) {
+        const srcChain = event.args.$srcChain
+        if (!this.oneSidedChains.includes(srcChain)) return
+
+        return [
+          Result.Transfer('cctp-v1.Transfer', {
+            srcChain,
+            dstEvent: event,
+            dstTokenAddress: event.args.dstTokenAddress,
+            dstAmount: event.args.dstAmount,
+            srcWasBurned: true,
+            dstWasMinted: true,
+            bridgeType: 'burnAndMint',
+          }),
+        ]
+      }
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
       const wrappers: MatchResult = []
-      const mayanForwarded = db.find(MayanForwarded, {
-        sameTxAfter: messageSent,
-      })
+      const mayanForwarded = db
+        .findAll(MayanForwarded, { sameTxAfter: messageSent })
+        .find(isMayanCircleForwarded)
       if (mayanForwarded) {
         const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
           db,
@@ -238,7 +259,7 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
           Result.Message('mayan.Message', {
             app: 'mctp',
             srcEvent: mayanForwarded,
-            dstEvent: messageReceived,
+            dstEvent: event,
             extraEvents: mayanWrappedWormholeLog
               ? [mayanWrappedWormholeLog]
               : undefined,
@@ -250,15 +271,38 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
         Result.Message('cctp-v1.Message', {
           app: 'cctp-v1',
           srcEvent: messageSent,
-          dstEvent: messageReceived,
+          dstEvent: event,
         }),
         Result.Transfer('cctp-v1.Transfer', {
           srcEvent: messageSent,
           srcTokenAddress: messageSent.args.srcTokenAddress,
           srcAmount: messageSent.args.srcAmount,
-          dstEvent: messageReceived,
-          dstTokenAddress: messageReceived.args.dstTokenAddress,
-          dstAmount: messageReceived.args.dstAmount,
+          dstEvent: event,
+          dstTokenAddress: event.args.dstTokenAddress,
+          dstAmount: event.args.dstAmount,
+          srcWasBurned: true,
+          dstWasMinted: true,
+          bridgeType: 'burnAndMint',
+        }),
+      ]
+    }
+
+    if (CCTPv1MessageSent.checkType(event)) {
+      const hasCounterpart =
+        db.findAll(CCTPv1MessageReceived, {
+          messageBody: event.args.messageBody,
+        }).length > 0
+      if (hasCounterpart) return
+
+      const dstChain = event.args.$dstChain
+      if (!this.oneSidedChains.includes(dstChain)) return
+
+      return [
+        Result.Transfer('cctp-v1.Transfer', {
+          srcEvent: event,
+          dstChain,
+          srcTokenAddress: event.args.srcTokenAddress,
+          srcAmount: event.args.srcAmount,
           srcWasBurned: true,
           dstWasMinted: true,
           bridgeType: 'burnAndMint',

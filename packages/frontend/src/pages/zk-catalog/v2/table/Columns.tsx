@@ -1,5 +1,9 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
@@ -18,19 +22,18 @@ export const zkCatalogColumns = [
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     cell: (ctx) => {
+      const project = {
+        ...ctx.row.original,
+        nameSecondLine: ctx.row.original.creator,
+      }
       return (
-        <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
-          <div className="w-max space-y-px">
-            <div className="max-w-[146px] whitespace-pre-wrap font-bold text-base leading-none">
-              {ctx.row.original.name}
-            </div>
-            {ctx.row.original.creator && (
-              <div className="font-medium text-[13px] text-secondary leading-normal">
-                {ctx.row.original.creator}
-              </div>
-            )}
-          </div>
-        </TableLink>
+        <div className="flex h-full items-center">
+          <ProjectNameInfoTooltip project={project}>
+            <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
+              <ProjectNameCell project={project} withInfoTooltip />
+            </TableLink>
+          </ProjectNameInfoTooltip>
+        </div>
       )
     },
     enableHiding: false,

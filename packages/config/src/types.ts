@@ -782,6 +782,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
+  quantumResistant?: true
   formalVerificationLinks?: {
     name: string
     url: string
@@ -1074,6 +1075,7 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  programHashesDescription?: string
   zkVerifiers?: ChainSpecificAddress[]
 }
 
@@ -1244,6 +1246,7 @@ export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 export interface InteropConfig {
   name?: string
   shortName?: string
+  description?: string
   type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'

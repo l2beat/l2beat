@@ -36,10 +36,8 @@ export function WhatsNewWidgetCloseable({
         className="absolute top-1 right-1 bg-primary-invert p-1 shadow-lg"
         onClick={() => {
           track('whatsNewClicked', {
-            props: {
-              device: isDesktop ? 'desktop' : 'mobile',
-              action: 'close',
-            },
+            device: isDesktop ? 'desktop' : 'mobile',
+            action: 'close',
           })
         }}
       >

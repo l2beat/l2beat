@@ -27,10 +27,8 @@ const RadioGroup = ({
       onValueChange={(val) => {
         onValueChange?.(val)
         track('radioGroupChanged', {
-          props: {
-            name: name,
-            value: val,
-          },
+          name: name,
+          value: val,
         })
       }}
       data-variant={variant}

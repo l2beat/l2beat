@@ -81,8 +81,40 @@ function resolveTransfer(
   return {}
 }
 
-// https://docs.debridge.com/dmp-details/dmp/deployed-contracts
 // chainconfeeg
+// https://docs.debridge.com/dmp-details/dmp/deployed-contracts
+// https://docs.debridge.com/home/architecture/supported-chains
+const DEBRIDGE_CHAIN_LOOKUP = [
+  { chainId: '1', chain: 'ethereum' },
+  { chainId: '7565164', chain: 'solana' },
+  { chainId: '42161', chain: 'arbitrum' },
+  { chainId: '43114', chain: 'avalanche' },
+  { chainId: '56', chain: 'bsc' },
+  { chainId: '137', chain: 'polygonpos' },
+  { chainId: '10', chain: 'optimism' },
+  { chainId: '8453', chain: 'base' },
+  { chainId: '59144', chain: 'linea' },
+  { chainId: '2741', chain: 'abstract' },
+  // local canonical subset is exported below via defineNetworks()
+  // apechain not supported
+  { chainId: '100', chain: 'gnosis' },
+  { chainId: '747', chain: 'flow' },
+  { chainId: '1514', chain: 'story' },
+  { chainId: '60808', chain: 'bob' },
+  { chainId: '999', chain: 'hyperevm' },
+  // zksync not supported
+  { chainId: '5000', chain: 'mantle' },
+  { chainId: '1329', chain: 'sei' },
+  { chainId: '143', chain: 'monad' },
+  // katana not supported
+  { chainId: '728126428', chain: 'tron' },
+  { chainId: '1776', chain: 'injective' },
+  { chainId: '32769', chain: 'zilliqa' },
+  { chainId: '25', chain: 'cronos' },
+  { chainId: '4326', chain: 'megaeth' },
+  // tempo unsupported
+]
+
 export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '42161', chain: 'arbitrum' },
@@ -100,6 +132,10 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '143', chain: 'monad' },
   // tempo unsupported
 ])
+
+export function findDeBridgeChain(chainId: string | number | bigint): string {
+  return findChain(DEBRIDGE_CHAIN_LOOKUP, (x) => x.chainId, String(chainId))
+}
 
 export const Sent = createInteropEventType<{
   submissionId: `0x${string}`
@@ -121,6 +157,8 @@ export const Claimed = createInteropEventType<{
 export class DeBridgePlugin implements InteropPlugin {
   readonly name = 'debridge'
 
+  constructor(private oneSidedChains: string[] = []) {}
+
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
     if (sent) {
@@ -136,11 +174,7 @@ export class DeBridgePlugin implements InteropPlugin {
           srcTokenAddress: transfer.tokenAddress,
           srcWasBurned: transfer.zeroAddressMatched,
           amount: sent.amount,
-          $dstChain: findChain(
-            DEBRIDGE_NETWORKS,
-            (x) => x.chainId,
-            sent.chainIdTo.toString(),
-          ),
+          $dstChain: findDeBridgeChain(sent.chainIdTo.toString()),
         }),
       ]
     }
@@ -161,56 +195,99 @@ export class DeBridgePlugin implements InteropPlugin {
           dstTokenAddress: transfer.tokenAddress,
           dstWasMinted: transfer.zeroAddressMatched,
           receiver: EthereumAddress(claimed.receiver),
-          $srcChain: findChain(
-            DEBRIDGE_NETWORKS,
-            (x) => x.chainId,
-            claimed.chainIdFrom.toString(),
-          ),
+          $srcChain: findDeBridgeChain(claimed.chainIdFrom.toString()),
         }),
       ]
     }
   }
 
-  matchTypes = [Claimed]
-  match(claimed: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (!Claimed.checkType(claimed)) return
-    const sent = db.find(Sent, {
-      submissionId: claimed.args.submissionId,
-    })
-    if (!sent) return
+  matchTypes = [Claimed, Sent]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (Claimed.checkType(event)) {
+      const sent = db.find(Sent, {
+        submissionId: event.args.submissionId,
+      })
+      if (!sent) {
+        const srcChain = event.args.$srcChain
+        if (
+          event.args.amount === 0n ||
+          !this.oneSidedChains.includes(srcChain)
+        ) {
+          return
+        }
 
-    const results: MatchResult = []
-    const hasTransfer = claimed.args.amount > 0n
-    if (hasTransfer) {
+        return [
+          Result.Transfer('debridge.Transfer', {
+            srcChain,
+            dstEvent: event,
+            dstTokenAddress: event.args.dstTokenAddress,
+            dstAmount: event.args.amount,
+            dstWasMinted: event.args.dstWasMinted,
+            bridgeType: 'lockAndMint',
+          }),
+        ]
+      }
+
+      const results: MatchResult = []
+      const hasTransfer = event.args.amount > 0n
+      if (hasTransfer) {
+        results.push(
+          Result.Transfer('debridge.Transfer', {
+            srcEvent: sent,
+            srcTokenAddress: sent.args.srcTokenAddress,
+            srcAmount: event.args.amount,
+            srcWasBurned: sent.args.srcWasBurned,
+            dstEvent: event,
+            dstTokenAddress: event.args.dstTokenAddress,
+            dstAmount: event.args.amount,
+            dstWasMinted: event.args.dstWasMinted,
+            bridgeType: 'lockAndMint',
+          }),
+        )
+      }
+
+      const dln = collectDlnExtraEvents(event, db)
+      const app =
+        dln.app !== 'unknown'
+          ? dln.app
+          : hasTransfer
+            ? 'tokenBridge'
+            : 'unknown'
+
       results.push(
-        Result.Transfer('debridge.Transfer', {
+        Result.Message('debridge.Message', {
+          app,
           srcEvent: sent,
-          srcTokenAddress: sent.args.srcTokenAddress,
-          srcAmount: claimed.args.amount,
-          srcWasBurned: sent.args.srcWasBurned,
-          dstEvent: claimed,
-          dstTokenAddress: claimed.args.dstTokenAddress,
-          dstAmount: claimed.args.amount,
-          dstWasMinted: claimed.args.dstWasMinted,
-          bridgeType: 'lockAndMint',
+          dstEvent: event,
+          extraEvents: dln.extraEvents,
         }),
       )
+
+      return results
     }
 
-    const dln = collectDlnExtraEvents(claimed, db)
-    const app =
-      dln.app !== 'unknown' ? dln.app : hasTransfer ? 'tokenBridge' : 'unknown'
+    if (!Sent.checkType(event)) return
 
-    results.push(
-      Result.Message('debridge.Message', {
-        app,
-        srcEvent: sent,
-        dstEvent: claimed,
-        extraEvents: dln.extraEvents,
+    const claimed = db.find(Claimed, {
+      submissionId: event.args.submissionId,
+    })
+    if (claimed) return
+
+    const dstChain = event.args.$dstChain
+    if (event.args.amount === 0n || !this.oneSidedChains.includes(dstChain)) {
+      return
+    }
+
+    return [
+      Result.Transfer('debridge.Transfer', {
+        srcEvent: event,
+        srcTokenAddress: event.args.srcTokenAddress,
+        srcAmount: event.args.amount,
+        srcWasBurned: event.args.srcWasBurned,
+        dstChain,
+        bridgeType: 'lockAndMint',
       }),
-    )
-
-    return results
+    ]
   }
 }
 

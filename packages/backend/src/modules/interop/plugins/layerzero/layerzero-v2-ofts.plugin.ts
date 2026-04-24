@@ -365,6 +365,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
           dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
           dstWasMinted: oftReceivedPacketDelivered.args.minted,
+          bridgeType: 'burnAndMint',
           extraEvents: packetDelivered ? [packetDelivered] : undefined,
         }),
       ]
@@ -434,6 +435,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
+        bridgeType: 'burnAndMint',
         extraEvents: packetSent ? [packetSent] : undefined,
       }),
     ]

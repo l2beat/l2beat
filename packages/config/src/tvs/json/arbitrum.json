@@ -315,6 +315,41 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1698969600,
+            "untilTimestamp": 1747440000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1698969600,
+            "untilTimestamp": 1747440000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-ANIME",
       "priceId": "anime",
       "symbol": "ANIME",
@@ -1433,6 +1468,25 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-CHIP",
+      "priceId": "chip-2",
+      "symbol": "CHIP",
+      "name": "Chip",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102171777/large/CHIP_Token_Logo_Large.png?1776777444",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "chip-2",
+        "decimals": 18,
+        "sinceTimestamp": 1776816000,
+        "address": "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -2791,6 +2845,39 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1623784100
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-ESP",
+      "priceId": "espresso",
+      "symbol": "ESP",
+      "name": "Espresso",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67626/large/espresso.jpg?1753324525",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1770854400
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1770854400
           }
         ]
       },
@@ -7710,6 +7797,39 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1638403200
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-SKY",
+      "priceId": "sky",
+      "symbol": "SKY",
+      "name": "SKY Governance Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1727136000
           }
         ]
       },

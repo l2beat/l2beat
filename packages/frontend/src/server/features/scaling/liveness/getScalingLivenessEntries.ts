@@ -15,6 +15,7 @@ import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
+import { getApprovedOngoingAnomalies } from './getApprovedOngoingAnomalies'
 import { getLiveness } from './getLiveness'
 import type { LivenessAnomaly, LivenessProject } from './types'
 import { getHasTrackedContractChanged } from './utils/getHasTrackedContractChanged'
@@ -25,27 +26,34 @@ import {
 } from './utils/transformLivenessData'
 
 export async function getScalingLivenessEntries() {
-  const [tvs, projectsChangeReport, liveness, projects, zkCatalogProjects] =
-    await Promise.all([
-      get7dTvsBreakdown({ type: 'layer2' }),
-      getProjectsChangeReport(),
-      getLiveness(),
-      ps.getProjects({
-        select: [
-          'statuses',
-          'scalingInfo',
-          'livenessInfo',
-          'display',
-          'trackedTxsConfig',
-        ],
-        optional: ['scalingDa', 'contracts'],
-        where: ['scalingInfo'],
-        whereNot: ['isUpcoming', 'archivedAt'],
-      }),
-      ps.getProjects({
-        select: ['zkCatalogInfo'],
-      }),
-    ])
+  const [
+    tvs,
+    projectsChangeReport,
+    liveness,
+    projects,
+    zkCatalogProjects,
+    projectsOngoingAnomalies,
+  ] = await Promise.all([
+    get7dTvsBreakdown({ type: 'layer2' }),
+    getProjectsChangeReport(),
+    getLiveness(),
+    ps.getProjects({
+      select: [
+        'statuses',
+        'scalingInfo',
+        'livenessInfo',
+        'display',
+        'trackedTxsConfig',
+      ],
+      optional: ['scalingDa', 'contracts'],
+      where: ['scalingInfo'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
+    getApprovedOngoingAnomalies(),
+  ])
 
   const entries = projects
     .map((project) =>
@@ -55,6 +63,7 @@ export async function getScalingLivenessEntries() {
         liveness[project.id.toString()],
         tvs.projects[project.id]?.breakdown.total,
         zkCatalogProjects,
+        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .filter((x) => x !== undefined)
@@ -88,6 +97,7 @@ function getScalingLivenessEntry(
   liveness: LivenessProject | undefined,
   tvs: number | undefined,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
+  ongoingAnomaly: boolean,
 ): ScalingLivenessEntry | undefined {
   if (!liveness) {
     return undefined
@@ -107,7 +117,7 @@ function getScalingLivenessEntry(
       project,
       changes,
       syncWarning,
-      ongoingAnomaly: liveness.anomalies.some((a) => a.end === undefined),
+      ongoingAnomaly,
     }),
     stacks: project.scalingInfo.stacks,
     proofSystem: getProofSystemWithName(

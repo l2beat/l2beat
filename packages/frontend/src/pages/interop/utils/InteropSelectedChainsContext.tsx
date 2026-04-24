@@ -133,7 +133,8 @@ export function InteropSelectedChainsProvider({
       .sort()
       .join(',')
     track('interopChainsSelected', {
-      props: { chains, page: window.location.pathname },
+      chains,
+      page: window.location.pathname,
     })
   }, [debouncedSelection, mode, track])
 

@@ -1,20 +1,8 @@
 {
   "name": "taiko",
-  "timestamp": 1776683523,
+  "timestamp": 1776863372,
   "configHash": "0xf35702c4c81529b7cb06b5ec621647cdb45fb0f8158a9a57e83bdbf848e54019",
   "entries": [
-    {
-      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "role": ".operatorMapping"
-        }
-      ]
-    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
@@ -383,7 +371,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1776683519,
+        "clock": 1776863363,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -904,7 +892,7 @@
       "sinceTimestamp": 1772642207,
       "sinceBlock": 24585332,
       "values": {
-        "$admin": "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7",
+        "$admin": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42",
         "$pastUpgrades": [
           [
@@ -935,20 +923,20 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 4033,
-          "lastProposalBlockId": 24920707,
-          "lastFinalizedProposalId": 4030,
-          "lastFinalizedTimestamp": 1776683027,
-          "lastCheckpointTimestamp": 1776683027,
-          "lastFinalizedBlockHash": "0x3319f17a56d2b7b9bdd774f5d508521522570db41305b94e8f310745efaa2ec9"
+          "nextProposalId": 4501,
+          "lastProposalBlockId": 24935659,
+          "lastFinalizedProposalId": 4495,
+          "lastFinalizedTimestamp": 1776861695,
+          "lastCheckpointTimestamp": 1776861695,
+          "lastFinalizedBlockHash": "0xd0dcd1f55bdbcb0a6195194d4755e783ae1b69fb43b2b2ea373bac13e090db87"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
         "impl": "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42",
         "inNonReentrant": false,
-        "owner": "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7",
+        "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
-        "pendingOwner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1003,6 +991,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+          "description": "pause and unpause the rollup system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
           "role": ".owner"
@@ -1045,6 +1039,11 @@
         {
           "permission": "upgrade",
           "from": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
           "role": "admin"
         },
         {
@@ -1665,6 +1664,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+          "description": "pause and unpause the rollup system.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
           "role": ".owner",
@@ -1728,6 +1736,14 @@
         {
           "permission": "upgrade",
           "from": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
           "role": "admin",
           "via": [
             { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
@@ -2228,11 +2244,6 @@
       ]
     },
     {
-      "address": "eth:0xcdCEBD75cDcb9DEd637D537776431Db563Ff0821",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2333,7 +2344,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 39076,
+        "nextMessageId": 39083,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2575,54 +2586,6 @@
       ]
     },
     {
-      "name": "Safe",
-      "address": "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
-          "description": "pause and unpause the rollup system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
-          "role": "admin"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1774370471,
-      "sinceBlock": 24728654,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
-          "eth:0xcdCEBD75cDcb9DEd637D537776431Db563Ff0821",
-          "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439",
-          "eth:0x0aED2375549D1115e180bd0caea829C429Ea50B3"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x11b97a36b2a75ccd2b649feb13076d9773fc41f2083532dfcde9e9d48e7ae40e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 4,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
       "name": "L2BEAT",
       "address": "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
       "type": "Contract",
@@ -2813,11 +2776,8 @@
         "inNonReentrant": false,
         "latestActivationEpoch": 1775558231,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 2,
-        "operatorMapping": [
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
-        ],
+        "operatorCount": 1,
+        "operatorMapping": ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -4791,9 +4751,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": [
       "constructor(address _singleton)"
     ],
@@ -5190,6 +5147,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 24920728, "taiko": 5759588 },
-  "permissionsConfigHash": "0xd54976b63fbe3a079c91201a03e5c8e208af9fa750e0cb99de2ba6c87cb7723c"
+  "usedBlockNumbers": { "ethereum": 24935674, "taiko": 5849298 },
+  "permissionsConfigHash": "0x4872857493ab42ed238a13f901100067ccbb93ec4c5114fc6790aa32fb9c3d32"
 }

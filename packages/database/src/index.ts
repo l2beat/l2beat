@@ -59,6 +59,7 @@ export type {
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
+  InteropTransferTokenInfo,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {

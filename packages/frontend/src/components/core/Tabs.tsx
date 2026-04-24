@@ -25,10 +25,8 @@ function Tabs({
       onValueChange={(val) => {
         onValueChange?.(val)
         track('tabsChanged', {
-          props: {
-            name: name,
-            value: val,
-          },
+          name: name,
+          value: val,
         })
       }}
       {...props}

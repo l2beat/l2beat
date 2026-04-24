@@ -22,7 +22,7 @@ import {
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import { codeIsEOA } from './codeIsEOA'
+import { codeIsEOA } from './bytecode'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import type { TemplateService } from './TemplateService'
 

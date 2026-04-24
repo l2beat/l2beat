@@ -49,9 +49,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useEffect(() => {
     if (debouncedValue === '') return
-    track('searchBarSearched', {
-      props: { value: debouncedValue },
-    })
+    track('searchBarSearched', { value: debouncedValue })
   }, [debouncedValue, track])
 
   const filteredPages = useMemo(
@@ -79,9 +77,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
     setValue('')
     router.push(item.href)
     track('searchBarProjectSelected', {
-      props: {
-        name: item.name,
-      },
+      name: item.name,
     })
   }
 

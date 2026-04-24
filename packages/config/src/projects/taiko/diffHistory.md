@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xb9e0fd172c64eeedef11c7aef2bd1ee2b5938c96
+
+# Diff at Wed, 22 Apr 2026 13:12:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2164a3ed7ae404dbff0f676d052e9bf58c88f761 block: 1776683523
+- current timestamp: 1776863372
+
+## Description
+
+last admin upgrade perms are txfered to the DAO upgrade module.
+all vanilla upgrades are now in hands of dao with delay or SC with no delay.
+no risk change since proof system is closed.
+
+## Watched changes
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.
+      values.$admin:
+-        "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f","description":"pause and unpause the rollup system.","role":".owner"}
+      directlyReceivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f","role":"admin"}
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f","description":"pause and unpause the rollup system.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xF14Dc4EdDb43e9a6A440e6beC97ea2ea64f39Ef7)
+    +++ description: None
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      values.operatorMapping.0:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat@1776683523/Safe/Safe.sol => /dev/null    | 1216 --------------------
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
 Generated with discovered.json: 0x40a5bbe5f06a78d685cd38b6db16f4450472e5c3
 
 # Diff at Mon, 20 Apr 2026 11:13:29 GMT:

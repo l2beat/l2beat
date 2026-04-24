@@ -91,9 +91,11 @@ export function ProjectsUsedIn({
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>
-                <p className="text-secondary text-xs">
-                  Click to view project page
-                </p>
+                {!noLink && (
+                  <p className="text-secondary text-xs">
+                    Click to view project page
+                  </p>
+                )}
               </TooltipContent>
             </Tooltip>
           )

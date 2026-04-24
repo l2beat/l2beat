@@ -161,6 +161,12 @@ export function getASTIdentifiers(
       result = parseTypeName(node.definition, visit)
       break
     }
+    case 'FileLevelConstant': {
+      const typeName = parseTypeName(node.typeName, visit)
+      const initialValue = parseExpression(node.initialValue, visit)
+      result = [node.name].concat(typeName).concat(initialValue)
+      break
+    }
     case 'UsingForDeclaration': {
       const typeName = parseTypeName(node.typeName, visit)
       const libraryName = node.libraryName ?? []

@@ -12783,6 +12783,20 @@
       }
     },
     {
+      "name": "Chip",
+      "coingeckoId": "chip-2",
+      "address": "0x0C1c1C109FE34733fca54b82d7B46B75CFb71F6e",
+      "symbol": "CHIP",
+      "decimals": 18,
+      "deploymentTimestamp": 1774945554,
+      "coingeckoListingTimestamp": 1776816000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102171777/large/CHIP_Token_Logo_Large.png?1776777444",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "clBTC",
       "coingeckoId": "clbtc",
       "address": "0x1792865D493FE4DFdD504010D3c0f6da11E8046D",

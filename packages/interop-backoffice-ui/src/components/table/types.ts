@@ -7,6 +7,7 @@ interface CsvValueContext<TData extends RowData, TValue> {
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
+    excludeFromCsv?: boolean
     csvHeader?: string
     getCsvValue?: (args: CsvValueContext<TData, TValue>) => string
   }

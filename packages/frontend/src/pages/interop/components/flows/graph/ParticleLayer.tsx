@@ -16,6 +16,7 @@ import { useScaledParticleCounts } from './utils/useScaledParticleCounts'
 interface Props {
   flows: Flow[]
   chainData: ChainData[]
+  visibleChainIds: string[]
   layout: FlowsGraphLayout
   interopChains: InteropChainWithIcon[]
   centerX: number
@@ -40,17 +41,18 @@ interface Props {
 export function ParticleLayer({
   flows,
   chainData,
+  visibleChainIds,
   layout,
   interopChains,
   centerX,
   centerY,
   isSmallScreen,
 }: Props) {
-  const { highlightedChains, selectedChains } = useInteropFlows()
+  const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
 
   const { flowsParticles } = useScaledParticleCounts(
-    selectedChains,
+    visibleChainIds,
     chainData,
     flows,
   )

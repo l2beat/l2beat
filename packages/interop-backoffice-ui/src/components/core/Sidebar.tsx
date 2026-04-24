@@ -226,6 +226,8 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
+  const { isMobile, open, setOpen, openMobile, setOpenMobile } = useSidebar()
+
   return (
     <Button
       data-sidebar="trigger"
@@ -233,8 +235,19 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn('size-7', className)}
+      type="button"
       onClick={(event) => {
         onClick?.(event)
+        if (event.defaultPrevented) {
+          return
+        }
+
+        if (isMobile) {
+          setOpenMobile(!openMobile)
+          return
+        }
+
+        setOpen(!open)
       }}
       {...props}
     >

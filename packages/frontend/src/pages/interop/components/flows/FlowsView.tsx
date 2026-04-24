@@ -1,12 +1,17 @@
+import partition from 'lodash/partition'
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../chain-selector/types'
+import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from './consts'
 import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
+import { InactiveChainsDialog } from './graph/InactiveChainsDialog'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
 import {
   InteropFlowsProvider,
@@ -29,8 +34,34 @@ export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
 }
 
 function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
-  const { highlightedChains } = useInteropFlows()
-  const hasGraphSelection = highlightedChains.length > 0
+  const { highlightedChains, selectedChains, selectedProtocols } =
+    useInteropFlows()
+  const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
+  const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
+  const { data, isLoading } = api.interop.flows.useQuery(
+    {
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    },
+    { enabled: hasEnoughChains && hasEnoughProtocols },
+  )
+  const activeIds = new Set<string>([
+    ...(data?.chainData ?? [])
+      .filter((chain) => chain.totalVolume > 0)
+      .map((chain) => chain.chainId),
+  ])
+  const [activeChains, inactiveChains] = partition(
+    interopChains.filter((chain) => selectedChains.includes(chain.id)),
+    (chain) => activeIds.has(chain.id),
+  )
+
+  const visibleHighlightedChains = isLoading
+    ? highlightedChains
+    : highlightedChains.filter((chainId) => activeIds.has(chainId))
+  const hasGraphSelection = visibleHighlightedChains.length > 0
+  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
+  const shouldShowInactiveChainsInfo =
+    !!data && inactiveChains.length > 0 && !isLoading
 
   return (
     <PrimaryCard
@@ -44,15 +75,39 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       <div className="h-full max-lg:order-3">
         <FlowsGeneralStats />
       </div>
-      <div className="group/flows flex w-full min-w-0 flex-col items-center gap-10 md:max-lg:max-h-[70vh] lg:h-[calc(100svh-12rem)]">
-        <div className="flex flex-col items-center gap-3 max-lg:order-1">
-          <div className="flex gap-2">
-            <FlowsChainsSelector allChains={interopChains} />
-            <FlowsProtocolsSelector allProtocols={protocols} />
+      <div className="flex h-full flex-col">
+        <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">
+          <div className="flex flex-col items-center gap-3 max-lg:order-1">
+            <div className="flex gap-2">
+              <FlowsChainsSelector allChains={interopChains} />
+              <FlowsProtocolsSelector allProtocols={protocols} />
+            </div>
+            <SelectInfo
+              highlightedChainsNumber={visibleHighlightedChains.length}
+            />
           </div>
-          <SelectInfo highlightedChainsNumber={highlightedChains.length} />
+          <FlowsGraphPanel
+            activeChains={activeChains}
+            data={data}
+            hasEnoughChains={hasEnoughChains}
+            hasEnoughProtocols={hasEnoughProtocols}
+            isLoading={isLoading}
+          />
         </div>
-        <FlowsGraphPanel interopChains={interopChains} />
+        {shouldRenderInactiveChainsInfo && (
+          <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1 max-lg:order-2">
+            {shouldShowInactiveChainsInfo ? (
+              <>
+                <span className="font-normal text-secondary text-xs leading-none md:text-base">
+                  No transfers detected for
+                </span>
+                <InactiveChainsDialog chains={inactiveChains} />
+              </>
+            ) : isLoading ? (
+              <Skeleton className="h-4 w-40 md:h-5" />
+            ) : null}
+          </div>
+        )}
       </div>
       <div
         className={cn(
@@ -61,7 +116,9 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         )}
       >
         <div className="h-full lg:w-[280px]">
-          <FlowsSelectedPathPanel />
+          <FlowsSelectedPathPanel
+            visibleHighlightedChains={visibleHighlightedChains}
+          />
         </div>
       </div>
     </PrimaryCard>

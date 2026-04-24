@@ -3,28 +3,27 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
-import { api } from '~/trpc/React'
+import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 
 interface FlowsGraphPanelProps {
-  interopChains: InteropChainWithIcon[]
+  activeChains: InteropChainWithIcon[]
+  data: InteropFlowsData | undefined
+  hasEnoughChains: boolean
+  hasEnoughProtocols: boolean
+  isLoading: boolean
 }
 
-export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
-  const { selectedChains, selectedProtocols } = useInteropFlows()
-  const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
-  const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
-  )
+export function FlowsGraphPanel({
+  activeChains,
+  data,
+  hasEnoughChains,
+  hasEnoughProtocols,
+  isLoading,
+}: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
   const size =
@@ -32,31 +31,36 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   const isSmallScreen = size ? size <= 500 : false
 
   return (
-    <div
-      id="flows-graph"
-      className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6 max-lg:order-2"
-      ref={containerRef}
-    >
-      {!size ? (
-        <Skeleton className="h-full w-full rounded-lg" />
-      ) : !hasEnoughChains ? (
-        <SelectionOverlay
-          message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
-        />
-      ) : !hasEnoughProtocols ? (
-        <SelectionOverlay
-          message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
-        />
-      ) : isLoading || !data ? (
-        <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
-      ) : (
-        <FlowsGraph
-          interopChains={interopChains}
-          data={data}
-          size={size}
-          isSmallScreen={isSmallScreen}
-        />
-      )}
+    <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
+      <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center pb-6">
+        <div
+          id="flows-graph"
+          className="flex aspect-square max-h-full min-h-0 w-full min-w-0 max-w-[min(70svh,calc(100svh-20rem))] items-center justify-center"
+          ref={containerRef}
+        >
+          {!size ? (
+            <Skeleton className="h-full w-full rounded-lg" />
+          ) : !hasEnoughChains ? (
+            <SelectionOverlay
+              message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
+            />
+          ) : !hasEnoughProtocols ? (
+            <SelectionOverlay
+              message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
+            />
+          ) : isLoading || !data ? (
+            <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
+          ) : (
+            <FlowsGraph
+              interopChains={activeChains}
+              visibleChainIds={activeChains.map((chain) => chain.id)}
+              data={data}
+              size={size}
+              isSmallScreen={isSmallScreen}
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }

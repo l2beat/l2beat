@@ -95,9 +95,7 @@ export function ChartRangeControls({
         open={drawerOpen}
         onOpenChange={(open) => {
           if (!open) {
-            track('chartRangeSelected', {
-              props: { name, value: selectedOption },
-            })
+            track('chartRangeSelected', { name, value: selectedOption })
           }
           setDrawerOpen(open)
         }}
@@ -182,9 +180,7 @@ export function ChartRangeControls({
           onDateRangeChange={(dateRange) => {
             onDateRangeChange(dateRange)
             if (dateRange?.from && dateRange?.to) {
-              track('chartRangeSelected', {
-                props: { name, value: 'custom' },
-              })
+              track('chartRangeSelected', { name, value: 'custom' })
             }
           }}
         />
@@ -225,9 +221,7 @@ function PredefinedOptions({
             const range = optionToRange(option.value, { offset })
             setValue(range)
             setInternalValue(undefined)
-            track('chartRangeSelected', {
-              props: { name, value: option.value },
-            })
+            track('chartRangeSelected', { name, value: option.value })
           }}
           type="button"
           disabled={option.disabled}
