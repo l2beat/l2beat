@@ -3,7 +3,7 @@ import type { Database } from '@l2beat/database'
 import {
   EthRpcClient,
   Http,
-  RpcMetricsAggregator,
+  type RpcMetricsAggregator,
   UpsertMap,
 } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
@@ -37,7 +37,6 @@ export type PluginSyncStatus = {
 
 export class InteropSyncersManager {
   private rpcClients: { [chain: string]: EthRpcClient } = {}
-  private readonly rpcMetricsAggregator: RpcMetricsAggregator
 
   private syncers = new UpsertMap<
     string, // plugin cluster name
@@ -52,14 +51,8 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
-    rpcMetricsAggregator?: RpcMetricsAggregator,
+    private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
-    this.rpcMetricsAggregator =
-      rpcMetricsAggregator ??
-      new RpcMetricsAggregator({
-        logger: logger.for(RpcMetricsAggregator.name),
-      })
-
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
       if (resyncablePlugins.length === 0) {
