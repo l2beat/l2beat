@@ -27,6 +27,14 @@ interface ScheduledCall {
   blockNumber: number
 }
 
+interface ScheduledStorageRead {
+  resolve: (value: Bytes) => void
+  reject: (reason: unknown) => void
+  address: EthereumAddress
+  slot: number | bigint | Bytes
+  blockNumber: number
+}
+
 interface ScheduledLogRequest {
   resolve: (value: providers.Log[]) => void
   reject: (reason: unknown) => void
@@ -57,6 +65,14 @@ export class BatchingAndCachingProvider {
 
   private logRequests: ScheduledLogRequest[] = []
   private logRequestsTimeout: ReturnType<typeof setTimeout> | undefined
+
+  private storageReads: ScheduledStorageRead[] = []
+  private storageReadsTimeout: ReturnType<typeof setTimeout> | undefined
+
+  // Flips to true the first time a state-override eth_call fails, so
+  // subsequent storage-read flushes skip the override path and go
+  // straight to per-slot fetches.
+  private stateOverrideUnsupported = false
 
   constructor(
     private cache: ReorgAwareCache,
@@ -204,26 +220,116 @@ export class BatchingAndCachingProvider {
     }
   }
 
-  async getStorage(
+  getStorage(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
     blockNumber: number,
   ): Promise<Bytes> {
-    let duration = -performance.now()
-    const entry = await this.cache.entry(
-      'getStorage',
-      [blockNumber, address, slot],
-      blockNumber,
+    return new Promise((resolve, reject) => {
+      this.storageReads.push({ resolve, reject, address, slot, blockNumber })
+      if (!this.storageReadsTimeout) {
+        this.storageReadsTimeout = setTimeout(() => {
+          this.storageReadsTimeout = undefined
+          this.flushStorageReads()
+        }, 0)
+      }
+    })
+  }
+
+  private async flushStorageReads() {
+    const start = performance.now()
+    const reads = [...this.storageReads]
+    this.storageReads = []
+
+    const checkedInCache = await Promise.all(
+      reads.map(async (read) => ({
+        read,
+        entry: await this.cache.entry(
+          'getStorage',
+          [read.blockNumber, read.address, read.slot],
+          read.blockNumber,
+        ),
+      })),
     )
-    const cached = entry.read()
-    if (cached !== undefined) {
-      duration += performance.now()
-      this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
-      return Bytes.fromHex(cached)
+
+    // Group misses by (address, blockNumber) — one eth_call with state
+    // override can only target a single address, so each group becomes one
+    // batched RPC.
+    const toExecute = new Map<
+      string,
+      { read: ScheduledStorageRead; entry: CacheEntry }[]
+    >()
+    for (const checked of checkedInCache) {
+      const cached = checked.entry.read()
+      if (cached === undefined) {
+        const key = `${checked.read.blockNumber}.${checked.read.address.toString()}`
+        const group = toExecute.get(key) ?? []
+        group.push(checked)
+        toExecute.set(key, group)
+      } else {
+        const duration = performance.now() - start
+        this.stats.mark(ProviderMeasurement.GET_STORAGE, duration)
+        checked.read.resolve(Bytes.fromHex(cached))
+      }
     }
-    const storage = await this.provider.getStorage(address, slot, blockNumber)
-    entry.write(storage.toString())
-    return storage
+
+    await Promise.all(
+      [...toExecute.values()].map((group) => this.batchReadStorage(group)),
+    )
+  }
+
+  private async batchReadStorage(
+    group: { read: ScheduledStorageRead; entry: CacheEntry }[],
+  ) {
+    const first = group[0]
+    assert(first !== undefined, 'empty storage group')
+    const { address, blockNumber } = first.read
+    const slots = group.map((g) => g.read.slot)
+
+    try {
+      let values: Bytes[]
+      if (this.stateOverrideUnsupported || slots.length === 1) {
+        values = await Promise.all(
+          slots.map((slot) =>
+            this.provider.getStorage(address, slot, blockNumber),
+          ),
+        )
+      } else {
+        try {
+          values = await this.provider.batchReadStorage(
+            address,
+            slots,
+            blockNumber,
+          )
+        } catch (e) {
+          this.logger.warn(
+            'State override batch storage read failed, falling back to per-slot fetch',
+            { error: e },
+          )
+          this.stateOverrideUnsupported = true
+          values = await Promise.all(
+            slots.map((slot) =>
+              this.provider.getStorage(address, slot, blockNumber),
+            ),
+          )
+        }
+      }
+
+      assert(values.length === group.length)
+      for (let i = 0; i < group.length; i++) {
+        const item = group[i] as {
+          read: ScheduledStorageRead
+          entry: CacheEntry
+        }
+        const value = values[i] as Bytes
+        item.read.resolve(value)
+        item.entry.write(value.toString())
+      }
+    } catch (e) {
+      for (const item of group) {
+        item.read.reject(e)
+      }
+    }
   }
 
   async getLogs(
