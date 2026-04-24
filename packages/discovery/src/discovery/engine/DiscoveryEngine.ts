@@ -121,7 +121,7 @@ export class DiscoveryEngine {
             counter.getCount(),
           )
           if (skipReason !== undefined) {
-            const info = `${counter.increment()}/${total}`
+            const info = `↓${depth} ${counter.increment()}/${total}`
             const entries = [
               chalk.gray(info),
               chalk.gray(address),
@@ -154,7 +154,7 @@ export class DiscoveryEngine {
             }
 
             counter.increment()
-            this.logObject(analysis, total, counter)
+            this.logObject(analysis, total, counter, depth)
           } catch (error) {
             this.logAnalysisError(address, error)
             throw error
@@ -175,8 +175,9 @@ export class DiscoveryEngine {
     analysis: Analysis,
     total: number,
     counter: DiscoveryCounter,
+    depth: number,
   ) {
-    const info = `${counter.getCount()}/${total}`
+    const info = `↓${depth} ${counter.getCount()}/${total}`
     if (analysis.type === 'EOA') {
       const entries = [chalk.gray(info), analysis.address, chalk.blue('EOA')]
       this.logger.info(entries.join(' '))
