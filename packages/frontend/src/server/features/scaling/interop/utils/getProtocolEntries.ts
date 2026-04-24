@@ -105,6 +105,7 @@ export function getProtocolEntries(
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
+      description: project.interopConfig.description,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,
       subgroup: subgroupProject

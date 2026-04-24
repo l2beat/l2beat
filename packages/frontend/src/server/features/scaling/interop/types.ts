@@ -14,6 +14,7 @@ export type ProtocolEntry = {
   iconUrl: string
   name: string
   shortName: string | undefined
+  description: string | undefined
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:

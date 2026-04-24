@@ -33,7 +33,7 @@ export function getInteropProtocolEntry(
   project: Project<'interopConfig', 'display' | 'statuses'>,
 ): InteropProtocolEntry {
   const header: InteropProtocolEntry['header'] = {
-    description: project.display?.description,
+    description: project.interopConfig.description,
     warning: project.statuses?.yellowWarning,
     redWarning: project.statuses?.redWarning,
     emergencyWarning: project.statuses?.emergencyWarning,

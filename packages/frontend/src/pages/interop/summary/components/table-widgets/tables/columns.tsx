@@ -27,6 +27,7 @@ function getCommonColumns<
     slug: string
     name: string
     shortName: string | undefined
+    description: string | undefined
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },

@@ -1,6 +1,7 @@
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { env } from '~/env'
+import { InteropProjectNameTooltip } from '~/pages/interop/components/table/InteropProjectNameTooltip'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 
@@ -8,6 +9,7 @@ interface Props {
   shortName?: string
   slug: string
   name: string
+  description?: string
   subgroup?: {
     name: string
     iconUrl: string
@@ -19,6 +21,7 @@ export function InteropNameCell({
   shortName,
   slug,
   name,
+  description,
   subgroup,
   isAggregate,
 }: Props) {
@@ -36,11 +39,20 @@ export function InteropNameCell({
     </TwoRowCell>
   )
 
-  return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+  const content = env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
     <TableLink href={buildUrl(`/interop/protocols/${slug}`)}>
       {nameCell}
     </TableLink>
   ) : (
     nameCell
+  )
+
+  return (
+    <InteropProjectNameTooltip
+      projectName={shortName ?? name}
+      description={description}
+    >
+      {content}
+    </InteropProjectNameTooltip>
   )
 }

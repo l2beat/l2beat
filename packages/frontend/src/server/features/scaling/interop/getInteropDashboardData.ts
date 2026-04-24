@@ -167,6 +167,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     slug: project.slug,
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
+    description: project.interopConfig.description,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
