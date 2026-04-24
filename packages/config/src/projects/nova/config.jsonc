@@ -122,7 +122,17 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": {
-      "ignoreRelatives": ["getValidators"]
+      "fields": {
+        "getValidators": {
+          "permissions": [
+            {
+              "type": "propose",
+              "description": "Can propose BoLD assertions and initiate challenges. Whitelisted validator on RollupProxy."
+            },
+            { "type": "challenge" }
+          ]
+        }
+      }
     }
   }
 }

@@ -202,7 +202,10 @@ export const nova: ScalingProject = orbitStackL2({
       isPostBoLD,
     ),
     stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT(
+      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+        discovery.getContractValue<string[]>('RollupProxy', 'getValidators')
+          .length,
+        true,
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
       ),
