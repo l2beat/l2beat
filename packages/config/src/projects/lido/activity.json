@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777021964,
-  "lastConsumedUpdateNotifierId": 127,
+  "lastReconciledAt": 1777105115,
+  "lastConsumedUpdateNotifierId": 130,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1704,6 +1704,73 @@
           }
         }
       ]
+    },
+    {
+      "timestamp": "2026-04-25T08:12:54.000Z",
+      "updateNotifierId": 130,
+      "address": "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf",
+      "contractName": "FeedRegistry",
+      "entity": null,
+      "id": "130:eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-25T08:12:54.000Z",
+      "updateNotifierId": 130,
+      "address": "eth:0x98be4a407Bff0c125e25fBE9Eb1165504349c37d",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "130:eth:0x98be4a407Bff0c125e25fBE9Eb1165504349c37d:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.6",
+          "before": "eth:0xBC621E0fAd141CD1b14f34f7954695E6C3322472",
+          "after": "eth:0x0dcd2cB5230177F6BC13a604bA1d815F7578E36D"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-25T08:12:54.000Z",
+      "updateNotifierId": 130,
+      "address": "eth:0xC92E8bdf79f0507f65a392b0ab4667716BFE0110",
+      "contractName": "GPv2VaultRelayer",
+      "entity": null,
+      "id": "130:eth:0xC92E8bdf79f0507f65a392b0ab4667716BFE0110:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-25T08:12:54.000Z",
+      "updateNotifierId": 130,
+      "address": "eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776",
+      "contractName": "AllowedRecipientsRegistry",
+      "entity": null,
+      "id": "130:eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getAllowedRecipients.28",
+          "after": "eth:0xe84A061897afc2e7fF5FB7e3686717C528617487"
+        },
+        {
+          "field": "values.getAllowedRecipients.29",
+          "after": "eth:0x0C63F9F31B8d5acA60da6B167ad476ab05f7f51d"
+        },
+        {
+          "field": "values.getAllowedRecipients.30",
+          "after": "eth:0x2259849D3E810A9aDc784Fea33799AbbA1039215"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-25T08:12:54.000Z",
+      "updateNotifierId": 130,
+      "address": "eth:0xe84A061897afc2e7fF5FB7e3686717C528617487",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "130:eth:0xe84A061897afc2e7fF5FB7e3686717C528617487:contract-added",
+      "type": "contract-added"
     }
   ]
 }

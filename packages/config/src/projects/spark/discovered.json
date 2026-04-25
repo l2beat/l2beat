@@ -1,6 +1,6 @@
 {
   "name": "spark",
-  "timestamp": 1776887848,
+  "timestamp": 1777104774,
   "configHash": "0x155fb67f3b41b7b70988a637c22131bb6db7900c5e39c7049cb5e44d1a893e24",
   "entries": [
     {
@@ -30,9 +30,26 @@
       }
     },
     {
-      "address": "eth:0x062cE42caE04c51D04E77e3D64cc8953a2296FfE",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "LombardTimeLock",
+      "address": "eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x47b07da8e38defd363cbe1e56ddeb060ba5a8bc7b632e01ec71a98ab4cf69567"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1716965183,
+      "sinceBlock": 19973818,
+      "values": {
+        "$immutable": true,
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 86400,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "implementationNames": {
+        "eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59": "LombardTimeLock"
+      }
     },
     {
       "name": "ESM",
@@ -74,7 +91,7 @@
         "DAI_PRICE_FEED_ADDRESS": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
         "getAnswer": [],
         "getTimestamp": [],
-        "latestAnswer": 117471731,
+        "latestAnswer": 117481826,
         "POT_ADDRESS": "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
       },
       "errors": {
@@ -113,9 +130,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "711735527616774797564757",
+        "scaledTotalSupply": "739999342562645937312475",
         "symbol": "spwstETH",
-        "totalSupply": "711765022575957556091682",
+        "totalSupply": "740030008799717694293818",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "fieldMeta": {
@@ -148,7 +165,7 @@
         "owner": "eth:0x9C070027cdC9dc8F82416B2e5314E11DFb4FE3CD",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "tBTC",
-        "totalSupply": "5646959554350000000000"
+        "totalSupply": "5379424275580000000000"
       },
       "implementationNames": {
         "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": "TBTC"
@@ -166,11 +183,11 @@
       "sinceBlock": 8928160,
       "values": {
         "$immutable": true,
-        "chi": "1174717318946626045491140254",
+        "chi": "1174818268956316788372851032",
         "dsr": "1000000000393915525145987602",
         "live": 1,
-        "Pie": "207804751305325759636090941",
-        "rho": 1776884843,
+        "Pie": "207727469515775995855557851",
+        "rho": 1777102991,
         "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
         "vow": "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466"
       },
@@ -197,7 +214,7 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "WBTC",
-        "totalSupply": 11868234710622
+        "totalSupply": 11837399827482
       },
       "implementationNames": {
         "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": "WBTC"
@@ -218,7 +235,7 @@
         "ASSET_TO_PEG": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
         "DECIMALS": 8,
         "DENOMINATOR": "10000000000000000",
-        "latestAnswer": 7882117212520,
+        "latestAnswer": 7731473094011,
         "MAX_DECIMALS": 18,
         "PEG_TO_BASE": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
       },
@@ -372,15 +389,15 @@
         "description": "Aggregated price feed ETH/USD from Chronicle, Chainlink, and RedStone oracles",
         "getAgeThreshold": 90000,
         "getAggregatedOracleValue": {
-          "value": 240193023550,
+          "value": 231647000000,
           "goodOraclesCount": 3
         },
-        "latestAnswer": 240193023550,
+        "latestAnswer": 231647000000,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 240193023550,
-          "startedAt": 1776887843,
-          "updatedAt": 1776887843,
+          "answer": 231647000000,
+          "startedAt": 1777104755,
+          "updatedAt": 1777104755,
           "answeredInRound": 1
         },
         "redstone": "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4",
@@ -406,7 +423,7 @@
         "DAI_PRICE_FEED_ADDRESS": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
         "getAnswer": [],
         "getTimestamp": [],
-        "latestAnswer": 109411279,
+        "latestAnswer": 109438246,
         "POT_ADDRESS": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
       },
       "errors": {
@@ -416,11 +433,6 @@
       "implementationNames": {
         "eth:0x27f3A665c75aFdf43CfbF6B3A859B698f46ef656": "SavingsDaiOracle"
       }
-    },
-    {
-      "address": "eth:0x2a4df63f0dbE4630EE011821cF1fa69A9635f961",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3126c94C032A1D9Be9294cF5be2da99255b00cc8",
@@ -459,6 +471,19 @@
         "0xafb4d4f4dba8564baebcfdf60cf5d9b5492c799a722048d4ab6df9472f75c653"
       ],
       "proxyType": "immutable",
+      "sinceTimestamp": 1685119787,
+      "sinceBlock": 17344560,
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58",
+          "eth:0x6605aa120fe8b656482903E7757BaBF56947E45E"
+        ]
+      },
+      "implementationNames": {
+        "eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4": "SubProxy"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -475,20 +500,7 @@
           "from": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
           "role": "admin"
         }
-      ],
-      "sinceTimestamp": 1685119787,
-      "sinceBlock": 17344560,
-      "values": {
-        "$immutable": true,
-        "wards": [
-          "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
-          "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58",
-          "eth:0x6605aa120fe8b656482903E7757BaBF56947E45E"
-        ]
-      },
-      "implementationNames": {
-        "eth:0x3300f198988e4C9C63F75dF86De36421f06af8c4": "SubProxy"
-      }
+      ]
     },
     {
       "name": "LRTOracle",
@@ -574,8 +586,8 @@
         "$upgradeCount": 13,
         "currentPeriodMintedFeeAmount": "1507879294513996496",
         "feePeriodStartTime": 1776470400,
-        "getCurrentPeriodStartTime": 1776816000,
-        "getNextDailyLimitResetTimestamp": 1776902400,
+        "getCurrentPeriodStartTime": 1777075200,
+        "getNextDailyLimitResetTimestamp": 1777161600,
         "highestRsethPrice": "1069610361882844043",
         "lrtConfig": "eth:0x947Cb49334e6571ccBFEF1f1f1178d8469D65ec7",
         "maxFeeMintAmountPerDay": "20000000000000000000",
@@ -623,9 +635,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 25810585687357,
+        "scaledTotalSupply": 26088773810552,
         "symbol": "spUSDC",
-        "totalSupply": 30006834971185,
+        "totalSupply": 30338699020657,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -666,9 +678,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "74957370994777719918671",
+        "scaledTotalSupply": "81769150923599085556520",
         "symbol": "spweETH",
-        "totalSupply": "74957370994777719918671",
+        "totalSupply": "81769150923599085556520",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "fieldMeta": {
@@ -709,9 +721,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 294258885328,
+        "scaledTotalSupply": 293805776172,
         "symbol": "spWBTC",
-        "totalSupply": 294299998444,
+        "totalSupply": 293846826089,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
       "fieldMeta": {
@@ -742,15 +754,15 @@
         "description": "Aggregated price feed BTC/USD from Chronicle, Chainlink, and RedStone oracles",
         "getAgeThreshold": 90000,
         "getAggregatedOracleValue": {
-          "value": 7900545000000,
+          "value": 7754820000000,
           "goodOraclesCount": 3
         },
-        "latestAnswer": 7900545000000,
+        "latestAnswer": 7754820000000,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 7900545000000,
-          "startedAt": 1776887843,
-          "updatedAt": 1776887843,
+          "answer": 7754820000000,
+          "startedAt": 1777104755,
+          "updatedAt": 1777104755,
           "answeredInRound": 1
         },
         "redstone": "eth:0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc",
@@ -998,7 +1010,7 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "latestAnswer": "996657085147999647",
+        "latestAnswer": "995860467971942120",
         "weeth": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
         "weethETHFeed": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
       },
@@ -1034,9 +1046,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0x856900aa78e856a5df1a2665eE3a66b2487cD68f",
-        "scaledTotalSupply": "245466652426854323045293253",
+        "scaledTotalSupply": "241966709336314522389154917",
         "symbol": "spDAI",
-        "totalSupply": "287580198235839801259916128",
+        "totalSupply": "283530667629090882167400587",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
       "fieldMeta": {
@@ -1048,11 +1060,6 @@
         "eth:0x4DEDf26112B3Ec8eC46e7E31EA5e123490B05B8B": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0x6175ddEc3B9b38c88157C10A01ed4A3fa8639cC6": "AToken"
       }
-    },
-    {
-      "address": "eth:0x51a9f9c3485CF88674ef825825076268b7B7ffBc",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x52A8305f29f85bEc5fa6eE78B87Ddd2218d8E12E",
@@ -1074,7 +1081,7 @@
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
         "ezETH": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-        "latestAnswer": 258647066889,
+        "latestAnswer": 249511671147,
         "oracle": "eth:0x74a09653A083691711cF8215a6ab074BB4e99ef5"
       },
       "implementationNames": {
@@ -1161,9 +1168,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "316539723490805193993238",
+        "scaledTotalSupply": "327734858312919635716658",
         "symbol": "spWETH",
-        "totalSupply": "333223428427463502393577",
+        "totalSupply": "345060392674805571424679",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -1270,7 +1277,7 @@
         "btcUSDFeed": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "cbbtcUSDFeed": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
         "decimals": 18,
-        "latestAnswer": "986448041090708890"
+        "latestAnswer": "999960699248920294"
       },
       "implementationNames": {
         "eth:0x64B157212C21097002920D57322B671b88DFcCBC": "CBBTCRatioOracle"
@@ -1371,13 +1378,13 @@
         "description": "RedStone Price Feed for ETH",
         "getDataFeedId": "0x4554480000000000000000000000000000000000000000000000000000000000",
         "getPriceFeedAdapter": "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
-        "latestAnswer": 240193023550,
+        "latestAnswer": 231410485516,
         "latestRound": 1,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 240193023550,
-          "startedAt": 1776885611,
-          "updatedAt": 1776885611,
+          "answer": 231410485516,
+          "startedAt": 1777066595,
+          "updatedAt": 1777066595,
           "answeredInRound": 1
         },
         "version": 1
@@ -1426,7 +1433,7 @@
         "name": "Dai Stablecoin",
         "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "DAI",
-        "totalSupply": "4429306938602873545193758218",
+        "totalSupply": "4408788190684181272222411903",
         "version": "1"
       },
       "implementationNames": {
@@ -1515,7 +1522,7 @@
         "supplyControl": "eth:0x31d9bDEa6F104606C954f8FE6ba614F1BD347Ec3",
         "supplyControllerDeprecated": "eth:0xE25a329d385f77df5D4eD56265babe2b99A5436e",
         "symbol": "PYUSD",
-        "totalSupply": 2597642751179301,
+        "totalSupply": 2442798538620542,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267"
       },
       "implementationNames": {
@@ -1537,17 +1544,12 @@
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 256912946841,
+        "latestAnswer": 247772031499,
         "oracle": "eth:0x349A73444b1a310BAe67ef67973022020d70020d"
       },
       "implementationNames": {
         "eth:0x70942D6b580741CF50A7906f4100063EE037b8eb": "RSETHExchangeRateOracle"
       }
-    },
-    {
-      "address": "eth:0x747a6084a43E4Fd52c85C5BFF8fAb37ccCC42665",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "RestakeManager",
@@ -1631,18 +1633,18 @@
           [
             [1, "15072454295993000000000"],
             [1, 0],
-            [1, "57286445282797000000000"],
+            [1, "57301019927334000000000"],
             [20, "57352230238543000000000"],
-            [4, "55365527843303000000000"]
+            [4, "55375385278226000000000"]
           ],
           [
             "15072454295993000000001",
             1,
-            "57286445282797000000001",
+            "57301019927334000000001",
             "57352230238543000000020",
-            "55365527843303000000004"
+            "55375385278226000000004"
           ],
-          "188260824290335902919687"
+          "188145751427144637863574"
         ],
         "collateralTokens": ["eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"],
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1697,9 +1699,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 98904690357905,
+        "scaledTotalSupply": 98901208212927,
         "symbol": "spPYUSD",
-        "totalSupply": 100001160483017,
+        "totalSupply": 100000292184846,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
       "fieldMeta": {
@@ -1816,52 +1818,13 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1232555665889320507",
+        "stEthPerToken": "1232732932248837027",
         "symbol": "wstETH",
-        "tokensPerStEth": "811322382976086006",
-        "totalSupply": "3399207809329596843023909"
+        "tokensPerStEth": "811205715236089743",
+        "totalSupply": "3387406234984221134587969"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
-      }
-    },
-    {
-      "address": "eth:0x8049aF8D961ef3F88E05Be4bBc97ccBa5202DAd1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1676909783,
-      "sinceBlock": 16670886,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x981BdCFB1c98654BEF839C78E19E81C0D183A9e5",
-          "eth:0xf01D0A6F78180C4c9583a848192DD2F250ef4b8f",
-          "eth:0x52A8305f29f85bEc5fa6eE78B87Ddd2218d8E12E"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x48ae0bf8081053c37a018b6800833e646425b0cd0b6c06c695d1f53ca89a9aa1",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
@@ -1911,14 +1874,14 @@
       "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0x0a5bc9e901f7d1fa6ea72cc37895e22cbba97035e1b26132e181e160ec12e699"
+        "0xe74df23d0bc8ed5688a9b2785252e21596f9be234e752e654b507461e392394a"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1715936519,
       "sinceBlock": 19888667,
       "values": {
         "$admin": "eth:0xbae061C73876952aa2C5e483B74DfA785425f879",
-        "$implementation": "eth:0x21F352Fc288b5E030867eEd41f7402482B083b02",
+        "$implementation": "eth:0x072072317469ebB6C340a47e41561C9C3b782BD9",
         "$pastUpgrades": [
           [
             "2024-05-17T09:01:59.000Z",
@@ -1949,12 +1912,21 @@
             "2025-11-20T20:02:11.000Z",
             "0x7f94a5c4d6fa0f859f453b2185e7573533dca20e8c7e7b84a1a818b751a32201",
             ["eth:0x21F352Fc288b5E030867eEd41f7402482B083b02"]
+          ],
+          [
+            "2026-04-24T14:51:23.000Z",
+            "0x70e7eb22979240dd2d86009d353e90e9ea597d47069a6e81214461e51f6c6ce4",
+            ["eth:0x072072317469ebB6C340a47e41561C9C3b782BD9"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "Bascule": "eth:0xC3ecFE771564e3f28CFB7a9b203F4d10279338eD",
-        "consortium": "eth:0xdad58DfA5c1a7a34419AFdBE1f0d610efeea95E4",
+        "CLAIMER_ROLE": "0x11a8cb5a02bd6c42679835e867ef2118ba78f088f8300511420c6603c21d9c78",
         "decimals": 8,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdmin": "eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59",
+        "defaultAdminDelay": 0,
+        "defaultAdminDelayIncreaseWait": 432000,
         "DOMAIN_SEPARATOR": "0x2c437c69596d3cb0d046c1b65cd31dee6005447683107eb67b1cf385d850284f",
         "eip712Domain": {
           "fields": "0x0f",
@@ -1972,20 +1944,26 @@
         "getTreasury": "eth:0x251a604E8E8f6906d60f8dedC5aAeb8CD38F4892",
         "isNative": false,
         "isRedeemsEnabled": true,
+        "MINT_BURN_PAUSER_ROLE": "0xcde5f488028d559649a41c456ff903e6e9941fb9e9d1fc630ce5c01f53d8e1e5",
+        "mintBurnPaused": false,
+        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Lombard Staked Bitcoin",
-        "operator": "eth:0xCd1b5b2E6C1ff8b606cF4B5731e2f3361474c01b",
         "owner": "eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59",
         "paused": false,
-        "pauser": "eth:0xaD67Ba2795770c8E0B70E2896C0f81f9D313fd44",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "pendingDefaultAdmin": {
+          "newAdmin": "eth:0x0000000000000000000000000000000000000000",
+          "schedule": 0
+        },
+        "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "ratio": "996286358544706349",
         "symbol": "LBTC",
         "toNativeCommission": 0,
-        "totalSupply": 950178381502
+        "totalSupply": 948609089772
       },
       "implementationNames": {
         "eth:0x8236a87084f8B84306f72007F36F2618A5634494": "TransparentUpgradeableProxy",
-        "eth:0x21F352Fc288b5E030867eEd41f7402482B083b02": "StakedLBTC"
+        "eth:0x072072317469ebB6C340a47e41561C9C3b782BD9": "StakedLBTC"
       }
     },
     {
@@ -2008,8 +1986,8 @@
         "name": "Savings Dai",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "sDAI",
-        "totalAssets": "191186638695746121049156310",
-        "totalSupply": "162750995220843236733965045",
+        "totalAssets": "191269386578800433386619261",
+        "totalSupply": "162807524130505632176788075",
         "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
         "version": "1"
       },
@@ -2140,7 +2118,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 57078,
+        "nonce": 58142,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2237,16 +2215,16 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x52A8305f29f85bEc5fa6eE78B87Ddd2218d8E12E",
-          "eth:0x8A714DA4cd3ad43442a092227dB52860329E0742",
+          "eth:0x3126c94C032A1D9Be9294cF5be2da99255b00cc8",
           "eth:0x8541cCfc6E7EAcEbD233C6789a0FbF7C708B0E68",
-          "eth:0x2a4df63f0dbE4630EE011821cF1fa69A9635f961"
+          "eth:0xACD204885E9eA069C1CD3e4b12a75cE478De6f1D"
         ],
-        "$threshold": 1,
+        "$threshold": 2,
         "domainSeparator": "0x651f8808b266c6dc60128c8c8274c85c09b96a92dfe277dc0d10e73f4067d4b2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 2,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2300,9 +2278,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "10413956762376956189422",
+        "scaledTotalSupply": "10261152998884701414454",
         "symbol": "sprETH",
-        "totalSupply": "10418760592215061705515",
+        "totalSupply": "10265886352492395380492",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -2401,7 +2379,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54984713741043979",
+        "totalSupply": "54803445597898191",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2455,8 +2433,8 @@
         "currentPeriodMintedAmount": "23331066420172231023",
         "custodyAddress": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
         "decimals": 18,
-        "getCurrentPeriodStartTime": 1776816000,
-        "getNextDailyLimitResetTimestamp": 1776902400,
+        "getCurrentPeriodStartTime": 1777075200,
+        "getNextDailyLimitResetTimestamp": 1777161600,
         "lrtConfig": "eth:0x947Cb49334e6571ccBFEF1f1f1178d8469D65ec7",
         "maxMintAmountPerDay": "300000000000000000000000",
         "name": "rsETH",
@@ -2494,17 +2472,17 @@
         ],
         "$upgradeCount": 1,
         "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chi": "1094112790002191481500523568",
+        "chi": "1094382462843599408133266250",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x8b772c141b7d822c799262c0fa58f5b6b522910e811414d0cf217f27294bbbf8",
         "getImplementation": "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0",
         "name": "Savings USDS",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "rho": 1776887795,
+        "rho": 1777104587,
         "ssr": "1000000001136785036595443334",
         "symbol": "sUSDS",
-        "totalAssets": "5797609966186287761168698733",
-        "totalSupply": "5298914063351863143902771658",
+        "totalAssets": "5302169431568684297263247482",
+        "totalSupply": "4844895271059192471744319713",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "usds": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "usdsJoin": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
@@ -2545,9 +2523,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 326753600239,
+        "scaledTotalSupply": 338823507478,
         "symbol": "spLBTC",
-        "totalSupply": 326753600239,
+        "totalSupply": 338823507478,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8236a87084f8B84306f72007F36F2618A5634494"
       },
       "fieldMeta": {
@@ -2586,13 +2564,13 @@
         "description": "RedStone Price Feed for BTC",
         "getDataFeedId": "0x4254430000000000000000000000000000000000000000000000000000000000",
         "getPriceFeedAdapter": "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
-        "latestAnswer": 7888502542480,
+        "latestAnswer": 7769990114790,
         "latestRound": 1,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 7888502542480,
-          "startedAt": 1776875483,
-          "updatedAt": 1776875483,
+          "answer": 7769990114790,
+          "startedAt": 1777086371,
+          "updatedAt": 1777086371,
           "answeredInRound": 1
         },
         "version": 1
@@ -2615,12 +2593,12 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "getCollateralRate": 47361065290,
-        "getExchangeRate": "1161915096070302360",
-        "getTotalCollateral": "18476060935212592",
+        "getCollateralRate": "9637435225663437",
+        "getExchangeRate": "1162132137419465677",
+        "getTotalCollateral": "3749506018488684561400",
         "name": "Rocket Pool ETH",
         "symbol": "rETH",
-        "totalSupply": "335748073381161156405584",
+        "totalSupply": "334778124214101993776795",
         "version": 1
       },
       "implementationNames": {
@@ -2722,9 +2700,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 223418218261,
+        "scaledTotalSupply": 242771494111,
         "symbol": "spcbBTC",
-        "totalSupply": 223454818552,
+        "totalSupply": 242811290615,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
       "fieldMeta": {
@@ -2751,7 +2729,7 @@
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 262580585344,
+        "latestAnswer": 253283602048,
         "weeth": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "implementationNames": {
@@ -2840,7 +2818,7 @@
         "name": "Renzo Restaked ETH",
         "roleManager": "eth:0x4994EFc62101A9e3F885d872514c2dC7b3235849",
         "symbol": "ezETH",
-        "totalSupply": "174828723735952292373296"
+        "totalSupply": "174674790483171121645678"
       },
       "implementationNames": {
         "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",
@@ -2864,7 +2842,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1811057861757299272585550"
+        "totalSupply": "1826848628026825522120954"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2898,9 +2876,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "325662164407861422750973277",
+        "scaledTotalSupply": "203720029071472653169548712",
         "symbol": "spUSDS",
-        "totalSupply": "336096398118213546018482767",
+        "totalSupply": "210283140498818342974360367",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "fieldMeta": {
@@ -3041,7 +3019,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "cbBTC",
-        "totalSupply": 3624352396711,
+        "totalSupply": 3672045592009,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -3091,13 +3069,13 @@
         "DOMAIN_SEPARATOR": "0xe481930428c599d86cf3522b2e43b0e3006041a472f66cb41fa924ac01d3a22b",
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getImplementation": "eth:0x2d10683E941275D502173053927AD6066e6aFd6B",
-        "getRate": "1093206544736617426",
+        "getRate": "1093403333730093782",
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "name": "Wrapped eETH",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "weETH",
-        "totalSupply": "2236494473476551508442444",
+        "totalSupply": "2102169111317115039946488",
         "WEETH_OPERATING_ADMIN_ROLE": "0xfeab26ff201be143cb96161bb5c9224b5761f7085c44d6677299b1cfc2153cd7"
       },
       "implementationNames": {
@@ -3135,7 +3113,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
         "scaledTotalSupply": "22525781966487245054",
         "symbol": "sptBTC",
-        "totalSupply": "22530670282064140541",
+        "totalSupply": "22530670282064141102",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
       "fieldMeta": {
@@ -3167,7 +3145,7 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "latestAnswer": "998354358182651008",
+        "latestAnswer": "999848507990480835",
         "reth": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "rethETHFeed": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"
       },
@@ -3236,7 +3214,7 @@
       "sinceTimestamp": 1511829681,
       "sinceBlock": 4634748,
       "values": {
-        "_totalSupply": "98083352472229802",
+        "_totalSupply": "99083352472229802",
         "$immutable": true,
         "basisPointsRate": 0,
         "decimals": 6,
@@ -3248,7 +3226,7 @@
         "owner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
         "paused": false,
         "symbol": "USDT",
-        "totalSupply": "98083352472229802",
+        "totalSupply": "99083352472229802",
         "upgradedAddress": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -3283,7 +3261,7 @@
         "name": "USDS Stablecoin",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "USDS",
-        "totalSupply": "7866545695903945949447424254",
+        "totalSupply": "7948785609423086325763633491",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
@@ -3320,9 +3298,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 533184146724979,
+        "scaledTotalSupply": 720263759874820,
         "symbol": "spUSDT",
-        "totalSupply": 613020855815216,
+        "totalSupply": 828272912712586,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
       "fieldMeta": {
@@ -3349,7 +3327,7 @@
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 296051272083,
+        "latestAnswer": 285558885556,
         "steth": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "implementationNames": {
@@ -3591,7 +3569,7 @@
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 279083900033,
+        "latestAnswer": 269204423236,
         "reth": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "implementationNames": {
@@ -3662,6 +3640,187 @@
       "function setPriceOracle(address newPriceOracle)",
       "function setPriceOracleSentinel(address newPriceOracleSentinel)",
       "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedInnerCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0x072072317469ebB6C340a47e41561C9C3b782BD9": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
+      "error AccessControlEnforcedDefaultAdminRules()",
+      "error AccessControlInvalidDefaultAdmin(address defaultAdmin)",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AssetRouterNotSet()",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error MintBurnExpectedPaused()",
+      "error MintBurnPaused()",
+      "error NonEqualLength(uint256 a, uint256 b)",
+      "error NotInitializing()",
+      "error PayloadAlreadyUsed()",
+      "error RedeemForBtcDisabled()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error UnauthorizedAccount(address account)",
+      "error ZeroAddress()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AssetRouterChanged(address indexed newVal, address indexed prevVal)",
+      "event BasculeChanged(address indexed prevVal, address indexed newVal)",
+      "event BatchMintSkipped(bytes32 indexed payloadHash, bytes payload)",
+      "event BurnCommissionChanged(uint64 indexed prevValue, uint64 indexed newValue)",
+      "event ConsortiumChanged(address indexed prevVal, address indexed newVal)",
+      "event DefaultAdminDelayChangeCanceled()",
+      "event DefaultAdminDelayChangeScheduled(uint48 newDelay, uint48 effectSchedule)",
+      "event DefaultAdminTransferCanceled()",
+      "event DefaultAdminTransferScheduled(address indexed newAdmin, uint48 acceptSchedule)",
+      "event DustFeeRateChanged(uint256 indexed oldRate, uint256 indexed newRate)",
+      "event EIP712DomainChanged()",
+      "event FeeChanged(uint256 indexed oldFee, uint256 indexed newFee)",
+      "event FeeCharged(uint256 indexed fee, bytes userSignature)",
+      "event Initialized(uint64 version)",
+      "event MintBurnPauseChanged(bool paused)",
+      "event MintProofConsumed(address indexed recipient, bytes32 indexed payloadHash, bytes payload)",
+      "event NameAndSymbolChanged(string name, string symbol)",
+      "event Paused(address account)",
+      "event RedeemFeeChanged(uint256 indexed oldFee, uint256 indexed newFee)",
+      "event RedeemRequest(address indexed from, uint256 indexed nonce, uint256 amount, uint256 fee, bytes payload)",
+      "event RedeemsForBtcEnabled(bool)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TreasuryAddressChanged(address indexed prevValue, address indexed newValue)",
+      "event Unpaused(address account)",
+      "function Bascule() view returns (address)",
+      "function CLAIMER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function MINT_BURN_PAUSER_ROLE() view returns (bytes32)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function acceptDefaultAdminTransfer()",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function batchMint(address[] to, uint256[] amount)",
+      "function batchMint(bytes[] payload, bytes[] proof)",
+      "function batchMintWithFee(bytes[] mintPayload, bytes[] proof, bytes[] feePayload, bytes[] userSignature)",
+      "function beginDefaultAdminTransfer(address newAdmin)",
+      "function burn(uint256 amount)",
+      "function burn(address from, uint256 amount)",
+      "function calcUnstakeRequestAmount(bytes scriptPubkey, uint256 amount) view returns (uint256 amountAfterFee, bool isAboveDust)",
+      "function cancelDefaultAdminTransfer()",
+      "function changeAssetRouter(address newVal)",
+      "function changeDefaultAdminDelay(uint48 newDelay)",
+      "function changeNameAndSymbol(string name_, string symbol_)",
+      "function changeRedeemFee(uint256 newVal)",
+      "function changeRedeemForBtcMinAmount(uint256 newVal)",
+      "function changeTreasuryAddress(address newValue)",
+      "function decimals() view returns (uint8)",
+      "function defaultAdmin() view returns (address)",
+      "function defaultAdminDelay() view returns (uint48)",
+      "function defaultAdminDelayIncreaseWait() view returns (uint48)",
+      "function deposit(uint256 amount)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAssetRouter() view returns (address)",
+      "function getFeeDigest(uint256 fee, uint256 expiry) view returns (bytes32)",
+      "function getRate() view returns (uint256)",
+      "function getRedeemFee() view returns (uint256)",
+      "function getRedeemForBtcMinAmount() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTreasury() view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address treasury, address initialOwner, uint48 initialOwnerDelay)",
+      "function isNative() pure returns (bool)",
+      "function isRedeemsEnabled() view returns (bool)",
+      "function migrateToAccessControl(address[] minters_, address[] claimers_)",
+      "function mint(address to, uint256 amount)",
+      "function mint(bytes rawPayload, bytes proof) returns (address recipient)",
+      "function mintBurnPaused() view returns (bool)",
+      "function mintWithFee(bytes mintPayload, bytes proof, bytes feePayload, bytes userSignature)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pauseMintBurn()",
+      "function pauseTransfers()",
+      "function paused() view returns (bool)",
+      "function pendingDefaultAdmin() view returns (address newAdmin, uint48 schedule)",
+      "function pendingDefaultAdminDelay() view returns (uint48 newDelay, uint48 schedule)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function ratio() view returns (uint256)",
+      "function redeem(uint256 amount)",
+      "function redeemForBtc(bytes scriptPubkey, uint256 amount)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollbackDefaultAdminDelay()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function toNativeCommission() view returns (uint64)",
+      "function toggleRedeemsForBtc()",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function unpauseMintBurn()",
+      "function unpauseTransfers()"
     ],
     "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58": [
       "constructor(address gem_, address end_, address proxy_, uint256 min_)",
@@ -3843,125 +4002,6 @@
       "function vat() view returns (address)",
       "function vow() view returns (address)",
       "function wards(address) view returns (uint256)"
-    ],
-    "eth:0x21F352Fc288b5E030867eEd41f7402482B083b02": [
-      "constructor()",
-      "error AssetRouterNotSet()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error ERC2612ExpiredSignature(uint256 deadline)",
-      "error ERC2612InvalidSigner(address signer, address owner)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidInitialization()",
-      "error InvalidMintAmount()",
-      "error NonEqualLength(uint256 a, uint256 b)",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error PayloadAlreadyUsed()",
-      "error RedeemForBtcDisabled()",
-      "error ReentrancyGuardReentrantCall()",
-      "error UnauthorizedAccount(address account)",
-      "error ZeroAddress()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AssetRouterChanged(address indexed newVal, address indexed prevVal)",
-      "event BasculeChanged(address indexed prevVal, address indexed newVal)",
-      "event BatchMintSkipped(bytes32 indexed payloadHash, bytes payload)",
-      "event BurnCommissionChanged(uint64 indexed prevValue, uint64 indexed newValue)",
-      "event ClaimerUpdated(address indexed claimer, bool isClaimer)",
-      "event ConsortiumChanged(address indexed prevVal, address indexed newVal)",
-      "event DustFeeRateChanged(uint256 indexed oldRate, uint256 indexed newRate)",
-      "event EIP712DomainChanged()",
-      "event FeeChanged(uint256 indexed oldFee, uint256 indexed newFee)",
-      "event FeeCharged(uint256 indexed fee, bytes userSignature)",
-      "event Initialized(uint64 version)",
-      "event MintProofConsumed(address indexed recipient, bytes32 indexed payloadHash, bytes payload)",
-      "event MinterUpdated(address indexed minter, bool isMinter)",
-      "event NameAndSymbolChanged(string name, string symbol)",
-      "event OperatorRoleTransferred(address indexed previousOperator, address indexed newOperator)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event PauserRoleTransferred(address indexed previousPauser, address indexed newPauser)",
-      "event RedeemFeeChanged(uint256 indexed oldFee, uint256 indexed newFee)",
-      "event RedeemRequest(address indexed from, uint256 indexed nonce, uint256 amount, uint256 fee, bytes payload)",
-      "event RedeemsForBtcEnabled(bool)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event TreasuryAddressChanged(address indexed prevValue, address indexed newValue)",
-      "event Unpaused(address account)",
-      "function Bascule() view returns (address)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function addClaimer(address newClaimer)",
-      "function addMinter(address newMinter)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function batchMint(address[] to, uint256[] amount)",
-      "function batchMint(bytes[] payload, bytes[] proof)",
-      "function batchMintWithFee(bytes[] mintPayload, bytes[] proof, bytes[] feePayload, bytes[] userSignature)",
-      "function burn(uint256 amount)",
-      "function burn(address from, uint256 amount)",
-      "function calcUnstakeRequestAmount(bytes scriptPubkey, uint256 amount) view returns (uint256 amountAfterFee, bool isAboveDust)",
-      "function changeAssetRouter(address newVal)",
-      "function changeConsortium(address newVal)",
-      "function changeNameAndSymbol(string name_, string symbol_)",
-      "function changeOperator(address newOperator)",
-      "function changePauser(address newPauser)",
-      "function changeRedeemFee(uint256 newVal)",
-      "function changeRedeemForBtcMinAmount(uint256 newVal)",
-      "function changeTreasuryAddress(address newValue)",
-      "function consortium() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function deposit(uint256 amount)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getAssetRouter() view returns (address)",
-      "function getFeeDigest(uint256 fee, uint256 expiry) view returns (bytes32)",
-      "function getRate() view returns (uint256)",
-      "function getRedeemFee() view returns (uint256)",
-      "function getRedeemForBtcMinAmount() view returns (uint256)",
-      "function getTreasury() view returns (address)",
-      "function initialize(address consortium_, address treasury, address owner_)",
-      "function isClaimer(address claimer) view returns (bool)",
-      "function isMinter(address minter) view returns (bool)",
-      "function isNative() pure returns (bool)",
-      "function isRedeemsEnabled() view returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function mint(bytes rawPayload, bytes proof) returns (address recipient)",
-      "function mintWithFee(bytes mintPayload, bytes proof, bytes feePayload, bytes userSignature)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function operator() view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pauser() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function ratio() view returns (uint256)",
-      "function redeem(uint256 amount)",
-      "function redeemForBtc(bytes scriptPubkey, uint256 amount)",
-      "function reinitialize()",
-      "function removeClaimer(address oldClaimer)",
-      "function removeMinter(address oldMinter)",
-      "function renounceOwnership()",
-      "function symbol() view returns (string)",
-      "function toNativeCommission() view returns (uint64)",
-      "function toggleRedeemsForBtc()",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()"
     ],
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": [
       "function mintingFinished() view returns (bool)",
@@ -5242,9 +5282,6 @@
       "function unwrap(uint256 _wstETHAmount) returns (uint256)",
       "function wrap(uint256 _stETHAmount) returns (uint256)"
     ],
-    "eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x8105f69D9C41644c6A0803fDA7D03Aa70996cFD9": [
       "constructor(address provider, address[] assets, address[] sources, address fallbackOracle, address baseCurrency, uint256 baseCurrencyUnit)",
       "event AssetSourceUpdated(address indexed asset, address indexed source)",
@@ -6276,6 +6313,6 @@
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24937705 },
-  "permissionsConfigHash": "0x8c66a19341f29766181c728b8dfe8393432666c2018fc2019a6919009a98e341"
+  "usedBlockNumbers": { "ethereum": 24955734 },
+  "permissionsConfigHash": "0xa732fcf2f5e09aead8cfd23d83c5efafba9832a116d64bb8b1e84a96e6aa56c9"
 }

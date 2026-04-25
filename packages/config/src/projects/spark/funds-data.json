@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-24T10:05:18.272697Z",
+  "lastModified": "2026-04-25T08:30:29.795Z",
   "contracts": {
     "eth:0x12B54025C112Aa61fAce2CDB7118740875A566E9": {
-      "lastFetched": "2026-04-22T16:15:42.871Z",
+      "lastFetched": "2026-04-25T08:30:10.789Z",
       "balances": {
         "tokens": [
           {
@@ -12,7 +12,7 @@
             "name": "Spark wstETH",
             "balance": "10000000000061",
             "decimals": 18,
-            "usdValue": 0.029574722149448725
+            "usdValue": 0.02849232104265223
           },
           {
             "assetAddress": "0x154c5875b1b0db1794f88d003730dad160e6b38e",
@@ -25,7 +25,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "\u73af\u7403\u80a1",
+            "name": "环球股",
             "balance": "1000000",
             "decimals": 6,
             "usdValue": 0
@@ -50,9 +50,9 @@
             "assetAddress": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
             "symbol": "wstETH",
             "name": "Wrapped liquid staked Ether 2.0",
-            "balance": "6.440242276413112e+23",
+            "balance": "7.400184672672481e+23",
             "decimals": 18,
-            "usdValue": 1904683758.9888904
+            "usdValue": 2108672875.5353649
           },
           {
             "assetAddress": "0x98d1c76831c0abea30e3dac8628bd72d6b0e3dd2",
@@ -95,13 +95,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 1904683759.018465,
-        "timestamp": "2026-04-22T16:03:22.108Z",
+        "totalUsdValue": 2108672875.563857,
+        "timestamp": "2026-04-25T08:30:11.838Z",
         "source": "debank"
       }
     },
     "eth:0x377C3bd93f2a2984E1E7bE6A5C22c525eD4A4815": {
-      "lastFetched": "2026-04-22T16:15:42.897Z",
+      "lastFetched": "2026-04-25T08:30:11.839Z",
       "balances": {
         "tokens": [
           {
@@ -110,7 +110,7 @@
             "name": "Royal Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.007063241808126553
+            "usdValue": 0.006828619208759352
           },
           {
             "assetAddress": "0x05cd8430676f04b63b33c1ece124818858edfc4f",
@@ -118,13 +118,13 @@
             "name": "Royal Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 2.322100465644753e-06
+            "usdValue": 0.0000022484791826349687
           },
           {
             "assetAddress": "0x0ebf5374149f6c592d95d66ac893f8a788bcb9f1",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "7169910152459728",
+            "balance": "13610672568769784",
             "decimals": 6,
             "usdValue": 0
           },
@@ -134,13 +134,13 @@
             "name": "Good Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 1.7812095590791883e-06
+            "usdValue": 0.0000017144277899272092
           },
           {
             "assetAddress": "0x2799d4f53a83f9648d0168e2ac439a1b12c6809f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "7248702312115885",
+            "balance": "573361774713091",
             "decimals": 6,
             "usdValue": 0
           },
@@ -148,7 +148,7 @@
             "assetAddress": "0x340cb4bfb55c238e1bfbeab7f3563a2f0a082d75",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "12754398451797904",
+            "balance": "16060754136006652",
             "decimals": 6,
             "usdValue": 0
           },
@@ -158,13 +158,13 @@
             "name": "Brave Bear",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 2.3525325200127086e-06
+            "usdValue": 0.000002273756346683045
           },
           {
             "assetAddress": "0x407a56f0ed8a467547ffbe066071a4a698363901",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "6356692682869305",
+            "balance": "36664421201006136",
             "decimals": 6,
             "usdValue": 0
           },
@@ -188,7 +188,7 @@
             "assetAddress": "0x579a94807dd15ce2c519a4e4cd068b29bfc48401",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "30491215124244988",
+            "balance": "37037592720600280",
             "decimals": 6,
             "usdValue": 0
           },
@@ -196,7 +196,7 @@
             "assetAddress": "0x5de1b25d0a94549c9dace58777c385fa67aa846f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "10499286783036342",
+            "balance": "20236992504966530",
             "decimals": 6,
             "usdValue": 0
           },
@@ -212,7 +212,7 @@
             "assetAddress": "0x689435017b46dd058fec51ccade5c3b6b7c4dce5",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "11284624631886156",
+            "balance": "17878965993104794",
             "decimals": 6,
             "usdValue": 0
           },
@@ -222,13 +222,13 @@
             "name": "Bit Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 1.4741750199101226e-06
+            "usdValue": 0.0000014205898769715687
           },
           {
             "assetAddress": "0x6dda7434ac4d29e303cb570d72d43f966f739375",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "4166866491821122",
+            "balance": "31365068966886332",
             "decimals": 6,
             "usdValue": 0
           },
@@ -236,7 +236,7 @@
             "assetAddress": "0x715da2abf0bf47b13963be8dc91d5dc2727a93e4",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "24838827060680100",
+            "balance": "23882030141946372",
             "decimals": 6,
             "usdValue": 0
           },
@@ -244,7 +244,7 @@
             "assetAddress": "0x888d534385a3727f3bbd2f4e8c3fc322a9cfdbd2",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "20027832604479490",
+            "balance": "16261336811530234",
             "decimals": 6,
             "usdValue": 0
           },
@@ -254,13 +254,13 @@
             "name": "YfTether.io",
             "balance": "10000000000000000",
             "decimals": 18,
-            "usdValue": 0.018416277119826196
+            "usdValue": 0.017722652398409068
           },
           {
             "assetAddress": "0x9ae3f5e7456fa060f3487c9db990f9d7dd678de8",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "28835092222613804",
+            "balance": "5052446110778319",
             "decimals": 6,
             "usdValue": 0
           },
@@ -276,15 +276,15 @@
             "assetAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "2863626318468",
+            "balance": "3162203834075",
             "decimals": 6,
-            "usdValue": 2862195.220857571
+            "usdValue": 3160939.4582916833
           },
           {
             "assetAddress": "0xaeb03ab1da96100ecc341471c45766d421fab1c7",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "32128307686442976",
+            "balance": "10580472178702592",
             "decimals": 6,
             "usdValue": 0
           },
@@ -292,7 +292,7 @@
             "assetAddress": "0xb5dfe4b1daa61b2be8c943f09d68dccd268cc23e",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "24217491360690480",
+            "balance": "39142992370963100",
             "decimals": 6,
             "usdValue": 0
           },
@@ -300,7 +300,7 @@
             "assetAddress": "0xd2fcf51823fa77aea830a5372ae8731313154419",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "25997858043817990",
+            "balance": "41863083627859040",
             "decimals": 6,
             "usdValue": 0
           },
@@ -308,7 +308,7 @@
             "assetAddress": "0xd8c07379abf894a7b7ea5c9a0c608e7668b993fe",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "25219284925741972",
+            "balance": "17989830859259934",
             "decimals": 6,
             "usdValue": 0
           },
@@ -316,7 +316,7 @@
             "assetAddress": "0xdf7d222b57c0b28a14b64d968aee6f3f48dc2c50",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "41740065331364340",
+            "balance": "1477402655576452",
             "decimals": 6,
             "usdValue": 0
           },
@@ -324,7 +324,7 @@
             "assetAddress": "0xe343089913d4c79dd188fb92751e92397071a21f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "22957100165468844",
+            "balance": "14236407983940930",
             "decimals": 6,
             "usdValue": 0
           },
@@ -332,18 +332,18 @@
             "assetAddress": "0xe776cf33e8828117151516a9ed31b20486252303",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "18911085151164960",
+            "balance": "32952078361085540",
             "decimals": 6,
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 2862195.2508588317,
-        "timestamp": "2026-04-22T16:03:23.197Z",
+        "totalUsdValue": 3160939.4873644244,
+        "timestamp": "2026-04-25T08:30:12.957Z",
         "source": "debank"
       }
     },
     "eth:0x3CFd5C0D4acAA8Faee335842e4f31159fc76B008": {
-      "lastFetched": "2026-04-22T16:15:43.601Z",
+      "lastFetched": "2026-04-25T08:30:12.958Z",
       "balances": {
         "tokens": [
           {
@@ -358,18 +358,18 @@
             "assetAddress": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
             "symbol": "weETH",
             "name": "EtherFi wrapped ETH",
-            "balance": "7.463286599477772e+22",
+            "balance": "8.176915092359907e+22",
             "decimals": 18,
-            "usdValue": 196214395.730165
+            "usdValue": 207309015.81381375
           }
         ],
-        "totalUsdValue": 196214395.730165,
-        "timestamp": "2026-04-22T16:03:23.945Z",
+        "totalUsdValue": 207309015.81381375,
+        "timestamp": "2026-04-25T08:30:13.849Z",
         "source": "debank"
       }
     },
     "eth:0x4197ba364AE6698015AE5c1468f54087602715b2": {
-      "lastFetched": "2026-04-22T16:15:43.604Z",
+      "lastFetched": "2026-04-25T08:30:13.850Z",
       "balances": {
         "tokens": [
           {
@@ -384,9 +384,9 @@
             "assetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "293356507137",
+            "balance": "293429359702",
             "decimals": 8,
-            "usdValue": 232680554.0180793
+            "usdValue": 227649568.90438044
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -394,7 +394,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0x594daad7d77592a2b97b725a7ad59d7e188b5bfa",
@@ -402,7 +402,7 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 4.025728490286023e-05
+            "usdValue": 0.00003749765769814271
           },
           {
             "assetAddress": "0x5f6d3fc8147ed50ffc13bccfeb342659bcb83853",
@@ -426,7 +426,7 @@
             "name": "Colon",
             "balance": "10511241370",
             "decimals": 9,
-            "usdValue": 0.0008516262082085753
+            "usdValue": 0.0007083116847601898
           },
           {
             "assetAddress": "0xdd95b4349a295bbef55f43fc1be47449b47f1505",
@@ -439,19 +439,19 @@
           {
             "assetAddress": "0xea08ee742119ad545aaf2120601833d499ea4364",
             "symbol": "$",
-            "name": "[E T H - B O N US \u02f3 N E T]",
+            "name": "[E T H - B O N US ˳ N E T]",
             "balance": "5e+22",
             "decimals": 18,
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 232680554.01973695,
-        "timestamp": "2026-04-22T16:03:26.141Z",
+        "totalUsdValue": 227649568.9057438,
+        "timestamp": "2026-04-25T08:30:14.968Z",
         "source": "debank"
       }
     },
     "eth:0x4DEDf26112B3Ec8eC46e7E31EA5e123490B05B8B": {
-      "lastFetched": "2026-04-22T16:15:43.606Z",
+      "lastFetched": "2026-04-25T08:30:14.969Z",
       "balances": {
         "tokens": [
           {
@@ -468,7 +468,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0x2dbd330bc9b7f3a822a9173ab52172bdddcace2a",
@@ -484,7 +484,7 @@
             "name": "BigMouthFrog",
             "balance": "245925000000000000000",
             "decimals": 18,
-            "usdValue": 1.1969456467201658e-08
+            "usdValue": 1.229264664915855e-8
           },
           {
             "assetAddress": "0x6226e00bcac68b0fe55583b90a1d727c14fab77f",
@@ -492,15 +492,15 @@
             "name": "MultiVAC",
             "balance": "1e+21",
             "decimals": 18,
-            "usdValue": 0.2821
+            "usdValue": 0.2712
           },
           {
             "assetAddress": "0x6b175474e89094c44da98b954eedeac495271d0f",
             "symbol": "DAI",
             "name": "Dai Stablecoin",
-            "balance": "8.868510452452386e+25",
+            "balance": "8.726045652146092e+25",
             "decimals": 18,
-            "usdValue": 88685104.52452385
+            "usdValue": 87251730.47580877
           },
           {
             "assetAddress": "0xa046017cf0e0c6fc0708f8db6d2fc4848ba6dc8a",
@@ -511,13 +511,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 88685104.80738962,
-        "timestamp": "2026-04-22T16:03:27.086Z",
+        "totalUsdValue": 87251730.74762633,
+        "timestamp": "2026-04-25T08:30:15.929Z",
         "source": "debank"
       }
     },
     "eth:0x59cD1C87501baa753d0B5B5Ab5D8416A45cD71DB": {
-      "lastFetched": "2026-04-22T16:15:43.610Z",
+      "lastFetched": "2026-04-25T08:30:15.929Z",
       "balances": {
         "tokens": [
           {
@@ -526,7 +526,7 @@
             "name": "Royal Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 2.322100465644753e-06
+            "usdValue": 0.0000022484791826349687
           },
           {
             "assetAddress": "0x28561b8a2360f463011c16b6cc0b0cbef8dbbcad",
@@ -534,7 +534,7 @@
             "name": "MOO DENG",
             "balance": "11111000000000",
             "decimals": 9,
-            "usdValue": 0.09493797999766139
+            "usdValue": 0.0737054685212451
           },
           {
             "assetAddress": "0x289ff00235d2b98b0145ff5d4435d3e92f9540a6",
@@ -542,7 +542,7 @@
             "name": "Book of Ethereum",
             "balance": "100111111111111110000",
             "decimals": 18,
-            "usdValue": 4.133351108536902
+            "usdValue": 3.6861082993895753
           },
           {
             "assetAddress": "0x290b3b9f7661a6834135be44c3475aef987fa3b2",
@@ -550,7 +550,7 @@
             "name": "Trump Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 1.5237714999328844e-05
+            "usdValue": 0.000014663007401384667
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -558,7 +558,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0x3e391e5cb8ea766c93134faf486e6393158032c2",
@@ -566,7 +566,7 @@
             "name": "Brave Bear",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 2.3525325200127086e-06
+            "usdValue": 0.000002273756346683045
           },
           {
             "assetAddress": "0x6cd62ece6442d3b989f8cd1b3201727964c6fc26",
@@ -574,15 +574,15 @@
             "name": "Bit Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 1.4741750199101226e-06
+            "usdValue": 0.0000014205898769715687
           },
           {
             "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "symbol": "WETH",
             "name": "Wrapped Ether",
-            "balance": "3.4673327110141245e+22",
+            "balance": "3.4691630868644256e+22",
             "decimals": 18,
-            "usdValue": 83539140.47300552
+            "usdValue": 80446422.82129917
           },
           {
             "assetAddress": "0xe627b9cda8398859f5f8d3f7e1cb48ec262aa4a6",
@@ -595,19 +595,19 @@
           {
             "assetAddress": "0xe92ec83d8ea27f802393f084004491e463209acb",
             "symbol": "SPARK",
-            "name": "\u661f\u706b\u901a\u8bc1",
+            "name": "星火通证",
             "balance": "5e+25",
             "decimals": 18,
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 83539144.70208174,
-        "timestamp": "2026-04-22T16:03:27.900Z",
+        "totalUsdValue": 80446426.5817511,
+        "timestamp": "2026-04-25T08:30:16.946Z",
         "source": "debank"
       }
     },
     "eth:0x6715bc100A183cc65502F05845b589c1919ca3d3": {
-      "lastFetched": "2026-04-22T16:15:43.612Z",
+      "lastFetched": "2026-04-25T08:30:16.947Z",
       "balances": {
         "tokens": [
           {
@@ -624,34 +624,34 @@
             "name": "Savings USDS",
             "balance": "3.137424619743445e+24",
             "decimals": 18,
-            "usdValue": 3432293.764487805
+            "usdValue": 3433510.772892919
           }
         ],
-        "totalUsdValue": 3432293.764487805,
-        "timestamp": "2026-04-22T16:03:29.076Z",
+        "totalUsdValue": 3433510.772892919,
+        "timestamp": "2026-04-25T08:30:17.817Z",
         "source": "debank"
       }
     },
     "eth:0x779224df1c756b4EDD899854F32a53E8c2B2ce5d": {
-      "lastFetched": "2026-04-22T16:15:43.616Z",
+      "lastFetched": "2026-04-25T08:30:17.818Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
             "symbol": "PYUSD",
             "name": "PayPal USD",
-            "balance": "88829379840540",
+            "balance": "88803064362036",
             "decimals": 6,
-            "usdValue": 88802731.02658784
+            "usdValue": 88758662.829855
           }
         ],
-        "totalUsdValue": 88802731.02658784,
-        "timestamp": "2026-04-22T16:03:30.072Z",
+        "totalUsdValue": 88758662.829855,
+        "timestamp": "2026-04-25T08:30:18.812Z",
         "source": "debank"
       }
     },
     "eth:0xe7dF13b8e3d6740fe17CBE928C7334243d86c92f": {
-      "lastFetched": "2026-04-22T16:15:43.619Z",
+      "lastFetched": "2026-04-25T08:30:18.812Z",
       "balances": {
         "tokens": [
           {
@@ -660,13 +660,13 @@
             "name": "TrueUSD",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 9.982e-05
+            "usdValue": 0.00010004
           },
           {
             "assetAddress": "0x0bffc1ae5e6391875205d1ce015819592109e25c",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -682,7 +682,7 @@
             "assetAddress": "0x2796217928b5056ae141b61e5854b5bd859a0511",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -692,13 +692,13 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0x2c84c0ad55d9cda95be48d1bb943ba1ff8e40a77",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "42880315179154690",
+            "balance": "20629502978948980",
             "decimals": 6,
             "usdValue": 0
           },
@@ -706,7 +706,7 @@
             "assetAddress": "0x3417c054742eb6889a30ad008afd226bd576024a",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "42880315179154690",
+            "balance": "20629502978948980",
             "decimals": 6,
             "usdValue": 0
           },
@@ -714,7 +714,7 @@
             "assetAddress": "0x37b52fd0fcfd2d7de01ec325014f4b46ebf7db53",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -722,7 +722,7 @@
             "assetAddress": "0x5a5a1c436a68c297fd41229ea35b1117c73ba486",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "42880315179154690",
+            "balance": "20629502978948980",
             "decimals": 6,
             "usdValue": 0
           },
@@ -730,7 +730,7 @@
             "assetAddress": "0x5d4a2233471a9eae441d7f1612460028b4d9a96e",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -746,7 +746,7 @@
             "assetAddress": "0x64eabd36578623d574bf59a422caccd8681282a9",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -754,7 +754,7 @@
             "assetAddress": "0x69693b3b238f5ae5b2bbf7efe544f96c52efe07a",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -762,7 +762,7 @@
             "assetAddress": "0x70f20154efcf549aed4a223ba081324c8c58e103",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -770,14 +770,14 @@
             "assetAddress": "0x82a400583fd643beb922e1061daa08dd8a7a5bdc",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
           {
             "assetAddress": "0x8b11a8b8d87497f65f8c86d03f7c4018860828bd",
-            "symbol": "U\u180bS\u180bD\u180bT",
-            "name": "U\u180bS\u180bD\u180bT",
+            "symbol": "U᠋S᠋D᠋T",
+            "name": "U᠋S᠋D᠋T",
             "balance": "33079658580",
             "decimals": 6,
             "usdValue": 0
@@ -786,7 +786,7 @@
             "assetAddress": "0x8f84b960bb17a31f41892d41d61bf7e19d8f9563",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "42880315179154690",
+            "balance": "20629502978948980",
             "decimals": 6,
             "usdValue": 0
           },
@@ -794,7 +794,7 @@
             "assetAddress": "0x912456c3634cf194fe3ac35424b6a4ec29628f08",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -804,13 +804,13 @@
             "name": "YfTether.io",
             "balance": "10000000000000000",
             "decimals": 18,
-            "usdValue": 0.018416277119826196
+            "usdValue": 0.017722652398409068
           },
           {
             "assetAddress": "0xa8164ab31d4c2420522e6b99b50cd65962908db6",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -818,7 +818,7 @@
             "assetAddress": "0xb802f872117c1c3abe9f752b0a03b097ce7e0f66",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -834,7 +834,7 @@
             "assetAddress": "0xbf77c1fe593c18d34dea9c692fe64bccb2e27118",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -850,7 +850,7 @@
             "assetAddress": "0xca1906b60b89af9a2f0501ba80b29f3ae0852310",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -858,7 +858,7 @@
             "assetAddress": "0xd057b3c39d563bb16b05a3eb8ca8a2fa43c8df49",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "55167119666296710",
+            "balance": "29512750878637216",
             "decimals": 6,
             "usdValue": 0
           },
@@ -874,7 +874,7 @@
             "assetAddress": "0xd8026a80fa81c47680aa9f948e558efb8dc1ef89",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "77868002789524450",
+            "balance": "27030028211773492",
             "decimals": 6,
             "usdValue": 0
           },
@@ -882,26 +882,26 @@
             "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
             "symbol": "USDT",
             "name": "Tether USD",
-            "balance": "154301544860740",
+            "balance": "223546676325464",
             "decimals": 6,
-            "usdValue": 154366351.50958154
+            "usdValue": 223611504.86159837
           },
           {
             "assetAddress": "0xe92ec83d8ea27f802393f084004491e463209acb",
             "symbol": "SPARK",
-            "name": "\u661f\u706b\u901a\u8bc1",
+            "name": "星火通证",
             "balance": "5.0000668e+25",
             "decimals": 18,
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 154366351.52886337,
-        "timestamp": "2026-04-22T16:03:31.908Z",
+        "totalUsdValue": 223611504.88003862,
+        "timestamp": "2026-04-25T08:30:19.954Z",
         "source": "debank"
       }
     },
     "eth:0xb3973D459df38ae57797811F2A1fd061DA1BC123": {
-      "lastFetched": "2026-04-22T16:15:43.622Z",
+      "lastFetched": "2026-04-25T08:30:19.956Z",
       "balances": {
         "tokens": [
           {
@@ -910,24 +910,24 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
             "symbol": "cbBTC",
             "name": "Coinbase Wrapped BTC",
-            "balance": "212901585785",
+            "balance": "233681389271",
             "decimals": 8,
-            "usdValue": 168917118.79927218
+            "usdValue": 181376483.91124824
           }
         ],
-        "totalUsdValue": 168917118.80003792,
-        "timestamp": "2026-04-22T16:03:32.198Z",
+        "totalUsdValue": 181376483.9118658,
+        "timestamp": "2026-04-25T08:30:20.919Z",
         "source": "debank"
       }
     },
     "eth:0x78f897F0fE2d3B5690EbAe7f19862DEacedF10a7": {
-      "lastFetched": "2026-04-22T16:15:43.627Z",
+      "lastFetched": "2026-04-25T08:30:20.920Z",
       "balances": {
         "tokens": [
           {
@@ -976,7 +976,7 @@
             "name": "Savings Dai",
             "balance": "3.830051745503006e+22",
             "decimals": 18,
-            "usdValue": 44987.56440371801
+            "usdValue": 44991.6898988635
           },
           {
             "assetAddress": "0x98d1c76831c0abea30e3dac8628bd72d6b0e3dd2",
@@ -995,13 +995,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 44987.56440371801,
-        "timestamp": "2026-04-22T16:03:33.432Z",
+        "totalUsdValue": 44991.6898988635,
+        "timestamp": "2026-04-25T08:30:21.926Z",
         "source": "debank"
       }
     },
     "eth:0x856f1Ea78361140834FDCd0dB0b08079e4A45062": {
-      "lastFetched": "2026-04-22T16:15:43.636Z",
+      "lastFetched": "2026-04-25T08:30:21.927Z",
       "balances": {
         "tokens": [
           {
@@ -1010,25 +1010,25 @@
             "name": "rsETH",
             "balance": "15316380786230815000",
             "decimals": 18,
-            "usdValue": 39399.07287359163
+            "usdValue": 37986.568585267974
           }
         ],
-        "totalUsdValue": 39399.07287359163,
-        "timestamp": "2026-04-22T16:03:34.407Z",
+        "totalUsdValue": 37986.568585267974,
+        "timestamp": "2026-04-25T08:30:22.828Z",
         "source": "debank"
       }
     },
     "eth:0x7b481aCC9fDADDc9af2cBEA1Ff2342CB1733E50F": {
-      "lastFetched": "2026-04-22T16:15:43.648Z",
+      "lastFetched": "2026-04-25T08:30:22.829Z",
       "balances": {
         "tokens": [],
         "totalUsdValue": 0,
-        "timestamp": "2026-04-22T16:03:35.196Z",
+        "timestamp": "2026-04-25T08:30:23.917Z",
         "source": "debank"
       }
     },
     "eth:0x9985dF20D7e9103ECBCeb16a84956434B6f06ae8": {
-      "lastFetched": "2026-04-22T16:15:43.651Z",
+      "lastFetched": "2026-04-25T08:30:23.918Z",
       "balances": {
         "tokens": [
           {
@@ -1037,7 +1037,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007657505637813729
+            "usdValue": 0.0006175580493466261
           },
           {
             "assetAddress": "0x39f7437e0841b4e57dada656a74527ab748eac72",
@@ -1050,7 +1050,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "\u73af\u7403\u80a1",
+            "name": "环球股",
             "balance": "500000",
             "decimals": 6,
             "usdValue": 0
@@ -1099,9 +1099,9 @@
             "assetAddress": "0xae78736cd615f374d3085123a210448e74fc6393",
             "symbol": "rETH",
             "name": "Rocket Pool ETH",
-            "balance": "1.0418061610512938e+22",
+            "balance": "1.0265187360529885e+22",
             "decimals": 18,
-            "usdValue": 29111565.558010932
+            "usdValue": 27661179.812380765
           },
           {
             "assetAddress": "0xbaa70614c7aafb568a93e62a98d55696bcc85dfe",
@@ -1120,49 +1120,49 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 29111565.558776684,
-        "timestamp": "2026-04-22T16:03:36.413Z",
+        "totalUsdValue": 27661179.81299832,
+        "timestamp": "2026-04-25T08:30:24.939Z",
         "source": "debank"
       }
     },
     "eth:0xC02aB1A5eaA8d1B114EF786D9bde108cD4364359": {
-      "lastFetched": "2026-04-22T16:15:43.654Z",
+      "lastFetched": "2026-04-25T08:30:24.940Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
             "symbol": "USDS",
             "name": "USDS Stablecoin",
-            "balance": "1.0366622172207569e+26",
+            "balance": "6.819517499852373e+25",
             "decimals": 18,
-            "usdValue": 103666221.72207569
+            "usdValue": 68188355.48102388
           }
         ],
-        "totalUsdValue": 103666221.72207569,
-        "timestamp": "2026-04-22T16:03:37.414Z",
+        "totalUsdValue": 68188355.48102388,
+        "timestamp": "2026-04-25T08:30:25.923Z",
         "source": "debank"
       }
     },
     "eth:0xa9d4EcEBd48C282a70CfD3c469d6C8F178a5738E": {
-      "lastFetched": "2026-04-22T16:15:43.658Z",
+      "lastFetched": "2026-04-25T08:30:25.923Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0x8236a87084f8b84306f72007f36f2618a5634494",
             "symbol": "LBTC",
             "name": "Lombard Staked Bitcoin",
-            "balance": "326753600239",
+            "balance": "338823507478",
             "decimals": 8,
-            "usdValue": 258284880.0364445
+            "usdValue": 263617736.6129923
           }
         ],
-        "totalUsdValue": 258284880.0364445,
-        "timestamp": "2026-04-22T16:03:38.411Z",
+        "totalUsdValue": 263617736.6129923,
+        "timestamp": "2026-04-25T08:30:26.916Z",
         "source": "debank"
       }
     },
     "eth:0xB131cD463d83782d4DE33e00e35EF034F0869bA1": {
-      "lastFetched": "2026-04-22T16:15:43.662Z",
+      "lastFetched": "2026-04-25T08:30:26.917Z",
       "balances": {
         "tokens": [
           {
@@ -1171,16 +1171,16 @@
             "name": "Renzo Restaked ETH",
             "balance": "1.4001419552354048e+22",
             "decimals": 18,
-            "usdValue": 36259627.78052123
+            "usdValue": 34964131.83714998
           }
         ],
-        "totalUsdValue": 36259627.78052123,
-        "timestamp": "2026-04-22T16:03:39.404Z",
+        "totalUsdValue": 34964131.83714998,
+        "timestamp": "2026-04-25T08:30:27.819Z",
         "source": "debank"
       }
     },
     "eth:0xce6Ca9cDce00a2b0c0d1dAC93894f4Bd2c960567": {
-      "lastFetched": "2026-04-22T16:15:43.665Z",
+      "lastFetched": "2026-04-25T08:30:27.820Z",
       "balances": {
         "tokens": [
           {
@@ -1189,11 +1189,11 @@
             "name": "tBTC v2",
             "balance": "22530549180784587000",
             "decimals": 18,
-            "usdValue": 1747489.2217597675
+            "usdValue": 1733629.688967147
           }
         ],
-        "totalUsdValue": 1747489.2217597675,
-        "timestamp": "2026-04-22T16:03:40.207Z",
+        "totalUsdValue": 1733629.688967147,
+        "timestamp": "2026-04-25T08:30:28.926Z",
         "source": "debank"
       }
     },
@@ -1207,7 +1207,7 @@
             "name": "TrueUSD",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 9.982e-05
+            "usdValue": 0.00009982
           },
           {
             "assetAddress": "0x0bffc1ae5e6391875205d1ce015819592109e25c",
@@ -1323,8 +1323,8 @@
           },
           {
             "assetAddress": "0x8b11a8b8d87497f65f8c86d03f7c4018860828bd",
-            "symbol": "U\u180bS\u180bD\u180bT",
-            "name": "U\u180bS\u180bD\u180bT",
+            "symbol": "U᠋S᠋D᠋T",
+            "name": "U᠋S᠋D᠋T",
             "balance": "33079658580",
             "decimals": 6,
             "usdValue": 0
@@ -1436,7 +1436,7 @@
           {
             "assetAddress": "0xe92ec83d8ea27f802393f084004491e463209acb",
             "symbol": "SPARK",
-            "name": "\u661f\u706b\u901a\u8bc1",
+            "name": "星火通证",
             "balance": "5.0000668e+25",
             "decimals": 18,
             "usdValue": 0
@@ -1449,32 +1449,45 @@
       "proxyAddress": "eth:0xe7dF13b8e3d6740fe17CBE928C7334243d86c92f"
     },
     "eth:0xc20059e0317DE91738d13af027DfC4a50781b066": {
-      "lastFetched": "2026-04-22T16:15:43.669Z",
+      "lastFetched": "2026-04-25T08:30:28.927Z",
       "tokenInfo": {
         "symbol": "SPK",
         "name": "Spark",
         "decimals": 18,
-        "price": 0.03794,
+        "price": 0.0411204,
         "totalSupply": "10000000000000000000000000000",
-        "tokenValue": 379400000,
-        "timestamp": "2026-04-22T16:15:44.188Z",
+        "tokenValue": 411204000,
+        "timestamp": "2026-04-25T08:30:29.794Z",
         "source": "debank"
       }
     },
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
-      "lastFetched": "2026-04-23T14:01:59.366886Z",
+      "lastFetched": "2026-04-25T08:30:09.652Z",
       "tokenInfo": {
         "symbol": "wstETH",
         "name": "Wrapped liquid staked Ether 2.0",
         "decimals": 18,
-        "price": 2873.1,
-        "totalSupply": "3396980291378744368748451",
-        "tokenValue": 9759864075.16,
-        "timestamp": "2026-04-23T14:01:59.367701Z",
-        "source": "manual-oracle"
+        "price": 2849.4868287845643,
+        "totalSupply": "3387406234984221134587969",
+        "tokenValue": 9652369450.330248,
+        "timestamp": "2026-04-25T08:30:09.981Z",
+        "source": "debank"
       }
     },
     "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      "lastFetched": "2026-04-25T08:30:09.981Z",
+      "tokenInfo": {
+        "symbol": "rsETH",
+        "name": "rsETH",
+        "decimals": 18,
+        "price": 2480.126938304988,
+        "totalSupply": "629689361931087047159467",
+        "tokenValue": 1561709549.2893686,
+        "timestamp": "2026-04-25T08:30:10.789Z",
+        "source": "debank"
+      }
+    },
+    "eth:0x7159107483e623707C18C6E06cBc095bd0717783": {
       "lastFetched": "2026-04-24T10:05:18.272049Z",
       "tokenInfo": {
         "symbol": "rsETH",
@@ -1485,7 +1498,8 @@
         "tokenValue": 1558783421.67,
         "timestamp": "2026-04-24T10:05:18.272630Z",
         "source": "manual-oracle"
-      }
+      },
+      "proxyAddress": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
     }
   }
 }

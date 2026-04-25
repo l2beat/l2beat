@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-24T09:11:17.313Z",
+  "lastModified": "2026-04-25T08:14:30.100Z",
   "contracts": {
     "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3": {
-      "lastFetched": "2026-04-24T09:11:14.113Z",
+      "lastFetched": "2026-04-25T08:14:26.838Z",
       "balances": {
         "tokens": [
           {
@@ -12,7 +12,7 @@
             "name": "Royal Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.006775334333286654
+            "usdValue": 0.006828619208759352
           },
           {
             "assetAddress": "0x030db65619f1b43805f938373469b9a4953456a7",
@@ -34,7 +34,7 @@
             "assetAddress": "0x0ebf5374149f6c592d95d66ac893f8a788bcb9f1",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "19732522096367780",
+            "balance": "13062142185203192",
             "decimals": 6,
             "usdValue": 0
           },
@@ -50,9 +50,9 @@
             "assetAddress": "0x18084fba666a33d37592fa2633fd49a74dd93a88",
             "symbol": "tBTC",
             "name": "tBTC v2",
-            "balance": "30471917537236746000",
+            "balance": "30527918032480485000",
             "decimals": 18,
-            "usdValue": 2341222.9861838697
+            "usdValue": 2348993.1212418284
           },
           {
             "assetAddress": "0x19a90cabc4b46641a2724702093a9dc81db46f80",
@@ -76,13 +76,13 @@
             "name": "Uniswap",
             "balance": "2.8053182078473758e+23",
             "decimals": 18,
-            "usdValue": 909203.6311633346
+            "usdValue": 916497.4585037377
           },
           {
             "assetAddress": "0x21ce269e3e1c51c7da04d2dbc725ba582ef2e23e",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -90,9 +90,9 @@
             "assetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "432183057956",
+            "balance": "432214351849",
             "decimals": 8,
-            "usdValue": 334692413.8548478
+            "usdValue": 335248747.64764905
           },
           {
             "assetAddress": "0x24ccedebf841544c9e6a62af4e8c2fa6e5a46fde",
@@ -100,13 +100,13 @@
             "name": "BlueSparrowToken",
             "balance": "50002928380",
             "decimals": 9,
-            "usdValue": 0.48678715177839066
+            "usdValue": 0.4892479863597906
           },
           {
             "assetAddress": "0x26d002eb062b36aecf478efbe309c942fd02d3d1",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "34461630589118852",
+            "balance": "22832030874376376",
             "decimals": 6,
             "usdValue": 0
           },
@@ -114,7 +114,7 @@
             "assetAddress": "0x2799d4f53a83f9648d0168e2ac439a1b12c6809f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "18954780893370556",
+            "balance": "28805950455864628",
             "decimals": 6,
             "usdValue": 0
           },
@@ -124,7 +124,7 @@
             "name": "Book of Ethereum",
             "balance": "99999999999999000000",
             "decimals": 18,
-            "usdValue": 3.882942317607443
+            "usdValue": 3.682017169201537
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -132,13 +132,13 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0006648956530268296
+            "usdValue": 0.0006170227144725634
           },
           {
             "assetAddress": "0x2deb9106c4fd02aa5932d9b07b2bd873759ee3c2",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -146,7 +146,7 @@
             "assetAddress": "0x340cb4bfb55c238e1bfbeab7f3563a2f0a082d75",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "39743298161625",
+            "balance": "17164607784523364",
             "decimals": 6,
             "usdValue": 0
           },
@@ -154,7 +154,7 @@
             "assetAddress": "0x407a56f0ed8a467547ffbe066071a4a698363901",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "38714100646878300",
+            "balance": "38525078364549860",
             "decimals": 6,
             "usdValue": 0
           },
@@ -162,7 +162,7 @@
             "assetAddress": "0x41da1f315f829b061076a1f4a16a280ab7e7cbfa",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -188,13 +188,13 @@
             "name": "USDe",
             "balance": "1.3103233685478638e+22",
             "decimals": 18,
-            "usdValue": 13091.440775161705
+            "usdValue": 13094.061421898801
           },
           {
             "assetAddress": "0x4f213d27e6f126d228af5d1c0a8a201a33e7a9e2",
             "symbol": "LINK",
             "name": "ChainLink Token",
-            "balance": "2.023663967752734e+26",
+            "balance": "6.629723111913161e+26",
             "decimals": 18,
             "usdValue": 0
           },
@@ -220,7 +220,7 @@
             "name": "ChainLink Token",
             "balance": "4.5076122717237835e+23",
             "decimals": 18,
-            "usdValue": 4174048.963616223
+            "usdValue": 4237155.535420356
           },
           {
             "assetAddress": "0x525fc44cbe181c1108c209091b5eec5a5028190d",
@@ -236,13 +236,13 @@
             "name": "BigMouthFrog",
             "balance": "2.466555727690466e+21",
             "decimals": 18,
-            "usdValue": 1.2264368600820362e-7
+            "usdValue": 1.2329164583087132e-7
           },
           {
             "assetAddress": "0x55e69720af933a3b36be8e0551cc75f9dbd537d3",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "8723981457464170",
+            "balance": "24073379887358624",
             "decimals": 6,
             "usdValue": 0
           },
@@ -250,7 +250,7 @@
             "assetAddress": "0x579a94807dd15ce2c519a4e4cd068b29bfc48401",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "34446051994636350",
+            "balance": "40079314462744760",
             "decimals": 6,
             "usdValue": 0
           },
@@ -268,7 +268,7 @@
             "name": "Apu Apustaja",
             "balance": "2000000000000000000",
             "decimals": 18,
-            "usdValue": 0.00007542940066466532
+            "usdValue": 0.00007494550654238746
           },
           {
             "assetAddress": "0x5c5b196abe0d54485975d1ec29617d42d9198326",
@@ -282,7 +282,7 @@
             "assetAddress": "0x5de1b25d0a94549c9dace58777c385fa67aa846f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "2387402140841733",
+            "balance": "35348440817438196",
             "decimals": 6,
             "usdValue": 0
           },
@@ -300,7 +300,7 @@
             "name": "MultiVAC",
             "balance": "1e+21",
             "decimals": 18,
-            "usdValue": 0.2739
+            "usdValue": 0.2703
           },
           {
             "assetAddress": "0x643695d282f6ba237afe27ffe0acd89a86b50d3e",
@@ -322,7 +322,7 @@
             "assetAddress": "0x689435017b46dd058fec51ccade5c3b6b7c4dce5",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "12721689561057170",
+            "balance": "1363002717954899",
             "decimals": 6,
             "usdValue": 0
           },
@@ -338,7 +338,7 @@
             "assetAddress": "0x6dda7434ac4d29e303cb570d72d43f966f739375",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "11407583378231646",
+            "balance": "27117316044972570",
             "decimals": 6,
             "usdValue": 0
           },
@@ -346,7 +346,7 @@
             "assetAddress": "0x715da2abf0bf47b13963be8dc91d5dc2727a93e4",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "20988986840348484",
+            "balance": "768450669648813",
             "decimals": 6,
             "usdValue": 0
           },
@@ -354,7 +354,7 @@
             "assetAddress": "0x78915ecf25e3516ec02a74278af827520706b67f",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -372,13 +372,13 @@
             "name": "Wrapped liquid staked Ether 2.0",
             "balance": "2.497261728814491e+22",
             "decimals": 18,
-            "usdValue": 70766643.66531418
+            "usdValue": 71159084.10529324
           },
           {
             "assetAddress": "0x81465b228da456a9195d4320c0579579da3fbd8e",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "5754645780795543",
+            "balance": "1636955976633397",
             "decimals": 6,
             "usdValue": 0
           },
@@ -386,7 +386,7 @@
             "assetAddress": "0x81bae16bd046a84fedc03b5ac3e78014eaa51a66",
             "symbol": "LINK",
             "name": "ChainLink Token",
-            "balance": "2.023663967752734e+26",
+            "balance": "6.629723111913161e+26",
             "decimals": 18,
             "usdValue": 0
           },
@@ -410,7 +410,7 @@
             "assetAddress": "0x888d534385a3727f3bbd2f4e8c3fc322a9cfdbd2",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "14803582958030182",
+            "balance": "34716500235742796",
             "decimals": 6,
             "usdValue": 0
           },
@@ -418,7 +418,7 @@
             "assetAddress": "0x8f29184361b624aae6920a8889eb4e709c60c0c7",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "19929704156616156",
+            "balance": "6633662155984069",
             "decimals": 6,
             "usdValue": 0
           },
@@ -434,7 +434,7 @@
             "assetAddress": "0x92b68f3efe0d57b1828b1259e4c4e0af45366aae",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "2379475161437",
+            "balance": "397436419365",
             "decimals": 8,
             "usdValue": 0
           },
@@ -444,7 +444,7 @@
             "name": "YfTether.io",
             "balance": "10000000000000000",
             "decimals": 18,
-            "usdValue": 0.017617227768707548
+            "usdValue": 0.017722652398409068
           },
           {
             "assetAddress": "0x956f824b5a37673c6fc4a6904186cb3ba499349b",
@@ -460,13 +460,13 @@
             "name": "henlo",
             "balance": "3352883755949630000",
             "decimals": 9,
-            "usdValue": 1.4974475621715735
+            "usdValue": 1.5044521952754772
           },
           {
             "assetAddress": "0x9ae3f5e7456fa060f3487c9db990f9d7dd678de8",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "35046049948155496",
+            "balance": "26800385196790810",
             "decimals": 6,
             "usdValue": 0
           },
@@ -492,15 +492,15 @@
             "name": "Biden Coin",
             "balance": "100000000000000000000",
             "decimals": 18,
-            "usdValue": 0.00019597923048938275
+            "usdValue": 0.00019702132958802776
           },
           {
             "assetAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "138869511096068",
+            "balance": "139008863025041",
             "decimals": 6,
-            "usdValue": 138800111.04054773
+            "usdValue": 138953281.71235606
           },
           {
             "assetAddress": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
@@ -508,7 +508,7 @@
             "name": "rsETH",
             "balance": "128560920070854900000",
             "decimals": 18,
-            "usdValue": 316949.7618080762
+            "usdValue": 318733.2677044417
           },
           {
             "assetAddress": "0xa5959e9412d27041194c3c3bcbe855face2864f7",
@@ -538,7 +538,7 @@
             "assetAddress": "0xaeb03ab1da96100ecc341471c45766d421fab1c7",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "12021467156060140",
+            "balance": "5570475492711279",
             "decimals": 6,
             "usdValue": 0
           },
@@ -546,7 +546,7 @@
             "assetAddress": "0xafa8610aebcbdd778e0f78331d32546cc3c07104",
             "symbol": "LINK",
             "name": "ChainLink Token",
-            "balance": "2.023663967752734e+26",
+            "balance": "6.629723111913161e+26",
             "decimals": 18,
             "usdValue": 0
           },
@@ -554,7 +554,7 @@
             "assetAddress": "0xb5dfe4b1daa61b2be8c943f09d68dccd268cc23e",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "3648860364900483",
+            "balance": "8469084108828971",
             "decimals": 6,
             "usdValue": 0
           },
@@ -562,7 +562,7 @@
             "assetAddress": "0xb7af8b254993c7631639d5dde7763692c4d9928d",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -570,7 +570,7 @@
             "assetAddress": "0xbaf2c4baa422e0ad8e74b977f34c1a0de31bc168",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "14706239357702054",
+            "balance": "23331928969735370",
             "decimals": 6,
             "usdValue": 0
           },
@@ -586,17 +586,17 @@
             "assetAddress": "0xc00e94cb662c3520282e6f5717214004a7f26888",
             "symbol": "COMP",
             "name": "Compound",
-            "balance": "9.997492123399285e+22",
+            "balance": "9.997492186499285e+22",
             "decimals": 18,
-            "usdValue": 2357408.6426975513
+            "usdValue": 2263432.2310234383
           },
           {
             "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "symbol": "WETH",
             "name": "Wrapped Ether",
-            "balance": "5.408012257943872e+22",
+            "balance": "5.408218800943871e+22",
             "decimals": 18,
-            "usdValue": 124669284.17870268
+            "usdValue": 125364134.27151921
           },
           {
             "assetAddress": "0xc5fb36dd2fb59d3b98deff88425a3f425ee469ed",
@@ -604,7 +604,7 @@
             "name": "Dejitaru Tsuka",
             "balance": "1000000000",
             "decimals": 9,
-            "usdValue": 0.0014200018687291743
+            "usdValue": 0.0014248838354528814
           },
           {
             "assetAddress": "0xc6d3d201530a6d4ad9dfbaad39c5f68a9a470a69",
@@ -628,7 +628,7 @@
             "name": "Coinbase Wrapped BTC",
             "balance": "26683001693",
             "decimals": 8,
-            "usdValue": 20672519.478343118
+            "usdValue": 20703920.034735437
           },
           {
             "assetAddress": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
@@ -636,7 +636,7 @@
             "name": "EtherFi wrapped ETH",
             "balance": "1.1998411031877702e+22",
             "decimals": 18,
-            "usdValue": 30236582.223577198
+            "usdValue": 30408636.775856286
           },
           {
             "assetAddress": "0xd09eb9099fac55edcbf4965e0a866779ca365a0c",
@@ -644,13 +644,13 @@
             "name": "Colon",
             "balance": "19545378160",
             "decimals": 9,
-            "usdValue": 0.0012844704507089548
+            "usdValue": 0.0013170870353426786
           },
           {
             "assetAddress": "0xd2fcf51823fa77aea830a5372ae8731313154419",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "22098051841646224",
+            "balance": "24419314151417536",
             "decimals": 6,
             "usdValue": 0
           },
@@ -666,7 +666,7 @@
             "assetAddress": "0xd8c07379abf894a7b7ea5c9a0c608e7668b993fe",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "30271243361200716",
+            "balance": "12567175482990988",
             "decimals": 6,
             "usdValue": 0
           },
@@ -674,7 +674,7 @@
             "assetAddress": "0xdf7d222b57c0b28a14b64d968aee6f3f48dc2c50",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "28934301720173676",
+            "balance": "38856640902837700",
             "decimals": 6,
             "usdValue": 0
           },
@@ -698,7 +698,7 @@
             "assetAddress": "0xe343089913d4c79dd188fb92751e92397071a21f",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "20545551320651580",
+            "balance": "8767869068000711",
             "decimals": 6,
             "usdValue": 0
           },
@@ -706,7 +706,7 @@
             "assetAddress": "0xe47da9f2d66258fb64bcb614599090acf60c11dc",
             "symbol": "WBTC",
             "name": "Wrapped BTC",
-            "balance": "11407508689873",
+            "balance": "11385611285127",
             "decimals": 8,
             "usdValue": 0
           },
@@ -730,7 +730,7 @@
             "assetAddress": "0xe776cf33e8828117151516a9ed31b20486252303",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "1192858355766937",
+            "balance": "28369160686070988",
             "decimals": 6,
             "usdValue": 0
           },
@@ -762,7 +762,7 @@
             "assetAddress": "0xfdb5951a1cd9db59447c606e903178e1b2012f10",
             "symbol": "USDC",
             "name": "USD Coin",
-            "balance": "17403103576737500",
+            "balance": "11126166186716296",
             "decimals": 6,
             "usdValue": 0
           },
@@ -775,13 +775,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 729949486.7021853,
-        "timestamp": "2026-04-24T09:11:14.745Z",
+        "totalUsdValue": 731935716.8624225,
+        "timestamp": "2026-04-25T08:14:27.552Z",
         "source": "debank"
       }
     },
     "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": {
-      "lastFetched": "2026-04-24T09:11:14.760Z",
+      "lastFetched": "2026-04-25T08:14:27.565Z",
       "balances": {
         "tokens": [
           {
@@ -806,7 +806,7 @@
             "name": "tBTC v2",
             "balance": "17787661484065586",
             "decimals": 18,
-            "usdValue": 1366.6643028310148
+            "usdValue": 1368.6847044267063
           },
           {
             "assetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
@@ -814,7 +814,7 @@
             "name": "Wrapped BTC",
             "balance": "224477206",
             "decimals": 8,
-            "usdValue": 173840.2671811196
+            "usdValue": 174116.62107065727
           },
           {
             "assetAddress": "0x289ff00235d2b98b0145ff5d4435d3e92f9540a6",
@@ -822,7 +822,7 @@
             "name": "Book of Ethereum",
             "balance": "99999999999000000000",
             "decimals": 18,
-            "usdValue": 3.882942317568652
+            "usdValue": 3.6820171691647534
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -830,7 +830,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0006648956530268296
+            "usdValue": 0.0006170227144725634
           },
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
@@ -862,7 +862,7 @@
             "name": "Wrapped liquid staked Ether 2.0",
             "balance": "6.089938574625911e+21",
             "decimals": 18,
-            "usdValue": 17257482.789310683
+            "usdValue": 17353185.139853097
           },
           {
             "assetAddress": "0x82866b4a71ba9d930fe338c386b6a45a7133eb36",
@@ -878,7 +878,7 @@
             "name": "YfTether.io",
             "balance": "10000000000000000",
             "decimals": 18,
-            "usdValue": 0.017617227768707548
+            "usdValue": 0.017722652398409068
           },
           {
             "assetAddress": "0x98d1c76831c0abea30e3dac8628bd72d6b0e3dd2",
@@ -910,7 +910,7 @@
             "name": "USD Coin",
             "balance": "333883643183",
             "decimals": 6,
-            "usdValue": 333716.78479060467
+            "usdValue": 333750.14312574966
           },
           {
             "assetAddress": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
@@ -918,7 +918,7 @@
             "name": "rsETH",
             "balance": "2.2417748811993076e+22",
             "decimals": 18,
-            "usdValue": 55267962.78619103
+            "usdValue": 55578960.77195057
           },
           {
             "assetAddress": "0xa35b1b31ce002fbf2058d22f30f95d405200a15b",
@@ -926,7 +926,7 @@
             "name": "ETHx",
             "balance": "250093823778092130",
             "decimals": 18,
-            "usdValue": 626.906648373363
+            "usdValue": 630.041523858631
           },
           {
             "assetAddress": "0xa90e85666a40022932402ef957dbcc4512cd0739",
@@ -950,7 +950,7 @@
             "name": "Rocket Pool ETH",
             "balance": "30166057550038565000",
             "decimals": 18,
-            "usdValue": 80798.74115177416
+            "usdValue": 81258.14210267675
           },
           {
             "assetAddress": "0xbaa70614c7aafb568a93e62a98d55696bcc85dfe",
@@ -966,7 +966,7 @@
             "name": "Coinbase Wrapped Staked ETH",
             "balance": "8774562679985345000",
             "decimals": 18,
-            "usdValue": 22807.984010966302
+            "usdValue": 22928.458756562504
           },
           {
             "assetAddress": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
@@ -974,15 +974,15 @@
             "name": "Renzo Restaked ETH",
             "balance": "2.5509667349697917e+22",
             "decimals": 18,
-            "usdValue": 63576760.53059868
+            "usdValue": 63688614.61850554
           },
           {
             "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "symbol": "WETH",
             "name": "Wrapped Ether",
-            "balance": "3.640975757467257e+21",
+            "balance": "3.906891947217257e+21",
             "decimals": 18,
-            "usdValue": 8393432.184416544
+            "usdValue": 9056292.740408018
           },
           {
             "assetAddress": "0xc6d3d201530a6d4ad9dfbaad39c5f68a9a470a69",
@@ -998,7 +998,7 @@
             "name": "Coinbase Wrapped BTC",
             "balance": "42115119",
             "decimals": 8,
-            "usdValue": 32628.473658143103
+            "usdValue": 32678.0347301823
           },
           {
             "assetAddress": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
@@ -1006,7 +1006,7 @@
             "name": "EtherFi wrapped ETH",
             "balance": "2.969491213994621e+21",
             "decimals": 18,
-            "usdValue": 7483262.993373806
+            "usdValue": 7525844.838583402
           },
           {
             "assetAddress": "0xd09eb9099fac55edcbf4965e0a866779ca365a0c",
@@ -1014,7 +1014,7 @@
             "name": "Colon",
             "balance": "15550336700",
             "decimals": 9,
-            "usdValue": 0.0010219269141899785
+            "usdValue": 0.0010478767253886407
           },
           {
             "assetAddress": "0xd11c452fc99cf405034ee446803b6f6c1f6d5ed8",
@@ -1022,7 +1022,7 @@
             "name": "Treehouse ETH",
             "balance": "1.2879889478789088e+21",
             "decimals": 18,
-            "usdValue": 3689624.394717423
+            "usdValue": 3692475.4242857737
           },
           {
             "assetAddress": "0xd9a442856c234a39a81a089c06451ebaa4306a72",
@@ -1030,7 +1030,7 @@
             "name": "pufETH",
             "balance": "81144909656401690000",
             "decimals": 18,
-            "usdValue": 200934.70079155915
+            "usdValue": 202065.37913481356
           },
           {
             "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
@@ -1038,7 +1038,7 @@
             "name": "Tether USD",
             "balance": "81047366361",
             "decimals": 6,
-            "usdValue": 81070.05962358108
+            "usdValue": 81072.4910445719
           },
           {
             "assetAddress": "0xdcee70654261af21c44c093c300ed3bb97b78192",
@@ -1046,7 +1046,7 @@
             "name": "Wrapped OETH",
             "balance": "4000000000000000000",
             "decimals": 18,
-            "usdValue": 10673.231806441447
+            "usdValue": 10713.383522952654
           },
           {
             "assetAddress": "0xe627b9cda8398859f5f8d3f7e1cb48ec262aa4a6",
@@ -1070,7 +1070,7 @@
             "name": "Staked ETH",
             "balance": "1012747370697620000",
             "decimals": 18,
-            "usdValue": 2490.223543022117
+            "usdValue": 2489.597018741886
           },
           {
             "assetAddress": "0xf2de943065c0b42d920db03ec8a56f674126253f",
@@ -1086,33 +1086,33 @@
             "name": "rswETH",
             "balance": "496478015438040500",
             "decimals": 18,
-            "usdValue": 1201.573343026855
+            "usdValue": 1201.8123948666575
           }
         ],
-        "totalUsdValue": 156610685.19170594,
-        "timestamp": "2026-04-24T09:11:15.406Z",
+        "totalUsdValue": 157839650.02412122,
+        "timestamp": "2026-04-25T08:14:28.200Z",
         "source": "debank"
       }
     },
     "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": {
-      "lastFetched": "2026-04-24T09:11:15.407Z",
+      "lastFetched": "2026-04-25T08:14:28.202Z",
       "balances": {
         "tokens": [],
         "totalUsdValue": 0,
-        "timestamp": "2026-04-24T09:11:16.319Z",
+        "timestamp": "2026-04-25T08:14:29.000Z",
         "source": "debank"
       }
     },
     "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": {
-      "lastFetched": "2026-04-24T09:11:16.320Z",
+      "lastFetched": "2026-04-25T08:14:29.001Z",
       "tokenInfo": {
         "symbol": "COMP",
         "name": "Compound",
         "decimals": 18,
-        "price": 23.6,
+        "price": 22.64,
         "totalSupply": "10000000000000000000000000",
-        "tokenValue": 236000000,
-        "timestamp": "2026-04-24T09:11:17.313Z",
+        "tokenValue": 226400000,
+        "timestamp": "2026-04-25T08:14:30.099Z",
         "source": "debank"
       }
     },
