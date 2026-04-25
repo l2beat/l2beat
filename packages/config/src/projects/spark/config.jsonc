@@ -64,7 +64,12 @@
     },
     // --- Spark oracle wrappers: keep visible as leaves, prune feed references to avoid Chronicle/Renzo/Kelp/Lido contagion ---
     "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39": {
-      "ignoreRelatives": ["steth"]
+      "ignoreRelatives": [
+        "steth"
+      ],
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
     },
     // EZETHExchangeRateOracle, RSETHExchangeRateOracle: let `oracle` (Renzo/Kelp) be discovered as dep; leaf prunes below
     // --- Chronicle Aggors: let feeds be discovered as leaves (leaf overrides below prune each) ---
@@ -86,10 +91,32 @@
     },
     // --- Leaf: Redstone price feeds (ERC1967 proxies) ---
     "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4": {
-      "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner", "getPriceFeedAdapter"]
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "admin",
+        "implementation",
+        "owner",
+        "getPriceFeedAdapter"
+      ],
+      "ignoreInWatchMode": [
+        "latestAnswer",
+        "latestRoundData"
+      ]
     },
     "eth:0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc": {
-      "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner", "getPriceFeedAdapter"]
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "admin",
+        "implementation",
+        "owner",
+        "getPriceFeedAdapter"
+      ],
+      "ignoreInWatchMode": [
+        "latestAnswer",
+        "latestRoundData"
+      ]
     },
     // --- Leaf: Maker MedianGNOUSD (slot mapping drags Chronicle-style feeders) ---
     "eth:0x31BFA908637C29707e155Cfac3a50C9823bF8723": {
@@ -97,7 +124,15 @@
     },
     // --- Leaf: MakerDAO Pot (vat/vow are Maker core) ---
     "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7": {
-      "ignoreRelatives": ["vat", "vow"]
+      "ignoreRelatives": [
+        "vat",
+        "vow"
+      ],
+      "ignoreInWatchMode": [
+        "Pie",
+        "chi",
+        "rho"
+      ]
     },
     // --- Spark: EmissionManager — surface per-reward emission admin via EmissionAdminUpdated events ---
     // --- and the Rewards Vault's live wstETH balance so reward-system impact caps auto-track on-chain state ---
@@ -270,19 +305,54 @@
       ]
     },
     "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
-      "ignoreRelatives": ["owner", "getOwner", "upgradedAddress"]
+      "ignoreRelatives": [
+        "owner",
+        "getOwner",
+        "upgradedAddress"
+      ],
+      "ignoreInWatchMode": [
+        "_totalSupply",
+        "totalSupply"
+      ]
     },
     "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
-      "ignoreRelatives": ["owner", "pendingOwner"]
+      "ignoreRelatives": [
+        "owner",
+        "pendingOwner"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     },
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
-      "ignoreMethods": ["getEthValue", "getRethValue"]
+      "ignoreMethods": [
+        "getEthValue",
+        "getRethValue"
+      ],
+      "ignoreInWatchMode": [
+        "getCollateralRate",
+        "getExchangeRate",
+        "getTotalCollateral",
+        "totalSupply"
+      ]
     },
     "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
-      "ignoreRelatives": ["$admin", "$implementation", "roleManager"]
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "roleManager"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     },
     "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": {
-      "ignoreRelatives": ["owner"]
+      "ignoreRelatives": [
+        "owner"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     },
     "eth:0x8236a87084f8B84306f72007F36F2618A5634494": {
       "ignoreRelatives": [
@@ -296,6 +366,24 @@
         "owner",
         "pauser",
         "pendingOwner"
+      ],
+      "ignoreInWatchMode": [
+        "CLAIMER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "MINTER_ROLE",
+        "MINT_BURN_PAUSER_ROLE",
+        "PAUSER_ROLE",
+        "consortium",
+        "defaultAdmin",
+        "defaultAdminDelay",
+        "defaultAdminDelayIncreaseWait",
+        "mintBurnPaused",
+        "operator",
+        "pauser",
+        "pendingDefaultAdmin",
+        "pendingDefaultAdminDelay",
+        "pendingOwner",
+        "totalSupply"
       ]
     },
     "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
@@ -308,6 +396,10 @@
         "liquidityPool",
         "owner",
         "roleRegistry"
+      ],
+      "ignoreInWatchMode": [
+        "getRate",
+        "totalSupply"
       ]
     },
     "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": {
@@ -329,6 +421,12 @@
         "usdsJoin",
         "vat",
         "vow"
+      ],
+      "ignoreInWatchMode": [
+        "chi",
+        "rho",
+        "totalAssets",
+        "totalSupply"
       ]
     },
     "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
@@ -337,11 +435,22 @@
         "$implementation",
         "custodyAddress",
         "lrtConfig"
+      ],
+      "ignoreInWatchMode": [
+        "getCurrentPeriodStartTime",
+        "getNextDailyLimitResetTimestamp"
       ]
     },
     "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreRelatives": ["$admin", "$implementation", "getImplementation"]
+      "ignoreRelatives": [
+        "$admin",
+        "$implementation",
+        "getImplementation"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     },
     "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": {
       "ignoreRelatives": [
@@ -354,6 +463,9 @@
         "owner",
         "pauser",
         "rescuer"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
       ]
     },
     "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
@@ -369,6 +481,9 @@
         "proposedOwnerDeprecated",
         "supplyControl",
         "supplyControllerDeprecated"
+      ],
+      "ignoreInWatchMode": [
+        "totalSupply"
       ]
     },
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
@@ -408,6 +523,9 @@
         "riskOracleMiddleware",
         "roleManager",
         "strategyManager"
+      ],
+      "ignoreInWatchMode": [
+        "calculateTVLs"
       ]
     },
     // --- Kelp LRTOracle (RSETHExchangeRateOracle.oracle): leaf — ignore lrtConfig so Kelp's stack stays out ---
@@ -429,7 +547,55 @@
             "address": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
           }
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "getCurrentPeriodStartTime",
+        "getNextDailyLimitResetTimestamp"
+      ]
+    },
+    "eth:0xFDdf8D19D092839A26b31365c927cA236B5086cf": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
+    },
+    "eth:0xBE21C54Dff3b2F1708970d185aa5b0eEB70556f1": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
+    },
+    "eth:0x70942D6b580741CF50A7906f4100063EE037b8eb": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
+    },
+    "eth:0x52E85eB49e07dF74c8A9466D2164b4C4cA60014A": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
+    },
+    "eth:0x4219aA1A99f3fe90C2ACB97fCbc1204f6485B537": {
+      "ignoreInWatchMode": [
+        "getAggregatedOracleValue",
+        "latestAnswer",
+        "latestRoundData"
+      ]
+    },
+    "eth:0x27f3A665c75aFdf43CfbF6B3A859B698f46ef656": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
+    },
+    "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6": {
+      "ignoreInWatchMode": [
+        "getAggregatedOracleValue",
+        "latestAnswer",
+        "latestRoundData"
+      ]
+    },
+    "eth:0x230E0321Cf38F09e247e50Afc7801EA2351fe56F": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
     }
   }
 }
