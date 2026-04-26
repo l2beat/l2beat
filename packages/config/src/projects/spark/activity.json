@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777105830,
-  "lastConsumedUpdateNotifierId": 132,
+  "lastReconciledAt": 1777193036,
+  "lastConsumedUpdateNotifierId": 134,
   "events": [
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
@@ -113,6 +113,22 @@
       "entity": null,
       "id": "132:eth:0x055E84e7FE8955E2781010B866f10Ef6E1E77e59:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 134,
+      "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
+      "contractName": "SavingsDaiOracle",
+      "entity": null,
+      "id": "134:eth:0x0c0864837C7e65458aCD3C665222203217019436:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.latestAnswer",
+          "before": 117481826,
+          "after": 117485533
+        }
+      ]
     }
   ]
 }

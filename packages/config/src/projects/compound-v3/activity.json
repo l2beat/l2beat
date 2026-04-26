@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777021877,
-  "lastConsumedUpdateNotifierId": 126,
+  "lastReconciledAt": 1777191938,
+  "lastConsumedUpdateNotifierId": 133,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2245,6 +2245,172 @@
       "contractName": "Safe",
       "entity": null,
       "id": "126:eth:0x55bea483873291eB3ded185c9962676F107cB4D6:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "133:eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "contractName": "cUSDTv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "133:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.assetList",
+          "before": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
+          "after": "eth:0xC98D160CA655d97880BAE7f95DEb033ee0f1b53f"
+        },
+        {
+          "field": "values.$pastUpgrades.49",
+          "after": [
+            "2026-04-25T16:46:11.000Z",
+            "0xb389fde297c1dfe69d8a4b642e608767842d8d0b0b2b2a5e796874857c527f9b",
+            [
+              "eth:0x26caC7b9FEb76f4Bc6d1cFaD3020596d8878bed1"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.50",
+          "after": [
+            "2026-04-25T21:26:47.000Z",
+            "0x9b9de59c6d7bdb156a22dc4c45d2bcc78cd4ba290410a7596293a71ad7f08641",
+            [
+              "eth:0x5fB5484720f549132A2b344783476E2a0F845B61"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 49,
+          "after": 51
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E",
+          "after": "eth:0x5fB5484720f549132A2b344783476E2a0F845B61"
+        },
+        {
+          "field": "implementationNames.eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0x5fB5484720f549132A2b344783476E2a0F845B61",
+          "after": "CometWithExtendedAssetList"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "contractName": "cUSDCv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "133:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.assetList",
+          "before": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
+          "after": "eth:0x595B4a0Fc56A84BbBEA01CbAc0d243ED9324227A"
+        },
+        {
+          "field": "values.$pastUpgrades.56",
+          "after": [
+            "2026-04-25T16:46:11.000Z",
+            "0xb389fde297c1dfe69d8a4b642e608767842d8d0b0b2b2a5e796874857c527f9b",
+            [
+              "eth:0x0644d1FdEEB3a64C880a42dFb778725d0551eEfB"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.57",
+          "after": [
+            "2026-04-25T21:26:47.000Z",
+            "0x9b9de59c6d7bdb156a22dc4c45d2bcc78cd4ba290410a7596293a71ad7f08641",
+            [
+              "eth:0xb8c70eaE7AB3BD8C574362BA651704DD8E16Aab8"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.58",
+          "after": [
+            "2026-04-26T05:29:11.000Z",
+            "0x747628b8861479974cc763f7a0cbbe92eaf229d141dd7e8884229b7a48495082",
+            [
+              "eth:0xFe36A00669bB4b5834A2F3E2b9A2908fEe21d141"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 56,
+          "after": 59
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC",
+          "after": "eth:0xFe36A00669bB4b5834A2F3E2b9A2908fEe21d141"
+        },
+        {
+          "field": "values.isTransferPaused",
+          "before": true,
+          "after": false
+        },
+        {
+          "field": "values.isWithdrawPaused",
+          "before": true,
+          "after": false
+        },
+        {
+          "field": "implementationNames.eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0xFe36A00669bB4b5834A2F3E2b9A2908fEe21d141",
+          "after": "CometWithExtendedAssetList"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "133:eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0x595B4a0Fc56A84BbBEA01CbAc0d243ED9324227A",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "133:eth:0x595B4a0Fc56A84BbBEA01CbAc0d243ED9324227A:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-26T08:23:17.000Z",
+      "updateNotifierId": 133,
+      "address": "eth:0xC98D160CA655d97880BAE7f95DEb033ee0f1b53f",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "133:eth:0xC98D160CA655d97880BAE7f95DEb033ee0f1b53f:contract-added",
       "type": "contract-added"
     }
   ]

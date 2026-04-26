@@ -1,7 +1,7 @@
 {
   "name": "spark",
-  "timestamp": 1777104774,
-  "configHash": "0x155fb67f3b41b7b70988a637c22131bb6db7900c5e39c7049cb5e44d1a893e24",
+  "timestamp": 1777191797,
+  "configHash": "0xf336eaa1c703ab3d9a119cc2adbe38ac574cc7b2cd3ea81baff202f031eaffc1",
   "entries": [
     {
       "name": "PoolAddressesProvider",
@@ -91,7 +91,7 @@
         "DAI_PRICE_FEED_ADDRESS": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
         "getAnswer": [],
         "getTimestamp": [],
-        "latestAnswer": 117481826,
+        "latestAnswer": 117485533,
         "POT_ADDRESS": "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
       },
       "errors": {
@@ -130,9 +130,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "739999342562645937312475",
+        "scaledTotalSupply": "742720487675258521847243",
         "symbol": "spwstETH",
-        "totalSupply": "740030008799717694293818",
+        "totalSupply": "742751266679036506198942",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "fieldMeta": {
@@ -153,6 +153,7 @@
         "0x4b09a9d7df2c4726bc3562e43f7ad5fa38f9fb46a9fb6182a853ca80860d3517"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1629198727,
       "sinceBlock": 13042356,
       "values": {
@@ -165,7 +166,7 @@
         "owner": "eth:0x9C070027cdC9dc8F82416B2e5314E11DFb4FE3CD",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "tBTC",
-        "totalSupply": "5379424275580000000000"
+        "totalSupply": "5358909718400000000000"
       },
       "implementationNames": {
         "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": "TBTC"
@@ -179,15 +180,16 @@
         "0x1f7ec5b58e95d96751b68b20f527eecb8082509a2bb2c9ff15ee434abd56589c"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["Pie", "chi", "rho"],
       "sinceTimestamp": 1573672721,
       "sinceBlock": 8928160,
       "values": {
         "$immutable": true,
-        "chi": "1174818268956316788372851032",
+        "chi": "1174855332597941600589088960",
         "dsr": "1000000000393915525145987602",
         "live": 1,
-        "Pie": "207727469515775995855557851",
-        "rho": 1777102991,
+        "Pie": "207774200575824270863164156",
+        "rho": 1777183079,
         "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
         "vow": "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466"
       },
@@ -203,6 +205,7 @@
         "0xb7c329cce2ca65d263e3a674f3cbb871505726440a851f67d2520306b5eab0f4"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1543095952,
       "sinceBlock": 6766284,
       "values": {
@@ -228,6 +231,7 @@
         "0xc8e593e15611aa338ee43b93e9b256bd6de147c1082262ee77ffe7bf45af80da"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1673867219,
       "sinceBlock": 16418941,
       "values": {
@@ -235,7 +239,7 @@
         "ASSET_TO_PEG": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
         "DECIMALS": 8,
         "DENOMINATOR": "10000000000000000",
-        "latestAnswer": 7731473094011,
+        "latestAnswer": 7794001342150,
         "MAX_DECIMALS": 18,
         "PEG_TO_BASE": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
       },
@@ -379,6 +383,11 @@
         "0x4c3729f879997bd5720a541e4c3e4b0ef09bbd1fa33ac25064a22834e888e843"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getAggregatedOracleValue",
+        "latestAnswer",
+        "latestRoundData"
+      ],
       "sinceTimestamp": 1737842555,
       "sinceBlock": 21704379,
       "values": {
@@ -389,15 +398,15 @@
         "description": "Aggregated price feed ETH/USD from Chronicle, Chainlink, and RedStone oracles",
         "getAgeThreshold": 90000,
         "getAggregatedOracleValue": {
-          "value": 231647000000,
+          "value": 233228000000,
           "goodOraclesCount": 3
         },
-        "latestAnswer": 231647000000,
+        "latestAnswer": 233228000000,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 231647000000,
-          "startedAt": 1777104755,
-          "updatedAt": 1777104755,
+          "answer": 233228000000,
+          "startedAt": 1777191779,
+          "updatedAt": 1777191779,
           "answeredInRound": 1
         },
         "redstone": "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4",
@@ -416,6 +425,7 @@
         "0x758585ac76f06fdfef08b36cbf13f6858c0e8802e30c076147f414882263f7af"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1728420107,
       "sinceBlock": 20923318,
       "values": {
@@ -423,7 +433,7 @@
         "DAI_PRICE_FEED_ADDRESS": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
         "getAnswer": [],
         "getTimestamp": [],
-        "latestAnswer": 109438246,
+        "latestAnswer": 109448894,
         "POT_ADDRESS": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
       },
       "errors": {
@@ -511,6 +521,10 @@
         "0xdb183ee68ce9fa0f9f906e68ff8accd7659f011a2f999abbb68a8a40fc394f44"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getCurrentPeriodStartTime",
+        "getNextDailyLimitResetTimestamp"
+      ],
       "sinceTimestamp": 1702242335,
       "sinceBlock": 18758376,
       "values": {
@@ -586,8 +600,8 @@
         "$upgradeCount": 13,
         "currentPeriodMintedFeeAmount": "1507879294513996496",
         "feePeriodStartTime": 1776470400,
-        "getCurrentPeriodStartTime": 1777075200,
-        "getNextDailyLimitResetTimestamp": 1777161600,
+        "getCurrentPeriodStartTime": 1777161600,
+        "getNextDailyLimitResetTimestamp": 1777248000,
         "highestRsethPrice": "1069610361882844043",
         "lrtConfig": "eth:0x947Cb49334e6571ccBFEF1f1f1178d8469D65ec7",
         "maxFeeMintAmountPerDay": "20000000000000000000",
@@ -635,9 +649,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 26088773810552,
+        "scaledTotalSupply": 24806243827388,
         "symbol": "spUSDC",
-        "totalSupply": 30338699020657,
+        "totalSupply": 28850461027514,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -678,9 +692,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "81769150923599085556520",
+        "scaledTotalSupply": "81846176491877557456972",
         "symbol": "spweETH",
-        "totalSupply": "81769150923599085556520",
+        "totalSupply": "81846176491877557456972",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "fieldMeta": {
@@ -721,9 +735,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 293805776172,
+        "scaledTotalSupply": 294179519863,
         "symbol": "spWBTC",
-        "totalSupply": 293846826089,
+        "totalSupply": 294220622042,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
       "fieldMeta": {
@@ -744,6 +758,11 @@
         "0xb40885b89f3ee7919d1bce2821f8e33c3c3d6b85eab7fbb6c43a360d51e6253f"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getAggregatedOracleValue",
+        "latestAnswer",
+        "latestRoundData"
+      ],
       "sinceTimestamp": 1737842483,
       "sinceBlock": 21704373,
       "values": {
@@ -754,15 +773,15 @@
         "description": "Aggregated price feed BTC/USD from Chronicle, Chainlink, and RedStone oracles",
         "getAgeThreshold": 90000,
         "getAggregatedOracleValue": {
-          "value": 7754820000000,
+          "value": 7813472359000,
           "goodOraclesCount": 3
         },
-        "latestAnswer": 7754820000000,
+        "latestAnswer": 7813472359000,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 7754820000000,
-          "startedAt": 1777104755,
-          "updatedAt": 1777104755,
+          "answer": 7813472359000,
+          "startedAt": 1777191779,
+          "updatedAt": 1777191779,
           "answeredInRound": 1
         },
         "redstone": "eth:0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc",
@@ -1010,7 +1029,7 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "latestAnswer": "995860467971942120",
+        "latestAnswer": "997009837367924198",
         "weeth": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
         "weethETHFeed": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
       },
@@ -1046,9 +1065,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0x856900aa78e856a5df1a2665eE3a66b2487cD68f",
-        "scaledTotalSupply": "241966709336314522389154917",
+        "scaledTotalSupply": "247193333339320107951742438",
         "symbol": "spDAI",
-        "totalSupply": "283530667629090882167400587",
+        "totalSupply": "289675957185573805858045460",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
       "fieldMeta": {
@@ -1074,6 +1093,7 @@
         "0xe4d64f4c0a0a44633185202f829930e05f8d04a07bfc291747f397bc427278c7"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1741775195,
       "sinceBlock": 22030180,
       "values": {
@@ -1081,7 +1101,7 @@
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
         "ezETH": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-        "latestAnswer": 249511671147,
+        "latestAnswer": 251216154064,
         "oracle": "eth:0x74a09653A083691711cF8215a6ab074BB4e99ef5"
       },
       "implementationNames": {
@@ -1168,9 +1188,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "327734858312919635716658",
+        "scaledTotalSupply": "329080881293546350938135",
         "symbol": "spWETH",
-        "totalSupply": "345060392674805571424679",
+        "totalSupply": "346496225423656749368969",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -1277,7 +1297,7 @@
         "btcUSDFeed": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "cbbtcUSDFeed": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
         "decimals": 18,
-        "latestAnswer": "999960699248920294"
+        "latestAnswer": "1000247488310593766"
       },
       "implementationNames": {
         "eth:0x64B157212C21097002920D57322B671b88DFcCBC": "CBBTCRatioOracle"
@@ -1361,6 +1381,7 @@
         "0x08201d4b2a54a588b485b5be5847f8fdd6a9e8e80ab1daa19aad864878d46d84"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["latestAnswer", "latestRoundData"],
       "sinceTimestamp": 1737112391,
       "sinceBlock": 21643839,
       "values": {
@@ -1378,13 +1399,13 @@
         "description": "RedStone Price Feed for ETH",
         "getDataFeedId": "0x4554480000000000000000000000000000000000000000000000000000000000",
         "getPriceFeedAdapter": "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
-        "latestAnswer": 231410485516,
+        "latestAnswer": 232869202750,
         "latestRound": 1,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 231410485516,
-          "startedAt": 1777066595,
-          "updatedAt": 1777066595,
+          "answer": 232869202750,
+          "startedAt": 1777180415,
+          "updatedAt": 1777180415,
           "answeredInRound": 1
         },
         "version": 1
@@ -1433,7 +1454,7 @@
         "name": "Dai Stablecoin",
         "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "DAI",
-        "totalSupply": "4408788190684181272222411903",
+        "totalSupply": "4421319896533814156361849040",
         "version": "1"
       },
       "implementationNames": {
@@ -1449,6 +1470,7 @@
         "0x4ea1e91ffebdceaa371264987e1582cc988475ffa263944b00eda86d8b745d3a"
       ],
       "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1667870087,
       "sinceBlock": 15921958,
       "values": {
@@ -1522,7 +1544,7 @@
         "supplyControl": "eth:0x31d9bDEa6F104606C954f8FE6ba614F1BD347Ec3",
         "supplyControllerDeprecated": "eth:0xE25a329d385f77df5D4eD56265babe2b99A5436e",
         "symbol": "PYUSD",
-        "totalSupply": 2442798538620542,
+        "totalSupply": 2443181171687848,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267"
       },
       "implementationNames": {
@@ -1538,13 +1560,14 @@
         "0xe2e85613eac0e53b26008392890d33188107f4b144b449344adbd8242a4fbe8c"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1741775291,
       "sinceBlock": 22030188,
       "values": {
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 247772031499,
+        "latestAnswer": 249463085481,
         "oracle": "eth:0x349A73444b1a310BAe67ef67973022020d70020d"
       },
       "implementationNames": {
@@ -1560,6 +1583,7 @@
         "0xadd497c318e0ce9fa0a4daa27b274889da04969af5a6d560a9a0524d86a9d97a"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["calculateTVLs"],
       "sinceTimestamp": 1701811283,
       "sinceBlock": 18722789,
       "values": {
@@ -1644,7 +1668,7 @@
             "57352230238543000000020",
             "55375385278226000000004"
           ],
-          "188145751427144637863574"
+          "188146916653101329176431"
         ],
         "collateralTokens": ["eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"],
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1699,9 +1723,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 98901208212927,
+        "scaledTotalSupply": 98900162299877,
         "symbol": "spPYUSD",
-        "totalSupply": 100000292184846,
+        "totalSupply": 100000297343438,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
       "fieldMeta": {
@@ -1818,10 +1842,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1232732932248837027",
+        "stEthPerToken": "1232816722623155606",
         "symbol": "wstETH",
-        "tokensPerStEth": "811205715236089743",
-        "totalSupply": "3387406234984221134587969"
+        "tokensPerStEth": "811150580333000194",
+        "totalSupply": "3374364335916597113766779"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -1877,6 +1901,24 @@
         "0xe74df23d0bc8ed5688a9b2785252e21596f9be234e752e654b507461e392394a"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "CLAIMER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "MINTER_ROLE",
+        "MINT_BURN_PAUSER_ROLE",
+        "PAUSER_ROLE",
+        "consortium",
+        "defaultAdmin",
+        "defaultAdminDelay",
+        "defaultAdminDelayIncreaseWait",
+        "mintBurnPaused",
+        "operator",
+        "pauser",
+        "pendingDefaultAdmin",
+        "pendingDefaultAdminDelay",
+        "pendingOwner",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1715936519,
       "sinceBlock": 19888667,
       "values": {
@@ -1959,7 +2001,7 @@
         "ratio": "996286358544706349",
         "symbol": "LBTC",
         "toNativeCommission": 0,
-        "totalSupply": 948609089772
+        "totalSupply": 948885241444
       },
       "implementationNames": {
         "eth:0x8236a87084f8B84306f72007F36F2618A5634494": "TransparentUpgradeableProxy",
@@ -1986,8 +2028,8 @@
         "name": "Savings Dai",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "sDAI",
-        "totalAssets": "191269386578800433386619261",
-        "totalSupply": "162807524130505632176788075",
+        "totalAssets": "191328845836600400015738339",
+        "totalSupply": "162852552848560893432621665",
         "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
         "version": "1"
       },
@@ -2118,7 +2160,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 58142,
+        "nonce": 58326,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2280,7 +2322,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
         "scaledTotalSupply": "10261152998884701414454",
         "symbol": "sprETH",
-        "totalSupply": "10265886352492395380492",
+        "totalSupply": "10265886356608826023032",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -2379,7 +2421,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54803445597898191",
+        "totalSupply": "54799766070339818",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2402,6 +2444,10 @@
         "0xef8354ab3df92ff01de082725a5aa3f25cf09755ae9fffa4438c9a72c26c5fb8"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getCurrentPeriodStartTime",
+        "getNextDailyLimitResetTimestamp"
+      ],
       "sinceTimestamp": 1702241207,
       "sinceBlock": 18758282,
       "values": {
@@ -2433,8 +2479,8 @@
         "currentPeriodMintedAmount": "23331066420172231023",
         "custodyAddress": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
         "decimals": 18,
-        "getCurrentPeriodStartTime": 1777075200,
-        "getNextDailyLimitResetTimestamp": 1777161600,
+        "getCurrentPeriodStartTime": 1777161600,
+        "getNextDailyLimitResetTimestamp": 1777248000,
         "lrtConfig": "eth:0x947Cb49334e6571ccBFEF1f1f1178d8469D65ec7",
         "maxMintAmountPerDay": "300000000000000000000000",
         "name": "rsETH",
@@ -2458,6 +2504,7 @@
         "0x00fd427da0c7c9f62e15790e221ba65308f4bb106e3d4b1ccee93ac6c598afac"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["chi", "rho", "totalAssets", "totalSupply"],
       "sinceTimestamp": 1725455483,
       "sinceBlock": 20677434,
       "values": {
@@ -2472,17 +2519,17 @@
         ],
         "$upgradeCount": 1,
         "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chi": "1094382462843599408133266250",
+        "chi": "1094488941161134486448366337",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x8b772c141b7d822c799262c0fa58f5b6b522910e811414d0cf217f27294bbbf8",
         "getImplementation": "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0",
         "name": "Savings USDS",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "rho": 1777104587,
+        "rho": 1777190171,
         "ssr": "1000000001136785036595443334",
         "symbol": "sUSDS",
-        "totalAssets": "5302169431568684297263247482",
-        "totalSupply": "4844895271059192471744319713",
+        "totalAssets": "5377645359117209205252388920",
+        "totalSupply": "4913375847683260001746726464",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "usds": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "usdsJoin": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
@@ -2523,9 +2570,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 338823507478,
+        "scaledTotalSupply": 340550393659,
         "symbol": "spLBTC",
-        "totalSupply": 338823507478,
+        "totalSupply": 340550393659,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8236a87084f8B84306f72007F36F2618A5634494"
       },
       "fieldMeta": {
@@ -2547,6 +2594,7 @@
         "0x793a64dac893cb991b16b2fac0a99961bc7cc58589c76a752186e732856d7446"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["latestAnswer", "latestRoundData"],
       "sinceTimestamp": 1737112619,
       "sinceBlock": 21643857,
       "values": {
@@ -2564,13 +2612,13 @@
         "description": "RedStone Price Feed for BTC",
         "getDataFeedId": "0x4254430000000000000000000000000000000000000000000000000000000000",
         "getPriceFeedAdapter": "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
-        "latestAnswer": 7769990114790,
+        "latestAnswer": 7810113254875,
         "latestRound": 1,
         "latestRoundData": {
           "roundId": 1,
-          "answer": 7769990114790,
-          "startedAt": 1777086371,
-          "updatedAt": 1777086371,
+          "answer": 7810113254875,
+          "startedAt": 1777180415,
+          "updatedAt": 1777180415,
           "answeredInRound": 1
         },
         "version": 1
@@ -2588,17 +2636,23 @@
         "0x3abd0076b3c015fb6e0288c4b962b0d8f5b529971dccac72ead20921ae9279b2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "getCollateralRate",
+        "getExchangeRate",
+        "getTotalCollateral",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1632980684,
       "sinceBlock": 13325304,
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "getCollateralRate": "9637435225663437",
-        "getExchangeRate": "1162132137419465677",
-        "getTotalCollateral": "3749506018488684561400",
+        "getCollateralRate": "9498692810864130",
+        "getExchangeRate": "1162201185806249013",
+        "getTotalCollateral": "3699927641808635022030",
         "name": "Rocket Pool ETH",
         "symbol": "rETH",
-        "totalSupply": "334778124214101993776795",
+        "totalSupply": "335156829795384048376885",
         "version": 1
       },
       "implementationNames": {
@@ -2700,9 +2754,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 242771494111,
+        "scaledTotalSupply": 245465929919,
         "symbol": "spcbBTC",
-        "totalSupply": 242811290615,
+        "totalSupply": 245506178109,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
       "fieldMeta": {
@@ -2723,13 +2777,14 @@
         "0x77853d2f7a5d00666e6732cf05182d87f26b0009b5e222200d16ea62bde47ca3"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1738093331,
       "sinceBlock": 21725181,
       "values": {
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 253283602048,
+        "latestAnswer": 255028015789,
         "weeth": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "implementationNames": {
@@ -2785,6 +2840,7 @@
         "0xa8e9f180ef81d5b199440aa49bc0e39c74dd551d29934400210f55f5ec3c10f6"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1701811163,
       "sinceBlock": 18722779,
       "values": {
@@ -2842,7 +2898,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1826848628026825522120954"
+        "totalSupply": "1825282145549849108712939"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2876,9 +2932,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": "203720029071472653169548712",
+        "scaledTotalSupply": "171616895131296851418640604",
         "symbol": "spUSDS",
-        "totalSupply": "210283140498818342974360367",
+        "totalSupply": "177157900714514050112327330",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "fieldMeta": {
@@ -2995,6 +3051,7 @@
         "0x11a20425a99e50b61ba8470548b4f5f028df884961288990f908a911b4c045ab"
       ],
       "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1724165531,
       "sinceBlock": 20570548,
       "values": {
@@ -3037,6 +3094,7 @@
         "0xa60e51e0bc8885db84dc7c6232cc588bd546d5ad25e35334d2b4a61b87f22d1b"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["getRate", "totalSupply"],
       "sinceTimestamp": 1689005159,
       "sinceBlock": 17664336,
       "values": {
@@ -3069,13 +3127,13 @@
         "DOMAIN_SEPARATOR": "0xe481930428c599d86cf3522b2e43b0e3006041a472f66cb41fa924ac01d3a22b",
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getImplementation": "eth:0x2d10683E941275D502173053927AD6066e6aFd6B",
-        "getRate": "1093403333730093782",
+        "getRate": "1093470834502099822",
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "name": "Wrapped eETH",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "weETH",
-        "totalSupply": "2102169111317115039946488",
+        "totalSupply": "2081942488691937272386352",
         "WEETH_OPERATING_ADMIN_ROLE": "0xfeab26ff201be143cb96161bb5c9224b5761f7085c44d6677299b1cfc2153cd7"
       },
       "implementationNames": {
@@ -3113,7 +3171,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
         "scaledTotalSupply": "22525781966487245054",
         "symbol": "sptBTC",
-        "totalSupply": "22530670282064141102",
+        "totalSupply": "22530670282064141328",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
       "fieldMeta": {
@@ -3145,7 +3203,7 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "latestAnswer": "999848507990480835",
+        "latestAnswer": "999891801422966129",
         "reth": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
         "rethETHFeed": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"
       },
@@ -3211,6 +3269,7 @@
         "0x19ff7ee5145c2818dcae024f3bf78a4ae1900c509ac5b50e25be8234f0ccc7d3"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["_totalSupply", "totalSupply"],
       "sinceTimestamp": 1511829681,
       "sinceBlock": 4634748,
       "values": {
@@ -3242,6 +3301,7 @@
         "0x3511bc489974e8a833d7590187eaab4f8835886bdcb8fff1ea63b7b4caaab165"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1725290327,
       "sinceBlock": 20663730,
       "values": {
@@ -3261,7 +3321,7 @@
         "name": "USDS Stablecoin",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "USDS",
-        "totalSupply": "7948785609423086325763633491",
+        "totalSupply": "7932276326740542355721230619",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
@@ -3298,9 +3358,9 @@
         "POOL": "eth:0xC13e21B648A5Ee794902342038FF3aDAB66BE987",
         "proxyAdmin": "eth:0x542DBa469bdE58FAeE189ffB60C6b49CE60E0738",
         "RESERVE_TREASURY_ADDRESS": "eth:0xb137E7d16564c81ae2b0C8ee6B55De81dd46ECe5",
-        "scaledTotalSupply": 720263759874820,
+        "scaledTotalSupply": 754776418309869,
         "symbol": "spUSDT",
-        "totalSupply": 828272912712586,
+        "totalSupply": 868025345706612,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
       "fieldMeta": {
@@ -3321,13 +3381,14 @@
         "0xd72ac73804bd9fd765b872261286f9bc3be95685a9d3888f392618b84d3d6e0d"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1738091531,
       "sinceBlock": 21725031,
       "values": {
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 285558885556,
+        "latestAnswer": 287527378583,
         "steth": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "implementationNames": {
@@ -3563,13 +3624,14 @@
         "0xef49492dcc3c1afa8c40cf112e418e9f4e3af5fa9b30e41e072a4e3b06e3ac36"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["latestAnswer"],
       "sinceTimestamp": 1738094651,
       "sinceBlock": 21725290,
       "values": {
         "$immutable": true,
         "decimals": 8,
         "ethSource": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-        "latestAnswer": 269204423236,
+        "latestAnswer": 271057858163,
         "reth": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "implementationNames": {
@@ -6313,6 +6375,6 @@
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24955734 },
+  "usedBlockNumbers": { "ethereum": 24962970 },
   "permissionsConfigHash": "0xa732fcf2f5e09aead8cfd23d83c5efafba9832a116d64bb8b1e84a96e6aa56c9"
 }
