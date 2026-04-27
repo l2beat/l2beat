@@ -55,6 +55,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   wc: 'worldchain',
   'hype-evm': 'hyperevm',
   megaeth: 'megaeth',
+  coti: 'coti',
   polygon: 'polygon',
   tempo: 'tempo',
   mon: 'monad',

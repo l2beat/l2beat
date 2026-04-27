@@ -16543,6 +16543,19 @@
       }
     },
     {
+      "name": "COTI Token",
+      "coingeckoId": "coti",
+      "symbol": "COTI",
+      "decimals": 18,
+      "deploymentTimestamp": 1742665129,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2962/large/Coti.png?1696503705",
+      "chainId": 2632500,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Wrapped USDe",
       "coingeckoId": "ethena-usde",
       "address": "0xB6fC4B1BFF391e5F6b4a3D2C7Bda1FeE3524692D",

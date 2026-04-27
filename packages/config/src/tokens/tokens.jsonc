@@ -225,6 +225,16 @@
       "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae"
     },
     {
+      "symbol": "gCOTI",
+      "address": "0xAf2CA40d3fc4459436D11B94d21FA4b8A89fB51d",
+      "coingeckoId": "coti-governance-token"
+    },
+    {
+      "symbol": "KING",
+      "address": "0x8F08B70456eb22f6109F57b8fafE862ED28E6040",
+      "coingeckoId": "lrt-squared"
+    },
+    {
       "symbol": "BADGER",
       "address": "0x3472a5a71965499acd81997a54bba8d852c6e53d"
     },
@@ -7933,6 +7943,112 @@
       "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
       "source": "native",
       "supply": "circulatingSupply"
+    }
+  ],
+  "coti": [
+    {
+      "symbol": "COTI",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "gCOTI",
+      "address": "0x7637C7838EC4Ec6b85080F28A678F8E234bB83D1",
+      "coingeckoId": "coti-governance-token",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0xf1Feebc4376c68B7003450ae66343Ae59AB37D3C",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (USDC)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "wETH",
+      "address": "0x639aCc80569c5FC83c6FBf2319A6Cc38bBfe26d1",
+      "category": "ether",
+      "coingeckoId": "ethereum",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (ETH)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x8C39B1fD0e6260fdf20652Fc436d25026832bfEA",
+      "category": "btc",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (WBTC)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "wADA",
+      "address": "0xe757Ca19d2c237AA52eBb1d2E8E4368eeA3eb331",
+      "coingeckoId": "cardano",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "ChainPort"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xfA6f73446b17A97a56e464256DA54AD43c2Cbc3E",
+      "category": "stablecoin",
+      "coingeckoId": "tether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "ChainPort"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "KING",
+      "address": "0x5CF4ce6Be17CaB6d86d724804e2f1f5040205594",
+      "coingeckoId": "lrt-squared",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (KING)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     }
   ],
   "superseed": [
