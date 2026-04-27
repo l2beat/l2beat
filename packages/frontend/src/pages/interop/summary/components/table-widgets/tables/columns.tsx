@@ -1,6 +1,7 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { EM_DASH } from '~/consts/characters'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
@@ -12,7 +13,6 @@ import type {
   NonMintingProtocolEntry,
 } from './getBridgeTypeEntries'
 import { InteropNameCell } from './InteropNameCell'
-import { EM_DASH } from '~/consts/characters'
 
 export type NonMintingProtocolRow = NonMintingProtocolEntry & BasicTableRow
 export type LockAndMintProtocolRow = LockAndMintProtocolEntry & BasicTableRow
