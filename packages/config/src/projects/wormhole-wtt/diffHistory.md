@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xc70895ee91eb87b5f43011f900b087c157eee9c6
+
+# Diff at Mon, 27 Apr 2026 13:11:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@23516f1986cca2ffc7aee54a5c9a070db7813fa2 block: 1775637905
+- current timestamp: 1777295406
+
+## Description
+
+config: import templates from wormhole disco.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775637905 (main branch discovery), not current.
+
+```diff
+    contract TokenImplementation (eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: Wormhole wrapped ERC20 token implementation used directly or behind Beacon proxies. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.
+      template:
++        "wormhole/BridgeToken"
+      description:
++        "Wormhole wrapped ERC20 token implementation used directly or behind Beacon proxies. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs."
+    }
+```
+
+```diff
+    contract TokenBridge (eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: Wormhole Token Bridge escrow and wrapped-token beacon on EVM chains. It accepts VAAs verified by Wormhole Core to mint, burn, release, register remote bridge emitters, and upgrade bridge logic.
+      template:
++        "wormhole/TokenBridge"
+      description:
++        "Wormhole Token Bridge escrow and wrapped-token beacon on EVM chains. It accepts VAAs verified by Wormhole Core to mint, burn, release, register remote bridge emitters, and upgrade bridge logic."
+    }
+```
+
+```diff
+    contract WormholeCore (eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: Wormhole Core Bridge verifies VAAs signed by the active Guardian set and executes Guardian governance messages for the local Wormhole deployment.
+      template:
++        "wormhole/WormholeCore"
+      description:
++        "Wormhole Core Bridge verifies VAAs signed by the active Guardian set and executes Guardian governance messages for the local Wormhole deployment."
+    }
+```
+
 Generated with discovered.json: 0xf82487c058caf69d01a259ff19dfa9e5609f02fe
 
 # Diff at Wed, 08 Apr 2026 08:46:17 GMT:
