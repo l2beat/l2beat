@@ -86,8 +86,9 @@ function main() {
       // op1.js is loaded dynamically (not via customJs) because swagger-ui-express renders
       // customJs before customJsStr without defer/async — that order would run op1.js
       // before the proxy stub exists, so queued init() calls would be lost.
-      ...(config.analytics && {
-        customJsStr: `
+      ...(config.analytics &&
+        config.analytics.clientId && {
+          customJsStr: `
           window.op = window.op || function () { var n = []; return new Proxy(function () { arguments.length && n.push([].slice.call(arguments)) }, { get: function (t, r) { return "q" === r ? n : function () { n.push([r].concat([].slice.call(arguments))) } }, has: function (t, r) { return "q" === r } }) }();
           window.op('init', {
             clientId: '${config.analytics.clientId}',
@@ -102,7 +103,7 @@ function main() {
           s.async = true;
           document.head.appendChild(s);
         `,
-      }),
+        }),
       swaggerOptions: {
         url: '/openapi',
       },

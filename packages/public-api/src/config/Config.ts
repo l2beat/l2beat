@@ -30,5 +30,5 @@ export interface OpenApiConfig {
 }
 
 export interface AnalyticsConfig {
-  clientId: string
+  clientId?: string
 }

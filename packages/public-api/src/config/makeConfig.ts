@@ -48,7 +48,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
     analytics: options.isLocal
       ? false
       : {
-          clientId: env.string('OPENPANEL_CLIENT_ID'),
+          clientId: env.optionalString('OPENPANEL_CLIENT_ID'),
         },
     cacheEnabled:
       (env.optionalString('DEPLOYMENT_ENV') === 'production' ||
