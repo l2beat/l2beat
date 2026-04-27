@@ -127,8 +127,8 @@ export function getProtocolEntries(
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
       netMintedValue:
-        data.mintedValueUsd !== undefined || data.burnedValueUsd !== undefined
-          ? (data.mintedValueUsd ?? 0) - (data.burnedValueUsd ?? 0)
+        data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
+          ? data.mintedValueUsd - data.burnedValueUsd
           : undefined,
       snapshotTimestamp,
     })
