@@ -4,9 +4,10 @@ import { TopTokenWidget } from '../../components/widgets/TopTokenWidget'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TopToken({ id }: { id: ProjectId }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { allChainIds } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    from: allChainIds,
+    to: allChainIds,
     id,
   })
   return (

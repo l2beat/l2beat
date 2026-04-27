@@ -12,7 +12,6 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
-import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TopTokensCell } from '../tokens/TopTokensCell'
@@ -64,7 +63,7 @@ function getCommonColumns(getProtocolHref?: (slug: string) => string) {
           </TwoRowCell>
         )
 
-        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+        return (
           <TableLink
             href={
               getProtocolHref?.(ctx.row.original.slug) ??
@@ -73,8 +72,6 @@ function getCommonColumns(getProtocolHref?: (slug: string) => string) {
           >
             {nameCell}
           </TableLink>
-        ) : (
-          nameCell
         )
       },
       meta: {

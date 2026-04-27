@@ -10,7 +10,6 @@ import type { Manifest } from '~/utils/Manifest'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
-import { toInteropApiSelection } from '../utils/toInteropApiSelection'
 import type { InteropMode } from '../utils/types'
 
 export async function getInteropProtocolPageData(
@@ -26,7 +25,6 @@ export async function getInteropProtocolPageData(
     interopChainsIds,
     mode,
   })
-  const apiSelection = toInteropApiSelection(initialSelection, mode)
 
   const project = await ps.getProject({
     slug: req.params.slug,
@@ -45,12 +43,11 @@ export async function getInteropProtocolPageData(
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getInteropProtocolEntry(project),
-    apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.protocol.prefetch({
-          ...apiSelection,
-          id: project.id,
-        })
-      : undefined,
+    helpers.interop.protocol.prefetch({
+      from: interopChainsIds,
+      to: interopChainsIds,
+      id: project.id,
+    }),
   ])
   return {
     head: {
@@ -73,7 +70,6 @@ export async function getInteropProtocolPageData(
         interopChains: interopChainsWithIcons.filter(
           (chain) => !chain.isUpcoming,
         ),
-        onboardingInteropChains: interopChainsWithIcons,
         initialSelection,
       },
     },

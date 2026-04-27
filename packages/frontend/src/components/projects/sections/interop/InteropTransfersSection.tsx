@@ -31,10 +31,11 @@ export function InteropTransfersSection({
   projectId,
   ...sectionProps
 }: InteropTransfersSectionProps) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { allChainIds } = useInteropSelectedChains()
   const { data: protocolData, isLoading: isProtocolLoading } =
     api.interop.protocol.useQuery({
-      ...selectionForApi,
+      from: allChainIds,
+      to: allChainIds,
       id: projectId,
     })
   const entry = protocolData?.entry
@@ -50,7 +51,8 @@ export function InteropTransfersSection({
     isFetchingNextPage,
   } = api.interop.transfers.useInfiniteQuery(
     {
-      ...selectionForApi,
+      from: allChainIds,
+      to: allChainIds,
       id: projectId,
       type: resolvedType,
       expectedTransferCount: totalCount,

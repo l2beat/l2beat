@@ -7,8 +7,10 @@ import { SingleChainStats } from './SingleChainStats'
 
 export function FlowsSelectedPathPanel({
   visibleHighlightedChains,
+  showDetailsButton = true,
 }: {
   visibleHighlightedChains: string[]
+  showDetailsButton?: boolean
 }) {
   const { allChains, selectedChains } = useInteropFlows()
   const chainA = allChains.find((c) => c.id === visibleHighlightedChains[0])
@@ -53,7 +55,7 @@ export function FlowsSelectedPathPanel({
           />
         )}
       </div>
-      {visibleHighlightedChains.length === 2 && chainB && (
+      {showDetailsButton && visibleHighlightedChains.length === 2 && chainB && (
         <a href={detailsUrl}>
           <Button variant="fill" className="mt-5 w-full">
             View path details

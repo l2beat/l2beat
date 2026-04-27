@@ -35,10 +35,11 @@ export function InteropTokensSection({
   projectId,
   ...sectionProps
 }: InteropTokensSectionProps) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { allChainIds } = useInteropSelectedChains()
   const { data: protocolData, isLoading: isProtocolLoading } =
     api.interop.protocol.useQuery({
-      ...selectionForApi,
+      from: allChainIds,
+      to: allChainIds,
       id: projectId,
     })
 
@@ -49,7 +50,8 @@ export function InteropTokensSection({
 
   const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
     {
-      ...selectionForApi,
+      from: allChainIds,
+      to: allChainIds,
       id: projectId,
       type: resolvedType,
     },

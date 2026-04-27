@@ -26,9 +26,10 @@ export function InteropProtocolSummary({
 }: {
   protocol: InteropProtocolEntry
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
+  const { allChainIds } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    from: allChainIds,
+    to: allChainIds,
     id: protocol.id,
   })
 

@@ -1,6 +1,5 @@
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
-import { env } from '~/env'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 
@@ -36,11 +35,9 @@ export function InteropNameCell({
     </TwoRowCell>
   )
 
-  return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+  return (
     <TableLink href={buildUrl(`/interop/protocols/${slug}`)}>
       {nameCell}
     </TableLink>
-  ) : (
-    nameCell
   )
 }
