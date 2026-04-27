@@ -200,7 +200,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between gap-x-6">
           <span className="font-medium text-label-value-14">
-            Total transfers
+            Total identified transfers
           </span>
           <span className="font-medium text-label-value-15 text-primary tabular-nums">
             {formatInteger(totalTransfers)} transfers
