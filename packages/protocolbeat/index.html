@@ -27,6 +27,17 @@
   <meta name="twitter:image:height" content="630">
 
   <link rel="stylesheet" href="/src/index.css" />
+  <script>
+    window.op = window.op || function () { var n = []; return new Proxy(function () { arguments.length && n.push([].slice.call(arguments)) }, { get: function (_t, r) { return "q" === r ? n : function () { n.push([r].concat([].slice.call(arguments))) } }, has: function (_t, r) { return "q" === r } }) }();
+    window.op('init', {
+      clientId: '%VITE_OPENPANEL_CLIENT_ID%',
+      trackScreenViews: true,
+      trackOutgoingLinks: true,
+      trackAttributes: true,
+      apiUrl: 'https://opapi.l2beat.com',
+    });
+  </script>
+  <script src="https://analytics.l2beat.com/op1.js" defer async></script>
 </head>
 
 <body class="h-full w-full bg-coffee-800 text-coffee-200">
