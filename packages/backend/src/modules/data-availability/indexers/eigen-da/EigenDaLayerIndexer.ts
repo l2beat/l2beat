@@ -32,7 +32,6 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
         name: 'eigenda_layer_indexer',
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )

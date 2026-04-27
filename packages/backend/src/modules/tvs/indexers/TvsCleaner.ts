@@ -27,7 +27,6 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
         ...managedOptions,
         name: INDEXER_NAMES.TVS_CLEANER,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        dataWipingAfterDeleteDisabled: true,
       },
       logger,
     )

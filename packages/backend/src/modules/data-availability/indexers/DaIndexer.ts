@@ -37,7 +37,6 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         name: INDEXER_NAMES.DA2,
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )

@@ -411,7 +411,6 @@ function mockIndexer($: {
       parents: [],
       indexerService,
       db,
-      dataWipingAfterDeleteDisabled: false,
     },
     Logger.SILENT,
   )

@@ -31,7 +31,6 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
         name: 'eigenda_projects_indexer',
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        dataWipingAfterDeleteDisabled: false,
       },
       logger,
     )

@@ -92,12 +92,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
           )
         }
 
-        if (diff.toTrimDataAfterUpdate.length > 0) {
-          await this.trimData(diff.toTrimDataAfterUpdate)
-        }
-
-        if (diff.toWipeDataAfterUpdate.length > 0) {
-          await this.wipeData(diff.toWipeDataAfterUpdate)
+        if (diff.toTrimData.length > 0) {
+          await this.trimData(diff.toTrimData)
         }
 
         if (diff.toDelete.length > 0) {
@@ -107,10 +103,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
           )
         }
 
-        if (!this.options.dataWipingAfterDeleteDisabled) {
-          if (diff.toWipeDataAfterDelete.length > 0) {
-            await this.wipeData(diff.toWipeDataAfterDelete)
-          }
+        if (diff.toWipeData.length > 0) {
+          await this.wipeData(diff.toWipeData)
         }
       })
       .then(() => {
@@ -239,27 +233,21 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         configurations: diff.toUpdate.length,
       })
     }
-    if (diff.toTrimDataAfterUpdate.length > 0) {
+    if (diff.toTrimData.length > 0) {
       this.logger.info('Trimmed data after update', {
-        configurations: diff.toTrimDataAfterUpdate.length,
+        configurations: diff.toTrimData.length,
       })
     }
-    if (diff.toWipeDataAfterUpdate.length > 0) {
-      this.logger.info('Wiped data after update', {
-        configurations: diff.toWipeDataAfterUpdate.length,
-      })
-    }
+
     if (diff.toDelete.length > 0) {
       this.logger.info('Deleted configurations', {
         configurations: diff.toDelete.length,
       })
     }
-    if (!this.options.dataWipingAfterDeleteDisabled) {
-      if (diff.toWipeDataAfterDelete.length > 0) {
-        this.logger.info('Wiped data after delete', {
-          configurations: diff.toWipeDataAfterDelete.length,
-        })
-      }
+    if (diff.toWipeData.length > 0) {
+      this.logger.info('Wiped data after delete', {
+        configurations: diff.toWipeData.length,
+      })
     }
   }
 }

@@ -50,8 +50,4 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   // Optionals
   tags?: IndexerTags
   updateRetryStrategy?: RetryStrategy
-  /** Some indexers do not include configurationId in the data table
-      which makes it impossible to remove data of removed configuration
-  */
-  dataWipingAfterDeleteDisabled?: boolean
 }

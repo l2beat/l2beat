@@ -117,13 +117,12 @@ describe(ManagedMultiIndexer.name, () => {
           saved('b', 100, 1000, 1000, 'props'),
           saved('c', 100, 1000, 1000, 'props'),
         ],
-        toTrimDataAfterUpdate: [
+        toTrimData: [
           trimRemovalWithId('b', 50, 99),
           trimRemovalWithId('b', 1001, 1500),
         ],
-        toWipeDataAfterUpdate: [wipeRemovalWithId('c')],
         toDelete: ['d'],
-        toWipeDataAfterDelete: [wipeRemovalWithId('d')],
+        toWipeData: [wipeRemovalWithId('c'), wipeRemovalWithId('d')],
       })
 
       expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
@@ -147,10 +146,8 @@ describe(ManagedMultiIndexer.name, () => {
         trimRemovalWithId('b', 50, 99),
         trimRemovalWithId('b', 1001, 1500),
       ])
-      expect(indexer.wipeData).toHaveBeenNthCalledWith(1, [
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
         wipeRemovalWithId('c'),
-      ])
-      expect(indexer.wipeData).toHaveBeenNthCalledWith(2, [
         wipeRemovalWithId('d'),
       ])
 
