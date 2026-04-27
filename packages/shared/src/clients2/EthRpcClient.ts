@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
 import type { Http } from './Http'
 
 export type BlockParameter =
@@ -34,6 +35,7 @@ export class EthRpcClient {
     private metricsLabel: string,
     private nextId: () => string | number = randomId,
     private timeout?: number,
+    private readonly rpcMetrics?: RpcMetricsRecorder,
   ) {}
 
   async getChainId(): Promise<bigint> {
@@ -216,41 +218,48 @@ export class EthRpcClient {
 
   async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
-    const response = await this.http.fetch(this.url, {
-      metricsLabel: this.metricsLabel,
-      method: 'POST',
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id,
-        method,
-        params,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-      timeout: this.timeout,
-    })
-    let data: unknown
-    let jsonSuccess = true
+
     try {
-      data = JSON.parse(response.body)
-    } catch {
-      jsonSuccess = false
+      const response = await this.http.fetch(this.url, {
+        metricsLabel: this.metricsLabel,
+        method: 'POST',
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id,
+          method,
+          params,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        timeout: this.timeout,
+      })
+      let data: unknown
+      let jsonSuccess = true
+      try {
+        data = JSON.parse(response.body)
+      } catch {
+        jsonSuccess = false
+      }
+      const parsed = JsonRpcResponse.safeValidate(data)
+      if (!jsonSuccess || !parsed.success) {
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
+      }
+      const envelope = parsed.data
+      if ('error' in envelope) {
+        throw new Error(
+          `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+        )
+      }
+      if (envelope.id !== id) {
+        throw new Error('RPC call failed. ID mismatch.')
+      }
+      return envelope.result
+    } finally {
+      this.rpcMetrics?.record({
+        method,
+      })
     }
-    const parsed = JsonRpcResponse.safeValidate(data)
-    if (!jsonSuccess || !parsed.success) {
-      throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-      )
-    }
-    const envelope = parsed.data
-    if ('error' in envelope) {
-      throw new Error(
-        `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
-      )
-    }
-    if (envelope.id !== id) {
-      throw new Error('RPC call failed. ID mismatch.')
-    }
-    return envelope.result
   }
 }
 

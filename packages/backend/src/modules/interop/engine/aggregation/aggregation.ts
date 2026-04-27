@@ -142,10 +142,12 @@ export function getAggregatedTransfer(
 
     if (options?.calculateNetMinted) {
       if (transfer.srcWasBurned === false && transfer.dstWasMinted) {
-        mintedValueUsd += transfer.dstValueUsd ?? transfer.srcValueUsd ?? 0
+        const value = transfer.dstValueUsd ?? transfer.srcValueUsd
+        mintedValueUsd = value ? mintedValueUsd + value : mintedValueUsd
       }
       if (transfer.srcWasBurned && transfer.dstWasMinted === false) {
-        burnedValueUsd += transfer.srcValueUsd ?? transfer.dstValueUsd ?? 0
+        const value = transfer.srcValueUsd ?? transfer.dstValueUsd
+        burnedValueUsd = value ? burnedValueUsd + value : burnedValueUsd
       }
     }
   }

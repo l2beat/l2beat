@@ -608,6 +608,46 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
   `,
   },
+  '0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8/programs/aggregation',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) repo:  \`git checkout v2.2.0-beta.8\` . Commit hash should be  \`8542b244fac50b3db2cb027c6282b9f42fd81af9\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
+  '0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) repo:  \`git checkout v2.2.0-beta.8\` . Commit hash should be  \`8542b244fac50b3db2cb027c6282b9f42fd81af9\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1turbo'),
@@ -710,6 +750,11 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
     `,
   },
+  '0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1'),
@@ -746,6 +791,11 @@ Verify:
     `,
   },
   '0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
+  '0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     proverSystemProject: ProjectId('sp1'),
     verificationStatus: 'notVerified',

@@ -44,6 +44,7 @@ export function createAggregatedAnomalyColumns(options: {
           <span className="text-muted-foreground text-xs">Open charts</span>
         </div>
       ),
+      enableSorting: false,
       meta: {
         csvHeader: 'Transfer ID',
       },

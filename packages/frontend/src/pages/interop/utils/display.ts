@@ -14,6 +14,11 @@ export const TRANSFER_TYPE_DISPLAY = {
     description:
       'Includes protocols with transfers where the original assets are locked in a vault on one chain and a 1:1 representation is created on the other. One-sided risk. If user bridges back, the original tokens are unlocked and the bridge risk is removed.',
   },
+  unknown: {
+    label: 'Unknown',
+    description:
+      'Includes protocols with transfers where the bridge type is not known.',
+  },
 }
 
 export const INTEROP_TYPE_TO_BG_COLOR: Record<
@@ -23,4 +28,5 @@ export const INTEROP_TYPE_TO_BG_COLOR: Record<
   lockAndMint: 'bg-lock-and-mint',
   burnAndMint: 'bg-burn-and-mint',
   nonMinting: 'bg-non-minting',
+  unknown: 'bg-gray-550 dark:bg-gray-650',
 }

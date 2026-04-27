@@ -27,10 +27,6 @@ export function TopTokensCell({
   const utils = api.useUtils()
   const { selectionForApi } = useInteropSelectedChains()
 
-  const resolvedType =
-    type ??
-    (protocol.bridgeTypes?.length === 1 ? protocol.bridgeTypes[0] : undefined)
-
   return (
     <>
       <InteropTopItems
@@ -45,7 +41,7 @@ export function TopTokensCell({
           utils.interop.tokens.prefetch({
             ...selectionForApi,
             id: protocol.id,
-            type: resolvedType,
+            type,
           })
         }
         type="cell"
@@ -53,7 +49,7 @@ export function TopTokensCell({
       />
       <TokensDialog
         id={protocol.id}
-        type={resolvedType}
+        type={type}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title={

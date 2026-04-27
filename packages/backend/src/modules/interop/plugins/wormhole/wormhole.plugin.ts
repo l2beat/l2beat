@@ -1,15 +1,11 @@
-import {
-  Address32,
-  assert,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findParsedAfter, findTransferLogBefore } from '../logScan'
+import { isMayanSwiftSettlementSender } from '../mayan-shared'
+import { isMayanSwiftSettlementPayload } from '../mayan-swift.utils'
 import {
   findMayanCircleDestinationChain,
   isMayanCircleSender,
-  isMayanSwiftSender,
   MAYAN_FORWARDER_TX_EVENT_SIGNATURES,
 } from '../mayan-wormhole'
 import {
@@ -20,7 +16,7 @@ import {
   type LogToCapture,
 } from '../types'
 import { FOLKS_CHAIN_ID_TO_CHAIN } from './folks-finance'
-import { WormholeConfig } from './wormhole.config'
+import { getWormholeCoreAddresses, WormholeConfig } from './wormhole.config'
 
 const logMessagePublishedLog =
   'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
@@ -55,17 +51,7 @@ export class WormholePlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(WormholeConfig) ?? []
-    const coreContractAddresses: ChainSpecificAddress[] = []
-    for (const network of networks) {
-      if (!network.coreContract) continue
-      try {
-        coreContractAddresses.push(
-          ChainSpecificAddress.fromLong(network.chain, network.coreContract),
-        )
-      } catch {
-        // Chain not supported by ChainSpecificAddress, skip
-      }
-    }
+    const coreContractAddresses = getWormholeCoreAddresses(networks)
 
     return [
       {
@@ -102,11 +88,12 @@ export class WormholePlugin implements InteropPluginResyncable {
 
     const senderAddress = EthereumAddress(parsed.sender)
 
-    // Skip Mayan Swift settlement messages - they are handled by mayan-swift.ts and
-    // mayan-swift-settlement.ts which create SettlementSent events with extracted order keys
-    // for matching with OrderUnlocked. If we captured them here as LogMessagePublished,
-    // they would remain unmatched since the settlement matching uses SettlementSent.
-    if (isMayanSwiftSender(senderAddress)) {
+    // Mayan Swift settlement messages are handled by mayan-swift.ts and
+    // mayan-swift-settlement.ts, which extract order keys for OrderUnlocked matching.
+    if (
+      isMayanSwiftSettlementSender(senderAddress) &&
+      isMayanSwiftSettlementPayload(parsed.payload)
+    ) {
       return
     }
 
@@ -116,19 +103,15 @@ export class WormholePlugin implements InteropPluginResyncable {
     // never matchable, so we skip them.
     if (isMayanCircleSender(senderAddress)) {
       const $dstChain = findMayanCircleDestinationChain(input.txLogs, networks)
-      if ($dstChain) {
-        return [
-          LogMessagePublished.create(input, {
-            payload: parsed.payload,
-            sequence: parsed.sequence,
-            wormholeChainId: network.wormholeChainId,
-            sender: senderAddress,
-            $dstChain,
-          }),
-        ]
-      }
-      // No forwarder event found — destination-side confirmation, skip capture
-      return
+      return [
+        LogMessagePublished.create(input, {
+          payload: parsed.payload,
+          sequence: parsed.sequence,
+          wormholeChainId: network.wormholeChainId,
+          sender: senderAddress,
+          $dstChain,
+        }),
+      ]
     }
 
     const logIndex = input.log.logIndex

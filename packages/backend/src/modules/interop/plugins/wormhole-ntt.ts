@@ -486,6 +486,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         srcTokenAddress,
         srcAmount,
         srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
+        bridgeType: 'burnAndMint',
         extraEvents: [logMessagePublished],
       }),
     ]
@@ -512,6 +513,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
         dstTokenAddress: received.args.transferTokenAddress,
         dstAmount: received.args.transferAmount,
         dstWasMinted: received.args.dstWasMinted,
+        bridgeType: 'burnAndMint',
         extraEvents,
       }),
     ]

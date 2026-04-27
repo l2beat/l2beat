@@ -4,6 +4,7 @@ import type {
   InteropPluginSyncedRangeRecord,
   InteropPluginSyncStateRecord,
 } from '@l2beat/database'
+import { RpcMetricsAggregator } from '@l2beat/shared'
 import {
   type Block,
   type Log,
@@ -42,6 +43,7 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
+            mockAggregator(),
           ),
       ).toThrow(/mix of non- and resyncable plugins/)
     })
@@ -68,6 +70,7 @@ describe(InteropSyncersManager.name, () => {
           mockStore(),
           mockDb(),
           Logger.SILENT,
+          mockAggregator(),
         )
 
         manager.start()
@@ -91,6 +94,7 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
+            mockAggregator(),
           ),
       ).toThrow('Missing configuration for chain ethereum')
     })
@@ -105,6 +109,7 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
+            mockAggregator(),
           ),
       ).toThrow('Missing RPC config for chain ethereum')
     })
@@ -416,7 +421,12 @@ function makeManager(params: {
     mockStore(),
     params.db ?? mockDb(),
     Logger.SILENT,
+    mockAggregator(),
   )
+}
+
+function mockAggregator(): RpcMetricsAggregator {
+  return new RpcMetricsAggregator({ logger: Logger.SILENT })
 }
 
 function makeCluster(name: string): PluginCluster {

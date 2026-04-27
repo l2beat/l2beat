@@ -31,6 +31,7 @@ import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesInde
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropNotifier } from './notifications/InteropNotifier'
+import { instrumentInteropRpcMetricsRun } from './rpc/interopRpcMetrics'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export function createInteropModule({
@@ -95,6 +96,7 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
+    providers.clients.rpcMetricsAggregator,
   )
 
   const processors = []
@@ -121,6 +123,12 @@ export function createInteropModule({
     eventPlugins,
     config.interop.capture.chains.map((c) => c.id),
     logger,
+  )
+
+  const configLoops = plugins.configPlugins.map((plugin) =>
+    instrumentInteropRpcMetricsRun(plugin, 'interop.config', {
+      plugin: plugin.provides.map((config) => config.key).join(','),
+    }),
   )
 
   const router = createInteropRouter(
@@ -225,13 +233,13 @@ export function createInteropModule({
     }
     if (config.interop && config.interop.config.enabled) {
       await configStore.start()
-      for (const configLoop of plugins.configPlugins) {
+      for (const configLoop of configLoops) {
         configLoop.start()
       }
     }
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
-      configPlugins: plugins.configPlugins.length,
+      configPlugins: configLoops.length,
       eventPlugins: eventPlugins.length,
     })
   }

@@ -48,10 +48,11 @@ export class BlockProvider {
     for (const [index, client] of this.clients.entries()) {
       try {
         const end = await client.getLatestBlockNumber()
+        const effectiveStart = start >= end ? 0 : start
 
         return await getBlockNumberAtOrBefore(
           timestamp,
-          start,
+          effectiveStart,
           end,
           (number: number) => client.getBlockWithTransactions(number),
         )

@@ -63,6 +63,7 @@ export function createMessageDetailsColumns(options: {
     columnHelper.accessor('messageId', {
       header: 'Message ID',
       cell: ({ row }) => renderIdentifier(row.original.messageId),
+      enableSorting: false,
       meta: {
         csvHeader: 'Message ID',
       },

@@ -643,6 +643,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
+          "bridgeType": "burnAndMint",
           "src": {
             "tokenAddress": "0x000000000000000000000000243c9be13faba09f945ccc565547293337da0ad7",
             "wasBurned": false,
@@ -654,6 +655,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": {
             "tokenAddress": "0x00000000000000000000000080ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
@@ -1185,6 +1187,48 @@
         "mayan-swift.Transfer",
         "mayan-swift.Transfer",
         "mayan-swift.Transfer"
+      ]
+    }
+  },
+  "mayan-swift-solana-ethereum-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Single Mayan Swift fulfill from Solana to Ethereum",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x4157f42d0f0cf65efaa529dfa826ebad230c16f084e81178fc20c680d9edc927"
+      }
+    ],
+    "expects": {
+      "events": ["mayan-swift.OrderFulfilled", "mayan-swift.SettlementSent"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
+  "mayan-swift-solana-bsc-onesided": {
+    "loadConfigs": ["wormhole"],
+    "description": "Single Mayan Swift fulfill from Solana to BSC",
+    "txs": [
+      {
+        "chain": "bsc",
+        "tx": "0x4be43ab7e60b2502bfc5980d6d1b333649f4b8628a9b4167646f706357011f68"
+      }
+    ],
+    "expects": {
+      "events": ["mayan-swift.OrderFulfilled"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "bsc" } } }
+        }
       ]
     }
   },
@@ -1726,12 +1770,14 @@
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
+          "bridgeType": "burnAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
         }
@@ -1853,6 +1899,7 @@
       "transfers": [
         {
           "type": "wormhole-tokenbridge.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "wasBurned": false },
           "dst": { "chain": "solana" }
         }
@@ -3715,11 +3762,13 @@
       "transfers": [
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "base" } } }
         }
@@ -3843,7 +3892,23 @@
         "chain": "ethereum",
         "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "event": { "ctx": { "chain": "bsc" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],

@@ -18,10 +18,8 @@ export function WhatsNewWidget({ whatsNew }: { whatsNew: WhatsNewWidget }) {
       href={whatsNew.href}
       onClick={() => {
         track('whatsNewClicked', {
-          props: {
-            device: isDesktop ? 'desktop' : 'mobile',
-            action: 'open',
-          },
+          device: isDesktop ? 'desktop' : 'mobile',
+          action: 'open',
         })
       }}
     >

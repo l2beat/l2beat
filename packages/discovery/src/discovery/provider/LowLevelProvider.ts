@@ -19,6 +19,10 @@ import type {
   ContractSource,
   IEtherscanClient,
 } from '../../utils/IEtherscanClient'
+import {
+  batchReadStorageViaOverride,
+  type StorageSlot,
+} from './batchStorageReader'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { ContractDeployment, RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
@@ -91,6 +95,26 @@ export class LowLevelProvider {
         },
         this.logger,
         `getStorage ${address.toString()} ${slot} ${blockNumber}`,
+      )
+    }, ProviderMeasurement.GET_STORAGE)
+  }
+
+  batchReadStorage(
+    address: EthereumAddress,
+    slots: readonly StorageSlot[],
+    blockNumber: number,
+  ): Promise<Bytes[]> {
+    return this.measure(() => {
+      return rpcWithRetries(
+        () =>
+          batchReadStorageViaOverride(
+            this.provider,
+            address,
+            slots,
+            blockNumber,
+          ),
+        this.logger,
+        `batchReadStorage ${address.toString()} ${slots.length} ${blockNumber}`,
       )
     }, ProviderMeasurement.GET_STORAGE)
   }

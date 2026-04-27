@@ -32,15 +32,12 @@ export function InteropTransfersSection({
   ...sectionProps
 }: InteropTransfersSectionProps) {
   const { selectionForApi } = useInteropSelectedChains()
-  const { data: protocolData, isLoading: isProtocolLoading } =
-    api.interop.protocol.useQuery({
-      ...selectionForApi,
-      id: projectId,
-    })
+  const { data: protocolData } = api.interop.protocol.useQuery({
+    ...selectionForApi,
+    id: projectId,
+  })
   const entry = protocolData?.entry
   const totalCount = entry?.transferCount ?? 0
-  const resolvedType =
-    entry?.bridgeTypes.length === 1 ? entry.bridgeTypes[0] : undefined
 
   const {
     data: transfersData,
@@ -52,7 +49,6 @@ export function InteropTransfersSection({
     {
       ...selectionForApi,
       id: projectId,
-      type: resolvedType,
       expectedTransferCount: totalCount,
       expectedVolume: entry?.volume ?? 0,
       snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
@@ -100,7 +96,6 @@ export function InteropTransfersSection({
   }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
   const isLoading =
-    isProtocolLoading ||
     ((isTransfersLoading || hasIntegrityMismatch) &&
       fetchedItems.length === 0) ||
     needsMoreRows

@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x466747869499119540bf0127a3e71869017860b4
+
+# Diff at Fri, 24 Apr 2026 10:30:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@50904b47f9bded0b5b79527f58da5cd3899e2866 block: 1773669732
+- current timestamp: 1777026534
+
+## Description
+
+admin removed from ac.
+
+## Watched changes
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) {
+    +++ description: None
+      values.accessControl.ADMIN.members.0:
+-        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
 Generated with discovered.json: 0x329301b20b05ee2df3dcaf5fdcd10d8b771bdd5d
 
 # Diff at Mon, 16 Mar 2026 14:12:50 GMT:

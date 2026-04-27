@@ -138,6 +138,7 @@
   "static/icons/hybrid.png": "e4aff123df437d0de26ad3686c6f9e39",
   "static/icons/hychain.png": "98595f3cb6f809e5b376e3fc1fc8bfde",
   "static/icons/hyperagi.png": "692037e0482f4ddb82759f54d89956b2",
+  "static/icons/hyperliquid.png": "99c5fe0d00ec10b0719c3ec91cf50213",
   "static/icons/hypr.png": "95e14ee00b182ee2283726a1f2662b5b",
   "static/icons/immutablex.png": "e372c597309f1365466cada9239609c5",
   "static/icons/immutablezkevm.png": "ecedc349e71d618a879116784253b919",
@@ -336,6 +337,7 @@
   "static/images/architecture/eclipse.png": "61050fd90b00520603df55a61b7365b7",
   "static/images/architecture/facet.png": "c7c28b688986766e0fec8155b59c5327",
   "static/images/architecture/fuel.png": "e4a5e6258145c6ad72fd7b091f2545b5",
+  "static/images/architecture/hyperliquid.png": "bc09bc0c038cec61f12574703a882744",
   "static/images/architecture/immutablezkevm.png": "160ff2e239f6fe56b057875e91c8bce9",
   "static/images/architecture/ink.png": "b6a673a70f82290d9572e5e7fc52ea16",
   "static/images/architecture/kinto.png": "1dae9ff076a3f45d63b2d1a396739b17",
@@ -1500,5 +1502,6 @@
   "static/meta-images/multisig-report/opengraph-image.png": "997d38e58cbd6fbe19592176036e5188",
   "static/meta-images/publications/governance-review-91.png": "266e0740207e1dc14eec694dcff54bba",
   "static/meta-images/publications/governance-review-92.png": "6aa41d0725bb7bd6da522e86616ee947",
-  "static/meta-images/publications/interop-interactive-summary-banner.png": "5b33d41be5a633b9a920b8e3423cbc7c"
+  "static/meta-images/publications/interop-interactive-summary-banner.png": "5b33d41be5a633b9a920b8e3423cbc7c",
+  "static/meta-images/scaling/projects/hyperliquid/opengraph-image.png": "071466313558cbbb7854d3a441bec233"
 }

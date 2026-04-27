@@ -56,7 +56,7 @@ import {
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { findBestTransferLog } from '../hyperlane-hwr'
-import { MayanForwarded } from '../mayan-forwarder'
+import { isMayanCircleForwarded, MayanForwarded } from '../mayan-forwarder'
 import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createEventParser,
@@ -246,9 +246,9 @@ export class CCTPV1Plugin implements InteropPluginResyncable {
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
       const wrappers: MatchResult = []
-      const mayanForwarded = db.find(MayanForwarded, {
-        sameTxAfter: messageSent,
-      })
+      const mayanForwarded = db
+        .findAll(MayanForwarded, { sameTxAfter: messageSent })
+        .find(isMayanCircleForwarded)
       if (mayanForwarded) {
         const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
           db,

@@ -1,6 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
+import {
+  EthRpcClient,
+  Http,
+  type RpcMetricsAggregator,
+  UpsertMap,
+} from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
@@ -46,6 +51,7 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly rpcMetricsAggregator: RpcMetricsAggregator,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -176,6 +182,12 @@ export class InteropSyncersManager {
         http,
         rpcConfig.url,
         `${EthRpcClient.name}:${chainConfig.name}`,
+        undefined,
+        undefined,
+        this.rpcMetricsAggregator.createRecorder({
+          rpcChain: chainConfig.name,
+          rpcClient: EthRpcClient.name,
+        }),
       )
       this.rpcClients[chainConfig.name] = client
     }

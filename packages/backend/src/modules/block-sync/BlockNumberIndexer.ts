@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
+import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
 
 export class BlockNumberIndexer extends RootIndexer {
   blockHeight = -1
@@ -25,13 +26,23 @@ export class BlockNumberIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const timestamp = UnixTime.now() - this.delayFromTipInSeconds
-    const blockNumber =
-      await this.blockProvider.getBlockNumberAtOrBefore(timestamp)
-    if (blockNumber > this.blockHeight) {
-      this.blockHeight = blockNumber
-      this.logger.info('Advanced block number', { blockNumber })
-    }
-    return this.blockHeight
+    return await withBlockSyncRpcMetricsContext(
+      'blockSync.tip',
+      {
+        chain: this.blockProvider.chain,
+      },
+      async () => {
+        const timestamp = UnixTime.now() - this.delayFromTipInSeconds
+        const blockNumber = await this.blockProvider.getBlockNumberAtOrBefore(
+          timestamp,
+          Math.max(this.blockHeight, 0),
+        )
+        if (blockNumber > this.blockHeight) {
+          this.blockHeight = blockNumber
+          this.logger.info('Advanced block number', { blockNumber })
+        }
+        return this.blockHeight
+      },
+    )
   }
 }

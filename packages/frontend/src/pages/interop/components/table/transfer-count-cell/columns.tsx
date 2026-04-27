@@ -1,6 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -8,6 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
@@ -75,7 +75,7 @@ export const columns = [
     enableSorting: false,
     cell: (ctx) => {
       const { valueUsd } = ctx.row.original
-      if (valueUsd === undefined) return <NoDataBadge />
+      if (valueUsd === undefined) return EM_DASH
       return (
         <span className="font-medium text-label-value-14 text-primary">
           {formatCurrency(valueUsd, 'usd')}

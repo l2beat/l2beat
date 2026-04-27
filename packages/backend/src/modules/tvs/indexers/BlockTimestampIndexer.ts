@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
@@ -53,53 +54,63 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
     to: number,
     configurations: Configuration<BlockTimestampConfig>[],
   ) {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp > to) {
-      this.logger.info('Timestamp out of range', {
-        from,
-        to,
-        timestamp,
-      })
-      return () => Promise.resolve(to)
-    }
+    return await withCoreFeatureRpcMetricsContext(
+      'tvs.blockTimestamp',
+      { chain: configurations[0].properties.chainName },
+      async () => {
+        const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+        if (timestamp > to) {
+          this.logger.info('Timestamp out of range', {
+            from,
+            to,
+            timestamp,
+          })
+          return () => Promise.resolve(to)
+        }
 
-    this.logger.info('Fetching block number for timestamp', {
-      timestamp: timestamp,
-    })
+        this.logger.info('Fetching block number for timestamp', {
+          timestamp: timestamp,
+        })
 
-    const blockNumber =
-      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
-        timestamp,
-        configurations[0].properties.chainName,
-      )
+        const blockNumber =
+          await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            configurations[0].properties.chainName,
+          )
 
-    this.logger.info('Fetched block number for timestamp', {
-      timestamp: timestamp,
-      blockNumber,
-    })
-
-    assert(blockNumber >= this.blockHeight, 'Block number cannot be smaller', {
-      blockNumber,
-      blockHeight: this.blockHeight,
-    })
-
-    this.blockHeight = blockNumber
-
-    return async () => {
-      await this.$.db.tvsBlockTimestamp.upsertMany([
-        {
-          configurationId: configurations[0].id,
-          chain: configurations[0].properties.chainName,
-          timestamp,
+        this.logger.info('Fetched block number for timestamp', {
+          timestamp: timestamp,
           blockNumber,
-        },
-      ])
-      this.logger.info('Saved block number into DB', {
-        timestamp: timestamp,
-        blockNumber,
-      })
-      return timestamp
-    }
+        })
+
+        assert(
+          blockNumber >= this.blockHeight,
+          'Block number cannot be smaller',
+          {
+            blockNumber,
+            blockHeight: this.blockHeight,
+          },
+        )
+
+        this.blockHeight = blockNumber
+
+        return async () => {
+          await this.$.db.tvsBlockTimestamp.upsertMany([
+            {
+              configurationId: configurations[0].id,
+              chain: configurations[0].properties.chainName,
+              timestamp,
+              blockNumber,
+            },
+          ])
+          this.logger.info('Saved block number into DB', {
+            timestamp: timestamp,
+            blockNumber,
+          })
+          return timestamp
+        }
+      },
+    )
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

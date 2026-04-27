@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hyperliquid",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7"
+    // "arb1:0xef2364db5db6f5539aa0bc111771a94ee47637fc", // hot validator 1
+    // "arb1:0xda6816df552c3f9e0fb64979fb357800d690d79b", // hot validator 2
+    // "arb1:0x58e1b0e63c905d5982324fcd9108582623b8132e", // hot validator 3
+    // "arb1:0x263294039413b96d25e4173a5f7599f8b3801504", // hot validator 4
+    // "arb1:0x8003fd297a7aa477b746825e7a506675bf590e91", // cold validator 1
+    // "arb1:0x86d6ae3032732f27239075d77a1317989b52f628", // cold validator 2
+    // "arb1:0xe346b41b47296153a21e64d6bfc857c27874c6e7", // cold validator 3
+    // "arb1:0x5a92b4a6a525445c9b4fff61c0db71dcfe305ede" // cold validator 4
+  ],
+  "names": {
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "HyperliquidBridge"
+  },
+  "overrides": {
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": {
+      "fields": {
+        // hot and cold validators can only be fetched from calldata
+        // to do so, filter for the RequestedValidatorSetUpdate event sig (arb1:0x420bbe99bd2c52ec500d33614359525f3ef7bb3358c0e07d1312db0941cbf2f4)
+        // and look at the latest transaction trace that emitted this event.
+        "hotAddresses": {
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "0xef2364db5db6f5539aa0bc111771a94ee47637fc",
+              "0xda6816df552c3f9e0fb64979fb357800d690d79b",
+              "0x58e1b0e63c905d5982324fcd9108582623b8132e",
+              "0x263294039413b96d25e4173a5f7599f8b3801504"
+            ]
+          },
+          "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update.",
+          "permissions": [
+            {
+              "type": "hotValidatorHyperliquid"
+            }
+          ]
+        },
+        "coldAddresses": {
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "0x8003fd297a7aa477b746825e7a506675bf590e91",
+              "0x86d6ae3032732f27239075d77a1317989b52f628",
+              "0xe346b41b47296153a21e64d6bfc857c27874c6e7",
+              "0x5a92b4a6a525445c9b4fff61c0db71dcfe305ede"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "coldValidatorHyperliquid"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

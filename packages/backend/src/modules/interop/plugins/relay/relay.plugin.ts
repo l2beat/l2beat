@@ -46,6 +46,7 @@ export class RelayPlugin implements InteropPlugin {
             : undefined,
           dstTokenAddress: tokenReceived.args.token,
           dstWasMinted: false,
+          bridgeType: 'nonMinting',
         }),
       ]
     }
@@ -92,6 +93,7 @@ export class RelayPlugin implements InteropPlugin {
           : undefined,
         srcTokenAddress: tokenSent.args.token,
         srcWasBurned: false,
+        bridgeType: 'nonMinting',
       }),
     ]
   }

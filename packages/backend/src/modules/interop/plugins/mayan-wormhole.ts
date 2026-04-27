@@ -3,6 +3,8 @@ import type { Log } from 'viem'
 import {
   forwardedERC20Log,
   forwardedEthLog,
+  isMayanCircleForwarded,
+  isMayanCircleProtocolData,
   logToProtocolData,
   swapAndForwardedERC20Log,
   swapAndForwardedEthLog,
@@ -28,10 +30,6 @@ const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
   '0x1c59b7fc', // mayanCircle.createOrder (legacy)
 ])
 
-export function isMayanSwiftSender(sender: EthereumAddress): boolean {
-  return sender === MAYAN_PROTOCOLS.mayanSwift
-}
-
 export function isMayanCircleSender(sender: EthereumAddress): boolean {
   return sender === MAYAN_PROTOCOLS.mayanCircle
 }
@@ -42,7 +40,9 @@ export function findMayanCircleDestinationChain(
 ): string | undefined {
   for (const candidateLog of txLogs) {
     const decoded = logToProtocolData(candidateLog, wormholeNetworks)
-    if (decoded) return decoded.dstChain
+    if (decoded && isMayanCircleProtocolData(decoded)) {
+      return decoded.dstChain
+    }
   }
 }
 
@@ -50,9 +50,14 @@ export function findWrappedMayanWormholeLog<
   T extends { sender: EthereumAddress },
 >(
   db: InteropEventDb,
-  mayanForwarded: InteropEvent<{ methodSignature: `0x${string}` }>,
+  mayanForwarded: InteropEvent<{
+    methodSignature: `0x${string}`
+    mayanProtocol?: EthereumAddress
+  }>,
   logMessagePublishedType: InteropEventType<T>,
 ): InteropEvent<T> | undefined {
+  if (!isMayanCircleForwarded(mayanForwarded)) return undefined
+
   if (
     !MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS.has(
       mayanForwarded.args.methodSignature,

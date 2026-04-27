@@ -12,9 +12,10 @@ import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
   nonMinting?: {
-    averageValueInFlight: number
+    averageValueInFlight: number | undefined
   } & ProtocolDataByBridgeTypeCommon
   burnAndMint?: ProtocolDataByBridgeTypeCommon
+  unknown?: ProtocolDataByBridgeTypeCommon
 }
 
 type ProtocolDataByBridgeTypeCommon = {
@@ -61,30 +62,25 @@ export function getProtocolsDataMapByBridgeType(
   const protocolsDataMap = new Map<string, ProtocolDataByBridgeType>()
 
   for (const record of records) {
-    if (record.bridgeType === 'unknown') continue
-
     const bridgeTypeMap = protocolsDataMap.get(record.id) ?? {
       lockAndMint: undefined,
       nonMinting: undefined,
       burnAndMint: undefined,
+      unknown: undefined,
     }
+
+    const common = mergeProtocolDataByBridgeTypeCommon(
+      bridgeTypeMap[record.bridgeType],
+      record,
+    )
+
     switch (record.bridgeType) {
-      case 'lockAndMint':
+      case 'lockAndMint': {
         bridgeTypeMap.lockAndMint = {
-          volume:
-            (bridgeTypeMap.lockAndMint?.volume ?? 0) +
-            (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(bridgeTypeMap.lockAndMint?.tokens, record),
-          flows: mergeFlowsData(bridgeTypeMap.lockAndMint?.flows, record),
-          transferCount:
-            (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
-            record.transferCount,
+          ...common,
           transfersWithDurationCount:
             (bridgeTypeMap.lockAndMint?.transfersWithDurationCount ?? 0) +
             record.transfersWithDurationCount,
-          identifiedTransferCount:
-            (bridgeTypeMap.lockAndMint?.identifiedTransferCount ?? 0) +
-            record.identifiedCount,
           totalDurationSum:
             (bridgeTypeMap.lockAndMint?.totalDurationSum ?? 0) +
             (record.totalDurationSum ?? 0),
@@ -92,95 +88,35 @@ export function getProtocolsDataMapByBridgeType(
             bridgeTypeMap.lockAndMint?.transferTypeStats,
             record.transferTypeStats,
           ),
-          minTransferValueUsd:
-            record.minTransferValueUsd !== undefined
-              ? Math.min(
-                  bridgeTypeMap.lockAndMint?.minTransferValueUsd ??
-                    Number.POSITIVE_INFINITY,
-                  record.minTransferValueUsd,
-                )
-              : bridgeTypeMap.lockAndMint?.minTransferValueUsd,
-          maxTransferValueUsd:
-            record.maxTransferValueUsd !== undefined
-              ? Math.max(
-                  bridgeTypeMap.lockAndMint?.maxTransferValueUsd ??
-                    Number.NEGATIVE_INFINITY,
-                  record.maxTransferValueUsd,
-                )
-              : bridgeTypeMap.lockAndMint?.maxTransferValueUsd,
-
           mintedValueUsd:
-            (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
-            (record.mintedValueUsd ?? 0),
+            record.mintedValueUsd !== undefined
+              ? (bridgeTypeMap.lockAndMint?.mintedValueUsd ?? 0) +
+                record.mintedValueUsd
+              : bridgeTypeMap.lockAndMint?.mintedValueUsd,
           burnedValueUsd:
-            (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
-            (record.burnedValueUsd ?? 0),
+            record.burnedValueUsd !== undefined
+              ? (bridgeTypeMap.lockAndMint?.burnedValueUsd ?? 0) +
+                record.burnedValueUsd
+              : bridgeTypeMap.lockAndMint?.burnedValueUsd,
         }
         break
-      case 'nonMinting':
+      }
+      case 'nonMinting': {
         bridgeTypeMap.nonMinting = {
-          volume:
-            (bridgeTypeMap.nonMinting?.volume ?? 0) +
-            (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(bridgeTypeMap.nonMinting?.tokens, record),
-          flows: mergeFlowsData(bridgeTypeMap.nonMinting?.flows, record),
-          transferCount:
-            (bridgeTypeMap.nonMinting?.transferCount ?? 0) +
-            record.transferCount,
-          identifiedTransferCount:
-            (bridgeTypeMap.nonMinting?.identifiedTransferCount ?? 0) +
-            record.identifiedCount,
-          minTransferValueUsd:
-            record.minTransferValueUsd !== undefined
-              ? Math.min(
-                  bridgeTypeMap.nonMinting?.minTransferValueUsd ??
-                    Number.POSITIVE_INFINITY,
-                  record.minTransferValueUsd,
-                )
-              : bridgeTypeMap.nonMinting?.minTransferValueUsd,
-          maxTransferValueUsd:
-            record.maxTransferValueUsd !== undefined
-              ? Math.max(
-                  bridgeTypeMap.nonMinting?.maxTransferValueUsd ??
-                    Number.NEGATIVE_INFINITY,
-                  record.maxTransferValueUsd,
-                )
-              : bridgeTypeMap.nonMinting?.maxTransferValueUsd,
+          ...common,
           averageValueInFlight:
-            (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
-            (record.avgValueInFlight ?? 0),
+            record.avgValueInFlight !== undefined
+              ? (bridgeTypeMap.nonMinting?.averageValueInFlight ?? 0) +
+                record.avgValueInFlight
+              : bridgeTypeMap.nonMinting?.averageValueInFlight,
         }
         break
+      }
       case 'burnAndMint':
-        bridgeTypeMap.burnAndMint = {
-          volume:
-            (bridgeTypeMap.burnAndMint?.volume ?? 0) +
-            (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(bridgeTypeMap.burnAndMint?.tokens, record),
-          flows: mergeFlowsData(bridgeTypeMap.burnAndMint?.flows, record),
-          transferCount:
-            (bridgeTypeMap.burnAndMint?.transferCount ?? 0) +
-            record.transferCount,
-          identifiedTransferCount:
-            (bridgeTypeMap.burnAndMint?.identifiedTransferCount ?? 0) +
-            record.identifiedCount,
-          minTransferValueUsd:
-            record.minTransferValueUsd !== undefined
-              ? Math.min(
-                  bridgeTypeMap.burnAndMint?.minTransferValueUsd ??
-                    Number.POSITIVE_INFINITY,
-                  record.minTransferValueUsd,
-                )
-              : bridgeTypeMap.burnAndMint?.minTransferValueUsd,
-          maxTransferValueUsd:
-            record.maxTransferValueUsd !== undefined
-              ? Math.max(
-                  bridgeTypeMap.burnAndMint?.maxTransferValueUsd ??
-                    Number.NEGATIVE_INFINITY,
-                  record.maxTransferValueUsd,
-                )
-              : bridgeTypeMap.burnAndMint?.maxTransferValueUsd,
-        }
+        bridgeTypeMap.burnAndMint = common
+        break
+      case 'unknown':
+        bridgeTypeMap.unknown = common
         break
       default:
         assertUnreachable(record.bridgeType)
@@ -264,6 +200,34 @@ function createInitialProtocolData(): ProtocolData {
     identifiedTransferCount: 0,
     mintedValueUsd: undefined,
     burnedValueUsd: undefined,
+  }
+}
+
+function mergeProtocolDataByBridgeTypeCommon(
+  previous: ProtocolDataByBridgeTypeCommon | undefined,
+  record: AggregatedInteropTransferWithTokens,
+): ProtocolDataByBridgeTypeCommon {
+  return {
+    volume: (previous?.volume ?? 0) + (getInteropTransferValue(record) ?? 0),
+    tokens: mergeTokensData(previous?.tokens, record),
+    flows: mergeFlowsData(previous?.flows, record),
+    transferCount: (previous?.transferCount ?? 0) + record.transferCount,
+    identifiedTransferCount:
+      (previous?.identifiedTransferCount ?? 0) + record.identifiedCount,
+    minTransferValueUsd:
+      record.minTransferValueUsd !== undefined
+        ? Math.min(
+            previous?.minTransferValueUsd ?? Number.POSITIVE_INFINITY,
+            record.minTransferValueUsd,
+          )
+        : previous?.minTransferValueUsd,
+    maxTransferValueUsd:
+      record.maxTransferValueUsd !== undefined
+        ? Math.max(
+            previous?.maxTransferValueUsd ?? Number.NEGATIVE_INFINITY,
+            record.maxTransferValueUsd,
+          )
+        : previous?.maxTransferValueUsd,
   }
 }
 

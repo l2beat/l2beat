@@ -15,7 +15,7 @@ export {
   AddressAnalyzer,
   type Analysis,
 } from './discovery/analysis/AddressAnalyzer'
-export { codeIsEOA } from './discovery/analysis/codeIsEOA'
+export { codeIsEOA } from './discovery/analysis/bytecode'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
 export {
   type RefreshReason,

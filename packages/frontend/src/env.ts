@@ -23,6 +23,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
   CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
   CLIENT_SIDE_INTEROP_DETAILED_PAGES: featureFlag.default(false),
+  CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -142,5 +143,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
     CLIENT_SIDE_INTEROP_DETAILED_PAGES:
       process.env.CLIENT_SIDE_INTEROP_DETAILED_PAGES,
+    CLIENT_SIDE_OPENPANEL_CLIENT_ID:
+      process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
   }
 }

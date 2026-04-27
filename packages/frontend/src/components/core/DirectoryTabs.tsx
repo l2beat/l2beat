@@ -30,9 +30,7 @@ const DirectoryTabs = ({
         onValueChange?.(value)
         setSelectedTab(value)
         track('directoryTabsChanged', {
-          props: {
-            value,
-          },
+          value,
         })
       }}
       {...props}

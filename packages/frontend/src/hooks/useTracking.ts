@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import { useCallback } from 'react'
 
-export const PlausibleEvents = v.object({
+export const OpenPanelEvents = v.object({
   switchChanged: v.object({ name: v.string(), value: v.string() }),
   checkboxChanged: v.object({ name: v.string(), value: v.string() }),
   radioGroupChanged: v.object({ name: v.string(), value: v.string() }),
@@ -33,20 +33,19 @@ export const PlausibleEvents = v.object({
   filterRemoved: v.object({ name: v.string() }),
   filterInversed: v.object({ name: v.string(), allValues: v.string() }),
 })
-export type PlausibleEvents = v.infer<typeof PlausibleEvents>
+export type OpenPanelEvents = v.infer<typeof OpenPanelEvents>
 
-type Plausible = {
-  <T extends keyof PlausibleEvents>(
+type OpenPanelTrack = {
+  <T extends keyof OpenPanelEvents>(
     event: T,
-    ...args: PlausibleEvents[T] extends undefined
-      ? []
-      : [{ props: PlausibleEvents[T] }]
+    ...args: OpenPanelEvents[T] extends undefined ? [] : [OpenPanelEvents[T]]
   ): void
 }
 
-export function useTracking(): { track: Plausible } {
-  const track: Plausible = useCallback((event, ...args) => {
-    window.plausible?.(event, ...args)
+export function useTracking(): { track: OpenPanelTrack } {
+  const track: OpenPanelTrack = useCallback((event, ...args) => {
+    window.plausible?.(event, args[0] ? { props: args[0] } : undefined)
+    window.op?.('track', event, ...args)
   }, [])
 
   return {

@@ -1,3 +1,122 @@
+Generated with discovered.json: 0xf1f4bac73c3651e6ac18b47bec3426ac264487ff
+
+# Diff at Fri, 24 Apr 2026 15:09:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1765382149
+- current timestamp: 1777043298
+
+## Description
+
+**Mint Blockchain shutdown (announced 2026-04-17, withdrawal deadline 2026-10-20).** Bridge and portal implementations upgraded to add emergency drain functions for the Mint Multisig (`0x3c54Be30`):
+
+- **L1StandardBridge → EmergencyBridgeA1**: adds `emergencyWithdraw(token)` — drains any ERC-20 to hardcoded `RECIPIENT = 0x757952e6`.
+- **OptimismPortal2 → EmergencyPortalPatch**: adds `emergencyWithdrawETH()` — drains ETH to the same `RECIPIENT`.
+
+Dispute game state is unchanged (`respectedGameType = 1`, `PermissionedDisputeGame` still active).
+
+EmergencyBridgeA1: [diff](https://disco.l2beat.com/diff/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A/eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E)
+EmergencyPortalPatch: [diff](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776)
+
+## Watched changes
+
+```diff
+    contract L1StandardBridge (eth:0x2b3F201543adF73160bA42E1a5b7750024F30420) {
+    +++ description: None
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x4e15d99844dc5a4304c2396a66c95ec41218ea311c8e524b118fad7beed0bb53"
++        "0xc8d5e683491427e9263869a1ea42ae938fe1ea1c6a8cdccd7a86a13140b3c22d"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      values.$implementation:
+-        "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A"
++        "eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E"
+      values.RECIPIENT:
++        "eth:0x757952e6374619b6F8B45CD6c143A756A2fbe8f6"
+      implementationNames.eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A:
+-        "L1StandardBridge"
+      implementationNames.eth:0x824C94659D0bdf1f532D1D0A80779209d6c29b6E:
++        "EmergencyBridgeA1"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Mint Multisig (eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b) {
+    +++ description: None
+      receivedPermissions.5.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: None
+      template:
+-        "opstack/OptimismPortal2"
+      sourceHashes.1:
+-        "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b"
++        "0x77a056b7a1c5ddb643a0168b7b9436ee0c2d7edf89da2f7c4bf674100a9fc4b5"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.$implementation:
+-        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"
++        "eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776"
+      values.$pastUpgrades.9:
++        ["2026-04-17T05:45:47.000Z","0x21527f22e677f2737632f3090b51d2fe36d74df7461dc6ee8e49baa6218ac2e6",["eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.params.prevBoughtGas:
+-        516470
++        300000
+      values.params.prevBlockNum:
+-        23977848
++        24897909
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
+      values.RECIPIENT:
++        "eth:0x757952e6374619b6F8B45CD6c143A756A2fbe8f6"
+      values.SAFE_MULTISIG:
++        "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
+      fieldMeta:
+-        {"respectedGameType":{"severity":"HIGH"},"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+      implementationNames.eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4:
+-        "OptimismPortal2"
+      implementationNames.eth:0x8953eCB2AAbB9260662241eC505250A1C63eF776:
++        "EmergencyPortalPatch"
+      usedTypes:
+-        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","1337":"KailuaGame"}}]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
+-        ".$admin"
++        "admin"
+      directlyReceivedPermissions.1.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/EmergencyBridgeA1.sol}        |  407 +-
+ .../OptimismPortal2/EmergencyPortalPatch.sol}      | 4699 ++++++++++----------
+ 2 files changed, 2588 insertions(+), 2518 deletions(-)
+```
+
 Generated with discovered.json: 0x5c6158a461e42f57e0d99d56a973f83147bb3858
 
 # Diff at Fri, 13 Feb 2026 11:33:15 GMT:

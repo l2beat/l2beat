@@ -1,6 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { CallParameters, HttpClient, IRpcClient } from '@l2beat/shared'
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import * as cheerio from 'cheerio'
 import {
   decodeFunctionResult,
@@ -26,6 +30,23 @@ export interface WormholeNetwork {
 }
 
 export const WormholeConfig = defineConfig<WormholeNetwork[]>('wormhole')
+
+export function getWormholeCoreAddresses(
+  networks: WormholeNetwork[],
+): ChainSpecificAddress[] {
+  const addresses: ChainSpecificAddress[] = []
+  for (const network of networks) {
+    if (!network.coreContract) continue
+    try {
+      addresses.push(
+        ChainSpecificAddress.fromLong(network.chain, network.coreContract),
+      )
+    } catch {
+      // Chain not supported by ChainSpecificAddress, skip
+    }
+  }
+  return addresses
+}
 
 const DOCS_URL =
   'https://wormhole.com/docs/products/reference/contract-addresses/'

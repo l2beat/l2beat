@@ -21,17 +21,17 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
     })
   if (!currentGroup) return null
 
+  const links = [...currentGroup.links, ...(currentGroup.secondaryLinks ?? [])]
+
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
-  const display = currentGroup.links.some(({ href }) =>
-    isLinkActive({ href, pathname }),
-  )
+  const display = links.some(({ href }) => isLinkActive({ href, pathname }))
   if (!display) return null
 
   return (
     <OverflowWrapper className="bg-surface-primary">
       <div className="flex">
-        {currentGroup.links
+        {links
           .filter((link) => !link.disabled)
           .map((link) => {
             const isSelected = isLinkActive({ href: link.href, pathname })

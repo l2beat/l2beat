@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x3c1d650d30e35bc107663c7573d3b22015fd3be6
+
+# Diff at Fri, 24 Apr 2026 10:10:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ffb976d00306d4043b30ea28fd12565a6eb5d7ab block: 1776863221
+- current timestamp: 1777024331
+
+## Description
+
+New opsuccinct config.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00"
++        "0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776863221 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x3dabedc1e0d35c0eb02aead7964f84dd156ecb50
 
 # Diff at Wed, 22 Apr 2026 13:08:46 GMT:

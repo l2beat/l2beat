@@ -12,6 +12,7 @@ import {
   type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
+import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
   type CallParameters,
   EVMBalanceResponse,
@@ -36,6 +37,7 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   chain: string
   generateId?: () => string
   multicallClient?: MulticallV3Client
+  rpcMetrics?: RpcMetricsRecorder
   timeout?: number
 }
 
@@ -309,18 +311,25 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   async query(method: string, params: Param[]) {
-    return await this.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      const result = await this.fetch(this.$.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          method,
+          params,
+          id: this.$.generateId ? this.$.generateId() : generateId(),
+          jsonrpc: '2.0',
+        }),
+        redirect: 'follow',
+        timeout: this.$.timeout ?? 10_000,
+      })
+      return result
+    } finally {
+      this.$.rpcMetrics?.record({
         method,
-        params,
-        id: this.$.generateId ? this.$.generateId() : generateId(),
-        jsonrpc: '2.0',
-      }),
-      redirect: 'follow',
-      timeout: this.$.timeout ?? 10_000,
-    })
+      })
+    }
   }
 
   // TODO: add multi-method support
@@ -332,26 +341,33 @@ export class RpcClient extends ClientCore implements IRpcClient {
       jsonrpc: '2.0',
     }))
 
-    const response = await this.fetch(this.$.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(queries),
-      redirect: 'follow',
-      timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
-    })
+    try {
+      const response = await this.fetch(this.$.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(queries),
+        redirect: 'follow',
+        timeout: this.$.timeout ?? 10_000, // Most RPCs respond in ~2s during regular conditions
+      })
 
-    const results = new Map(
-      v
-        .array(RpcResponse)
-        .parse(response)
-        .map((p) => [p.id, p]),
-    )
+      const results = new Map(
+        v
+          .array(RpcResponse)
+          .parse(response)
+          .map((p) => [p.id, p]),
+      )
 
-    return queries.map((q) => {
-      const r = results.get(q.id)
-      assert(r, `Request with ${q.id} not found`)
-      return r
-    })
+      return queries.map((q) => {
+        const r = results.get(q.id)
+        assert(r, `Request with ${q.id} not found`)
+        return r
+      })
+    } finally {
+      this.$.rpcMetrics?.record({
+        count: paramsBatch.length,
+        method,
+      })
+    }
   }
 
   override validateResponse(response: json): {
