@@ -1,29 +1,69 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aave-v3",
-  "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170"],
-  "maxDepth": 8,
-  "maxAddresses": 400,
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "initialAddresses": [
+    "eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170",
+    // Pool 4 ("Aave Horizon") PoolAddressesProvider — not registered in the Registry
+    // (Pool 4 was launched as a standalone product after the Registry was established)
+    "eth:0x5D39E06b825C1F2B80bf2756a73e28eFAA128ba0",
+    // Staked AAVE Safety Module — referenced by GovernancePowerStrategy but exceeds maxDepth
+    // from the Registry chain; added explicitly so its admin roles are properly discovered.
+    "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5"
+  ],
+  "maxDepth": 11,
+  "maxAddresses": 500,
   "overrides": {
     "eth:0x0a16f2FCC0D44FaE41cc54e079281D84A363bECD": {
-      "ignoreMethods": ["getAllReservesTokens"]
+      "ignoreMethods": [
+        "getAllReservesTokens"
+      ],
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
     },
     "eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170": {
-      "ignoreMethods": ["getAddressesProviderAddressById"]
+      "ignoreMethods": [
+        "getAddressesProviderAddressById"
+      ]
     },
     "eth:0x7c8509591f9693D21280d96e149a08A3bf69Cd0c": {
-      "ignoreMethods": ["getAllReservesTokens"],
-      "ignoreInWatchMode": ["getDebtCeilingDecimals"]
+      "ignoreMethods": [
+        "getAllReservesTokens"
+      ],
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
     },
     "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0": {
-      "ignoreMethods": ["getReservesList"],
-      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+      "ignoreMethods": [
+        "getReservesList"
+      ],
+      "ignoreInWatchMode": [
+        "getReservesCount",
+        "MAX_NUMBER_RESERVES",
+        "POOL_REVISION",
+        "UMBRELLA"
+      ],
+      "fields": {
+        "getAllVariableDebtTokens": {
+          "handler": {
+            "type": "aaveReserveTokens",
+            "tokenType": "variableDebt"
+          }
+        }
+      }
     },
     "eth:0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7": {
-      "ignoreMethods": ["getProposal", "getProposalState"],
+      "ignoreMethods": [
+        "getProposal",
+        "getProposalState"
+      ],
       "ignoreInWatchMode": [
         "getProposalsCount",
+        "getVotingPortalsCount",
         "MIN_VOTING_DURATION",
         "NAME",
         "PRECISION_DIVIDER",
@@ -31,17 +71,31 @@
       ]
     },
     "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1": {
-      "ignoreMethods": ["getReservesList"],
+      "ignoreMethods": [
+        "getReservesList"
+      ],
       "ignoreInWatchMode": [
         "getReservesCount",
         "MAX_NUMBER_RESERVES",
         "POOL_REVISION"
-      ]
+      ],
+      "fields": {
+        "getAllVariableDebtTokens": {
+          "handler": {
+            "type": "aaveReserveTokens",
+            "tokenType": "variableDebt"
+          }
+        }
+      }
     },
     "eth:0xB85B2bFEbeC4F5f401dbf92ac147A3076391fCD5": {
-      "ignoreMethods": ["getAllReservesTokens"]
+      "ignoreMethods": [
+        "getAllReservesTokens"
+      ],
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
     },
-    // CrossChainControllerUpgradeRev3 — array overflow on chain-indexed getters
     "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1": {
       "ignoreMethods": [
         "getConfigurationByChain",
@@ -49,9 +103,11 @@
         "getOptimalBandwidthByChain",
         "getReceiverBridgeAdaptersByChain"
       ],
-      "ignoreInWatchMode": ["getCurrentEnvelopeNonce", "getCurrentTransactionNonce"]
+      "ignoreInWatchMode": [
+        "getCurrentEnvelopeNonce",
+        "getCurrentTransactionNonce"
+      ]
     },
-    // SameChainAdapter — array overflow on chain ID lookups
     "eth:0x6cfbd2aA4691fc18B9C209bDd43DC3943C228FCf": {
       "ignoreMethods": [
         "getTrustedRemoteByChainId",
@@ -59,10 +115,47 @@
         "nativeToInfraChainId"
       ]
     },
-    // StakedAaveV3 — array overflow on index-based getters
     "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5": {
-      "ignoreMethods": ["getAdmin", "getPendingAdmin", "previewRedeem", "previewStake"],
+      "ignoreMethods": [
+        "getPendingAdmin",
+        "previewRedeem",
+        "previewStake"
+      ],
+      "fields": {
+        // Admin for SLASH_ADMIN_ROLE (role 0)
+        "adminForSlash": {
+          "handler": {
+            "type": "call",
+            "method": "getAdmin",
+            "args": [
+              0
+            ]
+          }
+        },
+        // Admin for COOLDOWN_ADMIN_ROLE (role 1)
+        "adminForCooldown": {
+          "handler": {
+            "type": "call",
+            "method": "getAdmin",
+            "args": [
+              1
+            ]
+          }
+        },
+        // Admin for CLAIM_HELPER_ROLE (role 2)
+        "adminForClaimHelper": {
+          "handler": {
+            "type": "call",
+            "method": "getAdmin",
+            "args": [
+              2
+            ]
+          }
+        }
+      },
       "ignoreInWatchMode": [
+        "CLAIM_HELPER_ROLE",
+        "COOLDOWN_ADMIN_ROLE",
         "decimals",
         "DELEGATE_BY_TYPE_TYPEHASH",
         "DELEGATE_TYPEHASH",
@@ -70,83 +163,163 @@
         "EIP712_REVISION",
         "eip712Domain",
         "EXCHANGE_RATE_UNIT",
+        "getExchangeRate",
         "INITIAL_EXCHANGE_RATE",
+        "LOWER_BOUND",
         "name",
         "PERMIT_TYPEHASH",
         "POWER_SCALE_FACTOR",
         "PRECISION",
         "REVISION",
+        "SLASH_ADMIN_ROLE",
         "symbol",
         "totalSupply"
       ]
     },
-    // 4th PoolInstance — suppress large reserves list
     "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": {
-      "ignoreMethods": ["getReservesList"],
-      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+      "ignoreMethods": [
+        "getReservesList"
+      ],
+      "ignoreInWatchMode": [
+        "getReservesCount",
+        "MAX_NUMBER_RESERVES",
+        "POOL_REVISION",
+        "UMBRELLA"
+      ],
+      "fields": {
+        "getAllVariableDebtTokens": {
+          "handler": {
+            "type": "aaveReserveTokens",
+            "tokenType": "variableDebt"
+          }
+        }
+      }
     },
-    // 4th AaveProtocolDataProvider — suppress reserve token enumeration
     "eth:0x53519c32f73fE1797d10210c4950fFeBa3b21504": {
-      "ignoreMethods": ["getAllReservesTokens"]
+      "ignoreMethods": [
+        "getAllReservesTokens"
+      ]
     },
-    // AaveEcosystemReserveV2
     "eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491": {
-      "ignoreInWatchMode": ["deltaOf", "getNextStreamId", "getStream", "REVISION"]
+      "ignoreInWatchMode": [
+        "deltaOf",
+        "getNextStreamId",
+        "getStream",
+        "REVISION"
+      ]
     },
-    // CollectorWithCustomImpl
     "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c": {
-      "ignoreInWatchMode": ["deltaOf", "getNextStreamId", "getStream"]
+      "ignoreInWatchMode": [
+        "deltaOf",
+        "getNextStreamId",
+        "getStream"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x46554e44535f41444d494e000000000000000000000000000000000000000000": "FUNDS_ADMIN_ROLE"
+            }
+          }
+        }
+      }
     },
-    // Gho Token
     "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": [
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "name",
+        "PERMIT_TYPEHASH",
+        "symbol",
+        "totalSupply"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x5e20732f79076148980e17b6ce9f22756f85058fe2765420ed48a504bef5a8bc": "FACILITATOR_MANAGER_ROLE",
+              "0xc7f115822aabac0cd6b9d21b08c0c63819451a58157aecad689d1b5674fad408": "BUCKET_MANAGER_ROLE"
+            }
+          }
+        }
+      }
     },
-    // GnosisSafe (Aave Guardian)
     "eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710": {
-      "ignoreInWatchMode": ["domainSeparator", "getChainId", "multisigThreshold", "nonce", "VERSION"]
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "nonce",
+        "VERSION"
+      ]
     },
-    // GnosisSafeL2 (BGD Labs Multisig)
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": {
-      "ignoreInWatchMode": ["domainSeparator", "getChainId", "multisigThreshold", "nonce", "VERSION"]
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "nonce",
+        "VERSION"
+      ]
     },
-    // PayloadsController
     "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5": {
-      "ignoreInWatchMode": ["getPayloadsCount"]
+      "ignoreInWatchMode": [
+        "getPayloadsCount"
+      ]
     },
-    // PoolConfiguratorInstance — GHO/Lido market
     "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517": {
-      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+      "ignoreInWatchMode": [
+        "CONFIGURATOR_REVISION"
+      ]
     },
-    // PoolConfiguratorInstance — main market
     "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27": {
-      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+      "ignoreInWatchMode": [
+        "CONFIGURATOR_REVISION"
+      ]
     },
-    // PoolConfiguratorInstance — Horizon RWA market
     "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F": {
-      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+      "ignoreInWatchMode": [
+        "CONFIGURATOR_REVISION"
+      ]
     },
-    // PoolConfiguratorInstance — EtherFi market
     "eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d": {
-      "ignoreInWatchMode": ["CONFIGURATOR_REVISION"]
+      "ignoreInWatchMode": [
+        "CONFIGURATOR_REVISION"
+      ]
     },
-    // PoolInstance — main market
     "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2": {
-      "ignoreInWatchMode": ["getReservesCount", "MAX_NUMBER_RESERVES", "POOL_REVISION", "UMBRELLA"]
+      "ignoreInWatchMode": [
+        "getReservesCount",
+        "MAX_NUMBER_RESERVES",
+        "POOL_REVISION",
+        "UMBRELLA"
+      ],
+      "fields": {
+        "getAllVariableDebtTokens": {
+          "handler": {
+            "type": "aaveReserveTokens",
+            "tokenType": "variableDebt"
+          }
+        }
+      }
     },
-    // RewardsController — main market
     "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb": {
-      "ignoreInWatchMode": ["REVISION"]
+      "ignoreInWatchMode": [
+        "REVISION"
+      ]
     },
-    // RewardsController — Horizon RWA market
     "eth:0x1D5D386a90CEA8AcEa9fa75389e97CF5F1AE21D3": {
-      "ignoreInWatchMode": ["REVISION"]
+      "ignoreInWatchMode": [
+        "REVISION"
+      ]
     },
-    // VariableDebtTokenMainnetInstanceGHO
     "eth:0x786dBff3f1292ae8F92ea68Cf93c30b34B1ed04B": {
       "ignoreInWatchMode": [
         "DEBT_TOKEN_REVISION",
-        "decimals",
         "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
         "DOMAIN_SEPARATOR",
         "EIP712_REVISION",
         "name",
@@ -155,26 +328,510 @@
         "totalSupply"
       ]
     },
-    // Horizon RWA aToken proxies — discovered via getAllATokens on provider 0x53519c32...
-    // aHorRwaUSDC, aHorRwaRLUSD, aHorRwaUSTB, aHorRwaUSCC, aHorRwaUSYC, aHorRwaJTRSY,
-    // aHorRwaJAAA, aHorRwaVBILL, aHorRwaACRED — templates auto-apply ignoreInWatchMode
-    // Underlying RWA token contracts for the Horizon market (external protocols: Ondo, JTRSY, etc.)
-    // USTB, USCC, USYC, JTRSY, JAAA, VBILL, ACRED underlying tokens — not part of Aave scope
-    "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e": { "ignoreDiscovery": true },
-    "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c": { "ignoreDiscovery": true },
-    "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b": { "ignoreDiscovery": true },
-    "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86": { "ignoreDiscovery": true },
-    "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64": { "ignoreDiscovery": true },
-    "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01": { "ignoreDiscovery": true },
-    "eth:0x17418038ecF73BA4026c4f428547BF099706F27B": { "ignoreDiscovery": true },
-    // Actual reward distributor contracts from RewardsController (not aTokens)
-    "eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974": { "ignoreDiscovery": true },
-    "eth:0x30D20208d987713f46DFD34EF128Bb16C404D10f": { "ignoreDiscovery": true },
-    // aEthLidoWETH, aEthUSDS (main market), aEthLidowstETH — discovered via getAllATokens,
-    // templates auto-apply ignoreInWatchMode
-    // aGHO (ATokenInstance, main market) — template auto-applies ignoreInWatchMode
-    // aAAVE (ATokenWithDelegationInstance, main market) — template auto-applies ignoreInWatchMode
-    // All other aToken proxies are discovered via getAllATokens on the data providers
+    "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0": {
+      "ignoreInWatchMode": [
+        "ASSET_LISTING_ADMIN_ROLE",
+        "BRIDGE_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EMERGENCY_ADMIN_ROLE",
+        "FLASH_BORROWER_ROLE",
+        "POOL_ADMIN_ROLE",
+        "RISK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN_ROLE",
+              "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN_ROLE",
+              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE_ROLE",
+              "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN_ROLE",
+              "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER_ROLE",
+              "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x3cE8E2eb6501d4705477643E96881B1bef6A2DB3": {
+      "ignoreInWatchMode": [
+        "ASSET_LISTING_ADMIN_ROLE",
+        "BRIDGE_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EMERGENCY_ADMIN_ROLE",
+        "FLASH_BORROWER_ROLE",
+        "POOL_ADMIN_ROLE",
+        "RISK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN_ROLE",
+              "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN_ROLE",
+              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE_ROLE",
+              "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN_ROLE",
+              "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER_ROLE",
+              "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0": {
+      "ignoreInWatchMode": [
+        "ASSET_LISTING_ADMIN_ROLE",
+        "BRIDGE_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EMERGENCY_ADMIN_ROLE",
+        "FLASH_BORROWER_ROLE",
+        "POOL_ADMIN_ROLE",
+        "RISK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN_ROLE",
+              "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN_ROLE",
+              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE_ROLE",
+              "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN_ROLE",
+              "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER_ROLE",
+              "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN_ROLE"
+            }
+          }
+        }
+      },
+      "ignoreRelatives": [
+        "accessControl"
+      ]
+    },
+    "eth:0xEFD5df7b87d2dCe6DD454b4240b3e0A4db562321": {
+      "ignoreInWatchMode": [
+        "ASSET_LISTING_ADMIN_ROLE",
+        "BRIDGE_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "EMERGENCY_ADMIN_ROLE",
+        "FLASH_BORROWER_ROLE",
+        "POOL_ADMIN_ROLE",
+        "RISK_ADMIN_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN_ROLE",
+              "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN_ROLE",
+              "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE_ROLE",
+              "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN_ROLE",
+              "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER_ROLE",
+              "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x4457cA11E90f416Cc1D3a8E1cA41C0cdEcC251d4": {
+      "ignoreInWatchMode": [
+        "DEFAULT_ADMIN_ROLE",
+        "RETRY_ROLE",
+        "SOLVE_EMERGENCY_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xc448b9502bbdf9850cc39823b6ea40cfe96d3ac63008e89edd2b8e98c6cc0af3": "RETRY_ROLE",
+              "0xf4cdc679c22cbf47d6de8e836ce79ffdae51f38408dcde3f0645de7634fa607d": "SOLVE_EMERGENCY_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x2bd010Ab5393AB51b601B99C4B33ba148d9466e9": {
+      "ignoreInWatchMode": [
+        "BURNER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "GHO_TOKEN",
+        "MINTER_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE",
+              "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xE9ac5231fAecb633dA0Fe85Fcb2785b8363427d2": {
+      "ignoreInWatchMode": [
+        "BURNER_ROLE",
+        "DEFAULT_ADMIN_ROLE",
+        "GHO_TOKEN",
+        "MINTER_ROLE"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": "MINTER_ROLE",
+              "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848": "BURNER_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x3a657Ec8a755d2E43DDbfDeaDc15899EDaf8dcf8": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6e8ac99B2ec2e08600c7d0Aab970f31e9b11957a": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xCc18Be380838956aad41FD22466085eD66aaBB46": {
+      "ignoreMethods": [
+        "getMarkets"
+      ],
+      "ignoreInWatchMode": [
+        "UPDATE_TYPE",
+        "getUpdateType"
+      ]
+    },
+    "eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d": {
+      "ignoreMethods": [
+        "getMarkets"
+      ],
+      "ignoreInWatchMode": [
+        "UPDATE_TYPE",
+        "getUpdateType"
+      ]
+    },
+    "eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4": {
+      "ignoreMethods": [
+        "getMarkets"
+      ],
+      "ignoreInWatchMode": [
+        "UPDATE_TYPE",
+        "getUpdateType"
+      ]
+    },
+    "eth:0x52E652182b22C41d0202bB8D834982F43B12Cd21": {
+      "ignoreMethods": [
+        "getMarkets"
+      ],
+      "ignoreInWatchMode": [
+        "UPDATE_TYPE",
+        "getUpdateType"
+      ]
+    },
+    "eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6": {
+      "ignoreMethods": [
+        "getMarkets"
+      ],
+      "ignoreInWatchMode": [
+        "UPDATE_TYPE",
+        "getUpdateType"
+      ]
+    },
+    "eth:0x43b64f28A678944E0655404B0B98E443851cC34F": {
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT"
+      ]
+    },
+    "eth:0x54586bE62E3c3580375aE3723C145253060Ca0C2": {
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT"
+      ]
+    },
+    "eth:0xE3C061981870C0C7b1f3C4F4bB36B95f1F260BE6": {
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT"
+      ]
+    },
+    "eth:0x08795CFE08C7a81dCDFf482BbAAF474B240f31cD": {
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ],
+      "ignoreMethods": [
+        "getAllReservesTokens"
+      ]
+    },
+    "eth:0x41393e5e337606dc3821075Af65AeE84D7688CBD": {
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
+    },
+    "eth:0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3": {
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
+    },
+    "eth:0x8Cb4b66f7B13F2Ae4D3c91338fC007dbF8C14208": {
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
+    },
+    "eth:0xE7d490885A68f00d9886508DF281D67263ed5758": {
+      "ignoreInWatchMode": [
+        "getDebtCeilingDecimals"
+      ]
+    },
+    "eth:0x25eFA336886C74eA8E282ac466BdCd0199f85BB9": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "VERSION"
+      ]
+    },
+    "eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "nonce",
+        "VERSION"
+      ]
+    },
+    "eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "nonce",
+        "VERSION"
+      ]
+    },
+    "eth:0xA9962a5BfBea6918E958DeE0647E99fD7863b95A": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "VERSION"
+      ]
+    },
+    "eth:0xBc841B0dE0b93205e912CFBBd1D0c160A1ec6F00": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "VERSION"
+      ]
+    },
+    "eth:0xa198Fac58E02A5C5F8F7e877895d50cFa9ad1E04": {
+      "ignoreInWatchMode": [
+        "A_AAVE",
+        "A_AAVE_BASE_BALANCE_SLOT",
+        "A_AAVE_DELEGATED_STATE_SLOT",
+        "AAVE",
+        "BASE_BALANCE_SLOT",
+        "getVotingAssetList",
+        "STK_AAVE"
+      ]
+    },
+    "eth:0xC36442b4a4522E871399CD717aBDD847Ab11FE88": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x40E4243C9471bb0a84Ba0968bccc9b8975E5Ee62": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0x8dc095F287dBEBD9e15f75BB3DfBF18389BB8104": {
+      "ignoreInWatchMode": [
+        "CLOSE_FACTOR_HF_THRESHOLD",
+        "MIN_BASE_MAX_CLOSE_FACTOR_THRESHOLD",
+        "MIN_LEFTOVER_BASE"
+      ]
+    },
+    "eth:0x96D5686812e33Ab509ECCDb38C89d15607B2a413": {
+      "ignoreInWatchMode": [
+        "CLOSE_FACTOR_HF_THRESHOLD",
+        "MIN_BASE_MAX_CLOSE_FACTOR_THRESHOLD",
+        "MIN_LEFTOVER_BASE"
+      ]
+    },
+    "eth:0xB748952c7BC638F31775245964707Bcc5DDFabFC": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e": {
+      "ignoreInWatchMode": [
+        "getMarketId"
+      ],
+      "fields": {
+        // Fetch the Umbrella address stored under the generic getAddress(bytes32) slot.
+        // UMBRELLA = bytes32('UMBRELLA') = 0x554d4252454c4c41...
+        // Using full ABI signature so getFunctionFragment parses it directly (no ABI search needed).
+        "getUmbrella": {
+          "handler": {
+            "type": "call",
+            "method": "function getAddress(bytes32 id) external view returns (address)",
+            "args": [
+              "0x554d4252454c4c41000000000000000000000000000000000000000000000000"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xcfBf336fe147D643B9Cb705648500e101504B16d": {
+      "ignoreInWatchMode": [
+        "getMarketId"
+      ],
+      "fields": {
+        "getUmbrella": {
+          "handler": {
+            "type": "call",
+            "method": "function getAddress(bytes32 id) external view returns (address)",
+            "args": [
+              "0x554d4252454c4c41000000000000000000000000000000000000000000000000"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xeBa440B438Ad808101d1c451C1C5322c90BEFCdA": {
+      "ignoreInWatchMode": [
+        "getMarketId"
+      ],
+      "fields": {
+        "getUmbrella": {
+          "handler": {
+            "type": "call",
+            "method": "function getAddress(bytes32 id) external view returns (address)",
+            "args": [
+              "0x554d4252454c4c41000000000000000000000000000000000000000000000000"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0x0274a704a6D9129F90A62dDC6f6024b33EcDad36": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xb5b29320d2Dde5BA5BAFA1EbcD270052070483ec": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x95E3015c67EF62B866cC28ca5A9AB5017A55e336": {
+      "ignoreInWatchMode": [
+        "getAgentCount",
+        "getUpdateType"
+      ],
+      "ignoreMethods": [
+        "getAllowedMarkets"
+      ]
+    },
+    "eth:0x7ABB46C690C52E919687D19ebF89C81A6136C1F2": {
+      "ignoreMethods": [
+        "getUpdateById"
+      ],
+      "ignoreInWatchMode": [
+        "description",
+        "updateCounter"
+      ]
+    },
+    "eth:0x7571F419F7Df2d0622C1A20154a0D4250B2265cC": {
+      "ignoreInWatchMode": [
+        "availableBudget"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    "eth:0xf00E2de0E78DFf055A92AD4719a179CE275b6Ef7": {
+      "ignoreInWatchMode": [
+        "availableBudget"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    "eth:0x6A14eBe9A934c8EFE15C3811a999149472876b56": {
+      "ignoreInWatchMode": [
+        "availableBudget"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    "eth:0xE1e62c3ee0c581F715fBb0e23CDA536Fc29eeB2c": {
+      "ignoreInWatchMode": [
+        "availableBudget"
+      ],
+      "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        }
+      }
+    },
+    "eth:0x0000000022D53366457F9d5E68Ec105046FC4383": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xB9fC157394Af804a3578134A6585C0dc9cc990d4": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x17418038ecF73BA4026c4f428547BF099706F27B": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x30D20208d987713f46DFD34EF128Bb16C404D10f": {
+      "ignoreDiscovery": true
+    },
     "eth:0x111111111117dC0aa78b770fA6A738034120C302": {
       "ignoreDiscovery": true
     },
@@ -369,6 +1026,1644 @@
     },
     "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
       "ignoreDiscovery": true
+    },
+    "eth:0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xab515542d621574f9b5212d50593cD0C07e641bD": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x872fBcb1B582e8Cd0D0DD4327fBFa0B4C2730995": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x45c00508C14601fd1C1e296eB3C0e3eEEdCa45D0": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x0B498ff89709d3838a063f1dFA463091F9801c2b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x65c4C0517025Ec0843C9146aF266A2C5a2D148A2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xAa6E8127831c9DE45ae56bB1b0d4D4Da6e5665BD": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBFb2E2b1790E98779CF78Ab0F045075BFd0A6be5": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xD2AC55cA3Bbd2Dd1e9936eC640dCb4b745fDe759": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x08f866c74205617B6F3903EF481798EcED10cDEC": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x0e1fD036506c1129e9F2A05c1a01DDCfa813b0Aa": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x9240a6669CC4782FC98620212862DF5CB2e0Df10": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x69592e6f9d21989a043646fE8225da2600e5A0f7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x8E46F30b09fDFAe6C97Db27FEcF3304f86dD88c2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x49d9409111a6363d82C4371fFa43fAEA660C917B": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x85105b7E11c442Ca6fF6b4d90d7a439f68376Ac4": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x287778F121F134C66212FB16c9b53eC991D32f5b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3051e76a62da91D4aD6Be6bD98D8Ab26fdaF9D08": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x72915D41982DfCAf30b871290618E59C45Edba7F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xCCf3d848e08b94478Ed8f46fFead3008faF581fD": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xcE7a977Cac4a481bc84AC06b2Da0df614e621cf3": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xd9D8e68717Ce24CCbf162868aaad7E38d81b05d1": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x47f159C90850D5cE09E21F931d504536840f34b4": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xfdaFc9d1902f4e0b84f65F49f244b32b31013b74": {
+      "ignoreDiscovery": true // ComposableCoW
+    },
+    "eth:0x060373D064d0168931dE2AB8DDA7410923d06E88": {
+      "ignoreDiscovery": true // Milkman
+    },
+    "eth:0xC92E8bdf79f0507f65a392b0ab4667716BFE0110": {
+      "ignoreDiscovery": true // GPv2VaultRelayer (CoW Protocol)
+    },
+    "eth:0x6cF1e9cA41f7611dEf408122793c358a3d11E5a5": {
+      "ignoreDiscovery": true // TWAP price checker (HANDLER)
+    },
+    "eth:0xcfb9Bc9d2FA5D3Dd831304A0AE53C76ed5c64802": {
+      "ignoreDiscovery": true // FixedMinOutPriceChecker (limitOrderPriceChecker)
+    },
+    "eth:0xe80a1C615F75AFF7Ed8F08c9F21f9d00982D666c": {
+      "ignoreDiscovery": true // DynamicSlippageChecker (priceChecker)
+    },
+    "eth:0xe23fc134382de3eAF871C249C90bf3Acb846C5ab": {
+      "ignoreDiscovery": true // ChainlinkExpectedOutCalculator
+    },
+    "eth:0x004375Dff511095CC5A197A54140a24eFEF3A416": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0x2fDbAdf3C4D5A8666Bc06645B8358ab803996E28": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0x3dA1313aE46132A397D90d95B1424A9A7e3e0fCE": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0x43AE24960e5534731Fc831386c07755A2dc33D47": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0x8Bd1661Da98EBDd3BD080F0bE4e6d9bE8cE9858c": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xa2107FA5B38d9bbd2C461D6EDf11B11A50F6b974": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xB6909B960DbbE7392D405429eB2b3649752b4838": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xBb2b8038a1640196FbE3e38816F3e67Cba72D940": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xC2aDdA861F89bBB333c90c492cB837741916A225": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xd3d2E2692501A5c9Ca623199D38826e513033a17": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0xDFC14d2Af169B0D36C4EFF567Ada9b2E0CAE044f": {
+      "ignoreDiscovery": true // UniswapV2Pair
+    },
+    "eth:0x1efF8aF5D577060BA4ac8A29A13525bb0Ee2A3D5": {
+      "ignoreDiscovery": true // BPool (Balancer)
+    },
+    "eth:0x59A19D8c652FA0284f44113D0ff9aBa70bd46fB4": {
+      "ignoreDiscovery": true // BPool (Balancer)
+    },
+    "eth:0x50379f632ca68D36E50cfBC8F78fe16bd1499d1e": {
+      "ignoreDiscovery": true // GUniPool (Arrakis/Gelato)
+    },
+    "eth:0xD2eeC91055F07fE24C9cCB25828ecfEFd4be0c41": {
+      "ignoreDiscovery": true // ArrakisVaultV1
+    },
+    "eth:0x015396E1F286289aE23a762088E863b3ec465145": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x028f7886F3e937f8479efaD64f31B3fE1119857a": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x04142fc546D59838852873bba5C8827601A13FC8": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x08a8Dc81AeA67F84745623aC6c72CDA3967aab8b": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x08e1bba76D27841dD91FAb4b3a636A0D5CF8c3E9": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x0D8486E1CAbf3C9407B3DdA0cfc4d9C3101fB683": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x0c91bcA95b5FE69164cE583A2ec9429A569798Ed": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x1097eDb85392932b7dCB630baDDC8A6D73585218": {
+      "ignoreInWatchMode": [
+        "ATOKEN_IMPL",
+        "BORROW_ENGINE",
+        "CAPS_ENGINE",
+        "COLLATERAL_ENGINE",
+        "COLLECTOR",
+        "DEFAULT_INTEREST_RATE_STRATEGY",
+        "EMODE_ENGINE",
+        "LISTING_ENGINE",
+        "ORACLE",
+        "POOL",
+        "POOL_CONFIGURATOR",
+        "PRICE_FEED_ENGINE",
+        "RATE_ENGINE",
+        "REWARDS_CONTROLLER",
+        "VTOKEN_IMPL"
+      ]
+    },
+    "eth:0x16264412CB72F0d16A446f7D928Dd0D822810048": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x18577F0f4A0B2Ee6F4048dB51c7acd8699F97DB8": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x1EBdbE77bbDDD284BdCE8D7981D7eD26D6af58cA": {
+      "ignoreInWatchMode": [
+        "CONFIG_ENGINE",
+        "MINIMUM_DELAY",
+        "POOL_DATA_PROVIDER",
+        "RISK_COUNCIL"
+      ]
+    },
+    "eth:0x1a83eCA2d3b0cea2595Fb11Ec60cb2D428217C2e": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x1b7D3F4b3c032a5AE656e30eeA4e8E1Ba376068F": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x22517fE16DEd08e52E7EA3423A2EA4995b1f1731": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x22aC12a6937BBBC0a301AF9154d08EaD95673122": {
+      "ignoreInWatchMode": [
+        "COLLECTOR"
+      ]
+    },
+    "eth:0x253127Ffc04981cEA8932F406710661c2f2c3fD2": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x2ABbAab3EF4e4A899d39e7EC996b5715E76b399a": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x2CE7e7b238985A8aD3863De03F200B245B0c1216": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x2D9fe18b6c35FE439cC15D932cc5C943bf2d901E": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x2c2163f120cf58631368981BC16e90190Bc6C644": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x33652e48e4B74D18520f11BfE58Edd2ED2cEc5A2": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x3D3efceb4Ff0966D34d9545D3A2fa2dcdBf451f2": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x3E59212c34588a63350142EFad594a20C88C2CEd": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x3c20fbFD32243Dd9899301C84bCe17413EeE0A0C": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x40aAbEf1aa8f0eEc637E0E7d92fbfFB2F26A8b7B": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x4228F8895C7dDA20227F6a5c6751b8Ebf19a6ba8": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x46Aa1063e5265b43663E81329333B47c517A5409": {
+      "ignoreInWatchMode": [
+        "getControlledFacilitators",
+        "GHO_TOKEN",
+        "MINIMUM_DELAY",
+        "RISK_COUNCIL"
+      ]
+    },
+    "eth:0x47eD0509e64615c0d5C6d39AF1B38D02Bc9fE58f": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x482548b76D4C577A0b5cb2A1f97EFB2893E957ed": {
+      "ignoreInWatchMode": [
+        "ATOKEN_IMPL",
+        "BORROW_ENGINE",
+        "CAPS_ENGINE",
+        "COLLATERAL_ENGINE",
+        "COLLECTOR",
+        "DEFAULT_INTEREST_RATE_STRATEGY",
+        "EMODE_ENGINE",
+        "LISTING_ENGINE",
+        "ORACLE",
+        "POOL",
+        "POOL_CONFIGURATOR",
+        "PRICE_FEED_ENGINE",
+        "RATE_ENGINE",
+        "REWARDS_CONTROLLER",
+        "VTOKEN_IMPL"
+      ]
+    },
+    "eth:0x48351fCc9536dA440AE9471220F6dC921b0eB703": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x490E0E6255bF65b43E2e02F7acB783c5e04572Ff": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x4A35FD7F93324Cc48bc12190D3F37493437b1Eff": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x4f97B950a30321c181E974971E156E19fAD184A3": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x5024e947ef81B9184Faf0CfF9b485446f01c8eD2": {
+      "ignoreInWatchMode": [
+        "ADDRESSES_PROVIDER",
+        "MAX_BORROW_RATE",
+        "MAX_OPTIMAL_POINT",
+        "MIN_OPTIMAL_POINT"
+      ]
+    },
+    "eth:0x57B67e4DE077085Fd0AF2174e9c14871BE664546": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731": {
+      "ignoreInWatchMode": [
+        "getBorrowRateConfig",
+        "getGhoTimelocks",
+        "GHO_TOKEN",
+        "MINIMUM_DELAY",
+        "POOL_ADDRESSES_PROVIDER",
+        "POOL_DATA_PROVIDER",
+        "RISK_COUNCIL"
+      ]
+    },
+    "eth:0x655568bDd6168325EC7e58Bf39b21A856F906Dc2": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x68aeB290C7727D899B47c56d1c96AEAC475cD0dD": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x68e9f0aD4e6f8F5DB70F6923d4d6d5b225B83b16": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x690Df181701C11C53EA33bBF303C25834b66bD14": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6C67e666BB954d4bE23e9F1cE20e7E8699d29339": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6De3E52A1B7294A34e271a508082b1Ff4a37E30e": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6Efc73E54E41b27d2134fF9f98F15550f30DF9B1": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6c82c66622Eb360FC973D3F492f9D8E9eA538b08": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6df1C1E379bC5a00a7b4C6e67A203333772f45A8": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x72E95b8931767C79bA4EeE721354d6E99a61D004": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x730318dB7b830d324fC3fEDDB1d212Ec64bD3141": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x762Edb8D79b97487F82093f85059e42EeEf61E9e": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x77ad9BF13a52517AD698D65913e8D381300c8Bf3": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x7EC9Afe70f8FD603282eBAcbc9058A83623E2899": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x7F8Fc14D462bdF93c681c1f2Fd615389bF969Fb2": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3": {
+      "ignoreInWatchMode": [
+        "CONFIG_ENGINE",
+        "getRiskConfig",
+        "POOL",
+        "RISK_COUNCIL"
+      ]
+    },
+    "eth:0x8838eefF2af391863E1Bb8b1dF563F86743a8470": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x88B8358F5BC87c2D7E116cCA5b65A9eEb2c5EA3F": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x8958b1C39269167527821f8c276Ef7504883f2fa": {
+      "ignoreInWatchMode": [
+        "ADDRESSES_PROVIDER",
+        "MAX_BORROW_RATE",
+        "MAX_OPTIMAL_POINT",
+        "MIN_OPTIMAL_POINT"
+      ]
+    },
+    "eth:0x8988ECA19D502fd8b9CCd03fA3bD20a6f599bc2A": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x8C6FeaF5d58BA1A6541F9c4aF685f62bFCBaC3b1": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x8Db9D35e117d8b93C6Ca9b644b25BaD5d9908141": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x8aBd1892a1c31b8e52fC1210098fE4cAc4E52aCc": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0x8d0de040e8aAd872eC3c33A3776dE9152D3c34ca": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x909bA8DA4c826C62013Ce3A30ce1F42943F3b340": {
+      "ignoreInWatchMode": [
+        "ATOKEN_IMPL",
+        "BORROW_ENGINE",
+        "CAPS_ENGINE",
+        "COLLATERAL_ENGINE",
+        "COLLECTOR",
+        "DEFAULT_INTEREST_RATE_STRATEGY",
+        "EMODE_ENGINE",
+        "LISTING_ENGINE",
+        "ORACLE",
+        "POOL",
+        "POOL_CONFIGURATOR",
+        "PRICE_FEED_ENGINE",
+        "RATE_ENGINE",
+        "REWARDS_CONTROLLER",
+        "VTOKEN_IMPL"
+      ]
+    },
+    "eth:0x91b7d78BF92db564221f6B5AeE744D1727d1Dd1e": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x9355032d747f1e08F8720CD01950E652eE15cdB7": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x9Ba896531F878Ed5f0A4F73E82d63bA7b424F910": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x9D244A99801dc05cbC04183769c17056B8A1Ad53": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x9ec6F08190DeA04A54f8Afc53Db96134e5E3FdFB": {
+      "ignoreInWatchMode": [
+        "ADDRESSES_PROVIDER",
+        "MAX_BORROW_RATE",
+        "MAX_OPTIMAL_POINT",
+        "MIN_OPTIMAL_POINT"
+      ]
+    },
+    "eth:0xA38fCa8c6Bf9BdA52E76EB78f08CaA3BE7c5A970": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xA803414f84fCEF00e745bE7CC2A315908927f15D": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xAC50890a80A2731eb1eA2e9B4F29569CeB06D960": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xAEf73b04654931B94920a3D7AE62032b79fB6d0c": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xBF79d8339303148E345277a994Eb2cD5d82F0067": {
+      "ignoreInWatchMode": [
+        "CONFIG_ENGINE",
+        "getRiskConfig",
+        "POOL",
+        "RISK_COUNCIL"
+      ]
+    },
+    "eth:0xBae535520Abd9f8C85E58929e0006A2c8B372F74": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xBb077DaFFeb23B2126E7358b0b122ba6838FB881": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBdFe7aD7976d5d7E0965ea83a81Ca1bCfF7e84a9": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xC16666b7FF197427BD255E6961A5F99cfb3A6059": {
+      "ignoreInWatchMode": [
+        "ADDRESSES_PROVIDER",
+        "MAX_BORROW_RATE",
+        "MAX_OPTIMAL_POINT",
+        "MIN_OPTIMAL_POINT"
+      ]
+    },
+    "eth:0xC96113eED8cAB59cD8A66813bCB0cEb29F06D2e4": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xD26dcF055E16ed3048a17b37006082779CF0297c": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xD2cf07dEE40d3D530D15b88d689f5cd97A31FC3D": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xE35e6A0D3AbC28289f5d4C2d262a133Df936b98D": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xE439edd2625772AA635B437C099C607B6eb7d35f": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xF64178Ebd2E2719F2B1233bCb5Ef6DB4bCc4d09a": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xa665bB258D2a732C170dFD505924214c0b1AC74F": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xaFFA06528Bd92625de2e7A0cfa0119319265Ea4b": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xacD3d3FaCeA0424984F662827B988f4581a3cE31": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xae8593DD575FE29A9745056aA91C4b746eee62C8": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xb53F0547722AE5fa5b433a7acc44571aD68CEdAA": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xb639D208Bcf0589D54FaC24E655C79EC529762B8": {
+      "ignoreInWatchMode": [
+        "ADDRESSES_PROVIDER",
+        "CALLBACK_SUCCESS",
+        "GHO_TOKEN",
+        "MAX_FEE"
+      ]
+    },
+    "eth:0xb7D402138Cb01BfE97d95181C849379d6AD14d19": {
+      "ignoreInWatchMode": [
+        "COLLECTOR",
+        "COMPOSABLE_COW",
+        "HANDLER",
+        "MAX_SLIPPAGE"
+      ]
+    },
+    "eth:0xc30808705C01289A3D306ca9CAB081Ba9114eC82": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xc9AD8Dd111e6384128146467aAf92B81EC422848": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xcF8d0c70c850859266f5C338b38F9D663181C314": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xd180D7fdD4092f07428eFE801E17BC03576b3192": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xd90DA2Df915B87fE1621A7F2201FbF4ff2cCA031": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xe7ea6125490ae4594aD9B44D05dFF9F2A4343134": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xeA51d7853EEFb32b6ee06b1C12E6dcCA88Be0fFE": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xeA85a065F87FE28Aa8Fbf0D6C7deC472b106252C": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xeB284A70557EFe3591b9e6D9D720040E02c54a4d": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xeD90dE2D824Ee766c6Fd22E90b12e598f681dc9F": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xeFFDE9BFA8EC77c14C364055a200746d6e12BeD6": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0xfd3aDA5AAbdc6531C7C2AC46c00eBf870f5a0E6B": {
+      "ignoreInWatchMode": [
+        "DEBT_TOKEN_REVISION",
+        "DELEGATION_WITH_SIG_TYPEHASH",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "EIP712_REVISION",
+        "name",
+        "scaledTotalSupply",
+        "symbol",
+        "totalSupply"
+      ]
+    },
+    "eth:0x5D39E06b825C1F2B80bf2756a73e28eFAA128ba0": {
+      "ignoreInWatchMode": [
+        "getMarketId"
+      ],
+      "fields": {
+        "getUmbrella": {
+          "handler": {
+            "type": "call",
+            "method": "function getAddress(bytes32 id) external view returns (address)",
+            "args": [
+              "0x554d4252454c4c41000000000000000000000000000000000000000000000000"
+            ]
+          }
+        }
+      }
+    },
+    // Umbrella - add accessControl handler to discover role members (COVERAGE_MANAGER_ROLE, PAUSE_GUARDIAN_ROLE, RESCUE_GUARDIAN_ROLE)
+    "eth:0xD400fc38ED4732893174325693a63C30ee3881a8": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    // RewardsController (new umbrella version) - add accessControl handler for DEFAULT_ADMIN_ROLE and REWARDS_ADMIN_ROLE members
+    "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    // RwaATokenManager - accessControl handler to discover DEFAULT_ADMIN_ROLE members
+    "eth:0x803e5Db3E26e88AD0a682A46c3E04cdd053D0EB9": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
+    // StataTokenV2 instances - safe watch-mode ignores (exchange rates, constants, price feeds)
+    "eth:0x0bfc9d54Fc184518A81162F8fB99c2eACa081202": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "RAY",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "RAY",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0xD4fa2D31b7968E448877f69A96DE69f5de8cD23E": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "RAY",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    // UmbrellaStakeToken instances - safe watch-mode ignores
+    "eth:0x4f827A63755855cDf3e8f3bcD20265C833f15033": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "getMaxSlashableAssets",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0x6bf183243FdD1e306ad2C4450BC7dcf6f0bf8Aa6": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "getMaxSlashableAssets",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0x75e8aC0c063B6966E2A9954adEdf39BdE9370197": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "getMaxSlashableAssets",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0xA484Ab92fe32B143AEE7019fC1502b1dAA522D31": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "getMaxSlashableAssets",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    "eth:0xaAFD07D53A7365D3e9fb6F3a3B09EC19676B73Ce": {
+      "ignoreInWatchMode": [
+        "convertToAssets",
+        "convertToShares",
+        "decimals",
+        "DOMAIN_SEPARATOR",
+        "eip712Domain",
+        "getMaxSlashableAssets",
+        "latestAnswer",
+        "name",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "symbol",
+        "totalAssets",
+        "totalSupply"
+      ]
+    },
+    // Safe multisig contracts - constant fields safe to ignore
+    "eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "VERSION"
+      ]
+    },
+    "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "VERSION"
+      ]
+    },
+    "eth:0x2Fe367d6F8a755Ca22EfAE7F29004f9b5fA868e8": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "VERSION"
+      ]
+    },
+    "eth:0xE6ec1f0Ae6Cd023bd0a9B4d0253BDC755103253c": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "VERSION"
+      ]
+    },
+    // GnosisSafe - nonce is a tx counter, safe to ignore
+    "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF": {
+      "ignoreInWatchMode": [
+        "domainSeparator",
+        "getChainId",
+        "multisigThreshold",
+        "NAME",
+        "nonce",
+        "VERSION"
+      ]
+    },
+    // LendingPool (legacy Aave V2) - revision constant
+    "eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB": {
+      "ignoreInWatchMode": [
+        "LENDINGPOOL_REVISION"
+      ]
+    },
+    // LiquidationLogic - protocol constants (only change via code upgrade)
+    "eth:0x4731bF01583F991278692E8727d0700a00A1fBBf": {
+      "ignoreInWatchMode": [
+        "CLOSE_FACTOR_HF_THRESHOLD",
+        "MIN_BASE_MAX_CLOSE_FACTOR_THRESHOLD",
+        "MIN_LEFTOVER_BASE"
+      ]
+    },
+    // ProxyAdmin instances - UPGRADE_INTERFACE_VERSION is a constant
+    "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0x71B40923a23557820773cc061888bCD704F19594": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0x7385F804BCAa42D7019299Aa0857b37CdE458bc3": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xDE9F8379a5a972100d0373103a849E8ABdf56a9a": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xEbAEacB6102B21D7996524D8ad47b33a3115ba69": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xfD57dE1F38e3F730E0BEb7238dD50E396851dda0": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
+    },
+    "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b": {
+      "ignoreInWatchMode": [
+        "UPGRADE_INTERFACE_VERSION"
+      ]
     }
   }
 }

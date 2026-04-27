@@ -749,6 +749,22 @@
                 },
                 "additionalProperties": false,
                 "required": ["type", "endpoint"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "aaveReserveTokens" },
+                  "tokenType": {
+                    "anyOf": [
+                      { "const": "variableDebt" },
+                      { "const": "stableDebt" },
+                      { "const": "aToken" }
+                    ]
+                  },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "additionalProperties": false,
+                "required": ["type", "tokenType"]
               }
             ]
           },
