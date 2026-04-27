@@ -18,11 +18,7 @@
         "args": [],
         "method": "getStaticConfig"
       },
-      "edit": [
-        "pipe",
-        ["set", "chainSelector", ["format", "ChainIdMap"]],
-        ["pick", "chainSelector"]
-      ]
+      "edit": ["pick", "chainSelector"]
     }
   }
 }

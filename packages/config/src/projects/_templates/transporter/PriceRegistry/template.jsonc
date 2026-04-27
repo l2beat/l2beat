@@ -1,4 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["getFeeTokens", "owner"]
+  "ignoreMethods": ["getPriceUpdaters"],
+  "ignoreRelatives": ["getFeeTokens", "owner"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove fee tokens and price updaters used by CCIP pricing."
+        }
+      ]
+    }
+  }
 }

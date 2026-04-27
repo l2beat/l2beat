@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BridgeToken",
+  "description": "Wormhole wrapped ERC20 token implementation used directly or behind Beacon proxies. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.",
+  "ignoreRelatives": ["$admin", "eip712Domain", "owner"]
+}

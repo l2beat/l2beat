@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RMNRemote",
+  "description": "Remote Risk Management Network contract used by CCIP to verify RMN reports and expose cursed subjects.",
+  "fields": {
+    "getVersionedConfig": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign RMN reports that can approve or block CCIP activity for the local chain."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update the RMN signer set and fault threshold used to approve or block CCIP activity."
+        }
+      ]
+    }
+  }
+}

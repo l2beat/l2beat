@@ -1,0 +1,186 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ccip",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 150,
+  "initialAddresses": [
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+    "eth:0x06179f7C1be40863405f374E7f5F8806c728660A"
+  ],
+  "names": {
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
+    "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": "GHOEthereumTokenPool",
+    "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284": "EthereumToArbitrumOnRamp",
+    "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "ArbitrumToEthereumOffRamp",
+    "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": "ArbitrumToEthereumCommitStore",
+    "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad": "PriceRegistry",
+    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": "ARMProxy",
+    "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": "RMNRemote",
+    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "ARMProxyOwner",
+    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": "RMNRemoteOwner"
+  },
+  "overrides": {
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
+      "fields": {
+        "arbitrumOnRamp": {
+          "description": "The OnRamp used by CCIP to send messages and tokens from Ethereum to Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "getOnRamp",
+            "args": ["4949039107694359620"]
+          }
+        },
+        "arbitrumOffRamp": {
+          "description": "The OffRamp used by CCIP to deliver messages and tokens from Arbitrum One to Ethereum.",
+          "handler": {
+            "type": "call",
+            "method": "getOffRamps",
+            "args": []
+          },
+          "edit": [
+            "pipe",
+            ["find", ["=", "#sourceChainSelector", "4949039107694359620"]],
+            ["get", "offRamp"]
+          ],
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "deliver Arbitrum-to-Ethereum CCIP messages and token transfers accepted by this Router."
+            }
+          ]
+        },
+        "isArbitrumSupported": {
+          "description": "True if the Ethereum CCIP Router supports sending to Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "isChainSupported",
+            "args": ["4949039107694359620"]
+          }
+        }
+      }
+    },
+    "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
+      "category": "gov",
+      "description": "Aave governance executor that owns the GHO Ethereum token pool.",
+      "ignoreRelatives": ["owner"]
+    },
+    "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": {
+      "description": "Aave GHO CCIP steward that can update bridge and rate limits for the GHO Ethereum token pool.",
+      "ignoreRelatives": ["GHO_TOKEN", "GHO_TOKEN_POOL", "RISK_COUNCIL"]
+    },
+    "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": {
+      "ignoreRelatives": [
+        "$admin",
+        "arbitrumRemotePools",
+        "arbitrumRemoteToken",
+        "adapter",
+        "bridge",
+        "getAllowList",
+        "getLockbox",
+        "getMinter",
+        "getOffRamps",
+        "getOnRamps",
+        "getRebalancer",
+        "getToken",
+        "getXERC20",
+        "i_messageTransmitter",
+        "i_tokenMessenger",
+        "minter"
+      ],
+      "types": {
+        "RemoteAddress": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 12 }
+        }
+      },
+      "fields": {
+        "isArbitrumSupported": {
+          "description": "True if this GHO token pool supports the Ethereum to Arbitrum One route.",
+          "handler": {
+            "type": "call",
+            "method": "isSupportedChain",
+            "args": ["4949039107694359620"]
+          }
+        },
+        "arbitrumRemotePools": {
+          "description": "The GHO token pool addresses trusted as remote peers on Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "getRemotePools",
+            "args": ["4949039107694359620"],
+            "ignoreRelative": true
+          },
+          "edit": ["map", ["format", "RemoteAddress"]]
+        },
+        "arbitrumRemoteToken": {
+          "description": "The remote GHO token address on Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "getRemoteToken",
+            "args": ["4949039107694359620"],
+            "ignoreRelative": true
+          },
+          "edit": ["format", "RemoteAddress"]
+        },
+        "arbitrumInboundRateLimiter": {
+          "description": "Inbound rate limit config for GHO transfers arriving from Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "getCurrentInboundRateLimiterState",
+            "args": ["4949039107694359620"]
+          },
+          "edit": ["pick", "isEnabled", "capacity", "rate"]
+        },
+        "arbitrumOutboundRateLimiter": {
+          "description": "Outbound rate limit config for GHO transfers sent to Arbitrum One.",
+          "handler": {
+            "type": "call",
+            "method": "getCurrentOutboundRateLimiterState",
+            "args": ["4949039107694359620"]
+          },
+          "edit": ["pick", "isEnabled", "capacity", "rate"]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "configure remote chains, pool addresses, router, allowlist, admins, and rebalancer for the GHO token pool."
+            }
+          ]
+        },
+        "getBridgeLimitAdmin": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the GHO bridge limit and current bridged amount accepted by the token pool."
+            }
+          ]
+        },
+        "getRateLimitAdmin": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change inbound and outbound GHO rate limits for the Arbitrum route."
+            }
+          ]
+        },
+        "getRmnProxy": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "block GHO pool operations when ARM/RMN marks the route or global subject as cursed."
+            }
+          ]
+        },
+        "getRouter": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "route GHO token transfers into and out of this token pool."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

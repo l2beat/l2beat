@@ -1,0 +1,75 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "layerzero",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 50,
+  "initialAddresses": [
+    "eth:0x1a44076050125825900e736c501f859c50fE728c",
+    "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
+  ],
+  "names": {
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
+    "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": "RsETHOFTAdapter",
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
+  },
+  "overrides": {
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": {
+      "description": "Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here.",
+      "ignoreRelatives": ["getRegisteredLibraries"],
+      "fields": {
+        "rsETHAdapterDelegate": {
+          "description": "The address delegated by the rsETH OFT adapter to configure its LayerZero endpoint settings.",
+          "handler": {
+            "method": "delegates",
+            "type": "call",
+            "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"]
+          }
+        },
+        "rsETHReceiveLibraryFromUnichain": {
+          "description": "The receive MessageLib used by the Ethereum rsETH OFT adapter for messages from its Unichain peer.",
+          "handler": {
+            "method": "getReceiveLibrary",
+            "type": "call",
+            "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", 30320]
+          }
+        }
+      }
+    },
+    "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": {
+      "fields": {
+        "peerUnichain": {
+          "description": "The configured peer for the rsETH OFT route from Unichain.",
+          "handler": { "type": "call", "method": "peers", "args": [30320] }
+        },
+        "isUnichainPeer": {
+          "description": "True if the configured Unichain rsETH OFT peer matches 0xc3eacf0612346366db554c991d7858716db09f58.",
+          "handler": {
+            "type": "call",
+            "method": "isPeer",
+            "args": [
+              30320,
+              "0x000000000000000000000000c3eacf0612346366db554c991d7858716db09f58"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
+      "fields": {
+        "getUlnConfig": {
+          "description": "The verification config of the Ethereum rsETH OFT adapter for messages coming from Unichain. Returns confirmations, required DVNs, optional DVNs, and the optional DVN threshold.",
+          "handler": {
+            "type": "call",
+            "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", 30320]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "verify rsETH OFT messages sent from Unichain through LayerZero."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

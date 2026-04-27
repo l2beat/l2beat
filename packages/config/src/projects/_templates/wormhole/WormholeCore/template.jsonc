@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WormholeCore",
+  "description": "Wormhole Core Bridge verifies VAAs signed by the active Guardian set and executes Guardian governance messages for the local Wormhole deployment.",
+  "ignoreRelatives": ["$admin"]
+}

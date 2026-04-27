@@ -1,22 +1,23 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getOffRamps"],
+  "ignoreRelatives": ["getWrappedNative", "owner"],
   "fields": {
-    "onRamps": {
-      "handler": {
-        "type": "event",
-        "select": "onRamp",
-        "groupBy": "destChainSelector",
-        "set": { "event": "OnRampSet" }
-      }
+    "getArmProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block routed messages when ARM/RMN reports the relevant subject as cursed."
+        }
+      ]
     },
-    "offRamps": {
-      "handler": { "type": "call", "args": [], "method": "getOffRamps" },
-      "edit": [
-        "map",
-        ["shape", ["sourceChainSelector", ["format", "ChainIdMap"]], "offRamp"]
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove OnRamps and OffRamps and change the wrapped native token used by this Router."
+        }
       ]
     }
-  },
-  "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative", "owner", "onRamps", "offRamps"]
+  }
 }

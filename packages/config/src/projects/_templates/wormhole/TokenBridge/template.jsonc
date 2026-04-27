@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TokenBridge",
+  "description": "Wormhole Token Bridge escrow and wrapped-token beacon on EVM chains. It accepts VAAs verified by Wormhole Core to mint, burn, release, register remote bridge emitters, and upgrade bridge logic.",
+  "ignoreRelatives": ["$admin", "WETH"]
+}
