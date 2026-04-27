@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x4dcd53718b1b9f3e89a00180f0508887251f23c4
+
+# Diff at Mon, 27 Apr 2026 13:19:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@69e1ffc0f6a844a7112dfb14a6042b7d790771c0 block: 1776418606
+- current timestamp: 1777295886
+
+## Description
+
+Another trx to L2 via governance: https://tools.l2beat.com/decoder-new/?hash=0xeab9b42383251bb874b226fd6b1089763b429c60250c33b3c25dcfa24d1e64a2&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        41
++        42
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        41
++        42
+    }
+```
+
 Generated with discovered.json: 0xd17f1d42f09777bd9a8fe069b3b5d463e90619f3
 
 # Diff at Fri, 17 Apr 2026 09:37:51 GMT:

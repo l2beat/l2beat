@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xdf0dae661450d657979b94193e34cb9fb1316ecc
+
+# Diff at Mon, 27 Apr 2026 14:17:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@69e1ffc0f6a844a7112dfb14a6042b7d790771c0 block: 1776681649
+- current timestamp: 1777296071
+
+## Description
+
+Upgraded ExecutionMultisigValidator: https://disco.l2beat.com/diff/eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7/eth:0xc954B4D51031870624f3e779Ead14C57249C111D (although diff is not very readable). This is a intermediary contract that lets validators stop block execution. The main changes are:
+
+- It is made EIP1967 upgradeable
+- Multisig rotation now emits events, which allows tracking the members in disco
+- Added EIP-712 structured data hashing
+- General refactor
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorVTL.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.PRECOMMITTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.COMMITTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.COMMITTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.REVERTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.REVERTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.PROVER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.PROVER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.EXECUTOR_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.EXECUTOR_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xd972d03C8A45eF3c7937a279d998E4AeCCc2b63D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionMultisigValidator (eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.
+```
+
+## Source code changes
+
+```diff
+.../EraMultisigValidator/EraMultisigValidator.sol} | 7829 +++++++++++---------
+ .../TransparentUpgradeableProxy.p.sol              |  864 +++
+ .../src/projects/zksync2/.flat/ProxyAdmin.sol      |  217 +
+ .../.flat@1776681649/Safe/Safe.sol => /dev/null    | 1216 ---
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ 5 files changed, 5613 insertions(+), 4555 deletions(-)
+```
+
 Generated with discovered.json: 0xec69535c84a60d812b9d8cc45c4296daedd1d4eb
 
 # Diff at Mon, 20 Apr 2026 10:41:53 GMT:
