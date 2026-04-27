@@ -10,12 +10,7 @@ import type {
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type {
-  CoingeckoId,
-  Configuration,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
@@ -24,6 +19,7 @@ import type {
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
+import type { Configuration } from '../tools/uif/multi/types'
 import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { InteropAggregationConfig } from './features/interop'
