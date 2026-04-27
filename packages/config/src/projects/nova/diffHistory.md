@@ -8,7 +8,7 @@ Generated with discovered.json: 0x53af93e4826fee65f3bd5598b49168ab491d2071
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Surface the 10 whitelisted BoLD validators as named permissioned actors with `propose` and `challenge` permissions on the RollupProxy. Disable the `scheduledTransactions` handler on the shared Arbitrum `L1Timelock` (mirrors the existing arbitrum override) since it crashes on newer blocks.
 
 ## Config/verification related changes
 
