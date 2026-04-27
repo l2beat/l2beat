@@ -11,7 +11,7 @@ import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
 } from '@l2beat/backend-tools/elastic-search'
-import { RpcMetricsAggregator } from '@l2beat/shared'
+import { RpcMetricsAggregator, withRpcMetricsContext } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
 import apm from 'elastic-apm-node'
 import { Application } from './Application'
@@ -35,9 +35,11 @@ async function main() {
   })
 
   try {
-    const config = await getConfig()
-    const app = new Application(config, logger)
-    await app.start()
+    await withRpcMetricsContext({ coreFeature: 'uncategorized' }, async () => {
+      const config = await getConfig()
+      const app = new Application(config, logger)
+      await app.start()
+    })
   } catch (e) {
     logger.critical('Failed to start the application', e)
 
