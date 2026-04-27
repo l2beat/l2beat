@@ -45,6 +45,7 @@ export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined
   burnAndMint: BurnAndMintProtocolData | undefined
+  unknown: BridgeTypeCommonData | undefined
 }
 
 type BridgeTypeCommonData = {
@@ -60,7 +61,7 @@ export type LockAndMintProtocolData = BridgeTypeCommonData & {
 }
 
 export type NonMintingProtocolData = BridgeTypeCommonData & {
-  averageValueInFlight: number
+  averageValueInFlight: number | undefined
 }
 
 export type BurnAndMintProtocolData = BridgeTypeCommonData

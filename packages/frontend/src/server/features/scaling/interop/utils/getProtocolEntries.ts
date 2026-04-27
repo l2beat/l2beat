@@ -232,6 +232,30 @@ function getByBridgeTypeData(
           flows: flowsMapToSorted(data.burnAndMint.flows, selection),
         }
       : undefined,
+    unknown: data.unknown
+      ? {
+          volume: data.unknown.volume,
+          transferCount: data.unknown.transferCount,
+          averageValue:
+            data.unknown.identifiedTransferCount > 0
+              ? data.unknown.volume / data.unknown.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.unknown.tokens,
+              tokensDetailsMap,
+              interopProjects: [project],
+              durationSplit: undefined,
+              unknownTransfersCount:
+                data.unknown.transferCount -
+                data.unknown.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.unknown.flows, selection),
+        }
+      : undefined,
   }
 }
 

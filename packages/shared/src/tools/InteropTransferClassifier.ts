@@ -9,6 +9,8 @@ export interface InteropTransferForClassification {
   type: string
   srcChain: string
   dstChain: string
+  srcEventId: string | undefined
+  dstEventId: string | undefined
   srcWasBurned: boolean | undefined
   dstWasMinted: boolean | undefined
   srcAbstractTokenId: string | undefined
@@ -102,9 +104,14 @@ export class InteropTransferClassifier {
         const transferBridgeType =
           transfer.bridgeType ??
           InteropTransferClassifier.inferBridgeType(transfer)
+        const isOneSidedWithUnknownBridgeType =
+          InteropTransferClassifier.isOneSided(transfer) &&
+          transferBridgeType === 'unknown'
+
         return (
           plugin.plugin === transfer.plugin &&
-          plugin.bridgeType === transferBridgeType
+          (isOneSidedWithUnknownBridgeType ||
+            plugin.bridgeType === transferBridgeType)
         )
       })
 
@@ -155,5 +162,17 @@ export class InteropTransferClassifier {
       return 'nonMinting'
     }
     return 'unknown'
+  }
+
+  static isOneSided(
+    transfer: Pick<
+      InteropTransferForClassification,
+      'srcEventId' | 'dstEventId'
+    >,
+  ): boolean {
+    const hasSrcEvent = transfer.srcEventId !== undefined
+    const hasDstEvent = transfer.dstEventId !== undefined
+
+    return hasSrcEvent !== hasDstEvent
   }
 }

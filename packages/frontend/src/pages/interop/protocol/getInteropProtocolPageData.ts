@@ -42,16 +42,20 @@ export async function getInteropProtocolPageData(
     }),
   )
 
-  const [appLayoutProps, projectEntry] = await Promise.all([
-    getAppLayoutProps(),
-    getInteropProtocolEntry(project),
+  const shouldPrefetchProtocol =
     apiSelection.from.length > 0 && apiSelection.to.length > 0
-      ? helpers.interop.protocol.prefetch({
-          ...apiSelection,
+
+  const [appLayoutProps] = await Promise.all([
+    getAppLayoutProps(),
+    shouldPrefetchProtocol
+      ? helpers.interop.protocol.fetch({
           id: project.id,
+          ...apiSelection,
         })
       : undefined,
   ])
+  const projectEntry = getInteropProtocolEntry(project)
+
   return {
     head: {
       manifest,

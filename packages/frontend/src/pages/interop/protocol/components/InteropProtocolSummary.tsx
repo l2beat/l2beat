@@ -15,6 +15,7 @@ import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/ut
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
@@ -81,10 +82,14 @@ export function InteropProtocolSummary({
         <StatsItem
           title="Last 24h volume"
           isLoading={isLoading}
-          value={formatCurrency(data?.entry?.volume ?? 0, 'usd')}
+          value={
+            data?.entry?.volume
+              ? formatCurrency(data.entry.volume, 'usd')
+              : EM_DASH
+          }
         />
         <StatsItem
-          title="Last 24 transfer count"
+          title="Last 24h transfer count"
           isLoading={isLoading}
           value={formatInteger(data?.entry?.transferCount ?? 0)}
         />
@@ -93,21 +98,25 @@ export function InteropProtocolSummary({
           title="Last 24h avg. transfer time"
           isLoading={isLoading}
           value={
-            <AvgDurationCell
-              className="font-bold text-label-value-16"
-              splitClassName="flex-row text-label-value-16 font-bold"
-              averageDuration={
-                data?.entry?.averageDuration ?? {
-                  type: 'unknown',
-                }
-              }
-            />
+            data?.entry?.averageDuration ? (
+              <AvgDurationCell
+                className="font-bold text-label-value-16"
+                splitClassName="flex-row text-label-value-16 font-bold"
+                averageDuration={data?.entry?.averageDuration}
+              />
+            ) : (
+              <InteropNoDataBadge size="extraSmall" />
+            )
           }
         />
         <StatsItem
           title="Last 24 avg. transfer value"
           isLoading={isLoading}
-          value={formatCurrency(data?.entry?.averageValue ?? 0, 'usd')}
+          value={
+            data?.entry?.averageValue
+              ? formatCurrency(data.entry.averageValue, 'usd')
+              : EM_DASH
+          }
         />
         <StatsItem
           title="Tokens by volume"
@@ -130,32 +139,39 @@ export function InteropProtocolSummary({
       <span className="font-medium text-paragraph-12 text-secondary">
         Protocol transfer size
       </span>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="cursor-pointer">
-            <Breakdown
-              values={breakdownValues}
-              className="mt-2! h-1.5 w-full"
-            />
-            <div className="mt-2 flex flex-wrap gap-2">
-              {breakdownValues.map((value) => (
-                <div key={value.label} className="flex items-center gap-[3px]">
-                  <div className="size-3.5 rounded-xs" style={value.style} />
-                  <span className="font-medium text-label-value-12 text-secondary leading-none">
-                    {value.label}
-                  </span>
-                </div>
-              ))}
+      {isLoading ? (
+        <TransferSizeBreakdownSkeleton />
+      ) : (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="cursor-pointer">
+              <Breakdown
+                values={breakdownValues}
+                className="mt-2! h-1.5 w-full"
+              />
+              <div className="mt-2 flex flex-wrap gap-2">
+                {breakdownValues.map((value) => (
+                  <div
+                    key={value.label}
+                    className="flex items-center gap-[3px]"
+                  >
+                    <div className="size-3.5 rounded-xs" style={value.style} />
+                    <span className="font-medium text-label-value-12 text-secondary leading-none">
+                      {value.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent fitContent>
-          <TransferSizeTooltipContent
-            breakdownValues={breakdownValues}
-            transferSize={data?.transferSize}
-          />
-        </TooltipContent>
-      </Tooltip>
+          </TooltipTrigger>
+          <TooltipContent fitContent>
+            <TransferSizeTooltipContent
+              breakdownValues={breakdownValues}
+              transferSize={data?.transferSize}
+            />
+          </TooltipContent>
+        </Tooltip>
+      )}
       {protocol.header.description && (
         <div className="max-md:hidden">
           <HorizontalSeparator className="my-4" />
@@ -163,6 +179,19 @@ export function InteropProtocolSummary({
         </div>
       )}
     </section>
+  )
+}
+
+function TransferSizeBreakdownSkeleton() {
+  return (
+    <div aria-hidden>
+      <Skeleton className="mt-2 h-1.5 w-full rounded-full" />
+      <div className="mt-2 flex flex-wrap gap-2">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Skeleton key={i} className="h-3.5 w-20" />
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -181,7 +210,7 @@ function StatsItem({
         {title}
       </span>
       {isLoading ? (
-        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-[19px] w-full" />
       ) : (
         <div className="font-bold text-label-value-16 leading-none">
           {value}

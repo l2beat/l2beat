@@ -272,6 +272,79 @@ describe(InteropAggregationService.name, () => {
       expect(result.aggregatedTokens).toEqual([])
       expect(result.aggregatedTokensPairs).toEqual([])
     })
+
+    it('aggregates one-sided transfers even when their bridge type cannot be inferred', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'solana',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+          srcEventId: 'src-only-event',
+          dstEventId: undefined,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedTransfers).toHaveLength(1)
+      expect(result.aggregatedTransfers[0]?.bridgeType).toEqual('unknown')
+      expect(result.aggregatedTransfers[0]?.transferCount).toEqual(1)
+      expect(result.aggregatedTokens).toHaveLength(1)
+      expect(result.aggregatedTokensPairs).toHaveLength(1)
+    })
+
+    it('does not aggregate one-sided transfers when they carry a mismatched bridge type', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          bridgeType: 'nonMinting',
+          srcChain: 'ethereum',
+          dstChain: 'solana',
+          srcAbstractTokenId: 'usdc',
+          dstAbstractTokenId: 'usdc',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: undefined,
+          srcWasBurned: false,
+          dstWasMinted: undefined,
+          srcEventId: 'src-only-event',
+          dstEventId: undefined,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedTransfers).toEqual([])
+      expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
+    })
   })
 })
 
@@ -283,6 +356,7 @@ function createTransfer(
   type: string,
   timestamp: UnixTime,
   overrides: {
+    bridgeType?: 'lockAndMint' | 'burnAndMint' | 'nonMinting'
     srcChain: string
     dstChain: string
     srcAbstractTokenId: string
@@ -292,18 +366,24 @@ function createTransfer(
     dstValueUsd?: number
     srcWasBurned?: boolean
     dstWasMinted?: boolean
+    srcEventId?: string
+    dstEventId?: string
   },
 ): InteropTransferRecord {
   return {
     plugin,
     transferId,
     type,
-    bridgeType: undefined,
+    bridgeType: overrides.bridgeType,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
     srcLogIndex: 0,
-    srcEventId: 'random-event-id',
+    // We need to preserve explicit undefined here for one-sided transfer tests.
+    // Using ?? would replace it with the fallback and accidentally make the
+    // transfer two-sided again.
+    srcEventId:
+      'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned,
@@ -313,7 +393,8 @@ function createTransfer(
     dstTime: timestamp + overrides.duration,
     dstTxHash: 'random-hash',
     dstLogIndex: 0,
-    dstEventId: 'random-event-id',
+    dstEventId:
+      'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted,

@@ -2,6 +2,7 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
@@ -66,11 +67,14 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
 ) {
   return columnHelper.accessor((row) => row.volume, {
     header: 'Last 24h\nVolume',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.volume, 'usd')}
-      </span>
-    ),
+    cell: (ctx) => {
+      if (!ctx.row.original.volume) return EM_DASH
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.volume, 'usd')}
+        </span>
+      )
+    },
     meta: {
       align: 'right',
       headClassName: 'text-2xs text-right',
@@ -124,7 +128,8 @@ export const nonMintingColumns = [
         'The average USD value of funds in transit at any given second over the past 24 hours.',
     },
     cell: (ctx) => {
-      if (ctx.row.original.averageValueInFlight === undefined) return '-'
+      if (ctx.row.original.averageValueInFlight === undefined)
+        return <InteropNoDataBadge />
       return (
         <span className="font-medium text-label-value-15">
           {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
@@ -146,13 +151,15 @@ export const lockAndMintColumns = [
       tooltip:
         "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
     },
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {ctx.row.original.netMintedValue
-          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
-          : EM_DASH}
-      </span>
-    ),
+    cell: (ctx) => {
+      if (ctx.row.original.netMintedValue === undefined)
+        return <InteropNoDataBadge />
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+        </span>
+      )
+    },
   }),
   getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
 ]
