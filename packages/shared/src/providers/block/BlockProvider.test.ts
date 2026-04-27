@@ -101,6 +101,23 @@ describe(BlockProvider.name, () => {
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
+    it('falls back to 0 when start is above client latest', async () => {
+      const client = mockObject<BlockClient>({
+        getLatestBlockNumber: async () => 500,
+        getBlockWithTransactions: async (n: number) => block(n),
+      })
+
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(300 * 100),
+        800,
+      )
+
+      expect(blockNumber).toEqual(300)
+      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+    })
+
     it('throws error when run out of fallbacks', async () => {
       const client = mockObject<BlockClient>({
         getLatestBlockNumber: mockFn().rejectsWith(new Error('1')),
