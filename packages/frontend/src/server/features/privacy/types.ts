@@ -53,6 +53,7 @@ export interface PrivacyProjectSnapshot {
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   trustedSetup: TrustedSetup
+  riskSummary?: string
   upgradesAndGovernance?: string
   assets: PrivacyAssetSnapshot[]
   summary: {

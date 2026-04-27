@@ -114,6 +114,7 @@ export async function refreshPrivacySnapshot(logger: Logger): Promise<{
     }
 
     upsertManyPrivacyBucketRows(rows)
+
     return { written: rows.length, skipped }
   } finally {
     isRefreshing = false

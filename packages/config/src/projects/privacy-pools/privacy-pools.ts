@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -44,16 +45,25 @@ The main tradeoff is upgradeability and ASP dependence. The Entrypoint is a UUPS
     links: {
       websites: ['https://www.privacypools.com'],
     },
-    badges: [],
+    badges: [BADGES.Other.Compliance],
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     assets: getPrivacyPoolsAssets(),
+    riskSummary: `## Funds can be lost if
+1. the zk proof system is broken, allowing invalid withdrawals.
+2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
+3. a user loses the secret and nullifier required to spend their deposit.
+4. the Entrypoint owner deploys a malicious [upgrade](#upgrades-and-governance) that steals new deposits.
+
+## Privacy can be lost if
+1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.
+2. the ASP manager refuses to whitelist a deposit, forcing the user to either wait or exit publicly through ragequit.`,
     upgradesAndGovernance: `Privacy pools Entrypoint contract is owned by a 2/4 Multisig ([0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159](https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)). 
     
     It is a powerful role that has the authority to upgrade the Entrypoint contract, through which all deposits go. It can also manage minimum deposit amount, deposit fee, disable deposits on pools and manage ASP postman address that manages whitelisted privacy pools deposits.
     
-    Entrypoint owner cannot prevent private or public withdrawals from the pools.`
+    Entrypoint owner cannot prevent private or public withdrawals from the pools.`,
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

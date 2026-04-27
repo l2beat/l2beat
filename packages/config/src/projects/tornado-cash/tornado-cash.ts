@@ -153,10 +153,17 @@ The core mixer contracts are immutable and have no admin, pause, or upgrade path
     badges: [],
   },
   privacyInfo: {
-    // TODO: Replace with the actual trusted setup used by the project.
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
     assets: getTornadoAssets(),
-    upgradesAndGovernance: `Tornado cash has a TORN DAO, however it does not have the authority to upgrade or modify existing pools in any way. It can only add new pools to the onchain setup and the official UI, manage relayer-relevant parameters and govern the TORN token.`
+    riskSummary: `## Funds can be lost if
+1. the zk proof system is broken, allowing invalid withdrawals.
+2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
+3. a user loses the note secrets required to withdraw.
+
+## Privacy can be lost if
+1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.`,
+    upgradesAndGovernance:
+      'Tornado cash has a TORN DAO, however it does not have the authority to upgrade or modify existing pools in any way. It can only add new pools to the onchain setup and the official UI, manage relayer-relevant parameters and govern the TORN token.',
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

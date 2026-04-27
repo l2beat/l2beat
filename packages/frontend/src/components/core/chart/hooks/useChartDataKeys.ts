@@ -5,8 +5,19 @@ export function useChartDataKeys<T extends ChartMeta>(
   chartMeta: T,
   hiddenDataKeys?: (keyof T)[] | readonly (keyof T)[],
 ) {
+  const getDefaultDataKeys = () =>
+    hiddenDataKeys
+      ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
+      : Object.keys(chartMeta)
+
   const [showAllSelected, setShowAllSelected] = useState(false)
-  const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(null)
+  const [dataKeys, setDataKeys] = useState<(keyof T)[] | null>(() => {
+    if (Object.keys(chartMeta).length === 0) {
+      return null
+    }
+
+    return getDefaultDataKeys()
+  })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: do not re-run this effect when showAllDataKeys changes
   useEffect(() => {
@@ -24,9 +35,7 @@ export function useChartDataKeys<T extends ChartMeta>(
         return prev
       }
 
-      return hiddenDataKeys
-        ? Object.keys(chartMeta).filter((key) => !hiddenDataKeys.includes(key))
-        : Object.keys(chartMeta)
+      return getDefaultDataKeys()
     })
   }, [chartMeta, hiddenDataKeys])
 

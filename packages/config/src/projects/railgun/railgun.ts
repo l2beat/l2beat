@@ -20,7 +20,6 @@ const RAILGUN_SHIELD_EVENT =
 const RAILGUN_UNSHIELD_EVENT =
   '0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284'
 
-const stakingContractAddress = discovery.getContract('Staking').address
 const stakeLocktime = discovery.getContractValue<number>(
   'Staking',
   'STAKE_LOCKTIME',
@@ -97,11 +96,19 @@ The main tradeoff is governance and separate compliance infrastructure. Railgun'
     links: {
       websites: ['https://railgun.org'],
     },
-    badges: [BADGES.Other.Governance],
+    badges: [BADGES.Other.Compliance, BADGES.Other.Governance],
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     assets: getRailgunAssets(),
+    riskSummary: `## Funds can be lost if
+1. the zk proof system is broken, allowing invalid spends or withdrawals.
+2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
+3. a user loses the private keys required to control their private balance.
+4. the DAO passes a malicious [upgrade](#upgrades-and-governance) and users do not react before the 7-day execution delay expires.
+
+## Privacy can be lost if
+1. no broadcaster is available and transactions must be sent from a public address that can be linked to the user.`,
     upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of RAIL token. DAO has the authority to change ZK circuit logic on the core Railgun contract, effectively arbitrarily changing the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
 
 ## Governance flow

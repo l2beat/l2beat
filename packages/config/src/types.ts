@@ -836,6 +836,7 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   assets: ProjectPrivacyAsset[]
+  riskSummary?: string
   upgradesAndGovernance?: string
 }
 

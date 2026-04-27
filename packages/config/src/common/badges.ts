@@ -711,6 +711,17 @@ export const badges = [
     },
   },
   {
+    id: 'Compliance',
+    type: BadgeType.Other,
+    name: 'Compliance',
+    description: 'This project features compliance-related features',
+    action: {
+      type: 'scalingFilter',
+      id: 'other',
+      value: 'Compliance',
+    },
+  },
+  {
     id: 'EspressoPreconfs',
     type: BadgeType.Other,
     name: 'Espresso Preconfs',

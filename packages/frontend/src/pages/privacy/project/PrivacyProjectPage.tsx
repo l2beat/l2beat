@@ -46,6 +46,7 @@ export function PrivacyProjectPage({
   )
   const protocolDescription = entry.detailedDescription ?? ''
   const hasProtocolDescription = !!entry.detailedDescription
+  const hasRiskSummary = !!entry.riskSummary
   const hasUpgradesAndGovernance = !!entry.upgradesAndGovernance
 
   let order = 0
@@ -53,6 +54,7 @@ export function PrivacyProjectPage({
   const detailedDescriptionOrder = hasProtocolDescription
     ? nextOrder()
     : undefined
+  const riskSummaryOrder = hasRiskSummary ? nextOrder() : undefined
   const upgradesAndGovernanceOrder = hasUpgradesAndGovernance
     ? nextOrder()
     : undefined
@@ -148,6 +150,18 @@ export function PrivacyProjectPage({
                         content={protocolDescription}
                       />
                     )}
+
+                    {hasRiskSummary &&
+                      entry.riskSummary &&
+                      riskSummaryOrder && (
+                        <MarkdownSection
+                          id="risk-summary"
+                          title="Risk summary"
+                          sectionOrder={riskSummaryOrder}
+                          content={entry.riskSummary}
+                          mdClassName="[&_h2]:mb-0 [&_h2]:font-bold [&_h2]:text-red-300 [&_h2]:text-paragraph-15 md:[&_h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0"
+                        />
+                      )}
 
                     {hasUpgradesAndGovernance &&
                       entry.upgradesAndGovernance &&
@@ -262,6 +276,14 @@ function getNavigationSections(
           {
             id: 'detailed-description',
             title: 'Protocol description',
+          },
+        ]
+      : []),
+    ...(entry.riskSummary
+      ? [
+          {
+            id: 'risk-summary',
+            title: 'Risk summary',
           },
         ]
       : []),

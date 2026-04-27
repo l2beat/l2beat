@@ -45,6 +45,7 @@ export interface PrivacyProjectEntry {
     risk: 'green' | 'yellow' | 'red' | 'N/A'
     description: string
   }
+  riskSummary?: string
   upgradesAndGovernance?: string
   permissionsSection:
     | Omit<PermissionsSectionProps, 'id' | 'title' | 'sectionOrder'>
@@ -174,6 +175,7 @@ export async function getPrivacyProjectData(
       risk: project.trustedSetup.risk,
       description: project.trustedSetup.longDescription,
     },
+    riskSummary: project.riskSummary,
     upgradesAndGovernance: project.upgradesAndGovernance,
     permissionsSection,
     contractsSection,

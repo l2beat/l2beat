@@ -164,7 +164,7 @@ export async function getPrivacyProjectChart(
         entry?.withdrawalsCount ?? 0,
         entry?.depositsValueUsd ?? 0,
         entry?.withdrawalsValueUsd ?? 0,
-      ]
+      ] as PrivacyProjectChartPoint
     }),
     syncedUntil: syncedUntil ?? range[1],
   }

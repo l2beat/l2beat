@@ -137,6 +137,7 @@ function buildProjectSnapshot(
     permissions: project.permissions,
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
+    riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     assets: orderedAssets,
     summary: {
