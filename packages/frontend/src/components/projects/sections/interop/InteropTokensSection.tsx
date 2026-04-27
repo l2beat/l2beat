@@ -36,11 +36,10 @@ export function InteropTokensSection({
   ...sectionProps
 }: InteropTokensSectionProps) {
   const { selectionForApi } = useInteropSelectedChains()
-  const { data: protocolData, isLoading: isProtocolLoading } =
-    api.interop.protocol.useQuery({
-      ...selectionForApi,
-      id: projectId,
-    })
+  const { data: protocolData } = api.interop.protocol.useQuery({
+    ...selectionForApi,
+    id: projectId,
+  })
 
   const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
     {
@@ -53,7 +52,6 @@ export function InteropTokensSection({
   )
 
   const columns = useMemo(() => getTopTokensColumns(), [])
-  const isLoading = isProtocolLoading || isTokensLoading
 
   const tableData = useMemo(() => data ?? [], [data])
 
@@ -95,9 +93,9 @@ export function InteropTokensSection({
         skeletonCount={TOKENS_PER_PAGE}
         table={table}
         tableWrapperClassName="pb-0"
-        isLoading={isLoading}
+        isLoading={isTokensLoading}
       />
-      {!isLoading && pageCount > 1 && (
+      {!isTokensLoading && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
             <PaginationContent className="justify-center">

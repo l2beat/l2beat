@@ -139,32 +139,39 @@ export function InteropProtocolSummary({
       <span className="font-medium text-paragraph-12 text-secondary">
         Protocol transfer size
       </span>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="cursor-pointer">
-            <Breakdown
-              values={breakdownValues}
-              className="mt-2! h-1.5 w-full"
-            />
-            <div className="mt-2 flex flex-wrap gap-2">
-              {breakdownValues.map((value) => (
-                <div key={value.label} className="flex items-center gap-[3px]">
-                  <div className="size-3.5 rounded-xs" style={value.style} />
-                  <span className="font-medium text-label-value-12 text-secondary leading-none">
-                    {value.label}
-                  </span>
-                </div>
-              ))}
+      {isLoading ? (
+        <TransferSizeBreakdownSkeleton />
+      ) : (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="cursor-pointer">
+              <Breakdown
+                values={breakdownValues}
+                className="mt-2! h-1.5 w-full"
+              />
+              <div className="mt-2 flex flex-wrap gap-2">
+                {breakdownValues.map((value) => (
+                  <div
+                    key={value.label}
+                    className="flex items-center gap-[3px]"
+                  >
+                    <div className="size-3.5 rounded-xs" style={value.style} />
+                    <span className="font-medium text-label-value-12 text-secondary leading-none">
+                      {value.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent fitContent>
-          <TransferSizeTooltipContent
-            breakdownValues={breakdownValues}
-            transferSize={data?.transferSize}
-          />
-        </TooltipContent>
-      </Tooltip>
+          </TooltipTrigger>
+          <TooltipContent fitContent>
+            <TransferSizeTooltipContent
+              breakdownValues={breakdownValues}
+              transferSize={data?.transferSize}
+            />
+          </TooltipContent>
+        </Tooltip>
+      )}
       {protocol.header.description && (
         <div className="max-md:hidden">
           <HorizontalSeparator className="my-4" />
@@ -172,6 +179,19 @@ export function InteropProtocolSummary({
         </div>
       )}
     </section>
+  )
+}
+
+function TransferSizeBreakdownSkeleton() {
+  return (
+    <div aria-hidden>
+      <Skeleton className="mt-2 h-1.5 w-full rounded-full" />
+      <div className="mt-2 flex flex-wrap gap-2">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Skeleton key={i} className="h-3.5 w-20" />
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -190,7 +210,7 @@ function StatsItem({
         {title}
       </span>
       {isLoading ? (
-        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-[19px] w-full" />
       ) : (
         <div className="font-bold text-label-value-16 leading-none">
           {value}

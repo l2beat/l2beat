@@ -32,11 +32,10 @@ export function InteropTransfersSection({
   ...sectionProps
 }: InteropTransfersSectionProps) {
   const { selectionForApi } = useInteropSelectedChains()
-  const { data: protocolData, isLoading: isProtocolLoading } =
-    api.interop.protocol.useQuery({
-      ...selectionForApi,
-      id: projectId,
-    })
+  const { data: protocolData } = api.interop.protocol.useQuery({
+    ...selectionForApi,
+    id: projectId,
+  })
   const entry = protocolData?.entry
   const totalCount = entry?.transferCount ?? 0
 
@@ -97,7 +96,6 @@ export function InteropTransfersSection({
   }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
   const isLoading =
-    isProtocolLoading ||
     ((isTransfersLoading || hasIntegrityMismatch) &&
       fetchedItems.length === 0) ||
     needsMoreRows

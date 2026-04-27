@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
+import { Skeleton } from '~/components/core/Skeleton'
 import { SectionNavigation } from '~/components/section-navigation/SectionNavigation'
 import { usePathname } from '~/hooks/usePathname'
 import { useRouter } from '~/hooks/useRouter'
@@ -122,6 +123,34 @@ export function DesktopProjectNavigation({
           }
           style={isHeaderShown ? style : undefined}
         />
+      </div>
+    </div>
+  )
+}
+
+export function DesktopProjectNavigationSkeleton({
+  itemCount = 7,
+}: {
+  itemCount?: number
+}) {
+  return (
+    <div className="sticky top-8 w-full" aria-hidden>
+      <div className="relative">
+        <div className="absolute top-0 flex w-full flex-col gap-3">
+          {Array.from({ length: itemCount }).map((_, i) => (
+            <div key={i} className="flex flex-row gap-1.5">
+              <Skeleton className="size-5 shrink-0 rounded-lg" />
+              <Skeleton
+                className={cn(
+                  'mt-[3px] h-3.5',
+                  i % 3 === 0 && 'w-24',
+                  i % 3 === 1 && 'w-32',
+                  i % 3 === 2 && 'w-20',
+                )}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

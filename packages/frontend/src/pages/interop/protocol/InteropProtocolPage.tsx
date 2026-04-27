@@ -4,12 +4,16 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
+import {
+  DesktopProjectNavigation,
+  DesktopProjectNavigationSkeleton,
+} from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { ProjectSectionSkeleton } from '~/components/projects/sections/ProjectSectionSkeleton'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -28,6 +32,7 @@ import {
 import type { InteropMode, InteropSelection } from '../utils/types'
 import { InteropProtocolSummary } from './components/InteropProtocolSummary'
 import { TopToken } from './components/TopToken'
+import { getInteropProtocolSections } from './getInteropProtocolSections'
 
 interface Props extends AppLayoutProps {
   mode: InteropMode
@@ -80,22 +85,32 @@ function Content({
 }) {
   const { selectedChains, selectChain, selectionForApi, isDirty, reset } =
     useInteropSelectedChains()
-  const navigationSections = projectDetailsToNavigationSections(
-    projectEntry.sections,
-  )
   const showInitialChainSelector =
     mode === 'public' &&
     (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  const hasApiSelection =
+    selectionForApi.from.length > 0 && selectionForApi.to.length > 0
+  const shouldFetchProtocol = !showInitialChainSelector && hasApiSelection
   const { data, isLoading } = api.interop.protocol.useQuery(
     {
       ...selectionForApi,
       id: projectEntry.id,
     },
     {
-      enabled: !showInitialChainSelector,
+      enabled: shouldFetchProtocol,
     },
   )
-  const showEmptyState = !showInitialChainSelector && !isLoading && !data?.entry
+  const showEmptyState =
+    !showInitialChainSelector &&
+    (!hasApiSelection || (!isLoading && !data?.entry))
+  const showSectionSkeletons = shouldFetchProtocol && isLoading
+  const sections = getInteropProtocolSections({
+    projectId: projectEntry.id,
+    hasSelection: shouldFetchProtocol,
+    isLoading,
+    data,
+  })
+  const navigationSections = projectDetailsToNavigationSections(sections)
   const isNavigationEmpty = navigationSections.length === 0
 
   return (
@@ -157,9 +172,15 @@ function Content({
                     </div>
                     <TopToken id={projectEntry.id} />
 
-                    <HighlightableLinkContextProvider>
-                      <ProjectDetails items={projectEntry.sections} />
-                    </HighlightableLinkContextProvider>
+                    {showSectionSkeletons ? (
+                      Array.from({ length: 4 }).map((_, i) => (
+                        <ProjectSectionSkeleton key={i} variant={i} />
+                      ))
+                    ) : (
+                      <HighlightableLinkContextProvider>
+                        <ProjectDetails items={sections} />
+                      </HighlightableLinkContextProvider>
+                    )}
                   </>
                 ) : (
                   <InteropEmptyState
@@ -171,17 +192,21 @@ function Content({
               </>
             )}
           </div>
-          {!isNavigationEmpty && (
-            <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
-              <DesktopProjectNavigation
-                project={{
-                  title: projectEntry.shortName ?? projectEntry.name,
-                  slug: projectEntry.slug,
-                  isUnderReview: !!projectEntry.underReviewStatus,
-                  icon: projectEntry.icon,
-                }}
-                sections={navigationSections}
-              />
+          {(showSectionSkeletons || !isNavigationEmpty) && (
+            <div className="row-start-2 mt-4 hidden shrink-0 lg:block">
+              {showSectionSkeletons ? (
+                <DesktopProjectNavigationSkeleton />
+              ) : (
+                <DesktopProjectNavigation
+                  project={{
+                    title: projectEntry.shortName ?? projectEntry.name,
+                    slug: projectEntry.slug,
+                    isUnderReview: !!projectEntry.underReviewStatus,
+                    icon: projectEntry.icon,
+                  }}
+                  sections={navigationSections}
+                />
+              )}
             </div>
           )}
         </div>
