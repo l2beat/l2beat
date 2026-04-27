@@ -14,6 +14,7 @@ import {
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 import {
+  BlockNumberResponse,
   type CallParameters,
   EVMBalanceResponse,
   type EVMBlock,
@@ -57,8 +58,15 @@ export class RpcClient extends ClientCore implements IRpcClient {
   }
 
   async getLatestBlockNumber() {
-    const block = await this.getBlock('latest', false)
-    return Number(block.number)
+    const response = await this.query('eth_blockNumber', [])
+    const result = BlockNumberResponse.safeParse(response)
+    if (!result.success) {
+      this.$.logger.warn('Invalid response', {
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing block number')
+    }
+    return result.data.result
   }
 
   /** Calls eth_getBlockByNumber on RPC, includes full transactions bodies.*/

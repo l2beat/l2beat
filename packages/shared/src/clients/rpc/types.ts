@@ -133,6 +133,10 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
 })
 
+export const BlockNumberResponse = z.object({
+  result: Quantity.decode.transform((n) => Number(n)),
+})
+
 export type EVMFeeHistory = z.infer<typeof EVMFeeHistory>
 export const EVMFeeHistory = z.object({
   baseFeePerGas: z.array(Quantity.decode),

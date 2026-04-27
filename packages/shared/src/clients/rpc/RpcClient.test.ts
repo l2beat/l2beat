@@ -10,7 +10,7 @@ describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse(100),
+        fetch: async () => ({ result: '0x64' }),
       })
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -19,8 +19,8 @@ describe(RpcClient.name, () => {
       expect(result).toEqual(100)
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
         JSON.stringify({
-          method: 'eth_getBlockByNumber',
-          params: ['latest', false],
+          method: 'eth_blockNumber',
+          params: [],
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
