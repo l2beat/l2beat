@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777193036,
-  "lastConsumedUpdateNotifierId": 134,
+  "lastReconciledAt": 1777283138,
+  "lastConsumedUpdateNotifierId": 135,
   "events": [
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
@@ -127,6 +127,38 @@
           "field": "values.latestAnswer",
           "before": 117481826,
           "after": 117485533
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-27T09:29:24.000Z",
+      "updateNotifierId": 135,
+      "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
+      "contractName": "SavingsDaiOracle",
+      "entity": null,
+      "id": "135:eth:0x0c0864837C7e65458aCD3C665222203217019436:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.latestAnswer",
+          "before": 117485533,
+          "after": 117489855
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-27T09:29:24.000Z",
+      "updateNotifierId": 135,
+      "address": "eth:0xf09e48dd4CA8e76F63a57ADd428bB06fee7932a4",
+      "contractName": "EmissionManager",
+      "entity": null,
+      "id": "135:eth:0xf09e48dd4CA8e76F63a57ADd428bB06fee7932a4:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.rewardsVaultWstETHBalance",
+          "before": "26469565848978392992",
+          "after": "26468878478347339781"
         }
       ]
     }
