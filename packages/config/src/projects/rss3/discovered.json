@@ -1,6 +1,6 @@
 {
   "name": "rss3",
-  "timestamp": 1777064977,
+  "timestamp": 1777300262,
   "configHash": "0x5d50695d137da2799f880c7cc54f07809e626d6a1684e5ae0a3a0c0d388aebb7",
   "entries": [
     {
@@ -158,7 +158,7 @@
         "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator is the RSS3 Multisig and is expected to use this to move bridge escrow as part of the announced migration to Ethereum.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator (RSS3 Multisig) used this on 2026-04-22 to move the bridge's RSS3, USDC, USDT, and WETH escrow.",
       "sinceTimestamp": 1709859947,
       "sinceBlock": 19387057,
       "values": {
@@ -295,7 +295,7 @@
         "0x23906eab59a5d34b78a6e0c14f84da0cf651dab8b02049d1dd24c9ca2ed38d25"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the VSL L2 has halted as part of the announced migration to Ethereum — the batcher EOA was swept to the RSS3 Multisig, which drags its last-10-tx top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold.",
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1709859947,
       "sinceBlock": 19387057,
@@ -1158,6 +1158,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig_rss3": "0xa1334b06652e047b9d4bd797bb81c5e603151f939921696a7cde6f23f6d5aca5"
   },
-  "usedBlockNumbers": { "ethereum": 24952425 },
+  "usedBlockNumbers": { "ethereum": 24971989 },
   "permissionsConfigHash": "0xe8922c1f4bd3e5f95e93a9feee158af368f3bfe1a4cc8acb21a1a85bb61c440f"
 }

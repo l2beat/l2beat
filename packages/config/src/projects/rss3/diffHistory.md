@@ -1,16 +1,16 @@
-Generated with discovered.json: 0x21ad6e69fee670bfb9edae1210e92f93cb0febf3
+Generated with discovered.json: 0xa4f10b6b41a63f97a037e59ae4680c2ba89dd327
 
-# Diff at Fri, 24 Apr 2026 21:10:40 GMT:
+# Diff at Mon, 27 Apr 2026 14:32:07 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1760307209
-- current timestamp: 1777064977
+- current timestamp: 1777300262
 
 ## Description
 
 **RSS3 has [announced the retirement of VSL](https://rss3.io/blog/the-next-stage-of-rss3.html) and is migrating to Ethereum.** On 2026-04-24 the L2 stopped producing blocks (last VSL block at 08:59 UTC), the L1 sequencer inbox went silent (last batch at 05:24 UTC), and the batcher EOA was swept to the RSS3 Multisig. VSL bridge withdrawals are paused; pending withdrawals will be completed as part of the migration and $RSS3 on VSL will be claimable on Ethereum via a portal in the coming weeks. Added a `redWarning` and incident milestone on the project.
 
-**L1StandardBridge — operator sweep added for the migration** (on-chain upgrade, new implementation `0x12665984...` deployed 2026-04-17 and activated before the halt). The new impl sets `operator = RSS3Multisig (0x8AC80fa0)` and exposes an operator-only `sweep(token, to, amount)` that transfers any ERC-20 held by the bridge to an arbitrary address with no withdrawal proof or delay — the mechanism by which RSS3 will move bridge escrow to Ethereum and hand out funds through the claim portal. The capability is still worth flagging for the trust model: the RSS3 Multisig can unilaterally move any ERC-20 in the bridge escrow, mirroring the pre-existing OptimismPortal `operator = WithdrawalOverwriterMultisig` (which can already rewrite withdrawal calldata on finalization).
+**L1StandardBridge — operator sweep added and used** (on-chain upgrade, new implementation `0x12665984...` deployed 2026-04-17 and activated before the halt). The new impl sets `operator = RSS3Multisig (0x8AC80fa0)` and exposes an operator-only `sweep(token, to, amount)` that transfers any ERC-20 held by the bridge to an arbitrary address with no withdrawal proof or delay. On 2026-04-22 06:29 UTC (block 24933678) the operator used this to move the full bridge escrow to the RSS3 Multisig in a single batched sweep: ~464,630,520 RSS3, 1,023 USDC, 284 USDT, and 0.84 WETH. Mirrors the pre-existing OptimismPortal `operator = WithdrawalOverwriterMultisig` (which can rewrite withdrawal calldata on finalization).
 
 **SystemConfig modeling fix** (no on-chain upgrade — same impl `0x164883d4...` as before). With the L2 halted, the batcher's last 10 outgoing txs include 3 consolidation transfers into the RSS3 Multisig (one of 33.45 ETH), dropping its top-address ratio to 7/10 = 0.70. That trips the standard `opStackSequencerInbox` handler's 80% qualification threshold, which derives `sequencerInbox` from the batcher's tx pattern, so the field errored out. Fixed via a new `opstack/SystemConfig_rss3` template variant (scoped to RSS3's SystemConfig via `validAddresses`) that hardcodes `sequencerInbox` to `0xfFFF...12553` — the pre-halt discovered value, matching RSS3's chainId 12553 under the standard OP Stack predeploy convention and consistent with 47/50 (94%) of the batcher's outgoing txs over a 50-tx window going to that address.
 
@@ -31,7 +31,7 @@ L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0xE27083804bFf17Ec05f
 
 ```diff
     contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator is the RSS3 Multisig and is expected to use this to move bridge escrow as part of the announced migration to Ethereum.
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator (RSS3 Multisig) used this on 2026-04-22 to move the bridge's RSS3, USDC, USDT, and WETH escrow.
       template:
 -        "opstack/L1StandardBridge"
       sourceHashes.1:
@@ -79,22 +79,19 @@ discovery. Values are for block 1760307209 (main branch discovery), not current.
 
 ```diff
     contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator is the RSS3 Multisig and is expected to use this to move bridge escrow as part of the announced migration to Ethereum.
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator (RSS3 Multisig) used this on 2026-04-22 to move the bridge's RSS3, USDC, USDT, and WETH escrow.
       description:
 -        "The main entry point to deposit ERC20 tokens from host chain to this chain."
-+        "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator is the RSS3 Multisig and is expected to use this to move bridge escrow as part of the announced migration to Ethereum."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator (RSS3 Multisig) used this on 2026-04-22 to move the bridge's RSS3, USDC, USDT, and WETH escrow."
     }
 ```
 
 ```diff
     contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the VSL L2 has halted as part of the announced migration to Ethereum — the batcher EOA was swept to the RSS3 Multisig, which drags its last-10-tx top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold.
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       template:
 -        "opstack/SystemConfig"
 +        "opstack/SystemConfig_rss3"
-      description:
--        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address. RSS3 variant: sequencerInbox hardcoded to 0xfFFF...12553 because the VSL L2 has halted as part of the announced migration to Ethereum — the batcher EOA was swept to the RSS3 Multisig, which drags its last-10-tx top-address ratio below the standard opStackSequencerInbox handler's 80% qualification threshold."
     }
 ```
 
