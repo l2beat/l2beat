@@ -1,6 +1,6 @@
 {
   "name": "rss3",
-  "timestamp": 1777300262,
+  "timestamp": 1777300652,
   "configHash": "0x5d50695d137da2799f880c7cc54f07809e626d6a1684e5ae0a3a0c0d388aebb7",
   "entries": [
     {
@@ -158,7 +158,7 @@
         "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay. The operator (RSS3 Multisig) used this on 2026-04-22 to move the bridge's RSS3, USDC, USDT, and WETH escrow.",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.",
       "sinceTimestamp": 1709859947,
       "sinceBlock": 19387057,
       "values": {
@@ -1158,6 +1158,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig_rss3": "0xa1334b06652e047b9d4bd797bb81c5e603151f939921696a7cde6f23f6d5aca5"
   },
-  "usedBlockNumbers": { "ethereum": 24971989 },
+  "usedBlockNumbers": { "ethereum": 24972021 },
   "permissionsConfigHash": "0xe8922c1f4bd3e5f95e93a9feee158af368f3bfe1a4cc8acb21a1a85bb61c440f"
 }
