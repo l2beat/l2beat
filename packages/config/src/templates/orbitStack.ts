@@ -498,7 +498,13 @@ function orbitStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: 'BoLD',
+            challengeProtocol: 'Single-step',
+          }),
     riskView: getRiskView(templateVars, daProviders, isPostBoLD),
     stage: computedStage(templateVars),
     config: {

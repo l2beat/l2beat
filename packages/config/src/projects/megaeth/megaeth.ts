@@ -31,7 +31,7 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   nonTemplateProofSystem: {
     type: 'Optimistic',
-    name: 'OP Kailua',
+    name: 'Kailua',
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
