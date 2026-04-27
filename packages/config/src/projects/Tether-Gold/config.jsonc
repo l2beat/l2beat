@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Tether-Gold",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x68749665FF8D2d112Fa859AA293F07A622782F38"],
+  "overrides": {
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "mints": {
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "event Mint(address indexed _destination, uint256 _amount)"
+            }
+          }
+        }
+      }
+    },
+    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": {
+      "ignoreMethods": [
+        "getConfirmations",
+        "getConfirmationCount",
+        "transactions",
+        "owners",
+        "isConfirmed"
+      ],
+      "ignoreInWatchMode": ["transactionCount"]
+    }
+  }
+}

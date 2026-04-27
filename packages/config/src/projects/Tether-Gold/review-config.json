@@ -1,0 +1,100 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-27T06:32:50.961Z",
+  "protocolSlug": "Tether-Gold",
+  "protocolName": "Tether Gold (XAUT)",
+  "tokenName": "XAUT",
+  "chain": "Ethereum",
+  "projectType": "stablecoin",
+  "description": "Tether Gold (XAUt) is an ERC-20 token issued by TG Commodities Limited where each unit represents one troy ounce of physical gold held in custody, with a current circulating market value of {{xautMarketCap}}. The token is deployed behind an EIP-1967 transparent proxy and exposes off-chain controlled administrative functions: a single owner can mint new supply, freeze and destroy balances on a blocklist, and an upgrade authority can replace the implementation contract at any time. Both the token's `owner` and the proxy's upgrade authority resolve to the same custom 3-of-6 MultiSigWallet, making the multisig the single point of trust for supply, censorship, and code changes. There is no on-chain timelock or upgrade delay — once three signers confirm a transaction it executes immediately. This review covers only the Ethereum-native XAUt contract; XAUT0, the cross-chain version available on other networks, is a separate offering issued by Everdawn Labs via LayerZero and is out of scope here.",
+  "admins": {
+    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": {
+      "name": "Tether Gold MultiSig",
+      "description": "Custom on-chain multisig with six signers and a confirmation threshold of three. Holds the token's `owner` role and is the `owner` of the ProxyAdmin contract. Through the token it can mint XAUt, blocklist addresses via `addToBlockedList`, and permanently destroy blocked balances via `destroyBlockedFunds`. Through the ProxyAdmin it can upgrade the token implementation to arbitrary code via `upgrade` / `upgradeAndCall` or hand off the proxy admin slot via `changeProxyAdmin`. Both the signer set and the confirmation threshold are mutable on-chain via `addOwner` / `removeOwner` / `replaceOwner` / `changeRequirement`, which the multisig can execute on itself."
+    },
+    "eth:0x856FCc085290ac1E40392442211e6a333afB873e": {
+      "name": "ProxyAdmin",
+      "description": "OpenZeppelin-style ProxyAdmin contract set as the EIP-1967 admin slot of the Tether Gold token proxy. It exposes `upgrade`, `upgradeAndCall`, and `changeProxyAdmin` — all gated to its `owner`, which is the Tether Gold MultiSigWallet. The contract itself is immutable but acts as a pass-through layer for the multisig's upgrade authority over the token implementation."
+    },
+    "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0": {
+      "name": "Multisig Signer (0xAC3B...1FA0)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    },
+    "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c": {
+      "name": "Multisig Signer (0xEe52...fc8c)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    },
+    "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED": {
+      "name": "Multisig Signer (0x61D5...9fED)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    },
+    "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155": {
+      "name": "Multisig Signer (0x25bB...4155)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    },
+    "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1": {
+      "name": "Multisig Signer (0x4096...85C1)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    },
+    "eth:0x4D915Dd2c56814BD3Db51a1dA35b302BCC9c8973": {
+      "name": "Multisig Signer (0x4D91...8973)",
+      "description": "One of six EOAs registered as an owner on the Tether Gold MultiSigWallet. Can submit, confirm, and revoke confirmations on multisig transactions. Cannot act unilaterally — execution requires three of the six signers to confirm."
+    }
+  },
+  "dependencies": {},
+  "funds": {
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "name": "Tether Gold Token (XAUt)",
+      "description": "ERC-20 contract for the XAUt token, currently representing {{xautMarketCap}} of circulating gold-backed claims. The contract itself does not custody collateral — physical gold is held off-chain — but it controls who can hold and transfer those claims, and the `mint`, `addToBlockedList`, and `destroyBlockedFunds` permissions on this contract directly determine total supply and individual holder balances."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "xautMarketCap": "fundsdata.contracts[\"eth:0x68749665FF8D2d112Fa859AA293F07A622782F38\"].tokenInfo.tokenValue"
+  },
+  "publishedAt": "2026-04-27T08:30:00.000Z"
+}

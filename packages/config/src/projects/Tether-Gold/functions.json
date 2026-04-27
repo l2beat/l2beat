@@ -1,0 +1,382 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-27T06:09:19.014Z",
+  "contracts": {
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "functions": [
+        {
+          "functionName": "admin",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-25T10:12:02.293Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:12:02.293Z"
+          }
+        },
+        {
+          "functionName": "implementation",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-25T10:12:02.310Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:12:02.310Z"
+          }
+        },
+        {
+          "functionName": "changeAdmin",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-25T10:12:02.327Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:12:02.327Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-25T10:12:02.345Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:12:02.345Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-25T10:12:02.361Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:12:02.361Z"
+          }
+        }
+      ]
+    },
+    "eth:0x4C0d2c74A8D26f1E4F5653021c521F5471F9e566": {
+      "functions": [
+        {
+          "functionName": "addToBlockedList",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.507Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.507Z"
+          }
+        },
+        {
+          "functionName": "destroyBlockedFunds",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.523Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.523Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.535Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.535Z"
+          }
+        },
+        {
+          "functionName": "redeem",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.548Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.548Z"
+          }
+        },
+        {
+          "functionName": "removeFromBlockedList",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.563Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.563Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.575Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.575Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-25T10:14:23.590Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T10:14:23.590Z"
+          }
+        }
+      ]
+    },
+    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": {
+      "functions": [
+        {
+          "functionName": "addOwner",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.518Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "removeOwner",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.530Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "replaceOwner",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.542Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "changeRequirement",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.555Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "submitTransaction",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getOwners"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.566Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "confirmTransaction",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getOwners"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.580Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "revokeConfirmation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getOwners"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.591Z"
+          },
+          "score": "no-impact"
+        }
+      ]
+    },
+    "eth:0x856FCc085290ac1E40392442211e6a333afB873e": {
+      "functions": [
+        {
+          "functionName": "changeProxyAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.617Z"
+          },
+          "score": "critical"
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.631Z"
+          },
+          "score": "no-impact"
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.643Z"
+          },
+          "score": "critical"
+        },
+        {
+          "functionName": "upgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.654Z"
+          },
+          "score": "critical"
+        },
+        {
+          "functionName": "upgradeAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-27T06:09:19.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-25T09:54:51.666Z"
+          },
+          "score": "critical"
+        }
+      ]
+    }
+  }
+}

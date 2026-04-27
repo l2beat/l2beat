@@ -596,6 +596,11 @@
       "ignoreInWatchMode": [
         "latestAnswer"
       ]
+    },
+    "eth:0x0c0864837C7e65458aCD3C665222203217019436": {
+      "ignoreInWatchMode": [
+        "latestAnswer"
+      ]
     }
   }
 }

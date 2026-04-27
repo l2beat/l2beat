@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-27T06:22:21.577Z",
+  "contracts": {
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "address": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+      "name": "Tether Gold Token",
+      "externalCalls": [],
+      "generatedAt": "2026-04-27T06:22:12.652Z"
+    },
+    "eth:0x856FCc085290ac1E40392442211e6a333afB873e": {
+      "address": "eth:0x856FCc085290ac1E40392442211e6a333afB873e",
+      "name": "ProxyAdmin",
+      "externalCalls": [
+        {
+          "callerFunction": "changeProxyAdmin",
+          "storageVariable": "proxy",
+          "interfaceType": "TransparentUpgradeableProxy",
+          "calledFunction": "changeAdmin",
+          "resolvedAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "resolvedContractName": "Tether Gold Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "upgrade",
+          "storageVariable": "proxy",
+          "interfaceType": "TransparentUpgradeableProxy",
+          "calledFunction": "upgradeTo",
+          "resolvedAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "resolvedContractName": "Tether Gold Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "upgradeAndCall",
+          "storageVariable": "proxy",
+          "interfaceType": "TransparentUpgradeableProxy",
+          "calledFunction": "upgradeToAndCall",
+          "resolvedAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "resolvedContractName": "Tether Gold Token",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-04-27T06:22:18.139Z"
+    },
+    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": {
+      "address": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+      "name": "MultiSigWallet",
+      "externalCalls": [],
+      "generatedAt": "2026-04-27T06:22:21.576Z"
+    }
+  }
+}

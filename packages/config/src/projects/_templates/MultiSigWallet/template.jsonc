@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getOwners", "transactionCount"],
+  "ignoreInWatchMode": ["transactionCount"],
+  "fields": {
+    "$members": {
+      "handler": { "type": "call", "method": "getOwners", "args": [] }
+    },
+    "$threshold": {
+      "handler": { "type": "call", "method": "required", "args": [] }
+    }
+  }
+}

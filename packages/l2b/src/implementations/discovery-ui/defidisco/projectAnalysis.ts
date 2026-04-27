@@ -292,8 +292,15 @@ function mapAdminType(
     return 'Revoked'
   }
   const proxyType = proxyTypeMap.get(normalizedAddress)
+  // 'Immutable' is only a meaningful label for *generic* contracts that have
+  // no more specific classification. Don't clobber Multisig/Token/Timelock/
+  // Diamond etc. just because the contract bytecode happens to be
+  // non-upgradeable — a stand-alone multisig is still a multisig.
   if (proxyType === 'immutable') {
-    return 'Immutable'
+    if (rawType === 'Contract' || rawType === 'Untemplatized') {
+      return 'Immutable'
+    }
+    return rawType
   }
   if (rawType === 'Untemplatized' || rawType === 'Unknown') {
     if (proxyType !== undefined) {

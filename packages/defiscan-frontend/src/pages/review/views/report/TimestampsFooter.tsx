@@ -24,7 +24,7 @@ export function TimestampsFooter({ review }: TimestampsFooterProps) {
         label="Latest activity"
         iso={latestActivity}
         showRelative
-        emptyFallback="Not monitored"
+        emptyFallback="No updates"
       />
       <Divider />
       <TimestampItem
