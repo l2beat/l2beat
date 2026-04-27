@@ -13,6 +13,7 @@ import {
   UPGRADE_MECHANISM,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
@@ -122,6 +123,45 @@ export const nova: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: true,
+        usersHave7DaysToExit: true,
+        securityCouncilProperlySetUp: true,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: true,
+        daCommitteeDecentralized: true,
+        noRedTrustedSetups: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
+        programHashesReproducible: null,
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: false,
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/OffchainLabs/nitro',
+      securityCouncilReference:
+        'https://docs.arbitrum.foundation/security-council-members',
+      stage1PrincipleDescription:
+        'The Security Council is properly set up (9/12), but BoLD fraud proof submission on Nova is restricted to a whitelist of 10 validators (validatorWhitelistDisabled = false on the RollupProxy). The whitelisted validators colluding to push a malicious assertion without external challenge is a residual attack path beyond Security Council compromise or sequencer+DAC collusion.',
+    },
+  ),
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
