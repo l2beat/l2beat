@@ -101,7 +101,7 @@ export const fluent: ScalingProject = {
           selector: '0xec0f2437',
           functionSignature:
             'function commitBatch(bytes32 batchRoot, bytes32 fromBlockHash, bytes32 toBlockHash, uint24 numberOfBlocks, (bytes32 depositRoot, uint16 depositCount)[] blockDeposits, uint8 expectedBlobsCount)',
-          sinceTimestamp: UnixTime(1777161600), // mainnet activation 2026-04-24
+          sinceTimestamp: UnixTime(1776988800), // mainnet activation 2026-04-24
         },
       },
       {
@@ -115,7 +115,7 @@ export const fluent: ScalingProject = {
           selector: '0xf4405170',
           functionSignature:
             'function submitBlobs(uint256 batchIndex, uint256 numBlobs)',
-          sinceTimestamp: UnixTime(1777161600),
+          sinceTimestamp: UnixTime(1776988800),
         },
       },
       {
@@ -128,7 +128,7 @@ export const fluent: ScalingProject = {
           address: ROLLUP,
           selector: '0x94abf0e7',
           functionSignature: 'function finalizeBatches(uint256 toBatchIndex)',
-          sinceTimestamp: UnixTime(1777161600),
+          sinceTimestamp: UnixTime(1776988800),
         },
       },
       {
@@ -144,7 +144,7 @@ export const fluent: ScalingProject = {
           selector: '0x279a71f5',
           functionSignature:
             'function finalizeWithProofs(uint256 batchIndex, (bytes32 previousBlockHash, bytes32 blockHash, bytes32 withdrawalRoot, bytes32 depositRoot, uint16 depositCount)[] blockHeaders)',
-          sinceTimestamp: UnixTime(1777161600),
+          sinceTimestamp: UnixTime(1776988800),
         },
       },
     ],
@@ -212,10 +212,10 @@ export const fluent: ScalingProject = {
       ],
     },
     operator: {
-      ...OPERATOR.CENTRALIZED_SEQUENCER,
+      ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
-        OPERATOR.CENTRALIZED_SEQUENCER.description +
-        ' The same EOA holds the SEQUENCER, PROVER and EMERGENCY roles on the Rollup contract and DEFAULT_ADMIN_ROLE on L1FluentBridge — the contract that custodies bridged ETH and gates its own UUPS upgrades on that role. The ERC20Gateway and NativeGateway proxies are Ownable and are owned by a 4/5 Safe, so ERC-20 escrow is gated by the multisig rather than the EOA. The DEFAULT_ADMIN_ROLE on the Rollup contract itself is held by the same 4/5 Safe.',
+        OPERATOR.CENTRALIZED_OPERATOR.description +
+        ' Sequencing and proof submission are also permissioned at launch: only allowlisted addresses can submit batches and SP1 proofs to the Rollup. See the Permissions section for current role holders.',
       references: [
         {
           title: 'Fluent Security Invariants',
@@ -259,7 +259,7 @@ export const fluent: ScalingProject = {
   chainConfig: {
     name: 'fluent',
     chainId: 25363,
-    sinceTimestamp: UnixTime(1777161600), // 2026-04-24, mainnet activation
+    sinceTimestamp: UnixTime(1776988800), // 2026-04-24, mainnet activation
     gasTokens: ['ETH'],
     apis: [{ type: 'rpc', url: 'https://rpc.fluent.xyz', callsPerMinute: 120 }],
   },
