@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb9bcb28ae9a2fce7ef1f104ae48980018f1f57a8
+
+# Diff at Tue, 28 Apr 2026 09:42:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0e388c8c86a89046e76f813630ecf1076dcf68a block: 1776070910
+- current timestamp: 1777369203
+
+## Description
+
+edit description to add cctp use.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776070910 (main branch discovery), not current.
+
+```diff
+    contract Solana_Adapter (eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3) {
+    +++ description: Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool.
+      description:
+-        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
++        "Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool."
+    }
+```
+
 Generated with discovered.json: 0x7ea035dbea964d147cd43d099123d77d04bdfe33
 
 # Diff at Mon, 13 Apr 2026 09:14:19 GMT:
