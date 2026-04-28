@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x423a5e0741063327d905557adf73abd8bcb5bbb1
+
+# Diff at Tue, 28 Apr 2026 15:45:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1770824047
+- current timestamp: 1777390996
+
+## Description
+
+Conduit Multisig 2 (`arb1:0x79C2abE3...`) — signer `0x381624F7` removed. Threshold unchanged at 4; total signers 12 → 11 (33% → 36%). Same shared multisig change observed on `ethereal`.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      values.$members.1:
+-        "arb1:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0xe161e5243a656b82dae0ecf51fa179a95b302131
 
 # Diff at Wed, 11 Feb 2026 15:35:14 GMT:

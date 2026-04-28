@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1776158984,
+  "timestamp": 1777390966,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -423,7 +423,6 @@
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -590,6 +589,11 @@
     },
     {
       "address": "eth:0x0f4aDAD56724966285240D1b17Ee54e207786Dc6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1323,6 +1327,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
           "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8",
           "eth:0xa4C9190ca82c4056FF9CDe6a070424E563BF1D95",
           "eth:0xa4BB3AdFA1bDc0f609eCae7A39eC58e9b2A373e0"
@@ -1331,8 +1336,8 @@
         "domainSeparator": "0x8b6e17ec93cff6d892ec0adb63fd447402dd4d283487d0058fd2f8f64fd781db",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1379,7 +1384,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664985",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292665441",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1539,8 +1544,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 24877010
+          "prevBoughtGas": 333101,
+          "prevBlockNum": 24979370
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1679,7 +1684,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3712,
+        "gameCount": 4054,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2653,7 +2658,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xc76b1ed33201be3Dedcc16f745AB922E8cB462e3",
+        "lastResolved": "eth:0xF856e91A51944a5A8fF5adCB138D5931A648B44c",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -4501,6 +4506,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24877142 },
-  "permissionsConfigHash": "0x4075f117b9d9fe9eedef8dac8fa1bc6aa1b6d6c70dd0e044e3933205ebb195a4"
+  "usedBlockNumbers": { "ethereum": 24979528 },
+  "permissionsConfigHash": "0x2f4eda41b086ff47e479ef3c008f31e5d3e708bddc921a8e34c369b0d5169373"
 }
