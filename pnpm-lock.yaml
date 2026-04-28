@@ -848,6 +848,9 @@ importers:
 
   packages/protocolbeat:
     dependencies:
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
@@ -1223,6 +1226,9 @@ importers:
 
   packages/tools:
     dependencies:
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
       '@l2beat/tools-api':
         specifier: workspace:*
         version: link:../tools-api

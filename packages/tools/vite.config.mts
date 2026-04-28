@@ -1,11 +1,15 @@
+import { openPanelPlugin } from '@l2beat/shared-pure'
 import react from '@vitejs/plugin-react-swc'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 
 // https://vitejs.dev/config/
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    outDir: 'build',
-  },
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  return {
+    plugins: [react(), openPanelPlugin(env.VITE_OPENPANEL_CLIENT_ID)],
+    build: {
+      outDir: 'build',
+    },
+  }
 })

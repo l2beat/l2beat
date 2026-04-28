@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@l2beat/tools-api": "workspace:*",
     "@tanstack/react-query": "^5.59.16",

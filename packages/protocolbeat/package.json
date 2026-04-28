@@ -18,6 +18,7 @@
     "test:watch": "mocha --watch"
   },
   "dependencies": {
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-select": "^2.2.6",
