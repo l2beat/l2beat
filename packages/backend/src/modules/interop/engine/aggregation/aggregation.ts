@@ -63,8 +63,8 @@ export function getAggregatedTransfer(
   let dstValueUsd: number | undefined = undefined
   let valueInFlight: number | undefined = undefined
   let transferTypeStats: InteropTransferTypeStatsMap | undefined = undefined
-  let mintedValueUsd = 0
-  let burnedValueUsd = 0
+  let mintedValueUsd = undefined
+  let burnedValueUsd = undefined
   let identifiedCount = 0
   let countUnder100 = 0
   let count100To1K = 0
@@ -143,11 +143,13 @@ export function getAggregatedTransfer(
     if (options?.calculateNetMinted) {
       if (transfer.srcWasBurned === false && transfer.dstWasMinted) {
         const value = transfer.dstValueUsd ?? transfer.srcValueUsd
-        mintedValueUsd = value ? mintedValueUsd + value : mintedValueUsd
+        mintedValueUsd =
+          value !== undefined ? (mintedValueUsd ?? 0) + value : mintedValueUsd
       }
       if (transfer.srcWasBurned && transfer.dstWasMinted === false) {
         const value = transfer.srcValueUsd ?? transfer.dstValueUsd
-        burnedValueUsd = value ? burnedValueUsd + value : burnedValueUsd
+        burnedValueUsd =
+          value !== undefined ? (burnedValueUsd ?? 0) + value : burnedValueUsd
       }
     }
   }
@@ -172,10 +174,10 @@ export function getAggregatedTransfer(
     avgValueInFlight: valueInFlight
       ? Math.round((valueInFlight / UnixTime.DAY) * 100) / 100
       : undefined,
-    mintedValueUsd: options?.calculateNetMinted
+    mintedValueUsd: mintedValueUsd
       ? Math.round(mintedValueUsd * 100) / 100
       : undefined,
-    burnedValueUsd: options?.calculateNetMinted
+    burnedValueUsd: burnedValueUsd
       ? Math.round(burnedValueUsd * 100) / 100
       : undefined,
     countUnder100,

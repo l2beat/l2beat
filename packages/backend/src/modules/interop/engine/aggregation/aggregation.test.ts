@@ -357,7 +357,7 @@ describe('aggregation', () => {
       expect(result.avgValueInFlight).toEqual(324.07)
     })
 
-    it('calculates minted & burned value correctly', () => {
+    it('sums net mint and burn for strict lock-and-mint flags', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
           timestamp,
@@ -439,11 +439,47 @@ describe('aggregation', () => {
         calculateNetMinted: true,
       })
 
-      // Only the first transfer counts (minting)
-      // mintedValueUsd = 2000
-      // burnedValueUsd = 0
+      // Only the first transfer counts (minting); no burn total → field omitted
       expect(result.mintedValueUsd).toEqual(2000)
-      expect(result.burnedValueUsd).toEqual(0)
+      expect(result.burnedValueUsd).toEqual(undefined)
+    })
+
+    it('omits net mint or burn when src/dst booleans omit strict false', () => {
+      const mintNeedsExplicitNotBurn =
+        getAggregatedTransfer(
+          [
+            createTransfer({
+              timestamp,
+              srcChain: 'ethereum',
+              dstChain: 'arbitrum',
+              duration: 1000,
+              srcValueUsd: 10,
+              dstValueUsd: 10,
+              dstWasMinted: true,
+            }),
+          ],
+          { calculateNetMinted: true },
+        ).mintedValueUsd
+
+      expect(mintNeedsExplicitNotBurn).toEqual(undefined)
+
+      const burnNeedsExplicitNotMint =
+        getAggregatedTransfer(
+          [
+            createTransfer({
+              timestamp,
+              srcChain: 'ethereum',
+              dstChain: 'arbitrum',
+              duration: 1000,
+              srcValueUsd: 10,
+              dstValueUsd: 10,
+              srcWasBurned: true,
+            }),
+          ],
+          { calculateNetMinted: true },
+        ).burnedValueUsd
+
+      expect(burnNeedsExplicitNotMint).toEqual(undefined)
     })
 
     it('correctly counts identified transfers', () => {
