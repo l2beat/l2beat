@@ -19,17 +19,18 @@ import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { transferSizeBuckets } from '../../utils/transferSizeBuckets'
+import type { InteropSelection } from '../../utils/types'
 
 export function InteropProtocolSummary({
   protocol,
+  apiSelection,
 }: {
   protocol: InteropProtocolEntry
+  apiSelection: InteropSelection
 }) {
-  const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    ...apiSelection,
     id: protocol.id,
   })
 
@@ -125,12 +126,14 @@ export function InteropProtocolSummary({
             <TopTokensCell
               topItems={data?.entry?.tokens ?? { items: [], remainingCount: 0 }}
               type={undefined}
+              apiSelection={apiSelection}
               protocol={{
                 id: data?.entry?.id as ProjectId,
                 name: data?.entry?.name ?? '',
                 iconUrl: data?.entry?.iconUrl ?? '',
                 bridgeTypes: data?.entry?.bridgeTypes ?? [],
               }}
+              hideChainsInfo
             />
           }
         />

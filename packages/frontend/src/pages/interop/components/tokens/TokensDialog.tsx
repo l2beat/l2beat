@@ -22,7 +22,7 @@ import {
 } from '~/components/core/Tabs'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { TokensPairsTable } from './TokenPairsTable'
 import { TokensTable } from './TokensTable'
@@ -35,6 +35,8 @@ interface TokensDialogProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   title: ReactNode
+  apiSelection: InteropSelection
+  hideChainsInfo?: boolean
   showNetMintedValueColumn?: boolean
 }
 
@@ -44,15 +46,16 @@ export function TokensDialog({
   isOpen,
   setIsOpen,
   title,
+  apiSelection,
+  hideChainsInfo,
   showNetMintedValueColumn,
 }: TokensDialogProps) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
   const [hideSameToken, setHideSameToken] = useState(false)
 
   const utils = api.useUtils()
-  const queryInput = { ...selectionForApi, id, type }
+  const queryInput = { ...apiSelection, id, type }
   const showTopProtocolColumn = id === undefined
 
   const tabsList = (
@@ -109,7 +112,7 @@ export function TokensDialog({
           >
             <DrawerHeader className="mb-2">
               <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
-              <BetweenChainsInfo />
+              {!hideChainsInfo && <BetweenChainsInfo />}
               {tabsList}
             </DrawerHeader>
             <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
@@ -134,7 +137,7 @@ export function TokensDialog({
         >
           <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">
             <DialogTitle>{title}</DialogTitle>
-            <BetweenChainsInfo className="mt-1" />
+            {!hideChainsInfo && <BetweenChainsInfo className="mt-1" />}
             {tabsList}
           </DialogHeader>
           <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">

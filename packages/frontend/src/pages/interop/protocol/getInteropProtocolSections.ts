@@ -1,21 +1,24 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
+import type { InteropSelection } from '../utils/types'
 
 interface GetInteropProtocolSectionsOptions {
   projectId: ProjectId
-  hasSelection: boolean
   isLoading: boolean
   data: InteropProtocolDashboardData | undefined
+  apiSelection: InteropSelection
+  getChainById: (id: string) => { id: string; iconUrl: string } | undefined
 }
 
 export function getInteropProtocolSections({
   projectId,
-  hasSelection,
   isLoading,
   data,
+  apiSelection,
+  getChainById,
 }: GetInteropProtocolSectionsOptions): ProjectDetailsSection[] {
-  if (!hasSelection || isLoading || !data?.entry) {
+  if (isLoading || !data?.entry) {
     return []
   }
 
@@ -28,6 +31,8 @@ export function getInteropProtocolSections({
         id: 'interop-volume',
         projectId,
         title: 'Volume and flows',
+        apiSelection,
+        getChainById,
       },
     })
   }
@@ -38,6 +43,7 @@ export function getInteropProtocolSections({
       id: 'interop-tokens',
       projectId,
       title: 'Top tokens by volume',
+      apiSelection,
     },
   })
 
@@ -47,6 +53,7 @@ export function getInteropProtocolSections({
       id: 'interop-transfers',
       projectId,
       title: 'Transfers',
+      apiSelection,
     },
   })
 

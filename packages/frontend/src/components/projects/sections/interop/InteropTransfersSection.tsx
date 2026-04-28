@@ -11,12 +11,11 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import {
   columns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '~/pages/interop/utils/types'
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -25,15 +24,16 @@ const TRANSFERS_PER_PAGE = 8
 
 export interface InteropTransfersSectionProps extends ProjectSectionProps {
   projectId: ProjectId
+  apiSelection: InteropSelection
 }
 
 export function InteropTransfersSection({
   projectId,
+  apiSelection,
   ...sectionProps
 }: InteropTransfersSectionProps) {
-  const { selectionForApi } = useInteropSelectedChains()
   const { data: protocolData } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    ...apiSelection,
     id: projectId,
   })
   const entry = protocolData?.entry
@@ -47,7 +47,7 @@ export function InteropTransfersSection({
     isFetchingNextPage,
   } = api.interop.transfers.useInfiniteQuery(
     {
-      ...selectionForApi,
+      ...apiSelection,
       id: projectId,
       expectedTransferCount: totalCount,
       expectedVolume: entry?.volume ?? 0,
@@ -107,7 +107,6 @@ export function InteropTransfersSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <BetweenChainsInfo className="mb-3" />
       {hasIntegrityMismatch ? (
         <TransfersResyncNotice />
       ) : (

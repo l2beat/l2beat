@@ -1,12 +1,17 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { api } from '~/trpc/React'
 import { TopTokenWidget } from '../../components/widgets/TopTokenWidget'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 
-export function TopToken({ id }: { id: ProjectId }) {
-  const { selectionForApi } = useInteropSelectedChains()
+export function TopToken({
+  id,
+  apiSelection,
+}: {
+  id: ProjectId
+  apiSelection: InteropSelection
+}) {
   const { data, isLoading } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    ...apiSelection,
     id,
   })
   return (
@@ -15,6 +20,7 @@ export function TopToken({ id }: { id: ProjectId }) {
       topToken={data?.topToken}
       isLoading={isLoading}
       hideProtocol
+      hideChainsInfo
     />
   )
 }

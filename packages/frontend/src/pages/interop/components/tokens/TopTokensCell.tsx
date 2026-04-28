@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { InteropTopItems } from '../top-items/TopItems'
 import { TokensDialog } from './TokensDialog'
 
@@ -11,6 +11,8 @@ export function TopTokensCell({
   topItems,
   type,
   protocol,
+  apiSelection,
+  hideChainsInfo,
   showNetMintedValueColumn,
 }: {
   topItems: TopItems<TokenData>
@@ -21,11 +23,12 @@ export function TopTokensCell({
     iconUrl: string
     bridgeTypes?: KnownInteropBridgeType[]
   }
+  apiSelection: InteropSelection
+  hideChainsInfo?: boolean
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const utils = api.useUtils()
-  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -39,7 +42,7 @@ export function TopTokensCell({
         }}
         onMouseEnter={() =>
           utils.interop.tokens.prefetch({
-            ...selectionForApi,
+            ...apiSelection,
             id: protocol.id,
             type,
           })
@@ -52,6 +55,8 @@ export function TopTokensCell({
         type={type}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        apiSelection={apiSelection}
+        hideChainsInfo={hideChainsInfo}
         title={
           <>
             <span>Top tokens & pairs by volume for </span>

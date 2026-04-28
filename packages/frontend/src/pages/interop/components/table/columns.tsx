@@ -15,6 +15,7 @@ import { EM_DASH } from '~/consts/characters'
 import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { TopTokensCell } from '../tokens/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
@@ -139,6 +140,7 @@ const averageInFlightValueColumn = columnHelper.accessor(
 
 export function getAllProtocolsColumns(
   type: KnownInteropBridgeType | undefined,
+  apiSelection: InteropSelection,
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
@@ -326,6 +328,7 @@ export function getAllProtocolsColumns(
           <TopTokensCell
             topItems={ctx.row.original.tokens}
             type={type}
+            apiSelection={apiSelection}
             protocol={{
               id: ctx.row.original.id,
               name: ctx.row.original.name,

@@ -15,12 +15,11 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import {
   getTopTokensColumns,
   type TokenRow,
 } from '~/pages/interop/components/tokens/columns'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '~/pages/interop/utils/types'
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -29,21 +28,22 @@ const TOKENS_PER_PAGE = 6
 
 export interface InteropTokensSectionProps extends ProjectSectionProps {
   projectId: ProjectId
+  apiSelection: InteropSelection
 }
 
 export function InteropTokensSection({
   projectId,
+  apiSelection,
   ...sectionProps
 }: InteropTokensSectionProps) {
-  const { selectionForApi } = useInteropSelectedChains()
   const { data: protocolData } = api.interop.protocol.useQuery({
-    ...selectionForApi,
+    ...apiSelection,
     id: projectId,
   })
 
   const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
     {
-      ...selectionForApi,
+      ...apiSelection,
       id: projectId,
     },
     {
@@ -51,7 +51,10 @@ export function InteropTokensSection({
     },
   )
 
-  const columns = useMemo(() => getTopTokensColumns(), [])
+  const columns = useMemo(
+    () => getTopTokensColumns({ hideFlowsColumn: true }),
+    [],
+  )
 
   const tableData = useMemo(() => data ?? [], [data])
 
@@ -88,7 +91,6 @@ export function InteropTokensSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <BetweenChainsInfo className="mb-3" />
       <BasicTable
         skeletonCount={TOKENS_PER_PAGE}
         table={table}
