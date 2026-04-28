@@ -85,7 +85,9 @@ The main `opstack` group should cover direct portal deposits so the generic plug
 
 ## 5. Register the chain's `interopConfig`
 
-Without this, matched transfers land in `InteropTransfer` but never reach `AggregatedInteropTransfer`, so the dashboard shows nothing for the canonical bridge. Add an `interopConfig` block to `packages/config/src/projects/<chain>/<chain>.ts` registering the `opstack` and `opstack-standardbridge` plugins on `chain: '<chain>'`. Copy from `ink/ink.ts`.
+Without this, matched transfers never reach `AggregatedInteropTransfer` and the dashboard shows nothing for the canonical bridge. Add an `interopConfig` block to `packages/config/src/projects/<chain>/<chain>.ts` registering the `opstack` and `opstack-standardbridge` plugins. Copy from `ink/ink.ts`.
+
+Then from `packages/frontend` run `pnpm og-images && pnpm tinify` and commit the new `static/meta-images/interop/projects/<chain>/opengraph-image.png` plus `scripts/tinify/metadata.json`.
 
 ## 6. Run examples to verify
 
