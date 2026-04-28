@@ -1,7 +1,7 @@
 {
   "name": "ccip",
-  "timestamp": 1777287134,
-  "configHash": "0xc3f999daa854813147daa995c917e40dd1e1e6c433a9cda0acb5d0866bdc0ad6",
+  "timestamp": 1777388210,
+  "configHash": "0x2887c843b3a7d5916c3ae606af4913672afc3553afe1cfb6b9a74615b314e7b8",
   "entries": [
     {
       "address": "eth:0x0100000000000000000000000000000000000000",
@@ -11,7 +11,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
-          "description": "sign RMN reports that can approve or block CCIP activity for the local chain.",
+          "description": "sign RMNRemote reports; this is separate from CommitStoreV1's legacy isBlessed() passthrough.",
           "role": ".getVersionedConfig"
         }
       ]
@@ -26,6 +26,7 @@
         "0x7612d95cd6518326945cfb5387b8a37c83d797ad268bd7d9d5695c45b59a579e"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.",
       "ignoreInWatchMode": [
         "getOnRamps",
         "getCurrentBridgedAmount",
@@ -66,7 +67,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "100000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "56325060732492340920981328",
+        "getCurrentBridgedAmount": "53687596939094980712404598",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -123,19 +124,19 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "ARMProxyOwnerBypasser",
       "address": "eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -541,7 +542,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "EthereumToArbitrumOnRampTokenLimitAdmin",
       "address": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -549,6 +550,20 @@
         "0x15b33604a10bda5235da68c98629cc8246b96e86c931a23c296ae08f1eb691cb"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "change the aggregate outbound value rate limit for Ethereum-to-Arbitrum sends.",
+          "role": ".getTokenLimitAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "replace the token limit admin for this OnRamp.",
+          "role": ".getTokenLimitAdmin"
+        }
+      ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
       "sinceTimestamp": 1695826667,
       "sinceBlock": 18227834,
@@ -640,13 +655,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -659,13 +674,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -684,8 +699,8 @@
         "0x3693b1f8ad16df4a5aaa5bfcfb070ead01c1ca6e49553832567f9710362a47ac"
       ],
       "proxyType": "immutable",
-      "description": "Proxy pointing to the active ARM/RMN contract used by CCIP to report whether routes are cursed.",
-      "receivedPermissions": [
+      "description": "ARM proxy used by the Router, OnRamp, CommitStore, OffRamp, and GHO token pool to read RMN curse and blessing state.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
@@ -730,13 +745,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -750,8 +765,8 @@
         "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
       ],
       "proxyType": "immutable",
-      "description": "Role based timelock used to administer CCIP contracts.",
-      "receivedPermissions": [
+      "description": "Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -772,14 +787,62 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "add, remove, or reprice fee tokens accepted by this OnRamp.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "change Router, PriceRegistry, message size, token count, gas limit, and fee parameters for outbound messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "change token transfer fee configuration and node operator fee weights.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284",
+          "description": "withdraw accumulated non-LINK fee tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
-          "description": "add or remove OnRamps and OffRamps and change the wrapped native token used by this Router.",
+          "description": "add, remove, or replace OnRamps and OffRamps used by the Router.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "description": "change the wrapped native token used for native-fee payments.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "description": "recover tokens held by the Router.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
-          "description": "add or remove fee tokens and price updaters used by CCIP pricing.",
+          "description": "add or remove fee tokens accepted by CCIP pricing.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+          "description": "add or remove price updater accounts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+          "description": "change the staleness threshold for token and gas prices.",
           "role": ".owner"
         },
         {
@@ -881,25 +944,26 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "CallProxy",
+      "name": "RMNRemoteOwnerExecutor",
       "address": "eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610",
       "type": "Contract",
       "sourceHashes": [
         "0x8167542a48273d3ad36291b1445d3c0d62682a63ff6a5ea38974c19147782c9a"
       ],
       "proxyType": "immutable",
+      "description": "Public call proxy that forwards any caller to RMNRemoteOwner, allowing anyone to execute already-scheduled RMNRemoteOwner operations after the timelock delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -956,13 +1020,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -976,8 +1040,8 @@
         "0xd5b2b6b0153f0ac33437f0059e864bae869943a68c01d8626d43eb2abebb728d"
       ],
       "proxyType": "immutable",
-      "description": "Role based timelock used to administer CCIP contracts.",
-      "receivedPermissions": [
+      "description": "Timelock administering RMNRemote signer configuration and curse/blessing controls.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
@@ -1056,6 +1120,7 @@
         "0x0ae770c7c5e476e676ed2fed06f93f96e0b4ed9b58b6a627483af05a17f92157"
       ],
       "proxyType": "immutable",
+      "description": "Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).",
       "ignoreInWatchMode": [
         "getNopFeesJuels",
         "linkAvailableForPayment",
@@ -1082,8 +1147,8 @@
           "defaultTokenDestGasOverhead": 90000,
           "enforceOutOfOrder": false
         },
-        "getExpectedNextSequenceNumber": 21118,
-        "getNopFeesJuels": "563660979220522025957",
+        "getExpectedNextSequenceNumber": 21143,
+        "getNopFeesJuels": "565697867054963752722",
         "getStaticConfig": {
           "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
           "chainSelector": "5009297550715157269",
@@ -1095,7 +1160,7 @@
           "tokenAdminRegistry": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6"
         },
         "getTokenLimitAdmin": "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "-557022070220125766431",
+        "linkAvailableForPayment": "-559058958054567493196",
         "linkToken": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": {
@@ -1109,6 +1174,14 @@
         "tokenPools": [],
         "typeAndVersion": "EVM2EVMOnRamp 1.5.0"
       },
+      "fieldMeta": {
+        "getStaticConfig": {
+          "description": "Immutable lane config: Ethereum source selector, Arbitrum destination selector, previous OnRamp, RMN proxy, LINK token, and token admin registry."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable outbound config: Router, PriceRegistry, message size and gas limits, token limits, destination gas overheads, fee defaults, and ordered-execution policy."
+        }
+      },
       "implementationNames": {
         "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284": "EVM2EVMOnRamp"
       }
@@ -1121,13 +1194,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -1148,7 +1221,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "RMNRemoteOwnerProposer",
       "address": "eth:0x79bC82F3931A7d017719146A822e4AD8152b157e",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -1415,13 +1488,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -1435,7 +1508,8 @@
         "0x56b28474b4daa9a8cbbe1a1ed1135d6881be21c0f343671e361b90eebf0b210d"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "description": "Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
@@ -1458,10 +1532,10 @@
       },
       "fieldMeta": {
         "arbitrumOnRamp": {
-          "description": "The OnRamp used by CCIP to send messages and tokens from Ethereum to Arbitrum One."
+          "description": "Ethereum-to-Arbitrum OnRamp selected by the Router when users call ccipSend() for the Arbitrum chain selector."
         },
         "arbitrumOffRamp": {
-          "description": "The OffRamp used by CCIP to deliver messages and tokens from Arbitrum One to Ethereum."
+          "description": "Arbitrum-to-Ethereum OffRamp allowed to call routeMessage() and deliver messages to Ethereum receivers."
         },
         "isArbitrumSupported": {
           "description": "True if the Ethereum CCIP Router supports sending to Arbitrum One."
@@ -1472,7 +1546,7 @@
       }
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "RMNRemoteOwnerCanceller",
       "address": "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -1862,13 +1936,14 @@
       }
     },
     {
-      "name": "CallProxy",
+      "name": "ARMProxyOwnerExecutor",
       "address": "eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e",
       "type": "Contract",
       "sourceHashes": [
         "0x838eaabb6de8f4c17edd99a2bc83ce87289ec3e6fb3ce7ebf21b989b8acc2397"
       ],
       "proxyType": "immutable",
+      "description": "Public call proxy that forwards any caller to ARMProxyOwner, allowing anyone to execute already-scheduled ARMProxyOwner operations after the timelock delay.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1885,7 +1960,7 @@
       }
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "RMNRemoteOwnerBypasser",
       "address": "eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -2148,7 +2223,8 @@
         "0xb3ac732170b6c82e6eb8e400fac9618c85fcdce082a404030cee9be7bd700bdf"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "description": "PriceRegistry used by the OnRamp and CommitStore to price fees, tokens, and gas for this route.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
@@ -2181,13 +2257,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2200,13 +2276,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2219,13 +2295,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2239,7 +2315,8 @@
         "0xd025e395362545e27f2685927e4952ec45f7414e89a22f0db36aa587b3741d69"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "description": "Arbitrum-to-Ethereum CommitStore. Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
@@ -2326,7 +2403,16 @@
       },
       "fieldMeta": {
         "ocrConfig": {
-          "description": "Latest OCR2 signer and transmitter config for committing Merkle roots on this CommitStore."
+          "description": "Commit OCR config from ConfigSet. transmit() requires exactly f+1 valid OCR signer signatures, and msg.sender must be one of the transmitters."
+        },
+        "getStaticConfig": {
+          "description": "Immutable commit lane config: Ethereum destination selector, Arbitrum source selector, trusted Arbitrum OnRamp, and ARM/RMN proxy used for blessing checks."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable commit config: PriceRegistry used for price updates included in commit reports."
+        },
+        "latestConfigDetails": {
+          "description": "Digest and config count for the currently accepted commit OCR config. Commit reports must use this digest."
         }
       },
       "implementationNames": {
@@ -2341,13 +2427,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2360,13 +2446,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2379,13 +2465,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2403,13 +2489,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2422,13 +2508,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2441,19 +2527,19 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "ARMProxyOwnerCanceller",
       "address": "eth:0xAD97C0270a243270136E40278155C12ce7C7F87B",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -2855,13 +2941,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2874,13 +2960,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2893,13 +2979,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2912,7 +2998,7 @@
         "0xb2c79442b21e5fe7cc935a88ca894b959faf19445c69c6ab9f4751fd141a4c46"
       ],
       "proxyType": "immutable",
-      "description": "Aave GHO CCIP steward that can update bridge and rate limits for the GHO Ethereum token pool.",
+      "description": "Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2953,13 +3039,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2972,13 +3058,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -2991,19 +3077,19 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "GnosisSafe",
+      "name": "ARMProxyOwnerGnosisSafe",
       "address": "eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -3067,19 +3153,19 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "ARMProxyOwnerProposer",
       "address": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -3308,17 +3394,17 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 801,
+        "getOpCount": 808,
         "getRoot": {
-          "root": "0x23584f73d268f9bd4ecad9119bd8e5b70675ba35bb08b3474516d6e7c84ea249",
-          "validUntil": 1777326069
+          "root": "0x60db87ce785035216724b3daf6f762b2fc62cde523254a88627941f2c33b877c",
+          "validUntil": 1777603313
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 796,
-          "postOpCount": 803,
-          "overridePreviousRoot": false
+          "preOpCount": 807,
+          "postOpCount": 808,
+          "overridePreviousRoot": true
         },
         "MAX_NUM_SIGNERS": 200,
         "NUM_GROUPS": 32,
@@ -3342,13 +3428,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3361,19 +3447,19 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
     },
     {
-      "name": "ManyChainMultiSig",
+      "name": "ARMProxyOwnerProposer2",
       "address": "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
       "type": "Contract",
       "template": "transporter/ManyChainMultiSig",
@@ -3646,13 +3732,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3666,8 +3752,8 @@
         "0x3664618ea06cf10d0f454add5b6c58096ae0a6b3f86d41ffaf228442727fd581"
       ],
       "proxyType": "immutable",
-      "description": "Remote Risk Management Network contract used by CCIP to verify RMN reports and expose cursed subjects.",
-      "receivedPermissions": [
+      "description": "RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -3696,8 +3782,23 @@
           }
         },
         "isCursed": false,
+        "legacyRMN": "eth:0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F",
         "owner": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
         "typeAndVersion": "RMNRemote 1.6.0"
+      },
+      "fieldMeta": {
+        "getVersionedConfig": {
+          "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1."
+        },
+        "legacyRMN": {
+          "description": "Legacy RMN contract used by RMNRemote.isBlessed() for CommitStoreV1 root blessing. This immutable constructor arg is shown explicitly and kept as a leaf; its internal signer threshold is not decoded in this discovery."
+        },
+        "getCursedSubjects": {
+          "description": "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
+        },
+        "isCursed": {
+          "description": "True when RMNRemote has an active global or legacy curse."
+        }
       },
       "implementationNames": {
         "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": "RMNRemote"
@@ -3712,7 +3813,8 @@
         "0x3338bd5c98f2d0c2daccf1d67f82534a0b6d6ffd4c6f9badb508924d8df24f09"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "description": "Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.",
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
@@ -3794,7 +3896,19 @@
       },
       "fieldMeta": {
         "ocrConfig": {
-          "description": "Latest OCR2 signer and transmitter config for executing messages on this OffRamp."
+          "description": "Execution OCR config from ConfigSet. usually f+1 signers must sign message that is committed by a transmitter. This OffRamp inherits OCR2BaseNoChecks, so transmit() does not verify OCR signer signatures onchain. Acceptance is one configured transmitter plus the matching config digest; message safety comes from the blessed CommitStore proof and OffRamp execution checks."
+        },
+        "commitStore": {
+          "description": "CommitStore whose blessed Merkle roots must prove every message executed by this OffRamp."
+        },
+        "getStaticConfig": {
+          "description": "Immutable inbound lane config: Ethereum destination selector and Arbitrum source selector."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable execution config: Router, PriceRegistry, permissionless execution delay, message size and token limits, and token pool gas limit."
+        },
+        "latestConfigDetails": {
+          "description": "Digest and config count for the currently accepted execution OCR config. Reports must use this digest, but this field is not itself a quorum."
         }
       },
       "implementationNames": {
@@ -3809,13 +3923,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3828,13 +3942,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3847,13 +3961,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3866,13 +3980,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -3885,13 +3999,13 @@
         {
           "permission": "interact",
           "from": "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749",
-          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.",
+          "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses.",
           "role": ".ocrConfig"
         },
         {
           "permission": "interact",
           "from": "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d",
-          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp.",
+          "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof.",
           "role": ".ocrConfig"
         }
       ]
@@ -4869,6 +4983,6 @@
     "transporter/RouterV1_2_0": "0x21c399286da4da32ed8a752a1e05890c2c38a1b2d8ce7148f65c0b90db2e79ec",
     "transporter/TokenPool": "0x23366a4f5f3dd76f32c1f9eb98e01ce5dc5f876782217c04086c2237dc55d7b7"
   },
-  "usedBlockNumbers": { "ethereum": 24970899 },
-  "permissionsConfigHash": "0x3976ac49bf0694197fc239987011f9c96ef6dc047430c72bb1cffe009c98ada4"
+  "usedBlockNumbers": { "ethereum": 24979299 },
+  "permissionsConfigHash": "0xaeb86b3c9e9fb0fd41eb9da1cc94bd749f492404521604391b31f1f8951d3e00"
 }
