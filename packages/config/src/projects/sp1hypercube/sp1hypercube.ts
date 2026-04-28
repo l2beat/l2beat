@@ -92,7 +92,7 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     projectsForTvs: [
       {
         projectId: ProjectId('fluent'),
-        sinceTimestamp: UnixTime(1776988800), // 2026-04-24 mainnet activation
+        sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
       },
       {
         projectId: ProjectId('celo'),

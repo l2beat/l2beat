@@ -102,7 +102,7 @@ export const fluent: ScalingProject = {
           selector: '0xec0f2437',
           functionSignature:
             'function commitBatch(bytes32 batchRoot, bytes32 fromBlockHash, bytes32 toBlockHash, uint24 numberOfBlocks, (bytes32 depositRoot, uint16 depositCount)[] blockDeposits, uint8 expectedBlobsCount)',
-          sinceTimestamp: UnixTime(1776988800), // mainnet activation 2026-04-24
+          sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch, block 24913732
         },
       },
       {
@@ -116,7 +116,7 @@ export const fluent: ScalingProject = {
           selector: '0xf4405170',
           functionSignature:
             'function submitBlobs(uint256 batchIndex, uint256 numBlobs)',
-          sinceTimestamp: UnixTime(1776988800),
+          sinceTimestamp: UnixTime(1776599267),
         },
       },
       {
@@ -129,7 +129,7 @@ export const fluent: ScalingProject = {
           address: ROLLUP,
           selector: '0x94abf0e7',
           functionSignature: 'function finalizeBatches(uint256 toBatchIndex)',
-          sinceTimestamp: UnixTime(1776988800),
+          sinceTimestamp: UnixTime(1776599267),
         },
       },
       {
@@ -145,7 +145,7 @@ export const fluent: ScalingProject = {
           selector: '0x279a71f5',
           functionSignature:
             'function finalizeWithProofs(uint256 batchIndex, (bytes32 previousBlockHash, bytes32 blockHash, bytes32 withdrawalRoot, bytes32 depositRoot, uint16 depositCount)[] blockHeaders)',
-          sinceTimestamp: UnixTime(1776988800),
+          sinceTimestamp: UnixTime(1776599267),
         },
       },
     ],
@@ -189,7 +189,7 @@ export const fluent: ScalingProject = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'an actor with the EMERGENCY role reverts finalized batches before users withdraw.',
+            text: 'a preconfirmed but not yet finalized batch is used to release fast withdrawals on L1, and an actor with the EMERGENCY role then reverts that batch (revertBatches rejects already-finalized batches).',
           },
           {
             category: 'Withdrawals can be delayed if',
@@ -260,7 +260,7 @@ export const fluent: ScalingProject = {
   chainConfig: {
     name: 'fluent',
     chainId: 25363,
-    sinceTimestamp: UnixTime(1776988800), // 2026-04-24, mainnet activation
+    sinceTimestamp: UnixTime(1776599267), // first onchain commitBatch 2026-04-19
     gasTokens: ['ETH'],
     apis: [{ type: 'rpc', url: 'https://rpc.fluent.xyz', callsPerMinute: 120 }],
   },
