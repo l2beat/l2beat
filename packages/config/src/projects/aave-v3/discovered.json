@@ -1,7 +1,7 @@
 {
   "name": "aave-v3",
-  "timestamp": 1777304509,
-  "configHash": "0x71f2e04dfa349a3e4bf6826fc08d13a1198230a579fdecf3558f72665a612288",
+  "timestamp": 1777370902,
+  "configHash": "0x8d4f1cc0539b6295ea3259da8f797649e67c69ef9a1b941d766832aa1535a49c",
   "entries": [
     {
       "name": "ATokenInstance",
@@ -191,9 +191,9 @@
         "name": "Aave Ethereum Variable Debt USDe",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "162335396008588860590254195",
+        "scaledTotalSupply": "162298324559458666335830081",
         "symbol": "variableDebtEthUSDe",
-        "totalSupply": "183187767733566286852332740",
+        "totalSupply": "183175133677379395820102464",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
       },
       "implementationNames": {
@@ -255,9 +255,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "97573993420493882277336235",
+        "scaledTotalSupply": "97120971116677772376643473",
         "symbol": "aEthDAI",
-        "totalSupply": "113069864212446814242850292",
+        "totalSupply": "112562096955087593249789159",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
@@ -320,7 +320,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "64788465639717012093761",
         "symbol": "variableDebtEthcrvUSD",
-        "totalSupply": "82429718636374895203685",
+        "totalSupply": "82434065167541139084988",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
       },
       "implementationNames": {
@@ -373,6 +373,11 @@
         "eth:0x04142fc546D59838852873bba5C8827601A13FC8": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xb27C52c7f84819e3157993489741cB60786aE330": "VariableDebtTokenInstance"
       }
+    },
+    {
+      "address": "eth:0x0650302887619fa7727D8BD480Cda11A638B219B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AaveProtocolDataProvider",
@@ -486,7 +491,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "306433750427430000",
         "symbol": "variableDebtEthETHx",
-        "totalSupply": "306893827549971484",
+        "totalSupply": "306893855073042025",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "implementationNames": {
@@ -543,9 +548,9 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
-        "scaledTotalSupply": 8703371690788,
+        "scaledTotalSupply": 8703186826649,
         "symbol": "aHorRwaUSCC",
-        "totalSupply": 8703371690788,
+        "totalSupply": 8703186826649,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c"
       },
       "implementationNames": {
@@ -671,7 +676,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "246089797249772352802349",
         "symbol": "aEthLidoUSDS",
-        "totalSupply": "260748296840401458815614",
+        "totalSupply": "260757072626611716974852",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
@@ -1137,9 +1142,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "743236055795167971294917",
+        "scaledTotalSupply": "739860022139676012220879",
         "symbol": "aEthwstETH",
-        "totalSupply": "744327551861162010616599",
+        "totalSupply": "740946574024535641826610",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -1204,7 +1209,7 @@
         },
         "getReferenceAsset": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 242951562660,
+        "latestAnswer": 243121752220,
         "name": "Wrapped Aave Ethereum WETH",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -1216,8 +1221,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthWETH",
-        "totalAssets": "25225402370205125849594",
-        "totalSupply": "23705548221746891576529",
+        "totalAssets": "25257059800240026225110",
+        "totalSupply": "23733174962147736738214",
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -1287,9 +1292,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 25823076481366,
+        "scaledTotalSupply": 25825770587612,
         "symbol": "aEthPYUSD",
-        "totalSupply": 27724301854496,
+        "totalSupply": 27729417230008,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
@@ -1350,9 +1355,9 @@
         "name": "Aave Ethereum Variable Debt cbETH",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "19632271007115286016",
+        "scaledTotalSupply": "19632264374616613186",
         "symbol": "variableDebtEthcbETH",
-        "totalSupply": "20327239324932597514",
+        "totalSupply": "20327269955904677849",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "implementationNames": {
@@ -1525,9 +1530,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "2004752687774103107690",
+        "scaledTotalSupply": "2005031047163184930975",
         "symbol": "aEthtBTC",
-        "totalSupply": "2005045895615180753496",
+        "totalSupply": "2005324327375709017460",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
@@ -1623,9 +1628,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 10852370,
+        "scaledTotalSupply": 310900233,
         "symbol": "aEthBTCb",
-        "totalSupply": 10852370,
+        "totalSupply": 310900233,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072"
       },
@@ -1860,7 +1865,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "51322837253698322298600391",
         "symbol": "variableDebtEthLidoGHO",
-        "totalSupply": "54888789057131088446029995",
+        "totalSupply": "54892274152462249213985485",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "implementationNames": {
@@ -1922,9 +1927,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "71013664831549713344710981",
+        "scaledTotalSupply": "70794492752443519185752699",
         "symbol": "aEthLidoGHO",
-        "totalSupply": "73536473394917912967761820",
+        "totalSupply": "73312648263742233043553185",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
@@ -2057,7 +2062,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1077387470888879671196845",
         "symbol": "variableDebtEthCRV",
-        "totalSupply": "1413899867495214892461475",
+        "totalSupply": "1414102799934982785319589",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52"
       },
       "implementationNames": {
@@ -2121,7 +2126,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "477799259137457883966",
         "symbol": "aEthSTG",
-        "totalSupply": "477902518867072247606",
+        "totalSupply": "477902574499739224807",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
       },
@@ -2201,13 +2206,69 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1119773247764281087352",
         "symbol": "aEthETHx",
-        "totalSupply": "1120525392469729443671",
+        "totalSupply": "1120525392493124048388",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "implementationNames": {
         "eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA": "ATokenInstance"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1746198419,
+      "sinceBlock": 22396905,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "Roles",
+      "address": "eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x87182abba6ca24466860f04a02ed14a3d85dc9c2781d4dcc8fdcbec02308cdba",
+        "0x87182abba6ca24466860f04a02ed14a3d85dc9c2781d4dcc8fdcbec02308cdba"
+      ],
+      "proxyType": "EIP1167 proxy",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1755183275,
+      "sinceBlock": 23140007,
+      "values": {
+        "$implementation": "eth:0x9646fDAD06d3e24444381f44362a3B0eB343D337",
+        "avatar": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
+        "owner": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
+        "target": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa"
+      },
+      "implementationNames": {
+        "eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9": "Roles",
+        "eth:0x9646fDAD06d3e24444381f44362a3B0eB343D337": "Roles"
       }
     },
     {
@@ -2410,7 +2471,7 @@
           "eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 182,
+        "nonce": 183,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2521,9 +2582,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1645837285446699,
+        "scaledTotalSupply": 1651046025156243,
         "symbol": "aEthUSDT",
-        "totalSupply": 1912827085495250,
+        "totalSupply": 1919121078045591,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -2643,7 +2704,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "469069542546515849663911",
         "symbol": "aEthBAL",
-        "totalSupply": "495429793668499267201475",
+        "totalSupply": "495434811225863863715775",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xba100000625a3754423978a60c9317c58a424e3D"
       },
@@ -2706,7 +2767,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "9370191813089964266102",
         "symbol": "variableDebtEthKNC",
-        "totalSupply": "10706312084647482520453",
+        "totalSupply": "10707136256431429377094",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
       },
       "implementationNames": {
@@ -2926,9 +2987,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 3324498915673,
+        "scaledTotalSupply": 3268091268745,
         "symbol": "aEthLidoUSDC",
-        "totalSupply": 3559430759454,
+        "totalSupply": 3499349377051,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -3292,7 +3353,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "525786035845618180113875",
         "symbol": "aEthrsETH",
-        "totalSupply": "525786112339000351058179",
+        "totalSupply": "525786112339937575126151",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
       },
@@ -3355,7 +3416,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "102287608437081336175619",
         "symbol": "variableDebtEthLidoUSDS",
-        "totalSupply": "112120181380631231843667",
+        "totalSupply": "112131904033712176382564",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "implementationNames": {
@@ -3655,9 +3716,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "28713766117902940720310229",
+        "scaledTotalSupply": "30994691869087077751073466",
         "symbol": "aEthUSDS",
-        "totalSupply": "29819898597190920986334518",
+        "totalSupply": "32189178945879717079567610",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
@@ -3720,7 +3781,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "566407134823539700518652",
         "symbol": "variableDebtEthLUSD",
-        "totalSupply": "696548893708362091294450",
+        "totalSupply": "696580860121674748378809",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
       },
       "implementationNames": {
@@ -4109,7 +4170,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "29344194861658790841354",
         "symbol": "variableDebtEthBAL",
-        "totalSupply": "39124810580205948597167",
+        "totalSupply": "39131093592762842252988",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xba100000625a3754423978a60c9317c58a424e3D"
       },
       "implementationNames": {
@@ -4206,7 +4267,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1755904235126930800550386",
         "symbol": "aEthLUSD",
-        "totalSupply": "1996935432150948303788466",
+        "totalSupply": "1996961003754369862353713",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
       },
@@ -4267,9 +4328,9 @@
         "name": "Aave Ethereum Variable Debt WBTC",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 129046820465,
+        "scaledTotalSupply": 128426392267,
         "symbol": "variableDebtEthWBTC",
-        "totalSupply": 132380228776,
+        "totalSupply": 131744859325,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
       "implementationNames": {
@@ -4388,9 +4449,9 @@
         "getIncentivesController": "eth:0x1D5D386a90CEA8AcEa9fa75389e97CF5F1AE21D3",
         "name": "Aave Horizon RWA Variable Debt USDC",
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
-        "scaledTotalSupply": 6634965770080,
+        "scaledTotalSupply": 6634965651965,
         "symbol": "variableDebtHorRwaUSDC",
-        "totalSupply": 6907591223897,
+        "totalSupply": 6908402153835,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -4450,9 +4511,9 @@
         "name": "Aave Ethereum Variable Debt LINK",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "592195617340016994682319",
+        "scaledTotalSupply": "591972229865345531476510",
         "symbol": "variableDebtEthLINK",
-        "totalSupply": "600316432370819451216585",
+        "totalSupply": "600101927892258570189871",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
       },
       "implementationNames": {
@@ -4576,9 +4637,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "173423746855949431375259804",
+        "scaledTotalSupply": "172913788827256847241975410",
         "symbol": "aEthsUSDe",
-        "totalSupply": "173425562680498564854244847",
+        "totalSupply": "172915599312316295396228950",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
       },
@@ -4586,6 +4647,11 @@
         "eth:0x4579a27aF00A62C0EB156349f31B345c08386419": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA": "ATokenInstance"
       }
+    },
+    {
+      "address": "eth:0x45d11217458aEE68A4D976A8f17e2E24Fc5898A1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CollectorWithCustomImpl",
@@ -5093,9 +5159,9 @@
         "name": "Aave Ethereum Variable Debt USDS",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "4664241267285697716584438",
+        "scaledTotalSupply": "4634620698964894071087286",
         "symbol": "variableDebtEthUSDS",
-        "totalSupply": "5174335042105207646481462",
+        "totalSupply": "5142085385300922231059202",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "implementationNames": {
@@ -5162,7 +5228,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 99713879,
         "symbol": "variableDebtEthFBTC",
-        "totalSupply": 99950811,
+        "totalSupply": 99951918,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364"
       },
       "implementationNames": {
@@ -5364,9 +5430,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "2057250428483489488686390",
+        "scaledTotalSupply": "2050176534176512784146662",
         "symbol": "aEthWETH",
-        "totalSupply": "2189148689974853536184684",
+        "totalSupply": "2181816440797816288167827",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -5486,7 +5552,7 @@
         "SLASH_ADMIN_ROLE": 0,
         "STAKED_TOKEN": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
         "symbol": "stkAAVE",
-        "totalSupply": "2421879013825828677332327",
+        "totalSupply": "2422168315109451642138226",
         "UNSTAKE_WINDOW": 172800
       },
       "errors": { "getAdmin": "Processing error occurred." },
@@ -5494,6 +5560,11 @@
         "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5": "InitializableAdminUpgradeabilityProxy",
         "eth:0x0fE58FE1CaA69951dC924A8c222bE19013B89476": "StakedAaveV3"
       }
+    },
+    {
+      "address": "eth:0x4DB9f12c891A64Ef80C6f8047a2D9a651d16f849",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PoolInstance",
@@ -5768,9 +5839,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "184272931193987457034607481",
+        "scaledTotalSupply": "187162419492655369032082152",
         "symbol": "aEthUSDe",
-        "totalSupply": "196381850485263292428215964",
+        "totalSupply": "199483404881303507393250256",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
       },
@@ -5833,7 +5904,7 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": "15190555257159588107138776",
+        "getMaxSlashableAssets": "14090326747789414406827601",
         "getUnstakeWindow": 172800,
         "latestAnswer": 100000000,
         "MIN_ASSETS_REMAINING": 1000000,
@@ -5846,8 +5917,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkGHO.v1",
-        "totalAssets": "15190555257159588108138776",
-        "totalSupply": "15190555257159588108138776",
+        "totalAssets": "14090326747789414407827601",
+        "totalSupply": "14090326747789414407827601",
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -5912,7 +5983,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 41312973740163,
         "symbol": "variableDebtEthUSDG",
-        "totalSupply": 42308400163376,
+        "totalSupply": 42318022362700,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D"
       },
       "implementationNames": {
@@ -5949,6 +6020,11 @@
     },
     {
       "address": "eth:0x5063b3D23C3640d51c9E2aef41063B1d482C70ff",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x50842854e40914A8e0745310B47fC22B98112B7A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -6134,9 +6210,22 @@
           "via": [
             { "address": "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432",
@@ -6337,7 +6426,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "16687636521968625104974",
         "symbol": "aEthENS",
-        "totalSupply": "16780595346354736982116",
+        "totalSupply": "16780630118911958654704",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72"
       },
@@ -6503,15 +6592,20 @@
         "name": "Aave Ethereum Variable Debt PYUSD",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 21039538385624,
+        "scaledTotalSupply": 20967871293765,
         "symbol": "variableDebtEthPYUSD",
-        "totalSupply": 24161052837825,
+        "totalSupply": 24081219147588,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
       "implementationNames": {
         "eth:0x57B67e4DE077085Fd0AF2174e9c14871BE664546": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xb27C52c7f84819e3157993489741cB60786aE330": "VariableDebtTokenInstance"
       }
+    },
+    {
+      "address": "eth:0x5811d9FF80ff4B73A8F9bA42A6082FaB82E89Ea7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SupplyLogic",
@@ -6584,7 +6678,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "55799802446951780481636",
         "symbol": "aEthKNC",
-        "totalSupply": "58040136205975686941947",
+        "totalSupply": "58040788737272742145472",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
       },
@@ -6647,9 +6741,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1247326592178,
+        "scaledTotalSupply": 1246773968898,
         "symbol": "aEthcbBTC",
-        "totalSupply": 1247573182865,
+        "totalSupply": 1247020620507,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
@@ -6735,6 +6829,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x5Df7e094f52436040A5a37D5C9A9A80586D35823",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ATokenInstance",
       "address": "eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a",
       "type": "Contract",
@@ -6788,9 +6887,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "9864020142404103060653966",
+        "scaledTotalSupply": "9859879946330068939436792",
         "symbol": "aEthLINK",
-        "totalSupply": "9873392459657960191653235",
+        "totalSupply": "9869257885397914027542099",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
       },
@@ -6853,9 +6952,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 2908173114918,
+        "scaledTotalSupply": 2910756720510,
         "symbol": "aEthWBTC",
-        "totalSupply": 2918099695461,
+        "totalSupply": 2920692663396,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
@@ -7043,9 +7142,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 11820218110,
+        "scaledTotalSupply": 11819069072,
         "symbol": "aEtheBTC",
-        "totalSupply": 11820246229,
+        "totalSupply": 11819097189,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642"
       },
@@ -7210,7 +7309,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "10045036618465703272",
         "symbol": "variableDebtEthSTG",
-        "totalSupply": "10125319583089885493",
+        "totalSupply": "10125389478766012397",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
       },
       "implementationNames": {
@@ -7272,9 +7371,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 165740760882,
+        "scaledTotalSupply": 165439774336,
         "symbol": "aEthLBTC",
-        "totalSupply": 165747282293,
+        "totalSupply": 165446283904,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8236a87084f8B84306f72007F36F2618A5634494"
       },
@@ -7331,9 +7430,9 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
-        "scaledTotalSupply": 9140726368967,
+        "scaledTotalSupply": 9149141423053,
         "symbol": "aHorRwaUSDC",
-        "totalSupply": 9388021817159,
+        "totalSupply": 9397393320491,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -7457,7 +7556,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "5493981062589623651",
         "symbol": "variableDebtEthFXS",
-        "totalSupply": "5522352982859365027",
+        "totalSupply": "5522380462985778491",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
       },
       "implementationNames": {
@@ -7573,7 +7672,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "14826975582602049862047",
         "symbol": "aEthEtherFiFRAX",
-        "totalSupply": "15085803904104945870730",
+        "totalSupply": "15085804353541488733610",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
@@ -7673,9 +7772,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": 64506827317884,
+        "getMaxSlashableAssets": 64541365896742,
         "getUnstakeWindow": 172800,
-        "latestAnswer": 116927291,
+        "latestAnswer": 116937335,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum USDC v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -7686,8 +7785,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthUSDC.v1",
-        "totalAssets": 64506828317884,
-        "totalSupply": 64506828317884,
+        "totalAssets": 64541366896742,
+        "totalSupply": 64541366896742,
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -7823,9 +7922,9 @@
         "name": "Aave Ethereum Variable Debt EURC",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 25762401642611,
+        "scaledTotalSupply": 25874994250842,
         "symbol": "variableDebtEthEURC",
-        "totalSupply": 26793567650317,
+        "totalSupply": 26913187992809,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
       },
       "implementationNames": {
@@ -7902,7 +8001,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "42075287156478369311",
         "symbol": "variableDebtEthrsETH",
-        "totalSupply": "42077090365717507424",
+        "totalSupply": "42077091468334225085",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
       },
       "implementationNames": {
@@ -7962,9 +8061,9 @@
         "name": "Aave Ethereum Variable Debt USDT",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1472704183144956,
+        "scaledTotalSupply": 1467884796626423,
         "symbol": "variableDebtEthUSDT",
-        "totalSupply": 1805723401158299,
+        "totalSupply": 1800079457443199,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
       "implementationNames": {
@@ -8041,7 +8140,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1306739022974197116",
         "symbol": "variableDebtEthMKR",
-        "totalSupply": "1328086838133400517",
+        "totalSupply": "1328091190864830121",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
       },
       "implementationNames": {
@@ -8105,7 +8204,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "2973241454699682619018701",
         "symbol": "aEth1INCH",
-        "totalSupply": "2996822588708164095930553",
+        "totalSupply": "2996823451730991160666256",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x111111111117dC0aa78b770fA6A738034120C302"
       },
@@ -8194,9 +8293,9 @@
         "name": "Aave Ethereum Variable Debt USDC",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1409435922330249,
+        "scaledTotalSupply": 1408999231426744,
         "symbol": "variableDebtEthUSDC",
-        "totalSupply": 1731047313366221,
+        "totalSupply": 1730737762861854,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -8312,7 +8411,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 8200681693,
         "symbol": "aEthEtherFiUSDC",
-        "totalSupply": 8685726258,
+        "totalSupply": 8685813632,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -8413,6 +8512,11 @@
         "eth:0x74e5664394998f13B07aF42446380ACef637969f": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0x80D786DF608603cCDcC83F5712B97C185A6A948d": "ATokenInstance"
       }
+    },
+    {
+      "address": "eth:0x753de005261e9Ff910B541A07282544Ec433d08c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ClinicSteward",
@@ -8629,7 +8733,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "55097281269861916205",
         "symbol": "variableDebtEthweETH",
-        "totalSupply": "56667714241386893039",
+        "totalSupply": "56668908315238154239",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "implementationNames": {
@@ -8699,74 +8803,14 @@
         "name": "Aave Ethereum Variable Debt GHO",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "84533359794969221755532995",
+        "scaledTotalSupply": "84531776192726830746237937",
         "symbol": "variableDebtEthGHO",
-        "totalSupply": "99997536463994239492626849",
+        "totalSupply": "100001978158244957961634335",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "implementationNames": {
         "eth:0x786dBff3f1292ae8F92ea68Cf93c30b34B1ed04B": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xC4BeA6FF17879E27F266909397E5e0Ad3d301946": "VariableDebtTokenMainnetInstanceGHO"
-      }
-    },
-    {
-      "name": "LendingPool",
-      "address": "eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9027fe129b5fa5d622e8902e7239f0c82e9bbc5f533bc592a63fc65ed33f9584",
-        "0x2a51dd816a2e6b721a5fbcee207ebef8f31178f1d5a6d0a62b194ad110d5cfb9"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["LENDINGPOOL_REVISION"],
-      "sinceTimestamp": 1615219096,
-      "sinceBlock": 11998773,
-      "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0xb9184a4480830bf89B55b73631E287Df9079F466",
-        "$pastUpgrades": [
-          [
-            "2023-09-23T03:01:35.000Z",
-            "0x604a54970ad073dadec1d94ed1e5e993767033f06db2e3fbd80b0066f651311b",
-            ["eth:0xb9184a4480830bf89B55b73631E287Df9079F466"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "FLASHLOAN_PREMIUM_TOTAL": 9,
-        "getAddressesProvider": "eth:0xAcc030EF66f9dFEAE9CbB0cd1B25654b82cFA8d5",
-        "getReservesList": [
-          "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-          "eth:0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11",
-          "eth:0xBb2b8038a1640196FbE3e38816F3e67Cba72D940",
-          "eth:0xDFC14d2Af169B0D36C4EFF567Ada9b2E0CAE044f",
-          "eth:0xB6909B960DbbE7392D405429eB2b3649752b4838",
-          "eth:0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5",
-          "eth:0x3dA1313aE46132A397D90d95B1424A9A7e3e0fCE",
-          "eth:0xa2107FA5B38d9bbd2C461D6EDf11B11A50F6b974",
-          "eth:0xC2aDdA861F89bBB333c90c492cB837741916A225",
-          "eth:0x8Bd1661Da98EBDd3BD080F0bE4e6d9bE8cE9858c",
-          "eth:0x43AE24960e5534731Fc831386c07755A2dc33D47",
-          "eth:0xd3d2E2692501A5c9Ca623199D38826e513033a17",
-          "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc",
-          "eth:0x004375Dff511095CC5A197A54140a24eFEF3A416",
-          "eth:0x2fDbAdf3C4D5A8666Bc06645B8358ab803996E28",
-          "eth:0x1efF8aF5D577060BA4ac8A29A13525bb0Ee2A3D5",
-          "eth:0x59A19D8c652FA0284f44113D0ff9aBa70bd46fB4",
-          "eth:0x50379f632ca68D36E50cfBC8F78fe16bd1499d1e",
-          "eth:0xD2eeC91055F07fE24C9cCB25828ecfEFd4be0c41"
-        ],
-        "LENDINGPOOL_REVISION": 3,
-        "MAX_NUMBER_RESERVES": 128,
-        "MAX_STABLE_RATE_BORROW_SIZE_PERCENT": 2500,
-        "paused": false
-      },
-      "implementationNames": {
-        "eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB": "InitializableImmutableAdminUpgradeabilityProxy",
-        "eth:0xb9184a4480830bf89B55b73631E287Df9079F466": "LendingPool"
       }
     },
     {
@@ -8854,7 +8898,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "7769582533451455100821931",
         "symbol": "aEthCRV",
-        "totalSupply": "8227092938476187562216712",
+        "totalSupply": "8227224785337848341361766",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52"
       },
@@ -8919,7 +8963,7 @@
         },
         "getReferenceAsset": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 116245114,
+        "latestAnswer": 116227608,
         "name": "Wrapped Aave Ethereum USDT",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -8931,8 +8975,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthUSDT",
-        "totalAssets": 100433983864479,
-        "totalSupply": 86415545149663,
+        "totalAssets": 99550163278475,
+        "totalSupply": 85644362549530,
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -9026,9 +9070,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 49585907690576,
+        "scaledTotalSupply": 49387449737444,
         "symbol": "aEthUSDG",
-        "totalSupply": 50326230102825,
+        "totalSupply": 50132459809009,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D"
       },
@@ -9366,9 +9410,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "95889252216218909532123767",
+        "scaledTotalSupply": "95888125105065742062814737",
         "symbol": "aEthPT_sUSDe_7MAY2026",
-        "totalSupply": "95889252216218909532123767",
+        "totalSupply": "95888125105065742062814737",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49"
       },
@@ -9433,7 +9477,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "465285461747075911422",
         "symbol": "aEthFXS",
-        "totalSupply": "466446413815451171345",
+        "totalSupply": "466446435762951968699",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
       },
@@ -9928,7 +9972,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "119035182910542629",
         "symbol": "variableDebtEthosETH",
-        "totalSupply": "119386934057339621",
+        "totalSupply": "119386934095430537",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "implementationNames": {
@@ -9990,7 +10034,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "45366710001778823355842",
         "symbol": "variableDebtEthFRAX",
-        "totalSupply": "58142196282753941957391",
+        "totalSupply": "58145174382357772168013",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
       "implementationNames": {
@@ -10079,7 +10123,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "113070165955265286434656",
         "symbol": "variableDebtEthRPL",
-        "totalSupply": "130866040395599575009267",
+        "totalSupply": "130875049824486486215513",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
       },
       "implementationNames": {
@@ -10131,9 +10175,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 15488554291,
+        "scaledTotalSupply": 15488314182,
         "symbol": "aEthXAUt",
-        "totalSupply": 15488554291,
+        "totalSupply": 15488314182,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38"
       },
@@ -10198,7 +10242,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "132383887724813888390",
         "symbol": "aEthMKR",
-        "totalSupply": "132686465542976601771",
+        "totalSupply": "132686469025091561464",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
       },
@@ -10329,24 +10373,6 @@
             "tokenAddress": "eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956"
           }
         ],
-        "getAllReservesTokens": [
-          {
-            "symbol": "weETH",
-            "tokenAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
-          },
-          {
-            "symbol": "USDC",
-            "tokenAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-          },
-          {
-            "symbol": "PYUSD",
-            "tokenAddress": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
-          },
-          {
-            "symbol": "FRAX",
-            "tokenAddress": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
-          }
-        ],
         "getDebtCeilingDecimals": 2
       },
       "implementationNames": {
@@ -10407,7 +10433,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "42804738570419883590903",
         "symbol": "variableDebtEthSNX",
-        "totalSupply": "54464302571581284619259",
+        "totalSupply": "54478658284121477553599",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
       },
       "implementationNames": {
@@ -10608,9 +10634,9 @@
         "name": "Aave Ethereum Lido Variable Debt WETH",
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "21611001956242590290609",
+        "scaledTotalSupply": "21618120793702278364365",
         "symbol": "variableDebtEthLidoWETH",
-        "totalSupply": "22637061793814857127288",
+        "totalSupply": "22645543503598207395978",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
@@ -10674,7 +10700,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "122510034837686521756468",
         "symbol": "aEthosETH",
-        "totalSupply": "122527767447841090325522",
+        "totalSupply": "122527767447841122702801",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
@@ -10737,7 +10763,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 2349864525,
         "symbol": "variableDebtEthEtherFiUSDC",
-        "totalSupply": 2559388277,
+        "totalSupply": 2559485396,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -10800,7 +10826,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "scaledTotalSupply": "34293511512850264625422794",
         "symbol": "aHorRwaGHO",
-        "totalSupply": "34621216270631242590167613",
+        "totalSupply": "34622444460565715384547134",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "implementationNames": {
@@ -10977,7 +11003,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "3593464371868852174672",
         "symbol": "aEthcbETH",
-        "totalSupply": "3608174430763183334403",
+        "totalSupply": "3608174462636624328390",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
@@ -11061,9 +11087,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1591816275910407,
+        "scaledTotalSupply": 1588558182087652,
         "symbol": "aEthUSDC",
-        "totalSupply": 1861483406089756,
+        "totalSupply": 1857878970444442,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -11126,9 +11152,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "707392921735038657415891",
+        "scaledTotalSupply": "707121230760174477903443",
         "symbol": "aEthLDO",
-        "totalSupply": "711400386875129198365516",
+        "totalSupply": "711128069174980575584166",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
       },
@@ -11483,7 +11509,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "83973473350997520322011",
         "symbol": "variableDebtEth1INCH",
-        "totalSupply": "87641546352412139337086",
+        "totalSupply": "87642625280465162140504",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x111111111117dC0aa78b770fA6A738034120C302"
       },
       "implementationNames": {
@@ -11545,9 +11571,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": 84806922661247,
+        "getMaxSlashableAssets": 83935564975572,
         "getUnstakeWindow": 172800,
-        "latestAnswer": 116245114,
+        "latestAnswer": 116227608,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum USDT v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -11558,8 +11584,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthUSDT.v1",
-        "totalAssets": 84806923661247,
-        "totalSupply": 84806923661247,
+        "totalAssets": 83935565975572,
+        "totalSupply": 83935565975572,
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -11712,9 +11738,9 @@
         "POWER_SCALE_FACTOR": 10000000000,
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "625792505155155787580487",
+        "scaledTotalSupply": "626051873677568915310067",
         "symbol": "aEthAAVE",
-        "totalSupply": "625792505155155787580487",
+        "totalSupply": "626051873677568915310067",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
       },
@@ -11862,9 +11888,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 471917886090,
+        "scaledTotalSupply": 56852159268,
         "symbol": "aEthPT_USDG_28MAY2026",
-        "totalSupply": 471917886090,
+        "totalSupply": 56852159268,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
       },
@@ -11917,9 +11943,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 32410116836,
+        "scaledTotalSupply": 29439294635,
         "symbol": "aEthmUSD",
-        "totalSupply": 33143240281,
+        "totalSupply": 30107129614,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA"
       },
@@ -11997,9 +12023,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 36474188626100,
+        "scaledTotalSupply": 35482888788988,
         "symbol": "aEthEURC",
-        "totalSupply": 37429446183281,
+        "totalSupply": 36414420300487,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
       },
@@ -12062,9 +12088,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": "22442547981279095903637",
+        "getMaxSlashableAssets": "22428629870403969662914",
         "getUnstakeWindow": 172800,
-        "latestAnswer": 242951562660,
+        "latestAnswer": 243121752220,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum WETH v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -12075,8 +12101,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthWETH.v1",
-        "totalAssets": "22442547981279096903637",
-        "totalSupply": "22442547981279096903637",
+        "totalAssets": "22428629870403970662914",
+        "totalSupply": "22428629870403970662914",
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -12144,9 +12170,9 @@
         "name": "Aave Ethereum Variable Debt tBTC",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "10813120269411309805",
+        "scaledTotalSupply": "10813120251069914404",
         "symbol": "variableDebtEthtBTC",
-        "totalSupply": "10855889166374700028",
+        "totalSupply": "10855952463713483545",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
       "implementationNames": {
@@ -12226,7 +12252,7 @@
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "scaledTotalSupply": "101797972164984774072984685",
         "symbol": "variableDebtHorRwaRLUSD",
-        "totalSupply": "103617159967466155234037115",
+        "totalSupply": "103621927051671811090551852",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "implementationNames": {
@@ -12343,7 +12369,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "39834109074275890910",
         "symbol": "variableDebtEthrETH",
-        "totalSupply": "40487730164737016815",
+        "totalSupply": "40487746799211636273",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "implementationNames": {
@@ -12565,9 +12591,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "401344998488218756360886",
+        "scaledTotalSupply": "401605285131565848474443",
         "symbol": "aEthRPL",
-        "totalSupply": "426919215539552027883678",
+        "totalSupply": "427203295980335566777515",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
       },
@@ -12706,7 +12732,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "189370661975338271736534",
         "symbol": "aEthcrvUSD",
-        "totalSupply": "226181625000157347834811",
+        "totalSupply": "226185100866573320020786",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
       },
@@ -12938,9 +12964,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1327758256524169427526386",
+        "scaledTotalSupply": "1313973241648529854423654",
         "symbol": "aEthweETH",
-        "totalSupply": "1329083951822492918420863",
+        "totalSupply": "1315285174003284920605023",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
@@ -13001,9 +13027,9 @@
         "name": "Aave Ethereum Variable Debt RLUSD",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "16170512383343972437971259",
+        "scaledTotalSupply": "16228833893538557073463569",
         "symbol": "variableDebtEthRLUSD",
-        "totalSupply": "16794959419492896690147331",
+        "totalSupply": "16857228822285513536147869",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "implementationNames": {
@@ -13235,9 +13261,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "65909457980326188686685",
+        "scaledTotalSupply": "65868571787871437709490",
         "symbol": "aEthLidowstETH",
-        "totalSupply": "66157268393245744715059",
+        "totalSupply": "66116273440216486649779",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -13612,7 +13638,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "48043550550756615448116",
         "symbol": "variableDebtEthLDO",
-        "totalSupply": "49775124109076218671316",
+        "totalSupply": "49776264808453850230657",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
       },
       "implementationNames": {
@@ -13730,7 +13756,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "270400596845761125785874",
         "symbol": "aEthSNX",
-        "totalSupply": "277883080243752210531570",
+        "totalSupply": "277883796447314942724123",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
       },
@@ -13793,7 +13819,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "24191508941099662764601",
         "symbol": "variableDebtEthwstETH",
-        "totalSupply": "24475453651037596435584",
+        "totalSupply": "24475474879461247865279",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -13941,9 +13967,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "31856122779672978427800",
+        "scaledTotalSupply": "32266740719797623127624",
         "symbol": "aEthrETH",
-        "totalSupply": "31905290234398375929374",
+        "totalSupply": "32316541945626312337842",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
@@ -14008,7 +14034,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 34468678840,
         "symbol": "aEthFBTC",
-        "totalSupply": 34468749763,
+        "totalSupply": 34468750316,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364"
       },
@@ -14185,9 +14211,9 @@
         "name": "Aave Ethereum Variable Debt DAI",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "84289801573620328694153837",
+        "scaledTotalSupply": "84094288291313236162561390",
         "symbol": "variableDebtEthDAI",
-        "totalSupply": "104919258098888585914278574",
+        "totalSupply": "104698768485156300939052073",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
       "implementationNames": {
@@ -14221,6 +14247,35 @@
       },
       "implementationNames": {
         "eth:0xcfBf336fe147D643B9Cb705648500e101504B16d": "PoolAddressesProvider"
+      }
+    },
+    {
+      "name": "AllowanceModule",
+      "address": "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "sinceTimestamp": 1603880884,
+      "sinceBlock": 11144602,
+      "values": {
+        "$immutable": true,
+        "ALLOWANCE_TRANSFER_TYPEHASH": "0x80b006280932094e7cc965863eb5118dc07e5d272c6670c4a7c87299e04fceeb",
+        "DOMAIN_SEPARATOR_TYPEHASH": "0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218",
+        "getChainId": 1,
+        "NAME": "Allowance Module",
+        "VERSION": "0.1.0"
+      },
+      "implementationNames": {
+        "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": "AllowanceModule"
       }
     },
     {
@@ -14277,7 +14332,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1264451139158338820399",
         "symbol": "variableDebtEthENS",
-        "totalSupply": "1316470861182863429815",
+        "totalSupply": "1316514335619632987924",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72"
       },
       "implementationNames": {
@@ -14563,7 +14618,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "122292826817376696577986",
         "symbol": "aEthFRAX",
-        "totalSupply": "145838366127347391316129",
+        "totalSupply": "145840745093795521814449",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
@@ -14628,7 +14683,7 @@
         },
         "getReferenceAsset": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 116927291,
+        "latestAnswer": 116937335,
         "name": "Wrapped Aave Ethereum USDC",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -14640,8 +14695,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthUSDC",
-        "totalAssets": 192416688017449,
-        "totalSupply": 164541899616688,
+        "totalAssets": 191946561593854,
+        "totalSupply": 164121713951349,
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -14803,6 +14858,11 @@
       }
     },
     {
+      "address": "eth:0xdBf59fD74bd98Fc50F7952E916BB57F26037ddC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ATokenInstance",
       "address": "eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864",
       "type": "Contract",
@@ -14865,6 +14925,44 @@
       "implementationNames": {
         "eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA": "ATokenInstance"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1742489543,
+      "sinceBlock": 22089392,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x4DB9f12c891A64Ef80C6f8047a2D9a651d16f849",
+          "eth:0xE328bd9b85A127C5fbb71070d17a2d26d2615dEa",
+          "eth:0xdBf59fD74bd98Fc50F7952E916BB57F26037ddC9",
+          "eth:0x50842854e40914A8e0745310B47fC22B98112B7A",
+          "eth:0x5Df7e094f52436040A5a37D5C9A9A80586D35823",
+          "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d",
+          "eth:0x753de005261e9Ff910B541A07282544Ec433d08c"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xfc8e27ac87fe83822bcea6881ab4545cfc1f43cee93f3c789aa009adfce84634",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 6,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -14958,7 +15056,7 @@
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "scaledTotalSupply": "23032295990126725992637651",
         "symbol": "variableDebtHorRwaGHO",
-        "totalSupply": "23575471728777455711715925",
+        "totalSupply": "23576836508198619040578881",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "implementationNames": {
@@ -15269,15 +15367,20 @@
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
-        "scaledTotalSupply": "261260561099025879605782925",
+        "scaledTotalSupply": "261261341122438062496070532",
         "symbol": "aHorRwaRLUSD",
-        "totalSupply": "263391374958169104593838466",
+        "totalSupply": "263396451620838939382301173",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "implementationNames": {
         "eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB": "InitializableImmutableAdminUpgradeabilityProxy",
         "eth:0x9EB507147b99D3Cde32A53Bd5cd12bDEEaC26E5c": "ATokenInstance"
       }
+    },
+    {
+      "address": "eth:0xE328bd9b85A127C5fbb71070d17a2d26d2615dEa",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "VariableDebtTokenInstance",
@@ -15321,9 +15424,9 @@
         "name": "Aave Ethereum Variable Debt mUSD",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 22978933618,
+        "scaledTotalSupply": 23558176168,
         "symbol": "variableDebtEthmUSD",
-        "totalSupply": 23800557045,
+        "totalSupply": 24402987867,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA"
       },
       "implementationNames": {
@@ -15407,7 +15510,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "15496496152966725672104",
         "symbol": "variableDebtEthLidowstETH",
-        "totalSupply": "15604934801757099315591",
+        "totalSupply": "15604982157912874620891",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -15734,9 +15837,9 @@
         "name": "Aave Ethereum Variable Debt WETH",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1995243256735474559490176",
+        "scaledTotalSupply": "1988382808447340280898634",
         "symbol": "variableDebtEthWETH",
-        "totalSupply": "2189207140878898162373464",
+        "totalSupply": "2181909398674011034053792",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
@@ -15796,9 +15899,9 @@
         "name": "Aave Ethereum Variable Debt USDtb",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "135423643337578047578023068",
+        "scaledTotalSupply": "135401878917604455583010585",
         "symbol": "variableDebtEthUSDtb",
-        "totalSupply": "140001790740293745747887007",
+        "totalSupply": "139990669329432791888251751",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C"
       },
       "implementationNames": {
@@ -15907,9 +16010,9 @@
         "name": "Aave Ethereum Variable Debt cbBTC",
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 52709951796,
+        "scaledTotalSupply": 34563534107,
         "symbol": "variableDebtEthcbBTC",
-        "totalSupply": 52935488065,
+        "totalSupply": 34711722477,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
       "implementationNames": {
@@ -16032,9 +16135,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "178200245616697441577254562",
+        "scaledTotalSupply": "178480590276123155226699126",
         "symbol": "aEthUSDtb",
-        "totalSupply": "180832892763540364251517435",
+        "totalSupply": "181126475345383631204536370",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C"
       },
@@ -16143,9 +16246,9 @@
         "name": "Aave Ethereum Lido Variable Debt USDC",
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 2873352641694,
+        "scaledTotalSupply": 2867617145445,
         "symbol": "variableDebtEthLidoUSDC",
-        "totalSupply": 3155885898900,
+        "totalSupply": 3149938366539,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "implementationNames": {
@@ -16396,7 +16499,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "7598929003778195216791",
         "symbol": "variableDebtEthUNI",
-        "totalSupply": "7807246474737658646771",
+        "totalSupply": "7807273826647384566832",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
       },
       "implementationNames": {
@@ -16458,9 +16561,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "727512779470187778303947",
+        "scaledTotalSupply": "727457315972899779835135",
         "symbol": "aEthUNI",
-        "totalSupply": "729750081345601140392448",
+        "totalSupply": "729694469163759815341202",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
       },
@@ -16473,6 +16576,43 @@
       "address": "eth:0xf71fc92e2949ccF6A5Fd369a0b402ba80Bc61E02",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PermissionedPayloadsController",
+      "address": "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
+        "0xb69cdb7fdb6585fc26d28c5ee894f80bb775db9409aa5902e31cb2bf4c4cd27f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1746198419,
+      "sinceBlock": 22396905,
+      "values": {
+        "$admin": "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17",
+        "$implementation": "eth:0x8f4D2e69e0890C316564616ea9e69445f07b61A0",
+        "$pastUpgrades": [
+          [
+            "2025-05-02T15:06:59.000Z",
+            "0x646ca1ed95e03773f56116cefc291398a4ba5074ae7b07aa52b04f7027d1e948",
+            ["eth:0x8f4D2e69e0890C316564616ea9e69445f07b61A0"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "EXPIRATION_DELAY": 3024000,
+        "getPayloadsCount": 0,
+        "GRACE_PERIOD": 604800,
+        "guardian": "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF",
+        "MAX_EXECUTION_DELAY": 604800,
+        "MIN_EXECUTION_DELAY": 0,
+        "owner": "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF",
+        "payloadsManager": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
+        "whoCanRescue": "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF"
+      },
+      "implementationNames": {
+        "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67": "TransparentUpgradeableProxy",
+        "eth:0x8f4D2e69e0890C316564616ea9e69445f07b61A0": "PermissionedPayloadsController"
+      }
     },
     {
       "name": "PoolLogic",
@@ -16543,9 +16683,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "23774433733735597426878",
+        "scaledTotalSupply": "23760743818076691941605",
         "symbol": "aEthLidoWETH",
-        "totalSupply": "24634155455179321217660",
+        "totalSupply": "24620841341639852605568",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -16608,9 +16748,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "22957460021300002333340564",
+        "scaledTotalSupply": "22894041143206392654351601",
         "symbol": "aEthRLUSD",
-        "totalSupply": "23164031068896602711259265",
+        "totalSupply": "23101397341580955292028626",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
@@ -16673,7 +16813,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "247885117728942677047",
         "symbol": "variableDebtEthEtherFiFRAX",
-        "totalSupply": "256819865412033989205",
+        "totalSupply": "256820427524553618804",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
       "implementationNames": {
@@ -17415,6 +17555,92 @@
       "function initialize(address _logic, bytes _data) payable",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9": [
+      "constructor(address _owner, address _avatar, address _target)",
+      "error AlreadyDisabledModule(address module)",
+      "error AlreadyEnabledModule(address module)",
+      "error ArraysDifferentLength()",
+      "error CalldataOutOfBounds()",
+      "error ConditionViolation(uint8 status, bytes32 info)",
+      "error FunctionSignatureTooShort()",
+      "error HashAlreadyConsumed(bytes32)",
+      "error InvalidInitialization()",
+      "error InvalidModule(address module)",
+      "error InvalidPageSize()",
+      "error MalformedMultiEntrypoint()",
+      "error ModuleTransactionFailed()",
+      "error NoMembership()",
+      "error NotAuthorized(address sender)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SetupModulesAlreadyCalled()",
+      "event AllowFunction(bytes32 roleKey, address targetAddress, bytes4 selector, uint8 options)",
+      "event AllowTarget(bytes32 roleKey, address targetAddress, uint8 options)",
+      "event AssignRoles(address module, bytes32[] roleKeys, bool[] memberOf)",
+      "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
+      "event ConsumeAllowance(bytes32 allowanceKey, uint128 consumed, uint128 newBalance)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event HashExecuted(bytes32)",
+      "event HashInvalidated(bytes32)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokeFunction(bytes32 roleKey, address targetAddress, bytes4 selector)",
+      "event RevokeTarget(bytes32 roleKey, address targetAddress)",
+      "event RolesModSetup(address indexed initiator, address indexed owner, address indexed avatar, address target)",
+      "event ScopeFunction(bytes32 roleKey, address targetAddress, bytes4 selector, tuple(uint8 parent, uint8 paramType, uint8 operator, bytes compValue)[] conditions, uint8 options)",
+      "event ScopeTarget(bytes32 roleKey, address targetAddress)",
+      "event SetAllowance(bytes32 allowanceKey, uint128 balance, uint128 maxRefill, uint128 refill, uint64 period, uint64 timestamp)",
+      "event SetDefaultRole(address module, bytes32 defaultRoleKey)",
+      "event SetUnwrapAdapter(address to, bytes4 selector, address adapter)",
+      "event TargetSet(address indexed previousTarget, address indexed newTarget)",
+      "function allowFunction(bytes32 roleKey, address targetAddress, bytes4 selector, uint8 options)",
+      "function allowTarget(bytes32 roleKey, address targetAddress, uint8 options)",
+      "function allowances(bytes32) view returns (uint128 refill, uint128 maxRefill, uint64 period, uint128 balance, uint64 timestamp)",
+      "function assignRoles(address module, bytes32[] roleKeys, bool[] memberOf)",
+      "function avatar() view returns (address)",
+      "function consumed(address, bytes32) view returns (bool)",
+      "function defaultRoles(address) view returns (bytes32)",
+      "function disableModule(address prevModule, address module)",
+      "function enableModule(address module)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function execTransactionWithRole(address to, uint256 value, bytes data, uint8 operation, bytes32 roleKey, bool shouldRevert) returns (bool success)",
+      "function execTransactionWithRoleReturnData(address to, uint256 value, bytes data, uint8 operation, bytes32 roleKey, bool shouldRevert) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function invalidate(bytes32 hash)",
+      "function isModuleEnabled(address _module) view returns (bool)",
+      "function moduleTxHash(bytes data, bytes32 salt) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function revokeFunction(bytes32 roleKey, address targetAddress, bytes4 selector)",
+      "function revokeTarget(bytes32 roleKey, address targetAddress)",
+      "function scopeFunction(bytes32 roleKey, address targetAddress, bytes4 selector, tuple(uint8 parent, uint8 paramType, uint8 operator, bytes compValue)[] conditions, uint8 options)",
+      "function scopeTarget(bytes32 roleKey, address targetAddress)",
+      "function setAllowance(bytes32 key, uint128 balance, uint128 maxRefill, uint128 refill, uint64 period, uint64 timestamp)",
+      "function setAvatar(address _avatar)",
+      "function setDefaultRole(address module, bytes32 roleKey)",
+      "function setTarget(address _target)",
+      "function setTransactionUnwrapper(address to, bytes4 selector, address adapter)",
+      "function setUp(bytes initParams)",
+      "function target() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unwrappers(bytes32) view returns (address)"
     ],
     "eth:0x1D5D386a90CEA8AcEa9fa75389e97CF5F1AE21D3": [
       "constructor(address admin)",
@@ -19663,15 +19889,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB": [
-      "constructor(address admin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function implementation() returns (address)",
-      "function initialize(address _logic, bytes _data) payable",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "eth:0x79f5C4562EC3e85C3103Ce63Ab94E92EFfDd6197": [
       "constructor(address pool, address rewardsController)",
       "error CallerMustBePool()",
@@ -20489,6 +20706,52 @@
       "function MIN_BASE_MAX_CLOSE_FACTOR_THRESHOLD() view returns (uint256)",
       "function MIN_LEFTOVER_BASE() view returns (uint256)"
     ],
+    "eth:0x8f4D2e69e0890C316564616ea9e69445f07b61A0": [
+      "error EthTransferFailed()",
+      "error OnlyGuardianInvalidCaller(address account)",
+      "error OnlyGuardianOrOwnerInvalidCaller(address account)",
+      "error OnlyRescueGuardian()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "event ERC20Rescued(address indexed caller, address indexed token, address indexed to, uint256 amount)",
+      "event ExecutorSet(uint8 indexed accessLevel, address indexed executor, uint40 delay)",
+      "event GuardianUpdated(address oldGuardian, address newGuardian)",
+      "event Initialized(uint8 version)",
+      "event NativeTokensRescued(address indexed caller, address indexed to, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PayloadCancelled(uint40 payloadId)",
+      "event PayloadCreated(uint40 indexed payloadId, address indexed creator, tuple(address target, bool withDelegateCall, uint8 accessLevel, uint256 value, string signature, bytes callData)[] actions, uint8 indexed maximumAccessLevelRequired)",
+      "event PayloadExecuted(uint40 payloadId)",
+      "event PayloadExecutionMessageReceived(address indexed originSender, uint256 indexed originChainId, bool indexed delivered, bytes message, bytes reason)",
+      "event PayloadQueued(uint40 payloadId)",
+      "event PayloadsManagerUpdated(address newPayloadsManager)",
+      "function EXPIRATION_DELAY() pure returns (uint40)",
+      "function GRACE_PERIOD() pure returns (uint40)",
+      "function MAX_EXECUTION_DELAY() pure returns (uint40)",
+      "function MIN_EXECUTION_DELAY() pure returns (uint40)",
+      "function cancelPayload(uint40 payloadId)",
+      "function createPayload(tuple(address target, bool withDelegateCall, uint8 accessLevel, uint256 value, string signature, bytes callData)[] actions) returns (uint40)",
+      "function emergencyEtherTransfer(address to, uint256 amount)",
+      "function emergencyTokenTransfer(address erc20Token, address to, uint256 amount)",
+      "function executePayload(uint40 payloadId) payable",
+      "function getExecutorSettingsByAccessControl(uint8 accessControl) view returns (tuple(address executor, uint40 delay))",
+      "function getPayloadById(uint40 payloadId) view returns (tuple(address creator, uint8 maximumAccessLevelRequired, uint8 state, uint40 createdAt, uint40 queuedAt, uint40 executedAt, uint40 cancelledAt, uint40 expirationTime, uint40 delay, uint40 gracePeriod, tuple(address target, bool withDelegateCall, uint8 accessLevel, uint256 value, string signature, bytes callData)[] actions))",
+      "function getPayloadState(uint40 payloadId) view returns (uint8)",
+      "function getPayloadsCount() view returns (uint40)",
+      "function guardian() view returns (address)",
+      "function initialize(address guardian, address initialPayloadsManager, tuple(uint8 accessLevel, tuple(address executor, uint40 delay) executorConfig)[] executors)",
+      "function maxRescue(address erc20Token) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function payloadsManager() view returns (address)",
+      "function renounceOwnership()",
+      "function setExecutionDelay(uint40 delay)",
+      "function transferOwnership(address newOwner)",
+      "function updateExecutors(tuple(uint8 accessLevel, tuple(address executor, uint40 delay) executorConfig)[]) pure",
+      "function updateGuardian(address newGuardian)",
+      "function updatePayloadsManager(address newPayloadsManager)",
+      "function whoCanRescue() view returns (address)"
+    ],
     "eth:0x909bA8DA4c826C62013Ce3A30ce1F42943F3b340": [
       "constructor(address aTokenImpl, address vTokenImpl, tuple(address pool, address poolConfigurator, address oracle, address rewardsController, address collector, address defaultInterestRateStrategy) engineConstants, tuple(address listingEngine, address eModeEngine, address borrowEngine, address collateralEngine, address priceFeedEngine, address rateEngine, address capsEngine) engineLibraries)",
       "function ATOKEN_IMPL() view returns (address)",
@@ -20707,6 +20970,81 @@
       "error ProxyDeniedAdminAccess()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x9646fDAD06d3e24444381f44362a3B0eB343D337": [
+      "constructor(address _owner, address _avatar, address _target)",
+      "error AlreadyDisabledModule(address module)",
+      "error AlreadyEnabledModule(address module)",
+      "error ArraysDifferentLength()",
+      "error CalldataOutOfBounds()",
+      "error ConditionViolation(uint8 status, bytes32 info)",
+      "error FunctionSignatureTooShort()",
+      "error HashAlreadyConsumed(bytes32)",
+      "error InvalidInitialization()",
+      "error InvalidModule(address module)",
+      "error InvalidPageSize()",
+      "error MalformedMultiEntrypoint()",
+      "error ModuleTransactionFailed()",
+      "error NoMembership()",
+      "error NotAuthorized(address sender)",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SetupModulesAlreadyCalled()",
+      "event AllowFunction(bytes32 roleKey, address targetAddress, bytes4 selector, uint8 options)",
+      "event AllowTarget(bytes32 roleKey, address targetAddress, uint8 options)",
+      "event AssignRoles(address module, bytes32[] roleKeys, bool[] memberOf)",
+      "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
+      "event ConsumeAllowance(bytes32 allowanceKey, uint128 consumed, uint128 newBalance)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event HashExecuted(bytes32)",
+      "event HashInvalidated(bytes32)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokeFunction(bytes32 roleKey, address targetAddress, bytes4 selector)",
+      "event RevokeTarget(bytes32 roleKey, address targetAddress)",
+      "event RolesModSetup(address indexed initiator, address indexed owner, address indexed avatar, address target)",
+      "event ScopeFunction(bytes32 roleKey, address targetAddress, bytes4 selector, tuple(uint8 parent, uint8 paramType, uint8 operator, bytes compValue)[] conditions, uint8 options)",
+      "event ScopeTarget(bytes32 roleKey, address targetAddress)",
+      "event SetAllowance(bytes32 allowanceKey, uint128 balance, uint128 maxRefill, uint128 refill, uint64 period, uint64 timestamp)",
+      "event SetDefaultRole(address module, bytes32 defaultRoleKey)",
+      "event SetUnwrapAdapter(address to, bytes4 selector, address adapter)",
+      "event TargetSet(address indexed previousTarget, address indexed newTarget)",
+      "function allowFunction(bytes32 roleKey, address targetAddress, bytes4 selector, uint8 options)",
+      "function allowTarget(bytes32 roleKey, address targetAddress, uint8 options)",
+      "function allowances(bytes32) view returns (uint128 refill, uint128 maxRefill, uint64 period, uint128 balance, uint64 timestamp)",
+      "function assignRoles(address module, bytes32[] roleKeys, bool[] memberOf)",
+      "function avatar() view returns (address)",
+      "function consumed(address, bytes32) view returns (bool)",
+      "function defaultRoles(address) view returns (bytes32)",
+      "function disableModule(address prevModule, address module)",
+      "function enableModule(address module)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function execTransactionWithRole(address to, uint256 value, bytes data, uint8 operation, bytes32 roleKey, bool shouldRevert) returns (bool success)",
+      "function execTransactionWithRoleReturnData(address to, uint256 value, bytes data, uint8 operation, bytes32 roleKey, bool shouldRevert) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function invalidate(bytes32 hash)",
+      "function isModuleEnabled(address _module) view returns (bool)",
+      "function moduleTxHash(bytes data, bytes32 salt) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function revokeFunction(bytes32 roleKey, address targetAddress, bytes4 selector)",
+      "function revokeTarget(bytes32 roleKey, address targetAddress)",
+      "function scopeFunction(bytes32 roleKey, address targetAddress, bytes4 selector, tuple(uint8 parent, uint8 paramType, uint8 operator, bytes compValue)[] conditions, uint8 options)",
+      "function scopeTarget(bytes32 roleKey, address targetAddress)",
+      "function setAllowance(bytes32 key, uint128 balance, uint128 maxRefill, uint128 refill, uint64 period, uint64 timestamp)",
+      "function setAvatar(address _avatar)",
+      "function setDefaultRole(address module, bytes32 roleKey)",
+      "function setTarget(address _target)",
+      "function setTransactionUnwrapper(address to, bytes4 selector, address adapter)",
+      "function setUp(bytes initParams)",
+      "function target() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unwrappers(bytes32) view returns (address)"
     ],
     "eth:0x96D5686812e33Ab509ECCDb38C89d15607B2a413": [
       "error CollateralCannotBeLiquidated()",
@@ -21316,51 +21654,6 @@
       "function getUnbackedMintCap(address) pure returns (uint256)",
       "function getUserReserveData(address asset, address user) view returns (uint256 currentATokenBalance, uint256 currentStableDebt, uint256 currentVariableDebt, uint256 principalStableDebt, uint256 scaledVariableDebt, uint256 stableBorrowRate, uint256 liquidityRate, uint40 stableRateLastUpdated, bool usageAsCollateralEnabled)",
       "function getVirtualUnderlyingBalance(address asset) view returns (uint256)"
-    ],
-    "eth:0xb9184a4480830bf89B55b73631E287Df9079F466": [
-      "event Borrow(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint256 borrowRateMode, uint256 borrowRate, uint16 indexed referral)",
-      "event Deposit(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint16 indexed referral)",
-      "event FlashLoan(address indexed target, address indexed initiator, address indexed asset, uint256 amount, uint256 premium, uint16 referralCode)",
-      "event LiquidationCall(address indexed collateralAsset, address indexed debtAsset, address indexed user, uint256 debtToCover, uint256 liquidatedCollateralAmount, address liquidator, bool receiveAToken)",
-      "event Paused()",
-      "event RebalanceStableBorrowRate(address indexed reserve, address indexed user)",
-      "event Repay(address indexed reserve, address indexed user, address indexed repayer, uint256 amount)",
-      "event ReserveDataUpdated(address indexed reserve, uint256 liquidityRate, uint256 stableBorrowRate, uint256 variableBorrowRate, uint256 liquidityIndex, uint256 variableBorrowIndex)",
-      "event ReserveUsedAsCollateralDisabled(address indexed reserve, address indexed user)",
-      "event ReserveUsedAsCollateralEnabled(address indexed reserve, address indexed user)",
-      "event Swap(address indexed reserve, address indexed user, uint256 rateMode)",
-      "event TokensRescued(address indexed tokenRescued, address indexed receiver, uint256 amountRescued)",
-      "event Unpaused()",
-      "event Withdraw(address indexed reserve, address indexed user, address indexed to, uint256 amount)",
-      "function FLASHLOAN_PREMIUM_TOTAL() view returns (uint256)",
-      "function LENDINGPOOL_REVISION() view returns (uint256)",
-      "function MAX_NUMBER_RESERVES() view returns (uint256)",
-      "function MAX_STABLE_RATE_BORROW_SIZE_PERCENT() view returns (uint256)",
-      "function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)",
-      "function deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode)",
-      "function finalizeTransfer(address asset, address from, address to, uint256 amount, uint256 balanceFromBefore, uint256 balanceToBefore)",
-      "function flashLoan(address receiverAddress, address[] assets, uint256[] amounts, uint256[] modes, address onBehalfOf, bytes params, uint16 referralCode)",
-      "function getAddressesProvider() view returns (address)",
-      "function getConfiguration(address asset) view returns (tuple(uint256 data))",
-      "function getReserveData(address asset) view returns (tuple(tuple(uint256 data) configuration, uint128 liquidityIndex, uint128 variableBorrowIndex, uint128 currentLiquidityRate, uint128 currentVariableBorrowRate, uint128 currentStableBorrowRate, uint40 lastUpdateTimestamp, address aTokenAddress, address stableDebtTokenAddress, address variableDebtTokenAddress, address interestRateStrategyAddress, uint8 id))",
-      "function getReserveNormalizedIncome(address asset) view returns (uint256)",
-      "function getReserveNormalizedVariableDebt(address asset) view returns (uint256)",
-      "function getReservesList() view returns (address[])",
-      "function getUserAccountData(address user) view returns (uint256 totalCollateralETH, uint256 totalDebtETH, uint256 availableBorrowsETH, uint256 currentLiquidationThreshold, uint256 ltv, uint256 healthFactor)",
-      "function getUserConfiguration(address user) view returns (tuple(uint256 data))",
-      "function initReserve(address asset, address aTokenAddress, address stableDebtAddress, address variableDebtAddress, address interestRateStrategyAddress)",
-      "function initialize(address provider)",
-      "function liquidationCall(address collateralAsset, address debtAsset, address user, uint256 debtToCover, bool receiveAToken)",
-      "function paused() view returns (bool)",
-      "function rebalanceStableBorrowRate(address asset, address user)",
-      "function repay(address asset, uint256 amount, uint256 rateMode, address onBehalfOf) returns (uint256)",
-      "function rescueTokens(address token, address to, uint256 amount)",
-      "function setConfiguration(address asset, uint256 configuration)",
-      "function setPause(bool val)",
-      "function setReserveInterestRateStrategyAddress(address asset, address rateStrategyAddress)",
-      "function setUserUseReserveAsCollateral(address asset, bool useAsCollateral)",
-      "function swapBorrowRateMode(address asset, uint256 rateMode)",
-      "function withdraw(address asset, uint256 amount, address to) returns (uint256)"
     ],
     "eth:0xbaA999AC55EAce41CcAE355c77809e68Bb345170": [
       "constructor(address owner)",
@@ -21975,6 +22268,34 @@
       "function setPriceOracleSentinel(address newPriceOracleSentinel)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
+      "event AddDelegate(address indexed safe, address delegate)",
+      "event DeleteAllowance(address indexed safe, address delegate, address token)",
+      "event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce)",
+      "event PayAllowanceTransfer(address indexed safe, address delegate, address paymentToken, address paymentReceiver, uint96 payment)",
+      "event RemoveDelegate(address indexed safe, address delegate)",
+      "event ResetAllowance(address indexed safe, address delegate, address token)",
+      "event SetAllowance(address indexed safe, address delegate, address token, uint96 allowanceAmount, uint16 resetTime)",
+      "function ALLOWANCE_TRANSFER_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR_TYPEHASH() view returns (bytes32)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addDelegate(address delegate)",
+      "function allowances(address, address, address) view returns (uint96 amount, uint96 spent, uint16 resetTimeMin, uint32 lastResetMin, uint16 nonce)",
+      "function delegates(address, uint48) view returns (address delegate, uint48 prev, uint48 next)",
+      "function delegatesStart(address) view returns (uint48)",
+      "function deleteAllowance(address delegate, address token)",
+      "function executeAllowanceTransfer(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, address delegate, bytes signature)",
+      "function generateTransferHash(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, uint16 nonce) view returns (bytes32)",
+      "function getChainId() pure returns (uint256)",
+      "function getDelegates(address safe, uint48 start, uint8 pageSize) view returns (address[] results, uint48 next)",
+      "function getTokenAllowance(address safe, address delegate, address token) view returns (uint256[5])",
+      "function getTokens(address safe, address delegate) view returns (address[])",
+      "function removeDelegate(address delegate, bool removeAllowances)",
+      "function resetAllowance(address delegate, address token)",
+      "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
+      "function tokens(address, address, uint256) view returns (address)"
+    ],
     "eth:0xd180D7fdD4092f07428eFE801E17BC03576b3192": [
       "constructor(address admin)",
       "event Upgraded(address indexed implementation)",
@@ -22208,6 +22529,9 @@
       "function initialize(address _logic, bytes _data) payable",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85": [
+      "constructor(address _singleton)"
     ],
     "eth:0xDE9F8379a5a972100d0373103a849E8ABdf56a9a": [
       "constructor(address initialOwner)",
@@ -22722,6 +23046,17 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xf8C97539934ee66a67C26010e8e027D77E821B0C": [
       "event IsolationModeTotalDebtUpdated(address indexed asset, uint256 totalDebt)",
       "event MintedToTreasury(address indexed reserve, uint256 amountMinted)"
@@ -22902,6 +23237,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "RwaATokenInstance": "0x8bdb23ded2c70fa78f0ef74f26ae799e63181a357fc88ccbbbaf6a2611b4ac7b"
   },
-  "usedBlockNumbers": { "ethereum": 24972342 },
-  "permissionsConfigHash": "0x96185b060f1a7a68ac95a4263a386675c900a9348f9a31642e0315d4892ec15d"
+  "usedBlockNumbers": { "ethereum": 24977864 },
+  "permissionsConfigHash": "0x640158c73f27504b4f3ca6da06dcd48501cf5dda21db8ce3eae5ca7819a80247"
 }

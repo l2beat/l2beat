@@ -1,0 +1,833 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-28T12:00:00.000Z",
+  "protocolSlug": "aave-v3",
+  "protocolName": "Aave V3",
+  "tokenName": "AAVE",
+  "chain": "Ethereum",
+  "projectType": "lending",
+  "description": "Aave V3 is a decentralized lending protocol operating across four isolated markets on Ethereum \u2014 the Main Market, EtherFi Market, Lido Market, and Horizon RWA Market \u2014 where users deposit assets as collateral and borrow against them at floating or stable rates. Liquidations are triggered when a borrower's health factor drops below 1, enforced by any external caller. Protocol upgrades, parameter changes, and oracle configuration require a successful Aave Governance V3 vote (minimum 3-day voting period) followed by a minimum 1-day execution delay in the PayloadsController; a subset of risk parameters can be adjusted faster by delegated stewards operating within on-chain bounds. GHO, Aave's native overcollateralized stablecoin, is mintable directly against AAVE collateral deposited in the protocol. Asset prices are sourced from Chainlink oracle feeds; a price oracle sentinel circuit-breaker halts borrowing if a sequencer feed signals unavailability.",
+  "admins": {
+    "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
+      "name": "Aave Governance V3 Short Executor",
+      "description": "The on-chain execution endpoint for standard Aave Governance V3 proposals. Controls the PoolAddressesProviders for all four markets, enabling proxy upgrades for Pool, PoolConfigurator, Oracle, and ACLManager contracts, as well as all reserve-level parameter changes via PoolConfigurators. Operates under the full governance proposal lifecycle: 3-day minimum vote followed by a 1-day minimum PayloadsController execution delay. Has {{shortExecutorDirectCapital}} in directly controlled capital and {{shortExecutorReachCapital}} in reachable capital across the protocol."
+    },
+    "eth:0x0000000000000000000000000000000000000000": {
+      "name": "Zero Address (Renounced)",
+      "description": "The proxy admin slot for most aToken and variable debt token proxies has been set to the zero address, permanently removing the ability to upgrade those contracts. The 381 associated upgrade functions are irreversibly locked \u2014 no party can call upgradeTo or upgradeToAndCall on these proxies. This is a deliberate immutability decision for user-facing token contracts."
+    },
+    "eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3": {
+      "name": "Aave Emergency Council 4/6 Multisig",
+      "description": "A 4-of-6 Gnosis Safe that serves as the Aave Emergency Council. Can execute emergency pause actions across markets, disable risk features, and adjust caps through the RiskSteward and CapsPlusRiskSteward contracts. Controls {{emergencyCouncilDirectCapital}} in direct capital with {{emergencyCouncilReachCapital}} in reachable capital. Because no on-chain delay bounds most of its actions, it represents the fastest unilateral intervention vector in the protocol."
+    },
+    "eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30": {
+      "name": "Aave BGD 5/9 Multisig",
+      "description": "A 5-of-9 Gnosis Safe used by the Aave BGD Labs team. Controls pool-level risk parameters, steward addresses, and reserve configuration for Pool 3 (Lido Market). Has {{bgdMultisigReachCapital}} in reachable capital through Pool 3's PoolConfigurator."
+    },
+    "eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710": {
+      "name": "Aave Governance 5/9 Multisig",
+      "description": "A 5-of-9 Gnosis Safe that participates in the Aave governance execution chain \u2014 specifically controls ProxyAdmin functions affecting the full governance stack including GovernanceV3 contracts. Has {{govMultisig59ReachCapital}} in reachable capital."
+    },
+    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": {
+      "name": "Aave Protocol 3/4 Multisig",
+      "description": "A 3-of-4 GnosisSafeL2 multisig that controls protocol-level ProxyAdmin upgrades covering large portions of the governance and cross-chain messaging infrastructure. Has {{protocolMultisig34ReachCapital}} in reachable capital."
+    },
+    "eth:0xE6ec1f0Ae6Cd023bd0a9B4d0253BDC755103253c": {
+      "name": "Aave Risk 3/4 Multisig",
+      "description": "A 3-of-4 Gnosis Safe with access to risk parameters and steward configurations for the EtherFi and Lido markets. Has {{riskMultisig34ReachCapital}} in reachable capital through the respective PoolConfigurators."
+    },
+    "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa": {
+      "name": "Aave Operations 3/5 Multisig",
+      "description": "A 3-of-5 Gnosis Safe with administrative access to the ClinicSteward and PoolExposureSteward contracts. Has {{opMultisig35ReachCapital}} in reachable capital."
+    },
+    "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b": {
+      "name": "Aave Protocol 3/4 GnosisSafeL2 (B)",
+      "description": "A second 3-of-4 GnosisSafeL2 with administrative access to cross-chain messaging relay contracts. No direct capital exposure."
+    },
+    "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF": {
+      "name": "Aave Treasury 2/3 Multisig",
+      "description": "A 2-of-3 Gnosis Safe with administrative access to a subset of the GHO minting infrastructure. No direct capital exposure."
+    },
+    "eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8": {
+      "name": "Aave Operations 2/2 Multisig",
+      "description": "A 2-of-2 Gnosis Safe with administrative access to rewards emission configuration. No direct capital exposure; controls distribution of incentive tokens."
+    },
+    "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85": {
+      "name": "Aave Protocol 3/7 Multisig",
+      "description": "A 3-of-7 Gnosis Safe with administrative access to rewards emission configuration. No direct capital exposure."
+    },
+    "eth:0x64b761D848206f447Fe2dd461B6c9184dD07f73E": {
+      "name": "PoolConfiguratorInstance (Main Market)",
+      "description": "The PoolConfigurator for Aave's Main Market. Manages reserve parameters (supply/borrow caps, liquidation thresholds, interest rate strategies, freeze/pause flags) for Pool 1. This is a contract-to-contract access control boundary \u2014 all calls to it originate from addresses holding POOL_ADMIN_ROLE or RISK_ADMIN_ROLE in the ACLManager, ultimately controlled by governance or the Emergency Council. Has {{poolConfigurator1ReachCapital}} in reachable capital."
+    },
+    "eth:0x342631c6CeFC9cfbf97b2fe4a5D2E2e77cf40A3b": {
+      "name": "PoolConfiguratorInstance (EtherFi Market)",
+      "description": "The PoolConfigurator for the EtherFi Market (Pool 2). Functions identically to the Main Market configurator but scoped to Pool 2 reserves. All access gated by the ACLManager's POOL_ADMIN_ROLE and RISK_ADMIN_ROLE. No direct capital; reserve parameter authority over Pool 2."
+    },
+    "eth:0x8438F4D29D895d75C86BDC252c97E65929A0e62C": {
+      "name": "PoolConfiguratorInstance (Lido Market)",
+      "description": "The PoolConfigurator for the Lido Market (Pool 3). All access gated by the ACLManager. No direct capital; reserve parameter authority over Pool 3."
+    },
+    "eth:0x83Cb1B4af26EEf6463aC20AF62e1d6e3E32fB4B7": {
+      "name": "PoolConfiguratorInstance (Horizon Market)",
+      "description": "The PoolConfigurator for the Horizon RWA Market (Pool 4). All access gated by the ACLManager. No direct capital; reserve parameter authority over Pool 4, which includes tokenized real-world assets."
+    },
+    "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34": {
+      "name": "Unknown ACL Role Holder (A)",
+      "description": "An address holding a role in the ACLManager that grants direct access to PoolConfigurator functions including reserve borrowing, flash loan flags, reserve factors, and liquidation parameters for Pool 3. The contract or EOA type could not be resolved from on-chain data during analysis. Has {{unknownRoleHolderAReach}} in reachable capital."
+    },
+    "eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E": {
+      "name": "Unknown ACL Role Holder (B)",
+      "description": "A second unresolved ACL role holder with identical PoolConfigurator access to the previous entry \u2014 both hold the same role granting the same 34 functions over Pool 3 reserves. Has {{unknownRoleHolderBReach}} in reachable capital."
+    },
+    "eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974": {
+      "name": "Unknown Rewards Admin",
+      "description": "An unresolved address (contract or EOA type unknown) holding the EMISSION_ADMIN or equivalent role in the RewardsController. Can configure reward distributions \u2014 asset emission rates, distribution end times, and reward token assignments \u2014 for Protocol 3 reserves. No direct capital exposure."
+    },
+    "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5": {
+      "name": "PayloadsController",
+      "description": "The on-chain execution delay contract for Aave Governance V3. Queues and executes governance payloads after the minimum execution delay elapses. Guards all Short Executor and Long Executor outputs. Controlled via the governance voting system and the cross-chain controller."
+    },
+    "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1": {
+      "name": "CrossChainControllerUpgradeableRev",
+      "description": "The Aave cross-chain governance bridge. Routes governance messages from the Ethereum voting portal to the PayloadsController, and broadcasts decisions to other chains. Upgradeability is controlled by its own ProxyAdmin under the Aave governance Executor."
+    },
+    "eth:0x4457cA11E90f416Cc1D3a8E1bDbF6F9B9Fffe48": {
+      "name": "GranularGuardianAccessControl",
+      "description": "A granular access control contract that delegates specific guardian-level capabilities to designated addresses. Used to grant partial emergency powers without full Guardian multisig involvement."
+    },
+    "eth:0x7e6a6B115D31d4A837E3C73705b47Eb54D153BA2": {
+      "name": "RiskSteward (Main Market)",
+      "description": "An immutable risk parameter steward for the Main Market. Operates within on-chain bounds set by the Emergency Council; can adjust supply/borrow caps, liquidation parameters, and rate strategies without a full governance vote, subject to per-parameter rate limits and maximum change thresholds. Has {{riskStewardMainReach}} in reachable capital."
+    },
+    "eth:0xBF79d8339303148E345277a9B91D710f07278188": {
+      "name": "RiskSteward (Multi-Market)",
+      "description": "A second immutable RiskSteward covering multiple Aave markets. Operates under the same on-chain bounds as the Main Market steward. Has {{riskStewardMultiReach}} in reachable capital."
+    },
+    "eth:0x1EBdbE77bbDDD284BdCE8D79FDD41ABfbFeac35e": {
+      "name": "CapsPlusRiskSteward",
+      "description": "An immutable steward that can only increase (never decrease) supply and borrow caps within governance-set maximums. Has {{capsPlusReach}} in reachable capital."
+    },
+    "eth:0x5C905d62B22e4DAa4967E517e5E55E44cAb1d3D8": {
+      "name": "GhoAaveSteward",
+      "description": "An immutable steward specifically governing GHO parameters in the Aave Pool. Can adjust GHO borrow rate, GHO discount rate, and GHO facilitator bucket capacity within governance-defined bounds. Has {{ghoAaveStewardReach}} in reachable capital."
+    },
+    "eth:0xD3cF979e676265e4f6379749DECe4708B9A22851": {
+      "name": "ProxyAdmin (Governance)",
+      "description": "Controls proxy upgrades for the core governance contracts (GovernorV3, PayloadsController, CrossChainController). Changes to these proxies require going through the Short Executor and its governance lifecycle. Has {{proxyAdminGovDirect}} in directly controlled capital and {{proxyAdminGovReach}} in reachable capital."
+    },
+    "eth:0x86C3FfeE349A7cFf7cA88C449c1ab449ca90098d": {
+      "name": "ProxyAdmin (Main Protocol)",
+      "description": "Controls proxy upgrades for the main Aave V3 protocol contracts including Pool 1, its associated aTokens, and PoolAddressesProvider. Has {{proxyAdminMain}} in directly controlled capital and {{proxyAdminMainReach}} in reachable capital."
+    },
+    "eth:0x40E4243C9471bb0a84Ba0968fBCE4d19C3d2Dfed": {
+      "name": "ProxyAdmin (Staking)",
+      "description": "Controls proxy upgrades for the Safety Module (stkAAVE, stkABPT) and related staking contracts. Has {{proxyAdminStakingReach}} in reachable capital."
+    },
+    "eth:0x8aBd1892a1c31b8e52fC12102e41E7b741824D6A": {
+      "name": "ProxyAdmin (Cross-Chain)",
+      "description": "Controls proxy upgrades for the cross-chain messaging infrastructure. Has {{proxyAdminCCReach}} in reachable capital."
+    },
+    "eth:0xDE9F8379a5a972100d0373102A4Ea9F1F54A8aBe": {
+      "name": "ProxyAdmin (GHO)",
+      "description": "Controls proxy upgrades for GHO-related contracts including the GHO token itself and GHO facilitators. Has {{proxyAdminGHOReach}} in reachable capital."
+    },
+    "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432": {
+      "name": "ProxyAdmin (EtherFi Market)",
+      "description": "Controls proxy upgrades for the EtherFi Market (Pool 2) contracts. Has {{proxyAdminEFiReach}} in reachable capital."
+    },
+    "eth:0x7385F804BCAa42D7019299AaD98d5E2BbC8e4F41": {
+      "name": "ProxyAdmin (Lido Market)",
+      "description": "Controls proxy upgrades for the Lido Market (Pool 3) contracts. Has {{proxyAdminLidoReach}} in reachable capital."
+    },
+    "eth:0x71B40923a23557820773cc068A91fFaA2f56E9f7": {
+      "name": "ProxyAdmin (Horizon Market)",
+      "description": "Controls proxy upgrades for the Horizon RWA Market (Pool 4) contracts. Has {{proxyAdminHorizonReach}} in reachable capital."
+    },
+    "eth:0xfD57dE1F38e3F730E0BEb7230f3a86e1a0A39F64": {
+      "name": "ProxyAdmin (ClinicSteward)",
+      "description": "Controls proxy upgrades for the ClinicSteward and related wind-down management contracts. Has {{proxyAdminClinicReach}} in reachable capital."
+    },
+    "eth:0xEbAEacB6102B21D7996524D88C1c2Fce7b83BC21": {
+      "name": "ProxyAdmin (Rewards)",
+      "description": "Controls proxy upgrades for the RewardsController used in Pool 3. Has {{proxyAdminRewardsReach}} in reachable capital."
+    },
+    "eth:0x5513224daaEABCa31af528073CB4b5D1D9ff8E93": {
+      "name": "GhoDirectMinter (Main)",
+      "description": "A proxy contract that manages the GHO direct mint facilitator for the Main Market. Controls the GHO bucket capacity and mint/burn operations with {{ghoDirectMinterDirect}} in directly managed GHO supply."
+    },
+    "eth:0x2cE01c87Fec1b71A9041c52C5E9A69CA8e0A96fE": {
+      "name": "GhoDirectMinter (EtherFi)",
+      "description": "The GHO direct mint facilitator for the EtherFi Market. Manages the GHO bucket for Pool 2 borrowers. Has {{ghoDirectMinterEFiDirect}} in directly managed GHO supply."
+    },
+    "eth:0xe10C78A3AC7f016eD2DE1A89e069E58E9Db60D64": {
+      "name": "GhoDirectMinter (Lido)",
+      "description": "The GHO direct mint facilitator for the Lido Market. Manages the GHO bucket for Pool 3 borrowers. Has {{ghoDirectMinterLidoDirect}} in directly managed GHO supply."
+    },
+    "eth:0xb639D208Bcf0589D54FaC24E85A5e77dd03dE5A7": {
+      "name": "GhoFlashMinter",
+      "description": "An immutable contract enabling flash loans of GHO. Can trigger minting and burning of GHO within a single transaction. Has {{ghoFlashMinterDirect}} in directly controlled GHO supply."
+    },
+    "eth:0x2bd010Ab5393AB51b601B99Ccf4D6F2C6E05E866": {
+      "name": "GhoDirectFacilitator (A)",
+      "description": "An immutable GHO direct-mint facilitator address. Has {{ghoFacilitatorADirect}} in directly controlled GHO supply."
+    },
+    "eth:0xE9ac5231fAecb633dA0Fe85F1f3aFB1a9cE03b18": {
+      "name": "GhoDirectFacilitator (B)",
+      "description": "A second immutable GHO direct-mint facilitator. Has {{ghoFacilitatorBDirect}} in directly controlled GHO supply."
+    },
+    "eth:0x46Aa1063e5265b43663E8132BB7e6e3f58D26820": {
+      "name": "GhoBucketSteward",
+      "description": "An immutable steward that can adjust GHO facilitator bucket capacities within governance-approved bounds. Has direct write access to {{ghoBucketStewardDirect}} in GHO supply."
+    },
+    "eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630c": {
+      "name": "AaveEcosystemReserveController",
+      "description": "Controls fund flows from the AaveEcosystemReserveV2 treasury and the CollectorWithCustomImpl fee collector. Can transfer or approve ERC-20 tokens held by these contracts to arbitrary recipients. Has {{ecosystemReserveControllerDirect}} in directly controlled treasury assets."
+    },
+    "eth:0xf00E2de0E78DFf055A92AD47eef3Cd3Fe9b15f83": {
+      "name": "ClinicSteward (A)",
+      "description": "An immutable governance steward responsible for winding down distressed or inactive reserves on specific markets. Can update interest rate strategies and liquidation parameters to discourage new borrowing. Has {{clinicStewardADirect}} in directly controlled capital."
+    },
+    "eth:0x7571F419F7Df2d0622C1A20116BE0F95e0f66e81": {
+      "name": "ClinicSteward (B)",
+      "description": "A second ClinicSteward with identical capabilities to ClinicSteward A. Has {{clinicStewardBDirect}} in directly controlled capital."
+    },
+    "eth:0x22aC12a6937BBBC0a301AF91fADfe46cA89d24c9": {
+      "name": "PoolExposureSteward",
+      "description": "An immutable steward that manages pool-level exposure limits, adjusting supply/borrow caps to control concentration risk within governance-defined bounds. Has {{poolExposureStewardDirect}} in directly controlled capital."
+    },
+    "eth:0x6A14eBe9A934c8EFE15C38119CBf59d85d7a9E95": {
+      "name": "ClinicStewardV2 (A)",
+      "description": "A newer version of the ClinicSteward operating on additional markets including the Horizon RWA Market. Has {{clinicStewardV2ADirect}} in directly controlled capital."
+    },
+    "eth:0xE1e62c3ee0c581F715fBb0e2e02F19Cb5ec20bB8": {
+      "name": "ClinicStewardV2 (B)",
+      "description": "A second ClinicStewardV2 instance. Has {{clinicStewardV2BDirect}} in directly controlled capital."
+    },
+    "eth:0xb7D402138Cb01BfE97d951811A3D92d5B0E30E87": {
+      "name": "MainnetSwapSteward",
+      "description": "An immutable steward that executes asset swaps from the Aave treasury on Ethereum mainnet within governance-approved parameters. Has {{swapStewardDirect}} in directly controlled capital."
+    },
+    "eth:0x4F2858d4A4e4464b34Aa4a228F60D64E54e8244E": {
+      "name": "AaveEModeAgent",
+      "description": "An immutable agent contract that configures eMode (efficiency mode) categories, which allow higher LTVs for correlated assets. Changes affect new positions; existing eMode positions are not retroactively affected. Reachable capital: {{emodeAgentReach}}."
+    },
+    "eth:0x1B3bD355c43d2247946b8e082F18d3A0CF53929c": {
+      "name": "AaveDiscountRateAgent",
+      "description": "An immutable agent that adjusts the GHO borrow discount rate for stkAAVE holders. Reachable capital: {{discountRateAgentReach}}."
+    },
+    "eth:0xdA626E64f34f24e0236E0C9c7f4E0F05b6aCDB39": {
+      "name": "AaveRatesAgent (Main Market)",
+      "description": "An immutable agent that updates interest rate strategy parameters for Main Market reserves within governance-set bounds. Reachable capital: {{ratesAgentMainReach}}."
+    },
+    "eth:0x52E652182b22C41d0202bB8D2867E6a0E2d82EE5": {
+      "name": "AaveRatesAgent (Multi-Market)",
+      "description": "A second AaveRatesAgent covering additional markets. Reachable capital: {{ratesAgentMultiReach}}."
+    },
+    "eth:0xCc18Be380838956aad41FD22a1a9882b9D20E72E": {
+      "name": "AaveCapoAgent",
+      "description": "An immutable agent that manages CAPO (Capped Oracle) price bounds for assets subject to controlled price exposure limits. Reachable capital: {{capoAgentReach}}."
+    },
+    "eth:0x09e8E1408a68778CEDdC193896a8bFf1E2c7D1A5": {
+      "name": "Executor (Pool 2/3 Governance)",
+      "description": "A governance executor for the EtherFi and Lido Markets. Executes payloads approved through the governance process for these markets. Reachable capital: {{executor23Reach}}."
+    },
+    "eth:0x17Dd33Ed0e3dD2a80E37489B25dEd9c4E4b1e434": {
+      "name": "Aave Governance V3 Long Executor",
+      "description": "The execution endpoint for governance proposals requiring higher quorum or longer timelock. Manages broader protocol-level changes. Reachable capital: {{longExecutorReach}}."
+    },
+    "eth:0x2759de67aD133C747C9f41d5Ba1EcEf0dB7A052B": {
+      "name": "Executor (Horizon Market)",
+      "description": "A governance executor specific to the Horizon RWA Market (Pool 4). Executes governance payloads scoped to that market. No direct capital exposure."
+    },
+    "eth:0xC2201708289b2C6A1d461A22cF9eBD78e812Bf7d": {
+      "name": "EmissionManager",
+      "description": "Manages reward emission administrators for the RewardsController. Controls who can configure incentive distributions for each reserve asset. No direct capital exposure."
+    },
+    "eth:0xD400fc38ED47328931743256dfc4f8E94543A8f4": {
+      "name": "Umbrella",
+      "description": "A protocol safety module contract that can be activated to cover shortfall events. Operates under governance control with specific activation conditions. No capital exposure at current state."
+    },
+    "eth:0x95E3015c67EF62B866cC28ca9BD592e0E3D93e41": {
+      "name": "AgentHub",
+      "description": "An upgradeable contract that aggregates and coordinates calls from multiple Aave agent contracts (RatesAgent, EModeAgent, CapoAgent, etc.). Acts as a dispatch layer for governance-delegated risk adjustments. No direct capital exposure."
+    },
+    "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2": {
+      "name": "PoolInstance (Main Market)",
+      "description": "The main Aave V3 lending pool. Holds custody of all collateral deposited in the Main Market and contains a self-admin rescueTokens function allowing recovery of accidentally sent tokens. Has {{poolMainDirect}} in directly held funds."
+    },
+    "eth:0x4e033931ad43597d96D6bcc25c280717730b58B1": {
+      "name": "PoolInstance (EtherFi Market)",
+      "description": "The Aave V3 lending pool for the EtherFi Market (Pool 2). Contains a rescueTokens function. Has {{poolEFiDirect}} in directly held funds."
+    },
+    "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0": {
+      "name": "PoolInstance (Lido Market)",
+      "description": "The Aave V3 lending pool for the Lido Market (Pool 3). Contains a rescueTokens function. Has {{poolLidoDirect}} in directly held funds."
+    },
+    "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": {
+      "name": "PoolInstance (Horizon Market)",
+      "description": "The Aave V3 lending pool for the Horizon RWA Market (Pool 4). Contains a rescueTokens function. Has {{poolHorizonDirect}} in directly held funds."
+    },
+    "eth:0x3Cbded22F878aFC8d39dCD744d3Fe62086B76193": {
+      "name": "EOA (0x3Cbd...6193)",
+      "description": "An externally owned account that holds a limited administrative role \u2014 specifically reward emission configuration for certain reserve assets. No direct capital exposure."
+    },
+    "eth:0x9148eCDA02859142D06B1591a4C2d6702d4C214D": {
+      "name": "EOA (0x9148...214D)",
+      "description": "A second EOA with limited administrative scope, similar in role to the above. No direct capital exposure."
+    }
+  },
+  "dependencies": {},
+  "funds": {
+    "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8": {
+      "name": "aEthWETH",
+      "description": "Deposit receipt token for WETH in Aave V3's Main Market. Represents {{aEthWethTvs}} in outstanding user deposits."
+    },
+    "eth:0xBdfa7b7893081B35Fb54027489e2Bc7A38275129": {
+      "name": "aEthweETH",
+      "description": "Deposit receipt token for weETH (Wrapped EtherFi ETH) in Aave V3's EtherFi Market. Represents {{aEthweEthTvs}} in outstanding user deposits."
+    },
+    "eth:0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8": {
+      "name": "aEthWBTC",
+      "description": "Deposit receipt token for WBTC in Aave V3's Main Market. Represents {{aEthWbtcTvs}} in outstanding user deposits."
+    },
+    "eth:0x0B925eD163218f6662a35e0f0371Ac234f9E9371": {
+      "name": "aEthwstETH",
+      "description": "Deposit receipt token for wstETH in Aave V3's Main Market. Represents {{aEthwstEthTvs}} in outstanding user deposits."
+    },
+    "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a": {
+      "name": "aEthUSDT",
+      "description": "Deposit receipt token for USDT in Aave V3's Main Market. Represents {{aEthUsdtTvs}} in outstanding user deposits."
+    },
+    "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c": {
+      "name": "aEthUSDC",
+      "description": "Deposit receipt token for USDC in Aave V3's Main Market. Represents {{aEthUsdcTvs}} in outstanding user deposits."
+    },
+    "eth:0x2D62109243b87C4bA3EE7bA1D91B0dD0A074d7b1": {
+      "name": "aEthrsETH",
+      "description": "Deposit receipt token for rsETH (Kelp DAO liquid restaking) in Aave V3's Main Market. Represents {{aEthrsEthTvs}} in outstanding user deposits."
+    },
+    "eth:0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd": {
+      "name": "aEthcbBTC",
+      "description": "Deposit receipt token for cbBTC (Coinbase Bitcoin) in Aave V3's Main Market. Represents {{aEthcbBtcTvs}} in outstanding user deposits."
+    },
+    "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
+      "name": "GHO",
+      "description": "Aave's native overcollateralized stablecoin. {{ghoOutstanding}} represents total GHO minted and outstanding across all Aave markets; this is protocol-issued debt, not deposited collateral."
+    },
+    "eth:0x927709711794F3De5DdBF1D176bEE2D55Ba13c21": {
+      "name": "aEthosETH",
+      "description": "Deposit receipt token for osETH (Stakewise liquid staking) in Aave V3's Main Market. Represents {{aEthosEthTvs}} in outstanding user deposits."
+    },
+    "eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB": {
+      "name": "aHorRwaRLUSD",
+      "description": "Deposit receipt token for RLSD (tokenized real-world asset) in Aave V3's Horizon RWA Market. Represents {{aHorRwaRlusdTvs}} in outstanding user deposits."
+    },
+    "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5": {
+      "name": "stkAAVE",
+      "description": "Staked AAVE in the Aave Safety Module. {{stkAaveTvs}} in AAVE locked as insurance backing against protocol shortfall events."
+    },
+    "eth:0x4579a27aF00A62C0EB156349f31B345c08386419": {
+      "name": "aEthsUSDe",
+      "description": "Deposit receipt token for sUSDe (Ethena staked synthetic dollar) in Aave V3's Main Market. Represents {{aEthsUsdeTvs}} in outstanding user deposits."
+    },
+    "eth:0x4F5923Fc5FD4a93352581b38B7cD26943012DECF": {
+      "name": "aEthUSDe",
+      "description": "Deposit receipt token for USDe (Ethena synthetic dollar) in Aave V3's Main Market. Represents {{aEthUsdeTvs}} in outstanding user deposits."
+    },
+    "eth:0xC035a7cf15375cE2706766804551791aD035E0C2": {
+      "name": "aEthLidowstETH",
+      "description": "Deposit receipt token for wstETH in Aave V3's Lido Market. Represents {{aEthLidowstEthTvs}} in outstanding user deposits."
+    },
+    "eth:0xEc4ef66D4fCeEba34aBB4dE69dB391Bc5476ccc8": {
+      "name": "aEthUSDtb",
+      "description": "Deposit receipt token for USDtb (Ethena T-bill backed stablecoin) in Aave V3's Main Market. Represents {{aEthUsdtbTvs}} in outstanding user deposits."
+    },
+    "eth:0x00907f9921424583e7ffBfEdf84F92B7B2Be4977": {
+      "name": "aEthGHO",
+      "description": "Deposit receipt token for GHO in Aave V3's Main Market. Represents {{aEthGhoTvs}} in outstanding GHO deposits."
+    },
+    "eth:0x10Ac93971cdb1F5c778144084242374473c350Da": {
+      "name": "aEthtBTC",
+      "description": "Deposit receipt token for tBTC (Threshold Bitcoin) in Aave V3's Main Market. Represents {{aEthtBtcTvs}} in outstanding user deposits."
+    },
+    "eth:0x65906988ADEe75306021C417a1A3458040239602": {
+      "name": "aEthLBTC",
+      "description": "Deposit receipt token for LBTC (Lombard Bitcoin) in Aave V3's Main Market. Represents {{aEthLbtcTvs}} in outstanding user deposits."
+    },
+    "eth:0x018008bfb33d285247A21d44E50697654f754e63": {
+      "name": "aEthDAI",
+      "description": "Deposit receipt token for DAI in Aave V3's Main Market. Represents {{aEthDaiTvs}} in outstanding user deposits."
+    },
+    "eth:0x08b798c40b9AB931356d9aB4235F548325C4cb80": {
+      "name": "aHorRwaUSCC",
+      "description": "Deposit receipt token for USCC (tokenized real-world asset) in Aave V3's Horizon RWA Market. Represents {{aHorRwaUsccTvs}} in outstanding user deposits."
+    },
+    "eth:0x81b76ff3FeD28BA0B4a5D4c76Bd5C13Bd0641d86": {
+      "name": "aEthPT_sUSDe_7MAY2026",
+      "description": "Deposit receipt token for PT-sUSDe (Pendle yield-stripped sUSDe) in Aave V3's Main Market. Represents {{aEthPtSusdeTvs}} in outstanding user deposits."
+    },
+    "eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a": {
+      "name": "aEthLINK",
+      "description": "Deposit receipt token for LINK in Aave V3's Main Market. Represents {{aEthLinkTvs}} in outstanding user deposits."
+    },
+    "eth:0xCc9EE9483f662091a1de4795249E24aC0aC2630f": {
+      "name": "aEthrETH",
+      "description": "Deposit receipt token for rETH (Rocket Pool liquid staking) in Aave V3's Main Market. Represents {{aEthrEthTvs}} in outstanding user deposits."
+    },
+    "eth:0x18eFE565A5373f430e2F809b97De30335B3ad96A": {
+      "name": "aEthLidoGHO",
+      "description": "Deposit receipt token for GHO in Aave V3's Lido Market. Represents {{aEthLidoGhoTvs}} in outstanding GHO deposits."
+    },
+    "eth:0x8A2b6f94Ff3A89a03E8c02Ee92b55aF90c9454A2": {
+      "name": "aEthXAUt",
+      "description": "Deposit receipt token for XAUt (Tether Gold) in Aave V3's Main Market. Represents {{aEthXautTvs}} in outstanding user deposits."
+    },
+    "eth:0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9": {
+      "name": "aEthAAVE",
+      "description": "Deposit receipt token for AAVE in Aave V3's Main Market. Represents {{aEthAaveTvs}} in outstanding user deposits."
+    },
+    "eth:0x4E58a2E433A739726134c83d2f07b2562e8dFdB3": {
+      "name": "aHorRwaUSTB",
+      "description": "Deposit receipt token for USTB (tokenized T-bill) in Aave V3's Horizon RWA Market. Represents {{aHorRwaUstbTvs}} in outstanding user deposits."
+    },
+    "eth:0xfA1fDbBD71B0aA16162D76914d69cD8CB3Ef92da": {
+      "name": "aEthLidoWETH",
+      "description": "Deposit receipt token for WETH in Aave V3's Lido Market. Represents {{aEthLidoWethTvs}} in outstanding user deposits."
+    },
+    "eth:0x7c0477d085ECb607CF8429f3eC91Ae5E1e460F4F": {
+      "name": "aEthUSDG",
+      "description": "Deposit receipt token for USDG (Global Dollar) in Aave V3's Main Market. Represents {{aEthUsdgTvs}} in outstanding user deposits."
+    },
+    "eth:0xce8c60fd8390eFCc3Fc66A3f0bd64BEb969e750E": {
+      "name": "aEthLidotETH",
+      "description": "Deposit receipt token for tETH in Aave V3's Lido Market. Represents {{aEthLidotEthTvs}} in outstanding user deposits."
+    },
+    "eth:0xAA6e91C82942aeAE040303Bf96c15a6dBcB82CA0": {
+      "name": "aEthEURC",
+      "description": "Deposit receipt token for EURC (Circle euro stablecoin) in Aave V3's Main Market. Represents {{aEthEurcTvs}} in outstanding user deposits."
+    },
+    "eth:0x946281A2d0DD6e650d08f74833323D66AE4c8b12": {
+      "name": "aHorRwaGHO",
+      "description": "Deposit receipt token for GHO in Aave V3's Horizon RWA Market. Represents {{aHorRwaGhoTvs}} in outstanding GHO deposits."
+    },
+    "eth:0x32a6268f9Ba3642Dda7892aDd74f1D34469A4259": {
+      "name": "aEthUSDS",
+      "description": "Deposit receipt token for USDS (Sky/MakerDAO stablecoin) in Aave V3's Main Market. Represents {{aEthUsdsTvs}} in outstanding user deposits."
+    },
+    "eth:0xA78Eba24D89e70A03ddB7AC195A15E53315aA5b4": {
+      "name": "aEthPT_srUSDe_25JUN2026",
+      "description": "Deposit receipt token for PT-srUSDe (Pendle yield-stripped srUSDe) in Aave V3's Main Market. Represents {{aEthPtSrusdeTvs}} in outstanding user deposits."
+    },
+    "eth:0x0C0d01AbF3e6aDfcA0989eBbA9d6e85dD58EaB1E": {
+      "name": "aEthPYUSD",
+      "description": "Deposit receipt token for PYUSD (PayPal stablecoin) in Aave V3's Main Market. Represents {{aEthPyusdTvs}} in outstanding user deposits."
+    },
+    "eth:0xcCA43ceF272c30415866914351fdfc3E881bb7c2": {
+      "name": "aEthFBTC",
+      "description": "Deposit receipt token for FBTC (Ignition Bitcoin) in Aave V3's Main Market. Represents {{aEthFbtcTvs}} in outstanding user deposits."
+    },
+    "eth:0xFa82580c16A31D0c1bC632A36F82e83EfEF3Eec0": {
+      "name": "aEthRLUSD",
+      "description": "Deposit receipt token for RLUSD (Ripple stablecoin) in Aave V3's Main Market. Represents {{aEthRlusdTvs}} in outstanding user deposits."
+    },
+    "eth:0x4E2a4d9B3DF7Aae73b418Bd39F3af9e148E3F479": {
+      "name": "aEthezETH",
+      "description": "Deposit receipt token for ezETH (Renzo liquid restaking) in Aave V3's Main Market. Represents {{aEthezEthTvs}} in outstanding user deposits."
+    },
+    "eth:0xE036478Da9A7ed89b56FE39A06e1FC1a4b38D4Ea": {
+      "name": "aEthPT_USDe_7MAY2026",
+      "description": "Deposit receipt token for PT-USDe (Pendle yield-stripped USDe) in Aave V3's Main Market. Represents {{aEthPtUsdeTvs}} in outstanding user deposits."
+    },
+    "eth:0x68215B6533c47ff9f7125aC95adf00fE4a62f79e": {
+      "name": "aHorRwaUSDC",
+      "description": "Deposit receipt token for USDC in Aave V3's Horizon RWA Market. Represents {{aHorRwaUsdcTvs}} in outstanding user deposits."
+    },
+    "eth:0x977b6fc5dE62598B08C85AC8Cf2b745874E8b78c": {
+      "name": "aEthcbETH",
+      "description": "Deposit receipt token for cbETH (Coinbase liquid staking) in Aave V3's Main Market. Represents {{aEthcbEthTvs}} in outstanding user deposits."
+    },
+    "eth:0x5fefd7069a7D91d01f269DADE14526CCF3487810": {
+      "name": "aEtheBTC",
+      "description": "Deposit receipt token for eBTC (BadgerDAO Bitcoin) in Aave V3's Main Market. Represents {{aEtheBtcTvs}} in outstanding user deposits."
+    },
+    "eth:0xE1CfD16b8E4B1C86Bb5b7A104cfEFbc7b09326dD": {
+      "name": "aHorRwaVBILL",
+      "description": "Deposit receipt token for VBILL (tokenized T-bill) in Aave V3's Horizon RWA Market. Represents {{aHorRwaVbillTvs}} in outstanding user deposits."
+    },
+    "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c": {
+      "name": "CollectorWithCustomImpl (Fee Collector)",
+      "description": "The primary Aave fee collector. Accumulates protocol revenue \u2014 spread between supply APY and borrow APY, flash loan fees, and reserve factor transfers \u2014 denominated in aTokens and underlying assets. Holds {{collectorBalance}} in treasury assets. Controlled by the AaveEcosystemReserveController under governance."
+    },
+    "eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491": {
+      "name": "AaveEcosystemReserveV2 (Ecosystem Reserve)",
+      "description": "A secondary treasury holding Aave ecosystem assets including AAVE tokens and legacy reserve balances. Holds {{ecosystemReserveBalance}} in assets. The AaveEcosystemReserveController governs fund flows from this contract."
+    },
+    "eth:0x2A1FBcb52Ed4d9b23daD17E1E8Aed4BB0E6079b8": {
+      "name": "aEthLidoUSDC",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLidoUSDCTvs}} in outstanding user deposits."
+    },
+    "eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002": {
+      "name": "aEthETHx",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthETHxTvs}} in outstanding user deposits."
+    },
+    "eth:0xB0EC6c4482Ac1Ef77bE239C0AC833CF37A27c876": {
+      "name": "aHorRwaJAAA",
+      "description": "Deposit receipt token in Aave V3. Represents {{aHorRwaJAAATvs}} in outstanding user deposits."
+    },
+    "eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18": {
+      "name": "aEthUNI",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthUNITvs}} in outstanding user deposits."
+    },
+    "eth:0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9": {
+      "name": "aEthLUSD",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLUSDTvs}} in outstanding user deposits."
+    },
+    "eth:0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65": {
+      "name": "aEthCRV",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthCRVTvs}} in outstanding user deposits."
+    },
+    "eth:0x24Ab03a9a5Bc2C49E5523e8d915A3536ac38B91D": {
+      "name": "aEthsyrupUSDT",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthsyrupUSDTTvs}} in outstanding user deposits."
+    },
+    "eth:0x74e5664394998f13B07aF42446380ACef637969f": {
+      "name": "aEthLidoezETH",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLidoezETHTvs}} in outstanding user deposits."
+    },
+    "eth:0xB76CF92076adBF1D9C39294FA8e7A67579FDe357": {
+      "name": "aEthRPL",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthRPLTvs}} in outstanding user deposits."
+    },
+    "eth:0x71Aef7b30728b9BB371578f36c5A1f1502a5723e": {
+      "name": "aEth1INCH",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEth1INCHTvs}} in outstanding user deposits."
+    },
+    "eth:0x9A44fd41566876A39655f74971a3A6eA0a17a454": {
+      "name": "aEthLDO",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLDOTvs}} in outstanding user deposits."
+    },
+    "eth:0x481a2acf3A72ffDc602A9541896Ca1DB87f86cf7": {
+      "name": "aEthtETH",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthtETHTvs}} in outstanding user deposits."
+    },
+    "eth:0x8A458A9dc9048e005d22849F470891b840296619": {
+      "name": "aEthMKR",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthMKRTvs}} in outstanding user deposits."
+    },
+    "eth:0x09AA30b182488f769a9824F15E6Ce58591Da4781": {
+      "name": "aEthLidoUSDS",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLidoUSDSTvs}} in outstanding user deposits."
+    },
+    "eth:0x5F9190496e0DFC831C3bd307978de4a245E2F5cD": {
+      "name": "aEtheUSDe",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEtheUSDeTvs}} in outstanding user deposits."
+    },
+    "eth:0x12b70410D60f926558245f769059eA3Fc7A7353E": {
+      "name": "aEthBTCb",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthBTCbTvs}} in outstanding user deposits."
+    },
+    "eth:0xb82fa9f31612989525992FCfBB09AB22Eff5c85A": {
+      "name": "aEthcrvUSD",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthcrvUSDTvs}} in outstanding user deposits."
+    },
+    "eth:0x38C503a438185cDE29b5cF4dC1442FD6F074F1cc": {
+      "name": "aEthPT_USDe_27NOV2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTUSDe27NOV2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0xd4e245848d6E1220DBE62e155d89fa327E43CB06": {
+      "name": "aEthFRAX",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthFRAXTvs}} in outstanding user deposits."
+    },
+    "eth:0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e": {
+      "name": "aEthENS",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthENSTvs}} in outstanding user deposits."
+    },
+    "eth:0xC7B4c17861357B8ABB91F25581E7263E08DCB59c": {
+      "name": "aEthSNX",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthSNXTvs}} in outstanding user deposits."
+    },
+    "eth:0x2516E7B3F76294e03C42AA4c5b5b4DCE9C436fB8": {
+      "name": "aEthBAL",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthBALTvs}} in outstanding user deposits."
+    },
+    "eth:0xA9ecb0503075124cc0B786096849A331FBe9EE6D": {
+      "name": "aEthPT_USDG_28MAY2026",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTUSDG28MAY2026Tvs}} in outstanding user deposits."
+    },
+    "eth:0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c": {
+      "name": "aEthsDAI",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthsDAITvs}} in outstanding user deposits."
+    },
+    "eth:0xc2015641564a5914A17CB9A92eC8d8feCfa8f2D0": {
+      "name": "aEthLidosUSDe",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLidosUSDeTvs}} in outstanding user deposits."
+    },
+    "eth:0xAa0200d169fF3ba9385c12E073c5d1d30434AE7b": {
+      "name": "aEthmUSD",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthmUSDTvs}} in outstanding user deposits."
+    },
+    "eth:0x38A5357Ce55c81add62aBc84Fb32981e2626ADEf": {
+      "name": "aEthPT_USDe_25SEP2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTUSDe25SEP2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0xbe54767735fB7Acca2aa7E2d209a6f705073536D": {
+      "name": "aEthPT_sUSDe_5FEB_2026",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTsUSDe5FEB2026Tvs}} in outstanding user deposits."
+    },
+    "eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956": {
+      "name": "aEthEtherFiFRAX",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthEtherFiFRAXTvs}} in outstanding user deposits."
+    },
+    "eth:0x56D919E7B25aA42F3F8a4BC77b8982048F2E84B4": {
+      "name": "aEthLidorsETH",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthLidorsETHTvs}} in outstanding user deposits."
+    },
+    "eth:0xbe1F842e7e0afd2c2322aae5d34bA899544b29db": {
+      "name": "aEthEtherFiweETH",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthEtherFiweETHTvs}} in outstanding user deposits."
+    },
+    "eth:0x7380c583cDe4409eFF5DD3320D93a45D96B80E2e": {
+      "name": "aEthEtherFiUSDC",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthEtherFiUSDCTvs}} in outstanding user deposits."
+    },
+    "eth:0x5b502e3796385E1e9755d7043B9C945C3aCCeC9C": {
+      "name": "aEthKNC",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthKNCTvs}} in outstanding user deposits."
+    },
+    "eth:0x1241ec22C9BdF16BA1Eb636F2a8de7e28A4343Cf": {
+      "name": "aEthPT_srUSDe_2APR2026",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTsrUSDe2APR2026Tvs}} in outstanding user deposits."
+    },
+    "eth:0x5f4a0873a3A02f7C0CB0e13a1d4362a1AD90e751": {
+      "name": "aEthPT_sUSDE_25SEP2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTsUSDE25SEP2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0xE728577e9a1Fe7032bc309B4541F58f45443866e": {
+      "name": "aEthPT_USDE_5FEB_2026",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTUSDE5FEB2026Tvs}} in outstanding user deposits."
+    },
+    "eth:0x285866acB0d60105B4Ed350a463361c2d9afA0E2": {
+      "name": "aEthPT_sUSDe_27NOV2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTsUSDe27NOV2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0x2eDff5AF94334fBd7C38ae318edf1c40e072b73B": {
+      "name": "aEthPT_eUSDe_14AUG2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTeUSDe14AUG2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864": {
+      "name": "aEthPT_sUSDE_31JUL2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTsUSDE31JUL2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0x82F9c5ad306BBa1AD0De49bB5FA6F01bf61085ef": {
+      "name": "aEthFXS",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthFXSTvs}} in outstanding user deposits."
+    },
+    "eth:0x4B0821e768Ed9039a70eD1E80E15E76a5bE5Df5F": {
+      "name": "aEthPT_eUSDE_29MAY2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTeUSDE29MAY2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0x312ffC57778CEfa11989733e6E08143E7E229c1c": {
+      "name": "aEthPT_USDe_31JUL2025",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthPTUSDe31JUL2025Tvs}} in outstanding user deposits."
+    },
+    "eth:0xdF7f48892244C6106EA784609f7de10AB36F9c7e": {
+      "name": "aEthEtherFiPYUSD",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthEtherFiPYUSDTvs}} in outstanding user deposits."
+    },
+    "eth:0x1bA9843bD4327c6c77011406dE5fA8749F7E3479": {
+      "name": "aEthSTG",
+      "description": "Deposit receipt token in Aave V3. Represents {{aEthSTGTvs}} in outstanding user deposits."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "shortExecutorDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A\"].totalDirectCapital",
+    "shortExecutorReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A\"].totalReachableCapital",
+    "emergencyCouncilDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3\"].totalDirectCapital",
+    "emergencyCouncilReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3\"].totalReachableCapital",
+    "bgdMultisigReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30\"].totalReachableCapital",
+    "govMultisig59ReachCapital": "v2score.inventory.admins.breakdown[\"eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710\"].totalReachableCapital",
+    "protocolMultisig34ReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60\"].totalReachableCapital",
+    "riskMultisig34ReachCapital": "v2score.inventory.admins.breakdown[\"eth:0xE6ec1f0Ae6Cd023bd0a9B4d0253BDC755103253c\"].totalReachableCapital",
+    "opMultisig35ReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa\"].totalReachableCapital",
+    "poolConfigurator1ReachCapital": "v2score.inventory.admins.breakdown[\"eth:0x64b761D848206f447Fe2dd461B6c9184dD07f73E\"].totalReachableCapital",
+    "unknownRoleHolderAReach": "v2score.inventory.admins.breakdown[\"eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34\"].totalReachableCapital",
+    "unknownRoleHolderBReach": "v2score.inventory.admins.breakdown[\"eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E\"].totalReachableCapital",
+    "riskStewardMainReach": "v2score.inventory.admins.breakdown[\"eth:0x7e6a6B115D31d4A837E3C73705b47Eb54D153BA2\"].totalReachableCapital",
+    "riskStewardMultiReach": "v2score.inventory.admins.breakdown[\"eth:0xBF79d8339303148E345277a9B91D710f07278188\"].totalReachableCapital",
+    "capsPlusReach": "v2score.inventory.admins.breakdown[\"eth:0x1EBdbE77bbDDD284BdCE8D79FDD41ABfbFeac35e\"].totalReachableCapital",
+    "ghoAaveStewardReach": "v2score.inventory.admins.breakdown[\"eth:0x5C905d62B22e4DAa4967E517e5E55E44cAb1d3D8\"].totalReachableCapital",
+    "proxyAdminGovDirect": "v2score.inventory.admins.breakdown[\"eth:0xD3cF979e676265e4f6379749DECe4708B9A22851\"].totalDirectCapital",
+    "proxyAdminGovReach": "v2score.inventory.admins.breakdown[\"eth:0xD3cF979e676265e4f6379749DECe4708B9A22851\"].totalReachableCapital",
+    "proxyAdminMain": "v2score.inventory.admins.breakdown[\"eth:0x86C3FfeE349A7cFf7cA88C449c1ab449ca90098d\"].totalDirectCapital",
+    "proxyAdminMainReach": "v2score.inventory.admins.breakdown[\"eth:0x86C3FfeE349A7cFf7cA88C449c1ab449ca90098d\"].totalReachableCapital",
+    "proxyAdminStakingReach": "v2score.inventory.admins.breakdown[\"eth:0x40E4243C9471bb0a84Ba0968fBCE4d19C3d2Dfed\"].totalReachableCapital",
+    "proxyAdminCCReach": "v2score.inventory.admins.breakdown[\"eth:0x8aBd1892a1c31b8e52fC12102e41E7b741824D6A\"].totalReachableCapital",
+    "proxyAdminGHOReach": "v2score.inventory.admins.breakdown[\"eth:0xDE9F8379a5a972100d0373102A4Ea9F1F54A8aBe\"].totalReachableCapital",
+    "proxyAdminEFiReach": "v2score.inventory.admins.breakdown[\"eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432\"].totalReachableCapital",
+    "proxyAdminLidoReach": "v2score.inventory.admins.breakdown[\"eth:0x7385F804BCAa42D7019299AaD98d5E2BbC8e4F41\"].totalReachableCapital",
+    "proxyAdminHorizonReach": "v2score.inventory.admins.breakdown[\"eth:0x71B40923a23557820773cc068A91fFaA2f56E9f7\"].totalReachableCapital",
+    "proxyAdminClinicReach": "v2score.inventory.admins.breakdown[\"eth:0xfD57dE1F38e3F730E0BEb7230f3a86e1a0A39F64\"].totalReachableCapital",
+    "proxyAdminRewardsReach": "v2score.inventory.admins.breakdown[\"eth:0xEbAEacB6102B21D7996524D88C1c2Fce7b83BC21\"].totalReachableCapital",
+    "ghoDirectMinterDirect": "v2score.inventory.admins.breakdown[\"eth:0x5513224daaEABCa31af528073CB4b5D1D9ff8E93\"].totalDirectCapital",
+    "ghoDirectMinterEFiDirect": "v2score.inventory.admins.breakdown[\"eth:0x2cE01c87Fec1b71A9041c52C5E9A69CA8e0A96fE\"].totalDirectCapital",
+    "ghoDirectMinterLidoDirect": "v2score.inventory.admins.breakdown[\"eth:0xe10C78A3AC7f016eD2DE1A89e069E58E9Db60D64\"].totalDirectCapital",
+    "ghoFlashMinterDirect": "v2score.inventory.admins.breakdown[\"eth:0xb639D208Bcf0589D54FaC24E85A5e77dd03dE5A7\"].totalDirectCapital",
+    "ghoFacilitatorADirect": "v2score.inventory.admins.breakdown[\"eth:0x2bd010Ab5393AB51b601B99Ccf4D6F2C6E05E866\"].totalDirectCapital",
+    "ghoFacilitatorBDirect": "v2score.inventory.admins.breakdown[\"eth:0xE9ac5231fAecb633dA0Fe85F1f3aFB1a9cE03b18\"].totalDirectCapital",
+    "ghoBucketStewardDirect": "v2score.inventory.admins.breakdown[\"eth:0x46Aa1063e5265b43663E8132BB7e6e3f58D26820\"].totalDirectCapital",
+    "ecosystemReserveControllerDirect": "v2score.inventory.admins.breakdown[\"eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630c\"].totalDirectCapital",
+    "clinicStewardADirect": "v2score.inventory.admins.breakdown[\"eth:0xf00E2de0E78DFf055A92AD47eef3Cd3Fe9b15f83\"].totalDirectCapital",
+    "clinicStewardBDirect": "v2score.inventory.admins.breakdown[\"eth:0x7571F419F7Df2d0622C1A20116BE0F95e0f66e81\"].totalDirectCapital",
+    "poolExposureStewardDirect": "v2score.inventory.admins.breakdown[\"eth:0x22aC12a6937BBBC0a301AF91fADfe46cA89d24c9\"].totalDirectCapital",
+    "clinicStewardV2ADirect": "v2score.inventory.admins.breakdown[\"eth:0x6A14eBe9A934c8EFE15C38119CBf59d85d7a9E95\"].totalDirectCapital",
+    "clinicStewardV2BDirect": "v2score.inventory.admins.breakdown[\"eth:0xE1e62c3ee0c581F715fBb0e2e02F19Cb5ec20bB8\"].totalDirectCapital",
+    "swapStewardDirect": "v2score.inventory.admins.breakdown[\"eth:0xb7D402138Cb01BfE97d951811A3D92d5B0E30E87\"].totalDirectCapital",
+    "emodeAgentReach": "v2score.inventory.admins.breakdown[\"eth:0x4F2858d4A4e4464b34Aa4a228F60D64E54e8244E\"].totalReachableCapital",
+    "discountRateAgentReach": "v2score.inventory.admins.breakdown[\"eth:0x1B3bD355c43d2247946b8e082F18d3A0CF53929c\"].totalReachableCapital",
+    "ratesAgentMainReach": "v2score.inventory.admins.breakdown[\"eth:0xdA626E64f34f24e0236E0C9c7f4E0F05b6aCDB39\"].totalReachableCapital",
+    "ratesAgentMultiReach": "v2score.inventory.admins.breakdown[\"eth:0x52E652182b22C41d0202bB8D2867E6a0E2d82EE5\"].totalReachableCapital",
+    "capoAgentReach": "v2score.inventory.admins.breakdown[\"eth:0xCc18Be380838956aad41FD22a1a9882b9D20E72E\"].totalReachableCapital",
+    "executor23Reach": "v2score.inventory.admins.breakdown[\"eth:0x09e8E1408a68778CEDdC193896a8bFf1E2c7D1A5\"].totalReachableCapital",
+    "longExecutorReach": "v2score.inventory.admins.breakdown[\"eth:0x17Dd33Ed0e3dD2a80E37489B25dEd9c4E4b1e434\"].totalReachableCapital",
+    "poolMainDirect": "v2score.inventory.admins.breakdown[\"eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2\"].totalDirectCapital",
+    "poolEFiDirect": "v2score.inventory.admins.breakdown[\"eth:0x4e033931ad43597d96D6bcc25c280717730b58B1\"].totalDirectCapital",
+    "poolLidoDirect": "v2score.inventory.admins.breakdown[\"eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0\"].totalDirectCapital",
+    "poolHorizonDirect": "v2score.inventory.admins.breakdown[\"eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8\"].totalDirectCapital",
+    "collectorBalance": "fundsdata.contracts[\"eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c\"].balances.totalUsdValue",
+    "ecosystemReserveBalance": "fundsdata.contracts[\"eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491\"].balances.totalUsdValue",
+    "aEthWethTvs": "fundsdata.contracts[\"eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8\"].tokenInfo.tokenValue",
+    "aEthweEthTvs": "fundsdata.contracts[\"eth:0xBdfa7b7893081B35Fb54027489e2Bc7A38275129\"].tokenInfo.tokenValue",
+    "aEthWbtcTvs": "fundsdata.contracts[\"eth:0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8\"].tokenInfo.tokenValue",
+    "aEthwstEthTvs": "fundsdata.contracts[\"eth:0x0B925eD163218f6662a35e0f0371Ac234f9E9371\"].tokenInfo.tokenValue",
+    "aEthUsdtTvs": "fundsdata.contracts[\"eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a\"].tokenInfo.tokenValue",
+    "aEthUsdcTvs": "fundsdata.contracts[\"eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c\"].tokenInfo.tokenValue",
+    "aEthrsEthTvs": "fundsdata.contracts[\"eth:0x2D62109243b87C4bA3EE7bA1D91B0dD0A074d7b1\"].tokenInfo.tokenValue",
+    "aEthcbBtcTvs": "fundsdata.contracts[\"eth:0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd\"].tokenInfo.tokenValue",
+    "ghoOutstanding": "fundsdata.contracts[\"eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f\"].tokenInfo.tokenValue",
+    "aEthosEthTvs": "fundsdata.contracts[\"eth:0x927709711794F3De5DdBF1D176bEE2D55Ba13c21\"].tokenInfo.tokenValue",
+    "aHorRwaRlusdTvs": "fundsdata.contracts[\"eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB\"].tokenInfo.tokenValue",
+    "stkAaveTvs": "fundsdata.contracts[\"eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5\"].tokenInfo.tokenValue",
+    "aEthsUsdeTvs": "fundsdata.contracts[\"eth:0x4579a27aF00A62C0EB156349f31B345c08386419\"].tokenInfo.tokenValue",
+    "aEthUsdeTvs": "fundsdata.contracts[\"eth:0x4F5923Fc5FD4a93352581b38B7cD26943012DECF\"].tokenInfo.tokenValue",
+    "aEthLidowstEthTvs": "fundsdata.contracts[\"eth:0xC035a7cf15375cE2706766804551791aD035E0C2\"].tokenInfo.tokenValue",
+    "aEthUsdtbTvs": "fundsdata.contracts[\"eth:0xEc4ef66D4fCeEba34aBB4dE69dB391Bc5476ccc8\"].tokenInfo.tokenValue",
+    "aEthGhoTvs": "fundsdata.contracts[\"eth:0x00907f9921424583e7ffBfEdf84F92B7B2Be4977\"].tokenInfo.tokenValue",
+    "aEthtBtcTvs": "fundsdata.contracts[\"eth:0x10Ac93971cdb1F5c778144084242374473c350Da\"].tokenInfo.tokenValue",
+    "aEthLbtcTvs": "fundsdata.contracts[\"eth:0x65906988ADEe75306021C417a1A3458040239602\"].tokenInfo.tokenValue",
+    "aEthDaiTvs": "fundsdata.contracts[\"eth:0x018008bfb33d285247A21d44E50697654f754e63\"].tokenInfo.tokenValue",
+    "aHorRwaUsccTvs": "fundsdata.contracts[\"eth:0x08b798c40b9AB931356d9aB4235F548325C4cb80\"].tokenInfo.tokenValue",
+    "aEthPtSusdeTvs": "fundsdata.contracts[\"eth:0x81b76ff3FeD28BA0B4a5D4c76Bd5C13Bd0641d86\"].tokenInfo.tokenValue",
+    "aEthLinkTvs": "fundsdata.contracts[\"eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a\"].tokenInfo.tokenValue",
+    "aEthrEthTvs": "fundsdata.contracts[\"eth:0xCc9EE9483f662091a1de4795249E24aC0aC2630f\"].tokenInfo.tokenValue",
+    "aEthLidoGhoTvs": "fundsdata.contracts[\"eth:0x18eFE565A5373f430e2F809b97De30335B3ad96A\"].tokenInfo.tokenValue",
+    "aEthXautTvs": "fundsdata.contracts[\"eth:0x8A2b6f94Ff3A89a03E8c02Ee92b55aF90c9454A2\"].tokenInfo.tokenValue",
+    "aEthAaveTvs": "fundsdata.contracts[\"eth:0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9\"].tokenInfo.tokenValue",
+    "aHorRwaUstbTvs": "fundsdata.contracts[\"eth:0x4E58a2E433A739726134c83d2f07b2562e8dFdB3\"].tokenInfo.tokenValue",
+    "aEthLidoWethTvs": "fundsdata.contracts[\"eth:0xfA1fDbBD71B0aA16162D76914d69cD8CB3Ef92da\"].tokenInfo.tokenValue",
+    "aEthUsdgTvs": "fundsdata.contracts[\"eth:0x7c0477d085ECb607CF8429f3eC91Ae5E1e460F4F\"].tokenInfo.tokenValue",
+    "aEthLidotEthTvs": "fundsdata.contracts[\"eth:0xce8c60fd8390eFCc3Fc66A3f0bd64BEb969e750E\"].tokenInfo.tokenValue",
+    "aEthEurcTvs": "fundsdata.contracts[\"eth:0xAA6e91C82942aeAE040303Bf96c15a6dBcB82CA0\"].tokenInfo.tokenValue",
+    "aHorRwaGhoTvs": "fundsdata.contracts[\"eth:0x946281A2d0DD6e650d08f74833323D66AE4c8b12\"].tokenInfo.tokenValue",
+    "aEthUsdsTvs": "fundsdata.contracts[\"eth:0x32a6268f9Ba3642Dda7892aDd74f1D34469A4259\"].tokenInfo.tokenValue",
+    "aEthPtSrusdeTvs": "fundsdata.contracts[\"eth:0xA78Eba24D89e70A03ddB7AC195A15E53315aA5b4\"].tokenInfo.tokenValue",
+    "aEthPyusdTvs": "fundsdata.contracts[\"eth:0x0C0d01AbF3e6aDfcA0989eBbA9d6e85dD58EaB1E\"].tokenInfo.tokenValue",
+    "aEthFbtcTvs": "fundsdata.contracts[\"eth:0xcCA43ceF272c30415866914351fdfc3E881bb7c2\"].tokenInfo.tokenValue",
+    "aEthRlusdTvs": "fundsdata.contracts[\"eth:0xFa82580c16A31D0c1bC632A36F82e83EfEF3Eec0\"].tokenInfo.tokenValue",
+    "aEthezEthTvs": "fundsdata.contracts[\"eth:0x4E2a4d9B3DF7Aae73b418Bd39F3af9e148E3F479\"].tokenInfo.tokenValue",
+    "aEthPtUsdeTvs": "fundsdata.contracts[\"eth:0xE036478Da9A7ed89b56FE39A06e1FC1a4b38D4Ea\"].tokenInfo.tokenValue",
+    "aHorRwaUsdcTvs": "fundsdata.contracts[\"eth:0x68215B6533c47ff9f7125aC95adf00fE4a62f79e\"].tokenInfo.tokenValue",
+    "aEthcbEthTvs": "fundsdata.contracts[\"eth:0x977b6fc5dE62598B08C85AC8Cf2b745874E8b78c\"].tokenInfo.tokenValue",
+    "aEtheBtcTvs": "fundsdata.contracts[\"eth:0x5fefd7069a7D91d01f269DADE14526CCF3487810\"].tokenInfo.tokenValue",
+    "aHorRwaVbillTvs": "fundsdata.contracts[\"eth:0xE1CfD16b8E4B1C86Bb5b7A104cfEFbc7b09326dD\"].tokenInfo.tokenValue",
+    "aEthLidoUSDCTvs": "fundsdata.contracts[\"eth:0x2A1FBcb52Ed4d9b23daD17E1E8Aed4BB0E6079b8\"].tokenInfo.tokenValue",
+    "aEthETHxTvs": "fundsdata.contracts[\"eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002\"].tokenInfo.tokenValue",
+    "aHorRwaJAAATvs": "fundsdata.contracts[\"eth:0xB0EC6c4482Ac1Ef77bE239C0AC833CF37A27c876\"].tokenInfo.tokenValue",
+    "aEthUNITvs": "fundsdata.contracts[\"eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18\"].tokenInfo.tokenValue",
+    "aEthLUSDTvs": "fundsdata.contracts[\"eth:0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9\"].tokenInfo.tokenValue",
+    "aEthCRVTvs": "fundsdata.contracts[\"eth:0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65\"].tokenInfo.tokenValue",
+    "aEthsyrupUSDTTvs": "fundsdata.contracts[\"eth:0x24Ab03a9a5Bc2C49E5523e8d915A3536ac38B91D\"].tokenInfo.tokenValue",
+    "aEthLidoezETHTvs": "fundsdata.contracts[\"eth:0x74e5664394998f13B07aF42446380ACef637969f\"].tokenInfo.tokenValue",
+    "aEthRPLTvs": "fundsdata.contracts[\"eth:0xB76CF92076adBF1D9C39294FA8e7A67579FDe357\"].tokenInfo.tokenValue",
+    "aEth1INCHTvs": "fundsdata.contracts[\"eth:0x71Aef7b30728b9BB371578f36c5A1f1502a5723e\"].tokenInfo.tokenValue",
+    "aEthLDOTvs": "fundsdata.contracts[\"eth:0x9A44fd41566876A39655f74971a3A6eA0a17a454\"].tokenInfo.tokenValue",
+    "aEthtETHTvs": "fundsdata.contracts[\"eth:0x481a2acf3A72ffDc602A9541896Ca1DB87f86cf7\"].tokenInfo.tokenValue",
+    "aEthMKRTvs": "fundsdata.contracts[\"eth:0x8A458A9dc9048e005d22849F470891b840296619\"].tokenInfo.tokenValue",
+    "aEthLidoUSDSTvs": "fundsdata.contracts[\"eth:0x09AA30b182488f769a9824F15E6Ce58591Da4781\"].tokenInfo.tokenValue",
+    "aEtheUSDeTvs": "fundsdata.contracts[\"eth:0x5F9190496e0DFC831C3bd307978de4a245E2F5cD\"].tokenInfo.tokenValue",
+    "aEthBTCbTvs": "fundsdata.contracts[\"eth:0x12b70410D60f926558245f769059eA3Fc7A7353E\"].tokenInfo.tokenValue",
+    "aEthcrvUSDTvs": "fundsdata.contracts[\"eth:0xb82fa9f31612989525992FCfBB09AB22Eff5c85A\"].tokenInfo.tokenValue",
+    "aEthPTUSDe27NOV2025Tvs": "fundsdata.contracts[\"eth:0x38C503a438185cDE29b5cF4dC1442FD6F074F1cc\"].tokenInfo.tokenValue",
+    "aEthFRAXTvs": "fundsdata.contracts[\"eth:0xd4e245848d6E1220DBE62e155d89fa327E43CB06\"].tokenInfo.tokenValue",
+    "aEthENSTvs": "fundsdata.contracts[\"eth:0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e\"].tokenInfo.tokenValue",
+    "aEthSNXTvs": "fundsdata.contracts[\"eth:0xC7B4c17861357B8ABB91F25581E7263E08DCB59c\"].tokenInfo.tokenValue",
+    "aEthBALTvs": "fundsdata.contracts[\"eth:0x2516E7B3F76294e03C42AA4c5b5b4DCE9C436fB8\"].tokenInfo.tokenValue",
+    "aEthPTUSDG28MAY2026Tvs": "fundsdata.contracts[\"eth:0xA9ecb0503075124cc0B786096849A331FBe9EE6D\"].tokenInfo.tokenValue",
+    "aEthsDAITvs": "fundsdata.contracts[\"eth:0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c\"].tokenInfo.tokenValue",
+    "aEthLidosUSDeTvs": "fundsdata.contracts[\"eth:0xc2015641564a5914A17CB9A92eC8d8feCfa8f2D0\"].tokenInfo.tokenValue",
+    "aEthmUSDTvs": "fundsdata.contracts[\"eth:0xAa0200d169fF3ba9385c12E073c5d1d30434AE7b\"].tokenInfo.tokenValue",
+    "aEthPTUSDe25SEP2025Tvs": "fundsdata.contracts[\"eth:0x38A5357Ce55c81add62aBc84Fb32981e2626ADEf\"].tokenInfo.tokenValue",
+    "aEthPTsUSDe5FEB2026Tvs": "fundsdata.contracts[\"eth:0xbe54767735fB7Acca2aa7E2d209a6f705073536D\"].tokenInfo.tokenValue",
+    "aEthEtherFiFRAXTvs": "fundsdata.contracts[\"eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956\"].tokenInfo.tokenValue",
+    "aEthLidorsETHTvs": "fundsdata.contracts[\"eth:0x56D919E7B25aA42F3F8a4BC77b8982048F2E84B4\"].tokenInfo.tokenValue",
+    "aEthEtherFiweETHTvs": "fundsdata.contracts[\"eth:0xbe1F842e7e0afd2c2322aae5d34bA899544b29db\"].tokenInfo.tokenValue",
+    "aEthEtherFiUSDCTvs": "fundsdata.contracts[\"eth:0x7380c583cDe4409eFF5DD3320D93a45D96B80E2e\"].tokenInfo.tokenValue",
+    "aEthKNCTvs": "fundsdata.contracts[\"eth:0x5b502e3796385E1e9755d7043B9C945C3aCCeC9C\"].tokenInfo.tokenValue",
+    "aEthPTsrUSDe2APR2026Tvs": "fundsdata.contracts[\"eth:0x1241ec22C9BdF16BA1Eb636F2a8de7e28A4343Cf\"].tokenInfo.tokenValue",
+    "aEthPTsUSDE25SEP2025Tvs": "fundsdata.contracts[\"eth:0x5f4a0873a3A02f7C0CB0e13a1d4362a1AD90e751\"].tokenInfo.tokenValue",
+    "aEthPTUSDE5FEB2026Tvs": "fundsdata.contracts[\"eth:0xE728577e9a1Fe7032bc309B4541F58f45443866e\"].tokenInfo.tokenValue",
+    "aEthPTsUSDe27NOV2025Tvs": "fundsdata.contracts[\"eth:0x285866acB0d60105B4Ed350a463361c2d9afA0E2\"].tokenInfo.tokenValue",
+    "aEthPTeUSDe14AUG2025Tvs": "fundsdata.contracts[\"eth:0x2eDff5AF94334fBd7C38ae318edf1c40e072b73B\"].tokenInfo.tokenValue",
+    "aEthPTsUSDE31JUL2025Tvs": "fundsdata.contracts[\"eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864\"].tokenInfo.tokenValue",
+    "aEthFXSTvs": "fundsdata.contracts[\"eth:0x82F9c5ad306BBa1AD0De49bB5FA6F01bf61085ef\"].tokenInfo.tokenValue",
+    "aEthPTeUSDE29MAY2025Tvs": "fundsdata.contracts[\"eth:0x4B0821e768Ed9039a70eD1E80E15E76a5bE5Df5F\"].tokenInfo.tokenValue",
+    "aEthPTUSDe31JUL2025Tvs": "fundsdata.contracts[\"eth:0x312ffC57778CEfa11989733e6E08143E7E229c1c\"].tokenInfo.tokenValue",
+    "aEthEtherFiPYUSDTvs": "fundsdata.contracts[\"eth:0xdF7f48892244C6106EA784609f7de10AB36F9c7e\"].tokenInfo.tokenValue",
+    "aEthSTGTvs": "fundsdata.contracts[\"eth:0x1bA9843bD4327c6c77011406dE5fA8749F7E3479\"].tokenInfo.tokenValue"
+  }
+}

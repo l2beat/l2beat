@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6777357439ced661fa38416d617997cf5bcb8553
+Generated with discovered.json: 0xe4c47818f9ba99e838722f06d2133cf77f1e542f
 
-# Diff at Mon, 27 Apr 2026 15:43:08 GMT:
+# Diff at Tue, 28 Apr 2026 10:09:37 GMT:
 
 - author: Alexandru Marcu (<alx.marcu@gmail.com>)
-- current timestamp: 1777304509
+- current timestamp: 1777370902
 
 ## Description
 
@@ -230,6 +230,18 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ATokenInstance (eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Roles (eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9)
     +++ description: None
 ```
 
@@ -997,12 +1009,6 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract LendingPool (eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract RiskOracle (eth:0x7ABB46C690C52E919687D19ebF89C81A6136C1F2)
     +++ description: None
 ```
@@ -1639,6 +1645,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract AllowanceModule (eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract VariableDebtTokenInstance (eth:0xd180D7fdD4092f07428eFE801E17BC03576b3192)
     +++ description: None
 ```
@@ -1706,6 +1718,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ATokenInstance (eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85)
     +++ description: None
 ```
 
@@ -1916,6 +1934,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ATokenInstance (eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedPayloadsController (eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67)
     +++ description: None
 ```
 

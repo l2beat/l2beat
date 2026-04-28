@@ -1,0 +1,21 @@
+{
+  "framework": "Aave Governance v3",
+  "voteExecution": "onchain",
+  "votingUnit": "AAVE, stkAAVE, and aAAVE (delegated voting power)",
+  "proposalRequirements": "80k AAVE proposition power required to create a proposal; any token holder can vote.",
+  "votingProcess": "Propose → 3-day vote (cross-chain) → queue in PayloadsController → 1-day delay → execute on Ethereum.",
+  "proposalPeriod": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7",
+      "fieldName": "MIN_VOTING_DURATION"
+    }
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5",
+      "fieldName": "MIN_EXECUTION_DELAY"
+    }
+  }
+}

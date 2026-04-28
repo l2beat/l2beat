@@ -1,0 +1,348 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://aave.com"
+    },
+    {
+      "type": "frontend",
+      "url": "https://app.aave.com",
+      "frontendSubtype": "official",
+      "label": "Aave V3 App"
+    },
+    {
+      "type": "docs",
+      "url": "https://aave.com/docs"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/aave-dao"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/aave"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/LICENSE",
+      "label": "BUSL-1.1",
+      "licenseScope": "Contracts"
+    },
+    {
+      "type": "other",
+      "url": "https://governance.aave.com",
+      "label": "Governance Forum"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2021-11-01_OpenZeppelin_AaveV3.pdf",
+      "author": "OpenZeppelin",
+      "date": "2021-11",
+      "scope": "V3 core"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-01-07_TrailOfBits_AaveV3.pdf",
+      "author": "Trail of Bits",
+      "date": "2022-01",
+      "scope": "V3 core"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-01-14_PeckShield_AaveV3.pdf",
+      "author": "PeckShield",
+      "date": "2022-01",
+      "scope": "V3 core"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-01-24_Certora_AaveV3.pdf",
+      "author": "Certora",
+      "date": "2022-01",
+      "scope": "V3 formal verification"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-01-27_ABDK_AaveV3.pdf",
+      "author": "ABDK",
+      "date": "2022-01",
+      "scope": "V3 core"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-01-27_SigmaPrime_AaveV3.pdf",
+      "author": "Sigma Prime",
+      "date": "2022-01",
+      "scope": "V3 core"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2022-08-12_Openzeppelin-v1.pdf",
+      "author": "OpenZeppelin",
+      "date": "2022-08",
+      "scope": "GHO stablecoin V1"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2022-11-10_Openzeppelin-v2.pdf",
+      "author": "OpenZeppelin",
+      "date": "2022-11",
+      "scope": "GHO stablecoin V2"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-12-09_PeckShield_AaveV3-0-1.pdf",
+      "author": "PeckShield",
+      "date": "2022-12",
+      "scope": "V3.0.1 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-12-23_SigmaPrime_AaveV3-0-1.pdf",
+      "author": "Sigma Prime",
+      "date": "2022-12",
+      "scope": "V3.0.1 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2022-12-25_Certora_AaveV3.0.1.pdf",
+      "author": "Certora",
+      "date": "2022-12",
+      "scope": "V3.0.1 formal verification"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2023-03-01_ABDK.pdf",
+      "author": "ABDK",
+      "date": "2023-03",
+      "scope": "GHO stablecoin"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2023-03_Certora_AaveV3-0-2.pdf",
+      "author": "Certora",
+      "date": "2023-03",
+      "scope": "V3.0.2 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2023-04-19_SigmaPrime_AaveV3-0-2.pdf",
+      "author": "Sigma Prime",
+      "date": "2023-04",
+      "scope": "V3.0.2 update"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2023-06-13_GhoSteward_SigmaPrime.pdf",
+      "author": "Sigma Prime",
+      "date": "2023-06",
+      "scope": "GHO steward"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2023-07-06_SigmaPrime.pdf",
+      "author": "Sigma Prime",
+      "date": "2023-07",
+      "scope": "GHO stablecoin"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2023-10-23_GSM_SigmaPrime.pdf",
+      "author": "Sigma Prime",
+      "date": "2023-10",
+      "scope": "GHO stability module"
+    },
+    {
+      "url": "https://github.com/aave/gho-core/blob/main/audits/2024-03-14_GhoStewardV2_Certora.pdf",
+      "author": "Certora",
+      "date": "2024-03",
+      "scope": "GHO steward V2"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-04-30_Certora_AaveV3.1.pdf",
+      "author": "Certora",
+      "date": "2024-04",
+      "scope": "V3.1 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-05-02_MixBytes_AaveV3.1.pdf",
+      "author": "MixBytes",
+      "date": "2024-05",
+      "scope": "V3.1 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-06-02_Cantina-contest-AaveV3.1.pdf",
+      "author": "Cantina",
+      "date": "2024-06",
+      "scope": "V3.1 contest"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-10_Certora_Aave-v3.2_Stable_Rate_Removal.pdf",
+      "author": "Certora",
+      "date": "2024-09",
+      "scope": "stable rate removal"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-11_Certora_StataTokenV2.pdf",
+      "author": "Certora",
+      "date": "2024-09",
+      "scope": "StataToken V2"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-12_Oxorio_Aav3-v3.2.pdf",
+      "author": "Oxorio",
+      "date": "2024-09",
+      "scope": "liquid eModes"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-15_Pashov_Aave-v3.2.pdf",
+      "author": "Pashov Audit Group",
+      "date": "2024-09",
+      "scope": "V3.2 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-19_Certora_Aave-v3.2_Liquid_eModes.pdf",
+      "author": "Certora",
+      "date": "2024-09",
+      "scope": "liquid eModes"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-09-30_Enigma_Aave-v3.2.pdf",
+      "author": "Enigma Dark",
+      "date": "2024-09",
+      "scope": "V3.2 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-10-22_StErMi_Aave-v3.3.pdf",
+      "author": "StErMi",
+      "date": "2024-10",
+      "scope": "V3.3 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-11-07_Certora_Aave-v3.3.0.pdf",
+      "author": "Certora",
+      "date": "2024-11",
+      "scope": "V3.3 formal verification"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2024-12-05_MixBytes_AaveStataToken(watoken)SecurityAuditReport.pdf",
+      "author": "MixBytes",
+      "date": "2024-12",
+      "scope": "static aToken"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-01-20_Certora_CollectorRev6.pdf",
+      "author": "Certora",
+      "date": "2025-01",
+      "scope": "Collector Rev6"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-01-22_Sherlock_Aave-v3.3.0.pdf",
+      "author": "Sherlock",
+      "date": "2025-01",
+      "scope": "V3.3 contest"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-01-29_Oxorio_Aave-v3.3.0.pdf",
+      "author": "Oxorio",
+      "date": "2025-01",
+      "scope": "V3.3 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-05-13_Enigma_Aave-v3.4.pdf",
+      "author": "Enigma Dark",
+      "date": "2025-05",
+      "scope": "V3.4 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-06-11_Certora_Aave-v3.4_Report.pdf",
+      "author": "Certora",
+      "date": "2025-06",
+      "scope": "V3.4 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-06-11_Stermi_Aave-v3.4_Report.md",
+      "author": "StErMi",
+      "date": "2025-06",
+      "scope": "V3.4 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-06-12_Blackthorn-v3.4_Report.pdf",
+      "author": "Blackthorn",
+      "date": "2025-06",
+      "scope": "V3.4 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-07-14_Certora_AaveV3.5.pdf",
+      "author": "Certora",
+      "date": "2025-07",
+      "scope": "V3.5 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-07-17_ABDK_Aave-v3.5.pdf",
+      "author": "ABDK",
+      "date": "2025-07",
+      "scope": "V3.5 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-07-17_StErMi_Aave-v3.5.pdf",
+      "author": "StErMi",
+      "date": "2025-07",
+      "scope": "V3.5 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-07-18_MixBytes_AaveV3.5.pdf",
+      "author": "MixBytes",
+      "date": "2025-07",
+      "scope": "V3.5 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-11-16_Blackthorn_Aave-v3.6.pdf",
+      "author": "Blackthorn",
+      "date": "2025-11",
+      "scope": "V3.6 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-11-18_Certora_Aave-v3.6.pdf",
+      "author": "Certora",
+      "date": "2025-11",
+      "scope": "V3.6 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-11-18_MixBytes_Aave-v3.6.pdf",
+      "author": "MixBytes",
+      "date": "2025-11",
+      "scope": "V3.6 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-11-18_Savant_Aave-v3.6.pdf",
+      "author": "Savant",
+      "date": "2025-11",
+      "scope": "V3.6 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/audits/2025-11-29_Pashov_Aave-v3.6.pdf",
+      "author": "Pashov Audit Group",
+      "date": "2025-11",
+      "scope": "V3.6 update"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-umbrella/blob/main/audits/MixBytes/Aave%20Umbrella%20Security%20Audit%20Report.pdf",
+      "author": "MixBytes",
+      "date": "2025-05",
+      "scope": "Umbrella system"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-umbrella/blob/main/audits/Ackee/ackee-blockchain-aave-umbrella-report.pdf",
+      "author": "Ackee Blockchain",
+      "date": "2025-05",
+      "scope": "Umbrella system"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-umbrella/blob/main/audits/Stermi/REPORT%20Aave%20Umbrella.md",
+      "author": "StErMi",
+      "date": "2025-03",
+      "scope": "Umbrella system"
+    },
+    {
+      "url": "https://github.com/aave-dao/aave-umbrella/blob/main/audits/Certora/Umbrella.pdf",
+      "author": "Certora",
+      "date": "2025-02",
+      "scope": "Umbrella formal verification"
+    },
+    {
+      "url": "https://immunefi.com/bug-bounty/aave/",
+      "author": "Immunefi",
+      "date": "2023-10",
+      "scope": "Bug Bounty Program",
+      "bounty": 1000000
+    }
+  ],
+  "linesOfCode": 38915,
+  "lastModified": "2026-04-27T21:30:32.660Z"
+}

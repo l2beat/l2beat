@@ -14,7 +14,7 @@
     "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5"
   ],
   "maxDepth": 11,
-  "maxAddresses": 500,
+  "maxAddresses": 600,
   "overrides": {
     "eth:0x0a16f2FCC0D44FaE41cc54e079281D84A363bECD": {
       "ignoreMethods": [
@@ -578,6 +578,9 @@
     "eth:0x8Cb4b66f7B13F2Ae4D3c91338fC007dbF8C14208": {
       "ignoreInWatchMode": [
         "getDebtCeilingDecimals"
+      ],
+      "ignoreMethods": [
+        "getAllReservesTokens"
       ]
     },
     "eth:0xE7d490885A68f00d9886508DF281D67263ed5758": {
@@ -759,7 +762,9 @@
       ],
       "fields": {
         "accessControl": {
-          "handler": { "type": "accessControl" }
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -769,7 +774,9 @@
       ],
       "fields": {
         "accessControl": {
-          "handler": { "type": "accessControl" }
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -779,7 +786,9 @@
       ],
       "fields": {
         "accessControl": {
-          "handler": { "type": "accessControl" }
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -789,7 +798,9 @@
       ],
       "fields": {
         "accessControl": {
-          "handler": { "type": "accessControl" }
+          "handler": {
+            "type": "accessControl"
+          }
         }
       }
     },
@@ -2391,7 +2402,6 @@
         }
       }
     },
-    // Umbrella - add accessControl handler to discover role members (COVERAGE_MANAGER_ROLE, PAUSE_GUARDIAN_ROLE, RESCUE_GUARDIAN_ROLE)
     "eth:0xD400fc38ED4732893174325693a63C30ee3881a8": {
       "fields": {
         "accessControl": {
@@ -2401,7 +2411,6 @@
         }
       }
     },
-    // RewardsController (new umbrella version) - add accessControl handler for DEFAULT_ADMIN_ROLE and REWARDS_ADMIN_ROLE members
     "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B": {
       "fields": {
         "accessControl": {
@@ -2411,7 +2420,6 @@
         }
       }
     },
-    // RwaATokenManager - accessControl handler to discover DEFAULT_ADMIN_ROLE members
     "eth:0x803e5Db3E26e88AD0a682A46c3E04cdd053D0EB9": {
       "fields": {
         "accessControl": {
@@ -2421,7 +2429,6 @@
         }
       }
     },
-    // StataTokenV2 instances - safe watch-mode ignores (exchange rates, constants, price feeds)
     "eth:0x0bfc9d54Fc184518A81162F8fB99c2eACa081202": {
       "ignoreInWatchMode": [
         "convertToAssets",
@@ -2479,7 +2486,6 @@
         "totalSupply"
       ]
     },
-    // UmbrellaStakeToken instances - safe watch-mode ignores
     "eth:0x4f827A63755855cDf3e8f3bcD20265C833f15033": {
       "ignoreInWatchMode": [
         "convertToAssets",
@@ -2575,7 +2581,6 @@
         "totalSupply"
       ]
     },
-    // Safe multisig contracts - constant fields safe to ignore
     "eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3": {
       "ignoreInWatchMode": [
         "domainSeparator",
@@ -2604,7 +2609,6 @@
         "VERSION"
       ]
     },
-    // GnosisSafe - nonce is a tx counter, safe to ignore
     "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF": {
       "ignoreInWatchMode": [
         "domainSeparator",
@@ -2615,13 +2619,11 @@
         "VERSION"
       ]
     },
-    // LendingPool (legacy Aave V2) - revision constant
+    // Aave V2 AMM Market LendingPool — a legacy V2 pool managing Uniswap LP collateral.
+    // Referenced by ClinicStewardV2 (POOL field) but not part of Aave V3.
     "eth:0x7937D4799803FbBe595ed57278Bc4cA21f3bFfCB": {
-      "ignoreInWatchMode": [
-        "LENDINGPOOL_REVISION"
-      ]
+      "ignoreDiscovery": true
     },
-    // LiquidationLogic - protocol constants (only change via code upgrade)
     "eth:0x4731bF01583F991278692E8727d0700a00A1fBBf": {
       "ignoreInWatchMode": [
         "CLOSE_FACTOR_HF_THRESHOLD",
@@ -2629,7 +2631,6 @@
         "MIN_LEFTOVER_BASE"
       ]
     },
-    // ProxyAdmin instances - UPGRADE_INTERFACE_VERSION is a constant
     "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432": {
       "ignoreInWatchMode": [
         "UPGRADE_INTERFACE_VERSION"
