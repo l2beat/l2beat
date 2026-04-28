@@ -5,6 +5,7 @@ import { manifest } from '~/utils/Manifest'
 import type { ChainData, CommonInteropData } from '../types'
 import { getAverageDuration } from './getAverageDuration'
 import { getInteropChains } from './getInteropChains'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 
 type Params = {
   chains: Map<string, CommonInteropData>
@@ -38,11 +39,7 @@ export function getChainsData({
         avgValue: Math.floor(chainData.volume / chainData.transferCount),
         minTransferValueUsd: chainData.minTransferValueUsd,
         maxTransferValueUsd: chainData.maxTransferValueUsd,
-        netMintedValue:
-          chainData.mintedValueUsd !== undefined &&
-          chainData.burnedValueUsd !== undefined
-            ? chainData.mintedValueUsd - chainData.burnedValueUsd
-            : undefined,
+        netMintedValue: getNetMintedValueUsd(chainData),
       }
     })
     .filter(notUndefined)
