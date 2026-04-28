@@ -623,6 +623,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+          "description": "manage all settings of the LZ crosschain security stack for the respective OApp: change libraries, DVN configs etc.",
+          "role": ".rsETHAdapterDelegate"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
           "description": "can configure the OFT adapter, including LayerZero peer and delegate settings.",
           "role": ".owner"
@@ -1521,5 +1527,5 @@
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
   "usedBlockNumbers": { "ethereum": 24970797 },
-  "permissionsConfigHash": "0x2595db28980716e9f4cae0e510a96fefe916b62c0ea78b0e0d0b0cf1bb080ae5"
+  "permissionsConfigHash": "0x54b71d05e16312ae063f4f96b7f856656ae781f2325bf4912f972db304d4695e"
 }

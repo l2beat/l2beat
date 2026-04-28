@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd67f507a3c42de860c6ce0eb58a155fe38756357
+Generated with discovered.json: 0x6f32a3a63a8285870da7dcd6e25b905ddb90b393
 
-# Diff at Tue, 28 Apr 2026 08:43:08 GMT:
+# Diff at Tue, 28 Apr 2026 10:00:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f81ebb7f82577ad365df8d5a0b7299b40591e160 block: 1777285916
+- comparing to: main@f7f6f213cad5e56b3adf52a416d571e104063136 block: 1777285916
 - current timestamp: 1777285916
 
 ## Description
@@ -103,6 +103,14 @@ discovery. Values are for block 1777285916 (main branch discovery), not current.
       description:
 -        "Receive Library used by LayerZero, defining the validation of received messages."
 +        "LayerZero-deployed receive library, defining the validation of received messages."
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x1a44076050125825900e736c501f859c50fE728c","description":"manage all settings of the LZ crosschain security stack for the respective OApp: change libraries, DVN configs etc.","role":".rsETHAdapterDelegate"}
     }
 ```
 

@@ -28,7 +28,13 @@
             "method": "delegates",
             "type": "call",
             "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"]
-          }
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "manage all settings of the LZ crosschain security stack for the respective OApp: change libraries, DVN configs etc."
+            }
+          ]
         },
         "rsETHReceiveLibraryFromUnichain": {
           "description": "The receive MessageLib used by the Ethereum rsETH OFT adapter for messages from its Unichain peer.",
