@@ -101,7 +101,7 @@ export const sp1turbo: BaseProject = {
     projectsForTvs: [
       {
         projectId: ProjectId('fluent'),
-        sinceTimestamp: UnixTime(1776356639),
+        sinceTimestamp: UnixTime(1776988800), // 2026-04-24 mainnet activation
       },
       {
         projectId: ProjectId('forknet'),

@@ -56,6 +56,7 @@ export const fluent: ScalingProject = {
       websites: ['https://fluent.xyz/'],
       documentation: ['https://docs.fluent.xyz/'],
       explorers: ['https://fluentscan.xyz/'],
+      bridges: ['https://portal.fluent.xyz/'],
       repositories: ['https://github.com/fluentlabs-xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',
@@ -162,7 +163,7 @@ export const fluent: ScalingProject = {
         ' Fluent uses SP1 (Succinct) STARK proofs wrapped to PLONK for onchain verification. ' +
         'Before proofs are posted, batches can be preconfirmed by an AWS Nitro Enclave whose attestation is verified against expected PCR0 measurements via SP1. ' +
         `Withdrawals on the proof-accelerated path require a finalization delay of ${formatSeconds(finalizationDelay)}; alternatively, batches finalize after the same delay even without a proof. ` +
-        'Currently a single whitelisted address holds the PROVER role.',
+        'Proof submission is permissioned; see the Permissions section for current role holders.',
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -174,7 +175,7 @@ export const fluent: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Fluent batches go through five stages: (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch via an ECDSA signature whose key is bound to PCR0 measurements verified by SP1; (4) participants can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and resolution requires SP1 proofs of the state transition function, blob membership and EIP-4844 commitments; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} delay (\`finalizeBatches\`) or immediately after all blocks are proven (\`finalizeWithProofs\`). At launch a single whitelisted address holds the \`PROVER\` and \`EMERGENCY\` roles on the Rollup.`,
+        description: `Fluent batches go through five stages: (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch via an ECDSA signature whose key is bound to PCR0 measurements verified by SP1; (4) participants can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and resolution requires SP1 proofs of the state transition function, blob membership and EIP-4844 commitments; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} delay (\`finalizeBatches\`) or immediately after all blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
         references: [
           {
             title: 'Fluent Rollup Architecture',
@@ -188,11 +189,11 @@ export const fluent: ScalingProject = {
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'a malicious sequencer manages to bypass the proof system, since the EMERGENCY role can revert finalized batches.',
+            text: 'an actor with the EMERGENCY role reverts finalized batches before users withdraw.',
           },
           {
             category: 'Withdrawals can be delayed if',
-            text: 'the sole address with the PROVER role stops submitting proofs, in which case batches still finalize through the time-based path.',
+            text: 'no address with the PROVER role submits proofs; in that case batches still finalize through the time-based path.',
           },
         ],
       },
