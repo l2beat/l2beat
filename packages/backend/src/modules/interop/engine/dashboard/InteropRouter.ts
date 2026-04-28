@@ -61,7 +61,7 @@ export function createInteropRouter(
   }
 
   router.all(
-    ['/interop/trpc', '/interop/trpc/(.*)'],
+    ['/trpc', '/trpc/(.*)'],
     createInteropTrpc(
       {
         aggregationConfigs: config.aggregation,
@@ -73,7 +73,7 @@ export function createInteropRouter(
         chains: config.capture.chains,
         tokenDbClient,
       },
-      { prefix: '/interop/trpc' },
+      { prefix: '/trpc' },
     ),
   )
 

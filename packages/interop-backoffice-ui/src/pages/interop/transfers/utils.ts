@@ -22,10 +22,10 @@ export function buildTransferDetailsPath(filters: TransferDetailsInput) {
   const encodedType = encodeURIComponent(filters.type)
 
   if (query.length === 0) {
-    return `/transfers/${encodedType}`
+    return `/interop/transfers/${encodedType}`
   }
 
-  return `/transfers/${encodedType}?${query}`
+  return `/interop/transfers/${encodedType}?${query}`
 }
 
 export function parseOptionalSearchParam(value: string | null) {

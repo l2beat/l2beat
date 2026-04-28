@@ -1,5 +1,5 @@
 export function buildAnomalyDetailsPath(id: string) {
-  return `/insights/anomalies/aggregate/${encodeURIComponent(id)}`
+  return `/interop/insights/anomalies/aggregate/${encodeURIComponent(id)}`
 }
 
 export function parseOptionalSearchParam(value: string | null) {

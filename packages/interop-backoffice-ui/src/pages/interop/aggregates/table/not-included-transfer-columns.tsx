@@ -11,7 +11,7 @@ import {
   getTransferSideLabel,
   shortenHash,
   toCsvIsoTimestamp,
-} from '~/pages/transfers/utils'
+} from '~/pages/interop/transfers/utils'
 import type { NotIncludedTransferRow } from '../types'
 
 const columnHelper = createColumnHelper<NotIncludedTransferRow>()

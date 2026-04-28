@@ -18,10 +18,10 @@ export function buildMessageDetailsPath(filters: MessageDetailsInput) {
   const encodedType = encodeURIComponent(filters.type)
 
   if (query.length === 0) {
-    return `/messages/${encodedType}`
+    return `/interop/messages/${encodedType}`
   }
 
-  return `/messages/${encodedType}?${query}`
+  return `/interop/messages/${encodedType}?${query}`
 }
 
 export function parseOptionalSearchParam(value: string | null) {

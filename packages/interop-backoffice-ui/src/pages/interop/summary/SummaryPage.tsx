@@ -18,22 +18,24 @@ export function SummaryPage() {
           </CardHeader>
           <CardContent className="flex flex-wrap gap-3">
             <Button asChild variant="outline">
-              <Link to="/events">Open events</Link>
+              <Link to="/interop/events">Open events</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to="/messages">Open messages</Link>
+              <Link to="/interop/messages">Open messages</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to="/known-apps">Open known apps</Link>
+              <Link to="/interop/known-apps">Open known apps</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to="/transfers">Open transfers</Link>
+              <Link to="/interop/transfers">Open transfers</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to="/missing-tokens">Open missing tokens</Link>
+              <Link to="/interop/missing-tokens">Open missing tokens</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to="/insights/coverage-pies">Open coverage pies</Link>
+              <Link to="/interop/insights/coverage-pies">
+                Open coverage pies
+              </Link>
             </Button>
           </CardContent>
         </Card>

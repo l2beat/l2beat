@@ -1,5 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { formatDollars } from '~/pages/transfers/utils'
+import { formatDollars } from '~/pages/interop/transfers/utils'
 import type { NotIncludedByPluginRow } from '../types'
 
 const columnHelper = createColumnHelper<NotIncludedByPluginRow>()

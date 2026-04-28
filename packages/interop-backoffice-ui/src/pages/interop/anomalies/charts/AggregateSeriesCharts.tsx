@@ -22,7 +22,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from '~/components/core/Empty'
-import { formatDollars } from '~/pages/transfers/utils'
+import { formatDollars } from '~/pages/interop/transfers/utils'
 import type { AggregateSeriesPoint } from '../types'
 
 interface AggregateSeriesChartsProps {

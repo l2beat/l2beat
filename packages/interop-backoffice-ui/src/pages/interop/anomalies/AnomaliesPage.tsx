@@ -45,7 +45,7 @@ export function AnomaliesPage() {
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" size="sm">
-                <Link to="/insights/anomalies/explorer">
+                <Link to="/interop/insights/anomalies/explorer">
                   Open graph explorer
                 </Link>
               </Button>

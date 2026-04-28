@@ -1,6 +1,6 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { formatDollars } from '~/pages/transfers/utils'
+import { formatDollars } from '~/pages/interop/transfers/utils'
 import type { AggregatedAnomalyRow } from '../types'
 import {
   buildAnomalyDetailsPath,

@@ -13,15 +13,15 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
-import { MessageDetailsTable } from './table/details/MessageDetailsTable'
+import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
-  MessageDetailsInput,
-  MessageDetailsRow,
+  TransferDetailsInput,
+  TransferDetailsRow,
 } from './types'
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
-export function MessageDetailsPage() {
+export function TransferDetailsPage() {
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
@@ -30,7 +30,7 @@ export function MessageDetailsPage() {
   const dstChain = parseOptionalSearchParam(searchParams.get('dstChain'))
   const hasValidParams = type !== undefined
 
-  const detailsInput: MessageDetailsInput = hasValidParams
+  const detailsInput: TransferDetailsInput = hasValidParams
     ? {
         type,
         plugin,
@@ -40,13 +40,13 @@ export function MessageDetailsPage() {
     : { type: '' }
 
   const {
-    data: messagesData,
-    error: messagesError,
-    isError: isMessagesError,
-    isLoading: isMessagesLoading,
-    isFetching: isMessagesFetching,
-    refetch: refetchMessages,
-  } = api.messages.details.useQuery(detailsInput, {
+    data: transfersData,
+    error: transfersError,
+    isError: isTransfersError,
+    isLoading: isTransfersLoading,
+    isFetching: isTransfersFetching,
+    refetch: refetchTransfers,
+  } = api.transfers.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -58,17 +58,16 @@ export function MessageDetailsPage() {
     refetch: refetchChains,
   } = api.chains.metadata.useQuery()
 
-  const rows: MessageDetailsRow[] = messagesData ?? []
+  const rows: TransferDetailsRow[] = transfersData ?? []
   const chains: ChainMetadata[] = chainsData ?? []
   const explorerUrlsByChain = new Map(
     chains.flatMap((chain) =>
       chain.explorerUrl ? [[chain.id, chain.explorerUrl] as const] : [],
     ),
   )
-  const uniquePlugins = new Set(rows.map((row) => row.plugin)).size
 
   const refetchAll = async () => {
-    await Promise.all([refetchMessages(), refetchChains()])
+    await Promise.all([refetchTransfers(), refetchChains()])
   }
 
   return (
@@ -77,16 +76,16 @@ export function MessageDetailsPage() {
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">
-              <CardTitle>Message details</CardTitle>
+              <CardTitle>Transfer details</CardTitle>
               <CardDescription>
-                Drill into a message type and optional plugin/chain filters.
+                Drill into a single transfer type and optional chain filters.
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" size="sm">
-                <Link to="/messages">
+                <Link to="/interop/transfers">
                   <ChevronLeftIcon />
-                  Back to messages
+                  Back to transfers
                 </Link>
               </Button>
               <Button
@@ -94,12 +93,14 @@ export function MessageDetailsPage() {
                 size="sm"
                 onClick={() => void refetchAll()}
                 disabled={
-                  !hasValidParams || isMessagesFetching || isChainsFetching
+                  !hasValidParams || isTransfersFetching || isChainsFetching
                 }
               >
                 <RefreshCwIcon
                   className={
-                    isMessagesFetching || isChainsFetching ? 'animate-spin' : ''
+                    isTransfersFetching || isChainsFetching
+                      ? 'animate-spin'
+                      : ''
                   }
                 />
                 Refresh
@@ -115,8 +116,7 @@ export function MessageDetailsPage() {
             <Badge variant="secondary">
               Destination chain: {dstChain ?? 'all'}
             </Badge>
-            <Badge variant="secondary">{rows.length} messages</Badge>
-            <Badge variant="secondary">{uniquePlugins} plugins</Badge>
+            <Badge variant="secondary">{rows.length} transfers</Badge>
           </CardContent>
         </Card>
 
@@ -125,16 +125,16 @@ export function MessageDetailsPage() {
             {!hasValidParams ? (
               <ErrorState
                 className="m-6"
-                cause="Invalid route. Expected /messages/:type."
+                cause="Invalid route. Expected /transfers/:type."
               />
             ) : null}
 
-            {hasValidParams && isMessagesLoading ? (
+            {hasValidParams && isTransfersLoading ? (
               <LoadingState className="m-6" />
             ) : null}
 
-            {hasValidParams && isMessagesError ? (
-              <ErrorState className="m-6" cause={messagesError.message} />
+            {hasValidParams && isTransfersError ? (
+              <ErrorState className="m-6" cause={transfersError.message} />
             ) : null}
 
             {isChainsError ? (
@@ -144,8 +144,8 @@ export function MessageDetailsPage() {
               </div>
             ) : null}
 
-            {hasValidParams && !isMessagesLoading && !isMessagesError ? (
-              <MessageDetailsTable
+            {hasValidParams && !isTransfersLoading && !isTransfersError ? (
+              <TransferDetailsTable
                 data={rows}
                 getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
                 enableCsvExport

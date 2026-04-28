@@ -22,7 +22,9 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('count', {
     header: 'All',
     cell: ({ row }) => (
-      <CellLink to={`/events/all/${encodeURIComponent(row.original.type)}`}>
+      <CellLink
+        to={`/interop/events/all/${encodeURIComponent(row.original.type)}`}
+      >
         {row.original.count}
       </CellLink>
     ),
@@ -33,7 +35,9 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('matched', {
     header: 'Matched',
     cell: ({ row }) => (
-      <CellLink to={`/events/matched/${encodeURIComponent(row.original.type)}`}>
+      <CellLink
+        to={`/interop/events/matched/${encodeURIComponent(row.original.type)}`}
+      >
         {row.original.matched}
       </CellLink>
     ),
@@ -45,7 +49,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     header: 'Unmatched',
     cell: ({ row }) => (
       <CellLink
-        to={`/events/unmatched/${encodeURIComponent(row.original.type)}`}
+        to={`/interop/events/unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unmatched}
       </CellLink>
@@ -58,7 +62,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     header: 'Unmatched (>2h ago)',
     cell: ({ row }) => (
       <CellLink
-        to={`/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
+        to={`/interop/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.oldUnmatched}
       </CellLink>
@@ -71,7 +75,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     header: 'Unsupported',
     cell: ({ row }) => (
       <CellLink
-        to={`/events/unsupported/${encodeURIComponent(row.original.type)}`}
+        to={`/interop/events/unsupported/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unsupported}
       </CellLink>

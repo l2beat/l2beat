@@ -12,7 +12,7 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { formatDollars } from '~/pages/transfers/utils'
+import { formatDollars } from '~/pages/interop/transfers/utils'
 import { api } from '~/react-query/trpc'
 import { AggregateSeriesCharts } from './charts/AggregateSeriesCharts'
 import type { AggregateDetailsInput, AggregateSeriesPoint } from './types'
@@ -49,7 +49,7 @@ export function AnomalyDetailsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" size="sm">
-                <Link to="/insights/anomalies">
+                <Link to="/interop/insights/anomalies">
                   <ChevronLeftIcon />
                   Back to anomalies
                 </Link>

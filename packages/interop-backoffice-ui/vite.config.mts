@@ -13,7 +13,6 @@ export default defineConfig({
       '/trpc': {
         target: process.env.TRPC_URL ?? 'http://localhost:3001',
         changeOrigin: true,
-        rewrite: (path) => `/interop${path}`,
       },
     },
   },

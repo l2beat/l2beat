@@ -107,7 +107,7 @@ export function EventDetailsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" size="sm">
-                <Link to="/events">
+                <Link to="/interop/events">
                   <ChevronLeftIcon />
                   Back to events
                 </Link>

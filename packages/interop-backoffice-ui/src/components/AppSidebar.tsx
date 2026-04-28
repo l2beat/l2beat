@@ -1,20 +1,12 @@
 import {
-  AlertTriangleIcon,
-  ArrowRightLeftIcon,
-  BookCheckIcon,
-  CircleDollarSignIcon,
-  CpuIcon,
-  HatGlassesIcon,
-  InboxIcon,
+  ChevronRightIcon,
+  GlobeIcon,
   LayersIcon,
-  MessageSquareIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
   RefreshCwIcon,
-  ViewIcon,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
-
+import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
   Sidebar,
   SidebarContent,
@@ -23,109 +15,108 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarSeparator,
   SidebarTrigger,
 } from '~/components/core/Sidebar'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from './core/Collapsible'
 
-const items = [
+const interopItems = [
   {
     title: 'Data',
+    icon: LayersIcon,
     items: [
       {
         title: 'Overview',
-        url: '/',
-        icon: PanelsTopLeftIcon,
+        url: '/interop',
       },
       {
         title: 'Aggregates',
-        url: '/aggregates',
-        icon: LayersIcon,
+        url: '/interop/aggregates',
       },
-
       {
         title: 'Events',
-        url: '/events',
-        icon: InboxIcon,
+        url: '/interop/events',
       },
       {
         title: 'Messages',
-        url: '/messages',
-        icon: MessageSquareIcon,
+        url: '/interop/messages',
       },
       {
         title: 'Transfers',
-        url: '/transfers',
-        icon: ArrowRightLeftIcon,
+        url: '/interop/transfers',
       },
       {
         title: 'Missing tokens',
-        url: '/missing-tokens',
-        icon: ViewIcon,
+        url: '/interop/missing-tokens',
       },
       {
         title: 'Known apps',
-        url: '/known-apps',
-        icon: BookCheckIcon,
+        url: '/interop/known-apps',
       },
     ],
   },
   {
     title: 'Indexing',
+    icon: RefreshCwIcon,
     items: [
       {
         title: 'Plugin statuses',
-        url: '/indexing/plugin-statuses',
-        icon: RefreshCwIcon,
+        url: '/interop/indexing/plugin-statuses',
       },
       {
         title: 'Processor statuses',
-        url: '/indexing/processor-statuses',
-        icon: CpuIcon,
+        url: '/interop/indexing/processor-statuses',
       },
       {
         title: 'Financial actions',
-        url: '/financials/actions',
-        icon: CircleDollarSignIcon,
+        url: '/interop/financials/actions',
       },
     ],
   },
   {
     title: 'Insights',
+    icon: PieChartIcon,
     items: [
       {
         title: 'Anomalies',
-        url: '/insights/anomalies',
-        icon: AlertTriangleIcon,
+        url: '/interop/insights/anomalies',
       },
       {
         title: 'Suspicious transfers',
-        url: '/insights/anomalies/suspicious-transfers',
-        icon: HatGlassesIcon,
+        url: '/interop/insights/anomalies/suspicious-transfers',
       },
       {
         title: 'Coverage pies',
-        url: '/insights/coverage-pies',
-        icon: PieChartIcon,
+        url: '/interop/insights/coverage-pies',
       },
       {
         title: 'Memory',
-        url: '/insights/memory',
-        icon: CpuIcon,
+        url: '/interop/insights/memory',
       },
     ],
   },
 ]
 
 export function AppSidebar() {
+  const { pathname } = useLocation()
+
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader className="gap-3">
         <div className="flex min-h-8 items-center gap-2 group-data-[collapsible=icon]:justify-center">
           <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
             <p className="truncate font-semibold text-sidebar-foreground text-sm">
-              Interop Back Office
+              L2BEAT Back Office
             </p>
           </div>
           <SidebarTrigger className="size-8 shrink-0" />
@@ -133,26 +124,95 @@ export function AppSidebar() {
         <SidebarSeparator className="mx-0" />
       </SidebarHeader>
       <SidebarContent>
-        {items.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild tooltip={item.title}>
-                      <Link to={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+        <SidebarGroup>
+          <SidebarGroupLabel>General</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Home">
+                  <Link to="/">
+                    <PanelsTopLeftIcon />
+                    <span>Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Interop</SidebarGroupLabel>
+          <SidebarMenu>
+            {interopItems.map((group) => {
+              const isActive = isNavGroupActive(
+                pathname,
+                group.items,
+                '/interop',
+              )
+              return (
+                <Collapsible key={group.title} asChild defaultOpen={isActive}>
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild className="group">
+                      <div>
+                        <SidebarMenuButton tooltip={group.title}>
+                          <group.icon />
+                          {group.title}
+                        </SidebarMenuButton>
+                        <SidebarMenuAction className="group-data-[state=open]:rotate-90">
+                          <ChevronRightIcon />
+                        </SidebarMenuAction>
+                      </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {group.items.map((subItem) => (
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton asChild>
+                              <Link to={subItem.url}>
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
                   </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                </Collapsible>
+              )
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Website</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Coming soon">
+                  <span className="cursor-not-allowed opacity-50">
+                    <GlobeIcon />
+                    <span>Coming soon</span>
+                  </span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   )
+}
+
+function isNavGroupActive(
+  pathname: string,
+  items: { url: string }[],
+  match: string,
+): boolean {
+  return items.some((item) => {
+    if (matchPath({ path: item.url, end: true }, pathname)) {
+      return true
+    }
+    if (match === item.url) {
+      return false
+    }
+    return matchPath({ path: `${item.url}/*`, end: false }, pathname) != null
+  })
 }

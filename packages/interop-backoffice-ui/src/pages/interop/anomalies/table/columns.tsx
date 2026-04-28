@@ -7,7 +7,7 @@ import {
   getTokenAddressDisplay,
   shortenHash,
   toCsvIsoTimestamp,
-} from '~/pages/transfers/utils'
+} from '~/pages/interop/transfers/utils'
 import type { SuspiciousTransferRow } from '../types'
 
 const columnHelper = createColumnHelper<SuspiciousTransferRow>()

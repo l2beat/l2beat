@@ -1,12 +1,12 @@
 {
-  "name": "@l2beat/interop-backoffice-ui",
+  "name": "@l2beat/backoffice",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies:interop-backoffice-ui",
-    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:interop-backoffice-ui",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:backoffice",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backoffice",
     "preview": "vite preview",
     "format": "biome format .",
     "format:fix": "biome format --write .",
@@ -20,6 +20,7 @@
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@radix-ui/react-checkbox": "^1.1.0",
+    "@radix-ui/react-collapsible": "1.1.1",
     "@radix-ui/react-dialog": "1.1.2",
     "@radix-ui/react-popover": "1.1.2",
     "@radix-ui/react-select": "2.1.2",
