@@ -17,7 +17,10 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { formatDollars, formatTransferTimestamp } from '~/pages/interop/transfers/utils'
+import {
+  formatDollars,
+  formatTransferTimestamp,
+} from '~/pages/interop/transfers/utils'
 import { api } from '~/react-query/trpc'
 import { DurationSplitCoverageTable } from './table/DurationSplitCoverageTable'
 import { NotIncludedByPluginTable } from './table/NotIncludedByPluginTable'
