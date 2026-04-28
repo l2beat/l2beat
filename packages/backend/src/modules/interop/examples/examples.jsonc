@@ -791,6 +791,11 @@
       {
         "chain": "ethereum",
         "tx": "0xad842eb3b6a603a78cccc24ea9b3d418f2b38bc13da0f542aedb237ed4740c61"
+      },
+      // relayRootBundle() via CCTP to solana and other noise (should not emit any transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0x9e2cc90ab1fae3b7f8f985d6f6966c8a13298ede6b27c5f499f3e273410186c4"
       }
     ]
   },
