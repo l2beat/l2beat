@@ -40,13 +40,13 @@ export class CelestiaRpcClient extends ClientCore {
       }
     }
 
-    const blockTimestamp = await this.getBlockTimestamp(height)
+    const block = await this.getBlock(height)
 
     return {
-      number: Number(height),
+      number: block.block.header.height,
       hash: 'UNSUPPORTED',
       logsBloom: 'UNSUPPORTED',
-      timestamp: blockTimestamp,
+      timestamp: UnixTime.fromDate(new Date(block.block.header.time)),
       transactions: [], // UNSUPPORTED
     }
   }

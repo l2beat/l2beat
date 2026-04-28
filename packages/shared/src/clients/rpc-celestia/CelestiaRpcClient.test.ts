@@ -70,6 +70,40 @@ describe(CelestiaRpcClient.name, () => {
       )
     })
 
+    it('returns block with transactions for the latest block', async () => {
+      const mockBlockHeight = '12345'
+      const mockTimestamp = '2024-02-07T10:00:00Z'
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: {
+            block: {
+              header: {
+                time: mockTimestamp,
+                height: mockBlockHeight,
+              },
+            },
+          },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getBlockWithTransactions('latest')
+
+      expect(result).toEqual({
+        number: Number(mockBlockHeight),
+        hash: 'UNSUPPORTED',
+        logsBloom: 'UNSUPPORTED',
+        timestamp: UnixTime.fromDate(new Date(mockTimestamp)),
+        transactions: [],
+      })
+
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block', {
+        method: 'GET',
+        redirect: 'follow',
+      })
+    })
+
     it('returns hardcoded response for block 0 without making any requests', async () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({}),
