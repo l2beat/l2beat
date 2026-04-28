@@ -17,7 +17,7 @@ export function TableTooltip({ children }: Props) {
         <InfoIcon className="size-3 fill-current" />
       </TooltipTrigger>
       <TooltipPortal>
-        <TooltipContent className='z-1000'>{children}</TooltipContent>
+        <TooltipContent className="z-1000">{children}</TooltipContent>
       </TooltipPortal>
     </Tooltip>
   )
