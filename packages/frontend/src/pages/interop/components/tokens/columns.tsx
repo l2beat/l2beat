@@ -40,6 +40,7 @@ type CommonRow = {
 function getCommonColumns<T extends CommonRow>(
   columnHelper: ColumnHelper<T>,
   showTopProtocolColumn?: boolean,
+  showFlowsColumn = true,
 ) {
   return compact([
     showTopProtocolColumn &&
@@ -189,23 +190,24 @@ function getCommonColumns<T extends CommonRow>(
           'The average USD value per token transfer completed in the past 24 hours.',
       },
     }),
-    columnHelper.accessor(
-      (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
-      {
-        id: 'flows',
-        header: 'Flows',
-        cell: (ctx) => {
-          const flows = ctx.row.original.flows
-          if (!flows || flows.length === 0) return EM_DASH
+    showFlowsColumn &&
+      columnHelper.accessor(
+        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+        {
+          id: 'flows',
+          header: 'Flows',
+          cell: (ctx) => {
+            const flows = ctx.row.original.flows
+            if (!flows || flows.length === 0) return EM_DASH
 
-          return <TokenFlowsCell flows={flows} />
+            return <TokenFlowsCell flows={flows} />
+          },
+          meta: {
+            tooltip:
+              'The distribution of this token volume across source and destination chains over the past 24 hours.',
+          },
         },
-        meta: {
-          tooltip:
-            'The distribution of this token volume across source and destination chains over the past 24 hours.',
-        },
-      },
-    ),
+      ),
   ])
 }
 
@@ -213,9 +215,11 @@ const tokenColumnHelper = createColumnHelper<TokenRow>()
 export const getTopTokensColumns = ({
   showNetMintedValueColumn,
   showTopProtocolColumn,
+  showFlowsColumn,
 }: {
   showNetMintedValueColumn?: boolean
   showTopProtocolColumn?: boolean
+  showFlowsColumn?: boolean
 } = {}) =>
   compact([
     tokenColumnHelper.display({
@@ -255,7 +259,11 @@ export const getTopTokensColumns = ({
         cellClassName: 'pl-0!',
       },
     }),
-    ...getCommonColumns(tokenColumnHelper, showTopProtocolColumn),
+    ...getCommonColumns(
+      tokenColumnHelper,
+      showTopProtocolColumn,
+      showFlowsColumn,
+    ),
     showNetMintedValueColumn &&
       tokenColumnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',
@@ -278,7 +286,13 @@ export const getTopTokensColumns = ({
   ])
 
 const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
-export const getTopTokensPairsColumns = (showTopProtocolColumn?: boolean) => [
+export const getTopTokensPairsColumns = ({
+  showTopProtocolColumn,
+  showFlowsColumn,
+}: {
+  showTopProtocolColumn?: boolean
+  showFlowsColumn?: boolean
+} = {}) => [
   tokensPairColumnHelper.accessor(
     (row) =>
       row.id === 'unknown'
@@ -320,5 +334,9 @@ export const getTopTokensPairsColumns = (showTopProtocolColumn?: boolean) => [
       },
     },
   ),
-  ...getCommonColumns(tokensPairColumnHelper, showTopProtocolColumn),
+  ...getCommonColumns(
+    tokensPairColumnHelper,
+    showTopProtocolColumn,
+    showFlowsColumn,
+  ),
 ]

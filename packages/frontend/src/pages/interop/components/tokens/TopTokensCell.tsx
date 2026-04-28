@@ -2,10 +2,8 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { InteropTopItems } from '../top-items/TopItems'
-import { TokensDialog } from './TokensDialog'
+import { SelectedChainsTokensDialog } from './TokensDialog'
 
 export function TopTokensCell({
   topItems,
@@ -24,8 +22,6 @@ export function TopTokensCell({
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const utils = api.useUtils()
-  const { selectionForApi } = useInteropSelectedChains()
 
   return (
     <>
@@ -37,17 +33,10 @@ export function TopTokensCell({
           })),
           remainingCount: topItems.remainingCount,
         }}
-        onMouseEnter={() =>
-          utils.interop.tokens.prefetch({
-            ...selectionForApi,
-            id: protocol.id,
-            type,
-          })
-        }
         type="cell"
         setIsOpen={setIsOpen}
       />
-      <TokensDialog
+      <SelectedChainsTokensDialog
         id={protocol.id}
         type={type}
         isOpen={isOpen}

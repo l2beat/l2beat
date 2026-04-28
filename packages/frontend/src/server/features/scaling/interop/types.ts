@@ -96,13 +96,23 @@ export const InteropProtocolTokensParams = v.object({
 })
 
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
-export const InteropTopItemsParams = v.object({
+const InteropTopItemsParamsShape = {
   id: v.union([
     v.string().transform((value) => ProjectId(value)),
     v.undefined(),
   ]),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  protocolIds: v.array(v.string()).optional(),
+}
+export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
+
+export type InteropTopItemsInfiniteParams = v.infer<
+  typeof InteropTopItemsInfiniteParams
+>
+export const InteropTopItemsInfiniteParams = v.object({
+  ...InteropTopItemsParamsShape,
+  cursor: v.number().optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<
@@ -204,6 +214,11 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
+export type InteropTokensResponse = {
+  items: TokenData[]
+  nextCursor: number | undefined
+}
+
 export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
@@ -217,6 +232,11 @@ export type TokensPairData = {
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
   flows: TokenFlowData[]
+}
+
+export type InteropTokensPairsResponse = {
+  items: TokensPairData[]
+  nextCursor: number | undefined
 }
 
 export type ChainData = {
