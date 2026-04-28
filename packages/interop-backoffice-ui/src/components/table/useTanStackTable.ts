@@ -1,5 +1,9 @@
 import {
+  type ColumnDef,
+  type ColumnFiltersState,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -11,7 +15,7 @@ import {
   type TableOptions,
   useReactTable,
 } from '@tanstack/react-table'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTableSearch } from './hooks/useTableSearch'
 import { fuzzyFilter } from './search'
 
@@ -24,11 +28,30 @@ function toPageSize(option: PageSizeOption, rowsCount: number) {
   return Number(option)
 }
 
+function withFilterDefaults<TData extends RowData>(
+  columns: TableOptions<TData>['columns'],
+): TableOptions<TData>['columns'] {
+  return columns.map((column) => {
+    const filterMeta = column.meta?.filter
+    if (!filterMeta || column.filterFn !== undefined) {
+      return column
+    }
+    if (filterMeta.kind === 'select') {
+      return { ...column, filterFn: 'arrIncludesSome' } as ColumnDef<
+        TData,
+        unknown
+      >
+    }
+    return column
+  })
+}
+
 interface UseTanStackTableOptions<TData extends RowData> {
   data: TData[]
   columns: TableOptions<TData>['columns']
   getRowId?: (row: TData, index: number) => string
   initialSorting?: SortingState
+  initialColumnFilters?: ColumnFiltersState
   initialPageSizeOption?: PageSizeOption
   searchPlaceholder?: string
   rowSelection?: RowSelectionState
@@ -41,6 +64,7 @@ export function useTanStackTable<TData extends RowData>({
   columns,
   getRowId,
   initialSorting = [],
+  initialColumnFilters = [],
   initialPageSizeOption = '100',
   searchPlaceholder = 'Search',
   rowSelection,
@@ -48,18 +72,23 @@ export function useTanStackTable<TData extends RowData>({
   enableRowSelection,
 }: UseTanStackTableOptions<TData>) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
+  const [columnFilters, setColumnFilters] =
+    useState<ColumnFiltersState>(initialColumnFilters)
   const [pageSizeOption, setPageSizeOption] = useState<PageSizeOption>(
     initialPageSizeOption,
   )
   const { isSearchPending, globalFilter, searchValue, setSearchValue } =
     useTableSearch()
 
+  const resolvedColumns = useMemo(() => withFilterDefaults(columns), [columns])
+
   const table = useReactTable({
     data,
-    columns,
+    columns: resolvedColumns,
     sortDescFirst: true,
     state: {
       sorting,
+      columnFilters,
       globalFilter,
       ...(rowSelection ? { rowSelection } : {}),
     },
@@ -67,13 +96,17 @@ export function useTanStackTable<TData extends RowData>({
       fuzzy: fuzzyFilter,
     },
     onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     initialState: {
       sorting: initialSorting,
+      columnFilters: initialColumnFilters,
       pagination: {
         pageIndex: 0,
         pageSize: toPageSize(initialPageSizeOption, data.length),
@@ -106,6 +139,9 @@ export function useTanStackTable<TData extends RowData>({
     isSearchEnabled: table
       .getAllColumns()
       .some((col) => col.getCanGlobalFilter()),
+
+    columnFilters,
+    setColumnFilters,
 
     filteredRowsCount,
     totalRowsCount: data.length,

@@ -3,7 +3,7 @@ import { Checkbox } from '~/components/core/Checkbox'
 import { ExternalLink } from '~/components/ExternalLink'
 import { cn } from '~/utils/cn'
 import { MissingTokenStatusBadge } from '../MissingTokenStatusBadge'
-import type { MissingTokenRow } from '../types'
+import type { MissingTokenRow, MissingTokenStatus } from '../types'
 import {
   getMissingTokenAction,
   getMissingTokenAddressDisplay,
@@ -89,6 +89,7 @@ export function createMissingTokensColumns(options: {
       header: 'Chain',
       meta: {
         csvHeader: 'Chain',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor(getMissingTokenAddressSearchValue, {
@@ -126,6 +127,12 @@ export function createMissingTokensColumns(options: {
         csvHeader: 'TokenDB status',
         getCsvValue: ({ row }) =>
           getMissingTokenStatusLabel(row.original.tokenDbStatus),
+        filter: {
+          kind: 'select',
+          label: 'Status',
+          getOptionLabel: (value) =>
+            getMissingTokenStatusLabel(value as MissingTokenStatus),
+        },
       },
     }),
     columnHelper.accessor('count', {
