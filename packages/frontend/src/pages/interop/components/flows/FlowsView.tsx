@@ -23,17 +23,29 @@ interface FlowsViewProps {
   protocols: (ProtocolDisplayable & {
     id: string
   })[]
+  defaultSelectedChains: string[]
 }
 
-export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
+export function FlowsView({
+  interopChains,
+  protocols,
+  defaultSelectedChains,
+}: FlowsViewProps) {
   return (
-    <InteropFlowsProvider chains={interopChains} protocols={protocols}>
+    <InteropFlowsProvider
+      chains={interopChains}
+      protocols={protocols}
+      defaultSelectedChains={defaultSelectedChains}
+    >
       <FlowsViewContent interopChains={interopChains} protocols={protocols} />
     </InteropFlowsProvider>
   )
 }
 
-function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
+function FlowsViewContent({
+  interopChains,
+  protocols,
+}: Omit<FlowsViewProps, 'defaultSelectedChains'>) {
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
