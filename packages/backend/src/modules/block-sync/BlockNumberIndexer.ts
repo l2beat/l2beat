@@ -35,7 +35,7 @@ export class BlockNumberIndexer extends RootIndexer {
         const timestamp = UnixTime.now() - this.delayFromTipInSeconds
         const blockNumber = await this.blockProvider.getBlockNumberAtOrBefore(
           timestamp,
-          Math.max(this.blockHeight, 0),
+          Math.max(this.blockHeight, 1),
         )
         if (blockNumber > this.blockHeight) {
           this.blockHeight = blockNumber

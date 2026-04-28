@@ -28,18 +28,6 @@ export class CelestiaRpcClient extends ClientCore {
     blockNumber: number | 'latest',
   ): Promise<Block> {
     const height = blockNumber === 'latest' ? undefined : blockNumber
-
-    // API for some reason does not support block 0, but we want to be able to return a valid response for it
-    if (blockNumber === 0) {
-      return {
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        number: 0,
-        timestamp: 1698760800, // 2023-10-31T14:00:00Z
-        transactions: [],
-      }
-    }
-
     const block = await this.getBlock(height)
 
     return {

@@ -103,24 +103,6 @@ describe(CelestiaRpcClient.name, () => {
         redirect: 'follow',
       })
     })
-
-    it('returns hardcoded response for block 0 without making any requests', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({}),
-      })
-      const rpc = mockClient({ http })
-
-      const result = await rpc.getBlockWithTransactions(0)
-
-      expect(result).toEqual({
-        number: 0,
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        timestamp: 1698760800,
-        transactions: [],
-      })
-      expect(http.fetch).not.toHaveBeenCalled()
-    })
   })
 
   describe(CelestiaRpcClient.prototype.getBlockTimestamp.name, () => {
