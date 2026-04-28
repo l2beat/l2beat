@@ -1,6 +1,7 @@
 import { type Block, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
+  type CelestiaBlock,
   CelestiaBlockResponse,
   type CelestiaBlockResult,
   CelestiaBlockResultResponse,
@@ -19,19 +20,30 @@ export class CelestiaRpcClient extends ClientCore {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    const block = await this.getBlockResult()
-    return Number(block.height)
+    const block = await this.getBlock()
+    return block.block.header.height
   }
 
   async getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<Block> {
     const height = blockNumber === 'latest' ? undefined : blockNumber
-    const block = await this.getBlockResult(height)
+
+    // API for some reason does not support block 0, but we want to be able to return a valid response for it
+    if (blockNumber === 0) {
+      return {
+        hash: 'UNSUPPORTED',
+        logsBloom: 'UNSUPPORTED',
+        number: 0,
+        timestamp: 1698760800, // 2023-10-31T14:00:00Z
+        transactions: [],
+      }
+    }
+
     const blockTimestamp = await this.getBlockTimestamp(height)
 
     return {
-      number: Number(block.height),
+      number: Number(height),
       hash: 'UNSUPPORTED',
       logsBloom: 'UNSUPPORTED',
       timestamp: blockTimestamp,
@@ -39,7 +51,7 @@ export class CelestiaRpcClient extends ClientCore {
     }
   }
 
-  async getBlockTimestamp(height?: number): Promise<UnixTime> {
+  async getBlock(height?: number): Promise<CelestiaBlock> {
     const response = await this.query('block', {
       ...(height && { height: height.toString() }),
     })
@@ -54,9 +66,12 @@ export class CelestiaRpcClient extends ClientCore {
       throw new Error(`Block ${height ?? 'latest'}: Error during parsing`)
     }
 
-    return UnixTime.fromDate(
-      new Date(blockResponse.data.result.block.header.time),
-    )
+    return blockResponse.data.result
+  }
+
+  async getBlockTimestamp(height?: number): Promise<UnixTime> {
+    const block = await this.getBlock(height)
+    return UnixTime.fromDate(new Date(block.block.header.time))
   }
 
   async getBlockResult(height?: number): Promise<CelestiaBlockResult> {
