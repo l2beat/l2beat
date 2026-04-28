@@ -5,6 +5,7 @@ import type {
   InteropTransferRecord,
   InteropTransferTypeStatsMap,
 } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import {
   assert,
   assertUnreachable,
@@ -141,16 +142,13 @@ export function getAggregatedTransfer(
     }
 
     if (options?.calculateNetMinted) {
-      if (transfer.srcWasBurned === false && transfer.dstWasMinted) {
-        const value = transfer.dstValueUsd ?? transfer.srcValueUsd
-        mintedValueUsd =
-          value !== undefined ? (mintedValueUsd ?? 0) + value : mintedValueUsd
-      }
-      if (transfer.srcWasBurned && transfer.dstWasMinted === false) {
-        const value = transfer.srcValueUsd ?? transfer.dstValueUsd
-        burnedValueUsd =
-          value !== undefined ? (burnedValueUsd ?? 0) + value : burnedValueUsd
-      }
+      const values = getNetMintedValues(transfer)
+      mintedValueUsd = values.mintedValueUsd
+        ? (mintedValueUsd ?? 0) + values.mintedValueUsd
+        : mintedValueUsd
+      burnedValueUsd = values.burnedValueUsd
+        ? (burnedValueUsd ?? 0) + values.burnedValueUsd
+        : burnedValueUsd
     }
   }
 
@@ -464,4 +462,35 @@ export function getAggregatedTokensPairs(
         ? Math.round(data.maxTransferValueUsd * 100) / 100
         : undefined,
   }))
+}
+
+function getNetMintedValues(transfer: InteropTransferRecord) {
+  let mintedValueUsd = undefined
+  let burnedValueUsd = undefined
+
+  if (InteropTransferClassifier.isOneSided(transfer)) {
+    if (transfer.srcWasBurned === false || transfer.dstWasMinted) {
+      const value = transfer.dstValueUsd ?? transfer.srcValueUsd
+
+      mintedValueUsd = value ? (mintedValueUsd ?? 0) + value : mintedValueUsd
+    }
+
+    if (transfer.srcWasBurned || transfer.dstWasMinted === false) {
+      const value = transfer.srcValueUsd ?? transfer.dstValueUsd
+      burnedValueUsd = value ? (burnedValueUsd ?? 0) + value : burnedValueUsd
+    }
+
+    return { mintedValueUsd, burnedValueUsd }
+  }
+
+  if (transfer.srcWasBurned === false && transfer.dstWasMinted) {
+    const value = transfer.dstValueUsd ?? transfer.srcValueUsd
+    mintedValueUsd = value ? (mintedValueUsd ?? 0) + value : mintedValueUsd
+  }
+  if (transfer.srcWasBurned && transfer.dstWasMinted === false) {
+    const value = transfer.srcValueUsd ?? transfer.dstValueUsd
+    burnedValueUsd = value ? (burnedValueUsd ?? 0) + value : burnedValueUsd
+  }
+
+  return { mintedValueUsd, burnedValueUsd }
 }
