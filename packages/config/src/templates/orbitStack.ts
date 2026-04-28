@@ -502,8 +502,8 @@ function orbitStackCommon(
         ? undefined
         : {
             type: 'Optimistic',
-            name: 'BoLD',
-            challengeProtocol: 'Single-step',
+            name: isPostBoLD ? 'BoLD' : 'Arbitrum Classic',
+            challengeProtocol: 'Interactive',
           }),
     riskView: getRiskView(templateVars, daProviders, isPostBoLD),
     stage: computedStage(templateVars),
