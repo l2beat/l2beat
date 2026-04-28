@@ -40,6 +40,40 @@ export const unichain: ScalingProject = opStackL2({
       other: ['https://growthepie.com/chains/unichain'],
     },
   },
+  interopConfig: {
+    name: 'Unichain Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'unichain',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'unichain',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   hasSuperchainScUpgrades: true,
   scopeOfAssessment: {
     inScope: [
