@@ -1,0 +1,90 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://www.steakhouse.financial"
+    },
+    {
+      "type": "frontend",
+      "url": "https://app.morpho.org/base/vault/0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2/steakhouse-prime-usdc",
+      "frontendSubtype": "third-party",
+      "label": "Morpho App"
+    },
+    {
+      "type": "frontend",
+      "url": "https://fallback.morpho.org",
+      "frontendSubtype": "third-party",
+      "label": "Morpho Fallback"
+    },
+    {
+      "type": "frontend",
+      "url": "https://github.com/morpho-org/morpho-lite-apps",
+      "frontendSubtype": "self-hosted",
+      "label": "Morpho Lite Apps"
+    },
+    {
+      "type": "docs",
+      "url": "https://www.steakhouse.financial/docs",
+      "label": "Steakhouse Docs"
+    },
+    {
+      "type": "docs",
+      "url": "https://docs.morpho.org",
+      "label": "Morpho Docs"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/Steakhouse-Financial",
+      "label": "Steakhouse Financial"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/morpho-org/metamorpho",
+      "label": "MetaMorpho Contracts"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/SteakhouseFi"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/LICENSE",
+      "label": "GPL-2.0-or-later",
+      "licenseScope": "Morpho Contracts"
+    },
+    {
+      "type": "other",
+      "url": "https://kitchen.steakhouse.financial/",
+      "label": "Steakhouse Research (The Kitchen)"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2023-11-14-metamorpho-cantina-managed-review.pdf",
+      "author": "Cantina",
+      "date": "2023-11-14",
+      "scope": "MetaMorpho v1"
+    },
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2023-11-16-morpho-blue-periphery-open-zeppelin.pdf",
+      "author": "OpenZeppelin",
+      "date": "2023-11-16",
+      "scope": "MetaMorpho v1"
+    },
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2024-01-05-periphery-cantina-competition.pdf",
+      "author": "Cantina",
+      "date": "2024-01-05",
+      "scope": "MetaMorpho v1 competition"
+    },
+    {
+      "url": "https://immunefi.com/bug-bounty/morpho/",
+      "author": "Immunefi",
+      "date": "2024-01",
+      "scope": "Bug Bounty Program",
+      "bounty": 1500000
+    }
+  ],
+  "linesOfCode": 8190,
+  "lastModified": "2026-04-28T08:01:08.226Z"
+}

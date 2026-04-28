@@ -96,8 +96,10 @@ export function LandingPage() {
   // Carousel state
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [isInView, setIsInView] = useState(true)
   const [perView, setPerView] = useState(3)
   const trackRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   // Responsive cards-per-view: 1 on mobile, 3 on md+
   useEffect(() => {
@@ -127,12 +129,24 @@ export function LandingPage() {
     [maxIndex],
   )
 
-  // Auto-advance every 3s, pause on hover
+  // Pause auto-advance when the carousel scrolls out of view
   useEffect(() => {
-    if (isPaused || sortedProtocols.length <= perView) return
+    const node = carouselRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [isLoading, indexData])
+
+  // Auto-advance every 3s, pause on hover or when off-screen
+  useEffect(() => {
+    if (isPaused || !isInView || sortedProtocols.length <= perView) return
     const id = setInterval(() => advance(1), 3000)
     return () => clearInterval(id)
-  }, [isPaused, advance, sortedProtocols.length, perView])
+  }, [isPaused, isInView, advance, sortedProtocols.length, perView])
 
   // Touch swipe support
   const touchStart = useRef(0)
@@ -376,6 +390,7 @@ export function LandingPage() {
           <p className="text-status-red">Failed to load protocol data.</p>
         ) : (
           <div
+            ref={carouselRef}
             role="region"
             aria-roledescription="carousel"
             aria-label="Recent protocol reports"

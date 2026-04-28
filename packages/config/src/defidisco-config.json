@@ -8,13 +8,15 @@
     "lido",
     "liquity-v2",
     "Steakhouse-USDC",
+    "Steakhouse-Prime-USDC",
     "liquity-v1",
     "Frankencoin",
     "EtherFi-Stake",
     "uniswap-v3",
     "aerodrome",
     "spark",
-    "Tether-Gold"
+    "Tether-Gold",
+    "Gauntlet-USDC-Prime"
   ],
   "lastUpdated": "2026-04-25"
 }

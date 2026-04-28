@@ -1705,6 +1705,7 @@
           "functionName": "setAssetSources",
           "isPermissioned": true,
           "score": "critical",
+          "description": "Replaces the price source for any asset in the asset→oracle map. Currently configured sources are heterogeneous: WETH and the BTC-family reserves (cbBTC, LBTC, tBTC) read from Chronicle Aggor wrappers that take the median of Chainlink, Chronicle, and RedStone (with a 25h staleness filter); the LST/LRT reserves (wstETH, rETH, weETH, ezETH, rsETH) read from ratio oracles that combine an on-chain exchange rate with the same ETH Aggor; WBTC reads from a Chainlink-only peg adapter (BTC/USD × WBTC/BTC, no Aggor); GNO uses Maker's Fig oracle; stables (DAI, USDC, USDT, USDS, PYUSD) use a hardcoded $1 FixedPriceOracle. POOL_ADMIN can swap any of these to an arbitrary contract in a single transaction, so the underlying-feed redundancy of an Aggor does not bound this function — the worst case is unrestricted oracle replacement on any reserve.",
           "ownerDefinitions": [
             {
               "path": "eth:0xdA135Cd78A086025BcdC87B038a1C462032b510C.accessControl.POOL_ADMIN_ROLE.members"
@@ -1723,6 +1724,7 @@
           "functionName": "setFallbackOracle",
           "isPermissioned": true,
           "score": "critical",
+          "description": "Sets the fallback price source consulted when an asset's primary source returns zero. Currently set to address(0) (no fallback active). POOL_ADMIN can replace it with any contract, which would then back-stop pricing for every reserve whose primary oracle returns zero — equivalent to oracle control over the affected assets.",
           "ownerDefinitions": [
             {
               "path": "eth:0xdA135Cd78A086025BcdC87B038a1C462032b510C.accessControl.POOL_ADMIN_ROLE.members"

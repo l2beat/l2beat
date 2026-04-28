@@ -1,0 +1,141 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-28T00:00:00.000Z",
+  "protocolSlug": "Steakhouse-Prime-USDC",
+  "protocolName": "Steakhouse Prime USDC",
+  "tokenName": "steakUSDC",
+  "chain": "Base",
+  "projectType": "yield",
+  "description": "Steakhouse Prime USDC is a Morpho MetaMorpho vault on Base that allocates USDC deposits across six Morpho Blue lending markets to generate yield for depositors. The vault is curated by Steakhouse Financial under the standardized MetaMorpho v1.1 contract, with a 7-day timelock on cap changes and an Aragon OSx DAO holding the guardian veto. Capital deployment relies entirely on Morpho Blue, and per-market collateral pricing depends on a fleet of Chainlink price feeds wrapped by MorphoChainlinkOracleV2 adapters.",
+  "admins": {
+    "base:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD": {
+      "name": "Steakhouse 5/8 Owner Multisig",
+      "description": "Primary vault owner multisig (5-of-8 threshold, 63% approval). Controls all critical vault parameters including curator and allocator designation (setCurator, setIsAllocator), fee configuration (setFee, setFeeRecipient), skim recipient management (setSkimRecipient), and initiation of timelock-protected governance changes (submitTimelock, submitGuardian). Can manage market caps and removals (submitCap, submitMarketRemoval), configure supply and withdrawal queues (setSupplyQueue, updateWithdrawQueue), execute fund reallocations (reallocate), and revoke pending governance proposals (revokePendingTimelock, revokePendingGuardian, revokePendingCap, revokePendingMarketRemoval). Owner transfer is two-step (Ownable2Step) but uncapped."
+    },
+    "base:0x827e86072B06674a077f592A531dcE4590aDeCdB": {
+      "name": "Steakhouse 2/6 Curator Multisig",
+      "description": "Designated curator multisig (2-of-6 threshold, 33% approval). Controls market cap submissions (submitCap) and market removal requests (submitMarketRemoval), both subject to the 7-day vault timelock. Manages supply and withdrawal queue configuration (setSupplyQueue, updateWithdrawQueue) and can execute fund reallocations between markets (reallocate). Can revoke pending cap changes and market removals (revokePendingCap, revokePendingMarketRemoval) without delay."
+    },
+    "base:0x894d59017Ed0F8dcd8f2B6e89a3C26eF76876D33": {
+      "name": "Steakhouse Aragon OSx DAO (Guardian)",
+      "description": "Aragon OSx DAO (v1.4.0) installed as the vault guardian. Has emergency veto power over every timelocked change initiated by the owner: can revoke pending timelock updates (revokePendingTimelock), guardian replacements (revokePendingGuardian), market cap changes (revokePendingCap), and market removals (revokePendingMarketRemoval). Cannot initiate any change itself; acts as a pure cancel-only check on owner actions during their 7-day delay window."
+    },
+    "base:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8": {
+      "name": "Allocator 1/5 Multisig",
+      "description": "Designated allocator multisig (1-of-5 threshold, 20% approval) with permissions to manage supply and withdrawal queues (setSupplyQueue, updateWithdrawQueue) and execute reallocations (reallocate). Reallocations are bounded to markets that already have a non-zero cap submitted via the timelocked submitCap path, so the allocator cannot move funds into unapproved markets."
+    },
+    "base:0xfeed46c11F57B7126a773EeC6ae9cA7aE1C03C9a": {
+      "name": "Allocator EOA (0xfeed...c9a)",
+      "description": "Designated allocator EOA with the same permissions as the allocator multisig: can update supply and withdrawal queues and trigger reallocations within the cap envelope already approved by the curator. Operates as part of the vault's automated rebalancing system."
+    },
+    "base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00": {
+      "name": "MorphoHelper",
+      "description": "Morpho ecosystem helper contract registered as a vault allocator. Can update supply and withdrawal queues (setSupplyQueue, updateWithdrawQueue) and execute reallocations (reallocate) on behalf of the vault. This is an upgradeable Morpho-side contract operating within the vault's existing per-market caps."
+    },
+    "base:0xA090dD1a701408Df1d4d0B85b716c87565f90467": {
+      "name": "PublicAllocator",
+      "description": "Morpho protocol contract that enables permissionless reallocation of vault funds between markets based on rules pre-configured by the curator. Holds allocator permissions on the vault and can update withdrawal queues (updateWithdrawQueue) and execute reallocations (reallocate). Operates strictly within the per-market caps and flow caps the curator has set."
+    }
+  },
+  "dependencies": {
+    "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "name": "Morpho Blue",
+      "description": "Core lending protocol where all vault deposits are allocated across six markets. The vault supplies USDC to Morpho Blue lending markets, making it the fundamental dependency for capital deployment, yield generation, and withdrawal operations. All vault positions, reallocations, and accounting interact directly with Morpho Blue."
+    },
+    "base:0xA090dD1a701408Df1d4d0B85b716c87565f90467": {
+      "name": "PublicAllocator",
+      "description": "Morpho protocol contract permitting permissionless reallocation of vault funds within curator-set bounds. The vault depends on PublicAllocator for automated capital optimization across markets without requiring manual multisig action."
+    },
+    "base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00": {
+      "name": "MorphoHelper",
+      "description": "Morpho ecosystem helper contract used by the vault for allocator-side automation. Operates within the vault's existing per-market caps to manage queues and reallocations."
+    },
+    "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9": {
+      "name": "MorphoChainlinkOracleV2 (cbBTC market)",
+      "description": "Per-market oracle adapter wrapping a Chainlink price feed to value cbBTC collateral on the Morpho Blue market this vault supplies. Used by Morpho Blue for collateral valuation and liquidation accounting; the vault's exposure to this market makes the adapter and its underlying feed a critical pricing dependency."
+    },
+    "base:0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4": {
+      "name": "MorphoChainlinkOracleV2 (WETH market)",
+      "description": "Per-market oracle adapter wrapping a Chainlink ETH/USD price feed for the WETH-collateral Morpho Blue market this vault supplies. Drives collateral valuation and health checks on the corresponding market."
+    },
+    "base:0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295": {
+      "name": "MorphoChainlinkOracleV2",
+      "description": "Per-market oracle adapter wrapping a Chainlink price feed for one of the vault's lending markets. Powers collateral valuation in that market; misbehavior here would directly affect liquidation accuracy on the vault's position."
+    },
+    "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A": {
+      "name": "MorphoChainlinkOracleV2",
+      "description": "Per-market oracle adapter wrapping multiple Chainlink price feeds to value collateral in one of the vault's lending markets. Combines a base-asset feed with a quote-asset feed to derive the market price."
+    },
+    "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96": {
+      "name": "MorphoChainlinkOracleV2",
+      "description": "Per-market oracle adapter wrapping multiple Chainlink price feeds to value collateral in one of the vault's lending markets. Used by Morpho Blue for collateral pricing in this market's accounting."
+    },
+    "base:0x43a5C292A453A3bF3606fa856197f09D7B74251a": {
+      "name": "Chainlink Price Feed",
+      "description": "Chainlink EACAggregatorProxy used by one of the vault's per-market MorphoChainlinkOracleV2 adapters to value collateral. Reliability of this feed directly affects liquidation timing on the corresponding Morpho Blue market."
+    },
+    "base:0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F": {
+      "name": "Chainlink cbBTC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing cbBTC/USD price data, consumed by the cbBTC-market oracle adapter. Anchors collateral valuation in the vault's BTC-denominated market."
+    },
+    "base:0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70": {
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data, used as the quote-side feed for several of the vault's per-market oracle adapters."
+    },
+    "base:0x7e860098F58bBFC8648a4311b374B1D669a2bc6B": {
+      "name": "Chainlink USD Price Feed (Quote)",
+      "description": "Chainlink EACAggregatorProxy used as the quote-side price feed in several MorphoChainlinkOracleV2 adapters that price collateral against USD. Underpins valuation accuracy on multiple vault markets."
+    },
+    "base:0x806b4Ac04501c29769051e42783cF04dCE41440b": {
+      "name": "Chainlink Price Feed",
+      "description": "Chainlink EACAggregatorProxy consumed by one of the vault's per-market oracle adapters as a base-asset feed. Reliability affects collateral pricing on the corresponding Morpho Blue market."
+    },
+    "base:0xd7818272B9e248357d13057AAb0B417aF31E817d": {
+      "name": "Chainlink Price Feed",
+      "description": "Chainlink EACAggregatorProxy whose underlying aggregator is an AccessControlledOCR2Aggregator. Consumed by a MorphoChainlinkOracleV2 adapter for one of the vault's markets."
+    },
+    "base:0x71E021bc2e8a709B72aC7b6036e5B2Bf30F263d0": {
+      "name": "Chainlink AccessControlledOCR2Aggregator",
+      "description": "Underlying Chainlink OCR2 aggregator behind one of the EACAggregatorProxy feeds the vault's oracle stack consumes. Holds the actual transmitters and aggregation logic for the price feed."
+    }
+  },
+  "funds": {
+    "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2": {
+      "name": "MetaMorpho Vault (steakUSDC)",
+      "description": "Main vault contract holding all depositor USDC. Assets are deployed across six Morpho Blue lending markets selected by the curator, generating yield through optimized capital allocation. The vault is immutable (MetaMorpho v1.1) and uses a 7-day timelock with guardian veto on all market and governance changes. Holds {{vaultBalances}} in tokens and {{vaultPositions}} in active Morpho Blue lending positions."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+              ],
+              "filters": { "excludeExternal": true }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            { "type": "text", "content": "" }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "vaultBalances": "fundsdata.contracts[\"base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2\"].balances.totalUsdValue",
+    "vaultPositions": "fundsdata.contracts[\"base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2\"].positions.totalUsdValue"
+  }
+}

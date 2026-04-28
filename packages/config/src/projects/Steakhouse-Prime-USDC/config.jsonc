@@ -1,0 +1,244 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Steakhouse-Prime-USDC",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2"],
+  "maxAddresses": 100,
+  "maxDepth": 5,
+  "overrides": {
+    // Underlying asset (USDC) — never want to walk into the token graph
+    "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": {
+      "ignoreDiscovery": true
+    },
+    // Vault — pre-baked Morpho template
+    "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2": {
+      "ignoreMethods": [
+        "convertToShares",
+        "convertToAssets",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "withdrawQueue"
+      ],
+      "fields": {
+        "supplyQueue": {
+          "handler": {
+            "type": "array",
+            "method": "supplyQueue",
+            "length": "{{ supplyQueueLength }}"
+          }
+        },
+        "marketParams": {
+          "handler": {
+            "type": "morphoMarkets",
+            "morphoAddressField": "MORPHO",
+            "ignoreRelative": true
+          }
+        },
+        "marketOracles": {
+          "handler": {
+            "type": "morphoMarkets",
+            "extractField": "oracle",
+            "sourceField": "marketParams"
+          }
+        },
+        "allocators": {
+          "handler": {
+            "type": "event",
+            "select": "allocator",
+            "add": {
+              "event": "SetIsAllocator",
+              "where": ["=", "#isAllocator", true]
+            },
+            "remove": {
+              "event": "SetIsAllocator",
+              "where": ["!=", "#isAllocator", true]
+            }
+          }
+        },
+        "MAX_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 1209600 },
+          "description": "Maximum timelock delay (2 weeks)"
+        },
+        "MIN_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 86400 },
+          "description": "Minimum timelock delay (1 day)"
+        },
+        "MAX_QUEUE_LENGTH": {
+          "handler": { "type": "hardcoded", "value": 30 },
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "handler": { "type": "hardcoded", "value": "500000000000000000" },
+          "description": "Maximum fee (50%, represented as 0.5e18)"
+        },
+        "fee": { "severity": "HIGH" },
+        // Per-market USDC supply caps (raw 6-decimal). Used as the impactCap
+        // fieldRef on per-oracle / per-feed dependency mitigations.
+        "marketCap_oracle_0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x9103c3b4e834476c9a62ea009ba2c884ee42e94e6e314a26f04d312434191836"
+          },
+          "description": "USDC supply cap of the cbBTC market"
+        },
+        "marketCap_oracle_0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x8793cf302b8ffd655ab97bd1c695dbd967807e8367a65cb2f4edaf1380ba1bda"
+          },
+          "description": "USDC supply cap of the WETH market"
+        },
+        "marketCap_oracle_0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x0ca10126f6c94cbd9cf0a48cc9516ae5e3dec5aa68303e6d988ee37c5149bf0d"
+          }
+        },
+        "marketCap_oracle_0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae"
+          }
+        },
+        "marketCap_oracle_0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad"
+          }
+        },
+        // Per-Chainlink-feed aggregate caps (sum over every market whose
+        // oracle adapter consumes that feed). For non-shared feeds this
+        // equals the single market's cap; for shared feeds it is the sum.
+        "feedCap_0x43a5C292A453A3bF3606fa856197f09D7B74251a": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x43a5C292A453A3bF3606fa856197f09D7B74251a"
+          }
+        },
+        "feedCap_0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F"
+          }
+        },
+        "feedCap_0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70"
+          }
+        },
+        "feedCap_0x7e860098F58bBFC8648a4311b374B1D669a2bc6B": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B"
+          }
+        },
+        "feedCap_0x806b4Ac04501c29769051e42783cF04dCE41440b": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x806b4Ac04501c29769051e42783cF04dCE41440b"
+          }
+        },
+        "feedCap_0xd7818272B9e248357d13057AAb0B417aF31E817d": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0xd7818272B9e248357d13057AAb0B417aF31E817d"
+          }
+        }
+      },
+      "ignoreInWatchMode": [
+        "totalAssets",
+        "totalSupply",
+        "lastTotalAssets",
+        "marketCap_oracle_0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
+        "marketCap_oracle_0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4",
+        "marketCap_oracle_0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295",
+        "marketCap_oracle_0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+        "marketCap_oracle_0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
+        "feedCap_0x43a5C292A453A3bF3606fa856197f09D7B74251a",
+        "feedCap_0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F",
+        "feedCap_0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70",
+        "feedCap_0x7e860098F58bBFC8648a4311b374B1D669a2bc6B",
+        "feedCap_0x806b4Ac04501c29769051e42783cF04dCE41440b",
+        "feedCap_0xd7818272B9e248357d13057AAb0B417aF31E817d"
+      ]
+    },
+    // Morpho Blue — external, leaf
+    "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "ignoreRelatives": ["owner", "feeRecipient"]
+    },
+    // PublicAllocator — external, leaf
+    "base:0xA090dD1a701408Df1d4d0B85b716c87565f90467": {
+      "ignoreRelatives": ["MORPHO"]
+    },
+    // MorphoHelper — external (proxy), leaf
+    "base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00": {
+      "ignoreRelatives": ["morpho", "public_allocator", "$admin", "$implementation"],
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    // Steakhouse DAO (guardian) — leaf, won't walk implementation
+    "base:0x894d59017Ed0F8dcd8f2B6e89a3C26eF76876D33": {
+      "ignoreRelatives": ["$admin", "$implementation", "getTrustedForwarder"],
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    // MorphoChainlinkOracleV2 instances — external, leaf
+    "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9": {
+      "ignoreRelatives": ["BASE_FEED_1", "BASE_FEED_2", "BASE_VAULT", "QUOTE_FEED_1", "QUOTE_FEED_2", "QUOTE_VAULT"],
+      "ignoreMethods": ["price"]
+    },
+    "base:0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295": {
+      "ignoreRelatives": ["BASE_FEED_1", "BASE_FEED_2", "BASE_VAULT", "QUOTE_FEED_1", "QUOTE_FEED_2", "QUOTE_VAULT"],
+      "ignoreMethods": ["price"]
+    },
+    "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96": {
+      "ignoreRelatives": ["BASE_FEED_1", "BASE_FEED_2", "BASE_VAULT", "QUOTE_FEED_1", "QUOTE_FEED_2", "QUOTE_VAULT"],
+      "ignoreMethods": ["price"]
+    },
+    "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A": {
+      "ignoreRelatives": ["BASE_FEED_1", "BASE_FEED_2", "BASE_VAULT", "QUOTE_FEED_1", "QUOTE_FEED_2", "QUOTE_VAULT"],
+      "ignoreMethods": ["price"]
+    },
+    "base:0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4": {
+      "ignoreRelatives": ["BASE_FEED_1", "BASE_FEED_2", "BASE_VAULT", "QUOTE_FEED_1", "QUOTE_FEED_2", "QUOTE_VAULT"],
+      "ignoreMethods": ["price"]
+    },
+    // Chainlink EACAggregatorProxy — external, leaf
+    "base:0x43a5C292A453A3bF3606fa856197f09D7B74251a": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "base:0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "base:0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "base:0x7e860098F58bBFC8648a4311b374B1D669a2bc6B": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "base:0x806b4Ac04501c29769051e42783cF04dCE41440b": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"]
+    },
+    "base:0xd7818272B9e248357d13057AAb0B417aF31E817d": {
+      "ignoreRelatives": ["owner", "aggregator", "accessController", "proposedAggregator"],
+      "ignoreMethods": ["getAnswer", "getTimestamp", "proposedLatestRoundData"]
+    },
+    // Chainlink AccessControlledOCR2Aggregator — external, leaf
+    "base:0x71E021bc2e8a709B72aC7b6036e5B2Bf30F263d0": {
+      "ignoreRelatives": ["getBillingAccessController", "getLinkToken", "getRequesterAccessController", "owner"],
+      "ignoreMethods": ["description", "latestAnswer", "latestRound", "latestRoundData", "latestTimestamp", "latestTransmissionDetails"]
+    }
+  }
+}

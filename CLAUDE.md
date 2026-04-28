@@ -277,7 +277,8 @@ packages/
 │   ├── WriteFunctionPermissionHandler.ts
 │   ├── AddressMappingHandler.ts          # Maps addresses via method call against discovered.json candidates
 │   ├── EnumerableRolesHandler.ts         # Enumerates roles and their holders via RoleSet events
-│   └── LayerZeroOAppConfigHandler.ts     # Captures a LayerZero V2 OApp's cross-chain security stack: peers, endpoint delegate, send/receive MessageLibs, ABI-decoded UlnConfig (DVN set + threshold + confirmations) and ExecutorConfig per remote EID. EIDs auto-enumerated from PeerSet events. Handler type: `layerZeroOAppConfig`, config: `{ endpoint, includeEnforcedOptions?, includeRateLimits?, extraEids? }`
+│   ├── LayerZeroOAppConfigHandler.ts     # Captures a LayerZero V2 OApp's cross-chain security stack: peers, endpoint delegate, send/receive MessageLibs, ABI-decoded UlnConfig (DVN set + threshold + confirmations) and ExecutorConfig per remote EID. EIDs auto-enumerated from PeerSet events. Handler type: `layerZeroOAppConfig`, config: `{ endpoint, includeEnforcedOptions?, includeRateLimits?, extraEids? }`
+│   └── MetaMorphoCapHandler.ts           # Reads MetaMorpho per-market supply caps off the vault's `config(bytes32)` mapping. Two modes: `market` returns the cap of a single market (config: `marketId`); `feed` walks `supplyQueue`, calls `idToMarketParams` on Morpho Blue to fetch each market's oracle adapter, scans the adapter's `BASE_FEED_1/2` and `QUOTE_FEED_1/2` for a Chainlink feed match, and sums the matching markets' caps (config: `feed`, optional `morphoAddressField` default `MORPHO`, optional `queueField` default `supplyQueue`). Handler type: `metaMorphoCap`
 ├── protocolbeat/src/defidisco/
 │   ├── ValuesPanelExtensions.tsx
 │   ├── TerminalExtensions.tsx

@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-28T14:39:49.065Z",
+  "tags": [
+    {
+      "contractAddress": "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2026-04-28T14:38:50.000Z"
+    },
+    {
+      "contractAddress": "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T14:38:50.011Z"
+    },
+    {
+      "contractAddress": "base:0xA090dD1a701408Df1d4d0B85b716c87565f90467",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T14:38:50.022Z"
+    },
+    {
+      "contractAddress": "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T14:38:50.031Z"
+    },
+    {
+      "contractAddress": "base:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T14:38:50.042Z"
+    },
+    {
+      "contractAddress": "base:0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T14:38:50.053Z"
+    },
+    {
+      "contractAddress": "base:0xf0Db7318A51a21C413CaDd4AbDC1E8a500fE5B1b",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T14:38:50.063Z"
+    },
+    {
+      "contractAddress": "base:0xf3c72D97A5Dcf0449e89BBCE1A0581d8d15c0237",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T14:39:49.065Z"
+    }
+  ]
+}

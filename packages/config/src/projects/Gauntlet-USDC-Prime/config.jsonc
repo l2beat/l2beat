@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Gauntlet-USDC-Prime",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61"],
+  "maxAddresses": 100,
+  "maxDepth": 5,
+  "overrides": {
+    // Underlying asset (USDC on Base) — never want to walk into the token graph
+    "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": {
+      "ignoreDiscovery": true
+    },
+    "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61": {
+      "ignoreMethods": [
+        "convertToShares",
+        "convertToAssets",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw",
+        "withdrawQueue"
+      ],
+      "fields": {
+        "supplyQueue": {
+          "handler": {
+            "type": "array",
+            "method": "supplyQueue",
+            "length": "{{ supplyQueueLength }}"
+          }
+        },
+        "marketParams": {
+          "handler": {
+            "type": "morphoMarkets",
+            "morphoAddressField": "MORPHO",
+            "ignoreRelative": true
+          }
+        },
+        "marketOracles": {
+          "handler": {
+            "type": "morphoMarkets",
+            "extractField": "oracle",
+            "sourceField": "marketParams"
+          }
+        },
+        "allocators": {
+          "handler": {
+            "type": "event",
+            "select": "allocator",
+            "add": {
+              "event": "SetIsAllocator",
+              "where": ["=", "#isAllocator", true]
+            },
+            "remove": {
+              "event": "SetIsAllocator",
+              "where": ["!=", "#isAllocator", true]
+            }
+          }
+        },
+        "MAX_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 1209600 },
+          "description": "Maximum timelock delay (2 weeks)"
+        },
+        "MIN_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 86400 },
+          "description": "Minimum timelock delay (1 day)"
+        },
+        "MAX_QUEUE_LENGTH": {
+          "handler": { "type": "hardcoded", "value": 30 },
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "handler": { "type": "hardcoded", "value": "500000000000000000" },
+          "description": "Maximum fee (50%, represented as 0.5e18)"
+        },
+        "fee": { "severity": "HIGH" },
+        "marketCap_oracle_663BECd10daE6C4A3Dcd89F1d76c1174199639B9": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "market",
+            "marketId": "0x9103c3b4e834476c9a62ea009ba2c884ee42e94e6e314a26f04d312434191836"
+          }
+        },
+        "feedCap_64c911996D3c6aC71f9b455B1E8E7266BcbD848F": {
+          "handler": {
+            "type": "metaMorphoCap",
+            "mode": "feed",
+            "feed": "0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F"
+          }
+        }
+      },
+      "ignoreInWatchMode": [
+        "totalAssets",
+        "totalSupply",
+        "lastTotalAssets",
+        "marketCap_oracle_663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
+        "feedCap_64c911996D3c6aC71f9b455B1E8E7266BcbD848F"
+      ]
+    }
+  }
+}

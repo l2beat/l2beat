@@ -1,0 +1,15 @@
+{
+  "framework": "Aragon OSx",
+  "voteExecution": "onchain",
+  "votingUnit": "Vault shares",
+  "proposalRequirements": "Via DAO plugin",
+  "votingProcess": "An Aragon OSx DAO (v1.4.0) is the vault guardian and can veto the timelocked actions.",
+  "proposalPeriod": {
+    "kind": "fixed",
+    "value": "1 Day"
+  },
+  "executionDelay": {
+    "kind": "fixed",
+    "value": "None"
+  }
+}

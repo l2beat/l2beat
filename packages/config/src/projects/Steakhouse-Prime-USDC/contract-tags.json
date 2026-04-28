@@ -1,0 +1,121 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-28T07:53:50.322Z",
+  "tags": [
+    {
+      "contractAddress": "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2",
+      "isExternal": false,
+      "fetchBalances": true,
+      "fetchPositions": true,
+      "timestamp": "2026-04-28T07:53:50.141Z"
+    },
+    {
+      "contractAddress": "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.151Z"
+    },
+    {
+      "contractAddress": "base:0xA090dD1a701408Df1d4d0B85b716c87565f90467",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.162Z"
+    },
+    {
+      "contractAddress": "base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.173Z"
+    },
+    {
+      "contractAddress": "base:0xcBa28b38103307Ec8dA98377ffF9816C164f9AFa",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.183Z"
+    },
+    {
+      "contractAddress": "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.194Z"
+    },
+    {
+      "contractAddress": "base:0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.203Z"
+    },
+    {
+      "contractAddress": "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.214Z"
+    },
+    {
+      "contractAddress": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.227Z"
+    },
+    {
+      "contractAddress": "base:0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4",
+      "isExternal": true,
+      "entity": "Morpho",
+      "timestamp": "2026-04-28T07:53:50.237Z"
+    },
+    {
+      "contractAddress": "base:0x43a5C292A453A3bF3606fa856197f09D7B74251a",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.248Z"
+    },
+    {
+      "contractAddress": "base:0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.257Z"
+    },
+    {
+      "contractAddress": "base:0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.269Z"
+    },
+    {
+      "contractAddress": "base:0x7e860098F58bBFC8648a4311b374B1D669a2bc6B",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.277Z"
+    },
+    {
+      "contractAddress": "base:0x806b4Ac04501c29769051e42783cF04dCE41440b",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.285Z"
+    },
+    {
+      "contractAddress": "base:0xd7818272B9e248357d13057AAb0B417aF31E817d",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.294Z"
+    },
+    {
+      "contractAddress": "base:0x71E021bc2e8a709B72aC7b6036e5B2Bf30F263d0",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.303Z"
+    },
+    {
+      "contractAddress": "base:0xf0Db7318A51a21C413CaDd4AbDC1E8a500fE5B1b",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-28T07:53:50.313Z"
+    },
+    {
+      "contractAddress": "base:0x894d59017Ed0F8dcd8f2B6e89a3C26eF76876D33",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-28T07:53:50.322Z"
+    }
+  ]
+}

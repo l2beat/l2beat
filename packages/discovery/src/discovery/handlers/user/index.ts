@@ -134,6 +134,10 @@ import {
   LayerZeroOAppConfigHandler,
   LayerZeroOAppConfigHandlerDefinition,
 } from '../defidisco/LayerZeroOAppConfigHandler'
+import {
+  MetaMorphoCapHandler,
+  MetaMorphoCapHandlerDefinition,
+} from '../defidisco/MetaMorphoCapHandler'
 
 const DEFINITIONS = [
   StorageHandlerDefinition,
@@ -173,6 +177,7 @@ const DEFINITIONS = [
   EnumerableRolesHandlerDefinition,
   CCIPRateLimitHandlerDefinition,
   LayerZeroOAppConfigHandlerDefinition,
+  MetaMorphoCapHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -221,6 +226,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   enumerableRoles: EnumerableRolesHandlerDefinition,
   ccipRateLimit: CCIPRateLimitHandlerDefinition,
   layerZeroOAppConfig: LayerZeroOAppConfigHandlerDefinition,
+  metaMorphoCap: MetaMorphoCapHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -303,5 +309,7 @@ export function getUserHandler(
       return new CCIPRateLimitHandler(field, definition)
     case 'layerZeroOAppConfig':
       return new LayerZeroOAppConfigHandler(field, definition)
+    case 'metaMorphoCap':
+      return new MetaMorphoCapHandler(field, definition, abi)
   }
 }

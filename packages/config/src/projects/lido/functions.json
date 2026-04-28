@@ -1082,18 +1082,11 @@
           "functionName": "submitReport",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
-          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "score": "no-impact",
+          "description": "Oracle members submit a hash of the report computed for a given reference slot. The report processor only acts when a quorum (5-of-9) of identical hashes has been collected, so an individual member's submission has no unilateral impact. Committee-level control is captured separately via addMember / removeMember / setQuorum.",
           "ownerDefinitions": [
             {
               "path": "$self.getMembers.addresses"
-            }
-          ],
-          "mitigations": [
-            {
-              "type": "other",
-              "label": "consensus hash",
-              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
             }
           ],
           "timestamp": "2026-03-30T15:23:33.876Z",
@@ -1243,18 +1236,11 @@
           "functionName": "submitReport",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
-          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "score": "no-impact",
+          "description": "Oracle members submit a hash of the report computed for a given reference slot. The report processor only acts when a quorum (5-of-9) of identical hashes has been collected, so an individual member's submission has no unilateral impact. Committee-level control is captured separately via addMember / removeMember / setQuorum.",
           "ownerDefinitions": [
             {
               "path": "$self.getMembers.addresses"
-            }
-          ],
-          "mitigations": [
-            {
-              "type": "other",
-              "label": "consensus hash",
-              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
             }
           ],
           "timestamp": "2026-03-30T15:23:33.907Z",
@@ -1404,18 +1390,11 @@
           "functionName": "submitReport",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
-          "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
+          "score": "no-impact",
+          "description": "Oracle members submit a hash of the report computed for a given reference slot. The report processor only acts when a quorum (5-of-9) of identical hashes has been collected, so an individual member's submission has no unilateral impact. Committee-level control is captured separately via addMember / removeMember / setQuorum.",
           "ownerDefinitions": [
             {
               "path": "$self.getMembers.addresses"
-            }
-          ],
-          "mitigations": [
-            {
-              "type": "other",
-              "label": "consensus hash",
-              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
             }
           ],
           "timestamp": "2026-03-30T15:23:33.938Z",

@@ -134,8 +134,14 @@
       "ignoreInWatchMode": ["getRageQuitSupport", "getSignallingEscrowDetails"]
     },
     "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86": {
-      "ignoreInWatchMode": ["currentPeriodId", "transactionsNextIndex"],
+      "ignoreInWatchMode": ["currentPeriodId", "transactionsNextIndex", "periodsLength"],
       "ignoreMethods": ["getTransaction"]
+    },
+    "eth:0x281e6BB6F26A94250aCEb24396a8E4190726C97e": {
+      "ignoreInWatchMode": ["estimateTradeOutput"]
+    },
+    "eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776": {
+      "ignoreInWatchMode": ["getPeriodState", "spendableBalance"]
     },
     "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0": {
       "ignoreMethods": ["getScheduleProposalState"]

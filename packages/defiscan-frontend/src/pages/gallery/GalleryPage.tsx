@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Radar,
@@ -15,7 +15,8 @@ import { ProtocolLogo } from '../../components/ProtocolLogo'
 import { getLatestActivityTimestamp } from '../review/views/activityTimestamp'
 import type { CompiledReview, ProtocolSummary, CompiledAdmin, CompiledDependency } from '../../types'
 
-const PAGE_SIZE = 12
+const PAGE_SIZE_MOBILE = 12
+const PAGE_SIZE_DESKTOP = 24
 
 const ACCENT_COLOR = '#2563eb'
 const ACCENT_GRID_COLOR = 'rgba(37,99,235,0.12)'
@@ -297,6 +298,16 @@ export function GalleryPage() {
     new Set(['active', 'updated']),
   )
   const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(PAGE_SIZE_DESKTOP)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () =>
+      setPageSize(mq.matches ? PAGE_SIZE_DESKTOP : PAGE_SIZE_MOBILE)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   const protocols = indexData?.protocols ?? []
 
@@ -355,14 +366,14 @@ export function GalleryPage() {
     return list
   }, [protocols, ecosystemFilter, typeFilter, activeStatuses, reviewMap, reviewsLoading])
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
   const safePage = Math.min(page, totalPages)
   const pageItems = filtered.slice(
-    (safePage - 1) * PAGE_SIZE,
-    safePage * PAGE_SIZE,
+    (safePage - 1) * pageSize,
+    safePage * pageSize,
   )
-  const showingFrom = filtered.length === 0 ? 0 : (safePage - 1) * PAGE_SIZE + 1
-  const showingTo = Math.min(safePage * PAGE_SIZE, filtered.length)
+  const showingFrom = filtered.length === 0 ? 0 : (safePage - 1) * pageSize + 1
+  const showingTo = Math.min(safePage * pageSize, filtered.length)
 
   const pageNumbers = buildPageNumbers(safePage, totalPages)
 

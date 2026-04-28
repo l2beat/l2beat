@@ -1,0 +1,1273 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-28T13:09:31.105Z",
+  "contracts": {
+    "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2": {
+      "lastFetched": "2026-04-28T13:09:28.577Z",
+      "balances": {
+        "tokens": [
+          {
+            "assetAddress": "0x033b1444fbfac85f3761831000dbdad714c48e50",
+            "symbol": "SOL",
+            "name": "Solana virtuals",
+            "balance": "1e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x05bc0488fd91c2dbee0a6cbe81fd63c2dd7a4c0b",
+            "symbol": "VDOR",
+            "name": "Vanguard digital Oil Reserve",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x10bcf9c4d1fd798df33ad1c1cb286e24720c0d7f",
+            "symbol": "DYDX - Claim Link: t.me/s/app_dydx | #72",
+            "name": "✅DYDX Airdrop",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x13ab68640c92fe42a7664ad2185ec21eab7a4383",
+            "symbol": "SEABLINGS",
+            "name": "SEAblings.Net",
+            "balance": "27000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x13c9c2305965641024069f22350d23dcb837237b",
+            "symbol": "REWARD 🎁 Visit: t .me/s/app_dydx",
+            "name": "REWARD 🎁 Visit: t .me/s/app_dydx",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x1575f7f60a4acd04332987fb741b805af96fdb90",
+            "symbol": "UЅDС | t.me/s/US_POOL | claim until 02.12.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x166d54f12a00bf3bc944bdbde4f132011f6d6eeb",
+            "symbol": "ZORA",
+            "name": "Scatter Zora",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x183d0b78bd3a8bf10e013a1c637e8090cc770606",
+            "symbol": "CUKI",
+            "name": "Cukimai Cukimai",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x195b8e1401c40439b444df8d9dd9b7acae733070",
+            "symbol": "AERO",
+            "name": "Aerodrome By Virtuals",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x1e358596f48420fe4cd147dcc850661632125e21",
+            "symbol": "Telegram @TronVanity88_bot",
+            "name": "Telegram @TronVanity88_bot",
+            "balance": "8888",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x20ef59fcf00f31437aa397ee1a6efb3d02996d12",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 09.08.25",
+            "name": "✅UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x23b056a48a684a6bede8a8bc90ddd5c5cf8a6c4b",
+            "symbol": "VDOR",
+            "name": "Vanguard Daimond Oil Reserves",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x27d3b6af76d7e0b615f71b200105b5a785c18b01",
+            "symbol": "VDOR",
+            "name": "Vanguard Digital Oil Galaxy",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2884de7b24e9fee4a60aa4bd8edc05644465af9b",
+            "symbol": "USOF",
+            "name": "United States Oil Tokenized Fund",
+            "balance": "7e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2aa071ef3a28e5b003b4509096c770ae6b609596",
+            "symbol": "VDOR",
+            "name": "VANGUARD DIGITAL OIL RESERVE",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2b364807379c6b616f1b2440c053aead35c43183",
+            "symbol": "EGO",
+            "name": "Trump's EGO",
+            "balance": "27000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2d6613f383a89742179fdbdf3649b5dddec523c6",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 20.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2dfbb42f72df1a88f1cc47a518041fb54a471464",
+            "symbol": "KICAUMANIA",
+            "name": "Kicau Mania",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2f3979f4a3c5280be05e15ce5c8ec01118aa25ba",
+            "symbol": "DION",
+            "name": "Digital Oil Memecoin",
+            "balance": "9e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2fa9269ebff1d760dc54afe80c1a8936924cf218",
+            "symbol": "EIR",
+            "name": "ELECTRIC IRAN RESERVE",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3096d1a5c59b52c18b1694688dd75b3fa4c71f79",
+            "symbol": "VIOR",
+            "name": "Vanguard Iran Oil Reserve",
+            "balance": "5000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x31acfa5b1874e7702796b51619ada57f61622e9a",
+            "symbol": "DRCX",
+            "name": "DRCX",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x32a9689c8be6a2cba780c1fd2a56232b8a9b685c",
+            "symbol": "42",
+            "name": "The Official of 42",
+            "balance": "31000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3319e7bd7e8792f313aef8f572cbb0470bfd38a2",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 30.09.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3368bfb035f52011d2befdc95d460352fb0ac0b5",
+            "symbol": "8BITBASE",
+            "name": "$8bitbase",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x33c47a9953f3b18397c92fba7946f35289064b8b",
+            "symbol": "CLAUNCH",
+            "name": "ConLaunch",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x34a7c7f7015c631b5530219a48ee977355960440",
+            "symbol": "WFH",
+            "name": "Work From Home",
+            "balance": "29000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x36d6828942f6debca99f693b9858436353c76946",
+            "symbol": "TRUMP",
+            "name": "Trump Wars",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3820b41c9850878462ef7fae152f3463cb6a24c8",
+            "symbol": "BABUCKS",
+            "name": "Banana Bucks",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x393cdbe530ec49462e4be960ad04b190c1975af7",
+            "symbol": "GNWR",
+            "name": "Global Nuclear War Reserve",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3acff603630a581da2747424784e328b80a540e4",
+            "symbol": "BASED",
+            "name": "Based One",
+            "balance": "3000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3b392d27ea2cbdc961c2224dce52116657448741",
+            "symbol": "ZEUS",
+            "name": "Zeus Coin",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x3b6915ed43f3a05565d5e57468f4ef10f928383e",
+            "symbol": "BOYS",
+            "name": "Based Little Boys",
+            "balance": "7e+21",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x40ec8a65d874835464a4d5e1e0e0e90cff2dab7b",
+            "symbol": "BOP",
+            "name": "Board Of Peace",
+            "balance": "35000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4200000000000000000000000000000000000006",
+            "symbol": "WETH",
+            "name": "Wrapped Ether",
+            "balance": "1",
+            "decimals": 18,
+            "usdValue": 2.2662e-15
+          },
+          {
+            "assetAddress": "0x42bf317d055894dd80d7fe3ba8008209a344befe",
+            "symbol": "$A26Z",
+            "name": "A26Z",
+            "balance": "463000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x432555067e7111cc6658943d17f357768804f087",
+            "symbol": "CC",
+            "name": "The Canton Network",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x437443bdac7720cb21e9053024495b03cd1a4286",
+            "symbol": "T3rdI",
+            "name": "Trump's 3rd impeachment",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x486f662020286e17e7469df4e5f2cf2415f36662",
+            "symbol": "AI",
+            "name": "Open AI",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x49f9c4d26e10637d654c413d355ed89f645047f9",
+            "symbol": "COIN",
+            "name": "ResearchCoin",
+            "balance": "60000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4a67abdb88ba6be3e794921a761fa0de80aad76d",
+            "symbol": "SILVER",
+            "name": "Digital Silver",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4b3c670a7d4affc94e749ac4c4001a4a3e357496",
+            "symbol": "SHARC",
+            "name": "Sahara Coin",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x4d6ff36f8de58d6d94d3ad201273c26eda5243f0",
+            "symbol": "RCS",
+            "name": "Reserve Currency of Socialcom",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x506f70791c129e0f83980aca3a061e92d90a52b8",
+            "symbol": "AOB",
+            "name": "American Oil Blockade",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x507b8c8053c20c40d8f448d9b9a4054a981544a7",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 30.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x51864357a346403c5a759c354afee1595215309a",
+            "symbol": "BETCOIN",
+            "name": "BET COIN",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x5230608a7034968d6fd085572b15e2a1cf5d8514",
+            "symbol": "NO KINGS",
+            "name": "NO KINGS",
+            "balance": "15000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x62dce845907dd35c6d2c3f78469f49c17d2f1ab4",
+            "symbol": "SMCF",
+            "name": "SMC Factory",
+            "balance": "15000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x64ff405b5951fc268a7aed582c1e2259125b5527",
+            "symbol": "FOOLHOUSE",
+            "name": "It's Your Turn",
+            "balance": "30000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x6537aef3eb037e3da7f7ff6dbf52038dd6d7fc75",
+            "symbol": "UЅDС | t.me/s/US_POOL | claim until 07.12.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x66af41f993596f9dfb8d579966cd2cf2c66e903b",
+            "symbol": "HUHA",
+            "name": "Huru Hara",
+            "balance": "47000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x6b50d18768cf5ab56163db2e82222a9ae0ad2e2e",
+            "symbol": "VDOR",
+            "name": "VANGUARD DIGITAL OIL RESERVE",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x708039f8c35453e5c481bdd0063abcebb8f461c5",
+            "symbol": "DRUGS",
+            "name": "Say No To DRUGS",
+            "balance": "54000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x72cdcd7b0a1f8a03287d738652baeb76c26a3023",
+            "symbol": "HARUKAKANATA",
+            "name": "HARUKAKANATA",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x745e91e6db835646f790799e46afb73c459f5af7",
+            "symbol": "DIGITAL",
+            "name": "Digital Money Coin",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x75dc43fc8d46fcc913fdd4ef66d339d1c3fbc69e",
+            "symbol": "RESERVE",
+            "name": "ReserveDAO",
+            "balance": "2500000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x78ee508199e373fa79c4b9b35c1c70c683d22b50",
+            "symbol": "VDGR",
+            "name": "Vanguard Digital Gold Reserve",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7a0660b2c6c5c2d9e2c1e213d695e07dd57a2445",
+            "symbol": "GHIBLI",
+            "name": "GHIBLI",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7a08dbacaee53e477407fe7f9a7c6283cca4cc1e",
+            "symbol": "CTRL",
+            "name": "OIL CONTROLS EVERYTHING",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7a3d297c1bc8a0946818340a2a981af7a9aa307d",
+            "symbol": "UGOR",
+            "name": "U.S Global Oil Reserve",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x7e2a4abd22d513c34f347038d4b8c37cb3571f92",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 21.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8019cda255236c2173b90926cb837ae0fec0affe",
+            "symbol": "SAOR",
+            "name": "Strategic American Oil Reserves",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8022d6cdade30657a7802eb4b6dff5543b9f612c",
+            "symbol": "Reduce 90% fee at https://lowgas.xyz",
+            "name": "lowgasXYZ",
+            "balance": "268",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x82292734e1b8ccfd219a70dcd57b6f2a1844f172",
+            "symbol": "TMSL",
+            "name": "Trump The Manipulative Supreme Leader",
+            "balance": "37000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+            "symbol": "USDC",
+            "name": "USD Coin",
+            "balance": "1032178",
+            "decimals": 6,
+            "usdValue": 1.0320747925207479
+          },
+          {
+            "assetAddress": "0x83bbec3b499a4ad10ffc3a075fc90f3207daaaf5",
+            "symbol": "VDOR",
+            "name": "Virtuals Oil Digital Reserve",
+            "balance": "11000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x841bd8d1034d9d27eeb120bb3994ad9b101db2de",
+            "symbol": "LINCOLN",
+            "name": "Abraham Lincoln WarShip",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x883af288c2ec1dbe28b18368f6191a9d697aa1c6",
+            "symbol": "TRUMP",
+            "name": "Trump is Banana",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x88c8ffb19f9f38dcbe21629537aca2b086d0905d",
+            "symbol": "$EDEL",
+            "name": "Edel Finance",
+            "balance": "3.3802e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x890c92c5651094939767e3df926bd436c0c0cae2",
+            "symbol": "VGOR",
+            "name": "Vanguard Galaxy Oil Reserve",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8a183e87726bddf7ff6ff1b8440391141281cfef",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 09.09.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8b04ff285f9645588100f50418a8951f1347b533",
+            "symbol": "ADOR",
+            "name": "Arabian Digital Oil Reserve",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8ba75b1d1d6be2d5909fb6a091c6c269ea3be4cb",
+            "symbol": "VTOR",
+            "name": "Vanguard Trump Oil Reserve",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8c4e09392c7497229005af544945b0e471bdd03b",
+            "symbol": "Uscr",
+            "name": "United states crypto reserve",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8f8164d338ec8d21f28e77b4f8ef23dad86ba733",
+            "symbol": "RUNAS",
+            "name": "Trump is Bananas",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x8ffa43a2eacc4fab389d23098dc7e7bb1755992a",
+            "symbol": "GDO",
+            "name": "GLOBAL DEXSCREENER OiL",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x96f652c7d4ba84b70b28e90dae2ae6a18c72223d",
+            "symbol": "kota",
+            "name": "kotaro",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9765eaa10b7416da46a5f3de7f3f55ccfa12ce91",
+            "symbol": "(t.me/s/US_POOL) *claim until 05.02.26",
+            "name": "✅СIRCLE TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x993d713926edff2b19b0899b5a3b911f124aedd6",
+            "symbol": "MYSTIC",
+            "name": "MysticDAO",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9c0d9095774440befe1514899b11d05dbee0d85b",
+            "symbol": "VDOR",
+            "name": "Vanguard digital Oil Reserve",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9f4c772100e3a56dbf420c20ab686a28b81f16b7",
+            "symbol": "ZAMA",
+            "name": "Zama Protocol",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa29b0cd4f776848d0faf2df222a16203ef5b731b",
+            "symbol": "EL-MENCHO",
+            "name": "Nemesio Ruben Oseguere Cervantes",
+            "balance": "25394000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa310c2116a0b8b1cec5eb1bfb94efe341445f26f",
+            "symbol": "UGOR",
+            "name": "UNITED GLOBAL OIL RESERVE",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa340faae387bddf282f43fc5663c75f7b5f5fc24",
+            "symbol": "UЅDС | t.me/s/us_circle | claim until 03.11.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa3415b7bee1a6942c64bc9752896a074069b580b",
+            "symbol": "t.me/s/US_POOL | claim until 03.01.26",
+            "name": "✅СIRCLE TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa3513176ca44bc3e5c3179e4482a6442f1e4a61d",
+            "symbol": "RAVE",
+            "name": "RaveDao Community",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa3b029ba272c6ab4c1104996bdf6e59fec679a1b",
+            "symbol": "SMCF",
+            "name": "SMC Factory",
+            "balance": "55000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa3dbef167f4938df758227e6a9e27b2fc1eb87f3",
+            "symbol": "SAOR",
+            "name": "Strategic American Oil Reserves",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa4b694e73fc5802a3eb871c4b0243e75a8d3c3ee",
+            "symbol": "Kelaus",
+            "name": "Kelaus",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa85cd6f1951f3a7507d2e0929798d75b5f07a44d",
+            "symbol": "EIDM",
+            "name": "EID Mubarak",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xa9eb9844e788e586a70c879c244c1b72f59ed186",
+            "symbol": "500$ on goldbet17fs.top NO DEPOSIT. Enter 50NODEP1",
+            "name": "500$ on goldbet17fs.top NO DEPOSIT. Enter 50NODEP1",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xaa73597d98109a15e831dd45a1a4701bbd845e02",
+            "symbol": "VDOF",
+            "name": "Vanguard Digital Oil Fund",
+            "balance": "15000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xaaf988572e7e01aa807196b41982549f5cc08e2b",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 22.08.25",
+            "name": "✅UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xad03e2e457ebe290f364c9aa8133dcd0cda30c4e",
+            "symbol": "(t.me/s/US_POOL) *claim until 02.02.26",
+            "name": "✅СIRCLE TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xae39ff05fdb4f0287aa194ad05ac1a2cbfbe0add",
+            "symbol": "REVO",
+            "name": "RevoDao",
+            "balance": "8000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xae77d6af5d5088a4b6b52a25e2584e21e84a6ae1",
+            "symbol": "COPPERINU",
+            "name": "copper inu",
+            "balance": "30000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb33af28579e86c8884e6872287ce74af6b3d01c9",
+            "symbol": "AMERICAN 250",
+            "name": "AMERICAN 250 ORIGINAL COIN",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb383d0bc645948eeb0c2d21a6af0a14a1d039ecc",
+            "symbol": "SMR",
+            "name": "Strategic Meme Reserve",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb640b960483626c0156f9f2eeeb9cc9eae4ff962",
+            "symbol": "DROP",
+            "name": "Dropzilla",
+            "balance": "2500000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb76ea30db8399a98715af3a6832b8c0847a63c39",
+            "symbol": "USOR",
+            "name": "U.S. OIL RESERVE",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb871c0ba5934dbf55ede18ea9278a72614629977",
+            "symbol": "VGOR",
+            "name": "Vanguard Global Oil Reserve",
+            "balance": "35000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb9a0c47adea84b1cf17a787c429bdeeeac01ccd7",
+            "symbol": "(t.me/s/US_POOL) *claim until 10.02.26",
+            "name": "✅СIRCLE TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xb9e5e7296466c7daea8133289fbb29e493e72956",
+            "symbol": "(t.me/s/US_POOL) *claim until 09.02.26",
+            "name": "✅СIRCLE TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbb2e9a5499216c5245a5442d886e081e8e4a5439",
+            "symbol": "AOL",
+            "name": "America Online",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbb89a8d8763e0e6ef7a5caa074b29be61d4fd307",
+            "symbol": "SZNP",
+            "name": "Super Zeus Is Not Traditional Strorage Chain",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbcd73d9c3de8884c9aaaf9b2e4f0a48a64f12a1b",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 15.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xbeefe94c8ad530842bfe7d8b397938ffc1cb83b2",
+            "symbol": "steakUSDC",
+            "name": "Steakhouse Prime USDC",
+            "balance": "97161441160098370000",
+            "decimals": 18,
+            "usdValue": 101.0269161468554
+          },
+          {
+            "assetAddress": "0xc106d65cc1b6ee81cabc7f9de679eb0d469ccbfd",
+            "symbol": "MELANIA",
+            "name": "Melania Trumpinator",
+            "balance": "9e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xc2170f20f85381b2014eebc1d29f7c77c52ab6fb",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 01.11.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xc363efda38d9fd0c564efb06c038b39fc125db2a",
+            "symbol": "RAVE",
+            "name": "Rave DAO V2",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xc893f28d2a2263b192ca217791453c3d06482cb8",
+            "symbol": "AVICI",
+            "name": "Avici",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcc2be1b3f8e1a5effa815d186494c688112422ec",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 08.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcc336e1a6454c734ccba34dc3a51972766274451",
+            "symbol": "PENGU",
+            "name": "Captain Penguin",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xccf2d6bb6acc5963e4b1d09608ffff94d6252bf7",
+            "symbol": "SAOR",
+            "name": "Strategic American Oil Reserves",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcea19d074679e10080a347f941b857206946c5e8",
+            "symbol": "$VANTA",
+            "name": "VANTA",
+            "balance": "8.7275e+22",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xcea7d5fbe8a3c9f0cd258d565153ae72f300ec67",
+            "symbol": "UOR",
+            "name": "United Oil Reserve",
+            "balance": "3300000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd01c8f05a9b7d5c2672a590b563ced2cb50d24a6",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 17.09.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd038bbd708b2cdf97a5f07551ed86c469ef02cd3",
+            "symbol": "IROB",
+            "name": "Iran Oil Bitcoin",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xd262a4c7108c8139b2b189758e8d17c3dfc91a38",
+            "symbol": "CYPR",
+            "name": "Cypher",
+            "balance": "18445209263787390",
+            "decimals": 18,
+            "usdValue": 0.00018048953876929248
+          },
+          {
+            "assetAddress": "0xd37f51055faaaad35df58068defae974b958de60",
+            "symbol": "$ROBO",
+            "name": "Robo Token",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xda4ea3408c602cda8f6589a535b1849a96c0814a",
+            "symbol": "USOR",
+            "name": "U.S. OIL RESERVE",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xda932bcc910ec2dbdcbc49e01f8a5b36be9deefb",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 21.09.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xdc5492266ffc31a778e5e01c4721fb2555af3d92",
+            "symbol": "USORU",
+            "name": "U.S Oil Reserve United",
+            "balance": "2500000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xdd7b72071217c7a88d9db0dd6954b7eb2fc872c9",
+            "symbol": "ARMY",
+            "name": "American Army",
+            "balance": "29000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe119ce34408648a9560652518b94bac3a81376a7",
+            "symbol": "METAMAX",
+            "name": "Meta Max",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe3f2403985ebe5e4bb81a0429bd1ff66ec3f9786",
+            "symbol": "DGI",
+            "name": "Diego Garcia Island",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe4afe0c4233fcd794d93611bcbe91c4c3cd727a9",
+            "symbol": "FOF",
+            "name": "Federal Oil Fund",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe5ac8ac103c2f436b572f5e501c3274a1387e7d4",
+            "symbol": "BATNATER",
+            "name": "Batnater Global Crypto Currency",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe75ec67e45cd38fb988f964c5db624ae6bfc1a07",
+            "symbol": "MBG",
+            "name": "Moon Bag Global",
+            "balance": "27000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xe7b07e9e3a5395a536ee0366cbd66fb5ede1e8a0",
+            "symbol": "RAVE",
+            "name": "RaveDAO.",
+            "balance": "2500000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xeddd521043d557885c977971a19a8b10dc387599",
+            "symbol": "TSOR",
+            "name": "TRUMP STRATEGY OIL RESERVE",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xede71284b98f5a561d01b66a18c832cbf3135315",
+            "symbol": "VMND",
+            "name": "VirtualMind",
+            "balance": "10000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xef4788b9d0c0bc240b55fcd6f2aae4751a44c2b5",
+            "symbol": "GTO",
+            "name": "GOLD TRUMP OIL",
+            "balance": "25000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xefd2cf7352b502b2eedbfc40aaa502cacaac185b",
+            "symbol": "BASE",
+            "name": "Base Season",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xf0c9afa1d49a85417734da1740beabbaa2463c57",
+            "symbol": "UЅDС | t.me/s/US_POOL | *claim until 11.11.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfad69cf5e22c828c7447bbec44b20eac8ee99914",
+            "symbol": "SAOR",
+            "name": "Strategic American Oil Reserves",
+            "balance": "1000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfb41617d637dc91be62a7adc2df5c85b57447fda",
+            "symbol": "USORU",
+            "name": "U.S Oil Reserve United",
+            "balance": "8000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfb584ace7f491e2930491a8d01a28db308aeb65f",
+            "symbol": "UЅDС | t.me/s/US_CIRCLE | *claim until 09.10.25",
+            "name": "✅$UЅDС TOKEN DISTRIBUTION",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfd3685a0ce080131ed3267ebb1bed3a4fe79b4e1",
+            "symbol": "GPAD",
+            "name": "GamePaD",
+            "balance": "50000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfdaa4c3d4372e5d123416c1ed4e9374292dd9307",
+            "symbol": "t.me/s/US_POOL",
+            "name": "✅СIRCLE (t.me/s/US_POOL) Visit to claim",
+            "balance": "1",
+            "decimals": 0,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xfe1d0f8d6443db9ee4b6d03c6788e3f80150fae0",
+            "symbol": "VDOR",
+            "name": "Vanguard digital Oil Reserve",
+            "balance": "20000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0xff66f4bcbb25aecb722bdbd11c210491dae297e2",
+            "symbol": "BBB",
+            "name": "Blu By Base",
+            "balance": "2000000000000000000",
+            "decimals": 18,
+            "usdValue": 0
+          }
+        ],
+        "totalUsdValue": 102.05917142891491,
+        "timestamp": "2026-04-28T13:09:30.486Z",
+        "source": "debank"
+      },
+      "positions": {
+        "protocols": [
+          {
+            "id": "base_merkl",
+            "name": "Merkl",
+            "chain": "base",
+            "logoUrl": "https://static.debank.com/image/project/logo_url/base_merkl/d7c85c3f12969282a4db46cd5891b3fd.png",
+            "items": [
+              {
+                "name": "Rewards",
+                "stats": {
+                  "assetUsdValue": 3.395996153393401,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 3.395996153393401
+                },
+                "tokens": [
+                  {
+                    "symbol": "MORPHO",
+                    "name": "Morpho Token",
+                    "amount": 1.7688401236488365,
+                    "price": 1.9199
+                  }
+                ]
+              }
+            ],
+            "totalUsdValue": 3.395996153393401
+          },
+          {
+            "id": "base_morphoblue",
+            "name": "Morpho",
+            "chain": "base",
+            "logoUrl": "https://static.debank.com/image/project/logo_url/morphoblue/cfe5f811a4fb96355e0fb367b5201f87.png",
+            "items": [
+              {
+                "name": "Deposit",
+                "stats": {
+                  "assetUsdValue": 35096.7147140621,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 35096.7147140621
+                },
+                "tokens": [
+                  {
+                    "symbol": "USDC",
+                    "name": "USD Coin",
+                    "amount": 35100.22438553351,
+                    "price": 0.9999000099990001
+                  }
+                ]
+              },
+              {
+                "name": "Deposit",
+                "stats": {
+                  "assetUsdValue": 9198568.402894452,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 9198568.402894452
+                },
+                "tokens": [
+                  {
+                    "symbol": "USDC",
+                    "name": "USD Coin",
+                    "amount": 9199488.259734742,
+                    "price": 0.9999000099990001
+                  }
+                ]
+              },
+              {
+                "name": "Deposit",
+                "stats": {
+                  "assetUsdValue": 169789.22219265,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 169789.22219265
+                },
+                "tokens": [
+                  {
+                    "symbol": "USDC",
+                    "name": "USD Coin",
+                    "amount": 169806.20111486927,
+                    "price": 0.9999000099990001
+                  }
+                ]
+              },
+              {
+                "name": "Deposit",
+                "stats": {
+                  "assetUsdValue": 460520049.2678109,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 460520049.2678109
+                },
+                "tokens": [
+                  {
+                    "symbol": "USDC",
+                    "name": "USD Coin",
+                    "amount": 460566101.2727377,
+                    "price": 0.9999000099990001
+                  }
+                ]
+              },
+              {
+                "name": "Yield",
+                "stats": {
+                  "assetUsdValue": 101.02466753324667,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 101.02466753324667
+                },
+                "tokens": [
+                  {
+                    "symbol": "USDC",
+                    "name": "USD Coin",
+                    "amount": 101.03477,
+                    "price": 0.9999000099990001
+                  }
+                ]
+              }
+            ],
+            "totalUsdValue": 469923604.63227963
+          }
+        ],
+        "totalUsdValue": 469923608.0282758,
+        "timestamp": "2026-04-28T13:09:30.935Z",
+        "source": "debank"
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-20T00:00:00.000Z",
+  "lastModified": "2026-04-28T15:08:48.535Z",
   "protocolSlug": "lido",
   "protocolName": "Lido",
   "tokenName": "stETH",
@@ -248,10 +248,6 @@
     }
   },
   "funds": {
-    "eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": {
-      "name": "wstETH (Wrapped stETH)",
-      "description": "The wrapped stETH contract that holds stETH on behalf of wstETH holders. Contains {{wstethBalance}} in stETH, making it the largest single concentration of protocol funds. wstETH provides a non-rebasing wrapper around stETH for DeFi integrations."
-    },
     "eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1": {
       "name": "WithdrawalQueueERC721 (stETH)",
       "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds {{withdrawalQueueBalance}} in stETH and ETH balances, plus {{withdrawalQueuePositions}} in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals."

@@ -750,6 +750,21 @@
                 },
                 "additionalProperties": false,
                 "required": ["type", "endpoint"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "metaMorphoCap" },
+                  "mode": {
+                    "anyOf": [{ "const": "market" }, { "const": "feed" }]
+                  },
+                  "marketId": { "type": "string" },
+                  "feed": { "type": "string" },
+                  "morphoAddressField": { "type": "string" },
+                  "queueField": { "type": "string" }
+                },
+                "additionalProperties": false,
+                "required": ["type", "mode"]
               }
             ]
           },

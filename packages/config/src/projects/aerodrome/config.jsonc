@@ -109,7 +109,8 @@
       }
     },
     "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da": {
-      "ignoreMethods": ["allPools"]
+      "ignoreMethods": ["allPools"],
+      "ignoreInWatchMode": ["allPoolsLength"]
     },
     "base:0xE28Adc50c7551CFf69FCF32D45d037e5F6554264": {
       "ignoreDiscovery": true
@@ -127,7 +128,8 @@
       "ignoreMethods": ["observations", "unstakedFee"]
     },
     "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7": {
-      "ignoreMethods": ["lastObservation"]
+      "ignoreMethods": ["lastObservation"],
+      "ignoreInWatchMode": ["currentCumulativePrices"]
     },
     "base:0xC0d2086B6f70C0C40423626167096c6196cFA0c8": {
       "ignoreMethods": [
@@ -145,7 +147,8 @@
       "ignoreInWatchMode": ["totalSupply"]
     },
     "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": {
-      "ignoreMethods": ["positions", "tokenByIndex", "WETH9"]
+      "ignoreMethods": ["positions", "tokenByIndex", "WETH9"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "base:0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43": {
       "ignoreMethods": ["weth"]
@@ -172,7 +175,11 @@
         "redistributor": {
           "severity": "HIGH"
         }
-      }
+      },
+      "ignoreInWatchMode": ["activePeriod", "weeklyEmissions"]
+    },
+    "base:0xB630227a79707D517320b6c0f885806389dFcbB3": {
+      "ignoreInWatchMode": ["activePeriod", "weeklyEmissions"]
     }
   }
 }
