@@ -91,6 +91,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     ],
     projectsForTvs: [
       {
+        projectId: ProjectId('fluent'),
+        sinceTimestamp: UnixTime(1776356639),
+      },
+      {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1771445567),
       },

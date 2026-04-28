@@ -100,6 +100,10 @@ export const sp1turbo: BaseProject = {
     ],
     projectsForTvs: [
       {
+        projectId: ProjectId('fluent'),
+        sinceTimestamp: UnixTime(1776356639),
+      },
+      {
         projectId: ProjectId('forknet'),
         sinceTimestamp: UnixTime(1753882500),
       },
