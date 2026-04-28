@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-21T15:04:03.292Z",
   "lastModified": "2026-04-21T15:04:03.292Z",
-  "compiledAt": "2026-04-21T09:36:37.000Z",
+  "compiledAt": "2026-04-28T09:34:24.000Z",
   "project": "aerodrome",
   "metadata": {
     "protocolName": "Aerodrome Finance",
@@ -10,7 +10,7 @@
     "chain": "Base",
     "projectType": "dex",
     "tokenName": "AERO",
-    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $570.97M."
+    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $878.13M."
   },
   "totals": {
     "contractCount": 36,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 175,
     "adminCount": 4,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 307960533.9536741,
+    "totalCapitalAtRisk": 343771320.6879112,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 570970485.7378225,
+    "totalTokenValue": 878132571.2700772,
     "linesOfCode": 15990,
     "verifiedContractCount": 36,
     "coverage": 100
@@ -2016,7 +2016,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 570970485.7378225,
+              "tokenValueUsd": 878132571.2700772,
               "fundsAtRisk": true
             },
             {
@@ -2255,7 +2255,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 570970485.7378225
+      "totalReachableTokenValue": 878132571.2700772
     },
     {
       "address": "base:0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a",
@@ -2571,14 +2571,14 @@
     {
       "address": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
       "name": "Aerodrome Token (AERO)",
-      "description": "The AERO governance and utility token with a market cap of $570.97M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
+      "description": "The AERO governance and utility token with a market cap of $878.13M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "AERO",
-        "price": 0.3066437727660669,
-        "totalSupply": "1861999285318622174082019405",
-        "tokenValue": 570970485.7378225
+        "price": 0.46588624411297747,
+        "totalSupply": "1884864776254544260290077090",
+        "tokenValue": 878132571.2700772
       },
       "aggregate": null
     },
@@ -2590,8 +2590,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 191365139.78452158,
-        "contractCount": 4848,
+        "totalUsdValue": 213128095.51857066,
+        "contractCount": 5042,
         "handlerName": "aerodrome-cl-factory",
         "label": "CL Factory TVL"
       }
@@ -2604,8 +2604,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 116595394.1691525,
-        "contractCount": 20083,
+        "totalUsdValue": 130643225.16934057,
+        "contractCount": 22397,
         "handlerName": "aerodrome-v2-factory",
         "label": "V2 Factory TVL"
       }
@@ -4411,6 +4411,301 @@
       "scope": "Bug Bounty Program",
       "url": "https://immunefi.com/bounty/velodromefinance/",
       "bounty": 100000
+    }
+  ],
+  "activity": [
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x090b2A6bb475c00e2256e2095A60887cD710803b",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0x090b2A6bb475c00e2256e2095A60887cD710803b:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+      "contractName": "CLGaugeFactory",
+      "entity": null,
+      "id": "138:base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        },
+        {
+          "field": "values.weeklyEmissions",
+          "before": "3948620243775031643792066",
+          "after": "3958216030134542946609161"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+      "contractName": "PoolFactory",
+      "isDependency": false,
+      "entity": null,
+      "id": "138:base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.allPoolsLength",
+          "before": 22367,
+          "after": 22397
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x87D8f999BBa9343E8099552426775B51C338E8CB",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0x87D8f999BBa9343E8099552426775B51C338E8CB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7",
+      "contractName": "Pool",
+      "entity": null,
+      "id": "138:base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.currentCumulativePrices.blockTimestamp",
+          "before": 1776764197,
+          "after": 1777368863
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F",
+      "contractName": "NonfungiblePositionManager",
+      "entity": null,
+      "id": "138:base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 3360294,
+          "after": 3386032
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xB630227a79707D517320b6c0f885806389dFcbB3",
+      "contractName": "CLGaugeFactory",
+      "entity": null,
+      "id": "138:base:0xB630227a79707D517320b6c0f885806389dFcbB3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        },
+        {
+          "field": "values.weeklyEmissions",
+          "before": "3948620243775031643792066",
+          "after": "3958216030134542946609161"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b",
+      "contractName": "CustomUnstakedFeeModule",
+      "entity": null,
+      "id": "138:base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_FEE": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53",
+      "contractName": "NonfungiblePositionManager",
+      "entity": null,
+      "id": "138:base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 7547,
+          "after": 101395
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5",
+      "contractName": "Minter",
+      "entity": null,
+      "id": "138:base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.epochCount",
+          "before": 138,
+          "after": 139
+        },
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BPS": {
+              "severity": "HIGH"
+            },
+            "MAXIMUM_TEAM_RATE": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4",
+      "contractName": "VotingEscrow",
+      "entity": null,
+      "id": "138:base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.clock",
+          "before": 1776764197,
+          "after": 1777368863
+        },
+        {
+          "field": "values.epoch",
+          "before": 785999,
+          "after": 793172
+        },
+        {
+          "field": "values.permanentLockBalance",
+          "before": "947077461749329703778687398",
+          "after": "945644602721248719568689798"
+        },
+        {
+          "field": "values.tokenId",
+          "before": 118170,
+          "after": 118555
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15",
+      "contractName": "Redistributor",
+      "entity": null,
+      "id": "138:base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
     }
   ],
   "governance": {

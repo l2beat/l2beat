@@ -1,6 +1,6 @@
 {
   "name": "Tether-Gold",
-  "timestamp": 1777110310,
+  "timestamp": 1777368864,
   "configHash": "0x4a9766f4dcf2a952f54a5cfbd00c355b4e795688d29a75b50a5c8ec338a201de",
   "entries": [
     {
@@ -136,13 +136,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1635678699,
       "sinceBlock": 13524461,
       "values": {
@@ -151,7 +144,14 @@
       },
       "implementationNames": {
         "eth:0x856FCc085290ac1E40392442211e6a333afB873e": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "role": "admin"
+        }
+      ]
     },
     {
       "address": "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
@@ -167,23 +167,6 @@
         "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x856FCc085290ac1E40392442211e6a333afB873e" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x856FCc085290ac1E40392442211e6a333afB873e",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1505129111,
       "sinceBlock": 4262126,
@@ -208,11 +191,28 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 3,
-        "transactionCount": 5355
+        "transactionCount": 5359
       },
       "implementationNames": {
         "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": "MultiSigWallet"
-      }
+      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x856FCc085290ac1E40392442211e6a333afB873e" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x856FCc085290ac1E40392442211e6a333afB873e",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
@@ -317,6 +317,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "MultiSigWallet": "0x14144aaeee81c9350f72a914c1b3534785e5c3ce4ee5aa6a2b2db44eca346f2c"
   },
-  "usedBlockNumbers": { "ethereum": 24956196 },
+  "usedBlockNumbers": { "ethereum": 24977695 },
   "permissionsConfigHash": "0xdcc00bd0cf1eba9dccedd8abf9a6dd2c0972af7d22869c4a36687aac73c42ffd"
 }

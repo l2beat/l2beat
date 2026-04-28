@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777105115,
-  "lastConsumedUpdateNotifierId": 130,
+  "lastReconciledAt": 1777369286,
+  "lastConsumedUpdateNotifierId": 137,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1771,6 +1771,97 @@
       "entity": null,
       "id": "130:eth:0xe84A061897afc2e7fF5FB7e3686717C528617487:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 137,
+      "address": "eth:0x281e6BB6F26A94250aCEb24396a8E4190726C97e",
+      "contractName": "Stonks",
+      "entity": null,
+      "id": "137:eth:0x281e6BB6F26A94250aCEb24396a8E4190726C97e:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.estimateTradeOutput.0",
+          "after": 0
+        },
+        {
+          "field": "values.estimateTradeOutput.3",
+          "before": 3
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 137,
+      "address": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
+      "contractName": "Finance",
+      "entity": null,
+      "id": "137:eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.periodsLength",
+          "before": 65,
+          "after": 66
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 137,
+      "address": "eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776",
+      "contractName": "AllowedRecipientsRegistry",
+      "entity": null,
+      "id": "137:eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getPeriodState._alreadySpentAmount",
+          "before": "436270559810604300000",
+          "after": "601880559810604300000"
+        },
+        {
+          "field": "values.getPeriodState._spendableBalanceInPeriod",
+          "before": "2563729440189395700000",
+          "after": "2398119440189395700000"
+        },
+        {
+          "field": "values.spendableBalance",
+          "before": "2563729440189395700000",
+          "after": "2398119440189395700000"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 137,
+      "address": "eth:0xF95f069F9AD107938F6ba802a3da87892298610E",
+      "contractName": "Vyper_contract",
+      "entity": null,
+      "id": "137:eth:0xF95f069F9AD107938F6ba802a3da87892298610E:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.get_relays.8",
+          "before": {
+            "uri": "https://0x98650451ba02064f7b000f5768cf0cf4d4e492317d82871bdc87ef841a0743f69f0f1eea11168503240ac35d101c9135@mainnet-relay.securerpc.com/",
+            "operator": "Manifold Finance",
+            "description": "Manifold SecureRPC Relay",
+            "is_mandatory": true
+          }
+        },
+        {
+          "field": "values.get_relays_amount",
+          "before": 10,
+          "after": 9
+        },
+        {
+          "field": "values.get_allowed_list_version",
+          "before": 24,
+          "after": 25
+        }
+      ]
     }
   ]
 }

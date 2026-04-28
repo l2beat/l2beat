@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777283138,
-  "lastConsumedUpdateNotifierId": 135,
+  "lastReconciledAt": 1777369903,
+  "lastConsumedUpdateNotifierId": 139,
   "events": [
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
@@ -159,6 +159,28 @@
           "field": "values.rewardsVaultWstETHBalance",
           "before": "26469565848978392992",
           "after": "26468878478347339781"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 139,
+      "address": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+      "contractName": "Lombard Staked Bitcoin Token",
+      "isDependency": true,
+      "entity": "Lombard",
+      "id": "139:eth:0x8236a87084f8B84306f72007F36F2618A5634494:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.ratio",
+          "before": "996286358544706349",
+          "after": "996197896618977227"
+        },
+        {
+          "field": "values.getRate",
+          "before": "1003727483994379121",
+          "after": "1003816614544084899"
         }
       ]
     }

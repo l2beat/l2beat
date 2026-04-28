@@ -1,0 +1,300 @@
+{
+  "version": "1.1",
+  "lastReconciledAt": 1777369845,
+  "lastConsumedUpdateNotifierId": 138,
+  "events": [
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x090b2A6bb475c00e2256e2095A60887cD710803b",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0x090b2A6bb475c00e2256e2095A60887cD710803b:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
+      "contractName": "CLGaugeFactory",
+      "entity": null,
+      "id": "138:base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        },
+        {
+          "field": "values.weeklyEmissions",
+          "before": "3948620243775031643792066",
+          "after": "3958216030134542946609161"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+      "contractName": "PoolFactory",
+      "isDependency": false,
+      "entity": null,
+      "id": "138:base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.allPoolsLength",
+          "before": 22367,
+          "after": 22397
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0x87D8f999BBa9343E8099552426775B51C338E8CB",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0x87D8f999BBa9343E8099552426775B51C338E8CB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7",
+      "contractName": "Pool",
+      "entity": null,
+      "id": "138:base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.currentCumulativePrices.blockTimestamp",
+          "before": 1776764197,
+          "after": 1777368863
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F",
+      "contractName": "NonfungiblePositionManager",
+      "entity": null,
+      "id": "138:base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 3360294,
+          "after": 3386032
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xB630227a79707D517320b6c0f885806389dFcbB3",
+      "contractName": "CLGaugeFactory",
+      "entity": null,
+      "id": "138:base:0xB630227a79707D517320b6c0f885806389dFcbB3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        },
+        {
+          "field": "values.weeklyEmissions",
+          "before": "3948620243775031643792066",
+          "after": "3958216030134542946609161"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b",
+      "contractName": "CustomUnstakedFeeModule",
+      "entity": null,
+      "id": "138:base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_FEE": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53",
+      "contractName": "NonfungiblePositionManager",
+      "entity": null,
+      "id": "138:base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 7547,
+          "after": 101395
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5",
+      "contractName": "Minter",
+      "entity": null,
+      "id": "138:base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.epochCount",
+          "before": 138,
+          "after": 139
+        },
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BPS": {
+              "severity": "HIGH"
+            },
+            "MAXIMUM_TEAM_RATE": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4",
+      "contractName": "VotingEscrow",
+      "entity": null,
+      "id": "138:base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.clock",
+          "before": 1776764197,
+          "after": 1777368863
+        },
+        {
+          "field": "values.epoch",
+          "before": 785999,
+          "after": 793172
+        },
+        {
+          "field": "values.permanentLockBalance",
+          "before": "947077461749329703778687398",
+          "after": "945644602721248719568689798"
+        },
+        {
+          "field": "values.tokenId",
+          "before": 118170,
+          "after": 118555
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15",
+      "contractName": "Redistributor",
+      "entity": null,
+      "id": "138:base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activePeriod",
+          "before": 1776297600,
+          "after": 1776902400
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-28T09:34:24.000Z",
+      "updateNotifierId": 138,
+      "address": "base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785",
+      "contractName": "DynamicSwapFeeModule",
+      "entity": null,
+      "id": "138:base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "fieldMeta",
+          "before": {
+            "MAX_BASE_FEE": {
+              "severity": "HIGH"
+            },
+            "MAX_SCALING_FACTOR": {
+              "severity": "HIGH"
+            },
+            "MAX_FEE_CAP": {
+              "severity": "HIGH"
+            },
+            "MAX_SECONDS_AGO": {
+              "severity": "HIGH"
+            },
+            "MAX_DISCOUNT": {
+              "severity": "HIGH"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
