@@ -8,6 +8,7 @@ export const near: BaseProject = {
   slug: 'near',
   name: 'NEAR DA',
   shortName: undefined,
+  archivedAt: UnixTime.fromDate(new Date('2026-04-28')),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   // data
   statuses: {
