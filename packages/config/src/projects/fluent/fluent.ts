@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -9,8 +10,12 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  EXITS,
+  FORCE_TRANSACTIONS,
+  OPERATOR,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -31,6 +36,8 @@ const timelockDelay = discovery.getContractValue<number>(
   'FluentTimeLock',
   'getMinDelay',
 )
+
+const ROLLUP = EthereumAddress('0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f')
 
 export const fluent: ScalingProject = {
   type: 'layer2',
@@ -59,6 +66,7 @@ export const fluent: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
+    name: 'SP1',
   },
   stage: {
     stage: 'NotApplicable',
@@ -66,20 +74,20 @@ export const fluent: ScalingProject = {
   config: {
     associatedTokens: ['BLEND'],
     escrows: [
-      {
-        // L1FluentBridge holds bridged ETH (gateways forward ETH here on deposit).
-        chain: 'ethereum',
-        address: EthereumAddress('0x9CAcf613fC29015893728563f423fD26dCdB8Ddc'),
-        sinceTimestamp: UnixTime(1775739227), // L1FluentBridge proxy deploy 2026-04-09
+      // L1FluentBridge holds bridged ETH (gateways forward ETH here on deposit).
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc',
+        ),
         tokens: ['ETH'],
-      },
-      {
-        // ERC20Gateway custodies all ERC-20 deposits.
-        chain: 'ethereum',
-        address: EthereumAddress('0xFD4C62647A34FF6d6802092F5fbe176099223B61'),
-        sinceTimestamp: UnixTime(1775739563), // ERC20Gateway proxy deploy 2026-04-09
+      }),
+      // ERC20Gateway custodies all ERC-20 deposits.
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61',
+        ),
         tokens: '*',
-      },
+      }),
     ],
     trackedTxs: [
       {
@@ -89,9 +97,7 @@ export const fluent: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: EthereumAddress(
-            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
-          ),
+          address: ROLLUP,
           selector: '0xec0f2437',
           functionSignature:
             'function commitBatch(bytes32 batchRoot, bytes32 fromBlockHash, bytes32 toBlockHash, uint24 numberOfBlocks, (bytes32 depositRoot, uint16 depositCount)[] blockDeposits, uint8 expectedBlobsCount)',
@@ -105,9 +111,7 @@ export const fluent: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: EthereumAddress(
-            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
-          ),
+          address: ROLLUP,
           selector: '0xf4405170',
           functionSignature:
             'function submitBlobs(uint256 batchIndex, uint256 numBlobs)',
@@ -121,12 +125,9 @@ export const fluent: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: EthereumAddress(
-            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
-          ),
+          address: ROLLUP,
           selector: '0x94abf0e7',
-          functionSignature:
-            'function finalizeBatches(uint256 toBatchIndex)',
+          functionSignature: 'function finalizeBatches(uint256 toBatchIndex)',
           sinceTimestamp: UnixTime(1777161600),
         },
       },
@@ -139,9 +140,7 @@ export const fluent: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: EthereumAddress(
-            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
-          ),
+          address: ROLLUP,
           selector: '0x279a71f5',
           functionSignature:
             'function finalizeWithProofs(uint256 batchIndex, (bytes32 previousBlockHash, bytes32 blockHash, bytes32 withdrawalRoot, bytes32 depositRoot, uint16 depositCount)[] blockHeaders)',
@@ -201,57 +200,42 @@ export const fluent: ScalingProject = {
   },
   technology: {
     dataAvailability: {
-      name: 'Data is posted to Ethereum as blobs',
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       description:
-        'Fluent posts transaction data to Ethereum L1 as EIP-4844 blobs. Blob hashes are pinned on the Rollup contract via `submitBlobs` and SP1 proofs verify that block data matches both the pinned hashes and the EIP-4844 commitments.',
+        TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA.description +
+        ' Fluent posts transaction data to Ethereum L1 as EIP-4844 blobs. Blob hashes are pinned on the Rollup contract via `submitBlobs` and SP1 proofs verify that block data matches both the pinned hashes and the EIP-4844 commitments.',
       references: [
         {
           title: 'Fluent Rollup Architecture - Blob Publication',
           url: 'https://docs.fluent.xyz/system-architecture/rollup-architecture',
         },
       ],
-      risks: [],
     },
     operator: {
-      name: 'The system is operated by a centralized sequencer',
+      ...OPERATOR.CENTRALIZED_SEQUENCER,
       description:
-        'Fluent currently runs a single sequencer that posts batches to L1, and a single whitelisted prover. There is no documented mechanism for permissionless self-sequencing or self-proposing. The same EOA holds the SEQUENCER, PROVER and EMERGENCY roles on the Rollup contract and DEFAULT_ADMIN_ROLE on L1FluentBridge — the contract that custodies bridged ETH and gates its own UUPS upgrades on that role. The ERC20Gateway and NativeGateway proxies are Ownable and are owned by a 4/5 Safe, so ERC-20 escrow is gated by the multisig rather than the EOA. The DEFAULT_ADMIN_ROLE on the Rollup contract itself is held by the same 4/5 Safe.',
+        OPERATOR.CENTRALIZED_SEQUENCER.description +
+        ' The same EOA holds the SEQUENCER, PROVER and EMERGENCY roles on the Rollup contract and DEFAULT_ADMIN_ROLE on L1FluentBridge — the contract that custodies bridged ETH and gates its own UUPS upgrades on that role. The ERC20Gateway and NativeGateway proxies are Ownable and are owned by a 4/5 Safe, so ERC-20 escrow is gated by the multisig rather than the EOA. The DEFAULT_ADMIN_ROLE on the Rollup contract itself is held by the same 4/5 Safe.',
       references: [
         {
           title: 'Fluent Security Invariants',
           url: 'https://docs.fluent.xyz/system-architecture/security-invariants',
         },
       ],
-      risks: [
-        {
-          category: 'Funds can be frozen if',
-          text: 'the sequencer fails to post batches and no other operator is granted the SEQUENCER role.',
-        },
-      ],
     },
-    forceTransactions: {
-      name: 'No mechanism to force transactions',
-      description:
-        'Fluent does not provide a documented forced-inclusion mechanism on L1. Users cannot force their transactions through the L1 contracts if the sequencer censors them.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'the sequencer refuses to include their transactions.',
-        },
-      ],
-    },
+    forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     exitMechanisms: [
       {
-        name: 'Regular withdrawals',
-        description: `Users initiate withdrawals on L2 by calling a gateway. The message hash enters the block's withdrawal root which becomes part of the next batch root. After the batch is preconfirmed (TEE-signed) or finalized, anyone can call \`receiveMessageWithProof\` on L1 with two Merkle proofs (block-against-batch and message-against-block).`,
+        ...EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay),
+        description:
+          EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay).description +
+          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is preconfirmed (TEE-signed) or finalized, anyone can call `receiveMessageWithProof` on L1 with two Merkle proofs (block-against-batch and message-against-block).",
         references: [
           {
             title: 'Fluent Bridge Architecture',
             url: 'https://docs.fluent.xyz/system-architecture/bridge',
           },
         ],
-        risks: [],
       },
       {
         name: 'Optimistic (preconfirmed) fast withdrawals',
