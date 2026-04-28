@@ -81,6 +81,74 @@ export const fluent: ScalingProject = {
         tokens: '*',
       },
     ],
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
+          ),
+          selector: '0xec0f2437',
+          functionSignature:
+            'function commitBatch(bytes32 batchRoot, bytes32 fromBlockHash, bytes32 toBlockHash, uint24 numberOfBlocks, (bytes32 depositRoot, uint16 depositCount)[] blockDeposits, uint8 expectedBlobsCount)',
+          sinceTimestamp: UnixTime(1777161600), // mainnet activation 2026-04-24
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
+          ),
+          selector: '0xf4405170',
+          functionSignature:
+            'function submitBlobs(uint256 batchIndex, uint256 numBlobs)',
+          sinceTimestamp: UnixTime(1777161600),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
+          ),
+          selector: '0x94abf0e7',
+          functionSignature:
+            'function finalizeBatches(uint256 toBatchIndex)',
+          sinceTimestamp: UnixTime(1777161600),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f',
+          ),
+          selector: '0x279a71f5',
+          functionSignature:
+            'function finalizeWithProofs(uint256 batchIndex, (bytes32 previousBlockHash, bytes32 blockHash, bytes32 withdrawalRoot, bytes32 depositRoot, uint16 depositCount)[] blockHeaders)',
+          sinceTimestamp: UnixTime(1777161600),
+        },
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,
@@ -215,7 +283,7 @@ export const fluent: ScalingProject = {
   milestones: [
     {
       title: 'Fluent mainnet launch',
-      url: 'https://www.theblock.co/post/398756/fluent-launches-ethereum-layer-2-mainnet-and-blend-token-with-50-million-day-one-liquidity',
+      url: 'https://www.fluent.xyz/',
       date: '2026-04-24T00:00:00Z',
       description:
         'Fluent activates its Ethereum L2 mainnet alongside the BLEND token launch.',
