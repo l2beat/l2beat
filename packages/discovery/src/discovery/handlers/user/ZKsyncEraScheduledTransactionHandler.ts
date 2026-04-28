@@ -7,7 +7,7 @@ import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { get$Implementations } from '../../utils/extractors'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ZKsyncEraScheduledTransactionsHandlerDefinition = v.infer<
@@ -232,3 +232,12 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     }
   }
 }
+
+export const ZKsyncEraScheduledTransactionHandlerBundle = declareHandler(
+  'zksynceraScheduledTransactions',
+  {
+    definition: ZKsyncEraScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new ZKsyncEraScheduledTransactionHandler(field, abi),
+  },
+)

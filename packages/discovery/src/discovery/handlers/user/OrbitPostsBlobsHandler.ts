@@ -4,7 +4,7 @@ import { type providers, utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 
 export type OrbitPostsBlobsDefinition = v.infer<
   typeof OrbitPostsBlobsDefinition
@@ -98,3 +98,9 @@ export class OrbitPostsBlobsHandler implements Handler {
     return undefined
   }
 }
+
+export const OrbitPostsBlobsHandlerBundle = declareHandler('orbitPostsBlobs', {
+  definition: OrbitPostsBlobsDefinition,
+  create: ({ field, definition }) =>
+    new OrbitPostsBlobsHandler(field, definition),
+})

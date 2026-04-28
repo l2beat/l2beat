@@ -7,7 +7,7 @@ import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { get$Implementations } from '../../utils/extractors'
 import { getSighash } from '../getSighash'
-import type { Handler, HandlerResult } from '../Handler'
+import { declareHandler, type Handler, type HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type PolygonCDKScheduledTransactionsHandlerDefinition = v.infer<
@@ -214,3 +214,12 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
     }
   }
 }
+
+export const PolygonCDKScheduledTransactionHandlerBundle = declareHandler(
+  'polygoncdkScheduledTransactions',
+  {
+    definition: PolygonCDKScheduledTransactionsHandlerDefinition,
+    create: ({ field, abi }) =>
+      new PolygonCDKScheduledTransactionHandler(field, abi),
+  },
+)
