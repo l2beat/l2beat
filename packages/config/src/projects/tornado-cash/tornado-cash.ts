@@ -142,11 +142,24 @@ export const tornadoCash: BaseProject = {
   display: {
     description:
       'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
-    detailedDescription: `Tornado Cash is a non-custodial mixer on Ethereum built around separate fixed-denomination pools. A deposit publishes a commitment into a Merkle tree, and a later withdrawal uses a zk-SNARK proof plus an unused nullifier to send the same denomination to a different address without revealing which deposit it came from.
+    detailedDescription: `Tornado Cash is a non-custodial mixer on Ethereum built around separate fixed-denomination pools, which prevents linking deposits and withdrawals via the amount. A deposit publishes a commitment into a Merkle tree producing a secret note, and a later withdrawal uses a zk-SNARK proof and the note to send the same denomination to a different address, breaking the deposit-withdrawal link. The note represents ownership of tokens in a Tornado cash pool, and losing it will effectively mean losing the tokens.
 
-This design gives strong privacy for the deposit-withdrawal link, but it is rigid: users must split funds across fixed pool sizes, which fragments liquidity and anonymity. Deposits are also public, and practical privacy can be weakened by timing analysis, amount patterns across pools, and wallet reuse. Lower usage after the August 2022 sanctions further reduced the size of some anonymity sets.
+Tornado cash pools are split by token and denomination into buckets that function independently from each other. Deposits could be mixed only with other deposits of the same token and denomination.
 
-The core mixer contracts are immutable and have no admin, pause, or upgrade path, so funds can only move with a valid proof. This makes the trust model relatively strong, but the protocol has no built-in compliance layer or native way to prove that funds came from legitimate activity.`,
+The core mixer contracts are immutable and have no admin, pause, or upgrade path, so funds can only move out with a valid proof. However Tornado cash features TORN token governance, which controls peripheral smart contracts: official pool registry, relayer registration requirement and TORN tokenomics.
+
+### Privacy considerations
+
+Tornado cash introduces a permissionless relayer network, which is essential for practical privacy. Relayers process withdrawals from Tornado cash pools on user's behalf for a fee, which enables withdrawals to fresh addresses without funding them before the withdrawal. Without an active relayer network, practical privacy of Tornado cash deteriorates significantly.
+
+Practical privacy also depends on the timing of deposits and withdrawals, underlying network and browser used to interact with Tornado cash frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research the best OPSEC practices.
+
+### Compliance
+
+Tornado cash does not have any protocol-level compliance features. However, it provides an optional [Compliance Tool](https://docs.tornado.cash/tornado-cash-classic/compliance-tool), which allows users to generate a proof linking a withdrawal to a specific deposit without revealing this information publicly onchain. This enables users to selectively disclose the origin of funds to third parties, such as exchanges or regulators.
+
+Protocol pools were [sanctioned by OFAC in August 2022](https://home.treasury.gov/news/press-releases/jy0916), flagging funds moved through these smart contracts as illicit and forcing Tornado Cash transaction censorship. Sanctions were lifted on March 21, 2025.
+`,
     links: {
       websites: ['https://tornadocash.network'],
     },

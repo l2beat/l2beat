@@ -37,15 +37,27 @@ export const privacyPools: BaseProject = {
   display: {
     description:
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
-    detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals. A deposit creates a commitment from the deposited value, a pool-specific label, and a precommitment derived from a secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit.
+    detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals, adding compliance by whitelisting all legitimate deposits. A deposit creates a commitment, which is represented by secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit. Losing the secret and the nullifier would effectively mean losing deposited tokens. 
 
-Compliance is enforced through the ASP layer. A private withdrawal must prove both ownership of a commitment and inclusion of its label in the latest approved association set, so only ASP-approved deposits can exit privately. Withdrawals can be submitted directly or relayed through the Entrypoint, while the pool checks the state root, ASP root, and nullifier uniqueness before spending the old commitment and inserting a new one for any remainder.
+Privacy pools are split by token, different pools are independent from each other. Deposits could be mixed only with other deposits of the same token. Arbitrary denominations of tokens could be deposited and withdrawn.
 
-The main tradeoff is upgradeability and ASP dependence. The Entrypoint is a UUPS proxy with privileged roles for pool management and ASP root updates, while the asset-specific pools and proof verifiers are immutable. If a label is excluded or revoked from the ASP set, the original depositor can still publicly recover the full remaining amount through ragequit, so funds are not trapped by an ASP decision.`,
+Privacy Pools are controlled by a 2/4 multisig, which has authority to stop deposits and manage the deposit whitelist, but users always have an option to publicly withdraw deposited tokens.
+
+### Privacy considerations
+
+Privacy Pools protocol supports [relayed withdrawals](https://etherscan.io/address/0x15e355024de1cdc74addea7ebdf98418ba5b1a2c#code#F1#L133), in which relayer processes withdrawals on user’s behalf for a fee, which enables sending funds to fresh addresses.
+
+Practical privacy also depends on the timing and amounts of deposits and withdrawals, underlying network and browser used to interact with Privacy Pools frontend (if used), RPC providers used to send transactions and query public blockchain state. Users are advised to research the best OPSEC practices.
+
+### Compliance
+
+The main feature of Privacy Pools is compliance, which is enforced through the ASP. Association set is a whitelist of deposits that are allowed to be withdrawn from the protocol. This set is managed in real time by the provider, which is currently a single entity. The full association set is published via IPFS, only its Merkle root is posted onchain. User's deposit could be excluded from the whitelist at any moment, in this case user can ragequit, i.e. publicly withdraw deposited funds. 
+
+ASP is designed to guarantee that withdrawals from Privacy Pools are not related to any known illegal activity.`,
     links: {
       websites: ['https://www.privacypools.com'],
     },
-    badges: [BADGES.Other.Compliance],
+    badges: [BADGES.Privacy.Compliance],
   },
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,

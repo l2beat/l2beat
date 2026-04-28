@@ -35,5 +35,8 @@ export default defineConfig(({ command }) => {
       // so CommonJS workspace builds are loaded via Node require().
       external: true,
     },
+    optimizeDeps: {
+      force: true,
+    },
   }
 })

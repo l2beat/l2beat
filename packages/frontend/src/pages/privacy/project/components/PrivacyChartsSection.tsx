@@ -5,6 +5,7 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
+import { PrivacyTvlChart } from '../../summary/components/PrivacyTvlChart'
 import { PrivacyChartRangeControls } from './PrivacyChartRangeControls'
 import { PrivacyFlowChart } from './PrivacyFlowChart'
 
@@ -40,9 +41,21 @@ export function PrivacyChartsSection({ project, defaultRange }: Props) {
     [data],
   )
 
+  const tvlChartData = useMemo(
+    () =>
+      data?.tvlChart.map(([timestamp, value]) => ({
+        timestamp,
+        value,
+      })),
+    [data],
+  )
   const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
+    () =>
+      getChartTimeRangeFromData(
+        chartData?.map((point) => ({ timestamp: point.timestamp })) ??
+          tvlChartData,
+      ),
+    [chartData, tvlChartData],
   )
 
   return (
@@ -51,6 +64,17 @@ export function PrivacyChartsSection({ project, defaultRange }: Props) {
         <ProjectChartTimeRange timeRange={timeRange} />
         <PrivacyChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
+
+      <div>
+        <h3 className="mb-3 font-bold text-lg md:text-xl">
+          Total value locked
+        </h3>
+        <PrivacyTvlChart
+          data={tvlChartData}
+          syncedUntil={data?.tvlSyncedUntil}
+          isLoading={isLoading}
+        />
+      </div>
 
       <div>
         <h3 className="mb-3 font-bold text-lg md:text-xl">

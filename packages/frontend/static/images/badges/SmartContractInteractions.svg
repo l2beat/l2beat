@@ -1,0 +1,177 @@
+<svg
+  width="204"
+  height="216"
+  viewBox="0 0 204 216"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <clipPath id="shield-clip-smart-contract-interactions">
+      <path d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z" />
+    </clipPath>
+    <linearGradient
+      id="shield-fill-smart-contract-interactions"
+      x1="24"
+      y1="18"
+      x2="180"
+      y2="199"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#F5F8FF" />
+      <stop offset="1" stop-color="#E7EEFF" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M102 8L192 46V115C192 159 156 197 102 212C48 197 12 159 12 115V46L102 8Z"
+    fill="#ECF2FF"
+    stroke="#2B67C5"
+    stroke-width="8"
+  />
+  <path
+    d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z"
+    fill="url(#shield-fill-smart-contract-interactions)"
+  />
+  <g clip-path="url(#shield-clip-smart-contract-interactions)">
+    <rect x="102" y="10" width="92" height="194" fill="#F8FBFF" />
+    <path
+      d="M94 18L182 106"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M88 30L182 124"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M82 42L176 136"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M76 54L170 148"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M70 66L164 160"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M64 78L158 172"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+  </g>
+  <path d="M102 18V199" stroke="#D8E3FC" stroke-width="3" />
+  <g>
+    <ellipse cx="64" cy="92" rx="19" ry="7" fill="#F9FBFF" stroke="#2B67C5" stroke-width="4" />
+    <path d="M45 92V105" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <path d="M83 92V105" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <ellipse cx="64" cy="105" rx="19" ry="7" fill="#F1F6FF" stroke="#2B67C5" stroke-width="4" />
+    <path
+      d="M64 62L76 67V77C76 84 71 89 64 92C57 89 52 84 52 77V67L64 62Z"
+      fill="#FFFFFF"
+      stroke="#2B67C5"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M64 69C66.2091 69 68 67.2091 68 65C68 62.7909 66.2091 61 64 61C61.7909 61 60 62.7909 60 65C60 67.2091 61.7909 69 64 69Z"
+      fill="#E8F0FF"
+    />
+    <path
+      d="M60 75C60 72.7909 61.7909 71 64 71C66.2091 71 68 72.7909 68 75V80H60V75Z"
+      fill="#2B67C5"
+    />
+  </g>
+  <path
+    d="M100 78H122"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+  <path
+    d="M113 70L122 78L113 86"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M122 106H100"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+  <path
+    d="M109 98L100 106L109 114"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M125 60C125 55.5817 128.582 52 133 52H159L171 64V114C171 118.418 167.418 122 163 122H133C128.582 122 125 118.418 125 114V60Z"
+    fill="#F9FBFF"
+    stroke="#2B67C5"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M159 52V64H171"
+    stroke="#2B67C5"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M136 75H158"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M136 88H160"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M136 101H154"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <circle cx="158" cy="101" r="6" fill="#2B67C5" />
+  <text
+    x="102"
+    y="151"
+    fill="#2B67C5"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="14.5"
+    font-weight="700"
+    letter-spacing="0.35px"
+    text-anchor="middle"
+  >
+    SMART CONTRACT
+  </text>
+  <text
+    x="102"
+    y="170"
+    fill="#2B67C5"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="16"
+    font-weight="700"
+    letter-spacing="0.35px"
+    text-anchor="middle"
+  >
+    INTERACTIONS
+  </text>
+</svg>

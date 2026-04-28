@@ -36,7 +36,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   metric: 'count' | 'value'
-  project: ChartProject
+  project?: ChartProject
 }
 
 export function PrivacyFlowChart({

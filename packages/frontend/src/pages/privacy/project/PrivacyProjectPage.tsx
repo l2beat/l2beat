@@ -21,10 +21,9 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { ChartRange } from '~/utils/range/range'
+import { PrivacyBreakdownTable } from './components/PrivacyBreakdownTable'
 import { PrivacyChartsSection } from './components/PrivacyChartsSection'
-import { PrivacyDepositsBreakdownTable } from './components/PrivacyDepositsBreakdownTable'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
-import { PrivacyValueBreakdownTable } from './components/PrivacyValueBreakdownTable'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
 interface Props extends AppLayoutProps {
@@ -59,8 +58,7 @@ export function PrivacyProjectPage({
     ? nextOrder()
     : undefined
   const chartsOrder = nextOrder()
-  const tvsOrder = nextOrder()
-  const activityOrder = nextOrder()
+  const breakdownOrder = nextOrder()
   const trustedSetupsOrder = nextOrder()
   const permissionsOrder = entry.permissionsSection ? nextOrder() : undefined
   const contractsOrder = entry.contractsSection ? nextOrder() : undefined
@@ -192,18 +190,10 @@ export function PrivacyProjectPage({
 
                     <ProjectSection
                       id="tvs"
-                      title="Value Secured Breakdown"
-                      sectionOrder={tvsOrder}
+                      title="Asset Breakdown"
+                      sectionOrder={breakdownOrder}
                     >
-                      <PrivacyValueBreakdownTable assets={entry.assets} />
-                    </ProjectSection>
-
-                    <ProjectSection
-                      id="activity"
-                      title="Deposits Breakdown"
-                      sectionOrder={activityOrder}
-                    >
-                      <PrivacyDepositsBreakdownTable assets={entry.assets} />
+                      <PrivacyBreakdownTable assets={entry.assets} />
                     </ProjectSection>
 
                     <TrustedSetupSection
@@ -301,11 +291,7 @@ function getNavigationSections(
     },
     {
       id: 'tvs',
-      title: 'Value Secured',
-    },
-    {
-      id: 'activity',
-      title: 'Deposits',
+      title: 'Breakdown',
     },
     {
       id: 'trusted-setups',

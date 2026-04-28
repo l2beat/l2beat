@@ -1,4 +1,3 @@
-import { TICKERS } from '@l2beat/config/build/projects/tornado-cash/tornado-cash'
 import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import {
   getAllPrivacyBucketRows,
@@ -6,37 +5,21 @@ import {
 } from './db/PrivacyBucketRepo'
 import { getAllPrivacyHistoryRows } from './db/PrivacyHistoryRepo'
 import { getPrivacyProjects } from './getPrivacyProjects'
+import {
+  amountToUsd,
+  bigintToNumber,
+  buildPrivacyBucketInfoByKey,
+  getPrivacyBucketKey,
+  getPrivacyTokenInfo,
+} from './privacyUtils'
 import type {
   PrivacyAssetSnapshot,
   PrivacyBucketSnapshot,
+  PrivacyDepositedValueUsd,
   PrivacyProjectConfig,
   PrivacyProjectSnapshot,
   PrivacySnapshot,
 } from './types'
-
-interface TokenInfo {
-  ticker: string
-  decimals: number
-  price: number | null
-}
-
-const NORMALIZED_TICKERS = new Map<string, TokenInfo>(
-  Object.entries(TICKERS).map(([address, value]) => [
-    address.toLowerCase(),
-    {
-      ticker: value.ticker,
-      decimals: value.decimals,
-      price:
-        'price' in value &&
-        (typeof value.price === 'number' || value.price === null)
-          ? value.price
-          : null,
-    },
-  ]),
-)
-const WETH_INFO = [...NORMALIZED_TICKERS.values()].find(
-  (token) => token.ticker === 'WETH',
-)
 
 export async function getPrivacySnapshot(
   cache: InMemoryCache,
@@ -52,18 +35,14 @@ export async function getPrivacySnapshot(
       const rows = getAllPrivacyBucketRows()
       const historyRows = getAllPrivacyHistoryRows()
       const rowIndex = indexRows(rows)
-      const depositValue30dUsdByProject = indexDepositValue30dUsdByProject(
+      const depositedValueUsdByBucket = indexDepositedValueUsdByBucket(
         projects,
         historyRows,
         UnixTime.now(),
       )
 
       const snapshots = projects.map((project) =>
-        buildProjectSnapshot(
-          project,
-          rowIndex,
-          depositValue30dUsdByProject.get(project.id.toString()) ?? 0,
-        ),
+        buildProjectSnapshot(project, rowIndex, depositedValueUsdByBucket),
       )
 
       const orderedProjects = snapshots.sort(
@@ -99,18 +78,18 @@ function indexRows(rows: PrivacyBucketRow[]): RowIndex {
 }
 
 function rowKey(projectId: string, assetKey: string, bucketId: string): string {
-  return `${projectId}::${assetKey}::${bucketId}`
+  return getPrivacyBucketKey(projectId, assetKey, bucketId)
 }
 
 function buildProjectSnapshot(
   project: PrivacyProjectConfig,
   rowIndex: RowIndex,
-  depositValue30dUsd: number,
+  depositedValueUsdByBucket: Map<string, NonNullableDepositedValueUsd>,
 ): PrivacyProjectSnapshot {
   const projectId = project.id.toString()
 
   const assets = project.privacyInfo.assets.map((asset) =>
-    buildAssetSnapshot(projectId, asset, rowIndex),
+    buildAssetSnapshot(projectId, asset, rowIndex, depositedValueUsdByBucket),
   )
 
   const orderedAssets = assets.sort((a, b) => {
@@ -146,9 +125,7 @@ function buildProjectSnapshot(
       ),
       bucketCount: sum(orderedAssets.map((asset) => asset.bucketCount)),
       deposits: aggregateDeposits(orderedAssets),
-      depositedValueUsd: {
-        last30d: depositValue30dUsd,
-      },
+      depositedValueUsd: aggregateDepositedValueUsd(orderedAssets),
     },
     unpricedAssets,
   }
@@ -158,8 +135,9 @@ function buildAssetSnapshot(
   projectId: string,
   asset: PrivacyProjectConfig['privacyInfo']['assets'][number],
   rowIndex: RowIndex,
+  depositedValueUsdByBucket: Map<string, NonNullableDepositedValueUsd>,
 ): PrivacyAssetSnapshot {
-  const tokenInfo = getTokenInfo(asset.asset.address, asset.asset.symbol)
+  const tokenInfo = getPrivacyTokenInfo(asset.asset.address, asset.asset.symbol)
   const symbol = asset.asset.symbol ?? tokenInfo.ticker
   const assetKey = (asset.asset.address ?? symbol).toLowerCase()
 
@@ -170,6 +148,8 @@ function buildAssetSnapshot(
       bucket,
       tokenInfo.decimals,
       rowIndex,
+      tokenInfo.price,
+      depositedValueUsdByBucket,
     ),
   )
 
@@ -186,6 +166,10 @@ function buildAssetSnapshot(
     totalAmount,
     totalValueUsd,
     deposits: aggregateDeposits(buckets),
+    depositedValueUsd:
+      tokenInfo.price === null
+        ? emptyDepositedValueUsd()
+        : aggregateDepositedValueUsd(buckets),
     buckets: buckets.sort((a, b) =>
       a.label.localeCompare(b.label, undefined, { numeric: true }),
     ),
@@ -198,8 +182,13 @@ function buildBucketSnapshot(
   bucket: PrivacyProjectConfig['privacyInfo']['assets'][number]['buckets'][number],
   decimals: number,
   rowIndex: RowIndex,
+  priceUsd: number | null,
+  depositedValueUsdByBucket: Map<string, NonNullableDepositedValueUsd>,
 ): PrivacyBucketSnapshot {
   const row = rowIndex.get(rowKey(projectId, assetKey, bucket.id))
+  const depositedValueUsd = depositedValueUsdByBucket.get(
+    rowKey(projectId, assetKey, bucket.id),
+  )
 
   const totalAmount =
     row?.totalValueAmount != null
@@ -222,25 +211,15 @@ function buildBucketSnapshot(
       last7d: row?.deposits7d ?? 0,
       last30d: row?.deposits30d ?? 0,
     },
+    depositedValueUsd:
+      priceUsd === null
+        ? emptyDepositedValueUsd()
+        : {
+            total: depositedValueUsd?.total ?? 0,
+            last7d: depositedValueUsd?.last7d ?? 0,
+            last30d: depositedValueUsd?.last30d ?? 0,
+          },
   }
-}
-
-function getTokenInfo(
-  address: string | undefined,
-  symbol: string | undefined,
-): TokenInfo {
-  if (address) {
-    const tokenInfo = NORMALIZED_TICKERS.get(address.toLowerCase())
-    if (tokenInfo) return tokenInfo
-  }
-
-  if (symbol === 'ETH' && WETH_INFO) {
-    return { ticker: 'ETH', decimals: 18, price: WETH_INFO.price }
-  }
-
-  throw new Error(
-    `Missing ticker metadata for privacy asset ${symbol ?? address ?? 'unknown'}`,
-  )
 }
 
 function aggregateDeposits(
@@ -253,46 +232,41 @@ function aggregateDeposits(
   }
 }
 
-function indexDepositValue30dUsdByProject(
+function aggregateDepositedValueUsd(
+  items: { depositedValueUsd: PrivacyDepositedValueUsd }[],
+): NonNullableDepositedValueUsd {
+  return {
+    total: sum(items.map((i) => i.depositedValueUsd.total ?? 0)),
+    last7d: sum(items.map((i) => i.depositedValueUsd.last7d ?? 0)),
+    last30d: sum(items.map((i) => i.depositedValueUsd.last30d ?? 0)),
+  }
+}
+
+interface NonNullableDepositedValueUsd {
+  total: number
+  last7d: number
+  last30d: number
+}
+
+function indexDepositedValueUsdByBucket(
   projects: PrivacyProjectConfig[],
   historyRows: ReturnType<typeof getAllPrivacyHistoryRows>,
   now: number,
-): Map<string, number> {
-  const bucketInfoByKey = new Map<
-    string,
-    { decimals: number; priceUsd: number | null }
-  >()
+): Map<string, NonNullableDepositedValueUsd> {
+  const bucketInfoByKey = buildPrivacyBucketInfoByKey(projects)
 
-  for (const project of projects) {
-    const projectId = project.id.toString()
-    for (const asset of project.privacyInfo.assets) {
-      const tokenInfo = getTokenInfo(asset.asset.address, asset.asset.symbol)
-      const assetKey = (
-        asset.asset.address ??
-        asset.asset.symbol ??
-        tokenInfo.ticker
-      ).toLowerCase()
-
-      for (const bucket of asset.buckets) {
-        bucketInfoByKey.set(rowKey(projectId, assetKey, bucket.id), {
-          decimals: tokenInfo.decimals,
-          priceUsd: tokenInfo.price,
-        })
-      }
-    }
-  }
-
-  const result = new Map<string, number>()
-  const last30dCutoff = UnixTime.toStartOf(now, 'day') - 29 * UnixTime.DAY
+  const byBucket = new Map<string, NonNullableDepositedValueUsd>()
+  const currentDay = UnixTime.toStartOf(now, 'day')
+  const last7dCutoff = currentDay - 6 * UnixTime.DAY
+  const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
   for (const row of historyRows) {
-    if (row.depositAmount === '0' || row.timestamp < last30dCutoff) {
+    if (row.depositAmount === '0') {
       continue
     }
 
-    const bucketInfo = bucketInfoByKey.get(
-      rowKey(row.projectId, row.assetKey, row.bucketId),
-    )
+    const key = rowKey(row.projectId, row.assetKey, row.bucketId)
+    const bucketInfo = bucketInfoByKey.get(key)
     if (!bucketInfo) continue
 
     const valueUsd = amountToUsd(
@@ -301,37 +275,34 @@ function indexDepositValue30dUsdByProject(
       bucketInfo.priceUsd,
     )
 
-    result.set(row.projectId, (result.get(row.projectId) ?? 0) + valueUsd)
+    const entry = byBucket.get(key) ?? {
+      total: 0,
+      last7d: 0,
+      last30d: 0,
+    }
+
+    entry.total += valueUsd
+    if (row.timestamp >= last7dCutoff) {
+      entry.last7d += valueUsd
+    }
+    if (row.timestamp >= last30dCutoff) {
+      entry.last30d += valueUsd
+    }
+
+    byBucket.set(key, entry)
   }
 
-  return result
+  return byBucket
+}
+
+function emptyDepositedValueUsd(): PrivacyDepositedValueUsd {
+  return {
+    total: null,
+    last7d: null,
+    last30d: null,
+  }
 }
 
 function sum(values: number[]): number {
   return values.reduce((acc, value) => acc + value, 0)
-}
-
-function amountToUsd(
-  amount: bigint,
-  decimals: number,
-  priceUsd: number | null,
-): number {
-  if (priceUsd === null) return 0
-  return bigintToNumber(amount, decimals) * priceUsd
-}
-
-function bigintToNumber(value: bigint, decimals: number): number {
-  if (decimals === 0) return Number(value)
-  const divisor = 10n ** BigInt(decimals)
-  const integer = value / divisor
-  const fraction = value % divisor
-  if (fraction === 0n) return Number(integer)
-  const fractionDigits = fraction
-    .toString()
-    .padStart(decimals, '0')
-    .replace(/0+$/, '')
-    .slice(0, 8)
-  return Number(
-    `${integer.toString()}.${fractionDigits === '' ? '0' : fractionDigits}`,
-  )
 }

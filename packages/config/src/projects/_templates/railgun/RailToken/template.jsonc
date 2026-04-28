@@ -1,12 +1,13 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json", 
-"fields": {
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
     "owner": {
-        "permissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "mint RAIL tokens up to the cap."
         }
       ]
     }
-}
+  }
 }

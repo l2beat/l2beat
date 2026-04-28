@@ -13,6 +13,12 @@ export type PrivacyProjectConfig = Project<
   'contracts' | 'permissions' | 'discoveryInfo'
 >
 
+export interface PrivacyDepositedValueUsd {
+  total: number | null
+  last7d: number | null
+  last30d: number | null
+}
+
 export interface PrivacyBucketSnapshot {
   id: string
   label: string
@@ -25,6 +31,7 @@ export interface PrivacyBucketSnapshot {
     last7d: number
     last30d: number
   }
+  depositedValueUsd: PrivacyDepositedValueUsd
 }
 
 export interface PrivacyAssetSnapshot {
@@ -40,6 +47,7 @@ export interface PrivacyAssetSnapshot {
     last7d: number
     last30d: number
   }
+  depositedValueUsd: PrivacyDepositedValueUsd
   buckets: PrivacyBucketSnapshot[]
 }
 
@@ -64,9 +72,7 @@ export interface PrivacyProjectSnapshot {
       last7d: number
       last30d: number
     }
-    depositedValueUsd: {
-      last30d: number
-    }
+    depositedValueUsd: PrivacyDepositedValueUsd
   }
   unpricedAssets: string[]
 }

@@ -1500,5 +1500,7 @@
   "static/icons/privacy-pools.png": "af88d4704aef95f64a139d55414ea8d3",
   "static/icons/railgun.png": "c539e68c8b23ee1c9fc39745b3a4de7b",
   "static/icons/tornado-cash.png": "3bd22bcd3b7043b001b99e506dcd3e15",
-  "static/images/badges/Compliance.png": "8252d28e0160a1d38813d03220ce3208"
+  "static/images/badges/Compliance.png": "8252d28e0160a1d38813d03220ce3208",
+  "static/images/badges/PrivateTransfers.png": "7bef0ce4fb2d1dffa36fe1b8feaa7dd9",
+  "static/images/badges/SmartContractInteractions.png": "445f1bb7b26dfd4be29603f067757664"
 }
