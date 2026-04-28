@@ -372,46 +372,54 @@ export async function fetchFundsForContract(
     }
 
     if (options.isToken) {
-      const tokenData = await fetchTokenInfo(debankChain, cleanAddress)
+      let tokenData: TokenInfo | undefined
+      try {
+        tokenData = await fetchTokenInfo(debankChain, cleanAddress)
+      } catch {
+        // Token has no price (e.g. debt tokens return null price from DeBank).
+        // Skip tokenInfo for this contract — it contributes $0 to TVS.
+      }
 
-      // Look up totalSupply and decimals from discovered.json
-      let totalSupply: string | undefined
-      let decimals: number | undefined
+      if (tokenData) {
+        // Look up totalSupply and decimals from discovered.json
+        let totalSupply: string | undefined
+        let decimals: number | undefined
 
-      if (options.discoveredData?.entries) {
-        const contract = options.discoveredData.entries.find(
-          (c: any) => c.address && addressesEqual(c.address, contractAddress),
-        )
-        if (contract?.values) {
-          if (contract.values.totalSupply != null)
-            totalSupply = String(contract.values.totalSupply)
-          if (contract.values.decimals != null)
-            decimals = Number(contract.values.decimals)
+        if (options.discoveredData?.entries) {
+          const contract = options.discoveredData.entries.find(
+            (c: any) => c.address && addressesEqual(c.address, contractAddress),
+          )
+          if (contract?.values) {
+            if (contract.values.totalSupply != null)
+              totalSupply = String(contract.values.totalSupply)
+            if (contract.values.decimals != null)
+              decimals = Number(contract.values.decimals)
+          }
         }
-      }
 
-      let tokenValue = 0
-      if (totalSupply !== undefined && decimals !== undefined) {
-        // Safe BigInt computation for large totalSupply values
-        const raw = BigInt(totalSupply)
-        const divisor = BigInt(10) ** BigInt(decimals)
-        // Convert to float: integer part + fractional remainder
-        const integerPart = Number(raw / divisor)
-        const remainder = Number(raw % divisor) / Number(divisor)
-        tokenValue = (integerPart + remainder) * tokenData.price
-      }
+        let tokenValue = 0
+        if (totalSupply !== undefined && decimals !== undefined) {
+          // Safe BigInt computation for large totalSupply values
+          const raw = BigInt(totalSupply)
+          const divisor = BigInt(10) ** BigInt(decimals)
+          // Convert to float: integer part + fractional remainder
+          const integerPart = Number(raw / divisor)
+          const remainder = Number(raw % divisor) / Number(divisor)
+          tokenValue = (integerPart + remainder) * tokenData.price
+        }
 
-      result.tokenInfo = {
-        symbol: tokenData.symbol,
-        name: tokenData.name,
-        decimals: tokenData.decimals,
-        price: tokenData.price,
-        totalSupply: totalSupply ?? '0',
-        tokenValue,
-        timestamp: new Date().toISOString(),
-        source: 'debank',
+        result.tokenInfo = {
+          symbol: tokenData.symbol,
+          name: tokenData.name,
+          decimals: tokenData.decimals,
+          price: tokenData.price,
+          totalSupply: totalSupply ?? '0',
+          tokenValue,
+          timestamp: new Date().toISOString(),
+          source: 'debank',
+        }
+        tokenFetched = true
       }
-      tokenFetched = true
     }
 
     if (options.fetchAggregate) {

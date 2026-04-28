@@ -137,7 +137,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   const diffoveryController = new DiffoveryController()
 
-  app.use(express.json())
+  app.use(express.json({ limit: '10mb' }))
 
   app.get('/health', (_, res) => {
     res.status(200).send('OK')
