@@ -10,6 +10,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { EM_DASH } from '~/consts/characters'
+import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { api } from '~/trpc/React'
@@ -17,7 +18,6 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
-import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
 import { transferSizeBuckets } from '../../utils/transferSizeBuckets'
 import type { InteropSelection } from '../../utils/types'
@@ -70,17 +70,6 @@ export function InteropProtocolSummary({
     >
       <div className="grid grid-cols-1 gap-x-3 max-md:gap-y-3 md:grid-cols-3">
         <StatsItem
-          title="Type"
-          isLoading={isLoading}
-          value={
-            <div className="flex flex-wrap items-start gap-0.5">
-              {data?.entry?.bridgeTypes.map((t) => (
-                <BridgeTypeBadge size="extraSmall" key={t} bridgeType={t} />
-              ))}
-            </div>
-          }
-        />
-        <StatsItem
           title="Last 24h volume"
           isLoading={isLoading}
           value={
@@ -93,6 +82,11 @@ export function InteropProtocolSummary({
           title="Last 24h transfer count"
           isLoading={isLoading}
           value={formatInteger(data?.entry?.transferCount ?? 0)}
+        />
+        <StatsItem
+          title="Last 24h top path"
+          isLoading={isLoading}
+          value={data?.topPath ? <TopPathValue path={data.topPath} /> : EM_DASH}
         />
         <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
         <StatsItem
@@ -182,6 +176,23 @@ export function InteropProtocolSummary({
         </div>
       )}
     </section>
+  )
+}
+
+function TopPathValue({
+  path,
+}: {
+  path: { chainA: string; chainB: string; volume: number }
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-label-value-16">
+      <span className="capitalize">{path.chainA}</span>
+      <BidirectionalArrowIcon className="size-4 fill-brand" />
+      <span className="capitalize">{path.chainB}</span>
+      <span className="text-secondary">
+        {formatCurrency(path.volume, 'usd')}
+      </span>
+    </div>
   )
 }
 
