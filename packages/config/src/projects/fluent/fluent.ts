@@ -283,7 +283,7 @@ export const fluent: ScalingProject = {
   milestones: [
     {
       title: 'Fluent mainnet launch',
-      url: 'https://www.fluent.xyz/',
+      url: 'https://x.com/fluentxyz/status/2047662772658622465',
       date: '2026-04-24T00:00:00Z',
       description:
         'Fluent activates its Ethereum L2 mainnet alongside the BLEND token launch.',
