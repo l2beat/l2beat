@@ -28,10 +28,20 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fluent')
 
-const finalizationDelay = discovery.getContractValue<number>(
+// L1 PoS slot time, used to convert block-count windows into seconds.
+const L1_BLOCK_TIME = 12
+
+// Fluent's Rollup measures both windows in L1 blocks, not seconds.
+const finalizationDelayBlocks = discovery.getContractValue<number>(
   'FluentRollup',
   'finalizationDelay',
 )
+const challengeWindowBlocks = discovery.getContractValue<number>(
+  'FluentRollup',
+  'challengeWindow',
+)
+const finalizationDelay = finalizationDelayBlocks * L1_BLOCK_TIME
+const challengeWindow = challengeWindowBlocks * L1_BLOCK_TIME
 const timelockDelay = discovery.getContractValue<number>(
   'FluentTimeLock',
   'getMinDelay',
@@ -162,7 +172,7 @@ export const fluent: ScalingProject = {
         RISK_VIEW.STATE_ZKP_SN.description +
         ' Fluent uses SP1 (Succinct) STARK proofs wrapped to PLONK for onchain verification. ' +
         'Before proofs are posted, batches can be preconfirmed by an AWS Nitro Enclave whose attestation is verified against expected PCR0 measurements via SP1. ' +
-        `Withdrawals on the proof-accelerated path require a finalization delay of ${formatSeconds(finalizationDelay)}; alternatively, batches finalize after the same delay even without a proof. ` +
+        `Each batch is preconfirmed by the TEE, then finalizes after ${formatSeconds(finalizationDelay)} on L1 (no proof required in the happy path). Permissioned challengers have ${formatSeconds(challengeWindow)} from acceptance to dispute, and a challenge must be resolved with an SP1 proof before that same window closes. ` +
         'Proof submission is permissioned; see the Permissions section for current role holders.',
       sentiment: 'warning',
     },
@@ -175,7 +185,7 @@ export const fluent: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Fluent batches go through five stages: (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch via an ECDSA signature whose key is bound to PCR0 measurements verified by SP1; (4) participants can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and resolution requires SP1 proofs of the state transition function, blob membership and EIP-4844 commitments; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} delay (\`finalizeBatches\`) or immediately after all blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
+        description: `Fluent batches go through five stages: (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch via an ECDSA signature whose key is bound to PCR0 measurements verified by SP1; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER\` role can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
         references: [
           {
             title: 'Fluent Rollup Architecture',
