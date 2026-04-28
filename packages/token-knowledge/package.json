@@ -1,0 +1,37 @@
+{
+  "name": "@l2beat/token-knowledge",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && cp src/rules.lp build/rules.lp",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-knowledge",
+    "start": "node build/server.js",
+    "dev": "node -r esbuild-register src/server.ts",
+    "dev:watch": "node --watch -r esbuild-register src/server.ts",
+    "clean": "rm -rf build",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-knowledge",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write ."
+  },
+  "dependencies": {
+    "@l2beat/database": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.446",
+    "clingo-wasm": "0.3.2",
+    "ohm-js": "^17.1.0"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
+    "dotenv": "^17.2.3",
+    "earl": "^1.1.0",
+    "express": "^5.1.0",
+    "mocha": "^10.2.0"
+  }
+}

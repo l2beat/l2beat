@@ -1,0 +1,3 @@
+- When working on tests, especially when writing them, use "red/green" approach, which means to confirm that the tests fail before implementing the code to make them pass.
+- When working on `token-knowledge` or `token-knowledge-ui` projects/packages, read `docs/mdbook/specs/l2b_specs/token-knowledge.md` document first for context.
+- After making code changes, always run `pnpm typecheck` and the relevant tests before declaring work complete. 
