@@ -92,6 +92,9 @@ export const pageLoaders = {
   GovernancePublicationPage: async () =>
     (await import('./publications/governance/GovernancePublicationPage'))
       .GovernancePublicationPage,
+  OtherPublicationPage: async () =>
+    (await import('./publications/other-publications/OtherPublicationPage'))
+      .OtherPublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,

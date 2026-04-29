@@ -8,6 +8,7 @@ import type { Manifest } from '../../utils/Manifest'
 import { getPublicationsData } from './getPublicationsData'
 import { getGovernancePublicationData } from './governance/getGovernancePublicationData'
 import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
+import { getOtherPublicationData } from './other-publications/getOtherPublicationData'
 
 export function createPublicationsRouter(
   manifest: Manifest,
@@ -53,7 +54,7 @@ export function createPublicationsRouter(
         )
       }
       if (otherPublication) {
-        data = await getGovernancePublicationData(
+        data = await getOtherPublicationData(
           manifest,
           otherPublication,
           req.originalUrl,
