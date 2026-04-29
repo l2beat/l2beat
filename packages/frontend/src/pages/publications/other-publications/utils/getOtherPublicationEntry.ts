@@ -1,6 +1,3 @@
-import { readFileSync } from 'fs'
-import matter from 'gray-matter'
-import path from 'path'
 import type { CollectionEntry } from '~/content/getCollection'
 import { getCollectionEntry } from '~/content/getCollection'
 import { formatPublicationDate } from '~/utils/dates'
@@ -45,19 +42,15 @@ export function getOtherPublicationEntry(
     throw new Error(`Thumbnail not found for ${post.id}`)
   }
 
-  const content = getOtherPublicationContent(post.id, post.data.contentFile)
-  const excerpt = getExcerpt(content)
-  const readTimeInMinutes = getReadTimeInMinutes(content)
-
   return {
     id: post.id,
     thumbnail,
-    content,
+    content: post.content,
     title: post.data.title,
     shortTitle: post.data.shortTitle,
     description: post.data.description,
-    excerpt,
-    readTimeInMinutes,
+    excerpt: post.excerpt,
+    readTimeInMinutes: post.readTimeInMinutes,
     publishedOn: formatPublicationDate(post.data.publishedOn),
     author: {
       id: author.id,
@@ -68,30 +61,4 @@ export function getOtherPublicationEntry(
     },
     tag: post.data.tag,
   }
-}
-
-function getOtherPublicationContent(id: string, contentFile: string): string {
-  const base = path.join(process.cwd(), 'src', 'content', 'other-publications')
-  const filePath = path.join(base, contentFile)
-  if (!filePath.startsWith(base)) {
-    throw new Error(`Invalid content file path for ${id}`)
-  }
-  const file = readFileSync(filePath, 'utf-8')
-  return matter(file).content
-}
-
-function getExcerpt(content: string) {
-  const lines = content.split('\n')
-  return lines.find((line) => line.trim().length > 0)
-}
-
-const AVERAGE_WORDS_PER_MINUTE = 183
-
-function getReadTimeInMinutes(content: string) {
-  const words = content
-    .split('\n')
-    .join(' ')
-    .split(' ')
-    .filter((word) => word !== '')
-  return Math.max(5, Math.round(words.length / AVERAGE_WORDS_PER_MINUTE))
 }
