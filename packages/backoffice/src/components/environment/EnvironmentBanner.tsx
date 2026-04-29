@@ -32,7 +32,7 @@ export function EnvironmentBanner() {
           className={cn(
             'relative z-[998] w-(--radix-select-trigger-width) overflow-hidden shadow-lg',
             'data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-full data-[state=open]:animate-in',
-            'data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-fuslide-in-from-top-full data-[state=closed]:animate-out',
+            'data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-full data-[state=closed]:animate-out',
           )}
         >
           <SelectPrimitive.Viewport>
