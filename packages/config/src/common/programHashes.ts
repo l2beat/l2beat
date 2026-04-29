@@ -248,6 +248,14 @@ Verify:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
     verificationStatus: 'notVerified',
   },
+  '0x003ff44df02a49f7ca06641411c6d1f34e71b3a17c6aa0087091ff193458e10b': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA(''), // rotated 2026-04 vkey, exact source version not yet identified
+    verificationStatus: 'notVerified',
+  },
+  '0x5b3aba7b278d553e2e973a7950e953095d9567595429c20f66df6a664a3c5e4a': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // rotated 2026-04 vkey, exact source version not yet identified
+    verificationStatus: 'notVerified',
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1hypercube'),
