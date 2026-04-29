@@ -12,7 +12,7 @@ export interface BaseContext {
 export async function createTRPCContext(opts: {
   headers: Headers
   db: Database
-  auth: BackofficeAuthConfig
+  auth: BackofficeAuthConfig | false
   jwtVerifyFn?: typeof jwtVerify
 }): Promise<BaseContext> {
   const session = await getSession(opts.headers, opts.auth, {
