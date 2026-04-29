@@ -1,5 +1,5 @@
 export type {
-  AppRouter as BackendRouter,
-  AppRouterInputs as BackendRouterInputs,
-  AppRouterOutputs as BackendRouterOutputs,
+  BackendRouter,
+  BackendRouterInputs,
+  BackendRouterOutputs,
 } from './appRouter'

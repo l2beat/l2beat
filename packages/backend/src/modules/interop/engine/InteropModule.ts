@@ -7,7 +7,11 @@ import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import type { ApplicationModule, ModuleDependencies } from '../../types'
+import type {
+  ApplicationModule,
+  ModuleDependencies,
+  TrpcContribution,
+} from '../../types'
 import {
   createInteropPlugins,
   flattenClusters,
@@ -40,7 +44,7 @@ import { instrumentInteropRpcMetricsRun } from './rpc/interopRpcMetrics'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
 export type InteropApplicationModule = ApplicationModule & {
-  trpcRouter: InteropTrpcRouter
+  trpc: TrpcContribution<'interop', InteropTrpcRouter>
 }
 
 export function createInteropModule({
@@ -265,5 +269,9 @@ export function createInteropModule({
     })
   }
 
-  return { routers: [router], trpcRouter, start }
+  return {
+    routers: [router],
+    trpc: { namespace: 'interop', trpcRouter },
+    start,
+  }
 }

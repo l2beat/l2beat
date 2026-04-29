@@ -50,9 +50,14 @@ export class Application {
     // Modules with TRPC
     const interopModule = createInteropModule(deps)
 
+    const modulesWithTrpc = [interopModule]
+
+    const trpcContributions = modulesWithTrpc.flatMap((module) =>
+      module ? module.trpc : [],
+    )
     const backofficeModule = createBackofficeModule({
       ...deps,
-      subRouters: { interop: interopModule?.trpcRouter },
+      trpcContributions,
     })
 
     // All-modules entrypoint
