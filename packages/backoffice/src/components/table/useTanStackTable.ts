@@ -15,7 +15,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
-import { scalarSelectFilter, withFilterDefaults } from './filters'
+import { scalarSelectFilter, withFilterDefaults } from './filter/filters'
 import { useTableSearch } from './hooks/useTableSearch'
 import { fuzzyFilter } from './search'
 
