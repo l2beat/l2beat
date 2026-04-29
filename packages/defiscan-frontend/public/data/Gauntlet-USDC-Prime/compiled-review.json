@@ -1268,25 +1268,6 @@
       "bounty": 1500000
     }
   ],
-  "activity": [
-    {
-      "timestamp": "2026-04-29T09:21:18.000Z",
-      "updateNotifierId": 142,
-      "address": "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
-      "contractName": "MorphoChainlinkOracleV2",
-      "isDependency": true,
-      "entity": "Morpho",
-      "id": "142:base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.price",
-          "before": "757305392078900000000000000000000000000",
-          "after": "770541958200300000000000000000000000000"
-        }
-      ]
-    }
-  ],
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

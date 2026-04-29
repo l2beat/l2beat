@@ -4415,53 +4415,6 @@
   ],
   "activity": [
     {
-      "timestamp": "2026-04-29T09:21:18.000Z",
-      "updateNotifierId": 141,
-      "address": "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53",
-      "contractName": "NonfungiblePositionManager",
-      "entity": null,
-      "id": "141:base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalSupply",
-          "before": 101395,
-          "after": 102675
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-29T09:21:18.000Z",
-      "updateNotifierId": 141,
-      "address": "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4",
-      "contractName": "VotingEscrow",
-      "entity": null,
-      "id": "141:base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.clock",
-          "before": 1777368863,
-          "after": 1777454477
-        },
-        {
-          "field": "values.epoch",
-          "before": 793172,
-          "after": 793593
-        },
-        {
-          "field": "values.tokenId",
-          "before": 118555,
-          "after": 118601
-        },
-        {
-          "field": "values.permanentLockBalance",
-          "before": "945644602721248719568689798",
-          "after": "945671980949682250311554725"
-        }
-      ]
-    },
-    {
       "timestamp": "2026-04-28T09:34:24.000Z",
       "updateNotifierId": 138,
       "address": "base:0x090b2A6bb475c00e2256e2095A60887cD710803b",

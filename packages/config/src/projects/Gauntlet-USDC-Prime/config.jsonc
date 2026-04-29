@@ -6,7 +6,6 @@
   "maxAddresses": 100,
   "maxDepth": 5,
   "overrides": {
-    // Underlying asset (USDC on Base) — never want to walk into the token graph
     "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": {
       "ignoreDiscovery": true
     },
@@ -95,6 +94,9 @@
         "marketCap_oracle_663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
         "feedCap_64c911996D3c6aC71f9b455B1E8E7266BcbD848F"
       ]
+    },
+    "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9": {
+      "ignoreMethods": ["price"]
     }
   }
 }

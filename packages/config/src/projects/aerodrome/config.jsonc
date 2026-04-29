@@ -22,11 +22,7 @@
       "ignoreDiscovery": true
     },
     "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5": {
-      "ignoreInWatchMode": [
-        "activePeriod",
-        "weekly",
-        "teamRate"
-      ]
+      "ignoreInWatchMode": ["activePeriod", "weekly", "teamRate"]
     },
     "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4": {
       "ignoreMethods": [
@@ -156,30 +152,20 @@
     "base:0xf632031B94D72deE0D99DeF846c9b6211041337f": {
       "ignoreMethods": ["WETH9"]
     },
-    "base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b": {
-    },
-    "base:0x090b2A6bb475c00e2256e2095A60887cD710803b": {
-    },
-    "base:0x87D8f999BBa9343E8099552426775B51C338E8CB": {
-    },
-    "base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785": {
-    },
     "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB": {
       "fields": {
-        "MAX_BPS": {
-          "severity": "HIGH"
-        },
-        "MAX_MIN_STAKE_TIME": {
-          "severity": "HIGH"
-        },
-        "redistributor": {
-          "severity": "HIGH"
-        }
+        "MAX_BPS": { "severity": "HIGH" },
+        "MAX_MIN_STAKE_TIME": { "severity": "HIGH" },
+        "redistributor": { "severity": "HIGH" }
       },
       "ignoreInWatchMode": ["activePeriod", "weeklyEmissions"]
     },
     "base:0xB630227a79707D517320b6c0f885806389dFcbB3": {
       "ignoreInWatchMode": ["activePeriod", "weeklyEmissions"]
+    },
+    "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53": {
+      "ignoreMethods": ["positions", "tokenByIndex"],
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }
