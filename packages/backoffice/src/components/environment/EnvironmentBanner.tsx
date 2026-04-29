@@ -3,8 +3,6 @@ import { ChevronDownIcon } from 'lucide-react'
 import { cn } from '~/utils/cn'
 import { type Environment, useEnvironment } from './EnvironmentContext'
 
-const BANNER_HEIGHT_PX = 20
-
 export function EnvironmentBanner() {
   const { environment, setEnvironment, config, allConfigs } = useEnvironment()
 
