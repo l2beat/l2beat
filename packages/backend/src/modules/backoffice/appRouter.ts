@@ -4,7 +4,7 @@ import type {
   inferRouterOutputs,
 } from '@trpc/server'
 import { router as createRouter } from '../../trpc/init'
-import type { InteropApplicationModule } from '../interop/engine/InteropModule'
+import type { InteropTrpcRouter } from '../interop/engine/dashboard/trpc/router'
 import type { TrpcContribution } from '../types'
 
 /**
@@ -13,8 +13,8 @@ import type { TrpcContribution } from '../types'
  * (type-only — no runtime import). Runtime wiring happens in Application.ts.
  */
 type BackendManifest = readonly [
-  NonNullable<InteropApplicationModule['trpc']>,
-  // future modules: NonNullable<TvsApplicationModule['trpc']>,
+  TrpcContribution<'interop', InteropTrpcRouter>,
+  // TrpcContribution<'activity', ActivityTrpcRouter>,
 ]
 
 type ContributionsToRouterMap<T extends readonly TrpcContribution[]> = {
@@ -27,8 +27,7 @@ type BackendRouterMap = ContributionsToRouterMap<BackendManifest>
 // `typeof createRouter<X>` instantiates the wrong one. Calling it through
 // a synthetic function lets TS pick the overload that accepts AnyRouter
 // values. Never invoked at runtime.
-const _backendRouterTypeAnchor = () =>
-  createRouter({} as BackendRouterMap)
+const _backendRouterTypeAnchor = () => createRouter({} as BackendRouterMap)
 export type BackendRouter = ReturnType<typeof _backendRouterTypeAnchor>
 export type BackendRouterInputs = inferRouterInputs<BackendRouter>
 export type BackendRouterOutputs = inferRouterOutputs<BackendRouter>

@@ -4,9 +4,11 @@ import type {
 } from '@l2beat/backend/backoffice-trpc'
 
 export type TransferStatsRow =
-  BackendRouterOutputs['transfers']['stats'][number]
+  BackendRouterOutputs['interop']['transfers']['stats'][number]
 export type TransferDetailsRow =
-  BackendRouterOutputs['transfers']['details'][number]
+  BackendRouterOutputs['interop']['transfers']['details'][number]
 export type TransferPairRow = TransferStatsRow['chains'][number]
-export type ChainMetadata = BackendRouterOutputs['chains']['metadata'][number]
-export type TransferDetailsInput = BackendRouterInputs['transfers']['details']
+export type ChainMetadata =
+  BackendRouterOutputs['interop']['chains']['metadata'][number]
+export type TransferDetailsInput =
+  BackendRouterInputs['interop']['transfers']['details']

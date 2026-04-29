@@ -11,9 +11,12 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 
 export function MemoryPage() {
-  const { data, error, isPending } = api.status.memory.useQuery(undefined, {
-    refetchInterval: 2_500,
-  })
+  const { data, error, isPending } = api.interop.status.memory.useQuery(
+    undefined,
+    {
+      refetchInterval: 2_500,
+    },
+  )
 
   return (
     <AppLayout className="min-h-screen">

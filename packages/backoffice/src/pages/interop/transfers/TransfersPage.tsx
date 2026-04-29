@@ -17,7 +17,7 @@ import { formatDollars } from './utils'
 
 export function TransfersPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.transfers.stats.useQuery()
+    api.interop.transfers.stats.useQuery()
 
   const rows: TransferStatsRow[] = data ?? []
   const totalTransfers = rows.reduce((sum, row) => sum + row.count, 0)

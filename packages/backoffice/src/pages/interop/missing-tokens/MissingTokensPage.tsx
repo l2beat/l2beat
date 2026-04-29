@@ -26,7 +26,7 @@ export function MissingTokensPage() {
     isLoading: isMissingTokensLoading,
     isFetching: isMissingTokensFetching,
     refetch: refetchMissingTokens,
-  } = api.missingTokens.list.useQuery()
+  } = api.interop.missingTokens.list.useQuery()
 
   const {
     data: chainsData,
@@ -34,7 +34,7 @@ export function MissingTokensPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: MissingTokenRow[] = missingTokensData ?? []
   const chains: ChainMetadata[] = chainsData ?? []
@@ -58,7 +58,7 @@ export function MissingTokensPage() {
     },
   )
 
-  const requeueMissingTokens = api.missingTokens.requeue.useMutation()
+  const requeueMissingTokens = api.interop.missingTokens.requeue.useMutation()
 
   const refetchAll = async () => {
     await Promise.all([refetchMissingTokens(), refetchChains()])

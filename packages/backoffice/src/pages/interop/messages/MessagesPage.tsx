@@ -18,7 +18,7 @@ import { formatKnownAppCoverage } from './utils'
 
 export function MessagesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.messages.stats.useQuery()
+    api.interop.messages.stats.useQuery()
 
   const rows: MessageStatsRow[] = data ?? []
   const totalMessages = rows.reduce((sum, row) => sum + row.count, 0)

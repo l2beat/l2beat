@@ -35,7 +35,7 @@ export function AggregatesPage() {
     isLoading: isAggregatesLoading,
     isFetching: isAggregatesFetching,
     refetch: refetchAggregates,
-  } = api.aggregates.latest.useQuery()
+  } = api.interop.aggregates.latest.useQuery()
 
   const {
     data: chainsData,
@@ -43,7 +43,7 @@ export function AggregatesPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const response: AggregatesResponse | undefined = aggregatesData
   const chains: ChainMetadata[] = chainsData ?? []

@@ -178,7 +178,7 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
 
 export function CoveragePiesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.coveragePies.data.useQuery()
+    api.interop.coveragePies.data.useQuery()
 
   const charts = data?.charts ?? []
 

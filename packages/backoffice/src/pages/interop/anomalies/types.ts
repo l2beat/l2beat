@@ -4,17 +4,18 @@ import type {
 } from '@l2beat/backend/backoffice-trpc'
 
 export type AnomaliesSummaryResponse =
-  BackendRouterOutputs['anomalies']['summary']
+  BackendRouterOutputs['interop']['anomalies']['summary']
 export type AggregatedAnomalyRow =
   AnomaliesSummaryResponse['aggregatedItems'][number]
 export type SuspiciousTransfersResponse =
-  BackendRouterOutputs['anomalies']['suspiciousTransfers']
+  BackendRouterOutputs['interop']['anomalies']['suspiciousTransfers']
 export type SuspiciousTransferRow = SuspiciousTransfersResponse['items'][number]
 export type AggregateDetailsInput =
-  BackendRouterInputs['anomalies']['aggregateDetails']
+  BackendRouterInputs['interop']['anomalies']['aggregateDetails']
 export type AggregateDetailsResponse =
-  BackendRouterOutputs['anomalies']['aggregateDetails']
+  BackendRouterOutputs['interop']['anomalies']['aggregateDetails']
 export type AggregateSeriesPoint = AggregateDetailsResponse['items'][number]
-export type ChainMetadata = BackendRouterOutputs['chains']['metadata'][number]
+export type ChainMetadata =
+  BackendRouterOutputs['interop']['chains']['metadata'][number]
 export type TransferStatsRow =
-  BackendRouterOutputs['transfers']['stats'][number]
+  BackendRouterOutputs['interop']['transfers']['stats'][number]

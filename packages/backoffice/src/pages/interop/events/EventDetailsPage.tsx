@@ -71,7 +71,7 @@ export function EventDetailsPage() {
     isLoading: isEventDetailsLoading,
     isFetching: isEventDetailsFetching,
     refetch: refetchEventDetails,
-  } = api.events.details.useQuery(detailsInput, {
+  } = api.interop.events.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -81,7 +81,7 @@ export function EventDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: EventDetailsRow[] = eventDetailsData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

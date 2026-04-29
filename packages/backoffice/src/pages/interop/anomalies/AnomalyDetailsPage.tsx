@@ -28,7 +28,7 @@ export function AnomalyDetailsPage() {
     : { id: '' }
 
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.anomalies.aggregateDetails.useQuery(detailsInput, {
+    api.interop.anomalies.aggregateDetails.useQuery(detailsInput, {
       enabled: hasValidParams,
     })
 
