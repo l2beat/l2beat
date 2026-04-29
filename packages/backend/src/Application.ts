@@ -47,13 +47,15 @@ export class Application {
       blockProcessors: [],
     }
 
+    // Modules with TRPC
     const interopModule = createInteropModule(deps)
+
     const backofficeModule = createBackofficeModule({
-      config,
-      db,
+      ...deps,
       subRouters: { interop: interopModule?.trpcRouter },
     })
 
+    // All-modules entrypoint
     const modules: (ApplicationModule | undefined)[] = [
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
@@ -64,9 +66,10 @@ export class Application {
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
+      createBlockSyncModule(deps),
+
       interopModule,
       backofficeModule,
-      createBlockSyncModule(deps),
     ]
 
     const apiServer = new ApiServer(
