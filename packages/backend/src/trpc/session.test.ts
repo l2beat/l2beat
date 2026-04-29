@@ -8,8 +8,15 @@ import { getSession } from './session'
 
 const BACKOFFICE_TOKEN = 'backoffice-token-abcd-1234'
 
+/** Placeholder JWKS passed to jwtVerify; tests stub jwtVerifyFn so value is unused. */
+const mockJwks = {} as BackofficeZeroTrustAuthConfig['JWKS']
+
 const mockAuth = mockObject<BackofficeAuthConfig>({
-  zeroTrust: mockObject<BackofficeZeroTrustAuthConfig>({}),
+  zeroTrust: mockObject<BackofficeZeroTrustAuthConfig>({
+    JWKS: mockJwks,
+    aud: 'test-audience',
+    teamDomain: 'https://test.cloudflareaccess.com',
+  }),
   authToken: BACKOFFICE_TOKEN,
 })
 
