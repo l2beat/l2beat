@@ -1,14 +1,17 @@
 import { expect, mockObject } from 'earl'
 import type { jwtVerify } from 'jose'
-import { type AuthCredentials, getSession } from './session'
+import type { BackofficeAuthConfig } from '../config/Config'
+import { getSession } from './session'
 
 const BACKOFFICE_TOKEN = 'backoffice-token-abcd-1234'
 
-const mockAuth = mockObject<AuthCredentials>({
-  JWKS: undefined,
-  aud: undefined,
-  teamDomain: undefined,
-  bypassAuthToken: BACKOFFICE_TOKEN,
+const mockAuth = mockObject<BackofficeAuthConfig>({
+  zeroTrust: {
+    JWKS: undefined,
+    aud: undefined,
+    teamDomain: undefined,
+  },
+  authToken: BACKOFFICE_TOKEN,
 })
 
 describe(getSession.name, () => {

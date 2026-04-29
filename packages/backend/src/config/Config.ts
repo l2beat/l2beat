@@ -267,7 +267,7 @@ export interface BackofficeFeatureConfig {
 }
 
 export interface BackofficeAuthConfig {
-  zeroTrust: BackofficeZeroTrustAuthConfig | false
+  zeroTrust: BackofficeZeroTrustAuthConfig
   authToken?: string
 }
 

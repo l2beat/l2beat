@@ -1,4 +1,5 @@
 import { jwtVerify } from 'jose'
+import type { BackofficeAuthConfig } from '../config/Config'
 
 export interface Session {
   email: string
@@ -11,11 +12,9 @@ export interface AuthCredentials {
   bypassAuthToken?: string
 }
 
-export type AuthConfig = AuthCredentials | false
-
 export async function getSession(
   headers: Headers,
-  auth: AuthConfig,
+  auth: BackofficeAuthConfig | false,
   options?: {
     jwtVerifyFn?: typeof jwtVerify
   },
@@ -36,11 +35,11 @@ export async function getSession(
   // Static back-office token shared between the deployed backoffice UI and
   // the staging/production backends. Lets the backoffice authenticate without
   // a Cloudflare Access JWT.
-  if (auth.bypassAuthToken && token === auth.bypassAuthToken) {
+  if (auth.authToken && token === auth.authToken) {
     return { email: 'dev@l2beat.com' }
   }
 
-  const { JWKS, teamDomain, aud } = auth
+  const { JWKS, teamDomain, aud } = auth.zeroTrust
   const jwtVerifyFn = options?.jwtVerifyFn ?? jwtVerify
 
   let decodedToken
