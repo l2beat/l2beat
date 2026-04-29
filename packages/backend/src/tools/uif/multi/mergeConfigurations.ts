@@ -50,7 +50,6 @@ export function mergeConfigurations<T>(
       // We will re-download everything from the beginning
       if (stored.currentHeight !== null) {
         toWipeData.push({
-          type: 'wipe',
           id: stored.id,
         })
       }
@@ -60,14 +59,12 @@ export function mergeConfigurations<T>(
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
           toWipeData.push({
-            type: 'wipe',
             id: stored.id,
           })
           currentHeight = null
         }
       } else {
         toTrimData.push({
-          type: 'trim',
           id: stored.id,
           range: [stored.minHeight, c.minHeight - 1],
         })
@@ -81,7 +78,6 @@ export function mergeConfigurations<T>(
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
           toWipeData.push({
-            type: 'wipe',
             id: stored.id,
           })
           currentHeight = null
@@ -93,7 +89,6 @@ export function mergeConfigurations<T>(
           c.maxHeight < currentHeight
         ) {
           toTrimData.push({
-            type: 'trim',
             id: stored.id,
             range: [c.maxHeight + 1, currentHeight],
           })
@@ -120,7 +115,6 @@ export function mergeConfigurations<T>(
 
       if (c.currentHeight !== null) {
         toWipeData.push({
-          type: 'wipe',
           id: c.id,
         })
       }
