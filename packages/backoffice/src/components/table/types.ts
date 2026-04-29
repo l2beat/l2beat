@@ -22,5 +22,6 @@ declare module '@tanstack/react-table' {
 
   interface FilterFns {
     fuzzy: FilterFn<unknown>
+    scalarSelect: FilterFn<unknown>
   }
 }

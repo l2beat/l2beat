@@ -1,5 +1,4 @@
 import {
-  type ColumnDef,
   type ColumnFiltersState,
   getCoreRowModel,
   getFacetedRowModel,
@@ -16,6 +15,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
+import { scalarSelectFilter, withFilterDefaults } from './filters'
 import { useTableSearch } from './hooks/useTableSearch'
 import { fuzzyFilter } from './search'
 
@@ -26,24 +26,6 @@ function toPageSize(option: PageSizeOption, rowsCount: number) {
     return Math.max(rowsCount, 1)
   }
   return Number(option)
-}
-
-function withFilterDefaults<TData extends RowData>(
-  columns: TableOptions<TData>['columns'],
-): TableOptions<TData>['columns'] {
-  return columns.map((column) => {
-    const filterMeta = column.meta?.filter
-    if (!filterMeta || column.filterFn !== undefined) {
-      return column
-    }
-    if (filterMeta.kind === 'select') {
-      return { ...column, filterFn: 'arrIncludesSome' } as ColumnDef<
-        TData,
-        unknown
-      >
-    }
-    return column
-  })
 }
 
 interface UseTanStackTableOptions<TData extends RowData> {
@@ -94,6 +76,7 @@ export function useTanStackTable<TData extends RowData>({
     },
     filterFns: {
       fuzzy: fuzzyFilter,
+      scalarSelect: scalarSelectFilter,
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
