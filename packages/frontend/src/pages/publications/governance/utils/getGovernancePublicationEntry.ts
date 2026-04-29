@@ -1,5 +1,9 @@
 import type { CollectionEntry } from '~/content/getCollection'
 import { getCollectionEntry } from '~/content/getCollection'
+import type { ExternalPublicationTag } from '~/content/external-publications'
+import { readFileSync } from 'fs'
+import matter from 'gray-matter'
+import path from 'path'
 import { formatPublicationDate } from '~/utils/dates'
 import type { ImageParams } from '~/utils/project/getImageParams'
 import { getImageParams } from '~/utils/project/getImageParams'
@@ -17,10 +21,11 @@ export interface GovernancePublicationEntry {
   author: GovernanceAuthorEntry
   publishedOn: string
   content: string
+  tag: 'governance' | ExternalPublicationTag
 }
 
 export function getGovernancePublicationEntry(
-  post: CollectionEntry<'governance-publications'>,
+  post: CollectionEntry<'governance-publications' | 'other-publications'>,
 ): GovernancePublicationEntry {
   const author = getCollectionEntry('authors', post.data.authorId)
   if (!author) {
@@ -32,16 +37,63 @@ export function getGovernancePublicationEntry(
     throw new Error(`Thumbnail not found for ${post.id}`)
   }
 
+  if ('content' in post) {
+    return {
+      id: post.id,
+      thumbnail,
+      content: post.content,
+      title: post.data.title,
+      shortTitle: post.data.shortTitle,
+      description: post.data.description,
+      excerpt: post.excerpt,
+      readTimeInMinutes: post.readTimeInMinutes,
+      publishedOn: formatPublicationDate(post.data.publishedOn),
+      author: getGovernanceAuthorEntry(author),
+      tag: 'governance',
+    }
+  }
+
+  const content = getOtherPublicationContent(post.id, post.data.contentFile)
+  const excerpt = getExcerpt(content)
+  const readTimeInMinutes = getReadTimeInMinutes(content)
+
   return {
     id: post.id,
     thumbnail,
-    content: post.content,
+    content,
     title: post.data.title,
     shortTitle: post.data.shortTitle,
     description: post.data.description,
-    excerpt: post.excerpt,
-    readTimeInMinutes: post.readTimeInMinutes,
+    excerpt,
+    readTimeInMinutes,
     publishedOn: formatPublicationDate(post.data.publishedOn),
     author: getGovernanceAuthorEntry(author),
+    tag: post.data.tag,
   }
+}
+
+function getOtherPublicationContent(id: string, contentFile: string): string {
+  const base = path.join(process.cwd(), 'src', 'content', 'other-publications')
+  const filePath = path.join(base, contentFile)
+  if (!filePath.startsWith(base)) {
+    throw new Error(`Invalid content file path for ${id}`)
+  }
+  const file = readFileSync(filePath, 'utf-8')
+  return matter(file).content
+}
+
+function getExcerpt(content: string) {
+  const lines = content.split('\n')
+  return lines.find((line) => line.trim().length > 0)
+}
+
+const AVERAGE_WORDS_PER_MINUTE = 183
+
+function getReadTimeInMinutes(content: string) {
+  const words = content
+    .split('\n')
+    .join(' ')
+    .split(' ')
+    .filter((word) => word !== '')
+  return Math.max(5, Math.round(words.length / AVERAGE_WORDS_PER_MINUTE))
 }

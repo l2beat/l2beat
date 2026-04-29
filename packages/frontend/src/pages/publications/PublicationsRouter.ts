@@ -37,6 +37,10 @@ export function createPublicationsRouter(
         'governance-publications',
         req.params.id,
       )
+      const otherPublication = getCollectionEntry(
+        'other-publications',
+        req.params.id,
+      )
 
       const monthlyUpdate = getCollectionEntry('monthly-updates', req.params.id)
 
@@ -45,6 +49,13 @@ export function createPublicationsRouter(
         data = await getGovernancePublicationData(
           manifest,
           governancePublication,
+          req.originalUrl,
+        )
+      }
+      if (otherPublication) {
+        data = await getGovernancePublicationData(
+          manifest,
+          otherPublication,
           req.originalUrl,
         )
       }
