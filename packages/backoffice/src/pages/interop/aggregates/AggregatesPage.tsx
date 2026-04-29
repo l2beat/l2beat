@@ -82,8 +82,8 @@ export function AggregatesPage() {
   }
 
   return (
-    <AppLayout className="min-h-screen">
-      <div className="flex flex-col gap-4 p-4">
+    <AppLayout>
+      <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">

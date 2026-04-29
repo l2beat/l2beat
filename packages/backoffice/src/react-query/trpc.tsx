@@ -4,7 +4,7 @@ import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
 import type React from 'react'
 import { useState } from 'react'
-import { useEnvironment } from '~/components/environment-selector/EnvironmentContext'
+import { useEnvironment } from '~/components/environment/EnvironmentContext'
 import { createQueryClient } from './queryClient'
 
 export const api: ReturnType<typeof createTRPCReact<BackendRouter>> =

@@ -10,7 +10,6 @@ import { Link, matchPath, useLocation } from 'react-router-dom'
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -30,7 +29,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from './core/Collapsible'
-import { EnvironmentSelector } from './environment-selector/EnvironmentSelector'
+import { EnvironmentSelector } from './environment/EnvironmentSelector'
 
 const interopItems = [
   {
@@ -123,6 +122,7 @@ export function AppSidebar() {
           </div>
           <SidebarTrigger className="size-8 shrink-0" />
         </div>
+        <EnvironmentSelector />
         <SidebarSeparator className="mx-0" />
       </SidebarHeader>
       <SidebarContent>
@@ -199,10 +199,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarSeparator className="mx-0" />
-        <EnvironmentSelector />
-      </SidebarFooter>
     </Sidebar>
   )
 }

@@ -13,6 +13,9 @@ export type Environment = 'local' | 'staging' | 'production'
 export interface EnvironmentConfig {
   label: string
   url: string
+  classNames: {
+    dot: string
+  }
 }
 
 const ENVIRONMENTS = {
@@ -21,18 +24,27 @@ const ENVIRONMENTS = {
         local: {
           label: 'Local',
           url: '/trpc/local',
+          classNames: {
+            dot: 'bg-environment-local',
+          },
         },
       }
     : {}),
   staging: {
     label: 'Staging',
     url: '/trpc/staging',
+    classNames: {
+      dot: 'bg-environment-staging',
+    },
   },
   production: {
     label: 'Production',
     url: '/trpc/production',
+    classNames: {
+      dot: 'bg-environment-production',
+    },
   },
-}
+} as const
 
 const STORAGE_KEY = 'backoffice-environment'
 
