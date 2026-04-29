@@ -16,7 +16,7 @@ import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const genesisTimestamp = UnixTime(1742665129) // 2025-03-22T17:38:49Z, block 1
+const mainnetLaunchTimestamp = UnixTime(1742662800) // 2025-03-22T17:00:00Z, block 0
 const ethereumBridgeEscrow = EthereumAddress(
   '0x439D73635B9590E9d9e2CC9eCAB832B057d2E25B',
 )
@@ -41,7 +41,7 @@ export const coti: ScalingProject = {
   id: ProjectId('coti'),
   capability: 'universal',
   hasTestnet: true,
-  addedAt: UnixTime(1712133479), // 2024-04-03T08:37:59Z
+  addedAt: mainnetLaunchTimestamp,
   badges: [BADGES.VM.EVM, BADGES.Other.Privacy],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -67,6 +67,7 @@ export const coti: ScalingProject = {
       socialMedia: [
         'https://twitter.com/COTInetwork',
         'https://medium.com/@cotinetwork',
+        'https://www.youtube.com/channel/UCl-2YzhaPnouvBtotKuM4DA',
         'https://t.me/COTInetwork',
         'https://discord.gg/9tq6CP6XrT',
       ],
@@ -76,27 +77,18 @@ export const coti: ScalingProject = {
     stage: 'NotApplicable',
   },
   config: {
-    associatedTokens: [
-      'COTI',
-      'gCOTI',
-      'USDC.e',
-      'wETH',
-      'wBTC',
-      'wADA',
-      'USDT',
-      'KING',
-    ],
+    associatedTokens: ['COTI', 'gCOTI', 'USDC.e', 'wETH', 'wBTC', 'USDT'],
     escrows: [
       {
         chain: 'ethereum',
         address: ethereumBridgeEscrow,
-        sinceTimestamp: genesisTimestamp,
+        sinceTimestamp: mainnetLaunchTimestamp,
         tokens: ['COTI', 'gCOTI'],
       },
     ],
     activityConfig: {
       type: 'block',
-      startBlock: 1,
+      startBlock: 0,
     },
   },
   chainConfig: {
@@ -104,7 +96,7 @@ export const coti: ScalingProject = {
     chainId: 2632500,
     gasTokens: ['COTI'],
     explorerUrl: 'https://mainnet.cotiscan.io',
-    sinceTimestamp: genesisTimestamp,
+    sinceTimestamp: mainnetLaunchTimestamp,
     coingeckoPlatform: 'coti',
     multicallContracts: [
       {
@@ -147,7 +139,7 @@ export const coti: ScalingProject = {
       {
         title: 'No state validation',
         description:
-          'Ethereum does not verify COTI state transitions. Public COTI documentation describes a sequencer, full nodes, and MPC-style executors, while team-provided operational details describe a small operator set and an N out of N honest-threshold assumption for current operation.',
+          'COTI relies on a sequencer and an executor set for block production and MPC-based execution. State validation is done by validator consensus.',
         references: [
           {
             title: 'COTI Architecture - COTI docs',
@@ -429,7 +421,7 @@ export const coti: ScalingProject = {
     dataAvailability: {
       name: 'Data availability relies on the COTI network',
       description:
-        'The reviewed documentation describes COTI full nodes synchronizing and verifying the chain, but it does not describe transaction data being posted to Ethereum or another external data availability layer with an onchain bridge.',
+        'Transaction data is made available through the COTI network. Full nodes synchronize chain data from peers.',
       references: [
         {
           title: 'COTI Architecture - COTI docs',
@@ -450,7 +442,7 @@ export const coti: ScalingProject = {
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
-        'The documented architecture includes a sequencer that processes transactions and organizes them into blocks. Team-provided operational details say the COTI Foundation runs the sequencer today and that the network halts if the active operators go offline.',
+        'COTI uses a sequencer that orders transactions into blocks and an executor set that processes them. The COTI Foundation runs the sequencer today, the network currently operates with two executors, and the network halts if the active operators go offline.',
       references: [
         {
           title: 'COTI Architecture - COTI docs',
@@ -483,7 +475,7 @@ export const coti: ScalingProject = {
       {
         name: 'Operator-authorized bridge-out to Ethereum',
         description:
-          'To bridge assets back to Ethereum, users deposit on the COTI bridge address on COTI and an externally controlled address authorizes minting on Ethereum. Team-provided operational details say this path is immediate when the bridge operator is online, but there is no trustless force-withdrawal path.',
+          'To bridge assets back to Ethereum, users deposit on the COTI bridge address on COTI and the Ethereum bridge authorizer mints or releases the corresponding assets on Ethereum. This path is immediate while the bridge operators are online, but there is no trustless force-withdrawal mechanism.',
         risks: [
           {
             category: 'Funds can be frozen if',
@@ -535,10 +527,11 @@ export const coti: ScalingProject = {
   },
   milestones: [
     {
-      title: 'COTI Mainnet launch',
-      url: 'https://docs.coti.io/coti-documentation/networks/mainnet',
-      date: '2025-03-22T00:00:00Z',
-      description: 'COTI EVM mainnet launched.',
+      title: 'Helium hard fork',
+      url: 'https://docs.coti.io/coti-documentation/networks/release-notes/v1.2.0',
+      date: '2026-01-11T22:00:00Z',
+      description:
+        'The Helium fork adds broader MPC and gcEVM arithmetic support, including 128-bit and 256-bit operations.',
       type: 'general',
     },
     {
@@ -547,6 +540,21 @@ export const coti: ScalingProject = {
       date: '2026-01-05T00:00:00Z',
       description:
         'ChainPort announced support for bridging ADA and USDT into COTI.',
+      type: 'general',
+    },
+    {
+      title: 'Hyperlane Nexus Bridge expands on COTI',
+      url: 'https://cotinetwork.medium.com/hyperlane-expands-wbtc-and-weth-to-coti-mainnet-3f52f647237e',
+      date: '2025-05-15T00:00:00Z',
+      description:
+        'Hyperlane expanded Nexus Bridge support on COTI with wBTC and wETH, extending earlier USDC.e availability.',
+      type: 'general',
+    },
+    {
+      title: 'COTI Mainnet launch',
+      url: 'https://docs.coti.io/coti-documentation/networks/mainnet',
+      date: '2025-03-22T17:00:00Z',
+      description: 'COTI mainnet launched.',
       type: 'general',
     },
   ],
