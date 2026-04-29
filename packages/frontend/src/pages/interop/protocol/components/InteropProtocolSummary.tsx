@@ -19,8 +19,14 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { TopTokensCell } from '../../components/tokens/TopTokensCell'
+import {
+  INTEROP_TYPE_TO_BG_COLOR,
+  TRANSFER_TYPE_DISPLAY,
+} from '../../utils/display'
 import { transferSizeBuckets } from '../../utils/transferSizeBuckets'
 import type { InteropSelection } from '../../utils/types'
+
+type TransferType = keyof typeof TRANSFER_TYPE_DISPLAY
 
 export function InteropProtocolSummary({
   protocol,
@@ -61,6 +67,20 @@ export function InteropProtocolSummary({
       style: { backgroundColor: transferSizeBuckets.over100K.color },
     },
   ]
+  const byBridgeType = data?.entry?.byBridgeType
+  const transferTypeBreakdownValues = Object.keys(byBridgeType ?? {}).flatMap(
+    (type) => {
+      const transferType = type as TransferType
+      const stats = byBridgeType?.[transferType]
+      if (!stats) return []
+
+      return {
+        value: stats.transferCount,
+        label: TRANSFER_TYPE_DISPLAY[transferType].label,
+        className: INTEROP_TYPE_TO_BG_COLOR[transferType],
+      }
+    },
+  )
 
   return (
     <section
@@ -137,7 +157,7 @@ export function InteropProtocolSummary({
         Protocol transfer size
       </span>
       {isLoading ? (
-        <TransferSizeBreakdownSkeleton />
+        <BreakdownSkeleton />
       ) : (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -169,6 +189,32 @@ export function InteropProtocolSummary({
           </TooltipContent>
         </Tooltip>
       )}
+      <HorizontalSeparator className="my-4" />
+      <span className="font-medium text-paragraph-12 text-secondary">
+        Transfer type distribution
+      </span>
+      {isLoading ? (
+        <BreakdownSkeleton />
+      ) : (
+        <div>
+          <Breakdown
+            values={transferTypeBreakdownValues}
+            className="mt-2! h-1.5 w-full"
+          />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {transferTypeBreakdownValues
+              .filter((value) => value.value > 0)
+              .map((value) => (
+                <div key={value.label} className="flex items-center gap-[3px]">
+                  <div className={`size-3.5 rounded-xs ${value.className}`} />
+                  <span className="font-medium text-label-value-12 text-secondary leading-none">
+                    {value.label}
+                  </span>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
       {protocol.header.description && (
         <div className="max-md:hidden">
           <HorizontalSeparator className="my-4" />
@@ -196,7 +242,7 @@ function TopPathValue({
   )
 }
 
-function TransferSizeBreakdownSkeleton() {
+function BreakdownSkeleton() {
   return (
     <div aria-hidden>
       <Skeleton className="mt-2 h-1.5 w-full rounded-full" />
