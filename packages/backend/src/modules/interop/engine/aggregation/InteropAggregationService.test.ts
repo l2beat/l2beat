@@ -70,7 +70,7 @@ describe(InteropAggregationService.name, () => {
         countOver100K: 0,
         identifiedCount: 2,
         mintedValueUsd: 5000,
-        burnedValueUsd: 0,
+        burnedValueUsd: undefined,
         bridgeType: 'lockAndMint',
       })
 
