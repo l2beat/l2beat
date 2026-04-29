@@ -1,25 +1,35 @@
 import type { InteropTrpcRouter } from '@l2beat/backend/interop-trpc'
-import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
 import type React from 'react'
 import { useState } from 'react'
+import { useEnvironment } from '~/api/environment'
 import { createQueryClient } from './queryClient'
-
-let clientQueryClientSingleton: QueryClient | undefined = undefined
-const getQueryClient = () => {
-  if (typeof window === 'undefined') {
-    return createQueryClient()
-  }
-  return (clientQueryClientSingleton ??= createQueryClient())
-}
 
 export const api: ReturnType<typeof createTRPCReact<InteropTrpcRouter>> =
   createTRPCReact<InteropTrpcRouter>()
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
+  const { config } = useEnvironment()
+  // The `key` on the inner provider forces a fresh tRPC client + query cache
+  // whenever the user switches environments, so cached data from one
+  // environment never leaks into another.
+  return (
+    <TRPCReactProviderInner key={config.url} url={config.url}>
+      {props.children}
+    </TRPCReactProviderInner>
+  )
+}
+
+function TRPCReactProviderInner({
+  url,
+  children,
+}: {
+  url: string
+  children: React.ReactNode
+}) {
+  const [queryClient] = useState(() => createQueryClient())
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -33,7 +43,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             serialize: JSON.stringify,
             deserialize: JSON.parse,
           },
-          url: '/trpc',
+          url,
           headers: () => {
             const headers = new Headers()
 
@@ -47,7 +57,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <api.Provider client={trpcClient} queryClient={queryClient}>
-        {props.children}
+        {children}
       </api.Provider>
     </QueryClientProvider>
   )
