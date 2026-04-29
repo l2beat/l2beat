@@ -1,6 +1,6 @@
 {
   "name": "Gauntlet-USDC-Prime",
-  "timestamp": 1777387084,
+  "timestamp": 1777454478,
   "configHash": "0x547097110ec9926270481009cc7b82750a7e825be8f7f647672d1f47fe2902e5",
   "entries": [
     {
@@ -133,7 +133,7 @@
         "BASE_FEED_2": "base:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "base:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "757305392078900000000000000000000000000",
+        "price": "770541958200300000000000000000000000000",
         "QUOTE_FEED_1": "base:0x0000000000000000000000000000000000000000",
         "QUOTE_FEED_2": "base:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "base:0x0000000000000000000000000000000000000000",
@@ -472,7 +472,7 @@
         "feedCap_64c911996D3c6aC71f9b455B1E8E7266BcbD848F": "750000000000000",
         "feeRecipient": "base:0x82C30B9DB2e3B92ACe4E1593B32890dCf8612D03",
         "guardian": "base:0x7084bF4dB6c21e1834dD6482f6056a39A33584cD",
-        "lastTotalAssets": 355097860048075,
+        "lastTotalAssets": 354473136376777,
         "marketCap_oracle_663BECd10daE6C4A3Dcd89F1d76c1174199639B9": "750000000000000",
         "marketOracles": [
           "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
@@ -517,8 +517,8 @@
         "supplyQueueLength": 2,
         "symbol": "gtUSDCp",
         "timelock": 604800,
-        "totalAssets": 355097995066070,
-        "totalSupply": "324795044724856236517630499",
+        "totalAssets": 354473139040487,
+        "totalSupply": "324196086350311339227461895",
         "withdrawQueueLength": 8
       },
       "fieldMeta": {
@@ -586,13 +586,6 @@
         "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "base:0xf0Db7318A51a21C413CaDd4AbDC1E8a500fE5B1b",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "sinceTimestamp": 1689693611,
       "sinceBlock": 1452132,
       "values": {
@@ -603,7 +596,14 @@
       },
       "implementationNames": {
         "base:0xf3c72D97A5Dcf0449e89BBCE1A0581d8d15c0237": "ConfirmedTransactionModule"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "base:0xf0Db7318A51a21C413CaDd4AbDC1E8a500fE5B1b",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
     },
     {
       "address": "base:0xf72Dbe617a4f24c8447178f6F11E4F399393255e",
@@ -1080,6 +1080,6 @@
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682",
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921"
   },
-  "usedBlockNumbers": { "base": 45298868 },
+  "usedBlockNumbers": { "base": 45332565 },
   "permissionsConfigHash": "0xf9463efddf7d3a9200331d65ef01997844cdf031fa7b8fee82b9e542e48dbe27"
 }

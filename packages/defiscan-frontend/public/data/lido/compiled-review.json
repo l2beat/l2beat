@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
   "lastModified": "2026-04-28T15:08:48.535Z",
-  "compiledAt": "2026-04-28T09:34:24.000Z",
+  "compiledAt": "2026-04-29T09:21:18.000Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "stETH",
-    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $2.85B in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract."
+    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $2.79B in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract."
   },
   "totals": {
     "contractCount": 183,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 214,
     "adminCount": 34,
     "dependencyCount": 1,
-    "totalCapitalAtRisk": 2852318144.6772494,
-    "totalTokenValueAtRisk": 21194522540.152782,
-    "totalTokenValue": 21194522540.152782,
+    "totalCapitalAtRisk": 2786009518.7485137,
+    "totalTokenValueAtRisk": 21673850151.445507,
+    "totalTokenValue": 21673850151.445507,
     "linesOfCode": 38231,
     "verifiedContractCount": 183,
     "coverage": 100
@@ -29,7 +29,7 @@
     {
       "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "name": "Lido DAO Agent",
-      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $2.85B in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
+      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $2.79B in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
       "adminType": "Contract",
       "isGovernance": true,
       "functions": [
@@ -50,7 +50,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -73,8 +73,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -117,7 +117,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -265,7 +265,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -288,8 +288,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -332,7 +332,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -480,7 +480,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -503,8 +503,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -547,7 +547,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -695,7 +695,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -718,8 +718,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -762,7 +762,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -910,7 +910,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -933,8 +933,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -977,7 +977,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1125,7 +1125,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1148,8 +1148,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -1192,7 +1192,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1340,7 +1340,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1363,8 +1363,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -1407,7 +1407,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1555,7 +1555,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1578,8 +1578,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -1622,7 +1622,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2066,7 +2066,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2099,7 +2099,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2223,8 +2223,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -2571,7 +2571,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2604,7 +2604,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2728,8 +2728,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -2935,8 +2935,8 @@
                 "receiveELRewards",
                 "deposit"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -2952,7 +2952,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3030,7 +3030,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3352,8 +3352,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -3423,7 +3423,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -3533,8 +3533,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -3604,7 +3604,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -3798,8 +3798,8 @@
                 "receiveELRewards",
                 "deposit"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -3815,7 +3815,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3893,7 +3893,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4221,7 +4221,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4490,7 +4490,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4603,8 +4603,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -4761,7 +4761,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5030,7 +5030,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5143,8 +5143,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -5643,7 +5643,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5728,8 +5728,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -5869,7 +5869,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5954,8 +5954,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -6095,7 +6095,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6180,8 +6180,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -6462,8 +6462,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -6497,7 +6497,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -6646,8 +6646,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -6681,7 +6681,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -6860,8 +6860,8 @@
                 "receiveELRewards",
                 "deposit"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -6918,7 +6918,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7021,7 +7021,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7349,8 +7349,8 @@
                 "receiveELRewards",
                 "deposit"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -7407,7 +7407,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7510,7 +7510,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7890,7 +7890,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7899,7 +7899,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7909,7 +7909,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8018,8 +8018,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -8125,7 +8125,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8234,8 +8234,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -8340,7 +8340,7 @@
           "contractName": "StakingRouter",
           "functionName": "addStakingModule",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -8356,7 +8356,7 @@
           "contractName": "StakingRouter",
           "functionName": "updateStakingModule",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -8372,7 +8372,7 @@
           "contractName": "StakingRouter",
           "functionName": "updateTargetValidatorsLimits",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8440,8 +8440,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -8557,7 +8557,7 @@
           "contractName": "StakingRouter",
           "functionName": "setStakingModuleStatus",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8566,7 +8566,7 @@
           "contractName": "StakingRouter",
           "functionName": "grantRole",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8575,7 +8575,7 @@
           "contractName": "StakingRouter",
           "functionName": "revokeRole",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8597,7 +8597,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8682,8 +8682,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -8810,7 +8810,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8895,8 +8895,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -9043,7 +9043,7 @@
                 "getStakingModuleIds",
                 "getStakingModule"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9091,7 +9091,7 @@
                 "finalize",
                 "getWithdrawalStatus"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9172,8 +9172,8 @@
                 "receiveELRewards",
                 "transfer"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -9414,7 +9414,7 @@
                 "getStakingModuleIds",
                 "getStakingModule"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9462,7 +9462,7 @@
                 "finalize",
                 "getWithdrawalStatus"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9543,8 +9543,8 @@
                 "receiveELRewards",
                 "transfer"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -9752,7 +9752,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 2850497993.6546,
+          "directFundsUsd": 2779419817.3285723,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -9761,7 +9761,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 2850497993.6546,
+          "directFundsUsd": 2779419817.3285723,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -9771,7 +9771,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 2850497993.6546,
+          "directFundsUsd": 2779419817.3285723,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9802,8 +9802,8 @@
                 "transferShares",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -9868,7 +9868,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10264,7 +10264,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 2850497993.6546,
+          "directFundsUsd": 2779419817.3285723,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -10295,8 +10295,8 @@
                 "transferShares",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -10361,7 +10361,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10844,8 +10844,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -10861,7 +10861,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10914,7 +10914,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11341,8 +11341,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -11358,7 +11358,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11411,7 +11411,7 @@
                 "onValidatorsCountsByNodeOperatorReportingFinished",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11949,8 +11949,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -11999,7 +11999,7 @@
                 "onValidatorExitTriggered",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12192,8 +12192,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -12242,7 +12242,7 @@
                 "onValidatorExitTriggered",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12406,7 +12406,7 @@
                 "onValidatorExitTriggered",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12428,8 +12428,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -12658,7 +12658,7 @@
                 "onValidatorExitTriggered",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12680,8 +12680,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -12900,8 +12900,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -12960,7 +12960,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -13096,8 +13096,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -13156,7 +13156,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -13314,7 +13314,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13549,7 +13549,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13661,8 +13661,8 @@
                 "burnShares",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -13843,7 +13843,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14078,7 +14078,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14190,8 +14190,8 @@
                 "burnShares",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -14392,8 +14392,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -14438,7 +14438,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -14681,8 +14681,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -14727,7 +14727,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -14905,8 +14905,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "pauseStaking",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -14937,7 +14937,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15078,8 +15078,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "resumeStaking",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15110,7 +15110,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15251,8 +15251,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "setStakingLimit",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15283,7 +15283,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15424,8 +15424,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "removeStakingLimit",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15456,7 +15456,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15597,8 +15597,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "setMaxExternalRatioBP",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15629,7 +15629,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15770,8 +15770,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "stop",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15802,7 +15802,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -15943,8 +15943,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "resume",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -15975,7 +15975,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -16116,8 +16116,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "unsafeChangeDepositedValidators",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
@@ -16148,7 +16148,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -16285,10 +16285,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 2852318144.67725,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 2786009518.7485137,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
@@ -16841,7 +16841,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16874,7 +16874,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16998,8 +16998,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -17456,7 +17456,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17489,7 +17489,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17613,8 +17613,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -18183,7 +18183,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18216,7 +18216,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18340,8 +18340,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -18934,7 +18934,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18967,7 +18967,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19091,8 +19091,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -19661,7 +19661,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19694,7 +19694,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19818,8 +19818,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -20378,7 +20378,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20411,7 +20411,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20535,8 +20535,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -21013,7 +21013,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21046,7 +21046,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21170,8 +21170,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -21402,8 +21402,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
@@ -21662,7 +21662,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21695,7 +21695,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21819,8 +21819,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -22167,7 +22167,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22200,7 +22200,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22324,8 +22324,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -22753,7 +22753,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22786,7 +22786,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22910,8 +22910,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -23387,7 +23387,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23420,7 +23420,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23544,8 +23544,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -24034,7 +24034,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24067,7 +24067,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24191,8 +24191,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -24692,7 +24692,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24725,7 +24725,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24849,8 +24849,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -25315,7 +25315,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25348,7 +25348,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25472,8 +25472,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -25949,7 +25949,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25982,7 +25982,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26106,8 +26106,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -26583,7 +26583,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26616,7 +26616,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26740,8 +26740,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -27230,7 +27230,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27263,7 +27263,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27387,8 +27387,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -27877,7 +27877,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27910,7 +27910,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28034,8 +28034,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -28511,7 +28511,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28544,7 +28544,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28668,8 +28668,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -29145,7 +29145,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29178,7 +29178,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29302,8 +29302,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -29793,7 +29793,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29826,7 +29826,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29950,8 +29950,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -30428,7 +30428,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30461,7 +30461,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30585,8 +30585,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -31063,7 +31063,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31096,7 +31096,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31220,8 +31220,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -31698,7 +31698,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31731,7 +31731,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31855,8 +31855,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -32333,7 +32333,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32366,7 +32366,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32490,8 +32490,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -32968,7 +32968,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -33001,7 +33001,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -33125,8 +33125,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -33603,7 +33603,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -33636,7 +33636,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -33760,8 +33760,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -34238,7 +34238,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -34271,7 +34271,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -34395,8 +34395,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -34873,7 +34873,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -34906,7 +34906,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -35030,8 +35030,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -35521,7 +35521,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -35554,7 +35554,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -35678,8 +35678,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -36156,7 +36156,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -36189,7 +36189,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -36313,8 +36313,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -37008,7 +37008,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -37041,7 +37041,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -37165,8 +37165,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -37650,7 +37650,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -37683,7 +37683,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -37807,8 +37807,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -38292,7 +38292,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -38325,7 +38325,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -38449,8 +38449,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -38934,7 +38934,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -38967,7 +38967,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -39091,8 +39091,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -39576,7 +39576,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -39609,7 +39609,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -39733,8 +39733,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -40218,7 +40218,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -40251,7 +40251,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -40375,8 +40375,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -40742,8 +40742,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
@@ -41002,7 +41002,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -41035,7 +41035,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -41159,8 +41159,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -41249,8 +41249,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
@@ -41645,8 +41645,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -41680,7 +41680,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -41838,8 +41838,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -41884,7 +41884,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -41999,8 +41999,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
@@ -42035,8 +42035,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -42070,7 +42070,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -42198,7 +42198,7 @@
           "contractName": "StakingRouter",
           "functionName": "onValidatorExitTriggered",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -42278,8 +42278,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -42391,10 +42391,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 0.000029448505220544365,
+      "totalDirectCapital": 0.00003004407839819155,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.022649486,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419941422,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24",
@@ -42507,8 +42507,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -42567,7 +42567,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -42663,8 +42663,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0",
@@ -42724,8 +42724,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -42784,7 +42784,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -42850,8 +42850,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
@@ -42950,7 +42950,7 @@
     {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
       "name": "TokenManager",
-      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $690.52 in direct capital through the LDO token and Voting contract.",
+      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $690.69 in direct capital through the LDO token and Voting contract.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -42959,7 +42959,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "changeController",
           "impact": "critical",
-          "directFundsUsd": 690.5226226029979,
+          "directFundsUsd": 690.6893352163634,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -42968,7 +42968,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "generateTokens",
           "impact": "critical",
-          "directFundsUsd": 690.5226226029979,
+          "directFundsUsd": 690.6893352163634,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -42990,7 +42990,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "destroyTokens",
           "impact": "critical",
-          "directFundsUsd": 690.5226226029979,
+          "directFundsUsd": 690.6893352163634,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -43012,7 +43012,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "enableTransfers",
           "impact": "critical",
-          "directFundsUsd": 690.5226226029979,
+          "directFundsUsd": 690.6893352163634,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -43021,7 +43021,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "claimTokens",
           "impact": "critical",
-          "directFundsUsd": 690.5226226029979,
+          "directFundsUsd": 690.6893352163634,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -43406,7 +43406,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -43439,7 +43439,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -43563,8 +43563,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -44133,7 +44133,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -44166,7 +44166,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -44290,8 +44290,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -44484,10 +44484,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 690.5226226029979,
+      "totalDirectCapital": 690.6893352163634,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318835.1998725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786010209.437849,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
@@ -44860,7 +44860,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -44893,7 +44893,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -45017,8 +45017,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -45505,7 +45505,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -45538,7 +45538,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -45662,8 +45662,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -46150,7 +46150,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -46183,7 +46183,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -46307,8 +46307,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -46434,8 +46434,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
@@ -46797,7 +46797,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -46830,7 +46830,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -46954,8 +46954,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -47431,7 +47431,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -47464,7 +47464,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -47588,8 +47588,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -48065,7 +48065,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48098,7 +48098,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48222,8 +48222,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -48376,8 +48376,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45",
@@ -48739,7 +48739,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48772,7 +48772,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48896,8 +48896,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -49030,8 +49030,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF",
@@ -49315,7 +49315,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -49348,7 +49348,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -49472,8 +49472,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -50034,7 +50034,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -50067,7 +50067,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -50191,8 +50191,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -50325,8 +50325,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
@@ -50371,7 +50371,7 @@
           "contractName": "StakingRouter",
           "functionName": "reportRewardsMinted",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -50407,8 +50407,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -50556,8 +50556,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "mintShares",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -50602,7 +50602,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -50730,8 +50730,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "processClStateUpdate",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -50776,7 +50776,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -50904,8 +50904,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "internalizeExternalBadDebt",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -50950,7 +50950,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -51078,8 +51078,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "collectRewardsAndProcessWithdrawals",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
@@ -51110,7 +51110,7 @@
               "calledFunctions": [
                 "finalize"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -51147,7 +51147,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -51264,8 +51264,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "emitTokenRebase",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -51310,7 +51310,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -51434,15 +51434,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.022649486,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 2852318144.6772494,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419941422,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "name": "AccountingOracle",
-      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $1.82M in reachable capital.",
+      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $6.59M in reachable capital.",
       "adminType": "Contract",
       "isGovernance": false,
       "functions": [
@@ -51451,7 +51451,7 @@
           "contractName": "StakingRouter",
           "functionName": "updateExitedValidatorsCountByStakingModule",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -51508,8 +51508,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -51636,7 +51636,7 @@
           "contractName": "StakingRouter",
           "functionName": "reportStakingModuleExitedValidatorsCountByNodeOperator",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -51693,8 +51693,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -51821,7 +51821,7 @@
           "contractName": "StakingRouter",
           "functionName": "onValidatorsCountsByNodeOperatorReportingFinished",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -51879,8 +51879,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -52024,15 +52024,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 0.000029448505220544365,
+      "totalDirectCapital": 0.00003004407839819155,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.022649486,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419941422,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "name": "DepositSecurityModule",
-      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $2.85B in reachable capital.",
+      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $2.79B in reachable capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -52041,7 +52041,7 @@
           "contractName": "StakingRouter",
           "functionName": "decreaseStakingModuleVettedKeysCountByNodeOperator",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -52109,8 +52109,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -52226,8 +52226,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "deposit",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -52253,7 +52253,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -52265,7 +52265,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -52412,10 +52412,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.022649486,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 2852318144.6772494,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419941422,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f",
@@ -52429,7 +52429,7 @@
           "contractName": "StakingRouter",
           "functionName": "reportValidatorExitDelay",
           "impact": "critical",
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -52510,8 +52510,8 @@
                 "receiveWithdrawals",
                 "receiveELRewards"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -52623,10 +52623,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 0.000029448505220544365,
+      "totalDirectCapital": 0.00003004407839819155,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 1820151.022649486,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 6589701.419941422,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
@@ -53002,7 +53002,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -53035,7 +53035,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -53159,8 +53159,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -53637,7 +53637,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -53670,7 +53670,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -53794,8 +53794,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -53908,8 +53908,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081",
@@ -54572,7 +54572,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -54605,7 +54605,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -54729,8 +54729,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -55214,7 +55214,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -55247,7 +55247,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -55371,8 +55371,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -55485,8 +55485,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C",
@@ -55869,7 +55869,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -55902,7 +55902,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -56026,8 +56026,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -56511,7 +56511,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -56544,7 +56544,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -56668,8 +56668,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -56782,8 +56782,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE",
@@ -57166,7 +57166,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -57199,7 +57199,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -57323,8 +57323,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -57808,7 +57808,7 @@
                 "deposit",
                 "getStakingModuleMaxDepositsCount"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -57841,7 +57841,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -57965,8 +57965,8 @@
                 "transfer",
                 "burnShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -58079,8 +58079,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 2852318144.67725,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalReachableCapital": 2786009518.7485137,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0",
@@ -58364,8 +58364,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "mintExternalShares",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -58410,7 +58410,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -58538,8 +58538,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "burnExternalShares",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -58584,7 +58584,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -58712,8 +58712,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "rebalanceExternalEtherToInternal",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -58758,7 +58758,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -58882,15 +58882,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.0226200377,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419911377,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
       "name": "LidoExecutionLayerRewardsVault",
-      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $1.82M in direct capital.",
+      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $6.59M in direct capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -58899,8 +58899,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "receiveELRewards",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -58944,7 +58944,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -59068,15 +59068,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.0226200377,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419911377,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "name": "WithdrawalVault",
-      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $1.82M in direct capital.",
+      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $6.59M in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -59085,8 +59085,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "receiveWithdrawals",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -59130,7 +59130,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -59254,10 +59254,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.0226200377,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419911377,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     },
     {
       "address": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
@@ -59271,8 +59271,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "burnShares",
           "impact": "critical",
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
@@ -59316,7 +59316,7 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -59440,15 +59440,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 1820151.0226200377,
-      "totalDirectTokenValue": 21194522540.152782,
-      "totalReachableCapital": 1820151.0226200377,
-      "totalReachableTokenValue": 21194522540.152782
+      "totalDirectCapital": 6589701.419911377,
+      "totalDirectTokenValue": 21673850151.445507,
+      "totalReachableCapital": 6589701.419911377,
+      "totalReachableTokenValue": 21673850151.445507
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 2852318144.6772494,
-    "totalTokenValueAtRisk": 21194522540.152782
+    "totalFundsAtRisk": 2786009518.7485137,
+    "totalTokenValueAtRisk": 21673850151.445507
   },
   "dependencies": [
     {
@@ -59506,8 +59506,8 @@
                 "deposit",
                 "getPooledEthBySharesRoundUp"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             },
             {
@@ -59518,7 +59518,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -59530,7 +59530,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -59541,8 +59541,8 @@
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 1820151.0226200377,
-          "directTokenValueUsd": 21194522540.152782,
+          "directFundsUsd": 6589701.419911377,
+          "directTokenValueUsd": 21673850151.445507,
           "reachableContracts": [
             {
               "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -59552,7 +59552,7 @@
                 "isBunkerModeActive",
                 "unfinalizedStETH"
               ],
-              "fundsUsd": 2850497993.6546,
+              "fundsUsd": 2779419817.3285723,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -59564,7 +59564,7 @@
                 "getStakingModuleMaxDepositsCount",
                 "deposit"
               ],
-              "fundsUsd": 0.000029448505220544365,
+              "fundsUsd": 0.00003004407839819155,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -59638,7 +59638,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -59649,8 +59649,8 @@
                 "transferShares",
                 "getPooledEthByShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             }
           ]
@@ -59660,7 +59660,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 0.000029448505220544365,
+          "directFundsUsd": 0.00003004407839819155,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -59671,8 +59671,8 @@
                 "transferShares",
                 "getPooledEthByShares"
               ],
-              "fundsUsd": 1820151.0226200377,
-              "tokenValueUsd": 21194522540.152782,
+              "fundsUsd": 6589701.419911377,
+              "tokenValueUsd": 21673850151.445507,
               "fundsAtRisk": true
             }
           ]
@@ -59696,20 +59696,20 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 2852318144.67725,
-      "totalTokenValueAtRisk": 21194522540.152782
+      "totalFundsAtRisk": 2786009518.7485137,
+      "totalTokenValueAtRisk": 21673850151.445507
     }
   ],
   "dependencyEntityGroups": [
     {
       "entity": "Ethereum Deposit Contract",
-      "totalFundsAtRisk": 2852318144.67725,
-      "totalTokenValueAtRisk": 21194522540.152782
+      "totalFundsAtRisk": 2786009518.7485137,
+      "totalTokenValueAtRisk": 21673850151.445507
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 2852318144.67725,
-    "totalTokenValueAtRisk": 21194522540.152782
+    "totalFundsAtRisk": 2786009518.7485137,
+    "totalTokenValueAtRisk": 21673850151.445507
   },
   "funds": [
     {
@@ -59717,10 +59717,10 @@
       "name": "WithdrawalQueueERC721 (stETH)",
       "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds (N/A) in stETH and ETH balances, plus (N/A) in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals.",
       "balances": {
-        "totalUsdValue": 1455033974.085868
+        "totalUsdValue": 1419630004.5584176
       },
       "positions": {
-        "totalUsdValue": 1395464019.568732
+        "totalUsdValue": 1359789812.7701545
       },
       "tokenInfo": null,
       "aggregate": null
@@ -59730,14 +59730,14 @@
       "name": "Lido stETH Token (ETH Buffer)",
       "description": "The stETH token contract itself holds (N/A) in ETH as a deposit buffer before it is staked on the Beacon Chain. This buffer provides immediate withdrawal liquidity for small requests.",
       "balances": {
-        "totalUsdValue": 1820151.0226200377
+        "totalUsdValue": 6589701.419911377
       },
       "positions": null,
       "tokenInfo": {
         "symbol": "stETH",
-        "price": 2263.991583,
-        "totalSupply": "9361573028495125055093448",
-        "tokenValue": 21194522540.152782
+        "price": 2322.349056,
+        "totalSupply": "9332727177875842272249242",
+        "tokenValue": 21673850151.445507
       },
       "aggregate": null
     },
@@ -59746,10 +59746,10 @@
       "name": "Lido DAO Token (LDO)",
       "description": "The LDO governance token contract. Holds (N/A) in miscellaneous token balances.",
       "balances": {
-        "totalUsdValue": 690.5202361861791
+        "totalUsdValue": 690.6868883195551
       },
       "positions": {
-        "totalUsdValue": 0.0023864168187531926
+        "totalUsdValue": 0.002446896808224589
       },
       "tokenInfo": null,
       "aggregate": null

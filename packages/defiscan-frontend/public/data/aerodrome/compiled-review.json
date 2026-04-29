@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-21T15:04:03.292Z",
   "lastModified": "2026-04-21T15:04:03.292Z",
-  "compiledAt": "2026-04-28T09:34:24.000Z",
+  "compiledAt": "2026-04-29T09:21:18.000Z",
   "project": "aerodrome",
   "metadata": {
     "protocolName": "Aerodrome Finance",
@@ -10,7 +10,7 @@
     "chain": "Base",
     "projectType": "dex",
     "tokenName": "AERO",
-    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $878.13M."
+    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $902.51M."
   },
   "totals": {
     "contractCount": 36,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 175,
     "adminCount": 4,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 343771320.6879112,
+    "totalCapitalAtRisk": 344256336.537792,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 878132571.2700772,
+    "totalTokenValue": 902509891.3611064,
     "linesOfCode": 15990,
     "verifiedContractCount": 36,
     "coverage": 100
@@ -2016,7 +2016,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 878132571.2700772,
+              "tokenValueUsd": 902509891.3611064,
               "fundsAtRisk": true
             },
             {
@@ -2255,7 +2255,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 878132571.2700772
+      "totalReachableTokenValue": 902509891.3611064
     },
     {
       "address": "base:0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a",
@@ -2571,14 +2571,14 @@
     {
       "address": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
       "name": "Aerodrome Token (AERO)",
-      "description": "The AERO governance and utility token with a market cap of $878.13M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
+      "description": "The AERO governance and utility token with a market cap of $902.51M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "AERO",
-        "price": 0.46588624411297747,
+        "price": 0.4788194371983031,
         "totalSupply": "1884864776254544260290077090",
-        "tokenValue": 878132571.2700772
+        "tokenValue": 902509891.3611064
       },
       "aggregate": null
     },
@@ -2590,8 +2590,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 213128095.51857066,
-        "contractCount": 5042,
+        "totalUsdValue": 211301792.16083226,
+        "contractCount": 5048,
         "handlerName": "aerodrome-cl-factory",
         "label": "CL Factory TVL"
       }
@@ -2604,8 +2604,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 130643225.16934057,
-        "contractCount": 22397,
+        "totalUsdValue": 132954544.37695977,
+        "contractCount": 22405,
         "handlerName": "aerodrome-v2-factory",
         "label": "V2 Factory TVL"
       }
@@ -4414,6 +4414,53 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-04-29T09:21:18.000Z",
+      "updateNotifierId": 141,
+      "address": "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53",
+      "contractName": "NonfungiblePositionManager",
+      "entity": null,
+      "id": "141:base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 101395,
+          "after": 102675
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-29T09:21:18.000Z",
+      "updateNotifierId": 141,
+      "address": "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4",
+      "contractName": "VotingEscrow",
+      "entity": null,
+      "id": "141:base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.clock",
+          "before": 1777368863,
+          "after": 1777454477
+        },
+        {
+          "field": "values.epoch",
+          "before": 793172,
+          "after": 793593
+        },
+        {
+          "field": "values.tokenId",
+          "before": 118555,
+          "after": 118601
+        },
+        {
+          "field": "values.permanentLockBalance",
+          "before": "945644602721248719568689798",
+          "after": "945671980949682250311554725"
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-28T09:34:24.000Z",
       "updateNotifierId": 138,
