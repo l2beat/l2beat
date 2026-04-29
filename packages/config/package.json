@@ -16,6 +16,7 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "get-lz-data": "node -r esbuild-register scripts/omnichain",
+    "get-lz-dvn-names": "node -r esbuild-register scripts/omnichain/getDvnNames.ts",
     "update-multichain": "node -r esbuild-register scripts/multichain",
     "socket-crawl": "node -r esbuild-register scripts/socketcrawl",
     "socket-convert": "node -r esbuild-register scripts/socketconvert",
