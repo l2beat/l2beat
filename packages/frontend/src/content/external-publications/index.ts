@@ -2,7 +2,7 @@ import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
-const tags = v.union([v.literal('OTHERS'), v.literal('RESEARCH')])
+const tags = v.union([v.literal('Others'), v.literal('Research')])
 export type ExternalPublicationTag = v.infer<typeof tags>
 
 const externalPublication = v.object({

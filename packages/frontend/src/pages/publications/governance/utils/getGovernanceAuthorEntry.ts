@@ -7,7 +7,7 @@ export interface GovernanceAuthorEntry {
   avatar: ImageParams
   firstName: string
   lastName: string
-  role: string
+  role: string | undefined
 }
 
 export function getGovernanceAuthorEntry(
@@ -23,6 +23,6 @@ export function getGovernanceAuthorEntry(
     avatar,
     firstName: author.data.firstName,
     lastName: author.data.lastName,
-    role: author.data.role ?? '',
+    role: author.data.role,
   }
 }
