@@ -29,6 +29,9 @@ export const intmax: ScalingProject = {
     BADGES.Other.Privacy,
   ],
   display: {
+    redWarning: {
+      text: 'Legacy withdrawals on this version of INTMAX2 are suspended after a cryptographic vulnerability was discovered in the balance proof circuit. No exploitation has been observed and funds remain secure in the Ethereum liquidity contract, but users are urged to exit via the new Exit system before assisted support ends. See the [exit documentation](https://intmax-exit.gitbook.io/intmax-exit-documentation) and [announcement](https://x.com/intmaxIO/status/2049396434513138094) for details.',
+    },
     name: 'INTMAX',
     slug: 'intmax',
     description:
