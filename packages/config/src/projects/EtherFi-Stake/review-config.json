@@ -114,7 +114,7 @@
     },
     "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
       "name": "Wrapped eETH (weETH)",
-      "description": "The non-rebasing wrapped eETH token. Holds {{weethBalance}} in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging."
+      "description": "The non-rebasing wrapped eETH token. Holds eETH on behalf of users who wrapped, used for DeFi integrations and cross-chain bridging. Wrapped value is intentionally not added to TVS to avoid double-counting against the eETH market cap."
     },
     "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": {
       "name": "EtherFiRestaker (EigenLayer Positions)",
@@ -176,7 +176,6 @@
     "liquidityPoolBalance": "fundsdata.contracts[\"eth:0x308861A430be4cce5502d0A12724771Fc6DaF216\"].balances.totalUsdValue",
     "treasuryBalance": "fundsdata.contracts[\"eth:0x6329004E903B7F420245E7aF3f355186f2432466\"].balances.totalUsdValue",
     "eethMarketCap": "fundsdata.contracts[\"eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2\"].tokenInfo.tokenValue",
-    "weethBalance": "fundsdata.contracts[\"eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee\"].balances.totalUsdValue",
     "restakerPositions": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.totalUsdValue"
   },
   "publishedAt": "2026-04-01T00:00:00.000Z"

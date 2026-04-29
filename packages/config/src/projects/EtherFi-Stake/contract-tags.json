@@ -143,8 +143,7 @@
     {
       "contractAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
       "isExternal": false,
-      "fetchBalances": true,
-      "timestamp": "2026-03-24T10:41:15.945Z"
+      "timestamp": "2026-04-29T07:30:00.000Z"
     }
   ]
 }

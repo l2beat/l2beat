@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "eETH",
-    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $5.86B."
+    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $694.40M."
   },
   "totals": {
     "contractCount": 71,
@@ -18,7 +18,7 @@
     "scoredFunctionCount": 84,
     "adminCount": 42,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 5856103213.7553425,
+    "totalCapitalAtRisk": 694398093.7671812,
     "totalTokenValueAtRisk": 5930539442.040521,
     "totalTokenValue": 5930539442.040521,
     "linesOfCode": 18031,
@@ -428,7 +428,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -795,7 +795,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.7553425,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -1354,7 +1354,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2051,7 +2051,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2748,7 +2748,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3445,7 +3445,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4153,7 +4153,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4315,7 +4315,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -4874,7 +4874,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5571,7 +5571,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6268,7 +6268,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6792,7 +6792,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7478,7 +7478,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8173,7 +8173,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8859,7 +8859,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9545,7 +9545,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10231,7 +10231,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10920,7 +10920,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11609,7 +11609,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12557,7 +12557,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13252,7 +13252,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13947,7 +13947,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14297,7 +14297,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15028,7 +15028,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16129,7 +16129,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16814,7 +16814,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17861,7 +17861,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18572,7 +18572,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18795,7 +18795,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19567,7 +19567,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20261,7 +20261,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21077,7 +21077,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -21768,7 +21768,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22705,7 +22705,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23389,7 +23389,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23648,7 +23648,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24354,7 +24354,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25030,7 +25030,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25724,7 +25724,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26884,7 +26884,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27588,7 +27588,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28348,7 +28348,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29039,7 +29039,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29814,7 +29814,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30501,7 +30501,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30690,7 +30690,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31379,7 +31379,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32068,7 +32068,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32757,7 +32757,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -33472,7 +33472,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -34162,7 +34162,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -34826,7 +34826,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -35538,7 +35538,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -36237,7 +36237,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -37443,7 +37443,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -38137,7 +38137,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -38900,7 +38900,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -39134,7 +39134,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -39825,7 +39825,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -40645,7 +40645,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -41334,7 +41334,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -42083,7 +42083,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -42764,7 +42764,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -43765,7 +43765,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -44462,7 +44462,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -45228,7 +45228,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -45940,7 +45940,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -46405,7 +46405,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -47101,7 +47101,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48113,7 +48113,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -48803,7 +48803,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -49493,7 +49493,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -50183,7 +50183,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -50873,7 +50873,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -51563,7 +51563,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -51600,7 +51600,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -52943,7 +52943,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -53644,7 +53644,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -54323,7 +54323,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -55013,7 +55013,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -55678,7 +55678,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -56371,7 +56371,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -56881,7 +56881,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -57575,7 +57575,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -58345,7 +58345,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -59034,7 +59034,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -59392,7 +59392,7 @@
       ],
       "totalDirectCapital": 694398093.7671812,
       "totalDirectTokenValue": 5930539442.040521,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -60665,7 +60665,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -61452,7 +61452,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -62005,7 +62005,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -62363,7 +62363,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -63031,7 +63031,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -63106,7 +63106,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -63167,7 +63167,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -63835,7 +63835,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.7553425,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -64681,7 +64681,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -65365,7 +65365,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -66049,7 +66049,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -66136,7 +66136,7 @@
       ],
       "totalDirectCapital": 694375950.577122,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -66500,7 +66500,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -67200,7 +67200,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -68161,7 +68161,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -68851,7 +68851,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -68947,7 +68947,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 5930539442.040521,
-      "totalReachableCapital": 5856103213.7553425,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -69557,7 +69557,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -70250,7 +70250,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -70927,7 +70927,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -71014,7 +71014,7 @@
       ],
       "totalDirectCapital": 51113213.79520184,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -71624,7 +71624,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -72292,7 +72292,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -72992,7 +72992,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -73079,7 +73079,7 @@
       ],
       "totalDirectCapital": 51113213.79520184,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -73689,7 +73689,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -73776,7 +73776,7 @@
       ],
       "totalDirectCapital": 51113213.79520184,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -74386,7 +74386,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -75070,7 +75070,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -75157,7 +75157,7 @@
       ],
       "totalDirectCapital": 51113213.79520184,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -75767,7 +75767,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -76451,7 +76451,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -76538,7 +76538,7 @@
       ],
       "totalDirectCapital": 51113213.79520184,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.755342,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -77184,7 +77184,7 @@
     {
       "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
       "name": "RoleRegistry Contract",
-      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $5.86B in reachable capital through withdrawal and weETH management.",
+      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $694.40M in reachable capital through withdrawal and weETH management.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -77802,7 +77802,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -77964,7 +77964,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -78683,7 +78683,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -79287,7 +79287,7 @@
           "contractName": "Wrapped eETH Token",
           "functionName": "recoverETH",
           "impact": "critical",
-          "directFundsUsd": 5161705119.98816,
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -79982,7 +79982,7 @@
           "contractName": "Wrapped eETH Token",
           "functionName": "recoverERC20",
           "impact": "critical",
-          "directFundsUsd": 5161705119.98816,
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -80677,7 +80677,7 @@
           "contractName": "Wrapped eETH Token",
           "functionName": "recoverERC721",
           "impact": "critical",
-          "directFundsUsd": 5161705119.98816,
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -81373,7 +81373,7 @@
           "functionName": "upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 5161705119.98816,
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -82070,7 +82070,7 @@
           "functionName": "upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 5161705119.98816,
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -82762,9 +82762,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 5161705119.98816,
+      "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.7553425,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     },
     {
@@ -84104,7 +84104,7 @@
                 "upgradeToAndCall",
                 "transfer"
               ],
-              "fundsUsd": 5161705119.98816,
+              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -84462,12 +84462,12 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5856103213.7553425,
+      "totalReachableCapital": 694398093.7671812,
       "totalReachableTokenValue": 5930539442.040521
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 5856103213.7553425,
+    "totalFundsAtRisk": 694398093.7671812,
     "totalTokenValueAtRisk": 5930539442.040521
   },
   "dependencies": [
@@ -86713,20 +86713,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "transferFrom"
-              ],
-              "fundsUsd": 5161705119.98816,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
               "name": "EtherFiRestaker",
               "viewOnlyPath": false,
@@ -86780,21 +86766,6 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 5930539442.040521,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "permit",
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "transferFrom"
-              ],
-              "fundsUsd": 5161705119.98816,
-              "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
             {
@@ -86853,21 +86824,6 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 5930539442.040521,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "transferFrom",
-                "permit"
-              ],
-              "fundsUsd": 5161705119.98816,
-              "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
             {
@@ -86930,21 +86886,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "transferFrom",
-                "permit"
-              ],
-              "fundsUsd": 5161705119.98816,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
               "name": "EtherFiRestaker",
               "viewOnlyPath": false,
@@ -86979,7 +86920,7 @@
           ]
         }
       ],
-      "totalFundsAtRisk": 5856081070.565282,
+      "totalFundsAtRisk": 694375950.577122,
       "totalTokenValueAtRisk": 5930539442.040521,
       "dependencyType": "callgraph"
     },
@@ -87712,19 +87653,7 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferFrom"
-              ],
-              "fundsUsd": 5161705119.98816,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
@@ -87788,7 +87717,7 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 5212818333.783362,
+      "totalFundsAtRisk": 51113213.79520184,
       "totalTokenValueAtRisk": 5930539442.040521,
       "dependencyType": "callgraph"
     }
@@ -87806,7 +87735,7 @@
     },
     {
       "entity": "LayerZero",
-      "totalFundsAtRisk": 5212818333.783362,
+      "totalFundsAtRisk": 51113213.79520184,
       "totalTokenValueAtRisk": 5930539442.040521
     },
     {
@@ -87816,7 +87745,7 @@
     },
     {
       "entity": "Lido stETH",
-      "totalFundsAtRisk": 5856081070.565282,
+      "totalFundsAtRisk": 694375950.577122,
       "totalTokenValueAtRisk": 5930539442.040521
     },
     {
@@ -87831,7 +87760,7 @@
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 5856081070.565282,
+    "totalFundsAtRisk": 694375950.577122,
     "totalTokenValueAtRisk": 5930539442.040521
   },
   "funds": [
@@ -87874,10 +87803,8 @@
     {
       "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
       "name": "Wrapped eETH (weETH)",
-      "description": "The non-rebasing wrapped eETH token. Holds $5.16B in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging.",
-      "balances": {
-        "totalUsdValue": 5161705119.98816
-      },
+      "description": "The non-rebasing wrapped eETH token. Holds eETH on behalf of users who wrapped, used for DeFi integrations and cross-chain bridging. Wrapped value is intentionally not added to TVS to avoid double-counting against the eETH market cap.",
+      "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": null

@@ -13,7 +13,7 @@
         "scoredFunctionCount": 84,
         "adminCount": 38,
         "dependencyCount": 7,
-        "totalCapitalAtRisk": 5856103213.7553425,
+        "totalCapitalAtRisk": 694398093.7671812,
         "totalTokenValueAtRisk": 5930539442.040521,
         "totalTokenValue": 5930539442.040521,
         "linesOfCode": 18031,
@@ -283,7 +283,7 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 16134469659.604725,
+    "totalCapitalAtRisk": 10972764539.616564,
     "totalTokenValueAtRisk": 31986993139.57538,
     "totalTokenValue": 32117091058.67659,
     "protocolsReviewed": 14,
@@ -292,30 +292,6 @@
     "totalUpdateCount": 757
   },
   "dependencies": [
-    {
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "name": "Lido stETH Token",
-      "entity": "Lido stETH",
-      "totalFundsAtRisk": 5856081070.565282,
-      "protocols": [
-        {
-          "slug": "EtherFi-Stake",
-          "name": "EtherFi Stake"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
-      "name": "LayerZero EndpointV2",
-      "entity": "LayerZero",
-      "totalFundsAtRisk": 5212818333.783362,
-      "protocols": [
-        {
-          "slug": "EtherFi-Stake",
-          "name": "EtherFi Stake"
-        }
-      ]
-    },
     {
       "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "name": "Ethereum Beacon Chain DepositContract",
@@ -440,6 +416,18 @@
       "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
       "name": "EigenLayer RewardsCoordinator",
       "entity": "EigenLayer",
+      "totalFundsAtRisk": 694375950.577122,
+      "protocols": [
+        {
+          "slug": "EtherFi-Stake",
+          "name": "EtherFi Stake"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+      "name": "Lido stETH Token",
+      "entity": "Lido stETH",
       "totalFundsAtRisk": 694375950.577122,
       "protocols": [
         {
@@ -748,6 +736,18 @@
       "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "name": "EigenLayer EigenPodManager",
       "entity": "EigenLayer",
+      "totalFundsAtRisk": 51113213.79520184,
+      "protocols": [
+        {
+          "slug": "EtherFi-Stake",
+          "name": "EtherFi Stake"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+      "name": "LayerZero EndpointV2",
+      "entity": "LayerZero",
       "totalFundsAtRisk": 51113213.79520184,
       "protocols": [
         {
