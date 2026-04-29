@@ -18,7 +18,7 @@ import type { AggregatedAnomalyRow, AnomaliesSummaryResponse } from './types'
 
 export function AnomaliesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.anomalies.summary.useQuery()
+    api.interop.anomalies.summary.useQuery()
 
   const response: AnomaliesSummaryResponse | undefined = data
   const rows: AggregatedAnomalyRow[] = response?.aggregatedItems ?? []

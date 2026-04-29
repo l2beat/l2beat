@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
-import { trcpRoot } from './trpc'
+import { publicProcedure } from './init'
 
-export const publicProcedure = trcpRoot.procedure
+export { publicProcedure }
 
 export const protectedProcedure = publicProcedure.use((opts) => {
   if (!opts.ctx.session) {

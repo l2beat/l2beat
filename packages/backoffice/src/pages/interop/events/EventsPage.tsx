@@ -17,7 +17,7 @@ import type { EventStatsRow } from './types'
 
 export function EventsPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.events.stats.useQuery()
+    api.interop.events.stats.useQuery()
 
   const rows: EventStatsRow[] = data ?? []
   const totalEvents = rows.reduce((sum, row) => sum + row.count, 0)

@@ -18,7 +18,7 @@ import { formatProcessorTimestamp } from './utils'
 
 export function ProcessorStatusesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.status.processors.useQuery(undefined, {
+    api.interop.status.processors.useQuery(undefined, {
       refetchInterval: 2_500,
     })
 

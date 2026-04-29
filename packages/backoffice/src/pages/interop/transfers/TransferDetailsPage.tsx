@@ -46,7 +46,7 @@ export function TransferDetailsPage() {
     isLoading: isTransfersLoading,
     isFetching: isTransfersFetching,
     refetch: refetchTransfers,
-  } = api.transfers.details.useQuery(detailsInput, {
+  } = api.interop.transfers.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -56,7 +56,7 @@ export function TransferDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: TransferDetailsRow[] = transfersData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

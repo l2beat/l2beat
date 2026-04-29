@@ -1,4 +1,3 @@
-import type { RouterInputs } from '@l2beat/backend/interop-trpc'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -15,7 +14,12 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { EventDetailsTable } from './table/details/EventDetailsTable'
-import type { ChainMetadata, EventDetailsRow, InteropEventKind } from './types'
+import type {
+  ChainMetadata,
+  EventDetailsInput,
+  EventDetailsRow,
+  InteropEventKind,
+} from './types'
 import { getEventKindLabel } from './utils/event-labels'
 
 const INTEROP_EVENT_KINDS: readonly InteropEventKind[] = [
@@ -50,8 +54,6 @@ function getKind(kind: string | undefined): InteropEventKind | undefined {
   return isInteropEventKind(kind) ? kind : undefined
 }
 
-type EventDetailsInput = RouterInputs['events']['details']
-
 export function EventDetailsPage() {
   const params = useParams<{ kind: string; type: string }>()
   const kind = getKind(params.kind)
@@ -69,7 +71,7 @@ export function EventDetailsPage() {
     isLoading: isEventDetailsLoading,
     isFetching: isEventDetailsFetching,
     refetch: refetchEventDetails,
-  } = api.events.details.useQuery(detailsInput, {
+  } = api.interop.events.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -79,7 +81,7 @@ export function EventDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: EventDetailsRow[] = eventDetailsData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

@@ -1,7 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAnomaliesRouter } from './anomalies'
 
 describe(createAnomaliesRouter.name, () => {

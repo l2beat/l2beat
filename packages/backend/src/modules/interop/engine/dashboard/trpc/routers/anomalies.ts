@@ -2,6 +2,8 @@ import { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
   VALUE_DIFF_THRESHOLD_PERCENT,
@@ -11,8 +13,6 @@ import {
   interpret,
   VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
 } from '../../stats'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 export interface SuspiciousTransferDto {
   plugin: string

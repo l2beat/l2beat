@@ -13,7 +13,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 
 export function FinancialActionsPage() {
-  const refreshFinancials = api.financials.refresh.useMutation({
+  const refreshFinancials = api.interop.financials.refresh.useMutation({
     onSuccess: (data) => {
       toast.success('Financials refresh requested', {
         description: `${data.updatedTransfers} transfers marked as unprocessed.`,

@@ -46,7 +46,7 @@ export function MessageDetailsPage() {
     isLoading: isMessagesLoading,
     isFetching: isMessagesFetching,
     refetch: refetchMessages,
-  } = api.messages.details.useQuery(detailsInput, {
+  } = api.interop.messages.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -56,7 +56,7 @@ export function MessageDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: MessageDetailsRow[] = messagesData ?? []
   const chains: ChainMetadata[] = chainsData ?? []

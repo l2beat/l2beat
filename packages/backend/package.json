@@ -9,15 +9,15 @@
       "types": "./build/src/index.d.ts",
       "default": "./build/src/index.js"
     },
-    "./interop-trpc": {
-      "types": "./build/src/modules/interop/engine/dashboard/trpc/index.d.ts",
-      "default": "./build/src/modules/interop/engine/dashboard/trpc/index.js"
+    "./trpc": {
+      "types": "./build/src/modules/backoffice/index.d.ts",
+      "default": "./build/src/modules/backoffice/index.js"
     }
   },
   "typesVersions": {
     "*": {
-      "interop-trpc": [
-        "./build/src/modules/interop/engine/dashboard/trpc/index.d.ts"
+      "trpc": [
+        "./build/src/modules/backoffice/index.d.ts"
       ]
     }
   },

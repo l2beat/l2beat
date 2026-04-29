@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import { createTestApiServer } from '../../../../test/testApiServer'
@@ -18,7 +17,6 @@ function makeConfig(dangerousOperationsEnabled = false): InteropFeatureConfig {
     dashboard: {
       enabled: true,
       getExplorerUrl: () => undefined,
-      auth: false,
     },
     compare: { enabled: false },
     financials: { enabled: false, tokenDbApiUrl: '' },
@@ -49,7 +47,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -79,7 +76,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -111,7 +107,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -143,7 +138,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -183,7 +177,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -238,7 +231,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(false),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,
@@ -275,7 +267,6 @@ describe(createInteropRouter.name, () => {
       const router = createInteropRouter(
         db,
         makeConfig(true),
-        mockObject<TokenDbClient>(),
         [],
         syncersManager,
         Logger.SILENT,

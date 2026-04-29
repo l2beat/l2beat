@@ -27,7 +27,7 @@ export function SuspiciousTransfersPage() {
     isLoading: isSuspiciousTransfersLoading,
     isFetching: isSuspiciousTransfersFetching,
     refetch: refetchSuspiciousTransfers,
-  } = api.anomalies.suspiciousTransfers.useQuery()
+  } = api.interop.anomalies.suspiciousTransfers.useQuery()
 
   const {
     data: chainsData,
@@ -35,7 +35,7 @@ export function SuspiciousTransfersPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const response: SuspiciousTransfersResponse | undefined =
     suspiciousTransfersData

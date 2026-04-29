@@ -1,31 +1,19 @@
 import { expect, mockObject } from 'earl'
 import type { jwtVerify } from 'jose'
-import type {
-  InteropDashboardAuthConfig,
-  InteropFeatureConfig,
-} from '../../../../../../config/Config'
-import { getSession } from './getSession'
+import { type AuthCredentials, getSession } from './session'
 
 const BACKOFFICE_TOKEN = 'backoffice-token-abcd-1234'
 
-const mockDashboard = mockObject<InteropFeatureConfig['dashboard']>({
-  enabled: true,
-  getExplorerUrl: () => undefined,
-  auth: mockObject<InteropDashboardAuthConfig>({
-    JWKS: undefined,
-    aud: undefined,
-    teamDomain: undefined,
-  }),
-  backofficeAuthToken: BACKOFFICE_TOKEN,
+const mockAuth = mockObject<AuthCredentials>({
+  JWKS: undefined,
+  aud: undefined,
+  teamDomain: undefined,
+  bypassAuthToken: BACKOFFICE_TOKEN,
 })
 
 describe(getSession.name, () => {
   it('works as expected when auth is disabled', async () => {
-    const dashboard = mockObject<InteropFeatureConfig['dashboard']>({
-      auth: false,
-    })
-
-    const session = await getSession(new Headers(), dashboard)
+    const session = await getSession(new Headers(), false)
 
     expect(session).toEqual({
       email: 'dev@l2beat.com',
@@ -40,7 +28,7 @@ describe(getSession.name, () => {
       throw new Error('Incorrect JWT token')
     }
 
-    const session = await getSession(headers, mockDashboard, {
+    const session = await getSession(headers, mockAuth, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
@@ -59,7 +47,7 @@ describe(getSession.name, () => {
       } as unknown as Awaited<ReturnType<typeof jwtVerify>>
     }
 
-    const session = await getSession(headers, mockDashboard, {
+    const session = await getSession(headers, mockAuth, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
@@ -69,7 +57,7 @@ describe(getSession.name, () => {
   })
 
   it('returns undefined if no token is provided', async () => {
-    const session = await getSession(new Headers(), mockDashboard)
+    const session = await getSession(new Headers(), mockAuth)
 
     expect(session).toEqual(undefined)
   })
@@ -81,7 +69,7 @@ describe(getSession.name, () => {
       throw new Error('Should not be called')
     }
 
-    const session = await getSession(headers, mockDashboard, {
+    const session = await getSession(headers, mockAuth, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
@@ -98,7 +86,7 @@ describe(getSession.name, () => {
       throw new Error('Should not be called')
     }
 
-    const session = await getSession(headers, mockDashboard, {
+    const session = await getSession(headers, mockAuth, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
@@ -117,7 +105,7 @@ describe(getSession.name, () => {
       } as unknown as Awaited<ReturnType<typeof jwtVerify>>
     }
 
-    const session = await getSession(headers, mockDashboard, {
+    const session = await getSession(headers, mockAuth, {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 

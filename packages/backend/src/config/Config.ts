@@ -61,6 +61,8 @@ export interface Config {
   readonly interop: InteropFeatureConfig | false
   readonly newClientsEnabled: boolean
 
+  readonly backoffice: BackofficeFeatureConfig | false
+
   readonly flags: ResolvedFeatureFlag[]
 }
 
@@ -242,8 +244,6 @@ export interface InteropFeatureConfig {
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
-    auth: InteropDashboardAuthConfig | false
-    backofficeAuthToken?: string
   }
   compare: {
     enabled: boolean
@@ -262,7 +262,16 @@ export interface InteropFeatureConfig {
   oneSidedChains: string[]
 }
 
-export interface InteropDashboardAuthConfig {
+export interface BackofficeFeatureConfig {
+  auth: BackofficeAuthConfig | false
+}
+
+export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig | false
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string

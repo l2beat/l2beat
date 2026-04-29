@@ -3,7 +3,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { TokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
@@ -32,12 +31,10 @@ import { renderStatusPage } from './StatusPage'
 import { renderSupportChartsPage } from './SupportChartsPage'
 import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
-import { createInteropTrpc } from './trpc/server/middleware'
 
 export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
-  tokenDbClient: TokenDbClient,
   processors: InteropBlockProcessor[],
   syncersManager: InteropSyncersManager,
   logger: Logger,
@@ -59,23 +56,6 @@ export function createInteropRouter(
     ctx.body = dangerousOperationsDisabledResponse
     return false
   }
-
-  router.all(
-    ['/trpc', '/trpc/(.*)'],
-    createInteropTrpc(
-      {
-        aggregationConfigs: config.aggregation,
-        db,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        syncersManager,
-        getProcessorStatuses: () => getProcessorsStatus(processors),
-        dashboard: config.dashboard,
-        chains: config.capture.chains,
-        tokenDbClient,
-      },
-      { prefix: '/trpc' },
-    ),
-  )
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()

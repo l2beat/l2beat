@@ -1,4 +1,4 @@
-import type { InteropTrpcRouter } from '@l2beat/backend/interop-trpc'
+import type { BackendRouter } from '@l2beat/backend/trpc'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
@@ -7,8 +7,8 @@ import { useState } from 'react'
 import { useEnvironment } from '~/components/environment-selector/EnvironmentContext'
 import { createQueryClient } from './queryClient'
 
-export const api: ReturnType<typeof createTRPCReact<InteropTrpcRouter>> =
-  createTRPCReact<InteropTrpcRouter>()
+export const api: ReturnType<typeof createTRPCReact<BackendRouter>> =
+  createTRPCReact<BackendRouter>()
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const { config } = useEnvironment()

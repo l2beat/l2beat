@@ -1,3 +1,3 @@
-import type { RouterOutputs } from '@l2beat/backend/interop-trpc'
-
-export type KnownAppsRow = RouterOutputs['knownApps']['list'][number]
+import type { BackendRouterOutputs } from '@l2beat/backend/trpc'
+export type KnownAppsRow =
+  BackendRouterOutputs['interop']['knownApps']['list'][number]

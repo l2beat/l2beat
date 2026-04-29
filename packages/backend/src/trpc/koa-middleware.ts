@@ -38,17 +38,11 @@ export const createKoaMiddleware =
 
     if (prefix && !request.path.startsWith(prefix)) return next()
 
-    // put parsed body (by koa-bodyparser/@koa/bodyparser for example)
-    // where nodeHTTPRequestHandler will look for it.
     if ('body' in request) {
       req.body = request.body
     }
 
-    // koa uses 404 as a default status but some logic in
-    // nodeHTTPRequestHandler assumes default status of 200.
     res.statusCode = 200
-    // tRPC writes directly to Node's response object.
-    // Disable Koa's response handling to avoid overriding status/body.
     ctx.respond = false
 
     await nodeHTTPRequestHandler({

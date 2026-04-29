@@ -81,7 +81,7 @@ export function StatusPage() {
   >(null)
 
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.status.pluginSyncStatuses.useQuery(undefined, {
+    api.interop.status.pluginSyncStatuses.useQuery(undefined, {
       refetchInterval: autoRefresh ? 5_000 : false,
     })
 
@@ -94,12 +94,12 @@ export function StatusPage() {
     (row) => row.resyncRequestedFrom !== undefined,
   ).length
 
-  const resync = api.status.resync.useMutation({
+  const resync = api.interop.status.resync.useMutation({
     onSuccess: (result, input) => {
       toast.success(
         `${input.pluginName}: resync requested for ${result.updatedChains.length} chains`,
       )
-      void utils.status.pluginSyncStatuses.invalidate()
+      void utils.interop.status.pluginSyncStatuses.invalidate()
     },
     onError: (mutationError) => {
       toast.error(mutationError.message)
@@ -109,14 +109,14 @@ export function StatusPage() {
     },
   })
 
-  const restartFromNow = api.status.restartFromNow.useMutation({
+  const restartFromNow = api.interop.status.restartFromNow.useMutation({
     onSuccess: (result, input) => {
       toast.success(
         `${input.pluginName}: restart requested for ${result.updatedChains.length} chains`,
       )
       setRestartDialogPlugin(null)
       setRestartConfirmation('')
-      void utils.status.pluginSyncStatuses.invalidate()
+      void utils.interop.status.pluginSyncStatuses.invalidate()
     },
     onError: (mutationError) => {
       toast.error(mutationError.message)

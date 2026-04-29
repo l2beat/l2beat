@@ -1,8 +1,8 @@
 import type { Database } from '@l2beat/database'
 import { TRPCError } from '@trpc/server'
 import { expect, mockObject } from 'earl'
+import { createCallerFactory } from '../../../../../trpc/init'
 import { createChainsRouter } from './routers/chains'
-import { createCallerFactory } from './trpc'
 
 describe('interop trpc auth', () => {
   it('rejects unauthenticated callers', async () => {
