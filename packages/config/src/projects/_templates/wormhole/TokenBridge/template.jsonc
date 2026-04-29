@@ -2,5 +2,38 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TokenBridge",
   "description": "Wormhole Token Bridge escrow and wrapped-token beacon on EVM chains. It accepts VAAs verified by Wormhole Core to mint, burn, release, register remote bridge emitters, and upgrade bridge logic.",
-  "ignoreRelatives": ["$admin", "WETH"]
+  "ignoreRelatives": ["$admin", "WETH"],
+  "fields": {
+    "finality": {
+      "description": "Consistency level used when this Token Bridge publishes Wormhole messages from the local chain.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "governanceChainId": {
+      "description": "Wormhole chain id from which Token Bridge governance messages are accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "governanceContract": {
+      "description": "Emitter address authorized to send Token Bridge governance messages.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "implementation": {
+      "description": "Beacon implementation returned by the Token Bridge for wrapped token proxies. Changing it changes the code used by wrapped assets minted by this bridge.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "tokenImplementation": {
+      "description": "Implementation used by wrapped ERC20 assets created by this Token Bridge.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "wormhole": {
+      "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by this Token Bridge.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    }
+  },
+  "category": "bridge-external"
 }
