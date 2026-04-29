@@ -1,5 +1,4 @@
 import { ServerIcon } from 'lucide-react'
-import { type Environment, useEnvironment } from '~/api/environment'
 import {
   Select,
   SelectContent,
@@ -8,6 +7,10 @@ import {
   SelectValue,
 } from '~/components/core/Select'
 import { useSidebar } from '~/components/core/Sidebar'
+import {
+  type Environment,
+  useEnvironment,
+} from '~/components/environment-selector/EnvironmentContext'
 
 const ENVIRONMENT_DOT_CLASS: Record<Environment, string> = {
   local: 'bg-sky-500',
@@ -18,9 +21,8 @@ const ENVIRONMENT_DOT_CLASS: Record<Environment, string> = {
 export function EnvironmentSelector() {
   const { environment, setEnvironment, config, allConfigs } = useEnvironment()
   const { state } = useSidebar()
-  const isCollapsed = state === 'collapsed'
 
-  if (isCollapsed) {
+  if (state === 'collapsed') {
     return (
       <div
         className="flex h-9 items-center justify-center"

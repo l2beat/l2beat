@@ -30,7 +30,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from './core/Collapsible'
-import { EnvironmentSelector } from './EnvironmentSelector'
+import { EnvironmentSelector } from './environment-selector/EnvironmentSelector'
 
 const interopItems = [
   {
