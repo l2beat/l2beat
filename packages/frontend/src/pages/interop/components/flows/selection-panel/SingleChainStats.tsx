@@ -81,6 +81,11 @@ function Stats({
       </div>
       <div className="space-y-1.5">
         <StatRow
+          label="Total volume"
+          value={formatCurrency(chainData.totalVolume, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
           label="Volume in"
           value={formatCurrency(chainData.inflow, 'usd')}
           isLoading={isLoading}
@@ -93,6 +98,11 @@ function Stats({
         <StatRow
           label="Net flow"
           value={formatCurrency(chainData.netFlow, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Total transfers"
+          value={formatInteger(totalTransfers)}
           isLoading={isLoading}
         />
         <StatRow

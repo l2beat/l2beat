@@ -11,6 +11,11 @@ on:
         description: "Dockerfile path (e.g., packages/frontend/Dockerfile)"
         required: true
         type: string
+      extra_build_args:
+        description: "Additional Docker build args passed to docker/build-push-action"
+        required: false
+        default: ""
+        type: string
     secrets:
       TURBO_TOKEN:
         required: true
@@ -59,4 +64,5 @@ jobs:
           build-args: |
             TURBO_TEAM=${{ secrets.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+            ${{ inputs.extra_build_args }}
           no-cache: true

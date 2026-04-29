@@ -19,20 +19,6 @@ export class LoopringClient extends ClientCore implements BlockClient {
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
-    // Block 0 has no transactions and the API returns an
-    // empty list for it. We derive block timestamps from their transactions,
-    // so there's nothing to infer from. We hard-code a timestamp
-    // one day before block 1, so the block-at-or-before search treats it as a valid lower bound.
-    if (blockNumber === 0) {
-      return {
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        number: 0,
-        timestamp: 1606283958,
-        transactions: [],
-      }
-    }
-
     const block = await this.queryBlock(blockNumber)
 
     return {

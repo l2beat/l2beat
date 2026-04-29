@@ -353,6 +353,8 @@ function matchFulfilledOrder(
       dstTokenAddress,
       extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
       bridgeType: 'nonMinting',
+      srcWasBurned: false,
+      dstWasMinted: false,
     }),
   ]
 }
@@ -432,6 +434,8 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
             mayanForwarded?.args.tokenOut ?? event.args.dstTokenAddress,
           extraEvents: mayanForwarded ? [mayanForwarded] : undefined,
           bridgeType: 'nonMinting',
+          srcWasBurned: false,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -460,6 +464,8 @@ export class MayanSwiftPlugin implements InteropPluginResyncable {
           dstTokenAddress: orderEvent.args.dstTokenAddress,
           dstAmount: orderEvent.args.dstAmount,
           bridgeType: 'nonMinting',
+          srcWasBurned: false,
+          dstWasMinted: false,
         }),
       ]
     }

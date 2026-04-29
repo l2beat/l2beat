@@ -7,7 +7,11 @@ import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import type { ApplicationModule, ModuleDependencies } from '../../types'
+import type {
+  ApplicationModule,
+  ModuleDependencies,
+  TrpcContribution,
+} from '../../types'
 import {
   createInteropPlugins,
   flattenClusters,
@@ -26,6 +30,11 @@ import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
 import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringConfigStoreProxy'
 import { createInteropRouter } from './dashboard/InteropRouter'
+import { getProcessorsStatus } from './dashboard/impls/processors'
+import {
+  createInteropTrpcRouter,
+  type InteropTrpcRouter,
+} from './dashboard/trpc/router'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
@@ -34,6 +43,10 @@ import { InteropNotifier } from './notifications/InteropNotifier'
 import { instrumentInteropRpcMetricsRun } from './rpc/interopRpcMetrics'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
 
+export type InteropApplicationModule = ApplicationModule & {
+  trpc: TrpcContribution<'interop', InteropTrpcRouter>
+}
+
 export function createInteropModule({
   config,
   db,
@@ -41,7 +54,7 @@ export function createInteropModule({
   blockProcessors,
   clock,
   providers,
-}: ModuleDependencies): ApplicationModule | undefined {
+}: ModuleDependencies): InteropApplicationModule | undefined {
   if (!config.interop) {
     logger.info('Interop module disabled')
     return
@@ -99,7 +112,7 @@ export function createInteropModule({
     providers.clients.rpcMetricsAggregator,
   )
 
-  const processors = []
+  const processors: InteropBlockProcessor[] = []
   if (config.interop.capture.enabled) {
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
@@ -134,11 +147,23 @@ export function createInteropModule({
   const router = createInteropRouter(
     db,
     config.interop,
-    tokenDbClient,
     processors,
     syncersManager,
     logger.for('InteropRouter'),
   )
+
+  const trpcRouter = createInteropTrpcRouter({
+    aggregationConfigs: config.interop.aggregation
+      ? config.interop.aggregation.configs
+      : [],
+    getExplorerUrl: config.interop.dashboard.getExplorerUrl,
+    getChainsForPlugin: (pluginName) =>
+      syncersManager.getChainsForPlugin(pluginName),
+    getPluginSyncStatuses: () => syncersManager.getPluginSyncStatuses(),
+    getProcessorStatuses: () => getProcessorsStatus(processors),
+    chains: config.interop.capture.chains,
+    tokenDbClient,
+  })
 
   const compareLoops = plugins.comparePlugins.map(
     (c) => new InteropCompareLoop(db, c, logger),
@@ -244,5 +269,9 @@ export function createInteropModule({
     })
   }
 
-  return { routers: [router], start }
+  return {
+    routers: [router],
+    trpc: { namespace: 'interop', trpcRouter },
+    start,
+  }
 }

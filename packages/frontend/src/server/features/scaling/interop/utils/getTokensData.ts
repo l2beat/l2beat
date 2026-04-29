@@ -6,6 +6,7 @@ import type { TokenData } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration } from './getAverageDuration'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 type Params = {
@@ -53,11 +54,7 @@ export function getTokensData({
           token.transferCount > 0 ? token.volume / token.transferCount : null,
         minTransferValueUsd: token.minTransferValueUsd,
         maxTransferValueUsd: token.maxTransferValueUsd,
-        netMintedValue:
-          token.mintedValueUsd !== undefined &&
-          token.burnedValueUsd !== undefined
-            ? token.mintedValueUsd - token.burnedValueUsd
-            : undefined,
+        netMintedValue: getNetMintedValueUsd(token),
         flows: token.flows
           ? Array.from(token.flows.values()).toSorted(
               (a, b) => b.volume - a.volume,

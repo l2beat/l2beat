@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xa73c9a6228b631f5fd16e3005263d4edb1e788db
+
+# Diff at Wed, 29 Apr 2026 08:39:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1776075330
+- current timestamp: 1777451880
+
+## Description
+
+Sub-Safe `eth:0xfD636E8E...` (one of the seats on the EigenLayer Pauser Multisig at `0x50503895...`) had a signer rotation: `0xfe5AF706` replaced with `0xDe64AA8F`, and `0x6DD76040` removed. Threshold unchanged at 2; total signers 9 → 8 (22% → 25%).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xfe5AF706c1b7fd30FE540ABaBB8A3f5DE68420F9"
++        "eth:0xDe64AA8F395C47c745969B96FBE295A252fe3370"
+      values.$members.2:
+-        "eth:0x6DD76040589433cc4Fc14e49db02592a25c0eC70"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0x5e2bd27b7a62b175121d585d0bd7ad4584abb7d1
 
 # Diff at Mon, 30 Mar 2026 14:54:02 GMT:
