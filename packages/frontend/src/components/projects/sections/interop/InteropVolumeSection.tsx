@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import { Skeleton } from '~/components/core/Skeleton'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
@@ -7,6 +8,7 @@ import {
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
+import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
 import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
@@ -60,10 +62,14 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       .filter((chain) => chain.totalVolume > 0)
       .map((chain) => chain.chainId),
   )
-  const [activeChains] = partition(
+  const [activeChains, inactiveChains] = partition(
     interopChains.filter((chain) => selectedChains.includes(chain.id)),
     (chain) => activeIds.has(chain.id),
   )
+
+  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
+  const shouldShowInactiveChainsInfo =
+    !!data && inactiveChains.length > 0 && !isLoading
 
   const visibleHighlightedChains = isLoading
     ? highlightedChains
@@ -91,8 +97,22 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         hasEnoughProtocols={hasEnoughProtocols}
         isLoading={isLoading}
       />
+      {shouldRenderInactiveChainsInfo && (
+        <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
+          {shouldShowInactiveChainsInfo ? (
+            <>
+              <span className="font-normal text-secondary text-xs leading-none md:text-base">
+                No transfers detected for
+              </span>
+              <InactiveChainsDialog chains={inactiveChains} />
+            </>
+          ) : isLoading ? (
+            <Skeleton className="h-4 w-40 md:h-5" />
+          ) : null}
+        </div>
+      )}
       {!isLoading && data && (
-        <div className="space-y-1 text-center font-medium text-label-value-14 text-secondary">
+        <div className="space-y-1 text-center font-medium text-label-value-14 text-secondary max-lg:order-3">
           {dollarsPerParticle && (
             <div className="flex items-center justify-center gap-1">
               <div className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
@@ -110,7 +130,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         </div>
       )}
       {chainA && (
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 max-lg:order-3 md:grid-cols-2">
           {visibleHighlightedChains.length === 1 && (
             <SingleChainStats
               chainId={chainA.id}
