@@ -42,54 +42,54 @@ interface State {
 function decompose(imp: Imp<unknown>, state: State): object {
   const $ref = state.refs.get(imp)
   if ($ref && !state.skipRefs) {
-    return { $ref }
+    return schema(imp, { $ref })
   }
   state.skipRefs = false
 
   switch (imp.meta.type) {
     case 'unknown':
       // Anything is accepted
-      return {}
+      return schema(imp, {})
     case 'boolean':
-      return { type: 'boolean' }
+      return schema(imp, { type: 'boolean' })
     case 'number':
-      return { type: 'number' }
+      return schema(imp, { type: 'number' })
     case 'string':
-      return { type: 'string' }
+      return schema(imp, { type: 'string' })
     case 'null':
-      return { type: 'null' }
+      return schema(imp, { type: 'null' })
     case 'bigint':
     case 'undefined':
       // Those are not supported so we cannot say anything about them
-      return {}
+      return schema(imp, {})
     case 'literal':
       if (typeof imp.meta.value === 'bigint') {
-        return {}
+        return schema(imp, {})
       }
-      return { const: imp.meta.value }
+      return schema(imp, { const: imp.meta.value })
     case 'enum':
-      return { enum: imp.meta.values }
+      return schema(imp, { enum: imp.meta.values })
     case 'check':
     case 'transform':
     case 'catch':
     case 'default': // NOTE: Json schema does support this, but not sure if needed
     case 'optional':
-      return decompose(imp.meta.parent, state)
+      return schema(imp, decompose(imp.meta.parent, state))
     case 'array':
-      return {
+      return schema(imp, {
         type: 'array',
         items: decompose(imp.meta.element, state),
-      }
+      })
     case 'tuple':
-      return {
+      return schema(imp, {
         type: 'array',
         items: imp.meta.values.map((x) => decompose(x, state)),
         additionalItems: false,
-      }
+      })
     case 'union':
-      return {
+      return schema(imp, {
         anyOf: imp.meta.values.map((x) => decompose(x, state)),
-      }
+      })
     case 'object': {
       const result: Record<string, unknown> = {
         type: 'object',
@@ -113,7 +113,7 @@ function decompose(imp: Imp<unknown>, state: State): object {
       if (required.length > 0) {
         result.required = required
       }
-      return result
+      return schema(imp, result)
     }
     case 'record': {
       const result: Record<string, unknown> = {
@@ -126,7 +126,7 @@ function decompose(imp: Imp<unknown>, state: State): object {
           (x as string | number).toString(),
         )
       }
-      return result
+      return schema(imp, result)
     }
     case 'lazy': {
       state.lazyCounter++
@@ -134,8 +134,18 @@ function decompose(imp: Imp<unknown>, state: State): object {
       const $ref = `#/definitions/${key}`
       state.refs.set(imp, $ref)
       state.remaining.push([key, imp])
-      return { $ref }
+      return schema(imp, { $ref })
     }
+  }
+}
+
+function schema(imp: Imp<unknown>, core: object): object {
+  if (!imp.jsonSchema) {
+    return core
+  }
+  return {
+    ...core,
+    ...imp.jsonSchema,
   }
 }
 

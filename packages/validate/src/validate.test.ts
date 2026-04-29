@@ -393,4 +393,13 @@ describe('validate', () => {
       expect(Foo.description).toEqual('Bar')
     })
   })
+
+  describe('document', () => {
+    it('should add schema description', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(Foo.jsonSchema).toEqual(undefined)
+      Foo.document('Bar')
+      expect(Foo.jsonSchema).toEqual({ description: 'Bar' })
+    })
+  })
 })

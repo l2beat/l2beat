@@ -22,6 +22,7 @@ export interface Parser<T> {
 
 export interface Validator<T> {
   description?: string
+  jsonSchema?: JsonSchemaMetadata
   validate: (value: unknown) => T
   safeValidate: (value: unknown) => Result<T>
   isValid: (value: unknown) => value is T
@@ -42,6 +43,11 @@ export interface Validator<T> {
   catch(value: T): Parser<T>
   optional(): Validator<T | undefined>
   describe: (description: string) => Validator<T>
+  document: (description: string) => Validator<T>
+}
+
+export interface JsonSchemaMetadata {
+  description?: string
 }
 
 const CANNOT_VALIDATE = () => {
@@ -88,6 +94,7 @@ export type ImpMeta =
 export class Imp<T> implements Validator<T>, Parser<T> {
   meta: ImpMeta
   description?: string
+  jsonSchema?: JsonSchemaMetadata
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
 
@@ -115,6 +122,11 @@ export class Imp<T> implements Validator<T>, Parser<T> {
 
   describe(description: string) {
     this.description = description
+    return this
+  }
+
+  document(description: string) {
+    this.jsonSchema = { ...this.jsonSchema, description }
     return this
   }
 

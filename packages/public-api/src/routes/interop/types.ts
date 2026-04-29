@@ -33,7 +33,11 @@ export const InteropProtocolSchema = v
     id: v.string(),
     slug: v.string(),
     name: v.string(),
-    subgroupId: v.union([v.string(), v.null()]),
+    subgroupId: v
+      .union([v.string(), v.null()])
+      .document(
+        'ID of the aggregate/root interop protocol this protocol belongs to. Null for aggregate/root protocols.',
+      ),
     totalVolume: v.number(),
     totalTransferCount: v.number(),
     avgTransferTime: AverageTransferTimeSchema,
