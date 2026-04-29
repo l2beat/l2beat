@@ -29,8 +29,12 @@
       "description": "Immutable execution contract that forwards governance calls from the EmergencyProtectedTimelock to the Lido DAO Agent and DualGovernance configuration. Can configure governance parameters including submission delays, scheduling delays, and governance state transitions."
     },
     "eth:0x8b7854488fde088d686ea672b6ba1a5242515f45": {
-      "name": "Emergency 4/7 Multisig",
-      "description": "4-of-7 Safe multisig that can activate emergency mode on the EmergencyProtectedTimelock, execute proposals during emergency mode, and reset the governance system. This is the ultimate circuit breaker for the protocol's governance."
+      "name": "Emergency Activation 4/7 Multisig",
+      "description": "4-of-7 Safe multisig with the sole power to flip the EmergencyProtectedTimelock into emergency mode, but only before the on-chain protection end date (currently 2026-06-20). Activation alone does not execute or reset proposals — that power is held by the separate Emergency Execution 5/7 Multisig."
+    },
+    "eth:0xc7792b3f2b399bb0edf53fecdceceb97fbeb18af": {
+      "name": "Emergency Execution 5/7 Multisig",
+      "description": "5-of-7 Safe multisig (same 7 signers as the Activation committee, higher quorum) that, once emergency mode is active, can call emergencyExecute to fast-track any pending proposal and emergencyReset to deactivate emergency mode while reassigning governance to the configured emergencyGovernance address. Powers expire once emergency protection ends (currently 2026-06-20)."
     },
     "eth:0xffe21561251c49adccfad065c94fb4931df49081": {
       "name": "Reseal Committee 5/6 Multisig",

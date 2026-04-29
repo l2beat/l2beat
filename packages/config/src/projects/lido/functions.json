@@ -2762,7 +2762,7 @@
             {
               "type": "other",
               "label": "protected period",
-              "description": "Emergency mode can only be activated before the emergency protection end date (currently 2026-04-19). After that date, this function becomes permanently inoperable."
+              "description": "Emergency mode can only be activated before the on-chain emergency protection end date (currently 2026-06-20). Past that timestamp, this function reverts with EmergencyProtectionExpired and the activation committee permanently loses its power."
             }
           ],
           "timestamp": "2026-03-30T15:22:33.675Z",
@@ -2780,7 +2780,14 @@
           "description": "Executes any proposal if the activation mode is activated and the proposal is from the emergency committee.",
           "ownerDefinitions": [
             {
-              "path": "$self.getEmergencyActivationCommittee"
+              "path": "$self.getEmergencyExecutionCommittee"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "emergency mode gated",
+              "description": "Reverts unless the EmergencyProtectedTimelock is currently in emergency mode. Emergency mode can only be entered by the separate Emergency Activation 4/7 Multisig before the on-chain protection end date (currently 2026-06-20), and the resulting window lasts only 30 days. Outside that window the Execution Committee has no operative power."
             }
           ]
         },
@@ -2806,7 +2813,14 @@
           "description": "Resets the system after it entered emergency mode. This cancels all proposals, deactivates emergency mode, and sets the emergency governance as acting governance.",
           "ownerDefinitions": [
             {
-              "path": "$self.getEmergencyActivationCommittee"
+              "path": "$self.getEmergencyExecutionCommittee"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "emergency mode gated",
+              "description": "Reverts unless the EmergencyProtectedTimelock is currently in emergency mode. Emergency mode can only be entered by the separate Emergency Activation 4/7 Multisig before the on-chain protection end date (currently 2026-06-20), and the resulting window lasts only 30 days. Outside that window the Execution Committee has no operative power."
             }
           ]
         },
