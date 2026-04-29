@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
@@ -6,6 +7,7 @@ import {
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
+import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
 import {
@@ -14,6 +16,7 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { api } from '~/trpc/React'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -71,6 +74,13 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
       ? interopChains.find((c) => c.id === visibleHighlightedChains[1])
       : undefined
 
+  const { dollarsPerParticle } = useScaledParticleCounts(
+    selectedChains,
+    data?.chainData,
+    data?.flows,
+  )
+  const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
+
   return (
     <div className="flex flex-col gap-4">
       <FlowsChainsSelector allChains={interopChains} />
@@ -81,6 +91,24 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         hasEnoughProtocols={hasEnoughProtocols}
         isLoading={isLoading}
       />
+      {!isLoading && data && (
+        <div className="space-y-1 text-center font-medium text-label-value-14 text-secondary">
+          {dollarsPerParticle && (
+            <div className="flex items-center justify-center gap-1">
+              <div className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
+              <span className="font-bold text-brand">
+                {formatCurrency(dollarsPerParticle, 'usd', { decimals: 0 })}
+              </span>
+            </div>
+          )}
+          <div>
+            Avg value per second ≈{' '}
+            <span className="font-bold text-brand">
+              {formatCurrency(avgValuePerSecond, 'usd')}
+            </span>
+          </div>
+        </div>
+      )}
       {chainA && (
         <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           {visibleHighlightedChains.length === 1 && (
