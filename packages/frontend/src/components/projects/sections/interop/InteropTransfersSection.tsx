@@ -16,6 +16,7 @@ import {
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
+import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -25,18 +26,16 @@ const TRANSFERS_PER_PAGE = 8
 export interface InteropTransfersSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   apiSelection: InteropSelection
+  protocolData: InteropProtocolDashboardData
 }
 
 export function InteropTransfersSection({
   projectId,
   apiSelection,
+  protocolData,
   ...sectionProps
 }: InteropTransfersSectionProps) {
-  const { data: protocolData } = api.interop.protocol.useQuery({
-    ...apiSelection,
-    id: projectId,
-  })
-  const entry = protocolData?.entry
+  const entry = protocolData.entry
   const totalCount = entry?.transferCount ?? 0
 
   const {

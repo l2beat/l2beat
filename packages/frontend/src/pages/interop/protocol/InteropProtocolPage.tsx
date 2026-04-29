@@ -1,36 +1,30 @@
-import type { DehydratedState } from '@tanstack/react-query'
-import { HydrationBoundary } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import {
-  DesktopProjectNavigation,
-  DesktopProjectNavigationSkeleton,
-} from '~/components/projects/navigation/DesktopProjectNavigation'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { ProjectSectionSkeleton } from '~/components/projects/sections/ProjectSectionSkeleton'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
-import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import type { InteropSelection } from '../utils/types'
 import { InteropProtocolSummary } from './components/InteropProtocolSummary'
-import { TopToken } from './components/TopToken'
 import { getInteropProtocolSections } from './getInteropProtocolSections'
 
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
-  queryState: DehydratedState
+  protocolData: InteropProtocolDashboardData
   interopChains: InteropChainWithIcon[]
   apiSelection: InteropSelection
 }
@@ -39,18 +33,17 @@ export function InteropProtocolPage({
   projectEntry,
   interopChains,
   apiSelection,
-  queryState,
+  protocolData,
   ...props
 }: Props) {
   return (
     <AppLayout {...props}>
-      <HydrationBoundary state={queryState}>
-        <Content
-          projectEntry={projectEntry}
-          interopChains={interopChains}
-          apiSelection={apiSelection}
-        />
-      </HydrationBoundary>
+      <Content
+        projectEntry={projectEntry}
+        interopChains={interopChains}
+        apiSelection={apiSelection}
+        protocolData={protocolData}
+      />
     </AppLayout>
   )
 }
@@ -59,16 +52,13 @@ function Content({
   projectEntry,
   interopChains,
   apiSelection,
+  protocolData,
 }: {
   projectEntry: InteropProtocolEntry
   interopChains: InteropChainWithIcon[]
   apiSelection: InteropSelection
+  protocolData: InteropProtocolDashboardData
 }) {
-  const { data, isLoading } = api.interop.protocol.useQuery({
-    ...apiSelection,
-    id: projectEntry.id,
-  })
-
   const getChainById = useMemo(() => {
     const map = new Map(interopChains.map((chain) => [chain.id, chain]))
     return (id: string) => map.get(id)
@@ -76,8 +66,7 @@ function Content({
 
   const sections = getInteropProtocolSections({
     projectId: projectEntry.id,
-    isLoading,
-    data,
+    protocolData,
     apiSelection,
     getChainById,
   })
@@ -113,39 +102,36 @@ function Content({
             <InteropProtocolSummary
               protocol={projectEntry}
               apiSelection={apiSelection}
+              protocolData={protocolData}
             />
             <div className="border-divider border-b px-4 md:hidden">
               <MobileProjectLinks
                 projectLinks={projectEntry.header.links ?? []}
               />
             </div>
-            <TopToken id={projectEntry.id} apiSelection={apiSelection} />
+            <TopTokenWidget
+              className="md:mt-4"
+              topToken={protocolData.topToken}
+              isLoading={false}
+              hideProtocol
+              hideChainsInfo
+            />
 
-            {isLoading ? (
-              Array.from({ length: 4 }).map((_, i) => (
-                <ProjectSectionSkeleton key={i} variant={i} />
-              ))
-            ) : (
-              <HighlightableLinkContextProvider>
-                <ProjectDetails items={sections} />
-              </HighlightableLinkContextProvider>
-            )}
+            <HighlightableLinkContextProvider>
+              <ProjectDetails items={sections} />
+            </HighlightableLinkContextProvider>
           </div>
-          {(isLoading || !isNavigationEmpty) && (
+          {!isNavigationEmpty && (
             <div className="row-start-2 mt-4 hidden shrink-0 lg:block">
-              {isLoading ? (
-                <DesktopProjectNavigationSkeleton />
-              ) : (
-                <DesktopProjectNavigation
-                  project={{
-                    title: projectEntry.shortName ?? projectEntry.name,
-                    slug: projectEntry.slug,
-                    isUnderReview: !!projectEntry.underReviewStatus,
-                    icon: projectEntry.icon,
-                  }}
-                  sections={navigationSections}
-                />
-              )}
+              <DesktopProjectNavigation
+                project={{
+                  title: projectEntry.shortName ?? projectEntry.name,
+                  slug: projectEntry.slug,
+                  isUnderReview: !!projectEntry.underReviewStatus,
+                  icon: projectEntry.icon,
+                }}
+                sections={navigationSections}
+              />
             </div>
           )}
         </div>

@@ -1,11 +1,11 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { getInteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 
@@ -13,7 +13,6 @@ export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
 ): Promise<RenderData | undefined> {
-  const helpers = getSsrHelpers()
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)
@@ -34,9 +33,9 @@ export async function getInteropProtocolPageData(
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     }))
 
-  const [appLayoutProps] = await Promise.all([
+  const [appLayoutProps, protocolData] = await Promise.all([
     getAppLayoutProps(),
-    helpers.interop.protocol.fetch({
+    getInteropProtocolData({
       id: project.id,
       ...apiSelection,
     }),
@@ -60,7 +59,7 @@ export async function getInteropProtocolPageData(
       props: {
         ...appLayoutProps,
         projectEntry,
-        queryState: helpers.dehydrate(),
+        protocolData,
         interopChains: interopChainsWithIcons,
         apiSelection,
       },

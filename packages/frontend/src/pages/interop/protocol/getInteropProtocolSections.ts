@@ -5,33 +5,30 @@ import type { InteropSelection } from '../utils/types'
 
 interface GetInteropProtocolSectionsOptions {
   projectId: ProjectId
-  isLoading: boolean
-  data: InteropProtocolDashboardData | undefined
+  protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
   getChainById: (id: string) => { id: string; iconUrl: string } | undefined
 }
 
 export function getInteropProtocolSections({
   projectId,
-  isLoading,
-  data,
+  protocolData,
   apiSelection,
   getChainById,
 }: GetInteropProtocolSectionsOptions): ProjectDetailsSection[] {
-  if (isLoading || !data?.entry) {
+  if (!protocolData.entry) {
     return []
   }
 
   const sections: ProjectDetailsSection[] = []
 
-  if (data.flows.length > 0) {
+  if (protocolData.flows.length > 0) {
     sections.push({
       type: 'InteropVolumeSection',
       props: {
         id: 'interop-volume',
-        projectId,
         title: 'Volume and flows',
-        apiSelection,
+        protocolData,
         getChainById,
       },
     })
@@ -44,6 +41,7 @@ export function getInteropProtocolSections({
       projectId,
       title: 'Top tokens by volume',
       apiSelection,
+      protocolData,
     },
   })
 
@@ -54,6 +52,7 @@ export function getInteropProtocolSections({
       projectId,
       title: 'Transfers',
       apiSelection,
+      protocolData,
     },
   })
 

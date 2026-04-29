@@ -95,10 +95,7 @@ function getTopPath(
   for (const flow of flows ?? []) {
     if (flow.volume === 0) continue
 
-    const [firstChain, secondChain] = [
-      flow.srcChain,
-      flow.dstChain,
-    ].toSorted()
+    const [firstChain, secondChain] = [flow.srcChain, flow.dstChain].toSorted()
     const key = `${firstChain}-${secondChain}`
     const current = paths.get(key)
 
