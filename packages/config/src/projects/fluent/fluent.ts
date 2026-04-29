@@ -196,16 +196,7 @@ export const fluent: ScalingProject = {
             url: 'https://docs.fluent.xyz/system-architecture/bridge',
           },
         ],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'a preconfirmed but not yet finalized batch is used to release fast withdrawals on L1, and an actor with the EMERGENCY role then reverts that batch (revertBatches rejects already-finalized batches).',
-          },
-          {
-            category: 'Withdrawals can be delayed if',
-            text: 'no address with the PROVER role submits proofs; in that case batches still finalize through the time-based path.',
-          },
-        ],
+        risks: [],
       },
     ],
   },
