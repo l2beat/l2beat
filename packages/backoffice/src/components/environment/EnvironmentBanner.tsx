@@ -7,7 +7,7 @@ export function EnvironmentBanner() {
   return (
     <div
       className={cn(
-        'sticky top-0 z-999 flex h-environment-banner w-full items-center justify-center',
+        'sticky top-0 z-999 flex h-environment-banner w-full items-center justify-center font-mono',
         config.classNames.dot,
       )}
     >
