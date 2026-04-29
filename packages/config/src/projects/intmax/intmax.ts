@@ -227,6 +227,14 @@ export const intmax: ScalingProject = {
         'After a testnet launch in December 2024, INTMAX publicly launches its mainnet.',
       type: 'general',
     },
+    {
+      title: 'INTMAX operation paused',
+      url: 'https://x.com/intmaxIO/status/2020160706893553808',
+      date: '2026-02-07T00:00:00Z',
+      description:
+        'Due to technical problems with ZK proving system, INTMAX L2 operation was paused and users were encouraged to withdraw deposited tokens.',
+      type: 'incident',
+    },
   ],
 }
 
