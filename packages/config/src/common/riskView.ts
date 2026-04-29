@@ -1,7 +1,12 @@
 import { assert, formatSeconds, type ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { ProjectScalingRiskView } from '../internalTypes'
-import type { Sentiment, TableReadyValue, WarningWithSentiment } from '../types'
+import type {
+  ExitWindowRisk,
+  Sentiment,
+  TableReadyValue,
+  WarningWithSentiment,
+} from '../types'
 import { getDacSentiment } from './dataAvailability'
 
 // State validation
@@ -632,6 +637,11 @@ function PROPOSER_POS(
   }
 }
 
+export const SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING: WarningWithSentiment = {
+  value: 'The Security Council can upgrade with no delay.',
+  sentiment: 'bad',
+}
+
 export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
@@ -700,15 +710,15 @@ export function EXIT_WINDOW_NITRO(
   validatorAfkTime: number,
   l1TimelockDelay: number,
   isPostBoLD: boolean,
-): TableReadyValue {
+): ExitWindowRisk {
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(
     l2TimelockDelay,
   )} delay. Since there is a ${formatSeconds(
     selfSequencingDelay,
   )} delay to force a tx (forcing the inclusion in the following state update), users have only ${formatSeconds(
     l2TimelockDelay - selfSequencingDelay,
-  )} to exit. 
-    
+  )} to exit.
+
   If users post a tx after that time, they would only be able to self propose a state root ${formatSeconds(
     isPostBoLD ? validatorAfkTime : challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
   )} after the last state root was proposed and then wait for the ${formatSeconds(
@@ -716,14 +726,12 @@ export function EXIT_WINDOW_NITRO(
   )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
-  const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
-  }
   return {
-    ...EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
+    ...withEmergencyExitWindow(
+      EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
+    ),
     description: description,
-    warning: warning,
+    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
   }
 }
 
@@ -731,16 +739,14 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
   l2TimelockDelay: number,
   selfSequencingDelay: number,
   l1TimelockDelay: number,
-): TableReadyValue {
+): ExitWindowRisk {
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
-  const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
-  }
   return {
-    ...EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
+    ...withEmergencyExitWindow(
+      EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
+    ),
     description: description,
-    warning: warning,
+    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
   }
 }
 
@@ -760,17 +766,21 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
   orderHint: Number.NEGATIVE_INFINITY,
 }
 
-export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
+export function EXIT_WINDOW_STARKNET(upgradeDelay: number): ExitWindowRisk {
   const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
   const value = formatSeconds(upgradeDelay - scReactionTime)
-  return {
+  return withEmergencyExitWindow({
     value,
     sentiment: 'warning',
     description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
-    warning: {
-      value: 'The Security Council can upgrade with no delay.',
-      sentiment: 'bad',
-    },
+    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
+  })
+}
+
+function withEmergencyExitWindow(value: TableReadyValue): ExitWindowRisk {
+  return {
+    ...value,
+    emergency: { value: 'No delay', sentiment: 'bad' },
   }
 }
 
@@ -843,6 +853,7 @@ export const RISK_VIEW = {
   PROPOSER_POS,
 
   // exitWindow
+  SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
   EXIT_WINDOW,
   EXIT_WINDOW_NITRO,
   EXIT_WINDOW_PERMISSIONLESS_BOLD,

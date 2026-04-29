@@ -7,6 +7,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
+import { ExitWindowCell } from './ExitWindowCell'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 
@@ -68,7 +69,7 @@ export const scalingRiskColumns = [
         'How much time do users have to exit the system in case of an unwanted upgrade?',
     },
     cell: (ctx) => (
-      <TableValueCell
+      <ExitWindowCell
         value={ctx.row.original.risks.exitWindow}
         href={
           ctx.row.original.hasWithdrawalsSection
