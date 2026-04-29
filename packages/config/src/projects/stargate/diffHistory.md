@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x4d7f6f398fc89f19421f2f8c008be30c975f7d32
+
+# Diff at Tue, 28 Apr 2026 10:12:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7f6f213cad5e56b3adf52a416d571e104063136 block: 1772444834
+- current timestamp: 1777371085
+
+## Description
+
+rm unsupported chains
+
+nethermind reduced signer size.
+
+## Watched changes
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        5
++        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772444834 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Treasury (eth:0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      description:
+-        "Receive Library used by LayerZero, defining the validation of received messages."
++        "LayerZero-deployed receive library, defining the validation of received messages."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessagingLinea (linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolNative (linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolUSDC (scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessagingScroll (scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolNative (scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xbc55d55aa9595bd8de43bd6518f028648516ae8b
 
 # Diff at Mon, 02 Mar 2026 09:48:35 GMT:

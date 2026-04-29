@@ -41,21 +41,6 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
   async getBlockWithTransactions(tag: number | 'latest'): Promise<Block> {
     const blockNumber =
       tag === 'latest' ? await this.getLatestBlockNumber() : tag
-
-    // Block 0 has no transactions and the API returns an
-    // empty list for it. We derive block timestamps from their transactions,
-    // so there's nothing to infer from. We hard-code a timestamp
-    // one day before block 1, so the block-at-or-before search treats it as a valid lower bound.
-    if (blockNumber === 0) {
-      return {
-        number: 0,
-        hash: 'UNSUPPORTED',
-        logsBloom: 'UNSUPPORTED',
-        timestamp: 1592142495,
-        transactions: [],
-      }
-    }
-
     const transactions = await this.getTransactionsInBlock(blockNumber)
 
     return {

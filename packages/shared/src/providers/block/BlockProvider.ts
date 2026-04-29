@@ -43,12 +43,12 @@ export class BlockProvider {
 
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
-    start = 0,
+    start = 1,
   ): Promise<number> {
     for (const [index, client] of this.clients.entries()) {
       try {
         const end = await client.getLatestBlockNumber()
-        const effectiveStart = start >= end ? 0 : start
+        const effectiveStart = start >= end ? 1 : start
 
         return await getBlockNumberAtOrBefore(
           timestamp,

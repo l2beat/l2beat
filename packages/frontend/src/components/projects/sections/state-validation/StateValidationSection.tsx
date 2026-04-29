@@ -18,6 +18,7 @@ export interface StateValidationSectionProps extends ProjectSectionProps {
     name: string
     icon: string
     href: string
+    quantumResistant?: boolean
     trustedSetups: TrustedSetupsByProofSystem
   }
   programHashes?: StateValidationProgramHashData[]
