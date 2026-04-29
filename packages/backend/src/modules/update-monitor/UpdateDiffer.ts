@@ -94,9 +94,17 @@ export class UpdateDiffer {
     diffHeadTimestamp: number,
   ) {
     const implementationChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some(
-        (f) => f.key && f.key.startsWith('values.$implementation'),
-      ),
+      discoveryDiff.diff?.some((f) => {
+        if (f.key?.startsWith('values.$implementation')) {
+          return true
+        }
+        if (f.key === 'values.$upgradeCount') {
+          const before = Number.parseInt(f.before ?? '0')
+          const after = Number.parseInt(f.after ?? '0')
+          return after > before
+        }
+        return false
+      }),
     )
     const fieldHighSeverityChanges = diff.filter((discoveryDiff) =>
       discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),

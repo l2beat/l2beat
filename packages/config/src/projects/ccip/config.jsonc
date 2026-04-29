@@ -17,13 +17,28 @@
     "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": "ARMProxy",
     "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": "RMNRemote",
     "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": "ARMProxyOwner",
-    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": "RMNRemoteOwner"
+    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": "RMNRemoteOwner",
+    "eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc": "ARMProxyOwnerBypasser",
+    "eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e": "ARMProxyOwnerExecutor",
+    "eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf": "ARMProxyOwnerGnosisSafe",
+    "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e": "ARMProxyOwnerProposer",
+    "eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F": "ARMProxyOwnerProposer2",
+    "eth:0xAD97C0270a243270136E40278155C12ce7C7F87B": "ARMProxyOwnerCanceller",
+    "eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B": "EthereumToArbitrumOnRampTokenLimitAdmin",
+    "eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610": "RMNRemoteOwnerExecutor",
+    "eth:0x79bC82F3931A7d017719146A822e4AD8152b157e": "RMNRemoteOwnerProposer",
+    "eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413": "RMNRemoteOwnerCanceller",
+    "eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F": "RMNRemoteOwnerBypasser",
+    "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": "GhoCcipSteward",
+    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
+      "canActIndependently": false,
+      "description": "Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.",
       "fields": {
         "arbitrumOnRamp": {
-          "description": "The OnRamp used by CCIP to send messages and tokens from Ethereum to Arbitrum One.",
+          "description": "Ethereum-to-Arbitrum OnRamp selected by the Router when users call ccipSend() for the Arbitrum chain selector.",
           "handler": {
             "type": "call",
             "method": "getOnRamp",
@@ -31,12 +46,8 @@
           }
         },
         "arbitrumOffRamp": {
-          "description": "The OffRamp used by CCIP to deliver messages and tokens from Arbitrum One to Ethereum.",
-          "handler": {
-            "type": "call",
-            "method": "getOffRamps",
-            "args": []
-          },
+          "description": "Arbitrum-to-Ethereum OffRamp allowed to call routeMessage() and deliver messages to Ethereum receivers.",
+          "handler": { "type": "call", "method": "getOffRamps", "args": [] },
           "edit": [
             "pipe",
             ["find", ["=", "#sourceChainSelector", "4949039107694359620"]],
@@ -56,8 +67,188 @@
             "method": "isChainSupported",
             "args": ["4949039107694359620"]
           }
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "add, remove, or replace OnRamps and OffRamps used by the Router."
+            },
+            {
+              "type": "interact",
+              "description": "change the wrapped native token used for native-fee payments."
+            },
+            {
+              "type": "interact",
+              "description": "recover tokens held by the Router."
+            }
+          ]
         }
       }
+    },
+    "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284": {
+      "canActIndependently": false,
+      "description": "Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).",
+      "fields": {
+        "getStaticConfig": {
+          "description": "Immutable lane config: Ethereum source selector, Arbitrum destination selector, previous OnRamp, RMN proxy, LINK token, and token admin registry."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable outbound config: Router, PriceRegistry, message size and gas limits, token limits, destination gas overheads, fee defaults, and ordered-execution policy."
+        },
+        "getTokenLimitAdmin": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the aggregate outbound value rate limit for Ethereum-to-Arbitrum sends."
+            },
+            {
+              "type": "interact",
+              "description": "replace the token limit admin for this OnRamp."
+            }
+          ]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change Router, PriceRegistry, message size, token count, gas limit, and fee parameters for outbound messages."
+            },
+            {
+              "type": "interact",
+              "description": "add, remove, or reprice fee tokens accepted by this OnRamp."
+            },
+            {
+              "type": "interact",
+              "description": "change token transfer fee configuration and node operator fee weights."
+            },
+            {
+              "type": "interact",
+              "description": "withdraw accumulated non-LINK fee tokens."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": {
+      "canActIndependently": false,
+      "description": "Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.",
+      "fields": {
+        "commitStore": {
+          "description": "CommitStore whose blessed Merkle roots must prove every message executed by this OffRamp."
+        },
+        "getStaticConfig": {
+          "description": "Immutable inbound lane config: Ethereum destination selector and Arbitrum source selector."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable execution config: Router, PriceRegistry, permissionless execution delay, message size and token limits, and token pool gas limit."
+        },
+        "latestConfigDetails": {
+          "description": "Digest and config count for the currently accepted execution OCR config. Reports must use this digest, but this field is not itself a quorum."
+        },
+        "ocrConfig": {
+          "description": "Execution OCR config from ConfigSet. usually f+1 signers must sign message that is committed by a transmitter. This OffRamp inherits OCR2BaseNoChecks, so transmit() does not verify OCR signer signatures onchain. Acceptance is one configured transmitter plus the matching config digest; message safety comes from the blessed CommitStore proof and OffRamp execution checks.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "transmit execution reports from one of the 16 configured transmitter addresses. This OffRamp does not verify OCR signer signatures onchain; execution still requires a blessed CommitStore proof."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": {
+      "canActIndependently": false,
+      "description": "Arbitrum-to-Ethereum CommitStore. Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
+      "fields": {
+        "getStaticConfig": {
+          "description": "Immutable commit lane config: Ethereum destination selector, Arbitrum source selector, trusted Arbitrum OnRamp, and ARM/RMN proxy used for blessing checks."
+        },
+        "getDynamicConfig": {
+          "description": "Mutable commit config: PriceRegistry used for price updates included in commit reports."
+        },
+        "latestConfigDetails": {
+          "description": "Digest and config count for the currently accepted commit OCR config. Commit reports must use this digest."
+        },
+        "ocrConfig": {
+          "description": "Commit OCR config from ConfigSet. transmit() requires exactly f+1 valid OCR signer signatures, and msg.sender must be one of the transmitters.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "sign commit reports with at least f+1 sigs and transmit them through one of the transmitter addresses."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad": {
+      "canActIndependently": false,
+      "description": "PriceRegistry used by the OnRamp and CommitStore to price fees, tokens, and gas for this route.",
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "add or remove fee tokens accepted by CCIP pricing."
+            },
+            {
+              "type": "interact",
+              "description": "add or remove price updater accounts."
+            },
+            {
+              "type": "interact",
+              "description": "change the staleness threshold for token and gas prices."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
+      "canActIndependently": false,
+      "description": "ARM proxy used by the Router, OnRamp, CommitStore, OffRamp, and GHO token pool to read RMN curse and blessing state."
+    },
+    "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": {
+      "canActIndependently": false,
+      "description": "RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor.",
+      "ignoreRelatives": ["legacyRMN"],
+      "fields": {
+        "legacyRMN": {
+          "description": "Legacy RMN contract used by RMNRemote.isBlessed() for CommitStoreV1 root blessing. This immutable constructor arg is shown explicitly and kept as a leaf; its internal signer threshold is not decoded in this discovery.",
+          "handler": {
+            "type": "hardcoded",
+            "value": "eth:0xdCD48419bD5Cd9d1b097695F2af4Ee125aADF84F"
+          }
+        },
+        "getVersionedConfig": {
+          "description": "RMNRemote.verify() requires fSign+1 valid RMN signature. This is separate from the legacy isBlessed() passthrough used by CommitStoreV1.",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "sign RMNRemote reports; this is separate from CommitStoreV1's legacy isBlessed() passthrough."
+            }
+          ]
+        },
+        "getCursedSubjects": {
+          "description": "Subjects currently cursed by RMNRemote. An empty list means there is no active global or route-specific curse in this contract."
+        },
+        "isCursed": {
+          "description": "True when RMNRemote has an active global or legacy curse."
+        }
+      }
+    },
+    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
+      "canActIndependently": false,
+      "description": "Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy."
+    },
+    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": {
+      "canActIndependently": false,
+      "description": "Timelock administering RMNRemote signer configuration and curse/blessing controls."
+    },
+    "eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610": {
+      "description": "Public call proxy that forwards any caller to RMNRemoteOwner, allowing anyone to execute already-scheduled RMNRemoteOwner operations after the timelock delay."
+    },
+    "eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e": {
+      "description": "Public call proxy that forwards any caller to ARMProxyOwner, allowing anyone to execute already-scheduled ARMProxyOwner operations after the timelock delay."
     },
     "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
       "category": "gov",
@@ -65,10 +256,26 @@
       "ignoreRelatives": ["owner"]
     },
     "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": {
-      "description": "Aave GHO CCIP steward that can update bridge and rate limits for the GHO Ethereum token pool.",
-      "ignoreRelatives": ["GHO_TOKEN", "GHO_TOKEN_POOL", "RISK_COUNCIL"]
+      "description": "Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.",
+      "ignoreRelatives": ["GHO_TOKEN", "GHO_TOKEN_POOL", "RISK_COUNCIL"],
+      "fields": {
+        "RISK_COUNCIL": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "update the GHO bridge limit through the GhoCcipSteward, subject to the steward delay and bounds."
+            },
+            {
+              "type": "interact",
+              "description": "update inbound and outbound GHO rate limits through the GhoCcipSteward, subject to the steward delay and bounds."
+            }
+          ]
+        }
+      }
     },
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": {
+      "canActIndependently": false,
+      "description": "GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.",
       "ignoreRelatives": [
         "$admin",
         "arbitrumRemotePools",

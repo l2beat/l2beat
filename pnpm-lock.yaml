@@ -243,6 +243,121 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
+  packages/backoffice:
+    dependencies:
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      '@radix-ui/react-checkbox':
+        specifier: ^1.1.0
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-collapsible':
+        specifier: 1.1.1
+        version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-dialog':
+        specifier: 1.1.2
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-popover':
+        specifier: 1.1.2
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-select':
+        specifier: 2.1.2
+        version: 2.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-slot':
+        specifier: 1.1.1
+        version: 1.1.1(@types/react@19.0.10)(react@19.0.0)
+      '@radix-ui/react-tabs':
+        specifier: 1.1.1
+        version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-tooltip':
+        specifier: 1.1.3
+        version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tailwindcss/vite':
+        specifier: 4.1.11
+        version: 4.1.11(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
+      '@tanstack/match-sorter-utils':
+        specifier: ^8.19.4
+        version: 8.19.4
+      '@tanstack/react-query':
+        specifier: 5.59.16
+        version: 5.59.16(react@19.0.0)
+      '@tanstack/react-query-devtools':
+        specifier: 5.59.16
+        version: 5.59.16(@tanstack/react-query@5.59.16(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-table':
+        specifier: ^8.17.3
+        version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-virtual':
+        specifier: ^3.13.23
+        version: 3.13.23(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@trpc/client':
+        specifier: 11.0.0-rc.599
+        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
+      '@trpc/react-query':
+        specifier: 11.0.0-rc.599
+        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.0.0-rc.599))(@trpc/server@11.0.0-rc.599)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      fuzzysort:
+        specifier: ^3.1.0
+        version: 3.1.0
+      lucide-react:
+        specifier: ^0.544.0
+        version: 0.544.0(react@19.0.0)
+      react:
+        specifier: 19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: 19.0.0
+        version: 19.0.0(react@19.0.0)
+      react-hook-form:
+        specifier: ^7.63.0
+        version: 7.63.0(react@19.0.0)
+      react-router-dom:
+        specifier: 6.27.0
+        version: 6.27.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      recharts:
+        specifier: ^3.7.0
+        version: 3.7.0(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(redux@5.0.1)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      tailwind-merge:
+        specifier: 3.3.1
+        version: 3.3.1
+      tailwindcss:
+        specifier: 4.1.11
+        version: 4.1.11
+    devDependencies:
+      '@l2beat/backend':
+        specifier: workspace:*
+        version: link:../backend
+      '@types/react':
+        specifier: 19.0.10
+        version: 19.0.10
+      '@types/react-dom':
+        specifier: 19.0.4
+        version: 19.0.4(@types/react@19.0.10)
+      '@vitejs/plugin-react-swc':
+        specifier: ^3.7.1
+        version: 3.7.1(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
+      vite:
+        specifier: ^5.4.10
+        version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
+
   packages/config:
     dependencies:
       '@l2beat/discovery':
@@ -645,121 +760,6 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
-
-  packages/interop-backoffice-ui:
-    dependencies:
-      '@l2beat/shared-pure':
-        specifier: workspace:*
-        version: link:../shared-pure
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@l2beat/validate':
-        specifier: workspace:*
-        version: link:../validate
-      '@radix-ui/react-checkbox':
-        specifier: ^1.1.0
-        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-collapsible':
-        specifier: 1.1.1
-        version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-dialog':
-        specifier: 1.1.2
-        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-popover':
-        specifier: 1.1.2
-        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-select':
-        specifier: 2.1.2
-        version: 2.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-slot':
-        specifier: 1.1.1
-        version: 1.1.1(@types/react@19.0.10)(react@19.0.0)
-      '@radix-ui/react-tabs':
-        specifier: 1.1.1
-        version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@radix-ui/react-tooltip':
-        specifier: 1.1.3
-        version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tailwindcss/vite':
-        specifier: 4.1.11
-        version: 4.1.11(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
-      '@tanstack/match-sorter-utils':
-        specifier: ^8.19.4
-        version: 8.19.4
-      '@tanstack/react-query':
-        specifier: 5.59.16
-        version: 5.59.16(react@19.0.0)
-      '@tanstack/react-query-devtools':
-        specifier: 5.59.16
-        version: 5.59.16(@tanstack/react-query@5.59.16(react@19.0.0))(react@19.0.0)
-      '@tanstack/react-table':
-        specifier: ^8.17.3
-        version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tanstack/react-virtual':
-        specifier: ^3.13.23
-        version: 3.13.23(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@trpc/client':
-        specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
-      '@trpc/react-query':
-        specifier: 11.0.0-rc.599
-        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.0.0-rc.599))(@trpc/server@11.0.0-rc.599)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      fuzzysort:
-        specifier: ^3.1.0
-        version: 3.1.0
-      lucide-react:
-        specifier: ^0.544.0
-        version: 0.544.0(react@19.0.0)
-      react:
-        specifier: 19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
-      react-hook-form:
-        specifier: ^7.63.0
-        version: 7.63.0(react@19.0.0)
-      react-router-dom:
-        specifier: 6.27.0
-        version: 6.27.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      recharts:
-        specifier: ^3.7.0
-        version: 3.7.0(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(redux@5.0.1)
-      sonner:
-        specifier: ^2.0.7
-        version: 2.0.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      tailwind-merge:
-        specifier: 3.3.1
-        version: 3.3.1
-      tailwindcss:
-        specifier: 4.1.11
-        version: 4.1.11
-    devDependencies:
-      '@l2beat/backend':
-        specifier: workspace:*
-        version: link:../backend
-      '@types/react':
-        specifier: 19.0.10
-        version: 19.0.10
-      '@types/react-dom':
-        specifier: 19.0.4
-        version: 19.0.4(@types/react@19.0.10)
-      '@vitejs/plugin-react-swc':
-        specifier: ^3.7.1
-        version: 3.7.1(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
-      tw-animate-css:
-        specifier: ^1.4.0
-        version: 1.4.0
-      vite:
-        specifier: ^5.4.10
-        version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
 
   packages/l2b:
     dependencies:
