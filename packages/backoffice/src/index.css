@@ -80,8 +80,8 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --environment-local: oklch(0.685 0.169 237.323);
-  --environment-staging: oklch(0.769 0.188 70.08);
-  --environment-production: oklch(0.696 0.17 162.48);
+  --environment-staging: oklch(0.652 0.232 5.6deg);
+  --environment-production: oklch(0.515 0.23 315deg);
 }
 
 .dark {
