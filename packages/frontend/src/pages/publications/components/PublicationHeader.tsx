@@ -38,9 +38,11 @@ export function PublicationHeader<
           <p className="font-bold text-label-value-16">
             {publication.author.firstName} {publication.author.lastName}
           </p>
-          <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
-            {publication.author.role}
-          </p>
+          {publication.author.role && (
+            <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
+              {publication.author.role}
+            </p>
+          )}
         </div>
       </div>
     </div>
