@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x2e0a371d03fc595ace2178db2d69a79f7c9a14e3
+
+# Diff at Wed, 29 Apr 2026 10:37:08 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48c82436aca63abdd2a1dd0798daa7eaa9ef5e58 block: 1756816898
+- current timestamp: 1777458958
+
+## Description
+
+Reduced upgrade delay to zero.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      receivedPermissions.2.delay:
+-        1209600
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0xF5C9F957705bea56a7e806943f98F7777B995826) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.$pastUpgrades.11:
++        ["2026-04-28T11:42:11.000Z","0x8133c660c29139f3afcfa0d694829a8e16d5473e74704be6b0aa06869cf329d8",["eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583","eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12","eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb","eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D","eth:0x613ee54C54D5548627064B4D648942bF3648f376","eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F","eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.getUpgradeActivationDelay:
+-        1209600
++        0
+      values.StarkWareDiamond_upgradeDelay:
+-        1209600
++        0
+    }
+```
+
 Generated with discovered.json: 0x419f4b728a4a8d795bcd27213dfb9fa33013d484
 
 # Diff at Wed, 03 Sep 2025 15:51:54 GMT:
