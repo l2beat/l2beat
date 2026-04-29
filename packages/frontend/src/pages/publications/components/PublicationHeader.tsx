@@ -19,7 +19,7 @@ export function PublicationHeader<
   return (
     <div>
       <div className="flex items-center gap-2">
-        <PublicationTag tag="governance" />
+        <PublicationTag tag={publication.tag} />
         <p className="text-brand text-subtitle-12 uppercase">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}

@@ -6,13 +6,14 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { GovernancePublicationEntry } from '~/pages/publications/governance/utils/getGovernancePublicationEntry'
-import { PublicationHeader } from '../components/PublicationHeader'
+import type { OtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
+import { PublicationHeader } from './components/PublicationHeader'
 
 interface Props extends AppLayoutProps {
-  publication: GovernancePublicationEntry
+  publication: OtherPublicationEntry | GovernancePublicationEntry
 }
 
-export function GovernancePublicationPage({ publication, ...props }: Props) {
+export function PublicationPage({ publication, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>

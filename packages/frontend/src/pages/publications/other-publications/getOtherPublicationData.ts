@@ -26,7 +26,7 @@ export async function getOtherPublicationData(
       }),
     },
     ssr: {
-      page: 'OtherPublicationPage',
+      page: 'PublicationPage',
       props: {
         ...appLayoutProps,
         publication,
