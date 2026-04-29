@@ -1,4 +1,4 @@
-import type { InteropTrpcRouter } from '@l2beat/backend/interop-trpc'
+import type { BackendRouter } from '@l2beat/backend/backoffice-trpc'
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
@@ -15,8 +15,8 @@ const getQueryClient = () => {
   return (clientQueryClientSingleton ??= createQueryClient())
 }
 
-export const api: ReturnType<typeof createTRPCReact<InteropTrpcRouter>> =
-  createTRPCReact<InteropTrpcRouter>()
+export const api: ReturnType<typeof createTRPCReact<BackendRouter>> =
+  createTRPCReact<BackendRouter>()
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient()

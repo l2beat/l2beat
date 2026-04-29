@@ -2,7 +2,7 @@ import type { Database, InteropMissingTokenInfo } from '@l2beat/database'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createMissingTokensRouter } from './missingTokens'
 
 describe(createMissingTokensRouter.name, () => {

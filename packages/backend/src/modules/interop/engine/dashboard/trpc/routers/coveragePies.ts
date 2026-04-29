@@ -1,6 +1,6 @@
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import { getInteropCoveragePiesData } from '../../impls/coveragePies'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 export function createCoveragePiesRouter() {
   return router({

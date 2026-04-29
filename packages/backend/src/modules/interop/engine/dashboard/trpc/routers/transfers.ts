@@ -1,10 +1,10 @@
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
   getInteropTransferDetails,
   getInteropTransferStats,
 } from '../../impls/transfers'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 const InteropTransferDetailsRequest = v.object({
   type: v.string(),

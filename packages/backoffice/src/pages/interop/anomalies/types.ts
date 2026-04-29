@@ -1,15 +1,20 @@
-import type { RouterInputs, RouterOutputs } from '@l2beat/backend/interop-trpc'
+import type {
+  BackendRouterInputs,
+  BackendRouterOutputs,
+} from '@l2beat/backend/backoffice-trpc'
 
-export type AnomaliesSummaryResponse = RouterOutputs['anomalies']['summary']
+export type AnomaliesSummaryResponse =
+  BackendRouterOutputs['anomalies']['summary']
 export type AggregatedAnomalyRow =
   AnomaliesSummaryResponse['aggregatedItems'][number]
 export type SuspiciousTransfersResponse =
-  RouterOutputs['anomalies']['suspiciousTransfers']
+  BackendRouterOutputs['anomalies']['suspiciousTransfers']
 export type SuspiciousTransferRow = SuspiciousTransfersResponse['items'][number]
 export type AggregateDetailsInput =
-  RouterInputs['anomalies']['aggregateDetails']
+  BackendRouterInputs['anomalies']['aggregateDetails']
 export type AggregateDetailsResponse =
-  RouterOutputs['anomalies']['aggregateDetails']
+  BackendRouterOutputs['anomalies']['aggregateDetails']
 export type AggregateSeriesPoint = AggregateDetailsResponse['items'][number]
-export type ChainMetadata = RouterOutputs['chains']['metadata'][number]
-export type TransferStatsRow = RouterOutputs['transfers']['stats'][number]
+export type ChainMetadata = BackendRouterOutputs['chains']['metadata'][number]
+export type TransferStatsRow =
+  BackendRouterOutputs['transfers']['stats'][number]

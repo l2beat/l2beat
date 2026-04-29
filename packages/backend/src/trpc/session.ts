@@ -1,21 +1,25 @@
 import { jwtVerify } from 'jose'
-import type { InteropFeatureConfig } from '../../../../../../config/Config'
-import { parseCookies } from './parseCookies'
 
 export interface Session {
   email: string
 }
 
-type DashboardConfig = InteropFeatureConfig['dashboard']
+export interface AuthCredentials {
+  JWKS: Parameters<typeof jwtVerify>[1]
+  aud: string
+  teamDomain: string
+}
+
+export type AuthConfig = AuthCredentials | false
 
 export async function getSession(
   headers: Headers,
-  dashboard: DashboardConfig,
+  auth: AuthConfig,
   options?: {
     jwtVerifyFn?: typeof jwtVerify
   },
 ): Promise<Session | undefined> {
-  if (dashboard.auth === false) {
+  if (auth === false) {
     return { email: 'dev@l2beat.com' }
   }
 
@@ -28,7 +32,7 @@ export async function getSession(
     return
   }
 
-  const { JWKS, teamDomain, aud } = dashboard.auth
+  const { JWKS, teamDomain, aud } = auth
   const jwtVerifyFn = options?.jwtVerifyFn ?? jwtVerify
 
   let decodedToken
@@ -45,4 +49,16 @@ export async function getSession(
   return {
     email: payload.email as string,
   }
+}
+
+function parseCookies(
+  cookieHeader: string,
+): Record<string, string> | undefined {
+  try {
+    return Object.fromEntries(
+      (cookieHeader ?? '')
+        .split(';')
+        .map((c) => c.trim().split('=').map(decodeURIComponent)),
+    )
+  } catch {}
 }

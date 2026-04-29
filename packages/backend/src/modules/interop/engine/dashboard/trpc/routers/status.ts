@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import type { PluginSyncStatus } from '../../../sync/InteropSyncersManager'
 import { getMemoryUsage } from '../../impls/memory'
 import type { ProcessorStatus } from '../../impls/processors'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 type Dependencies = {
   getChainsForPlugin: (pluginName: string) => string[]

@@ -1,7 +1,11 @@
-import type { RouterInputs, RouterOutputs } from '@l2beat/backend/interop-trpc'
+import type {
+  BackendRouterInputs,
+  BackendRouterOutputs,
+} from '@l2beat/backend/backoffice-trpc'
 
-export type MessageStatsRow = RouterOutputs['messages']['stats'][number]
-export type MessageDetailsRow = RouterOutputs['messages']['details'][number]
+export type MessageStatsRow = BackendRouterOutputs['messages']['stats'][number]
+export type MessageDetailsRow =
+  BackendRouterOutputs['messages']['details'][number]
 export type MessagePairRow = MessageStatsRow['chains'][number]
-export type ChainMetadata = RouterOutputs['chains']['metadata'][number]
-export type MessageDetailsInput = RouterInputs['messages']['details']
+export type ChainMetadata = BackendRouterOutputs['chains']['metadata'][number]
+export type MessageDetailsInput = BackendRouterInputs['messages']['details']

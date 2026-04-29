@@ -1,5 +1,5 @@
-import type { RouterOutputs } from '@l2beat/backend/interop-trpc'
+import type { BackendRouterOutputs } from '@l2beat/backend/backoffice-trpc'
 
-export type CoveragePiesData = RouterOutputs['coveragePies']['data']
+export type CoveragePiesData = BackendRouterOutputs['coveragePies']['data']
 export type CoveragePieChart = CoveragePiesData['charts'][number]
 export type CoveragePieSlice = CoveragePieChart['slices'][number]
