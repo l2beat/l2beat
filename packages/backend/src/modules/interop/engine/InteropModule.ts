@@ -29,7 +29,6 @@ import { InteropCleanerLoop } from './cleaner/InteropCleanerLoop'
 import { InteropCompareLoop } from './compare/InteropCompareLoop'
 import { InteropConfigStore } from './config/InteropConfigStore'
 import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringConfigStoreProxy'
-import { createInteropRouter } from './dashboard/InteropRouter'
 import { getProcessorsStatus } from './dashboard/impls/processors'
 import {
   createInteropTrpcRouter,
@@ -142,14 +141,6 @@ export function createInteropModule({
     instrumentInteropRpcMetricsRun(plugin, 'interop.config', {
       plugin: plugin.provides.map((config) => config.key).join(','),
     }),
-  )
-
-  const router = createInteropRouter(
-    db,
-    config.interop,
-    processors,
-    syncersManager,
-    logger.for('InteropRouter'),
   )
 
   const trpcRouter = createInteropTrpcRouter({
@@ -270,7 +261,6 @@ export function createInteropModule({
   }
 
   return {
-    routers: [router],
     trpc: { namespace: 'interop', trpcRouter },
     start,
   }
