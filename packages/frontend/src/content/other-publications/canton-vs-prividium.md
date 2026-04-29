@@ -150,54 +150,52 @@ This is the fundamental cost of enterprise privacy. Publishing unencrypted data 
 
 The question institutions face is what guarantees matter for their specific use case, and whether those guarantees are enforced by protocol or by trust.
 
-<div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0;">
-  <table style="width: 100%; min-width: 760px; border-collapse: collapse; table-layout: fixed; font-size: 15px; line-height: 1.45;">
-    <thead>
-      <tr>
-        <th style="width: 20%; border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top;">Threat</th>
-        <th style="width: 40%; border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top;">Canton</th>
-        <th style="width: 40%; border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top;">Prividium</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Can the operator steal funds?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Mediator can approve despite an informee's local reject. Malicious submitter can omit real signatories from the informee tree and finalize a double-spend. Both are detected post-finalization by ACS commitment reconciliation.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">No. ZK circuit rejects invalid state transitions; Ethereum verifies the proof.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Can the operator censor transactions?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Participant or sequencer can refuse. Submit to 14+ nodes to guarantee inclusion. No forced inclusion beyond that.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Sequencer can refuse. L1 priority queue exists, but the operator controls the filterer and can disable it.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Can a user exit without the operator?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">No mechanism. Assets exist only inside Canton.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Exists in theory. Requires Merkle proof from operator data, so it is blocked if operator withholds data.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Who sees transaction data?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">No single node sees everything. Sequencer handles sealed envelopes. Protocol-enforced encryption.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Operator sees all transactions in plaintext. Privacy is from the outside world only.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Can settlement be reversed?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Requires corrupting more than one-third of roughly 40 invited validators. No economic penalty for misbehavior.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Requires destroying more than one-third of roughly $100B staked ETH.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Do records survive?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Pruning supported for GDPR. Participants exchange hashes to verify they agree on shared state, but these live on participant nodes rather than a public chain. If data is pruned, hashes may be all that remains.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">State roots on Ethereum are permanent, although not transaction records. No party can alter or delete them.</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;"><strong>Can fraud spread across the system?</strong></td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">Fraudulent state can propagate through cross-domain reassignments. A single compromised signing key (for example, the issuer of an Instrument) can produce forged contracts that pass counter-participant validation, and propagation across domains is invisible off-chain.</td>
-        <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top;">If using a shared bridge contract across all ZK Stack chains, the Emergency Board can upgrade with zero delay, and those transactions are publicly visible.</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table style="width: 100%; border-collapse: collapse; table-layout: auto; font-size: 15px; line-height: 1.45;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Threat</th>
+      <th style="border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Canton</th>
+      <th style="border: 1px solid #9ca3af; padding: 10px; text-align: left; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Prividium</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Can the operator<br />steal funds?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Mediator can approve despite an informee's local reject.<br />Malicious submitter can omit real signatories from the informee tree and finalize a double-spend.<br />Both detected post-finalization by ACS commitment reconciliation.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">No. ZK circuit rejects invalid state transitions;<br />Ethereum verifies the proof.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Can the operator<br />censor transactions?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Participant or sequencer can refuse.<br />Submit to 14+ nodes to guarantee inclusion.<br />No forced inclusion beyond that.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Sequencer can refuse.<br />L1 priority queue exists but operator controls the filterer and can disable it.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Can a user exit<br />without the operator?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">No mechanism.<br />Assets exist only inside Canton.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Exists in theory.<br />Requires Merkle proof from operator's data -> blocked if operator withholds data</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Who sees<br />transaction data?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">No single node sees everything.<br />Sequencer handles sealed envelopes.<br />Protocol-enforced encryption.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Operator sees all transactions in plaintext.<br />Privacy from the outside world only.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Can settlement<br />be reversed?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Requires corrupting >1/3 of ~40 invited validators.<br />No economic penalty for misbehavior.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Requires destroying >1/3 of ~$100B staked ETH.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Do records<br />survive?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Pruning supported for GDPR.<br />Participants exchange hashes to verify they agree on shared state, but these live on participant nodes - not on a public chain.<br />If data is pruned, the hashes may be all that remains.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">State roots on Ethereum are permanent, although not transaction records.<br />No party can alter or delete them.</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Can fraud<br />spread across the system?</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">Fraudulent state can propagate through cross-domain reassignments.<br />A single compromised signing key (e.g. the issuer of an Instrument) produces forged contracts that pass counter-participant validation; propagation across domains is invisible off-chain.</td>
+      <td style="border: 1px solid #9ca3af; padding: 10px; vertical-align: top; word-break: normal; overflow-wrap: anywhere;">If using shared bridge contract across all ZK Stack chains.<br />Emergency Board can upgrade with zero delay, tx publicly visible.</td>
+    </tr>
+  </tbody>
+</table>
 
 Canton optimizes for multi-party coordination between known institutions who need confidentiality from each other. Its guarantees rest on the reputation, legal liability, and regulatory obligations of the participants. This maps to how institutional finance already governs counterparty risk.
 
