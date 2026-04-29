@@ -6,22 +6,6 @@
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
       "updateNotifierId": 132,
-      "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
-      "contractName": "SavingsDaiOracle",
-      "entity": null,
-      "id": "132:eth:0x0c0864837C7e65458aCD3C665222203217019436:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.latestAnswer",
-          "before": 117471731,
-          "after": 117481826
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-25T08:12:54.000Z",
-      "updateNotifierId": 132,
       "address": "eth:0x8076807464DaC94Ac8Aa1f7aF31b58F73bD88A27",
       "contractName": "GnosisSafe",
       "entity": null,
@@ -127,60 +111,6 @@
           "field": "values.latestAnswer",
           "before": 117481826,
           "after": 117485533
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-27T09:29:24.000Z",
-      "updateNotifierId": 135,
-      "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
-      "contractName": "SavingsDaiOracle",
-      "entity": null,
-      "id": "135:eth:0x0c0864837C7e65458aCD3C665222203217019436:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.latestAnswer",
-          "before": 117485533,
-          "after": 117489855
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-27T09:29:24.000Z",
-      "updateNotifierId": 135,
-      "address": "eth:0xf09e48dd4CA8e76F63a57ADd428bB06fee7932a4",
-      "contractName": "EmissionManager",
-      "entity": null,
-      "id": "135:eth:0xf09e48dd4CA8e76F63a57ADd428bB06fee7932a4:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.rewardsVaultWstETHBalance",
-          "before": "26469565848978392992",
-          "after": "26468878478347339781"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-28T09:34:24.000Z",
-      "updateNotifierId": 139,
-      "address": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
-      "contractName": "Lombard Staked Bitcoin Token",
-      "isDependency": true,
-      "entity": "Lombard",
-      "id": "139:eth:0x8236a87084f8B84306f72007F36F2618A5634494:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.ratio",
-          "before": "996286358544706349",
-          "after": "996197896618977227"
-        },
-        {
-          "field": "values.getRate",
-          "before": "1003727483994379121",
-          "after": "1003816614544084899"
         }
       ]
     }
