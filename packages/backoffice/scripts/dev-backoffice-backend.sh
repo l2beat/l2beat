@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+BACKOFFICE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT_DIR="$(cd "$BACKOFFICE_DIR/../.." && pwd)"
 NO_BACKEND_LOGS=false
 
 backend_pid=""
@@ -61,7 +62,7 @@ else
 fi
 backend_pid=$!
 
-pnpm -C "$ROOT_DIR/packages/backoffice" dev &
+pnpm -C "$BACKOFFICE_DIR" dev &
 backoffice_pid=$!
 
 echo "Started backend (PID $backend_pid) and backoffice (PID $backoffice_pid)."
