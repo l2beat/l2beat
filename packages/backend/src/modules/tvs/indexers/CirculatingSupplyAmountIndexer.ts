@@ -140,8 +140,6 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   }
 
   override async trimData(configurations: TrimRemovalConfiguration[]) {
-    if (configurations.length === 0) return
-
     const configs = configurations.map((c) => ({
       configurationId: c.id,
       fromInclusive: c.range[0],

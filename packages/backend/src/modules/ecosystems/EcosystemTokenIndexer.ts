@@ -95,8 +95,6 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
   override async wipeData(
     configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    if (configurations.length === 0) return
-
     const deletedRecords = await this.$.db.ecosystemToken.deleteByConfigIds(
       configurations.map((c) => c.id),
     )
