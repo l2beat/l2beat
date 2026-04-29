@@ -47,7 +47,7 @@ function PublicationHeader({
   return (
     <div>
       <div className="flex items-center gap-2">
-        <PublicationTag tag={publication.tag} />
+        <PublicationTag tag="governance" />
         <p className="text-brand text-subtitle-12 uppercase">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
@@ -66,11 +66,9 @@ function PublicationHeader({
           <p className="font-bold text-label-value-16">
             {publication.author.firstName} {publication.author.lastName}
           </p>
-          {publication.author.role && (
-            <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
-              {publication.author.role}
-            </p>
-          )}
+          <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
+            {publication.author.role}
+          </p>
         </div>
       </div>
     </div>
