@@ -6,7 +6,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { OtherPublicationEntry } from '~/pages/publications/other-publications/utils/getOtherPublicationEntry'
-import { PublicationTag } from '../components/PublicationsList'
+import { PublicationHeader } from '../components/PublicationHeader'
 
 interface Props extends AppLayoutProps {
   publication: OtherPublicationEntry
@@ -36,43 +36,5 @@ export function OtherPublicationPage({ publication, ...props }: Props) {
         </PrimaryCard>
       </SideNavLayout>
     </AppLayout>
-  )
-}
-
-function PublicationHeader({
-  publication,
-}: {
-  publication: OtherPublicationEntry
-}) {
-  return (
-    <div>
-      <div className="flex items-center gap-2">
-        <PublicationTag tag={publication.tag} />
-        <p className="text-brand text-subtitle-12 uppercase">
-          {publication.readTimeInMinutes} min read • Published on{' '}
-          {publication.publishedOn}
-        </p>
-      </div>
-      <h1 className="mt-2 text-heading-24 md:text-heading-32">
-        {publication.title}
-      </h1>
-      <div className="mt-6 flex items-center justify-start">
-        <img
-          {...publication.author.avatar}
-          alt={`Avatar of ${publication.author.firstName} ${publication.author.lastName}`}
-          className="mr-2 size-10 rounded-full"
-        />
-        <div>
-          <p className="font-bold text-label-value-16">
-            {publication.author.firstName} {publication.author.lastName}
-          </p>
-          {publication.author.role && (
-            <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
-              {publication.author.role}
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
   )
 }
