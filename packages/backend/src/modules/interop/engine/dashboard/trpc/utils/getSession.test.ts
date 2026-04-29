@@ -86,7 +86,7 @@ describe(getSession.name, () => {
     })
 
     expect(session).toEqual({
-      email: 'backoffice@l2beat.com',
+      email: 'dev@l2beat.com',
     })
   })
 
@@ -103,7 +103,7 @@ describe(getSession.name, () => {
     })
 
     expect(session).toEqual({
-      email: 'backoffice@l2beat.com',
+      email: 'dev@l2beat.com',
     })
   })
 
