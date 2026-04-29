@@ -31,12 +31,14 @@ export function createTransferDetailsColumns(options: {
       header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('bridgeType', {
       header: 'Bridge type',
       meta: {
         csvHeader: 'Bridge type',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('duration', {
@@ -51,6 +53,7 @@ export function createTransferDetailsColumns(options: {
       header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('srcTxHash', {
@@ -92,7 +95,7 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) => String(row.original.srcLogIndex ?? '-'),
       },
     }),
-    columnHelper.accessor('srcTokenAddress', {
+    columnHelper.accessor('srcSymbol', {
       id: 'srcToken',
       header: 'Source token',
       cell: ({ row }) => {
@@ -130,6 +133,10 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) =>
           formatTokenAmount(row.original.srcSymbol, row.original.srcAmount) ??
           getTokenAddressDisplay(row.original.srcTokenAddress),
+        filter: {
+          kind: 'select',
+          getOptionLabel: (value) => String(value ?? '-'),
+        },
       },
     }),
     columnHelper.accessor('srcValueUsd', {
@@ -164,6 +171,7 @@ export function createTransferDetailsColumns(options: {
       header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('dstTxHash', {
@@ -205,7 +213,7 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) => String(row.original.dstLogIndex ?? '-'),
       },
     }),
-    columnHelper.accessor('dstTokenAddress', {
+    columnHelper.accessor('dstSymbol', {
       id: 'dstToken',
       header: 'Destination token',
       cell: ({ row }) => {
@@ -242,6 +250,10 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) =>
           formatTokenAmount(row.original.dstSymbol, row.original.dstAmount) ??
           getTokenAddressDisplay(row.original.dstTokenAddress),
+        filter: {
+          kind: 'select',
+          getOptionLabel: (value) => String(value ?? '-'),
+        },
       },
     }),
     columnHelper.accessor('dstValueUsd', {

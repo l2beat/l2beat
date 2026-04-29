@@ -17,12 +17,18 @@ export function createTransferPairsColumns({
       header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
+        filter: {
+          kind: 'select',
+        },
       },
     }),
     columnHelper.accessor('dstChain', {
       header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
+        filter: {
+          kind: 'select',
+        },
       },
     }),
     columnHelper.accessor('count', {

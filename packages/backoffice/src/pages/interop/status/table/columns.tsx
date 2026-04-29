@@ -14,6 +14,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
     header: 'Plugin',
     meta: {
       csvHeader: 'Plugin',
+      filter: { kind: 'select' },
     },
   }),
   columnHelper.accessor('chain', {
@@ -23,6 +24,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
     ),
     meta: {
       csvHeader: 'Chain',
+      filter: { kind: 'select' },
     },
   }),
   columnHelper.accessor((row) => row.syncMode ?? 'unknown', {
@@ -31,6 +33,7 @@ export const pluginStatusColumns: TableOptions<PluginStatusRow>['columns'] = [
     cell: ({ getValue }) => <Badge variant="outline">{getValue()}</Badge>,
     meta: {
       csvHeader: 'Sync mode',
+      filter: { kind: 'select' },
     },
   }),
   columnHelper.accessor('toTimestamp', {
