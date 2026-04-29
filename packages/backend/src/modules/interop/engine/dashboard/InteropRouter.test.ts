@@ -17,7 +17,6 @@ function makeConfig(dangerousOperationsEnabled = false): InteropFeatureConfig {
     dashboard: {
       enabled: true,
       getExplorerUrl: () => undefined,
-      auth: false,
     },
     compare: { enabled: false },
     financials: { enabled: false, tokenDbApiUrl: '' },
