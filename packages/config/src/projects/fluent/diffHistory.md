@@ -7,7 +7,7 @@ Generated with discovered.json: 0x9a8b42f3b40b7647a3db7cd43cdb0fde3ee68f09
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+initial discovery
 
 ## Initial discovery
 
