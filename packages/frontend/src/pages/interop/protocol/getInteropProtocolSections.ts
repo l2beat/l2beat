@@ -1,20 +1,21 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropSelection } from '../utils/types'
 
 interface GetInteropProtocolSectionsOptions {
   projectId: ProjectId
   protocolData: InteropProtocolDashboardData
   apiSelection: InteropSelection
-  getChainById: (id: string) => { id: string; iconUrl: string } | undefined
+  interopChains: InteropChainWithIcon[]
 }
 
 export function getInteropProtocolSections({
   projectId,
   protocolData,
   apiSelection,
-  getChainById,
+  interopChains,
 }: GetInteropProtocolSectionsOptions): ProjectDetailsSection[] {
   if (!protocolData.entry) {
     return []
@@ -29,7 +30,7 @@ export function getInteropProtocolSections({
         id: 'interop-volume',
         title: 'Volume and flows',
         protocolData,
-        getChainById,
+        interopChains,
       },
     })
   }

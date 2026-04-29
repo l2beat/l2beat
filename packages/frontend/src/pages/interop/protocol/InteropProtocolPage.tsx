@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
@@ -59,16 +58,11 @@ function Content({
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
 }) {
-  const getChainById = useMemo(() => {
-    const map = new Map(interopChains.map((chain) => [chain.id, chain]))
-    return (id: string) => map.get(id)
-  }, [interopChains])
-
   const sections = getInteropProtocolSections({
     projectId: projectEntry.id,
     protocolData,
     apiSelection,
-    getChainById,
+    interopChains,
   })
   const navigationSections = projectDetailsToNavigationSections(sections)
   const isNavigationEmpty = navigationSections.length === 0
