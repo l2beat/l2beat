@@ -1,4 +1,4 @@
-import type { BackendRouter } from '@l2beat/backend/backoffice-trpc'
+import type { BackendRouter } from '@l2beat/backend/trpc'
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'

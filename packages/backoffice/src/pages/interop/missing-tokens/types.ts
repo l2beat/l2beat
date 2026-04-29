@@ -1,4 +1,4 @@
-import type { BackendRouterOutputs } from '@l2beat/backend/backoffice-trpc'
+import type { BackendRouterOutputs } from '@l2beat/backend/trpc'
 export type MissingTokenRow =
   BackendRouterOutputs['interop']['missingTokens']['list'][number]
 export type MissingTokenStatus = MissingTokenRow['tokenDbStatus']

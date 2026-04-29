@@ -9,14 +9,14 @@
       "types": "./build/src/index.d.ts",
       "default": "./build/src/index.js"
     },
-    "./backoffice-trpc": {
+    "./trpc": {
       "types": "./build/src/modules/backoffice/index.d.ts",
       "default": "./build/src/modules/backoffice/index.js"
     }
   },
   "typesVersions": {
     "*": {
-      "backoffice-trpc": [
+      "trpc": [
         "./build/src/modules/backoffice/index.d.ts"
       ]
     }

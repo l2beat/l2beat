@@ -1,7 +1,7 @@
 import type {
   BackendRouterInputs,
   BackendRouterOutputs,
-} from '@l2beat/backend/backoffice-trpc'
+} from '@l2beat/backend/trpc'
 
 export type TransferStatsRow =
   BackendRouterOutputs['interop']['transfers']['stats'][number]
