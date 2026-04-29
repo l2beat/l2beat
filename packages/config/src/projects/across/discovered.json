@@ -1,7 +1,7 @@
 {
   "name": "across",
-  "timestamp": 1776070910,
-  "configHash": "0x54ce2796c43f2b8397539cd946b865170508bd12a57ab0ce83d3c390afec2dc1",
+  "timestamp": 1777369203,
+  "configHash": "0x7280d281feb04e5121935f95f9cad77e4599ed8c3737550e28177b1a8558022b",
   "entries": [
     {
       "name": "VotingV2",
@@ -30,28 +30,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "17824173821714652096731584",
+        "cumulativeStake": "19609831360268303516274900",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10278,
+        "getCurrentRoundId": 10285,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 33,
-          "numberResolvedPriceRequests": 2952
+          "numberPendingPriceRequests": 35,
+          "numberResolvedPriceRequests": 3100
         },
-        "getVotePhase": 0,
-        "lastRoundIdProcessed": 10278,
-        "lastUpdateTime": 1776070799,
+        "getVotePhase": 1,
+        "lastRoundIdProcessed": 10285,
+        "lastUpdateTime": 1777368947,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "eth:0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 33,
+        "nextPendingIndexToProcess": 35,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "775169866287827712",
-        "rewardPerTokenStored": "775169078593534533",
+        "rewardPerToken": "784558564102901984",
+        "rewardPerTokenStored": "784556893512298825",
         "slashingLibrary": "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -668,7 +668,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1776070907,
+        "getCurrentTime": 1777369199,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -919,11 +919,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1776070907,
+        "getCurrentTime": 1777369199,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 3828145,
+        "numberOfDeposits": 3866307,
         "OFT_DST_EID": 0,
         "OFT_FEE_CAP": 0,
         "owner": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1160,7 +1160,7 @@
         "$immutable": true,
         "emergencyProposer": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1776070907,
+        "getCurrentTime": 1777369199,
         "getMember": [
           "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1210,7 +1210,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 963,
+        "nonce": 971,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1412,7 +1412,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1776070907,
+        "getCurrentTime": 1777369199,
         "governor": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1488,7 +1488,7 @@
         "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738"
       ],
       "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "description": "Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -1808,13 +1808,13 @@
         "protocolFeeCaptureAddress": "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xbf470280e2a3b203537568d80cd8684c6e9e96063839ec17c9bc3bfc4b2f274c",
-          "relayerRefundRoot": "0x7c7193a67095711d4bfce5b079cf850662adc3ec127201f98f59cf20d0600bb2",
+          "poolRebalanceRoot": "0xb87a170231d82e53baf38b178b154aac79bb84452219e1219c4e5ab72a724fc7",
+          "relayerRefundRoot": "0xcd43f9a78436c97413b2aecbfd73eff071e5428d0edfd9329193e77c016f83a3",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 19,
-          "challengePeriodEndTimestamp": 1776072071
+          "unclaimedPoolRebalanceLeafCount": 21,
+          "challengePeriodEndTimestamp": 1777368035
         },
         "spokePool": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -3977,6 +3977,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "usedBlockNumbers": { "ethereum": 24869822 },
+  "usedBlockNumbers": { "ethereum": 24977724 },
   "permissionsConfigHash": "0x0d9786c64b48b82169e67f5e59962553314fa5fa7800d3fae6beb2337b83d3bb"
 }

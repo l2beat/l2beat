@@ -498,7 +498,13 @@ function orbitStackCommon(
     },
     proofSystem:
       templateVars.nonTemplateProofSystem ??
-      (hasNoProofs ? undefined : { type: 'Optimistic' }),
+      (hasNoProofs
+        ? undefined
+        : {
+            type: 'Optimistic',
+            name: isPostBoLD ? 'BoLD' : 'Arbitrum Classic',
+            challengeProtocol: 'Interactive',
+          }),
     riskView: getRiskView(templateVars, daProviders, isPostBoLD),
     stage: computedStage(templateVars),
     config: {

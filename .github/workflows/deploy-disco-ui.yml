@@ -32,6 +32,8 @@ jobs:
     with:
       project: disco-ui
       dockerfile: packages/l2b/Dockerfile.disco-ui
+      extra_build_args: |
+        VITE_OPENPANEL_CLIENT_ID=${{ vars.DISCOUI_OPENPANEL_CLIENT_ID }}
     secrets:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}

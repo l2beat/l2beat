@@ -394,6 +394,7 @@ function opStackCommon(
           : fraudProofType === 'OpSuccinctFDP'
             ? {
                 type: 'Optimistic',
+                name: 'OP Succinct Lite',
                 zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
