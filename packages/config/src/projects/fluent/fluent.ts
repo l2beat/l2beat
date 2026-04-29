@@ -196,7 +196,12 @@ export const fluent: ScalingProject = {
             url: 'https://docs.fluent.xyz/system-architecture/bridge',
           },
         ],
-        risks: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid batch is preconfirmed by a compromised AWS Nitro Enclave and no permissioned challenger disputes it before the challenge window closes.',
+          },
+        ],
       },
     ],
   },
