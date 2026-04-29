@@ -28,6 +28,16 @@ export async function getSession(
     return
   }
 
+  // Static back-office token shared between the deployed backoffice UI and
+  // the staging/production backends. Lets the backoffice authenticate without
+  // a Cloudflare Access JWT.
+  if (
+    dashboard.backofficeAuthToken &&
+    token === dashboard.backofficeAuthToken
+  ) {
+    return { email: 'dev@l2beat.com' }
+  }
+
   const { JWKS, teamDomain, aud } = dashboard.auth
   const jwtVerifyFn = options?.jwtVerifyFn ?? jwtVerify
 

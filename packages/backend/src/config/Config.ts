@@ -243,6 +243,7 @@ export interface InteropFeatureConfig {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
     auth: InteropDashboardAuthConfig | false
+    backofficeAuthToken?: string
   }
   compare: {
     enabled: boolean

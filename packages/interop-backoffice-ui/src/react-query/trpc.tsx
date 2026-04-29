@@ -46,6 +46,10 @@ function TRPCReactProviderInner({
           url,
           headers: () => {
             const headers = new Headers()
+            const backendAuthToken = import.meta.env.VITE_BACKEND_AUTH_TOKEN
+            if (backendAuthToken) {
+              headers.set('Authorization', backendAuthToken)
+            }
 
             return headers
           },

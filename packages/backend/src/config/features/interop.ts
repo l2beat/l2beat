@@ -54,6 +54,7 @@ export async function getInteropFeatureConfig(
         return c?.explorerUrl
       },
       auth: isLocal ? false : getInteropDashboardAuthConfig(env),
+      backofficeAuthToken: env.optionalString('BACKOFFICE_AUTH_TOKEN'),
     },
     compare: {
       enabled: flags.isEnabled('interop', 'compare'),
