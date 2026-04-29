@@ -144,7 +144,7 @@ export function InteropProtocolSummary({
                 iconUrl: protocolData?.entry?.iconUrl ?? '',
                 bridgeTypes: protocolData?.entry?.bridgeTypes ?? [],
               }}
-              hideChainsInfo
+              hideDialog
             />
           }
         />

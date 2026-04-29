@@ -12,7 +12,7 @@ export function TopTokensCell({
   type,
   protocol,
   apiSelection,
-  hideChainsInfo,
+  hideDialog,
   showNetMintedValueColumn,
 }: {
   topItems: TopItems<TokenData>
@@ -24,7 +24,7 @@ export function TopTokensCell({
     bridgeTypes?: KnownInteropBridgeType[]
   }
   apiSelection: InteropSelection
-  hideChainsInfo?: boolean
+  hideDialog?: boolean
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -49,27 +49,29 @@ export function TopTokensCell({
         }
         type="cell"
         setIsOpen={setIsOpen}
+        hideDialog={hideDialog}
       />
-      <TokensDialog
-        id={protocol.id}
-        type={type}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        apiSelection={apiSelection}
-        hideChainsInfo={hideChainsInfo}
-        title={
-          <>
-            <span>Top tokens & pairs by volume for </span>
-            <img
-              src={protocol.iconUrl}
-              alt={protocol.name}
-              className="relative bottom-px mx-1 inline-block size-6"
-            />
-            <span>{protocol.name}</span>
-          </>
-        }
-        showNetMintedValueColumn={showNetMintedValueColumn}
-      />
+      {!hideDialog && (
+        <TokensDialog
+          id={protocol.id}
+          type={type}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          apiSelection={apiSelection}
+          title={
+            <>
+              <span>Top tokens & pairs by volume for </span>
+              <img
+                src={protocol.iconUrl}
+                alt={protocol.name}
+                className="relative bottom-px mx-1 inline-block size-6"
+              />
+              <span>{protocol.name}</span>
+            </>
+          }
+          showNetMintedValueColumn={showNetMintedValueColumn}
+        />
+      )}
     </>
   )
 }

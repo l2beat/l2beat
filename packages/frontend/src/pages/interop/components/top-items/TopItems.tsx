@@ -20,6 +20,7 @@ type TopItem = {
 type InteropTopItemsCellProps = {
   topItems: TopItems<TopItem>
   setIsOpen: (isOpen: boolean) => void
+  hideDialog?: boolean
 }
 
 const buttonVariants = cva('group/dialog-trigger flex items-center', {
@@ -31,17 +32,20 @@ const buttonVariants = cva('group/dialog-trigger flex items-center', {
   },
 })
 
-const remainingCountVariants = cva(
-  'font-bold group-hover/dialog-trigger:underline',
-  {
-    variants: {
-      type: {
-        default: 'text-label-value-13',
-        cell: 'text-label-value-15',
-      },
+const remainingCountVariants = cva('font-bold', {
+  variants: {
+    type: {
+      default: 'text-label-value-13',
+      cell: 'text-label-value-15',
+    },
+    hideDialog: {
+      false: 'group-hover/dialog-trigger:underline',
     },
   },
-)
+  defaultVariants: {
+    hideDialog: false,
+  },
+})
 
 const iconVariants = cva('rounded-full bg-white', {
   variants: {
@@ -57,6 +61,7 @@ export function InteropTopItems({
   setIsOpen,
   className,
   type = 'default',
+  hideDialog,
   ...rest
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
@@ -80,7 +85,11 @@ export function InteropTopItems({
         ))}
       </div>
       {topItems.remainingCount > 0 && (
-        <RemainingCount topItems={topItems} type={type} />
+        <RemainingCount
+          topItems={topItems}
+          type={type}
+          hideDialog={hideDialog}
+        />
       )}
     </button>
   )
@@ -89,11 +98,12 @@ export function InteropTopItems({
 function RemainingCount({
   topItems,
   type,
+  hideDialog,
 }: {
   topItems: TopItems<TopItem>
 } & VariantProps<typeof remainingCountVariants>) {
   return (
-    <span className={remainingCountVariants({ type })}>
+    <span className={remainingCountVariants({ type, hideDialog })}>
       +{topItems.remainingCount}
       {type === 'default' ? ' more' : ''}
     </span>

@@ -36,7 +36,6 @@ interface TokensDialogProps {
   setIsOpen: (isOpen: boolean) => void
   title: ReactNode
   apiSelection: InteropSelection
-  hideChainsInfo?: boolean
   showNetMintedValueColumn?: boolean
 }
 
@@ -47,7 +46,6 @@ export function TokensDialog({
   setIsOpen,
   title,
   apiSelection,
-  hideChainsInfo,
   showNetMintedValueColumn,
 }: TokensDialogProps) {
   const breakpoint = useBreakpoint()
@@ -112,7 +110,7 @@ export function TokensDialog({
           >
             <DrawerHeader className="mb-2">
               <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
-              {!hideChainsInfo && <BetweenChainsInfo />}
+              <BetweenChainsInfo />
               {tabsList}
             </DrawerHeader>
             <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
@@ -137,7 +135,7 @@ export function TokensDialog({
         >
           <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">
             <DialogTitle>{title}</DialogTitle>
-            {!hideChainsInfo && <BetweenChainsInfo className="mt-1" />}
+            <BetweenChainsInfo className="mt-1" />
             {tabsList}
           </DialogHeader>
           <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">
