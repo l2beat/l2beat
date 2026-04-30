@@ -13,6 +13,7 @@ interface FlowsGraphProps {
   data: InteropFlowsData
   size: number
   isSmallScreen: boolean
+  baseDollarsPerParticle?: number
 }
 
 export function FlowsGraph({
@@ -21,6 +22,7 @@ export function FlowsGraph({
   data,
   size,
   isSmallScreen,
+  baseDollarsPerParticle,
 }: FlowsGraphProps) {
   const layout = useMemo(
     () =>
@@ -57,6 +59,7 @@ export function FlowsGraph({
         centerX={center}
         centerY={center}
         isSmallScreen={isSmallScreen}
+        baseDollarsPerParticle={baseDollarsPerParticle}
       />
       <ChainBubblesLayer
         interopChains={interopChains}

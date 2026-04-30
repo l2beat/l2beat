@@ -90,6 +90,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     selectedChains,
     data?.chainData,
     data?.flows,
+    25,
   )
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
@@ -102,6 +103,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         hasEnoughChains={hasEnoughChains}
         hasEnoughProtocols={hasEnoughProtocols}
         isLoading={isLoading}
+        baseDollarsPerParticle={25}
       />
       {shouldRenderInactiveChainsInfo && (
         <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
