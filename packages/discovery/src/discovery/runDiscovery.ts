@@ -133,20 +133,18 @@ function printMaxAddressesWarning(
   maxAddresses: number,
 ) {
   const lines = [
-    `  ⚠  WARNING — DISCOVERY IS INCOMPLETE  ⚠  `,
-    ``,
+    '  ⚠  WARNING — DISCOVERY IS INCOMPLETE  ⚠  ',
+    '',
     `  maxAddresses limit reached: ${skipped} address${skipped === 1 ? '' : 'es'} were SKIPPED.`,
-    `  These addresses were NOT analyzed and are MISSING from discovered.json.`,
-    ``,
+    '  These addresses were NOT analyzed and are MISSING from discovered.json.',
+    '',
     `  FIX: raise "maxAddresses" (currently ${maxAddresses}) in the project config,`,
-    `       then re-run discovery.`,
+    '       then re-run discovery.',
   ]
   const width = lines.reduce((max, l) => Math.max(max, l.length), 0)
   const padded = lines.map((l) => ' ' + l.padEnd(width) + ' ')
   const blank = ' '.repeat(width + 2)
-  const banner = [blank, ...padded, blank].map((l) =>
-    chalk.bgRed.white.bold(l),
-  )
+  const banner = [blank, ...padded, blank].map((l) => chalk.bgRed.white.bold(l))
   logger.info('')
   for (const line of banner) {
     logger.info(line)
@@ -256,11 +254,8 @@ export async function discover(
     logger,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
-  const { analyses: result, stats: addressStats } = await discoveryEngine.discover(
-    allProviders,
-    config.structure,
-    timestamp,
-  )
+  const { analyses: result, stats: addressStats } =
+    await discoveryEngine.discover(allProviders, config.structure, timestamp)
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
