@@ -1,7 +1,7 @@
 {
   "name": "staderethx",
   "timestamp": 1777473533,
-  "configHash": "0xb7c348a8a8b43a0ab2cb2bafbe0d8efa299364331fc9febd1d81d18231582060",
+  "configHash": "0x17a7888ea1b735cccc5a6f3b890a2f483541f46a6f35b9913cce57b261e0b221",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -158,12 +158,11 @@
       "name": "StaderTimelock",
       "address": "eth:0x1112D5C55670Cb5144BF36114C20a122908068B9",
       "type": "Contract",
-      "template": "staderethx/StaderTimelock",
       "sourceHashes": [
         "0x1cf2a567f0dfcae3ac31fabbc74c453ddb5a347a26f76dbc26fc2171094a9153"
       ],
       "proxyType": "immutable",
-      "description": "OpenZeppelin TimelockController. `schedule` records `_timestamps[id] = block.timestamp + delay` for a call (where `delay >= getMinDelay()`), so operations become executable after `getMinDelay` seconds have passed. Holders of PROPOSER_ROLE schedule, holders of CANCELLER_ROLE cancel before execution, and holders of EXECUTOR_ROLE call `execute` after the delay; if EXECUTOR_ROLE is granted to the zero address, anyone can execute.",
+      "description": "OpenZeppelin TimelockController. `schedule` records `_timestamps[id] = block.timestamp + delay` for a call (where `delay >= getMinDelay()`), so operations become executable after `getMinDelay` seconds have passed. Holders of PROPOSER_ROLE schedule, holders of CANCELLER_ROLE cancel before execution, and holders of EXECUTOR_ROLE call `execute` after the delay; if EXECUTOR_ROLE is granted to the zero address, anyone can execute. Inlined in config.jsonc rather than templated because the OZ TimelockController flattened source is shared with other projects' deployments and Stader-specific cuts must not leak.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -4570,7 +4569,6 @@
     "staderethx/StaderInsuranceFund": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "staderethx/StaderOracle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "staderethx/StaderStakePoolsManager": "0x4cb89b9baafff2e426be0d85228411ec7dbbf803e39208be859b4531acdc3f53",
-    "staderethx/StaderTimelock": "0x0cffe7fcc3ee2601d6bee887de9d126b0332aa9211adf6e4e253c5d6da978071",
     "staderethx/UserWithdrawalManager": "0x06f75be3bd515444b896e16657240ffe38a680993a5f9b6208cee2f14cdf7f06",
     "staderethx/ValidatorWithdrawalVault": "0xa3b9f9822226d3db5e4c204c49a9529c6cd9ad0f6db6c04a5747d2327f0d77d0",
     "staderethx/VaultFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"

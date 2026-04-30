@@ -14,6 +14,65 @@
   "overrides": {
     "eth:0x3517D4C433C99fD4d75A3059e176a789FF675025": {
       "description": "Master implementation that VaultFactory clones via EIP1167 for every per-validator ValidatorWithdrawalVault and per-operator NodeELRewardVault. VaultFactory.initialize creates this with `new VaultProxy()` and each clone is initialised with (isValidatorWithdrawalVault, poolId, id, staderConfig). ValidatorWithdrawalVault and NodeELRewardVault both read poolId/id/staderConfig from this proxy's storage and rely on its fallback to delegate to the implementation registered in StaderConfig (NODE_EL_REWARD_VAULT_IMPLEMENTATION or VALIDATOR_WITHDRAWAL_VAULT_IMPLEMENTATION) according to the `isValidatorWithdrawalVault` flag. Source is not verified on Etherscan; behaviour above is observed from VaultFactory and the two vault implementations."
+    },
+    "eth:0x1112D5C55670Cb5144BF36114C20a122908068B9": {
+      "displayName": "StaderTimelock",
+      "category": "gov",
+      "canActIndependently": false,
+      "description": "OpenZeppelin TimelockController. `schedule` records `_timestamps[id] = block.timestamp + delay` for a call (where `delay >= getMinDelay()`), so operations become executable after `getMinDelay` seconds have passed. Holders of PROPOSER_ROLE schedule, holders of CANCELLER_ROLE cancel before execution, and holders of EXECUTOR_ROLE call `execute` after the delay; if EXECUTOR_ROLE is granted to the zero address, anyone can execute. Inlined in config.jsonc rather than templated because the OZ TimelockController flattened source is shared with other projects' deployments and Stader-specific cuts must not leak.",
+      "fields": {
+        "getMinDelay": {
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "description": "Minimum delay (in seconds, since `_timestamps[id] = block.timestamp + delay`) between scheduling and executing an operation."
+        },
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        },
+        "proposers": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "PROPOSER_ROLE"
+          },
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "permissions": [
+            {
+              "type": "act",
+              "delay": "{{ getMinDelay }}"
+            }
+          ]
+        },
+        "executors": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "EXECUTOR_ROLE"
+          },
+          "type": "PERMISSION",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute scheduled operations once the delay has passed."
+            }
+          ]
+        },
+        "cancellers": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "CANCELLER_ROLE"
+          },
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "cancel a scheduled operation before it executes."
+            }
+          ]
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa0c8d0bf3d31203d24a50e99a2f7248bfb32b378
+Generated with discovered.json: 0xa1557c3161b1f85b1e0777ef0f4ba38a89bcccc4
 
-# Diff at Wed, 29 Apr 2026 15:24:03 GMT:
+# Diff at Thu, 30 Apr 2026 09:49:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1777473533
@@ -38,7 +38,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract StaderTimelock (eth:0x1112D5C55670Cb5144BF36114C20a122908068B9)
-    +++ description: OpenZeppelin TimelockController. `schedule` records `_timestamps[id] = block.timestamp + delay` for a call (where `delay >= getMinDelay()`), so operations become executable after `getMinDelay` seconds have passed. Holders of PROPOSER_ROLE schedule, holders of CANCELLER_ROLE cancel before execution, and holders of EXECUTOR_ROLE call `execute` after the delay; if EXECUTOR_ROLE is granted to the zero address, anyone can execute.
+    +++ description: OpenZeppelin TimelockController. `schedule` records `_timestamps[id] = block.timestamp + delay` for a call (where `delay >= getMinDelay()`), so operations become executable after `getMinDelay` seconds have passed. Holders of PROPOSER_ROLE schedule, holders of CANCELLER_ROLE cancel before execution, and holders of EXECUTOR_ROLE call `execute` after the delay; if EXECUTOR_ROLE is granted to the zero address, anyone can execute. Inlined in config.jsonc rather than templated because the OZ TimelockController flattened source is shared with other projects' deployments and Stader-specific cuts must not leak.
 ```
 
 ```diff
