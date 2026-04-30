@@ -1128,16 +1128,6 @@ describe('deployedTokensRouter', () => {
       expect(result.data?.symbol).toEqual('USDC')
       expect(result.warnings).toEqual([
         {
-          field: 'decimals',
-          message:
-            'No RPC configured for ethereum, so decimals were not autofilled.',
-        },
-        {
-          field: 'deploymentTimestamp',
-          message:
-            'No Etherscan, Blockscout, or RPC configured for ethereum. Deployment timestamp was not autofilled.',
-        },
-        {
           field: 'abstractTokenId',
           message: 'No abstract token found with CoinGecko id usd-coin.',
         },
