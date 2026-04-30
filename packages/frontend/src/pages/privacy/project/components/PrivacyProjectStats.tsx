@@ -4,6 +4,8 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
   totalValueSecuredUsd: number
+  assetsCount: number
+  bucketsCount: number
   deposits: {
     total: number
     last7d: number
@@ -11,12 +13,25 @@ interface Props {
   }
 }
 
-export function PrivacyProjectStats({ totalValueSecuredUsd, deposits }: Props) {
+export function PrivacyProjectStats({
+  totalValueSecuredUsd,
+  assetsCount,
+  bucketsCount,
+  deposits,
+}: Props) {
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <ProjectSummaryStat
-        title="Total Value Secured"
-        value={formatCurrency(totalValueSecuredUsd, 'usd')}
+        title="Total Value Locked"
+        value={
+          <div className="flex flex-col md:gap-1">
+            <span>{formatCurrency(totalValueSecuredUsd, 'usd')}</span>
+            <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+              across {formatInteger(assetsCount)} assets and{' '}
+              {formatInteger(bucketsCount)} buckets
+            </span>
+          </div>
+        }
         valueClassName="text-heading-28"
       />
       <ProjectSummaryStat

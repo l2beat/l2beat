@@ -19,7 +19,6 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyBreakdownTable } from './components/PrivacyBreakdownTable'
 import { PrivacyChartsSection } from './components/PrivacyChartsSection'
@@ -58,7 +57,6 @@ export function PrivacyProjectPage({
     ? nextOrder()
     : undefined
   const chartsOrder = nextOrder()
-  const breakdownOrder = nextOrder()
   const trustedSetupsOrder = nextOrder()
   const permissionsOrder = entry.permissionsSection ? nextOrder() : undefined
   const contractsOrder = entry.contractsSection ? nextOrder() : undefined
@@ -115,16 +113,14 @@ export function PrivacyProjectPage({
                               {entry.description}
                             </p>
                           </div>
-                          <div className="text-paragraph-14 text-secondary">
-                            {entry.assets.length} tracked assets across{' '}
-                            {formatInteger(bucketCount)} buckets.
-                          </div>
                         </div>
                       </div>
                       <PrivacyProjectStats
                         totalValueSecuredUsd={
                           entry.summary.totalValueSecuredUsd
                         }
+                        assetsCount={entry.assets.length}
+                        bucketsCount={bucketCount}
                         deposits={entry.summary.deposits}
                       />
                       {entry.badges.length > 0 && (
@@ -174,7 +170,7 @@ export function PrivacyProjectPage({
 
                     <ProjectSection
                       id="charts"
-                      title="Charts"
+                      title="Value Locked"
                       sectionOrder={chartsOrder}
                     >
                       <PrivacyChartsSection
@@ -186,14 +182,12 @@ export function PrivacyProjectPage({
                           iconUrl: entry.icon,
                         }}
                       />
-                    </ProjectSection>
-
-                    <ProjectSection
-                      id="tvs"
-                      title="Asset Breakdown"
-                      sectionOrder={breakdownOrder}
-                    >
-                      <PrivacyBreakdownTable assets={entry.assets} />
+                      <div className="mt-8">
+                        <h3 className="mb-3 font-bold text-lg md:text-xl">
+                          Assets Breakdown
+                        </h3>
+                        <PrivacyBreakdownTable assets={entry.assets} />
+                      </div>
                     </ProjectSection>
 
                     <TrustedSetupSection
@@ -287,11 +281,7 @@ function getNavigationSections(
       : []),
     {
       id: 'charts',
-      title: 'Charts',
-    },
-    {
-      id: 'tvs',
-      title: 'Breakdown',
+      title: 'Value Locked',
     },
     {
       id: 'trusted-setups',
