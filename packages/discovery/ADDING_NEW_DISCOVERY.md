@@ -6,7 +6,7 @@ A no-fluff guide. Read this once before you start; it will save you several iter
 
 You write a `config.jsonc` (the question). The discovery engine BFS-walks the contract graph from a few seed addresses, reading every state value, following every address-typed reference, and writes a `discovered.json` (the answer). Both files live in `packages/config/src/projects/<name>/`.
 
-Your job after the first run is to *cut noise*: stop the engine from walking into things that aren't part of your project. You do this by adding `ignoreRelatives` on specific fields, almost always inside reusable **templates** that match contracts by their flattened-source bytecode.
+Your job after the first run is to *cut noise*: stop the engine from walking into things that aren't part of your project. You do this by adding `ignoreRelatives` on specific fields, almost always inside reusable **templates** that match contracts by the hash of their flattened source (see "Templates vs `config.jsonc` overrides" in milestone 1).
 
 `discovered.json` is committed, so future runs can diff against it. That's how the L2BEAT monitoring/watcher pipeline detects upgrades.
 
@@ -20,9 +20,9 @@ Your job after the first run is to *cut noise*: stop the engine from walking int
    l2b init <name> <chain> 0x...your seed contract... --max-addresses 50
    ```
 
-   This creates `packages/config/src/projects/<name>/config.jsonc` with the right `$schema`, `import`, `name`, `maxAddresses`, and `initialAddresses`. Pass multiple seed addresses as additional positional arguments if you need them; 1 to 3 is usually enough since the BFS finds the rest. The `<chain>` argument is the long chain name (`ethereum`, `arbitrum`, `optimism`, ...); init translates it into the chain prefix on the addresses.
+   This creates `packages/config/src/projects/<name>/config.jsonc` with the right `$schema`, `import`, `name`, `maxAddresses`, and `initialAddresses`. Pass multiple seed addresses as additional positional arguments if you need them; 1 to 3 is usually enough since the BFS finds the rest. The `<chain>` argument is the long chain name (`ethereum`, `arbitrum`, `optimism`, ...); init translates it into the chain prefix on the addresses. You can find all the supported chains inside `packages/shared-pure/src/types/ChainSpecificAddress.ts`.
 
-   - **Always pass `--max-addresses 50`** (or a similar low number, 30 to 100). The cap is a fail-fast guardrail: if your seed contract leaks into a foreign DeFi cluster, you want the run to stop fast and tell you "something exploded", not to chew through 1500 contracts before producing output. Treat the cap as a tripwire, not a budget. You'll raise it later (after cleanup) to a comfortable margin above your final entry count. Without `--max-addresses`, the engine default of 500 applies and the first cleanup loop is much slower.
+   - **Always pass `--max-addresses 50`**. It's a fail-fast tripwire, not a budget — see `maxAddresses` is a strict cap in Milestone 1 for why. You'll raise it later, after cleanup.
 
 2. **First run** (downloads sources from Etherscan, slow on cold cache):
 
@@ -44,7 +44,7 @@ Your job after the first run is to *cut noise*: stop the engine from walking int
 
    With `--dev`, drop the timeout an order of magnitude (`--analyze-timeout 5000`). A 60-second per-contract budget masks the difference between "the run is genuinely working" and "an RPC call is stuck", which defeats the point of the fast iteration loop.
 
-4. **Before milestone 1, run the completeness sniff test (gotcha 4).** If your project is known to deploy multiple instances of the same contract type (several pools, vaults, markets, hubs, ...) but your first-run discovery only shows one, your seed is undersampling. Surface the missing instances via the project's central registry — factory, role-based authority, addresses provider — *before* doing any cleanup. Cleanup done against an undersampled topology has to be redone once the missing instances surface and drag in their own foreign clusters.
+4. **Read the contracts.** The first run downloaded every verified contract's flattened source to `.flat/<ContractName>/`. Read it before continuing: the engine reads on-chain state, you bring understanding, and every later step (cuts, handler choice, descriptions, permissions) depends on knowing what the code does. Use that reading to sanity-check the entries: if the project deploys multiple pools / vaults / markets and only one appears, the seed is undersampling. Fix it now (see "Multi-instance projects" below).
 
 5. **Walk through the three milestones below in order:**
    - **Milestone 1**: cut noise (foreign protocol contracts pulled in via oracles, registries, etc.)
@@ -53,57 +53,14 @@ Your job after the first run is to *cut noise*: stop the engine from walking int
 
 6. **When clean**, raise `maxAddresses` to a comfortable margin above the final entry count (e.g. final = 92, set to 150) so future runs hit the cap warning if a refactor accidentally pulls in noise. Don't bump it before milestone 1 is done; the low cap is what makes the cleanup loop fast.
 
-## The gotchas that will bite you
+## Milestone 1: cleanup loop (cut noise)
 
-### 1. `ignoreRelatives` lives on the SOURCE contract, not the destination
+### First, confirm topology completeness
 
-You can't say "skip USDC". You have to say "for the contract `TokenRegistry`, don't follow the field `getAllTokens` (which contains USDC)". Often the same noise address is reachable from many sources; you have to cut every path.
+If the sniff test in recipe step 4 surfaced missing instances, fix the seed before any cleanup. Find the registry that lists all instances and enumerate it:
 
-Use `l2b why <name> <address>` to list every contract+field that references an address, marked LEAKING vs IGNORED.
-
-### 1a. `ignoreRelatives` is field-level, not element-level
-
-A single field can return a *tuple* or *array* that mixes project-internal addresses and foreign addresses (e.g. `getItem(itemId)` returns `(underlyingToken, parentRegistry, ...)` — the underlying is foreign, the parent registry is project-internal). `ignoreRelatives` cuts the whole field. You can't keep walking some elements and skip others.
-
-Before cutting a field, check whether any relative it emits is project-internal. If so:
-
-- **Preferred**: reach the project-internal address through a *different* field on a *different* contract. Use `l2b why <name> <project-internal-address>` to confirm there's another LEAKING entry to it. If yes, the cut is safe.
-- **Fallback**: if the only path to the project-internal address is through this field, add the project-internal address as an additional `initialAddresses` entry in `config.jsonc`. The BFS will seed it directly and not rely on the cut field.
-
-Cutting a field that's the only path to a project-internal contract silently removes that contract (and everything reachable through it) from the discovery, with no warning. The summary will look fine. This is the most common way to lose half a project's templates in one edit.
-
-### 1b. Cut at the leaf, not at the source, when the source mixes project + foreign relatives
-
-Same setup as 1a, but a different fix: instead of cutting the source field, **template the foreign destination contract and cut the leaks there**.
-
-For example, an oracle's `getSources` returns N price feeds — some are project-internal cap adapters, some are external Chainlink feeds. Cutting `getSources` on the oracle loses the cap adapters. The better move is to write a template for the foreign Chainlink feed contract that cuts everything dangerous (`aggregator`, `owner`, `accessController`, `proposedAggregator`). Then leave `getSources` walked: the cap adapters are discovered, the Chainlink feeds are walked one hop and stopped at the leaf.
-
-Rule of thumb: **cut where the foreign cluster begins, not where it's referenced**. If a field returns N addresses and only some are foreign, prefer templating the foreign contract types with their own `ignoreRelatives` rather than cutting the field that references them. The latter loses the project addresses too.
-
-**Exception**: if the foreign relatives are not contracts whose source you would read while doing a trust analysis of *this* project (deposit assets, generic ERC20s the project just holds in a balance — see gotcha 5), invert this rule. Cut the field on the source and route the project-internal relatives via `initialAddresses` or another field. Templating dozens of unrelated assets as leaves bloats `discovered.json` without adding any trust signal, even if the leaves are technically "cut."
-
-### 2. `ignoreRelatives` does NOT remove the field value from output
-
-The field's value still appears in the entry's `values` in `discovered.json`. It just isn't followed by the BFS. Don't be confused when USDC still shows up inside some `getAllTokens` array; what matters is whether USDC itself is in `entries`.
-
-### 2b. Multiple field names can return the same address; cut all of them
-
-A common Solidity pattern is to expose the same stored address through both a camelCase getter and a SCREAMING_CASE immutable/constant (e.g. `foo()` and `FOO`), or to keep an old name as an alias when a contract is renamed. `ignoreRelatives` filters by *field name*, so cutting one of them is not enough — the other getter still emits the same address as a relative. After adding cuts, check the entry's `values` in `discovered.json` for any address that appears in two fields with different names; if so, add both names to `ignoreRelatives`.
-
-### 3. `maxAddresses` is a strict cap, and that is a feature
-
-Default is 500. If discovery hits it, the run still completes but the cap-skipped addresses are reported in `WARNING: N addresses skipped due to maxAddresses cap`. Counterintuitively, the right reaction during the cleanup loop is usually to *lower* the cap, not raise it: keep the cap below the explosion threshold so each iteration is fast, fix the cuts, and only raise it once cap warnings stop appearing. The cap is strict (no parallel overshoot), so the entry count will never exceed the value you set.
-
-Concretely: if you bumped the cap to 2000 to "see the real picture" and each run now takes minutes downloading sources you're about to throw away, you're doing it wrong. Drop the cap back to ~50, use the BFS log (next section) to identify the boundary contract, cut at the boundary, re-run, repeat. Each iteration becomes seconds.
-
-### 4. Multi-instance projects: enumerate the registry before milestone 1
-
-If your project deploys several instances of the same contract type (multiple pools, vaults, markets, hubs, ...) and the seed you scaffolded with only references one of them, the BFS will only discover that one instance. Milestone 1 will then run against a fundamentally incomplete topology and any cleanup you do may have to be redone once the missing instances surface and bring their own foreign clusters with them.
-
-**Run the completeness sniff test before entering milestone 1:** read the first-run discovery and ask "is this the full protocol, or just the slice my seed reaches?". If the project is known to deploy N of something but you only see one, the seed is undersampling. Find the registry that lists all instances and enumerate it:
-
-- A factory or registry contract with a `getAllPools` / `getAllVaults` / `instances()` getter: enumerate via an `array` handler with explicit `length` (see milestone 2 for the pattern). The new instances are then walked by the BFS and matched by shape.
-- An OZ V5 `AccessManager` (or any role-based authority where every gated contract is registered as a *target*): enumerate via an `event` handler. Such authorities typically emit one log per gated target — for OZ V5 the event is `TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)`. Add a flat helper field to the authority's template:
+- **Factory or central registry with a list getter** (`getAllPools` / `getAllVaults` / `instances()`): enumerate via an `array` handler with explicit `length` (see milestone 2 for the pattern). The new instances are then walked by the BFS and matched by shape.
+- **OZ V5 `AccessManager`** (or any role-based authority where every gated contract is registered as a *target*): enumerate via an `event` handler. Such authorities typically emit one log per gated target — for OZ V5 the event is `TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)`. Add a flat helper field to the authority's template:
 
   ```jsonc
   "$gatedTargets": {
@@ -118,21 +75,80 @@ If your project deploys several instances of the same contract type (multiple po
 
   Leading `$` is convention for "helper field". The absence of `groupBy` is deliberate: `groupBy` keys are not walked by the BFS, so you need a flat field for the target addresses to surface as discovery entries (subtlety 2 in milestone 3).
 
-- A governance executor or proxy admin that owns every instance via its proxy: walk the upgrade authority's history (event handler on `Upgraded` / `OwnershipTransferred`).
+- **Governance executor or proxy admin that owns every instance**: walk the upgrade authority's history (event handler on `Upgraded` / `OwnershipTransferred`).
+- **No on-chain registry, address book is offchain only** (deployment scripts, the team's documentation): add the missing instance addresses to `initialAddresses` as a last resort. This is the one legitimate exception to "keep `initialAddresses` minimal" — the orphan-rot risk described in "When a source field returns mixed project + foreign relatives" still applies long-term, so revisit periodically.
 
-If no on-chain registry exists and the address book is purely off-chain (deployment scripts, the team's documentation), add the missing instance addresses directly to `initialAddresses` in `config.jsonc`.
+Treat under-sampling as a higher-priority bug than any leak. A leaky discovery wastes time. An undersampled discovery is silently *wrong*: the trust map omits whole sub-systems and the watcher will never alert on changes to them.
 
-**Treat under-sampling as a higher-priority bug than any leak.** A leaky discovery wastes time. An undersampled discovery is silently *wrong*: the trust map omits whole sub-systems and the watcher will never alert on changes to them. The diagnostic is simple: if you see ONE entry of a contract type that you know the protocol deploys multiple of, fix it before doing anything else.
+### The cleanup loop
 
-### 5. Templates are for contracts whose source you would read
+After your first run, look at `discovered.json` and ask "what's in here that isn't part of my project?". The fastest way to find the cuts you need is `l2b leaks`:
 
-Not every foreign contract reachable from your project belongs in `discovered.json`. Before deciding how to handle one, ask: **would I open this contract's source while doing a trust analysis of *this* project?**
+1. **Run** `l2b leaks <name> --top 10`. This ranks contracts by how many address-typed fields the BFS still walks out of them ("leaks" here means *fields BFS walks*, not *fields leaking into foreign code*). Early in cleanup the top entries are typically boundary contracts walking into foreign clusters — that's where to cut. Once cleanup is done they're usually your project's central registries pointing at peer contracts, which is fine. Each target is annotated with its template assignment so you can see at a glance which targets are already known versus unidentified.
 
-- **Yes** — an oracle the project consults for prices, a governance contract that controls upgrades, a parent-protocol registry the project depends on for state, a bridge endpoint that gates funds: template it as a leaf with admin-chain cuts. The contract appears in the discovery as one node so a reviewer can see what the project trusts. This is the "foreign trust roots are leaves" case from the recurring principles.
+2. **For each high-rank target, decide: is this contract part of your project?** Did your team deploy and control it? Foreign dependencies — Chainlink price feeds, Lido stETH, an external oracle the project consults, generic ERC20s the project just holds, a parent protocol the project is built on — are NOT part of your project no matter how trust-critical. Common culprit shapes to look for: generic registry getter (`*.getAll...`, `*.list...`), per-item getter that returns the underlying token (`*.UNDERLYING`, `*.token`, `*.asset`), oracle source list (`*.getSource`, `*.feed`), proxy admin slot (`$admin`). In doubt → assume yours.
 
-- **No** — a deposit or collateral asset the project just holds in a balance, a generic ERC20 whose `transfer()` is the only function the project ever calls, a yield-bearing token whose redemption ratio the project reads but whose admin chain is not part of *your* project's trust assumption: cut the field on the source contract that returns it. The asset's address still appears in the source's `values` block (because `ignoreRelatives` doesn't drop the value, see gotcha 2), so a reviewer can still see what's listed, but the BFS never walks into it and you never need a template for it. A reviewer auditing your project never opens that contract's source, so it does not belong in your discovery.
+3. **For each foreign destination, add `ignoreDiscovery: true`** to your project's `config.jsonc` `overrides` block:
 
-The **asset list cut** pattern goes in the template of the contract that holds the registry:
+   ```jsonc
+   "overrides": {
+     "<chain>:0xForeignAddress": { "ignoreDiscovery": true }
+   }
+   ```
+
+   The address still appears in source contracts' `values` (the seam where your project depends on it stays visible), but no entry is created in `discovered.json` and the BFS stops walking. Project-scoped: doesn't affect any other project's discovery, and the foreign project gets its own discovery later if a researcher needs its internals. For project-internal contracts at this stage, no action is needed — handler tuning is Milestone 2, descriptions and templates are Milestone 3.
+
+4. **Re-run** `l2b discover <name> --dev` and `l2b leaks` to verify the foreign clusters have collapsed.
+
+### One subtlety: the proxy `$admin` slot
+
+Proxy detection records the proxy admin address as a top-level `$admin` value on the entry. Unlike `$implementation` and `$pastUpgrades` (which are auto-filtered as ignored addresses), `$admin` is walked by the BFS as a normal relative. If `$admin` resolves to a foreign address (e.g. a multisig owned by a parent protocol), apply `ignoreDiscovery: true` on the admin's address in the same way as any other foreign destination. `l2b inspect` and `l2b leaks` both surface `$admin` with a `[LEAKING]` marker so this is easy to spot.
+
+### Batching cuts: read leaks once, edit many
+
+Don't iterate cut-by-cut. The topology you need is already in `discovered.json`, and `l2b leaks` reads it directly without re-running discovery. The fast loop is:
+
+1. `l2b leaks <name> --top 20` to get the global picture.
+2. Walk the list and decide foreign-or-yours per target. For ambiguous ones, `l2b leaks <name> --address <addr>` shows the entry's outgoing-field breakdown to help recognise it.
+3. Add all the `ignoreDiscovery: true` entries for the foreign targets to `config.jsonc` in one batch.
+4. `l2b discover <name> --dev` once.
+5. `l2b leaks <name> --top 20` again to see what survived.
+
+### When `l2b leaks` isn't enough: trace one address with `l2b why`
+
+Use `l2b why <name> <address>` when the leaks output names a target you don't recognize and you want to know *which fields on which contracts* reference it. `why` lists every reference, marked LEAKING or IGNORED, and with `--root` it prints the shortest non-ignored path from any seed to the target — useful for finding the single boundary contract that pulls in a foreign cluster you didn't expect.
+
+### How `ignoreRelatives` works
+
+You add `ignoreRelatives` on the SOURCE contract that walks into the foreign address — there is no "skip USDC" knob. When the same noise address is reachable from N different sources, every source needs its cut; use `l2b why <name> <address>` to list every contract+field that references it.
+
+The cut blocks BFS traversal but leaves the field's value in `discovered.json`. Don't be confused when USDC still shows up inside `getAllTokens`; what matters is whether USDC itself has its own entry.
+
+A common trap: the same stored address is exposed through both a camelCase getter and a SCREAMING_CASE constant (e.g. `foo()` and `FOO`), or kept as an alias when a contract is renamed. `ignoreRelatives` filters by *field name*, so cutting one is not enough — scan the entry's `values` for the same address appearing under multiple keys, and cut all of them.
+
+### When a source field returns mixed project + foreign relatives
+
+`ignoreRelatives` is field-level, not element-level. A single field can return a tuple or array that mixes project-internal and foreign addresses (e.g. `getItem(itemId)` returns `(underlyingToken, parentRegistry, ...)` — underlying foreign, parent registry project-internal). Cutting it wipes both. Cutting a field that is the only path to a project-internal contract silently removes that contract and everything below it; the summary will look fine. This is the most common way to lose half a project's templates in one edit.
+
+Several options, in order of preference:
+
+- **Skip the foreign side entirely.** `ignoreDiscovery` on each foreign address — the standard rule from "Is this contract part of your project?" below. The source field stays walked, project-internal addresses come through, foreign addresses don't get entries.
+- **Reroute the project-internal address through a different field** so you can cut the source via `ignoreRelatives`. Use `l2b why <name> <project-internal-address>` to find another LEAKING entry on a different contract.
+- **Last resort: a `copy` + `edit` helper field** on the same contract that re-extracts only the project-internal addresses from the source field, using the same `edit` DSL that Milestone 3 uses for access-control role extraction. The BFS walks the helper, the original mixed field can then be safely cut. A hack, but localized.
+
+**Don't add the project-internal address to `initialAddresses` as a workaround.** `initialAddresses` is the seed list for the BFS, not a routing escape hatch. Padded entries are discovered independently of the contract graph, so when the project evolves and the entry loses its natural on-chain link, it becomes an orphan node — silently disconnected from the rest, but still in the discovery. Over time you end up with two unrelated subgraphs in one `discovered.json`.
+
+### Is this contract part of your project?
+
+Every address the BFS reaches falls into one of two buckets, decided by **deployment and control**, not by trust-relevance:
+
+- **Yours** — your team deployed it and your team controls it. Walk it. Templates and descriptions for it happen in Milestone 3.
+- **Foreign** — anyone else deployed it. This includes contracts your project critically depends on (Chainlink price feeds, Lido stETH, an external oracle the project consults, a bridge endpoint that gates your funds, a parent protocol you're built on top of). It does not matter how trust-critical the dependency is: the foreign contract's internals belong in the foreign project's own discovery, not in yours. Add `ignoreDiscovery: true` to your `config.jsonc` `overrides` block; the address still appears in your source contracts' `values` (so the seam where your project depends on it stays visible), but no entry is created. Use a `names` entry in `config.jsonc` if you want the foreign address to render with a meaningful label.
+- **In doubt** — assume yours and keep walking. Better to over-discover (caught fast by `maxAddresses` and a re-evaluation pass) than to silently exclude a project-internal contract.
+
+**Why no foreign templates?** Templates match by flattened-source hash (see "Templates vs `config.jsonc` overrides" below) and apply globally, so cuts on a foreign template would silently apply when the foreign project gets its own discovery and would strip facts that *that* project's reviewer needs. The discoveries compose instead: project A's discovery describes A; if B depends on A, B's discovery shows the seam in source `values` and `ignoreDiscovery` keeps A's internals out.
+
+If a single field on one of your contracts returns many foreign addresses (a deposit asset list, a registered-tokens array), the per-address `ignoreDiscovery` becomes verbose. In that case, the **asset list cut** pattern via `ignoreRelatives` on the field is more compact:
 
 ```jsonc
 {
@@ -140,70 +156,21 @@ The **asset list cut** pattern goes in the template of the contract that holds t
 }
 ```
 
-Before applying it, run the gotcha 1a check: does the field also return project-internal addresses (a paired strategy contract, an interest rate model, a treasury)? If yes, route those internals via a different field on the same contract, a different contract, or `initialAddresses`. If no — the field is purely a list of foreign deposit assets — the cut is safe.
+Goes in your project-internal template for the contract that holds the registry. Check first that the field returns *only* foreign addresses; if it's mixed, see "When a source field returns mixed project + foreign relatives" above.
 
-**Bias toward a smaller `discovered.json`.** A complete discovery contains every contract a reviewer needs to read. One that contains many contracts whose source no reviewer will ever open is worse, not better: it inflates the watcher diff surface and forces template work that adds no trust signal. Templating is documentation effort; do not invest it in contracts that are not part of *your* project's surface area.
+**Bias toward a smaller `discovered.json`.** A complete discovery contains every contract a reviewer needs to read about *your* project. One that contains foreign internals is both noisy (inflates the watcher diff surface) and presumptuous (you've decided what the foreign reviewer should see). Keep your project's discovery focused on your project's contracts.
+
+### `maxAddresses` is a strict cap
+
+Default is 500. If discovery hits it, the run still completes but the cap-skipped addresses are reported in `WARNING: N addresses skipped due to maxAddresses cap`. **During the cleanup loop, lower the cap, don't raise it.** Keep it below the explosion threshold so each iteration is fast; only raise it once cap warnings stop appearing. The cap is strict (no parallel overshoot), so the entry count will never exceed the value you set.
+
+If you bumped the cap to 2000 to "see the real picture" and each run now takes minutes downloading sources you're about to throw away, drop it back to ~50, use `l2b leaks` to identify the boundary contract, cut at the boundary, re-run, repeat. Each iteration becomes seconds.
 
 ### Templates vs `config.jsonc` overrides
 
-Templates match contracts by **implementation bytecode hash** (proxies are auto-resolved by `add-shape`) and apply across every project that imports the same source code, so they're how knowledge accumulates. Overrides are per-project, per-address deviations with precedence over templates.
+Templates match contracts by hashing their **flattened source**. After the first discovery, every verified contract's source is fetched from Etherscan and run through L2BEAT's flattener, which inlines every imported file into a single `.sol` file under `.flat/<ContractName>/`. The hash of that flat file is the contract's *shape*: two deployments with the same flattened source produce the same shape and match the same template, no matter where they're deployed. (It is *not* a hash of the deployed bytecode — there is no compilation step involved.)
 
-- **Use a template** when the fact is true wherever the bytecode appears (this field is runtime state, this field leaks into a foreign cluster, this is what the contract does).
-- **Use a `config.jsonc` override** when *this specific deployment in this specific project* needs different treatment (different `category`, a project-specific `description` clarification, an extra `ignoreInWatchMode` entry).
-
-Default to templates. At the end of a clean cleanup loop, `config.jsonc` should be back to roughly what you started with (name, imports, `initialAddresses`, `maxAddresses`, plus possibly a `names` block from milestone 3) — pruning logic should have migrated into templates.
-
-### Protocol-on-protocol: when your project reuses another project's contracts
-
-You're discovering project B, but B reuses contracts originally deployed for project A. Walking them naively pulls in A's entire stack. The fix: keep the *immediate* shared contracts visible (so the trust analysis can show "B is governed by A") but cut the chain that leads deeper into A.
-
-- **Template the shared contracts under `_templates/<parent-project>/...`** even if only B's discovery exists today. The boundary cuts become reusable when A's discovery is added later.
-- **Cut at A's central registry, not at B's reference to A.** Most A-side contracts have a field like `getRegistry()` / `ADDRESSES_PROVIDER` / `getController()` that points to A's hub — cut that single field on the shared template. Don't cut the field on B's side that brings the shared contract into B's discovery; that walk is exactly how B's trust on A becomes visible.
-
-The mental model: B's discovery shows the *seam* where B trusts A; A's internals belong in A's discovery.
-
-## Milestone 1: cleanup loop (cut noise)
-
-After your first run, look at `discovered.json` and ask "what's in here that isn't part of my project?". The fastest way to find the cuts you need is `l2b leaks`:
-
-1. **Run** `l2b leaks <name> --top 10`. The top entries are your *boundary contracts*: the ones whose outgoing fields walk into foreign clusters. Each target is marked with its template assignment, so templated leaves (already cut downstream) are visible at a glance versus untemplated explosions waiting to happen.
-
-2. **For each foreign destination contract** that needs to become a leaf (a foreign token, a foreign oracle, an unrelated registry), run `l2b leaks <name> --address <addr>` to dump that entry's full outgoing-field breakdown. Copy the field names you want to cut.
-
-   Common culprit shapes: a generic registry getter (`*.getAll...`, `*.list...`), a per-item getter that returns the underlying token (`*.UNDERLYING`, `*.token`, `*.asset`), an oracle source list (`*.getSource`, `*.feed`), or a proxy admin slot (`$admin`).
-
-3. **Template the foreign contract in one command:**
-
-   ```bash
-   l2b add-shape <project> <addressOrName> \
-     --template <parent-project>/<ContractName> \
-     --description "What this contract is. One sentence." \
-     --ignore-relatives "field1,field2,$admin"
-   ```
-
-   `add-shape` auto-resolves proxies, creates the template if missing, and writes the shape + description + `ignoreRelatives` in one shot (insert-only — if either field exists, edit by hand). For protocol-on-protocol cases, set `<parent-project>` to the parent's name even if no discovery exists for it yet (see "Protocol-on-protocol" above).
-
-4. **Re-run** `l2b discover <name> --dev` and `l2b leaks` to verify the explosion fronts have collapsed. Each round usually removes a whole downstream subtree.
-
-### One subtlety: the proxy `$admin` slot
-
-Proxy detection records the proxy admin address as a top-level `$admin` value on the entry. Unlike `$implementation` and `$pastUpgrades` (which are auto-filtered as ignored addresses), `$admin` is walked by the BFS as a normal relative. If you don't want the proxy admin chain followed from a foreign template, add `$admin` to that template's `ignoreRelatives` alongside the contract methods. `l2b inspect` and `l2b leaks` both surface `$admin` with a `[LEAKING]` marker so this is easy to spot.
-
-### Batching cuts: read leaks once, edit many
-
-Don't iterate cut-by-cut. The topology you need is already in `discovered.json`, and `l2b leaks` reads it directly without re-running discovery. The fast loop is:
-
-1. `l2b leaks <name> --top 20` to get the global picture.
-2. For each high-rank entry that's a foreign destination, `l2b leaks <name> --address <addr>` to read the field names.
-3. Run all the `l2b add-shape ... --description ... --ignore-relatives ...` commands in one batch.
-4. `l2b discover <name> --dev` once.
-5. `l2b leaks <name> --top 20` again to see what survived.
-
-If the same template needs to cover multiple contract addresses with the same bytecode, `add-shape` reports "no new shape needed" on the second call (not an error). For multiple distinct implementations of the same logical contract, call `add-shape` again with a different address plus `--name` to distinguish the shape entries.
-
-### When `l2b leaks` isn't enough: trace one address with `l2b why`
-
-Use `l2b why <name> <address>` when the leaks output names a target you don't recognize and you want to know *which fields on which contracts* reference it. `why` lists every reference, marked LEAKING or IGNORED, and with `--root` it prints the shortest non-ignored path from any seed to the target — useful for finding the single boundary contract that pulls in a foreign cluster you didn't expect.
+Use templates for facts that are true wherever the shape matches (this field is runtime state, this is what the contract does, this is the access-control map). Use `config.jsonc` overrides for anything that depends on *who's discovering* (`names`, per-project `category`, `ignoreInWatchMode`, and the foreign-destination cuts covered above). Putting project-perspective state in a template silently re-applies it the next time the same shape shows up under a different project.
 
 ## Milestone 2: fix errors, fetch hidden config
 
@@ -302,7 +269,7 @@ Is the value runtime state (changes every block)?
 
 Enumerating an array that previously returned only its first 5 elements typically expands the discovery: if the registry had 50 items and you only saw 5, you now walk all 50, and each new item may reach into a new cluster of foreign contracts you hadn't seen before. The cap-skipped count usually jumps after the first milestone-2 round.
 
-This is normal. After re-running discovery, run `l2b leaks <name> --top 20` again and treat the new top entries as a fresh milestone-1 pass: template the new foreign destinations, batch the cuts, re-discover. Don't bump `maxAddresses` to "see the real picture"; keep the cap low and let it tell you when you're done.
+This is normal. After re-running discovery, run `l2b leaks <name> --top 20` again and treat the new top entries as a fresh milestone-1 pass: `ignoreDiscovery` the new foreign destinations, batch the edits, re-discover. Don't bump `maxAddresses` to "see the real picture"; keep the cap low and let it tell you when you're done.
 
 ## Milestone 3: trust analysis (descriptions, fields, events)
 
@@ -320,36 +287,54 @@ For each template, edit `template.jsonc` and add:
 
 These show up in the L2BEAT UI and feed the watcher's diff filtering.
 
-**Never reference internal tooling in descriptions.** Template descriptions and field descriptions are user-facing content. Don't write "Static analysis confirmed 9 admin functions carry the restricted modifier" or "the discovery surfaces 3 Hubs." State facts about the contracts directly: "All admin functions carry the restricted modifier" or "There are 3 Hubs." The reader doesn't need to know what tools you used to verify the facts.
+**Description discipline.** Every annotation in this section must come from the `.flat` source, not from the contract's name or its field names. If you can't point at the line of source that justifies a description, severity, or permission entry, delete it. And keep the prose itself contract-facing, not tool-facing: write "All admin functions carry the restricted modifier", not "Static analysis confirmed 9 admin functions carry the restricted modifier" — the reader doesn't need to know what tools you used to verify the facts.
 
 ### Defining permissions on address-typed fields
 
-The `permissions` array on address-typed fields declares "address X can do Y" in a machine-readable way. Without it, the trust map captures what contracts exist and what state they hold, but not what each privileged address is empowered to do.
+A `permissions: [...]` array on an address-typed field declares what the addresses that field points to can do on this contract. Each entry has:
+
+- **`type`** — one of three values:
+  - **`act`** — receiver can act *through* this contract. This is the chaining glue: if A acts through B and B has any permission on C, A transitively inherits B's permission on C. Use it for ownership and control relationships (multisig owns ProxyAdmin; ProxyAdmin admins a proxy → the multisig transitively can upgrade the proxy).
+  - **`interact`** — receiver can call privileged functions on this contract. Terminal: it does not chain further. Use it for the operations that should render as trust-map bullets.
+  - **`upgrade`** — receiver can upgrade the implementation. Auto-emitted from each entry's `$admin` slot, so you rarely write it explicitly. Terminal.
+- **`description`** — a plain-language sentence describing ONE operation. Used as the bullet text in the rendered output.
+- **`delay`** (optional, seconds) — delays sum along an `act`-chain. A multisig acting through a 7-day timelock that holds an `interact` permission on a registry renders with `delay = 7 days` on that interact.
+
+**One entry per operation, not one entry for all of them.** Each entry renders as a separate bullet. Bad:
+
+```jsonc
+"permissions": [{
+  "type": "interact",
+  "description": "reconfigure the entire permission system, change all parameters, upgrade contracts, and do everything else."
+}]
+```
+
+Good:
+
+```jsonc
+"permissions": [
+  { "type": "interact", "description": "swap oracle price sources on any Spoke." },
+  { "type": "interact", "description": "pause/freeze individual reserves or entire markets." },
+  { "type": "interact", "description": "list/delist assets on any Hub." },
+  { "type": "interact", "description": "grant/revoke any AccessManager role." }
+]
+```
 
 #### End actors vs intermediary contracts
 
-The permissions system should surface **end actors**: EOAs, multisigs, DAOs/governors, and other entities that are the actual trusted parties. Intermediary contracts (access managers, configurators, timelocks, executors, proxy admins) should NOT appear as actors. They are the plumbing through which trust flows, not the source of trust.
-
-To achieve this:
-
-- **Intermediary contracts** (anything that delegates authority but isn't the final trust root) get `"canActIndependently": false` at the template level. This tells the system not to show them as actors. Examples: AccessManager, ProxyAdmin, HubConfigurator, SpokeConfigurator, timelocks.
-- **End actor fields** (the addresses that ARE the trusted parties) get `"permissions": [{ "type": "act" }]` or `"permissions": [{ "type": "interact", "description": "..." }]`. Examples: multisig owners, role members extracted via `copy`/`edit`, guardian addresses.
-
-The system then auto-resolves the "via" chain: if a multisig is the owner of a ProxyAdmin (`type: "act"`) which is the admin of a proxy, the rendered output shows "Multisig can upgrade Contract via ProxyAdmin".
+The trust map should surface **end actors** — EOAs, multisigs, DAOs/governors — not the contracts that route trust between them. The resolver does this automatically for any intermediary that emits an `act` permission to its controller: a ProxyAdmin whose `owner` field has `permissions: [{type: "act"}]` is skipped, and the multisig that owns it ends up as the actor. Wire `act` correctly on the field that points at the controller and you usually don't need to do anything else. Set `canActIndependently: false` on a template only when you see an intermediary still showing as an actor in the rendered output (e.g. "ProxyAdmin can upgrade Contract") — it's an override for cases the auto-rule misses, not a default to apply preventively.
 
 #### Role-based access control: extract the actual holders
 
 For contracts that manage roles (OpenZeppelin AccessControl, AccessManager, custom role registries), don't put `permissions` on the `authority` reference on the target contract (that would make the access control contract itself show as an actor). Instead:
 
-1. On the access control contract's template, add `"canActIndependently": false`.
-2. Extract specific role members into named fields using `copy`/`edit` (for event-handler-produced grouped data) or `pickRoleMembers` (for the built-in `accessControl` handler).
-3. Put `permissions` on those extracted fields with `"type": "interact"` and a description of what that role can do.
+1. Extract specific role members into named fields using `copy`/`edit` (for event-handler-produced grouped data) or `pickRoleMembers` (for the built-in `accessControl` handler).
+2. Put `permissions` on those extracted fields with `"type": "interact"` and a description of what that role can do.
 
 Example for an OZ V5 AccessManager — use the `accessManagerV5` handler. It automatically decodes function selectors into human-readable signatures and labels roles by name instead of numeric ID:
 
 ```jsonc
 {
-  "canActIndependently": false,
   "fields": {
     "accessControl": {
       "handler": { "type": "accessManagerV5" }
@@ -373,7 +358,6 @@ Example for an OZ legacy AccessControl (bytes32 roles):
 
 ```jsonc
 {
-  "canActIndependently": false,
   "ignoreRelatives": ["accessControl", "riskAdmins", "poolAdmins"],
   "fields": {
     "accessControl": {
@@ -389,79 +373,37 @@ Example for an OZ legacy AccessControl (bytes32 roles):
 
 Note the `ignoreRelatives` on the role member fields: this prevents the BFS from walking every role holder (which can include flash borrower contracts, automation agents, etc. that would explode the discovery). The addresses still appear in the field values and in the permissions output, but don't get BFS-walked. If a role holder turns out to be an important actor you want fully discovered, add it to `initialAddresses` explicitly.
 
-#### Simple owner/guardian patterns
+#### Simple owner pattern
 
-For contracts with a single `owner` or `guardian` (not role-based), put `permissions` directly on the owner field. The owner IS the end actor.
+For contracts with a single `owner` field (not role-based), put `permissions` directly on it — the owner is the end actor.
 
 ```jsonc
-{
-  "fields": {
-    "owner": {
-      "severity": "HIGH",
-      "type": "PERMISSION",
-      "permissions": [{ "type": "interact", "description": "transfer any ERC20 out of the contract, withdraw from any Hub, and transfer ownership. No timelock." }]
-    }
+"fields": {
+  "owner": {
+    "severity": "HIGH",
+    "type": "PERMISSION",
+    "permissions": [{ "type": "interact", "description": "transfer any ERC20 out of the contract, withdraw from any Hub, and transfer ownership. No timelock." }]
   }
 }
 ```
 
-Each permission entry has:
-- **`type`**: `"interact"` (can call privileged functions), `"upgrade"` (can upgrade the implementation), `"act"` (can act through this contract as a proxy/intermediary), or `"guard"` (guardian role, can cancel/pause).
-- **`description`**: a plain-language sentence describing ONE specific operation. Not a comma-separated list of everything.
-
-**Use one permission entry per operation, not one entry for all operations.** The rendered output shows each entry as a separate bullet point under "Can interact with <ContractName>". Compare:
-
-Bad (one blob):
-```jsonc
-"permissions": [{
-  "type": "interact",
-  "description": "reconfigure the entire permission system, change all parameters, upgrade contracts, and do everything else."
-}]
-```
-
-Good (one per operation):
-```jsonc
-"permissions": [
-  { "type": "interact", "description": "swap oracle price sources on any Spoke." },
-  { "type": "interact", "description": "activate/deactivate position managers that can act on behalf of all users." },
-  { "type": "interact", "description": "pause/freeze individual reserves or entire markets." },
-  { "type": "interact", "description": "list/delist assets on any Hub." },
-  { "type": "interact", "description": "swap interest rate strategies." },
-  { "type": "interact", "description": "redirect protocol fee receivers." },
-  { "type": "interact", "description": "grant/revoke any AccessManager role." }
-]
-```
-
-The rendered output for the good version shows each operation as a separate bullet point, making it trivial for a reviewer to scan what each actor can do. The bad version forces the reviewer to parse a run-on sentence.
-
 #### Verifying the permissions output
 
-After setting up permissions, always verify the output before committing. Check two things:
+After setting up permissions, run `l2b model-permissions <project>` and then `l2b show-permissions <project>`. The output prints every actor with its account type, participant count, and the resolved capability bullets (with `act`-chain delays and `via:` paths). Check three things:
 
-1. **Only end actors appear.** Run `getDiscoveredPermissions()` and confirm that every actor is an EOA, multisig, or DAO/governor. If you see an intermediary contract (an AccessManager, a ProxyAdmin, a Configurator, a Timelock) showing as an actor, it's missing `canActIndependently: false` on its template.
+1. **Only end actors appear.** Anything flagged `[SUSPECT — Contract with no participants]` is most likely an intermediary that escaped the auto-rule — add `canActIndependently: false` to its template and re-run.
+2. **Every trust path is represented.** A path described in the project but absent from the output means a missing role-extraction field.
+3. **Each actor's bullets match its actual privileges.** A missing bullet means a missing `permissions: [...]` entry on the relevant template.
 
-2. **Every trust path is represented.** If the protocol has N separate access control systems (e.g., an OZ V5 AccessManager AND a legacy ACLManager), every system's role holders must show as actors. If a trust path is described in the project description but doesn't appear in the permissions output, you're missing a role extraction field.
+Pass `--short` to skip the bullets when you only want the identity check.
 
-```bash
-# Quick check: list actors and their types
-node -e "
-const { ProjectDiscovery } = require('./build/discovery/ProjectDiscovery');
-const d = new ProjectDiscovery('<name>');
-const perms = d.getDiscoveredPermissions();
-for (const a of perms.ethereum?.actors || []) {
-  const types = [...new Set(a.accounts.map(acc => acc.type))];
-  console.log(a.name, '(' + types.join(',') + ')');
-}
-"
-```
-
-If any actor shows type `Contract` and it's an intermediary (not a multisig or DAO), investigate.
-
-**Don't skip this step.** A project with `severity: "HIGH"` and `type: "PERMISSION"` on every trust-critical field but no properly configured `permissions` and `canActIndependently` annotations captures the contract topology but not the trust relationships. The permissions system turns raw address references into "who do I trust" statements. Getting this wrong means the rendered project page either shows an empty permissions section (missing permissions arrays) or shows intermediary contracts as actors (missing `canActIndependently: false`), both of which mislead the reader.
+**Don't skip this step.** A project with `severity: "HIGH"` and `type: "PERMISSION"` on every trust-critical field but no `permissions` arrays captures the contract topology but not the trust relationships. Getting this wrong means the rendered page either shows an empty permissions section (missing `permissions` arrays) or shows intermediary contracts as actors (auto-rule miss — apply `canActIndependently: false` to that specific template), both of which mislead the reader.
 
 ### Fetching state behind events with the `event` handler
 
-Many contracts only expose state through events (e.g. OpenZeppelin's V5 `AccessManager` uses `RoleGranted` / `RoleRevoked` instead of an enumerable mapping). The `event` handler reads logs and reconstructs state from them.
+Solidity mappings can't be enumerated via RPC the way fields or arrays can. Each value sits at `keccak256(key, slot)`, but the mapping itself stores no length and no key list — without an external side index, there's no way to read all of it from outside. The workaround: read the contract's source, find the function that writes to the mapping, and check whether it emits an event with the key as a topic. If it does, you can replay the event log to reconstruct the mapping's current state. The `event` handler does exactly that — query logs by topic, fold them with `set` or `add`/`remove` semantics, expose the result as a discovery field.
+
+Anything mapping-backed is fair game: role members (`RoleGranted` / `RoleRevoked`), whitelisted tokens (`TokenAdded` / `TokenRemoved`), approved operators, per-asset risk config, per-cycle Merkle roots, snapshotted price submitters, etc. The role-membership case shown below is just the most common.
 
 Two modes:
 
@@ -505,11 +447,11 @@ This produces `{0: [adminAddr1, adminAddr2], 100: [...], ...}` on the next disco
 
    Setting `ignoreRelative: true` defensively is dangerous: if a critical contract is reachable ONLY through the event handler, the address appears as an opaque value in `discovered.json`, the summary looks complete, and the trust analysis silently misses the contract's upgrade path and admin chain. The failure is invisible. Only set it when you have inspected the values and confirmed they are not worth walking — appropriate for a `MINTER_ROLE` full of EOAs, a `PUBLIC_ROLE`, a `KEEPER` allowlist; *not* appropriate for anything called "admin", "owner", or "guardian", or any role gating upgrades, fees, or pause. When in doubt, leave it off and cut noise at the boundary contract via `ignoreRelatives` on a template (milestone 1 style).
 
-2. **`groupBy` keys are NOT walked.** Only `Object.values` of a grouped result is recursed by the engine. If you `groupBy: "target"`, the target addresses are *keys* and won't be discovered. Add a separate **flat helper field** with the same `select` and the leading `$` convention so the BFS picks them up. The full pattern (`$gatedTargets`) is in gotcha 4 — for any `AccessManager`-style authority you should already have it from milestone 1.
+2. **`groupBy` keys are NOT walked.** Only `Object.values` of a grouped result is recursed by the engine. If you `groupBy: "target"`, the target addresses are *keys* and won't be discovered. Add a separate **flat helper field** with the same `select` and the leading `$` convention so the BFS picks them up. The full pattern (`$gatedTargets`) is in Milestone 1's "First, confirm topology completeness" — for any `AccessManager`-style authority you should already have it from cleanup.
 
 ### Distinct vs duplicate instances: research and disambiguate
 
-Templates dedupe by implementation bytecode, so once shape match has run you will often see N copies of the same template in the discovery. Two instances of the same bytecode are almost never interchangeable in practice: they are usually paired with different assets, markets, chains, or risk parameters. If there are N of something there is a reason, and the trust analysis is wrong until you know what it is. The dedup is a feature for *matching*, not a license to treat the instances as identical.
+Templates dedupe by shape, so once shape match has run you will often see N copies of the same template in the discovery. Two instances of the same shape are almost never interchangeable in practice: they are usually paired with different assets, markets, chains, or risk parameters. If there are N of something there is a reason, and the trust analysis is wrong until you know what it is. The dedup is a feature for *matching*, not a license to treat the instances as identical.
 
 Three things must happen, in order, before milestone 3 is done:
 
@@ -570,6 +512,8 @@ In addition to `array`, `call`, and `event`:
 | `l2b add-shape <project> <addressOrName>` | Look up the contract in `discovered.json`, auto-resolve proxies, create the template (default `<project>/<contractName>`) if missing, and add the shape. Use `--template <path>` and `--name <fileName>` to add multiple impls to one template under different keys. Pass `--description "..."` and `--ignore-relatives "field1,field2,..."` to populate the template in one shot (insert-only; errors out if either field is already set so you never silently clobber existing edits). |
 | `l2b init <project> <chain> <addr> [<addr> ...]` | Scaffold a new project's `config.jsonc` with `$schema`, `import`, `name`, and `initialAddresses`. Pass `--max-addresses N` to set the cap up front (recommended: 50). |
 | `l2b init-template <name>` | Create an empty template (rarely needed; `add-shape` does this) |
+| `l2b model-permissions <project>` | (Re)resolve the project's permissions through the Clingo modeller. Run after editing any `permissions: [...]`, `canActIndependently`, or related fields in templates / config.jsonc. |
+| `l2b show-permissions <project>` | Print the resolved trust map: each actor with type, participant count, and the capability bullets (`act`-chain delays and `via:` paths included). Flags Contract actors that don't look like multisigs. `--short` skips the bullets. |
 
 ## File anatomy
 
@@ -583,11 +527,11 @@ packages/config/src/projects/<name>/
 
 packages/config/src/projects/_templates/<project>/<TemplateName>/
 ├── template.jsonc            human (the spec, including ignoreRelatives)
-├── shapes.json               generated by add-shape (impl bytecode hashes)
+├── shapes.json               generated by add-shape (flattened-source hashes)
 └── (criteria.json, model.lp if needed)
 ```
 
-A template can have many entries in `shapes.json` (one per distinct implementation bytecode), all matching the same `template.jsonc`.
+A template can have many entries in `shapes.json` (one per distinct flattened-source hash), all matching the same `template.jsonc`.
 
 ### Minimal `config.jsonc`
 
@@ -627,19 +571,15 @@ A template can have many entries in `shapes.json` (one per distinct implementati
 
 A few rules apply across many projects. Internalize these and most boundary decisions become mechanical.
 
-- **Foreign trust roots are leaves.** When a contract is the trust root for an external system (a price feed proxy, a parent project's admin contract, a bridge endpoint), keep it visible as a single node and cut its outgoing fields that walk deeper. The trust analysis question is "what does my project trust?", not "what does the external system look like internally?". The internals belong in the external system's own discovery.
-
-- **Foreign assets the project doesn't depend on are not walked at all.** A deposit or collateral asset the project just holds in a balance is not a trust root in any meaningful sense — the project's correctness does not depend on the asset's behavior beyond "it is an ERC20", and a reviewer would never open the asset's source. Cut the field on the source contract that returns the asset list (gotcha 5); do not template each asset as a leaf. The asset address still appears in the source's `values` so reviewers can see what's listed.
+- **Foreign code stays a black box.** Anything your team didn't deploy and doesn't control gets `ignoreDiscovery: true` in your `config.jsonc`, no matter how trust-critical the dependency. The seam stays visible in source `values`; the foreign contract's internals belong in the foreign project's own discovery. When a single field returns many foreign addresses, `ignoreRelatives` on the field is the compact shortcut. A whole foreign protocol suddenly showing up usually means one such field on one of your contracts — one cut at the right place collapses the entire downstream graph.
 
 - **Unnamed EOAs are usually multisig signers.** Tons of EOAs in your discovery normally means a multisig's `$members`. Leave them; they're discoveries, not noise.
-
-- **A whole foreign protocol showing up** means a single field is leaking an oracle source, an underlying token, or a rewards controller. Usually one `ignoreRelatives` near your project's edge collapses the entire downstream graph.
 
 - **Standard interface helpers are usually not state.** When a contract implements a standard interface (a token standard, a vault standard, a generic access-control library), the view methods defined by the standard that take a key or index argument are typically pure math, per-element lookups, or historical reads. Add them to `ignoreMethods` rather than trying to enumerate them. The 5-item probe trips on them every time.
 
 - **Don't template what's auto-detected.** The engine has built-in detectors for common proxy types (EIP-1967, EIP-2535 Diamond, Gnosis Safe, transparent proxies, etc.). These produce proxy values like `$implementation`, `$admin`, `$members`, `$threshold` automatically and dispatch the implementation through shape match. You don't need to template the proxy wrapper itself — only the implementation behind it.
 
-- **State that's only in events needs an event handler with a flat helper.** If a contract's role/membership/registration state is emitted via events but has no enumerable getter, use the `event` handler. If you `groupBy` an address-typed field that you want walked (e.g. you bucket gated targets by `target` address), add a parallel flat helper field with the same `select` so the BFS picks the addresses up — `groupBy` keys are not walked (subtlety 2 in milestone 3).
+- **Mapping-backed state is read via events, not RPC.** A mapping has no length and no enumerable key list (one value per `keccak256(key, slot)`). If the contract emits an event when it writes to the mapping, replay the event log with the `event` handler. If you `groupBy` an address-typed field that you want walked (e.g. you bucket gated targets by `target` address), add a parallel flat helper field with the same `select` so the BFS picks the addresses up — `groupBy` keys are not walked (subtlety 2 in milestone 3).
 
 ## When you're done
 
