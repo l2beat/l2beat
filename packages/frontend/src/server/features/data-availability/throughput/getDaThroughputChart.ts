@@ -76,6 +76,9 @@ export async function getDaThroughputChart({
     throughput,
     resolution,
   )
+  if (minTimestamp === undefined || maxTimestamp === undefined) {
+    return { data: [] }
+  }
 
   const lastDataForLayers: Record<
     string,
@@ -186,6 +189,17 @@ export function groupByTimestampAndDaLayerId(
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
+  }
+
+  if (
+    minTimestamp === Number.POSITIVE_INFINITY ||
+    maxTimestamp === Number.NEGATIVE_INFINITY
+  ) {
+    return {
+      grouped: result,
+      minTimestamp: undefined,
+      maxTimestamp: undefined,
+    }
   }
 
   return {

@@ -102,6 +102,9 @@ export async function getDaThroughputChartByProjectData({
     sovereignProjects,
     includeScalingOnly,
   )
+  if (minTimestamp === undefined || maxTimestamp === undefined) {
+    return undefined
+  }
 
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
@@ -204,17 +207,30 @@ function groupByTimestampAndProjectId(
     }
   }
 
-  return {
-    grouped: Object.fromEntries(
-      Object.entries(result).map(([timestamp, projects]) => [
-        timestamp,
-        Object.fromEntries(
-          Object.entries(projects).sort(
-            ([, valueA], [, valueB]) => valueB - valueA,
-          ),
+  const grouped = Object.fromEntries(
+    Object.entries(result).map(([timestamp, projects]) => [
+      timestamp,
+      Object.fromEntries(
+        Object.entries(projects).sort(
+          ([, valueA], [, valueB]) => valueB - valueA,
         ),
-      ]),
-    ),
+      ),
+    ]),
+  )
+
+  if (
+    minTimestamp === Number.POSITIVE_INFINITY ||
+    maxTimestamp === Number.NEGATIVE_INFINITY
+  ) {
+    return {
+      grouped,
+      minTimestamp: undefined,
+      maxTimestamp: undefined,
+    }
+  }
+
+  return {
+    grouped,
     minTimestamp: UnixTime(minTimestamp),
     maxTimestamp: UnixTime(maxTimestamp),
   }

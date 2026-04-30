@@ -94,6 +94,9 @@ export async function getProjectDaThroughputChartData({
     throughput,
     resolution,
   )
+  if (minTimestamp === undefined || maxTimestamp === undefined) {
+    return undefined
+  }
 
   const expectedTo = getThroughputExpectedTimestamp({
     to: range[1],
@@ -152,6 +155,17 @@ function groupByTimestampAndProjectId(
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
+  }
+
+  if (
+    minTimestamp === Number.POSITIVE_INFINITY ||
+    maxTimestamp === Number.NEGATIVE_INFINITY
+  ) {
+    return {
+      grouped: result,
+      minTimestamp: undefined,
+      maxTimestamp: undefined,
+    }
   }
 
   return {
