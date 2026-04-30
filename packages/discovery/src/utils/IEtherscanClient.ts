@@ -60,6 +60,7 @@ export type ExplorerConfig =
 
 export interface ContractSource {
   name: string
+  rootFile: string | undefined
   isVerified: boolean
   abi: string[]
   solidityVersion: string

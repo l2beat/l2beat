@@ -102,6 +102,7 @@ describe(AddressAnalyzer.name, () => {
             address: address,
             source: {
               name: 'Proxy1',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -117,6 +118,7 @@ describe(AddressAnalyzer.name, () => {
             address: implementation,
             source: {
               name: 'Impl1',
+              rootFile: 'Bar.sol',
               isVerified: true,
               abi: ['function bar()'],
               solidityVersion: '0.8.0',
@@ -216,6 +218,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -231,6 +234,7 @@ describe(AddressAnalyzer.name, () => {
             address: implementation,
             source: {
               name: 'Test2',
+              rootFile: '',
               isVerified: false,
               abi: [],
               constructorArguments: '',
@@ -331,6 +335,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Foo.sol',
               isVerified: true,
               abi: ['function foo()'],
               solidityVersion: '0.8.0',
@@ -346,6 +351,7 @@ describe(AddressAnalyzer.name, () => {
             address,
             source: {
               name: 'Test',
+              rootFile: 'Bar.sol',
               isVerified: true,
               abi: ['function bar()'],
               solidityVersion: '0.8.0',

@@ -160,6 +160,7 @@ export class EtherscanClient implements IEtherscanClient {
 
     return {
       name: this.parseContractName(name),
+      rootFile: result.ContractFileName,
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       solidityVersion,

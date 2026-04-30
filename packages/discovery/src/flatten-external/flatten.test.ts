@@ -73,7 +73,7 @@ describe('flatten', () => {
       sol('path5', 'contract C5 { function r5() public {} }'),
     ]
 
-    const flattened = flattenStartingFrom('R1', files, remappings)
+    const flattened = flattenStartingFrom('R1', 'Root.sol', files, remappings)
 
     expect(flattened).toEqual(
       dedent(`
@@ -106,7 +106,7 @@ describe('flatten', () => {
       sol('Types.sol', 'contract Foo { struct S { uint256 x; } }'),
     ]
 
-    const flattened = flattenStartingFrom('Root', files, [], {
+    const flattened = flattenStartingFrom('Root', 'Root.sol', files, [], {
       includeAll: true,
     })
 
@@ -154,7 +154,7 @@ describe('flatten', () => {
       sol('Base.sol', 'contract Base { struct S { uint256 x; } }'),
     ]
 
-    const flattened = flattenStartingFrom('Root', files, [], {
+    const flattened = flattenStartingFrom('Root', 'Root.sol', files, [], {
       includeAll: true,
     })
 
@@ -201,7 +201,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [])
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [])
     expect(flattened).toEqual(
       dedent(`
       contract C2 { }
@@ -246,7 +246,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
     expect(flattened).toEqual(
@@ -303,7 +303,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
 
@@ -344,7 +344,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
 
@@ -383,7 +383,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
 
@@ -438,9 +438,13 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file, libFile], [], {
-      includeAll: true,
-    })
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [file, libFile],
+      [],
+      { includeAll: true },
+    )
 
     expect(flattened).toEqual(
       dedent(`
@@ -492,7 +496,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('Root', [file], [])
+    const flattened = flattenStartingFrom('Root', 'Root.sol', [file], [])
 
     expect(flattened).toEqual(
       dedent(`
@@ -532,7 +536,12 @@ describe('flatten', () => {
 
     const c2File = sol('DependencyFile.sol', 'contract C2 { }')
 
-    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [])
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, c2File],
+      [],
+    )
     expect(flattened).toEqual(
       dedent(`
       contract C2 { }
@@ -562,6 +571,7 @@ describe('flatten', () => {
 
     const flattened = flattenStartingFrom(
       'R1',
+      'a/b/c/Root.sol',
       [rootFile, c2File],
       ['@stdlib=../somewhere/'],
     )
@@ -599,9 +609,13 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [rootFile, globalsFile], [], {
-      includeAll: true,
-    })
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, globalsFile],
+      [],
+      { includeAll: true },
+    )
 
     expect(flattened).toEqual(
       dedent(`
@@ -656,7 +670,7 @@ describe('flatten', () => {
       ),
     ]
 
-    const flattened = flattenStartingFrom('R1', files, [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', files, [], {
       includeAll: true,
     })
 
@@ -722,7 +736,7 @@ describe('flatten', () => {
       ),
     ]
 
-    const flattened = flattenStartingFrom('Root', files, [], {
+    const flattened = flattenStartingFrom('Root', 'Root.sol', files, [], {
       includeAll: true,
     })
 
@@ -775,7 +789,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
     expect(flattened).toEqual(
@@ -832,7 +846,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
     expect(flattened).toEqual(
@@ -879,7 +893,7 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
     expect(flattened).toEqual(
@@ -932,7 +946,9 @@ describe('flatten', () => {
       ),
     ]
 
-    const flattened = flattenStartingFrom('R', files, [], { includeAll: true })
+    const flattened = flattenStartingFrom('R', 'Root.sol', files, [], {
+      includeAll: true,
+    })
     expect(flattened).toEqual(
       dedent(`
       // NOTE(l2beat): This is an interface, generated from the contract source code.
@@ -975,7 +991,9 @@ describe('flatten', () => {
     `,
     )
 
-    const flattened = flattenStartingFrom('R', [file], [], { includeAll: true })
+    const flattened = flattenStartingFrom('R', 'root.sol', [file], [], {
+      includeAll: true,
+    })
     expect(flattened).toEqual(
       dedent(`
       interface Iface {
@@ -1009,7 +1027,7 @@ describe('flatten', () => {
         sol('cba.sol', 'contract Name { function cba() public {} }'),
       ]
 
-      const flattened = flattenStartingFrom('R1', files, [], {
+      const flattened = flattenStartingFrom('R1', 'Root.sol', files, [], {
         includeAll: true,
       })
 
@@ -1055,7 +1073,7 @@ describe('flatten', () => {
         sol('Base2.sol', 'contract Base { function base2() public {} }'),
       ]
 
-      const flattened = flattenStartingFrom('Root', files, [], {
+      const flattened = flattenStartingFrom('Root', 'Root.sol', files, [], {
         includeAll: true,
       })
 
@@ -1092,7 +1110,7 @@ describe('flatten', () => {
       `,
       )
 
-      const flattened = flattenStartingFrom('Main', [file], [])
+      const flattened = flattenStartingFrom('Main', 'Root.sol', [file], [])
 
       expect(flattened).toEqual(
         dedent(`
@@ -1121,7 +1139,7 @@ describe('flatten', () => {
       `,
       )
 
-      const flattened = flattenStartingFrom('Main', [file], [], {
+      const flattened = flattenStartingFrom('Main', 'Root.sol', [file], [], {
         includeAll: true,
       })
 
@@ -1154,9 +1172,13 @@ describe('flatten', () => {
       `,
       )
 
-      const flattened = flattenStartingFrom('MyContract', [file], [], {
-        includeAll: true,
-      })
+      const flattened = flattenStartingFrom(
+        'MyContract',
+        'Root.sol',
+        [file],
+        [],
+        { includeAll: true },
+      )
 
       expect(flattened).toEqual(
         dedent(`
@@ -1197,7 +1219,7 @@ describe('flatten', () => {
         ),
       ]
 
-      const flattened = flattenStartingFrom('Main', files, [], {
+      const flattened = flattenStartingFrom('Main', 'Main.sol', files, [], {
         includeAll: true,
       })
 
@@ -1232,9 +1254,13 @@ describe('flatten', () => {
       `,
       )
 
-      const flattened = flattenStartingFrom('Rollup', [file], [], {
-        includeAll: true,
-      })
+      const flattened = flattenStartingFrom(
+        'Rollup',
+        'Rollup.sol',
+        [file],
+        [],
+        { includeAll: true },
+      )
 
       expect(flattened).toEqual(
         dedent(`
