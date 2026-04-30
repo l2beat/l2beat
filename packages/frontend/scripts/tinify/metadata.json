@@ -1502,5 +1502,8 @@
   "static/icons/tornado-cash.png": "3bd22bcd3b7043b001b99e506dcd3e15",
   "static/images/badges/Compliance.png": "8252d28e0160a1d38813d03220ce3208",
   "static/images/badges/PrivateTransfers.png": "7bef0ce4fb2d1dffa36fe1b8feaa7dd9",
-  "static/images/badges/SmartContractInteractions.png": "445f1bb7b26dfd4be29603f067757664"
+  "static/images/badges/SmartContractInteractions.png": "445f1bb7b26dfd4be29603f067757664",
+  "static/images/architecture/privacy-pools.png": "9dd20b4f88d28691c0c2bab2ea107054",
+  "static/images/architecture/railgun.png": "03cce018821a4b9a0b5433d1d910537a",
+  "static/images/architecture/tornado-cash.png": "230b1fc477ce8c8ffa7a9ff3295c513b"
 }
