@@ -1,6 +1,6 @@
 import {
+  ArrowLeftRightIcon,
   ChevronRightIcon,
-  GlobeIcon,
   LayersIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
@@ -186,11 +186,11 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Coming soon">
-                  <span className="cursor-not-allowed opacity-50">
-                    <GlobeIcon />
-                    <span>Coming soon</span>
-                  </span>
+                <SidebarMenuButton asChild tooltip="Tracked Txs">
+                  <Link to="/website/tracked-txs-status">
+                    <ArrowLeftRightIcon />
+                    <span>Tracked Txs</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
