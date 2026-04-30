@@ -31,7 +31,7 @@ describe(BalanceProvider.name, () => {
       const multicallClient = mockObject<MulticallV3Client>({
         encodeGetEthBalance: (holder: EthereumAddress) => ({
           to: EthereumAddress.ZERO,
-          data: Bytes.fromHex(
+          input: Bytes.fromHex(
             multicallInterface.encodeFunctionData('getEthBalance', [holder]),
           ),
         }),
@@ -127,7 +127,7 @@ describe(BalanceProvider.name, () => {
         multicallClient: mockObject<MulticallV3Client>({
           encodeGetEthBalance: () => ({
             to: EthereumAddress.ZERO,
-            data: Bytes.fromHex('0x'),
+            input: Bytes.fromHex('0x'),
           }),
         }),
         multicall: mockFn().rejectsWithOnce(new Error('RPC failure')),
@@ -139,7 +139,7 @@ describe(BalanceProvider.name, () => {
         multicallClient: mockObject<MulticallV3Client>({
           encodeGetEthBalance: (holder: EthereumAddress) => ({
             to: EthereumAddress.ZERO,
-            data: Bytes.fromHex(
+            input: Bytes.fromHex(
               multicallInterface.encodeFunctionData('getEthBalance', [holder]),
             ),
           }),
@@ -171,7 +171,7 @@ describe(BalanceProvider.name, () => {
         multicallClient: mockObject<MulticallV3Client>({
           encodeGetEthBalance: () => ({
             to: EthereumAddress.ZERO,
-            data: Bytes.fromHex('0x'),
+            input: Bytes.fromHex('0x'),
           }),
         }),
         multicall: mockFn().rejectsWithOnce(error),
@@ -183,7 +183,7 @@ describe(BalanceProvider.name, () => {
         multicallClient: mockObject<MulticallV3Client>({
           encodeGetEthBalance: () => ({
             to: EthereumAddress.ZERO,
-            data: Bytes.fromHex('0x'),
+            input: Bytes.fromHex('0x'),
           }),
         }),
         multicall: mockFn().rejectsWithOnce(error),
