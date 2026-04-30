@@ -194,7 +194,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     const key = this.buildSnapshotKey([
       'call',
       callParams.to.toString(),
-      callParams.data.toString(),
+      callParams.input.toString(),
       blockNumber.toString(),
     ])
     const snapshot = this.$.inputs.readRpc<string>(key)
@@ -211,7 +211,7 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     blockNumber: number,
   ): Promise<MulticallV3Response[]> {
     const callsKey = calls
-      .map((c) => buildSnapshotKey([c.to.toString(), c.data.toString()]))
+      .map((c) => buildSnapshotKey([c.to.toString(), c.input.toString()]))
       .join('|')
     const key = this.buildSnapshotKey([
       'multicall',

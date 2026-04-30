@@ -156,7 +156,7 @@ export const EVMCallResponse = z.object({
 
 export interface CallParameters {
   to: EthereumAddress
-  data: Bytes
+  input: Bytes
 }
 
 export type RPCError = z.infer<typeof RPCError>

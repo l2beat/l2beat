@@ -176,7 +176,7 @@ export class WormholeConfigPlugin
     })
     const calls: CallParameters[] = evmContracts.map((address) => ({
       to: address,
-      data: Bytes.fromHex(data),
+      input: Bytes.fromHex(data),
     }))
 
     const networkPromises = this.chains.map(async (chain) => {
