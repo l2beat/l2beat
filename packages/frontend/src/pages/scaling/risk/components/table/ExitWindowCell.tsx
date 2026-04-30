@@ -1,4 +1,4 @@
-import type { ExitWindowRisk } from '@l2beat/config'
+import type { TableReadyValue } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -17,16 +17,26 @@ interface Props {
   href?: string
 }
 
+type ExitWindowRisk = TableReadyValue & {
+  emergency?: Pick<TableReadyValue, 'value' | 'sentiment'>
+}
+
 export function ExitWindowCell({ value, href }: Props) {
+  const emergency = value.emergency
+
   const trigger = (
     <TableLink href={href}>
       <TwoRowCell>
         <TwoRowCell.First className="flex items-center gap-1">
           <SentimentText
-            sentiment={value.sentiment ?? 'neutral'}
+            sentiment={
+              emergency
+                ? (emergency.sentiment ?? 'neutral')
+                : (value.sentiment ?? 'neutral')
+            }
             className="font-medium"
           >
-            {value.value}
+            {emergency ? `Emergency: ${emergency.value}` : value.value}
           </SentimentText>
           {value.warning && (
             <RoundedWarningIcon
@@ -37,18 +47,19 @@ export function ExitWindowCell({ value, href }: Props) {
             />
           )}
         </TwoRowCell.First>
-        {value.secondLine && (
-          <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-        )}
-        {value.emergency && (
+        {emergency ? (
           <TwoRowCell.Second className="mt-0.5">
             <SentimentText
-              sentiment={value.emergency.sentiment ?? 'neutral'}
+              sentiment={value.sentiment ?? 'neutral'}
               className="font-medium"
             >
-              {`Emergency: ${value.emergency.value}`}
+              {`Regular: ${value.value}`}
             </SentimentText>
           </TwoRowCell.Second>
+        ) : (
+          value.secondLine && (
+            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
+          )
         )}
       </TwoRowCell>
     </TableLink>
