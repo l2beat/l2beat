@@ -6,7 +6,12 @@ import { getPreview } from '../../../api/api'
 import type {
   AddressFieldValue,
   ApiPreviewContract,
+  ApiPreviewCounterpartyRiskScenario,
+  ApiPreviewExpandedPermissionChain,
+  ApiPreviewMissingSource,
+  ApiPreviewPermissionPath,
   ApiPreviewPermissions,
+  ApiPreviewResponse,
   UpgradeabilityActor,
 } from '../../../api/types'
 import { Checkbox } from '../../../components/Checkbox'
@@ -41,6 +46,7 @@ export function PreviewPanel() {
         />
       </div>
       <div className="overflow-auto">
+        <RiskSummary response={response} />
         <PermissionsPreview
           permissionsPerChain={response.permissionsPerChain}
           selectedAddress={selectedAddress}
@@ -52,6 +58,202 @@ export function PreviewPanel() {
           showOnlySelected={showOnlySelected}
         />
       </div>
+    </div>
+  )
+}
+
+const TARGET_TOKEN_LABELS: Record<string, string> = {
+  'eth:0xa1290d69c65a6fe4df752f95823fae25cb99e5a7': 'RSETH (Ethereum)',
+  'eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3':
+    'RSETH_OFTAdapter (Ethereum)',
+  'unichain:0xc3eacf0612346366db554c991d7858716db09f58': 'RSETH_OFT (Unichain)',
+}
+
+function RiskSummary(props: {
+  response: ApiPreviewResponse
+}) {
+  const grouped = groupPathsByTarget(props.response.permissionPathsPerChain ?? [])
+  const directChains = (props.response.expandedPermissionChains ?? []).filter(
+    (x) => x.depth === 1,
+  )
+  const indirectChains = (props.response.expandedPermissionChains ?? []).filter(
+    (x) => x.depth > 1,
+  )
+  const scenarios = props.response.counterpartyRiskScenarios ?? []
+  const sourceCoverage = props.response.sourceCoverage
+
+  return (
+    <div className="border-b border-b-coffee-600 p-2">
+      <h2 className="font-bold text-2xl text-blue-600">Risk summary</h2>
+      <div className="mt-1 text-xs text-coffee-200">
+        Comprehensive permission and counterparty-risk analysis for rsETH and OFTs.
+      </div>
+
+      {!sourceCoverage.complete && <SourceCoverageBlock missing={sourceCoverage.missing} />}
+      <div className="mt-2 flex flex-col gap-3">
+        <DirectPathsBlock grouped={grouped} />
+        <ExpandedChainsBlock title="Direct token control chains" chains={directChains} />
+        <ExpandedChainsBlock
+          title="Indirect dependency and upstream chains"
+          chains={indirectChains}
+        />
+        <ScenariosBlock scenarios={scenarios} />
+      </div>
+    </div>
+  )
+}
+
+function SourceCoverageBlock(props: { missing: ApiPreviewMissingSource[] }) {
+  return (
+    <div className="mt-2 rounded border border-rose-500 p-2">
+      <div className="font-bold text-rose-200">
+        Analysis blocked (strict source mode): flattened source coverage incomplete.
+      </div>
+      <div className="mt-1 text-sm text-coffee-200">
+        Missing flattened sources for {props.missing.length} contracts.
+      </div>
+      <ul className="mt-1 list-disc pl-5 text-xs">
+        {props.missing.slice(0, 25).map((m) => (
+          <li key={m.address}>
+            {m.chain}: {m.name} ({m.address})
+          </li>
+        ))}
+      </ul>
+      {props.missing.length > 25 && (
+        <div className="text-xs text-coffee-300">
+          ...and {props.missing.length - 25} more.
+        </div>
+      )}
+    </div>
+  )
+}
+
+function DirectPathsBlock(props: {
+  grouped: { target: string; label: string; paths: ApiPreviewPermissionPath[] }[]
+}) {
+  if (props.grouped.length === 0) {
+    return (
+      <div className="rounded border border-coffee-500 p-2 text-sm text-coffee-200">
+        No direct permission paths found for target tokens.
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {props.grouped.map((group) => (
+        <div key={group.target} className="rounded border border-coffee-500 p-2">
+          <div className="font-bold">{group.label}</div>
+          <ul className="mt-1 list-disc pl-5">
+            {sortPermissionPaths(group.paths).map((path, i) => {
+              const display = toDisplayPath(path.actor, path.via)
+              return (
+                <li key={`${path.permission}-${path.actor.address}-${i}`}>
+                  <span className="font-semibold">{path.permission}</span> by{' '}
+                  <AddressDisplay value={display.primary} />
+                  {display.viaShort.length > 0 && (
+                    <>
+                      {' '}
+                      via{' '}
+                      {display.viaShort.map((address, idx) => (
+                        <span key={`${address.address}-${idx}`}>
+                          {idx > 0 && ' -> '}
+                          <AddressDisplay value={address} />
+                        </span>
+                      ))}
+                    </>
+                  )}
+                  {path.via.length > 0 && (
+                    <span className="text-xs text-coffee-300">
+                      {' '}
+                      (
+                      {path.via
+                        .map((step) =>
+                          step.delay !== undefined
+                            ? formatDelay(step.delay)
+                            : step.condition ?? '',
+                        )
+                        .filter((x) => x.length > 0)
+                        .join(', ')}
+                      )
+                    </span>
+                  )}
+                  {path.description ? <> - {path.description}</> : null}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ))}
+    </>
+  )
+}
+
+function ExpandedChainsBlock(props: {
+  title: string
+  chains: ApiPreviewExpandedPermissionChain[]
+}) {
+  return (
+    <div className="rounded border border-coffee-500 p-2">
+      <div className="font-bold">{props.title}</div>
+      {props.chains.length === 0 ? (
+        <div className="mt-1 text-sm text-coffee-200">No chains in this category.</div>
+      ) : (
+        <ul className="mt-1 list-disc pl-5">
+          {props.chains.map((chain, i) => (
+            <li key={`${chain.actor.address}-${chain.target.address}-${i}`}>
+              <span className="font-semibold">{chain.permission}</span> depth {chain.depth}:{' '}
+              <AddressDisplay value={chain.actor} /> {'->'}{' '}
+              <AddressDisplay value={chain.target} />
+              {chain.via.length > 0 && (
+                <>
+                  {' '}
+                  via{' '}
+                  {chain.via.map((v, idx) => (
+                    <span key={`${v.address.address}-${idx}`}>
+                      {idx > 0 && ' -> '}
+                      <AddressDisplay value={v.address} />
+                    </span>
+                  ))}
+                </>
+              )}
+              {chain.capabilities.length > 0 && (
+                <>
+                  {' '}
+                  | capabilities: {chain.capabilities.join('; ')}
+                </>
+              )}
+              {chain.systems.length > 0 && <> | systems: {chain.systems.join(', ')}</>}
+              {chain.description ? <> | {chain.description}</> : null}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function ScenariosBlock(props: { scenarios: ApiPreviewCounterpartyRiskScenario[] }) {
+  return (
+    <div className="rounded border border-coffee-500 p-2">
+      <div className="font-bold">Counterparty risk scenarios</div>
+      {props.scenarios.length === 0 ? (
+        <div className="mt-1 text-sm text-coffee-200">No scenarios synthesized.</div>
+      ) : (
+        <ul className="mt-1 list-disc pl-5">
+          {props.scenarios.map((scenario, i) => (
+            <li key={`${scenario.system}-${i}`}>
+              <span className="font-semibold">{scenario.system}</span>: {scenario.title} | impact:{' '}
+              {scenario.impact}
+              {scenario.chainRefs.length > 0 && (
+                <div className="text-xs text-coffee-300">
+                  examples: {scenario.chainRefs.slice(0, 3).join(' | ')}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
@@ -243,4 +445,84 @@ function applyShowOnlySelectedFilter(
   showOnlySelected: boolean,
 ) {
   return !showOnlySelected || includesAddress(addresses, selectedAddress)
+}
+
+function groupPathsByTarget(
+  permissionPathsPerChain: { chain: string; paths: ApiPreviewPermissionPath[] }[],
+) {
+  const grouped = new Map<
+    string,
+    { target: string; label: string; paths: ApiPreviewPermissionPath[] }
+  >()
+
+  for (const { paths } of permissionPathsPerChain) {
+    for (const path of paths) {
+      const target = path.target.address.toLowerCase()
+      const label = TARGET_TOKEN_LABELS[target]
+      if (!label) {
+        continue
+      }
+      const current = grouped.get(target) ?? { target, label, paths: [] }
+      current.paths.push(path)
+      grouped.set(target, current)
+    }
+  }
+
+  return [...grouped.values()]
+}
+
+function formatDelay(delaySeconds: number): string {
+  if (delaySeconds === 0) return '0s'
+  const days = Math.floor(delaySeconds / 86400)
+  const hours = Math.floor((delaySeconds % 86400) / 3600)
+  if (days > 0) {
+    return hours > 0 ? `${days}d ${hours}h` : `${days}d`
+  }
+  const minutes = Math.floor(delaySeconds / 60)
+  if (minutes > 0) return `${minutes}m`
+  return `${delaySeconds}s`
+}
+
+function toDisplayPath(
+  actor: AddressFieldValue,
+  via: ApiPreviewPermissionPath['via'],
+): { primary: AddressFieldValue; viaShort: AddressFieldValue[] } {
+  const firstVia = via[0]
+  if (!firstVia) {
+    return { primary: actor, viaShort: [] }
+  }
+
+  const primary = firstVia.address
+  const tail = via.slice(1).map((step) => step.address)
+  const viaShort = [actor, ...tail].filter(
+    (item, index, list) => {
+      if (index === 0) return true
+      const previous = list[index - 1]
+      return previous
+        ? item.address.toLowerCase() !== previous.address.toLowerCase()
+        : true
+    },
+  )
+
+  return { primary, viaShort }
+}
+
+function sortPermissionPaths(paths: ApiPreviewPermissionPath[]) {
+  return [...paths].sort((a, b) => {
+    const aDisplay = toDisplayPath(a.actor, a.via)
+    const bDisplay = toDisplayPath(b.actor, b.via)
+    const aUpgrade = a.permission === 'upgrade' ? 0 : 1
+    const bUpgrade = b.permission === 'upgrade' ? 0 : 1
+    if (aUpgrade !== bUpgrade) return aUpgrade - bUpgrade
+    const aProxy = (aDisplay.primary.name ?? '').toLowerCase().includes('proxyadmin')
+      ? 0
+      : 1
+    const bProxy = (bDisplay.primary.name ?? '').toLowerCase().includes('proxyadmin')
+      ? 0
+      : 1
+    if (aProxy !== bProxy) return aProxy - bProxy
+    return (aDisplay.primary.name ?? aDisplay.primary.address).localeCompare(
+      bDisplay.primary.name ?? bDisplay.primary.address,
+    )
+  })
 }

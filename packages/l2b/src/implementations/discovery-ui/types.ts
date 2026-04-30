@@ -17,6 +17,13 @@ export interface ApiProjectResponse {
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
+  permissionPathsPerChain: {
+    chain: string
+    paths: ApiPreviewPermissionPath[]
+  }[]
+  sourceCoverage: ApiPreviewSourceCoverage
+  expandedPermissionChains: ApiPreviewExpandedPermissionChain[]
+  counterpartyRiskScenarios: ApiPreviewCounterpartyRiskScenario[]
 }
 
 export interface ApiPreviewPermissions {
@@ -36,6 +43,52 @@ export interface ApiPreviewContract {
   name: string
   description: string
   upgradableBy: UpgradeabilityActor[] | undefined
+}
+
+export interface ApiPreviewPermissionPath {
+  actor: AddressFieldValue
+  permission: string
+  target: AddressFieldValue
+  via: ApiPreviewPermissionPathVia[]
+  description: string | undefined
+}
+
+export interface ApiPreviewPermissionPathVia {
+  address: AddressFieldValue
+  delay: number | undefined
+  condition: string | undefined
+}
+
+export interface ApiPreviewSourceCoverage {
+  strictMode: true
+  complete: boolean
+  missing: ApiPreviewMissingSource[]
+}
+
+export interface ApiPreviewMissingSource {
+  chain: string
+  address: string
+  name: string
+  expectedPaths: string[]
+}
+
+export interface ApiPreviewExpandedPermissionChain {
+  chain: string
+  permission: string
+  actor: AddressFieldValue
+  target: AddressFieldValue
+  via: ApiPreviewPermissionPathVia[]
+  depth: number
+  description: string | undefined
+  capabilities: string[]
+  systems: string[]
+}
+
+export interface ApiPreviewCounterpartyRiskScenario {
+  system: string
+  title: string
+  impact: string
+  chainRefs: string[]
 }
 
 export interface ApiProjectChain {
