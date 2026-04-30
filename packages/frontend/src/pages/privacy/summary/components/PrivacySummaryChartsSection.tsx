@@ -54,7 +54,7 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
 
   const countsChart = (
     <PrivacySummaryChartCard
-      title="Deposit and withdrawal counts"
+      title="Total deposit and withdrawal counts"
       data={chartData}
       syncedUntil={data?.syncedUntil}
       isLoading={isLoading}

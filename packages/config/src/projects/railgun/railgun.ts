@@ -125,7 +125,7 @@ Additionally, Railgun users can share a read-only viewing key to expose all sent
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
 3. a user loses the private keys required to control their private balance.
 4. the DAO passes a malicious [upgrade](#upgrades-and-governance) and users do not react before the 7-day execution delay expires.
-
+<br>
 ## Privacy can be lost if
 1. no broadcaster is available and transactions must be sent from a public address that can be linked to the user.`,
     upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of RAIL token. DAO has the authority to change ZK circuit logic on the core Railgun contract, effectively arbitrarily changing the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>

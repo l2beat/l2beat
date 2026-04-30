@@ -78,7 +78,7 @@ export function PrivacyChartsSection({ project, defaultRange }: Props) {
 
       <div>
         <h3 className="mb-3 font-bold text-lg md:text-xl">
-          Deposit and withdrawal counts
+          Total deposit and withdrawal counts
         </h3>
         <PrivacyFlowChart
           data={chartData}

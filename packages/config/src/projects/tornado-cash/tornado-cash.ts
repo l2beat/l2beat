@@ -171,8 +171,8 @@ Protocol pools were [sanctioned by OFAC in August 2022](https://home.treasury.go
     riskSummary: `## Funds can be lost if
 1. the zk proof system is broken, allowing invalid withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
-3. a user loses the note secrets required to withdraw.
-
+3. a user loses the note secrets required to withdraw.  
+<br>
 ## Privacy can be lost if
 1. no relayer is available and the withdrawal must be submitted from an address that can be linked to the user.`,
     upgradesAndGovernance:
