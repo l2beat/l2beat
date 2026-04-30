@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SocializingPool",
+  "category": "core",
+  "description": "Per-pool reward distributor (one instance for the permissioned pool, one for the permissionless pool, both registered in StaderConfig). Receives ETH via plain transfers from pool validators. `handleRewards`, callable only by StaderOracle, records the next per-cycle `RewardsData` once a Merkle root has reached oracle quorum, forwards `userETHRewards` to `StaderStakePoolsManager.receiveExecutionLayerRewards`, and sends `protocolETHRewards` to `staderConfig.getStaderTreasury()`; `operatorETHRewards` and `operatorSDRewards` stay in the contract until claimed. Operators call `claim` (or `claimAndDepositSD`) with a Merkle proof against the cycle root; ETH goes to the operator's reward address (looked up through the relevant NodeRegistry) and SD either to the same address or, when `claimAndDepositSD` is used, into SDCollateral. `pause` is gated by StaderConfig's MANAGER role; `unpause` and `updateStaderConfig` are gated by this contract's DEFAULT_ADMIN_ROLE. `maxApproveSD` is also gated by MANAGER.",
+  "ignoreMethods": ["handledRewards", "rewardsDataMap"]
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StaderOracle",
+  "category": "core",
+  "description": "Aggregates submissions from a set of trusted oracle nodes (managed via `addTrustedNode`/`removeTrustedNode`, gated by StaderConfig's MANAGER role; `MIN_TRUSTED_NODES` is 3). Holds the protocol's exchange-rate accounting: `totalETHBalance` and `totalETHXSupply` returned by `getExchangeRate()` drive every ETHx mint/burn through StaderStakePoolsManager. Trusted nodes can also submit per-pool socializing-rewards Merkle roots (forwarded to the corresponding SocializingPool via `handleRewards`), SD/ETH spot prices (median is taken), validator status and stats updates, withdrawn-validator lists, missed-attestation penalty counters, and validator-verification details. Each submission requires a quorum of `trustedNodesCount/2 + 1`. Exchange-rate updates whose deviation exceeds `erChangeLimit` (basis points) put the oracle into `erInspectionMode` until `closeERInspectionMode` confirms the value or `disableERInspectionMode` (MANAGER-gated, or anyone after MAX_ER_UPDATE_FREQUENCY blocks) re-opens submissions. Has `safeMode` and PoR-feed (`updateERFromPORFeed`) variants of the exchange-rate path."
+}

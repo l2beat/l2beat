@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UserWithdrawalManager",
+  "category": "core",
+  "description": "Withdrawal queue. `requestWithdraw(ethXAmount, owner)` pulls ETHx from `msg.sender`, snapshots the implied ETH amount via `StaderStakePoolsManager.previewWithdraw`, and stores a UserWithdrawInfo at `nextRequestId`; per-user pending requests are capped by `maxNonRedeemedUserRequestCount`. `finalizeUserWithdrawalRequest` is permissionless: it requires `StaderOracle.safeMode() == false` and `StakePoolManager.isVaultHealthy()`, processes up to `finalizationBatchLimit` requests at once that have aged at least `getMinBlockDelayToFinalizeWithdrawRequest` blocks, calls `ETHx.burnFrom` on the locked ETHx, and pulls the matching ETH from StakePoolManager via `transferETHToUserWithdrawManager`. The request `owner` then redeems the finalized ETH with `claim(requestId)`. `pause` is gated by StaderConfig's MANAGER role; `unpause`, `updateStaderConfig`, and `updateFinalizationBatchLimit` go through this contract's DEFAULT_ADMIN_ROLE / MANAGER respectively.",
+  "ignoreMethods": ["userWithdrawRequests"]
+}

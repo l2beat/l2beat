@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StaderStakePoolsManager",
+  "category": "core",
+  "description": "Entry point for user ETH deposits. `deposit` mints ETHx to the receiver in proportion to `StaderOracle.getExchangeRate()` (totalETHBalance / totalETHXSupply); the deposited amount must lie in `[getMinDepositAmount, getMaxDepositAmount]`. `validatorBatchDeposit` (permissionless) and `depositETHOverTargetWeight` (permissionless, gated by `excessETHDepositCoolDown`) push pooled ETH into the configured pools according to PoolSelector weights. `transferETHToUserWithdrawManager` is callable only by the USER_WITHDRAW_MANAGER contract registered in StaderConfig. `pause` is callable by StaderConfig's MANAGER role; `unpause` and `updateStaderConfig` are gated by this contract's DEFAULT_ADMIN_ROLE.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewWithdraw"
+  ]
+}

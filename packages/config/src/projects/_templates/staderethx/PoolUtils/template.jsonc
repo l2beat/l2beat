@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolUtils",
+  "category": "core",
+  "description": "Maps pool IDs to pool addresses, fans out queries to the underlying NodeRegistries (validator/operator counts, key existence checks, operator-pool resolution), and centralises the user/operator/protocol reward split via `calculateRewardShare(poolId, totalRewards)`. `addNewPool` and `updatePoolAddress` are gated by this contract's DEFAULT_ADMIN_ROLE despite the source comment, and verify that the proposed pool's NodeRegistry POOL_ID matches the supplied `_poolId`. `processValidatorExitList` is gated by StaderConfig's OPERATOR role and emits `ExitValidator` events for offchain operators to act on; `processOperatorExit` is callable only by SD_UTILITY_POOL. `updateStaderConfig` is gated by DEFAULT_ADMIN_ROLE."
+}

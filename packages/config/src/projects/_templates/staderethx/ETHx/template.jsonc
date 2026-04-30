@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ETHx",
+  "category": "core",
+  "description": "ERC20 receipt token (`ETHx`/`ETHx`). Has its own AccessControl with two custom roles, MINTER_ROLE and BURNER_ROLE: `mint` is gated by MINTER_ROLE and `burnFrom` by BURNER_ROLE. `pause` is callable by holders of StaderConfig's MANAGER role; `unpause` is gated by this contract's DEFAULT_ADMIN_ROLE. `_beforeTokenTransfer` reverts while paused, so transfers (and `_mint`/`_burn`) all stop together."
+}

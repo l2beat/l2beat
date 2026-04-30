@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Auction",
+  "category": "core",
+  "description": "ETH-for-SD auctions used to convert slashed operator SD into ETH. `createLot` is permissionless; SDCollateral calls it after `slashValidatorSD` to enqueue the slashed amount, but anyone can also push SD into a lot. Bidders call `addBid` (payable) until `block.number > endBlock`; `bidIncrement` enforces the minimum step. After the auction ends the highest bidder calls `claimSD`, anyone can call `transferHighestBidToSSPM` to forward the winning ETH into `StaderStakePoolsManager.receiveEthFromAuction`, losing bidders call `withdrawUnselectedBid`, and if a lot received no bids `extractNonBidSD` returns the SD to `staderConfig.getStaderTreasury()`. `updateDuration` and `updateBidIncrement` are gated by StaderConfig's MANAGER role; `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE.",
+  "ignoreMethods": ["lots"]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionedNodeRegistry",
+  "category": "core",
+  "description": "POOL_ID = 2. Registry of operators allowed to run validators in PermissionedPool. Onboarding is gated: `whitelistPermissionedNOs` (StaderConfig MANAGER role) adds an address to `permissionList`; the same comment in source notes the whitelist is one-way (no on-chain blacklisting). Whitelisted addresses then call `onboardNodeOperator` to register, and `addValidatorKeys` to deploy a per-validator ValidatorWithdrawalVault clone via VaultFactory. `markValidatorReadyToDeposit` and `withdrawnValidators` are callable only by StaderOracle. `allocateValidatorsAndUpdateOperatorId` is callable only by PermissionedPool.",
+  "ignoreMethods": [
+    "getOperatorTotalKeys",
+    "getSocializingPoolStateChangeBlock",
+    "nextQueuedValidatorIndexByOperatorId",
+    "nodeELRewardVaultByOperatorId",
+    "proposedRewardAddressByOperatorId",
+    "socializingPoolStateChangeBlock",
+    "validatorRegistry"
+  ],
+  "fields": {
+    "operatorStructById": {
+      "handler": {
+        "type": "array",
+        "method": "operatorStructById",
+        "startIndex": 1,
+        "length": "{{ nextOperatorId }}"
+      }
+    },
+    "getOperatorRewardAddress": {
+      "handler": {
+        "type": "array",
+        "method": "getOperatorRewardAddress",
+        "startIndex": 1,
+        "length": "{{ nextOperatorId }}"
+      }
+    }
+  }
+}

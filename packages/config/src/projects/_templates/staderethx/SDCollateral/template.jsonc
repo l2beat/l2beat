@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SDCollateral",
+  "category": "core",
+  "description": "Holds operator-bonded SD per-account, plus a separate `operatorUtilizedSDBalance` for SD borrowed from SDUtilityPool. Anyone can call `depositSDAsCollateral`/`depositSDAsCollateralOnBehalf`; `depositSDFromUtilityPool`, `reduceUtilizedSDPosition`, and `transferBackUtilizedSD` are routed through the SD_UTILITY_POOL contract. Operator `withdraw` first repays any utilized SD via `SDUtilityPool.repayOnBehalf` and then forwards excess SD to the operator's reward address. `slashValidatorSD` is callable only by the validator's withdraw vault; it converts the per-pool minThreshold to SD via `convertETHToSD` and routes the slashed amount into `Auction.createLot`. `maxApproveSD` and `updatePoolThreshold` are gated by StaderConfig's MANAGER role; `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE.",
+  "ignoreMethods": ["convertETHToSD", "convertSDToETH"]
+}

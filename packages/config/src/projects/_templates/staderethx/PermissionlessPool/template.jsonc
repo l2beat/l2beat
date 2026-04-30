@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionlessPool",
+  "category": "core",
+  "description": "Pool registered under POOL_ID = 1 (operators register openly via PermissionlessNodeRegistry, posting `COLLATERAL_ETH` = 4 ether plus SD collateral per validator key). `preDepositOnBeaconChain` is payable and callable only by PERMISSIONLESS_NODE_REGISTRY; it issues the 1 ETH pre-deposit per validator. `stakeUserETHToBeaconChain` is callable only by STAKE_POOL_MANAGER and combines `DEPOSIT_NODE_BOND` = 3 ether of operator collateral pulled from PermissionlessNodeRegistry (`transferCollateralToPool`) with the user's 28 ether to issue the final `getFullDepositSize` deposit. `setCommissionFees` is gated by StaderConfig's MANAGER role and capped at `MAX_COMMISSION_LIMIT_BIPS` = 1500. `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE. `protocolFee` and `operatorFee` initialise to 500 bps each. The plain `receive`/`fallback` revert."
+}

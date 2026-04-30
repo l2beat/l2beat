@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ValidatorWithdrawalVault",
+  "description": "Implementation reachable through the per-validator EIP1167 clones the VaultFactory hands out (the clone delegates through VaultProxy with `isValidatorWithdrawalVault = true`). `distributeRewards` splits the contract balance via `PoolUtils.calculateRewardShare`; if rewards exceed StaderConfig's `getRewardsThreshold` only StaderConfig's MANAGER role can trigger it. `settleFunds` is callable only by the matching NodeRegistry: it computes the user/operator/protocol split via `calculateValidatorWithdrawalShare`, reads the validator's penalty from Penalty, slashes operator SD via `SDCollateral.slashValidatorSD` if the operator share is below the penalty, and forwards the user share to StaderStakePoolsManager, the protocol share to `staderTreasury`, and the operator share to `OperatorRewardsCollector.depositFor(operator)`.",
+  "ignoreMethods": ["calculateValidatorWithdrawalShare"]
+}

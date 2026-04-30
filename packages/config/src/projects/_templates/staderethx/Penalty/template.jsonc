@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Penalty",
+  "category": "core",
+  "description": "Computes per-validator penalty amounts. `updateTotalPenaltyAmount(pubkeys[])` is permissionless and, for each pubkey, adds (`mevTheftPenaltyPerStrike` * RatedOracle violation count) + (`missedAttestationPenaltyPerStrike` * StaderOracle missed-attestation count) + DAO-set `additionalPenaltyAmount`. If the total reaches `validatorExitPenaltyThreshold` it emits `ForceExitValidator` for offchain operators to act on. `setAdditionalPenaltyAmount`, `updateMEVTheftPenaltyPerStrike`, `updateMissedAttestationPenaltyPerStrike`, `updateValidatorExitPenaltyThreshold`, and `updateRatedOracleAddress` are gated by StaderConfig's MANAGER role; `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE. `markValidatorSettled` is callable only by the validator's withdraw vault."
+}

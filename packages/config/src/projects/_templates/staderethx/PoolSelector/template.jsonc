@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolSelector",
+  "category": "core",
+  "description": "Decides how StaderStakePoolsManager splits queued ETH between pools. `poolWeights[poolId]` are basis points that must sum to `POOL_WEIGHTS_SUM` (10000). `computePoolAllocationForDeposit` is a view used by `validatorBatchDeposit`; `poolAllocationForExcessETHDeposit` rotates through pools starting at `poolIdArrayIndexForExcessDeposit` and is callable only by STAKE_POOL_MANAGER. `updatePoolWeights` is gated by StaderConfig's MANAGER role and rejects any combination that does not sum to 10000. `updatePoolAllocationMaxSize` is gated by StaderConfig's OPERATOR role; `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE."
+}

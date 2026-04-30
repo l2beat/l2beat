@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OperatorRewardsCollector",
+  "category": "core",
+  "description": "Holds per-operator ETH balances accumulated from validator EL rewards. `depositFor(receiver)` is payable and called by NodeELRewardVault and ValidatorWithdrawalVault when they distribute the operator share. Operators call `claim` or `claimWithAmount`: for permissionless operators (detected through PoolUtils + PermissionlessNodeRegistry POOL_ID) the contract first calls `claimLiquidation`, which through SDUtilityPool may pull WETH out to repay the liquidator and ETH to the staderTreasury before forwarding the rest to the operator's reward address; for permissioned operators it just sends the full balance. `updateStaderConfig` and `updateWethAddress` are gated by DEFAULT_ADMIN_ROLE.",
+  "ignoreRelatives": ["weth"]
+}

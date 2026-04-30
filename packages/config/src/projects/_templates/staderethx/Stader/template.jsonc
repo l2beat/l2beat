@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Stader",
+  "category": "core",
+  "description": "SD governance token (`Stader`/`SD`). Inherits ERC20, ERC20Burnable, ERC20Permit, and ERC20Votes. The constructor mints 150_000_000 SD to the deployer; there is no further mint path and no admin or pause control on the token itself. Used by SDCollateral as operator-bonded collateral, by SDUtilityPool as the borrowable principal, and as the auctioned asset in Auction.",
+  "ignoreMethods": ["getPastTotalSupply"]
+}

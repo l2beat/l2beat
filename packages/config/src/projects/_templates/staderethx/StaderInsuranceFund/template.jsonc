@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StaderInsuranceFund",
+  "category": "core",
+  "description": "Holds reserve ETH topped up by `depositFund` (payable, anyone) and by PermissionlessNodeRegistry sending the FRONT_RUN_PENALTY when a permissionless validator gets front-run. `reimburseUserFund` is callable only by PermissionedPool, which uses it to refund the pre-deposit ETH lost to defective permissioned validator keys (front-run or invalid signature). `withdrawFund` is gated by StaderConfig's MANAGER role and sends ETH to `msg.sender`; `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE."
+}

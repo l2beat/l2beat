@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RatedOracle",
+  "description": "Third-party oracle (Rated Network). Inherits OpenZeppelin Ownable; the constructor hardcodes `transferOwnership(0x7e764ED499BcBd64Bc0Ab76222C239c666d50E4D)` so the contract is owned by Rated, not Stader. Approved proposers (`approvedProposer` mapping) post validator-violation `Report`s through UMA's Optimistic Oracle V3 (`OO`); `bondAmount` of `bondCurrency` is locked per assertion and disputes settle within `timeToSettle` seconds. Stader's Penalty contract reads `getViolationsForValidator` from this oracle to compute MEV-theft penalties. Trusted at the boundary; its internal owner chain is out of scope.",
+  "ignoreRelatives": ["bondCurrency", "owner"],
+  "ignoreMethods": ["getViolationsInReport", "reports"]
+}

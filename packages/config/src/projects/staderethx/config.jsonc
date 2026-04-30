@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "staderethx",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 130,
+  "initialAddresses": ["eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"],
+  "names": {
+    "eth:0x9d4C3166c59412CEdBe7d901f5fDe41903a1d6Fc": "PermissionedSocializingPool",
+    "eth:0x1DE458031bFbe5689deD5A8b9ed57e1E79EaB2A4": "PermissionlessSocializingPool",
+    "eth:0x3517D4C433C99fD4d75A3059e176a789FF675025": "VaultProxy",
+    "eth:0x01422247a1d15BB4FcF91F5A077Cf25BA6460130": "StaderTreasury",
+    "eth:0x1112D5C55670Cb5144BF36114C20a122908068B9": "StaderTimelock"
+  },
+  "overrides": {
+    "eth:0x3517D4C433C99fD4d75A3059e176a789FF675025": {
+      "description": "Master implementation that VaultFactory clones via EIP1167 for every per-validator ValidatorWithdrawalVault and per-operator NodeELRewardVault. VaultFactory.initialize creates this with `new VaultProxy()` and each clone is initialised with (isValidatorWithdrawalVault, poolId, id, staderConfig). ValidatorWithdrawalVault and NodeELRewardVault both read poolId/id/staderConfig from this proxy's storage and rely on its fallback to delegate to the implementation registered in StaderConfig (NODE_EL_REWARD_VAULT_IMPLEMENTATION or VALIDATOR_WITHDRAWAL_VAULT_IMPLEMENTATION) according to the `isValidatorWithdrawalVault` flag. Source is not verified on Etherscan; behaviour above is observed from VaultFactory and the two vault implementations."
+    }
+  }
+}

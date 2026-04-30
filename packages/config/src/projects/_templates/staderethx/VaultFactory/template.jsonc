@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VaultFactory",
+  "category": "core",
+  "description": "Deploys the per-validator ValidatorWithdrawalVault and per-operator NodeELRewardVault EIP1167 minimal-proxy clones used by the Permissioned and Permissionless pools. The `vaultProxyImplementation` cloned by every call is a single VaultProxy contract created in the factory's `initialize` (`new VaultProxy()`); each clone is `initialise(isValidatorWithdrawalVault, poolId, validatorId | operatorId, staderConfig)` to dispatch reads to either the validator-vault or EL-reward-vault implementation registered in StaderConfig. `deployWithdrawVault` and `deployNodeELRewardVault` are gated by VaultFactory's own NODE_REGISTRY_CONTRACT role (not the StaderConfig roles), which is granted to the two NodeRegistries; clone addresses are deterministic via `cloneDeterministic`. `updateVaultProxyAddress` and `updateStaderConfig` are gated by DEFAULT_ADMIN_ROLE."
+}

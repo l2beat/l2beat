@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SDUtilityPool",
+  "category": "core",
+  "description": "Lending pool that lets permissionless operators borrow SD against their non-terminal validator count to satisfy the SD collateral requirement. SD delegators call `delegate` and receive cToken shares; `requestWithdraw` and `requestWithdrawWithSDAmount` queue a redemption that anyone can finalize after `minBlockDelayToFinalizeRequest` (50400 blocks ≈ 7 days) via `finalizeDelegatorWithdrawalRequest`. Operators call `utilize` (or PermissionlessNodeRegistry calls `utilizeWhileAddingKeys`) to borrow SD up to `maxETHWorthOfSDPerValidator * nonTerminalKeyCount`; interest accrues at `utilizationRatePerBlock` (capped at MAX_UTILIZATION_RATE_PER_BLOCK ≈ 25% APR) into both the borrower's principal and `accumulatedProtocolFee`. `liquidationCall` is permissionless and triggers when an operator's health factor drops below 1, applying `liquidationBonusPercent` and `liquidationFeePercent`. `withdrawProtocolFee` (sends to `staderTreasury`) and `maxApproveSD` are gated by StaderConfig's MANAGER role; `clearUtilizerInterest` and `updateStaderConfig` are gated by this contract's DEFAULT_ADMIN_ROLE.",
+  "ignoreMethods": ["delegatorWithdrawRequests"]
+}

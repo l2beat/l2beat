@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SDIncentiveController",
+  "category": "core",
+  "description": "Streams SD rewards to SDUtilityPool delegators (cToken holders). `start(rewardAmount, duration)` is gated by StaderConfig's MANAGER role and pulls SD from the caller before setting `emissionPerBlock = rewardAmount / duration` and `rewardEndBlock = block.number + duration`. `claim` and `updateRewardForAccount` are callable only by the SD_UTILITY_POOL contract registered in StaderConfig; they accrue and deliver the per-account share computed against `cTokenTotalSupply`. `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE."
+}

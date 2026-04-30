@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionlessNodeRegistry",
+  "category": "core",
+  "description": "POOL_ID = 1. Registry for the open node-operator set behind PermissionlessPool. `onboardNodeOperator` is callable by anyone (subject to PoolUtils name validation and a uniqueness check across all pools); on first registration the contract deploys the operator's NodeELRewardVault EIP1167 clone via VaultFactory. `addValidatorKeys` is payable and requires the operator to bond `COLLATERAL_ETH` (set in source to 4 ether) per key, plus the configured SD collateral; the public-key set goes through PermissionlessPool's `preDepositOnBeaconChain`. `markValidatorReadyToDeposit` and `withdrawnValidators` are callable only by StaderOracle; `updateNextQueuedValidatorIndex` and `updateDepositStatusAndBlock` only by PermissionlessPool. `FRONT_RUN_PENALTY` is 3 ether (deducted to the StaderInsuranceFund on detected front-runs). The operator set is open, so per-operator data is not enumerated.",
+  "ignoreMethods": [
+    "getOperatorRewardAddress",
+    "getOperatorTotalKeys",
+    "getSocializingPoolStateChangeBlock",
+    "nodeELRewardVaultByOperatorId",
+    "operatorNonTerminalKeysCount",
+    "operatorNonTerminalKeysCountInitialized",
+    "operatorStructById",
+    "proposedRewardAddressByOperatorId",
+    "queuedValidators",
+    "socializingPoolStateChangeBlock",
+    "validatorRegistry"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionedPool",
+  "category": "core",
+  "description": "Pool registered under POOL_ID = 2 (operators are whitelisted in PermissionedNodeRegistry). `stakeUserETHToBeaconChain` is callable only by STAKE_POOL_MANAGER and pre-deposits 1 ETH per validator (operator collateral is 0); `fullDepositOnBeaconChain` is callable only by PERMISSIONED_NODE_REGISTRY and finishes the 31 ETH deposit after the oracle marks the pubkeys valid. On defective keys (front-run or invalid signature) `transferETHOfDefectiveKeysToSSPM` pulls 1 ETH per key from StaderInsuranceFund (`reimburseUserFund`) and forwards 32 ETH per key back to StaderStakePoolsManager. `setCommissionFees` is gated by StaderConfig's MANAGER role and capped at `MAX_COMMISSION_LIMIT_BIPS` = 1500. `updateStaderConfig` is gated by this contract's DEFAULT_ADMIN_ROLE. `protocolFee` and `operatorFee` initialise to 500 bps each. `transferExcessETHToSSPM` is permissionless once `preDepositValidatorCount` is zero. The plain `receive`/`fallback` revert."
+}

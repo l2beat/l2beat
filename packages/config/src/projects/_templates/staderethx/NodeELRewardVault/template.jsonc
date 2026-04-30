@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NodeELRewardVault",
+  "description": "Implementation reachable through the per-operator EIP1167 clones the VaultFactory hands out (the clone delegates through VaultProxy with `isValidatorWithdrawalVault = false`). `receive` accepts plain ETH from operator EL rewards. `withdraw` is permissionless: it reads the clone's pool/operator IDs from VaultProxy storage, calls `PoolUtils.calculateRewardShare(poolId, balance)`, then sends the user share to `StaderStakePoolsManager.receiveExecutionLayerRewards`, the protocol share to `staderConfig.getStaderTreasury()`, and the operator share into `OperatorRewardsCollector.depositFor(operator)`."
+}

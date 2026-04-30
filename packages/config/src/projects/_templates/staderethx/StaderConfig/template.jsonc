@@ -1,0 +1,247 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StaderConfig",
+  "category": "core",
+  "description": "Central registry that every other Stader contract reads to look up sibling contract addresses (PoolUtils, StaderOracle, VaultFactory, NodeRegistries, Pools, ETHx, SD, treasury, ...) and protocol parameters (deposit and withdraw bounds, fee, socializing pool cycle duration, staked ETH per node). Inherits OpenZeppelin AccessControlUpgradeable and exposes four custom roles (MANAGER, OPERATOR, ROLE_SD_REWARD_APPROVER, ROLE_SD_REWARD_ENTRY) plus DEFAULT_ADMIN_ROLE. `getAdmin` returns `accountsMap[ADMIN]`; `updateAdmin` rotates this entry and grants DEFAULT_ADMIN_ROLE to the new address while revoking it from the old one.",
+  "fields": {
+    "getAdmin": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "The latest address registered through `updateAdmin`. `updateAdmin` is itself gated by DEFAULT_ADMIN_ROLE and grants DEFAULT_ADMIN_ROLE to this address while revoking it from the previous one."
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xaf290d8680820aad922855f39b306097b20e28774d6c1ad35a20325630c3a02c": "MANAGER",
+          "0x523a704056dcd17bcf83bed8b68c59416dac1119be77755efe3bde0a64e46e0c": "OPERATOR",
+          "0x809e00a8bf6ea8bf642409acefd6e4645b7257863ada00c0b5b73a79b39ad35c": "ROLE_SD_REWARD_APPROVER",
+          "0x0b773b68acd168e22dbb657b74525f5b987df813882933b2d4273dbf2ed848e1": "ROLE_SD_REWARD_ENTRY"
+        }
+      }
+    },
+    "defaultAdminMembers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke any role on StaderConfig (MANAGER, OPERATOR, ROLE_SD_REWARD_APPROVER, ROLE_SD_REWARD_ENTRY, DEFAULT_ADMIN_ROLE)."
+        },
+        {
+          "type": "interact",
+          "description": "update the contract addresses StaderConfig points at: PoolUtils, PoolSelector, SDCollateral, OperatorRewardsCollector, VaultFactory, Auction, StaderOracle, Penalty, PermissionedPool, StakePoolManager, PermissionlessPool, UserWithdrawManager, StaderInsuranceFund, both NodeRegistries, both NODE_EL_REWARD_VAULT and VALIDATOR_WITHDRAWAL_VAULT implementations, the ETH balance and ETHx supply PoR feed proxies, the Stader and ETHx token addresses, and the SD utility pool plus SD incentive controller."
+        },
+        {
+          "type": "interact",
+          "description": "update MIN_WITHDRAW_AMOUNT, MAX_WITHDRAW_AMOUNT, and MIN_BLOCK_DELAY_TO_FINALIZE_WITHDRAW_REQUEST."
+        }
+      ]
+    },
+    "managerMembers": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xaf290d8680820aad922855f39b306097b20e28774d6c1ad35a20325630c3a02c": "MANAGER"
+        },
+        "pickRoleMembers": "MANAGER"
+      },
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update protocol parameters held by StaderConfig: REWARD_THRESHOLD, MIN_DEPOSIT_AMOUNT, MAX_DEPOSIT_AMOUNT, SOCIALIZING_POOL_CYCLE_DURATION, SOCIALIZING_POOL_OPT_IN_COOLING_PERIOD, and the STADER_TREASURY address."
+        },
+        {
+          "type": "interact",
+          "description": "add and remove trusted oracle nodes on StaderOracle (subject to a cooldown), control the ETHx exchange-rate, SD-price, validator-stats, withdrawn-validators, validator-verification, and missed-attestation-penalty update frequencies, toggle the Chainlink PoR-feed exchange-rate path, change `erChangeLimit` (capped at 10000 bps), enable safe mode, and disable ER inspection mode."
+        },
+        {
+          "type": "interact",
+          "description": "set protocol and operator commission fees on PermissionedPool and PermissionlessPool (capped at MAX_COMMISSION_LIMIT_BIPS = 1500)."
+        },
+        {
+          "type": "interact",
+          "description": "set per-pool SD collateral thresholds on SDCollateral (`updatePoolThreshold`) and call `maxApproveSD` to grant unlimited SD allowances from SDCollateral, SDUtilityPool, and SocializingPool to peer Stader contracts."
+        },
+        {
+          "type": "interact",
+          "description": "update pool target weights on PoolSelector (`updatePoolWeights`, basis points must sum to 10000)."
+        },
+        {
+          "type": "interact",
+          "description": "whitelist permissioned node operators on PermissionedNodeRegistry (one-way, no on-chain blacklisting) and update permissioned- and permissionless-pool validator key limits, max keys per operator, and cached non-terminal key counts."
+        },
+        {
+          "type": "interact",
+          "description": "update Penalty parameters: MEV-theft and missed-attestation per-strike penalties, `validatorExitPenaltyThreshold`, additional per-pubkey penalties, and the RatedOracle address."
+        },
+        {
+          "type": "interact",
+          "description": "start SD reward emissions on SDIncentiveController (transfers SD into the contract and sets `emissionPerBlock` and `rewardEndBlock`)."
+        },
+        {
+          "type": "interact",
+          "description": "update SDUtilityPool risk parameters: `protocolFee` (capped at MAX_PROTOCOL_FEE = 10%), `utilizationRatePerBlock` (capped at MAX_UTILIZATION_RATE_PER_BLOCK ≈ 25% APR), `maxETHWorthOfSDPerValidator`, and `finalizationBatchLimit`; withdraw accumulated SDUtilityPool protocol fee SD to the staderTreasury (`withdrawProtocolFee`)."
+        },
+        {
+          "type": "interact",
+          "description": "withdraw ETH from StaderInsuranceFund."
+        },
+        {
+          "type": "interact",
+          "description": "update Auction parameters: `duration` (subject to MIN_AUCTION_DURATION) and `bidIncrement`."
+        },
+        {
+          "type": "interact",
+          "description": "update operational parameters on StaderStakePoolsManager (`excessETHDepositCoolDown`) and UserWithdrawalManager (`finalizationBatchLimit`)."
+        },
+        {
+          "type": "interact",
+          "description": "trigger `distributeRewards` on a per-validator ValidatorWithdrawalVault when its accumulated balance exceeds StaderConfig's `getRewardsThreshold`."
+        },
+        {
+          "type": "interact",
+          "description": "pause every pausable Stader contract (ETHx, StaderStakePoolsManager, both SocializingPools, UserWithdrawalManager, SDUtilityPool, PermissionlessNodeRegistry); on PermissionlessNodeRegistry, also unpause."
+        }
+      ]
+    },
+    "operatorMembers": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x523a704056dcd17bcf83bed8b68c59416dac1119be77755efe3bde0a64e46e0c": "OPERATOR"
+        },
+        "pickRoleMembers": "OPERATOR"
+      },
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "update WITHDRAWN_KEYS_BATCH_SIZE on StaderConfig."
+        },
+        {
+          "type": "interact",
+          "description": "update PermissionedNodeRegistry operational parameters (input key count limit, verified keys batch size, and max non-terminal keys per operator)."
+        },
+        {
+          "type": "interact",
+          "description": "update PermissionlessNodeRegistry operational parameters (input key count limit and verified keys batch size)."
+        },
+        {
+          "type": "interact",
+          "description": "update PoolSelector `poolAllocationMaxSize`."
+        },
+        {
+          "type": "interact",
+          "description": "trigger `processValidatorExitList` on PoolUtils (emits `ExitValidator` events for offchain operators to act on)."
+        }
+      ]
+    },
+    "getStaderOracle": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Pointer to StaderOracle, the source of truth for the ETHx exchange rate, SD/ETH price, validator stats, and SocializingPool reward Merkle roots. Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getStaderTreasury": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Recipient of protocol-fee ETH from per-validator and per-operator vaults, of failed-auction SD, and of SDUtilityPool `withdrawProtocolFee` payouts. Swappable by MANAGER on StaderConfig."
+    },
+    "getNodeELRewardVaultImplementation": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Implementation that every per-operator NodeELRewardVault EIP1167 clone delegates through (via VaultProxy). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getValidatorWithdrawalVaultImplementation": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Implementation that every per-validator ValidatorWithdrawalVault EIP1167 clone delegates through (via VaultProxy). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getETHxToken": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to the ETHx receipt token (mint and burn flow through this address). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getStaderToken": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to the SD governance token used for collateral and lending. Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getStakePoolManager": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to StaderStakePoolsManager (deposit entry point and ETH router). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getUserWithdrawManager": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to UserWithdrawalManager (the queue that burns ETHx and finalizes withdrawals). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getPermissionedNodeRegistry": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to PermissionedNodeRegistry. Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getPermissionlessNodeRegistry": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to PermissionlessNodeRegistry. Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getPermissionedPool": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to PermissionedPool (pool ID 2). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getPermissionlessPool": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to PermissionlessPool (pool ID 1). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getVaultFactory": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to VaultFactory (deploys per-validator and per-operator vault clones). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getPenaltyContract": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to Penalty (computes per-validator penalties from RatedOracle and StaderOracle inputs). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getSDUtilityPool": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Pointer to SDUtilityPool (lending pool for SD borrows used as operator collateral). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getETHBalancePORFeedProxy": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Alternative source of `totalETHBalance` when `isPORFeedBasedERData` is enabled on StaderOracle (Chainlink Proof-of-Reserve feed). Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getETHXSupplyPORFeedProxy": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Alternative source of `totalETHXSupply` when `isPORFeedBasedERData` is enabled on StaderOracle. Swappable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    },
+    "getRewardsThreshold": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-validator vault balance above which `distributeRewards` requires the MANAGER role on StaderConfig (otherwise anyone may trigger). Updatable by MANAGER."
+    },
+    "getTotalFee": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Denominator (basis points) used by PoolUtils.calculateRewardShare to scale the per-pool protocol and operator commission fees against the user share."
+    },
+    "getMinBlockDelayToFinalizeWithdrawRequest": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Minimum block delay between a user `requestWithdraw` on UserWithdrawalManager and that request becoming finalizable. Updatable by DEFAULT_ADMIN_ROLE on StaderConfig."
+    }
+  }
+}
