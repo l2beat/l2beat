@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VKeySetter",
+  "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, once Railgun governance switches the contract into COMMITTING state, can forward those keys to the Railgun smart wallet verifier through the Delegator. If you trust this contract, you trust its owner to stage and commit verifier-key changes and Railgun governance to authorize the commit phase.",
+  "category": "gov",
+  "canActIndependently": false,
+  "fields": {
+    "owner": {
+      "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        { "type": "act" },
+        {
+          "type": "interact",
+          "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states."
+        }
+      ]
+    },
+    "delegator": {
+      "description": "Railgun Delegator contract that can switch this helper into COMMITTING and is the contract used to forward verifier-key updates onward.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier."
+        }
+      ]
+    },
+    "verifier": {
+      "description": "Railgun smart wallet verifier contract whose verification keys this helper can update through the Delegator.",
+      "severity": "HIGH"
+    },
+    "state": {
+      "description": "Current workflow phase: SETTING, WAITING, or COMMITTING. Only COMMITTING allows the owner to forward staged verification keys to the verifier.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

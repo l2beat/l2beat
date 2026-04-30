@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoProxyV1",
+  "description": "Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
+  "category": "core",
+  "fields": {
+    "governance": {
+      "description": "Governance address controlling the legacy proxy.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable or disable supported pool instances."
+        },
+        {
+          "type": "interact",
+          "description": "rescue tokens sent to the proxy."
+        }
+      ]
+    },
+    "tornadoTrees": {
+      "description": "Legacy tree manager that records deposits and withdrawals from this proxy.",
+      "severity": "HIGH"
+    }
+  }
+}

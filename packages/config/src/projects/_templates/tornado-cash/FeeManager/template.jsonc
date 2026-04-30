@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeManager",
+  "description": "Upgradeable fee manager that derives relayer burn fees for each Tornado instance from registry settings and Uniswap TWAP data.",
+  "category": "core",
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the fee manager implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the fee manager implementation, changing how relayer burn fees are computed."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current fee manager implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "governance": {
+      "description": "Governance address controlling fee parameters.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the Uniswap fee tier used for the TORN price source."
+        },
+        {
+          "type": "interact",
+          "description": "change the TWAP lookback period used to price Tornado instances."
+        },
+        {
+          "type": "interact",
+          "description": "change how long cached per-instance fees remain valid before they must be recomputed."
+        }
+      ]
+    },
+    "registry": {
+      "description": "Instance registry whose per-pool settings are used to derive relayer burn fees.",
+      "severity": "HIGH"
+    },
+    "feeDeviations": {
+      "description": "Per-instance deviation between currently cached fees and freshly computed market fees.",
+      "severity": "LOW"
+    },
+    "PROTOCOL_FEE_DIVIDER": {
+      "description": "Divider used when converting per-instance protocol fee percentages into relayer burn fees.",
+      "severity": "LOW"
+    },
+    "uniswapTimePeriod": {
+      "description": "TWAP lookback period used when pricing TORN against pool assets.",
+      "severity": "LOW"
+    },
+    "uniswapTornPoolSwappingFee": {
+      "description": "Uniswap V3 fee tier used for the TORN price oracle path.",
+      "severity": "LOW"
+    },
+    "updateFeeTimeLimit": {
+      "description": "Maximum age of cached instance fees before they are recomputed on use.",
+      "severity": "LOW"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Staking",
+  "description": "Immutable RAIL staking contract that tracks delegated voting power, enforces a 30-day unstake delay, and snapshots balances for governance. It has no admin, but its parameters define the governance system's voting power.",
+  "category": "gov",
+  "ignoreMethods": [
+    "currentInterval",
+    "globalsSnapshot",
+    "globalsSnapshotLength",
+    "latestGlobalsSnapshotInterval",
+    "totalStaked",
+    "totalVotingPower"
+  ],
+  "fields": {
+    "stakingToken": {
+      "description": "RAIL token contract that users lock here to obtain voting power.",
+      "severity": "HIGH"
+    },
+    "STAKE_LOCKTIME": {
+      "description": "Delay between unlocking a stake and being able to claim the underlying RAIL.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "SNAPSHOT_INTERVAL": {
+      "description": "Length of the interval used when taking governance voting-power snapshots.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
