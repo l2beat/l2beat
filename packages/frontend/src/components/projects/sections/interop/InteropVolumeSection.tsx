@@ -88,7 +88,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center gap-4">
       <FlowsChainsSelector allChains={interopChains} />
       <FlowsGraphPanel
         activeChains={activeChains}
