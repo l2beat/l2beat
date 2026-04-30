@@ -3,7 +3,12 @@
   "displayName": "TornadoTreesV1",
   "description": "Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.",
   "category": "core",
-  "ignoreMethods": ["deposits", "withdrawals"],
+  "ignoreMethods": [
+    "deposits",
+    "withdrawals",
+    "getRegisteredDeposits",
+    "getRegisteredWithdrawals"
+  ],
   "fields": {
     "depositTree": {
       "description": "Legacy merkle tree instance storing deposit leaves."
