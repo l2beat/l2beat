@@ -290,11 +290,9 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockGetBlockNumber = mockFn().resolvesTo(100)
       const mockGetCode = mockFn().resolvesTo('0x')
       const mockCreateChain = mockFn().returns({
         rpc: {
-          getBlockNumber: mockGetBlockNumber,
           getCode: mockGetCode,
         },
       })
@@ -329,10 +327,9 @@ describe('deployedTokensRouter', () => {
         data: undefined,
         warnings: [],
       })
-      expect(mockGetBlockNumber).toHaveBeenCalledTimes(1)
       expect(mockGetCode).toHaveBeenCalledWith(
         '0x6fe981dbd557f81ff66836af0932cba535cbc343',
-        100,
+        'latest',
       )
       expect(mockGetCoinList).toHaveBeenCalledTimes(0)
     })
@@ -486,8 +483,9 @@ describe('deployedTokensRouter', () => {
           getDecimals: mockFn().resolvesTo(18),
           getSymbol: mockFn().resolvesTo('TKN'),
           getBlockNumber: mockFn().resolvesTo(100),
-          getCode: mockFn().executes(async (_: string, block: number) =>
-            block >= 50 ? '0xdead' : '0x',
+          getCode: mockFn().executes(
+            async (_: string, block: 'latest' | number) =>
+              block === 'latest' || block >= 50 ? '0xdead' : '0x',
           ),
           getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
         },
@@ -542,8 +540,9 @@ describe('deployedTokensRouter', () => {
           getDecimals: mockFn().resolvesTo(18),
           getSymbol: mockFn().resolvesTo('TKN'),
           getBlockNumber: mockFn().resolvesTo(100),
-          getCode: mockFn().executes(async (_: string, block: number) =>
-            block >= 50 ? '0xdead' : '0x',
+          getCode: mockFn().executes(
+            async (_: string, block: 'latest' | number) =>
+              block === 'latest' || block >= 50 ? '0xdead' : '0x',
           ),
           getBlockTimestamp: mockFn().resolvesTo(deploymentTimestamp),
         },
@@ -1127,6 +1126,16 @@ describe('deployedTokensRouter', () => {
       expect(result.error).toEqual(undefined)
       expect(result.data?.symbol).toEqual('USDC')
       expect(result.warnings).toEqual([
+        {
+          field: 'decimals',
+          message:
+            'No RPC configured for ethereum, so decimals were not autofilled.',
+        },
+        {
+          field: 'deploymentTimestamp',
+          message:
+            'No Etherscan, Blockscout, or RPC configured for ethereum. Deployment timestamp was not autofilled.',
+        },
         {
           field: 'abstractTokenId',
           message: 'No abstract token found with CoinGecko id usd-coin.',

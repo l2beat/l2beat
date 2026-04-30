@@ -185,7 +185,16 @@ async function fetchTokenMetadata(
       decimals: undefined,
       symbol: undefined,
       symbolSource: undefined,
-      warnings: [],
+      warnings: [
+        {
+          field: 'decimals',
+          message: `No RPC configured for ${chain.name}, so decimals were not autofilled.`,
+        },
+        {
+          field: 'symbol',
+          message: `No RPC configured for ${chain.name}, so symbol was not autofilled.`,
+        },
+      ],
     }
   }
 
@@ -393,8 +402,7 @@ async function fetchContractCodeStatus(
   }
 
   try {
-    const blockNumber = await chain.rpc.getBlockNumber()
-    const code = await chain.rpc.getCode(address, blockNumber)
+    const code = await chain.rpc.getCode(address, 'latest')
     return { isContract: code !== '0x', warnings: [] }
   } catch (error) {
     return {
