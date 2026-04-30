@@ -1720,6 +1720,11 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
+  '3442855748187296636739564186904728563385971901122957091055928358173521721079':
+    {
+      ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),
+      verificationStatus: 'notVerified',
+    },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
       ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_12'),
@@ -1786,6 +1791,11 @@ git checkout v0.13.5
 5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
+    },
+  '2358844945297786488640123814540854423585455959362109345448922524567546993330':
+    {
+      ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),
+      verificationStatus: 'notVerified',
     },
   '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {

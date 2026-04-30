@@ -1,6 +1,6 @@
 {
   "name": "edgex",
-  "timestamp": 1769695138,
+  "timestamp": 1777545991,
   "configHash": "0x5cb999bde5dc790f9b1a3de7f6f00d91d9175043b78486af8c31f49184bc94c4",
   "entries": [
     {
@@ -32,18 +32,6 @@
       "address": "eth:0x12ba3BE5ad1DAaF1FDDb854adC2871dcCB2A4229",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "role": ".operators"
-        }
-      ]
     },
     {
       "address": "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
@@ -137,7 +125,7 @@
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": true,
+        "hasRegisteredFact": false,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
@@ -224,7 +212,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -285,7 +273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 515,
+        "nonce": 523,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -476,7 +464,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 43112,
+        "getLastBatchId": 59632,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -487,7 +475,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 43077,
+        "getSequenceNumber": 59554,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -501,10 +489,7 @@
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_UPGRADE_DELAY": 15552000,
         "MAX_VERIFIER_COUNT": 64,
-        "operators": [
-          "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
-          "eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE"
-        ],
+        "operators": ["eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE"],
         "PROXY_VERSION": "5.0.2",
         "StarkWareDiamond_upgradeDelay": 0,
         "tokenAdmins": ["eth:0x8847c33C6AEB53bf9a43D6b5579e9146478e6D3a"],
@@ -1052,6 +1037,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 24340960 },
-  "permissionsConfigHash": "0x275efa89109b0ea5d1a68861b9491acec9786a33c905c2be9daf86ec7ce49285"
+  "usedBlockNumbers": { "ethereum": 24992417 },
+  "permissionsConfigHash": "0x5aff13ce66c991dfd2a87926b939789e25cc0e298e7a045667283f9e5ece1089"
 }
