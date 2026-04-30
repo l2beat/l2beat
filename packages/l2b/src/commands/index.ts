@@ -36,6 +36,7 @@ import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
 import { ScanKintoAm } from './ScanKintoAm'
+import { ShowPermissions } from './ShowPermissions'
 import { SolFmt } from './SolFmt'
 import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
@@ -85,6 +86,7 @@ export function getSubcommands() {
     RefreshDiscovery,
     RegenerateShapeHashes,
     ScanKintoAm,
+    ShowPermissions,
     SolFmt,
     StarknetAccessControl,
     StarknetProgramHashes,
