@@ -176,6 +176,8 @@ Use templates for facts that are true wherever the shape matches (this field is 
 
 When the noise is gone you'll see an `Errors during discovery: N` block with `Too many values. Update configuration to explore fully` on a bunch of fields. These come from the engine's default 5-item probe for any `function getX(uint256) view returns (...)`: if all 5 calls succeed it gives up. Two fixes per field:
 
+**Only act on fields that errored.** `ignoreMethods` and the `array` handler exist to fix engine errors, not to tidy up `discovered.json`. A field that returns successfully stays as-is even if it looks like noise — leaving it is free. Reach for `ignoreMethods` only when the engine actually trips over the call.
+
 ### Field is runtime state → `ignoreMethods`
 
 If the field is a current balance, an accumulated counter, an accrued fee, an interest index — anything that changes every block — don't call it at all:
@@ -281,13 +283,13 @@ For each template, edit `template.jsonc` and add:
 
 1. **`category`**: `"core"` (protocol-critical), `"gov"` (admin/access-control), or `"shared"` (libraries, helpers).
 2. **`description`** capturing what the contract does AND the trust assumption: *"if you trust this contract, you trust X to do Y"*. Mention the upgrade path explicitly for proxies.
-3. **`fields.<name>.description`** for every important value or relative.
+3. **`fields.<name>.description`** for every critical field (anything you'd flag with HIGH severity per bullet 4), and for any non-critical field whose meaning isn't obvious from its name and type — if a reader would have to open the source to understand it, write the description. Skip self-explanatory fields (`name`, `symbol`, `decimals`, `paused`).
 4. **`fields.<name>.severity: "HIGH"`** on any field whose change is a meaningful risk event (oracle source, role admin, fee receiver, liquidation parameters, anything controlling upgrades or pauses). Use `"LOW"` for cosmetic / metadata fields.
 5. **`fields.<name>.type`** to classify it: `"PERMISSION"` (grants rights), `"RISK_PARAMETER"` (tunable risk knob), `"CODE_CHANGE"` (upgrade pointer), `"L2"` / `"EXTERNAL"`.
 
 These show up in the L2BEAT UI and feed the watcher's diff filtering.
 
-**Description discipline.** Every annotation in this section must come from the `.flat` source, not from the contract's name or its field names. If you can't point at the line of source that justifies a description, severity, or permission entry, delete it. And keep the prose itself contract-facing, not tool-facing: write "All admin functions carry the restricted modifier", not "Static analysis confirmed 9 admin functions carry the restricted modifier" — the reader doesn't need to know what tools you used to verify the facts.
+**Description discipline.** Every description must come from the `.flat` source — never from the contract's name, the field's name, or what the contract probably does by analogy to similar protocols. If you can't point at a line of source that justifies the claim, omit the claim or omit the description entirely. A missing description is fine; a confidently wrong one misleads the reader. Keep the prose contract-facing, not tool-facing: write "All admin functions carry the restricted modifier", not "Static analysis confirmed 9 admin functions carry the restricted modifier" — the reader doesn't need to know what tools you used to verify the facts.
 
 ### Defining permissions on address-typed fields
 
