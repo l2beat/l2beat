@@ -2,6 +2,7 @@ import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
 import { HideUnknownsButton } from './HideUnknowns'
+import { LayoutFileButtons } from './LayoutFileButtons'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
@@ -32,6 +33,10 @@ export function Controls() {
         <div className="flex gap-1">
           <ValuesButton />
         </div>
+      </div>
+      <span className="text-coffee-600">|</span>
+      <div className="flex flex-col gap-2">
+        <LayoutFileButtons />
       </div>
     </div>
   )

@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware'
 import { SHOW_PERFORMANCE } from '../../../../config/perf'
 import { perfStats } from '../perf/perfStats'
 import type { Actions } from './actions/Actions'
+import { applyStoredLayout } from './actions/applyStoredLayout'
 import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
@@ -67,6 +68,7 @@ export const useStore = create<State & Actions>()(
       showHidden: wrapAction(set, showHidden),
       clear: wrapAction(set, clear),
       layout: wrapAction(set, layout),
+      applyStoredLayout: wrapAction(set, applyStoredLayout),
       selectAndFocus: wrapAction(set, selectAndFocus),
       registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
