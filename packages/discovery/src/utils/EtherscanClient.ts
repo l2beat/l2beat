@@ -24,6 +24,12 @@ import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class EtherscanError extends Error {}
 
+function isRateLimitError(error: unknown): boolean {
+  if (typeof error !== 'object' || error === null) return false
+  const message = (error as { message?: unknown }).message
+  return typeof message === 'string' && message.includes('rate limit reached')
+}
+
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
   maxAttempts: 10,
@@ -250,7 +256,9 @@ export class EtherscanClient implements IEtherscanClient {
         if (result.shouldStop) {
           throw error
         }
-        this.logger.warn('Retrying', { attempts, error })
+        if (!isRateLimitError(error)) {
+          this.logger.warn('Retrying', { attempts, error })
+        }
         await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
       }
     }
