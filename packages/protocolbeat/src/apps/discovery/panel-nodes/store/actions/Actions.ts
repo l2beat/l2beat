@@ -21,6 +21,8 @@ export interface Actions {
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
+  undo: () => void
+  redo: () => void
   hideSelected: () => void
   hideUnknowns: () => void
   showHidden: () => void
