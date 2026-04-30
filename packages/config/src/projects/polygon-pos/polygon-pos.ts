@@ -81,6 +81,8 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
+    description:
+      'The canonical bridge. Validated by the Polygon PoS validator set.',
     durationSplit: {
       lockAndMint: [
         {

@@ -1,7 +1,7 @@
 {
   "name": "wormhole",
-  "timestamp": 1777294117,
-  "configHash": "0x85c462a2966d1799d11a22061863cf3eb38d6b10eb3bb12d15a6de1aed4ddec1",
+  "timestamp": 1777463355,
+  "configHash": "0x50b45a5283822994d13cf82376e24d515a64c38343dee356136063d83ad15811",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -11,13 +11,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -43,7 +43,7 @@
         "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 implementation used by Wormhole wrapped tokens on Ethereum.",
+      "description": "Wormhole wrapped ERC20 token implementation. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.",
       "sinceTimestamp": 1663610147,
       "sinceBlock": 15569178,
       "values": {
@@ -68,8 +68,7 @@
       },
       "implementationNames": {
         "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": "TokenImplementation"
-      },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      }
     },
     {
       "address": "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB",
@@ -79,13 +78,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -110,13 +109,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -141,13 +140,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -172,13 +171,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -203,13 +202,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -325,6 +324,36 @@
         "wsolWrappedAsset": "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c"
       },
       "fieldMeta": {
+        "finality": {
+          "severity": "HIGH",
+          "description": "Consistency level used when this Token Bridge publishes Wormhole messages from the local chain.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceChainId": {
+          "severity": "HIGH",
+          "description": "Wormhole chain id from which Token Bridge governance messages are accepted.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceContract": {
+          "severity": "HIGH",
+          "description": "Emitter address authorized to send Token Bridge governance messages.",
+          "type": "PERMISSION"
+        },
+        "implementation": {
+          "severity": "HIGH",
+          "description": "Beacon implementation returned by the Token Bridge for wrapped token proxies. Changing it changes the code used by wrapped assets minted by this bridge.",
+          "type": "CODE_CHANGE"
+        },
+        "tokenImplementation": {
+          "severity": "HIGH",
+          "description": "Implementation used by wrapped ERC20 assets created by this Token Bridge.",
+          "type": "CODE_CHANGE"
+        },
+        "wormhole": {
+          "severity": "HIGH",
+          "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by this Token Bridge.",
+          "type": "PERMISSION"
+        },
         "solanaTokenBridge": {
           "severity": "HIGH",
           "description": "The Solana Token Bridge emitter address trusted for Token Bridge VAAs from Solana.",
@@ -342,48 +371,12 @@
         },
         "wsolEscrowedOnEthereum": {
           "description": "Amount accounted by the Token Bridge as WSOL escrowed on Ethereum. It is zero for this route because WSOL is a wrapped asset on Ethereum; outbound transfers burn WSOL instead of locking it in the Ethereum escrow."
-        },
-        "finality": {
-          "severity": "HIGH",
-          "description": "Consistency level used when this Token Bridge publishes Wormhole messages from Ethereum.",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceChainId": {
-          "severity": "HIGH",
-          "description": "Wormhole chain id from which Token Bridge governance messages are accepted.",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceContract": {
-          "severity": "HIGH",
-          "description": "Emitter address authorized to send Token Bridge governance messages.",
-          "type": "PERMISSION"
-        },
-        "implementation": {
-          "severity": "HIGH",
-          "description": "Beacon implementation returned by the Token Bridge for wrapped token proxies. Changing it changes the code used by wrapped assets such as WSOL.",
-          "type": "CODE_CHANGE"
-        },
-        "tokenImplementation": {
-          "severity": "HIGH",
-          "description": "Implementation used by wrapped ERC20 assets created by this Token Bridge.",
-          "type": "CODE_CHANGE"
-        },
-        "wormhole": {
-          "severity": "HIGH",
-          "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by the Token Bridge.",
-          "type": "PERMISSION"
         }
       },
       "implementationNames": {
         "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": "TokenBridge",
         "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": "BridgeImplementation"
       },
-      "references": [
-        {
-          "text": "Wormhole Token Bridge address",
-          "href": "https://wormhole.com/docs/products/reference/contract-addresses/#wrapped-token-transfers-wtt"
-        }
-      ],
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -394,13 +387,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -425,13 +418,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -456,13 +449,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -487,13 +480,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -518,13 +511,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -549,13 +542,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -580,13 +573,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -638,6 +631,7 @@
         ],
         "$upgradeCount": 3,
         "chainId": 2,
+        "currentQuorumHardcoded": 13,
         "evmChainId": 1,
         "getCurrentGuardianSetIndex": 5,
         "getGuardianSetExpiry": 0,
@@ -677,7 +671,7 @@
       "fieldMeta": {
         "guardianSet": {
           "severity": "HIGH",
-          "description": "The active Wormhole Guardian set. A quorum of these addresses signs VAAs accepted by this Core Bridge.",
+          "description": "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed.",
           "type": "PERMISSION"
         },
         "quorum": {
@@ -707,7 +701,7 @@
         },
         "messageFee": {
           "severity": "HIGH",
-          "description": "Fee required to publish a Wormhole message on Ethereum.",
+          "description": "Fee required to publish a Wormhole message on the local chain.",
           "type": "RISK_PARAMETER"
         }
       },
@@ -731,13 +725,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -762,13 +756,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -793,13 +787,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -903,7 +897,7 @@
         "nativeContract": "0x069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f00000000001",
         "owner": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
         "symbol": "SOL",
-        "totalSupply": 318356499505750
+        "totalSupply": 318241960039580
       },
       "fieldMeta": {
         "chainId": {
@@ -941,13 +935,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -965,6 +959,11 @@
       ]
     },
     {
+      "address": "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
       "type": "EOA",
       "proxyType": "EOA",
@@ -972,13 +971,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -1003,13 +1002,13 @@
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters.",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
           "role": ".guardianSet"
         },
         {
           "permission": "interact",
           "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum.",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
           "role": ".guardianSet"
         },
         {
@@ -1161,10 +1160,10 @@
     ]
   },
   "usedTemplates": {
-    "wormhole/BridgeToken": "0x7592d389e3f9abed7e9ab3a76f0afc91bfcda0372495c36c98295e11094cf354",
-    "wormhole/TokenBridge": "0x8163f10ff3a50f8996fcae18f7160579779678b5c7b65bbb1f20240a323df847",
-    "wormhole/WormholeCore": "0x583f840b9a2770e82da0e0b2196e675ab668adab613d0e0960654fd6af99be37"
+    "wormhole/BridgeToken": "0x094b8dc4d31b4ce31c889bef6d8375fa850c90ba52a4196ef22761d3acc48ef8",
+    "wormhole/TokenBridge": "0xd15c6606803bc4afae7e428a38a2b40690d1fb4e5fd3d29b47d3e66116582d15",
+    "wormhole/WormholeCore": "0x8d2d7315081026feab60e1c1d0c65c94288e55e984bad7f3d0e495d8ebb026e1"
   },
-  "usedBlockNumbers": { "ethereum": 24971481 },
-  "permissionsConfigHash": "0x1a50dacca381b654ce9f59337c8f9fa42e095f8b677250f121a4dd9d5a1351b9"
+  "usedBlockNumbers": { "ethereum": 24985547 },
+  "permissionsConfigHash": "0x6ac5bf7b67ce768230b21b5a4e51720b111417fcc7d271e31e3413103e4fdf28"
 }

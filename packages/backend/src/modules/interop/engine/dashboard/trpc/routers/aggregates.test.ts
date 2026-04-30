@@ -1,7 +1,7 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAggregatesRouter } from './aggregates'
 
 describe(createAggregatesRouter.name, () => {

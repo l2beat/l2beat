@@ -89,9 +89,8 @@ export const pageLoaders = {
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,
-  GovernancePublicationPage: async () =>
-    (await import('./publications/governance/GovernancePublicationPage'))
-      .GovernancePublicationPage,
+  PublicationPage: async () =>
+    (await import('./publications/PublicationPage')).PublicationPage,
   FaqPage: async () => (await import('./faq/FaqPage')).FaqPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,

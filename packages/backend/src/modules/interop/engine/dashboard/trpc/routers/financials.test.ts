@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createFinancialsRouter } from './financials'
 
 describe(createFinancialsRouter.name, () => {

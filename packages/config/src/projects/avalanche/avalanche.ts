@@ -21,6 +21,8 @@ export const avalanche: BaseProject = {
     badges: [],
   },
   interopConfig: {
+    description:
+      'Canonical EOA-bridge between Ethereum and Avalanche without any onchain validation logic.',
     durationSplit: {
       lockAndMint: [
         {

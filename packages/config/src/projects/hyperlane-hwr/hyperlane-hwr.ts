@@ -8,6 +8,8 @@ export const hyperlaneHwr: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768926236),
   interopConfig: {
+    description:
+      'Multichain token framework using the highly modular and open Hyperlane message bridge. Validation is custom for each token.',
     plugins: [
       {
         plugin: 'hyperlane-hwr',

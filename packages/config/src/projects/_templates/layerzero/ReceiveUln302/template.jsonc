@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Receive Library used by LayerZero, defining the validation of received messages.",
+  "description": "LayerZero-deployed receive library, defining the validation of received messages.",
   "fields": {
     "owner": {
       "permissions": [

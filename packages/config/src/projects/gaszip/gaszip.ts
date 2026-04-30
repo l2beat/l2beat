@@ -8,6 +8,8 @@ export const gaszip: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769070497),
   interopConfig: {
+    description:
+      'Intent-based centralised EOA bridge used for gas token transfers, optimised for speed and diverse chain support.',
     plugins: [
       {
         plugin: 'gaszip',

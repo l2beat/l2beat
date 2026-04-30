@@ -569,7 +569,13 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: Each OP stack chain uses the state validation mechanism of the underlying chain for its canonical bridge.',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

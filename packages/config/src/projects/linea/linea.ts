@@ -152,6 +152,8 @@ export const linea: ScalingProject = {
     },
   },
   interopConfig: {
+    description:
+      "The canonical or trust-minimized bridge: Validated with Linea's validity proof system but supporting external L1 yield sources.",
     name: 'Linea Canonical',
     durationSplit: {
       lockAndMint: [

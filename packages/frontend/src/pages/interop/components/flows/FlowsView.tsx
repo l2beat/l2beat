@@ -23,17 +23,29 @@ interface FlowsViewProps {
   protocols: (ProtocolDisplayable & {
     id: string
   })[]
+  defaultSelectedChains: string[]
 }
 
-export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
+export function FlowsView({
+  interopChains,
+  protocols,
+  defaultSelectedChains,
+}: FlowsViewProps) {
   return (
-    <InteropFlowsProvider chains={interopChains} protocols={protocols}>
+    <InteropFlowsProvider
+      chains={interopChains}
+      protocols={protocols}
+      defaultSelectedChains={defaultSelectedChains}
+    >
       <FlowsViewContent interopChains={interopChains} protocols={protocols} />
     </InteropFlowsProvider>
   )
 }
 
-function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
+function FlowsViewContent({
+  interopChains,
+  protocols,
+}: Omit<FlowsViewProps, 'defaultSelectedChains'>) {
   const { highlightedChains, selectedChains, selectedProtocols } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
@@ -75,7 +87,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       <div className="h-full max-lg:order-3">
         <FlowsGeneralStats />
       </div>
-      <div className="flex h-full flex-col">
+      <div className="flex h-full min-w-0 flex-col">
         <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4 xl:h-[calc(100svh-12rem)]">
           <div className="flex flex-col items-center gap-3 max-lg:order-1">
             <div className="flex gap-2">

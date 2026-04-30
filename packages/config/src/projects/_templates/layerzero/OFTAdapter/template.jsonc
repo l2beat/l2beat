@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OFTAdapter",
   "description": "An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.",
-  "ignoreRelatives": ["endpoint", "token"],
+  "ignoreRelatives": ["endpoint", "token", "peerUnichain"],
   "fields": {
     "owner": {
       "permissions": [

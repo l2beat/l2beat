@@ -1,13 +1,13 @@
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
   dedupeMissingTokens,
   getMissingTokenKey,
   getMissingTokenStatuses,
   getMissingTokens,
 } from '../../impls/missingTokens'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 type Dependencies = {
   chains: readonly { id: string; type: 'evm' }[]

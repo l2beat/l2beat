@@ -74,6 +74,7 @@ export function FlowsChainsSelector({
           isSelected={chain.isSelected}
           toggleSelected={toggleChainSelection}
           disabled={isAtMax && !chain.isSelected}
+          disabledTooltip="Deselect a chain to select another"
         />
       ))}
     </div>

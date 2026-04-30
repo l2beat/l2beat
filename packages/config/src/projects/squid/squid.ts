@@ -8,6 +8,7 @@ export const squid: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
+    description: 'Intent framework using the Axelar message bridge.',
     plugins: [
       {
         plugin: 'axelar',

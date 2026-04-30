@@ -38,6 +38,7 @@ interface Props extends AppLayoutProps {
     id: string
   })[]
   initialSelection: InteropSelection
+  defaultSelectedFlowChains: string[]
 }
 
 export function InteropSummaryPage({
@@ -46,6 +47,7 @@ export function InteropSummaryPage({
   queryState,
   initialSelection,
   protocols,
+  defaultSelectedFlowChains,
   ...props
 }: Props) {
   return (
@@ -62,6 +64,7 @@ export function InteropSummaryPage({
               mode={mode}
               interopChains={interopChains}
               protocols={protocols}
+              defaultSelectedFlowChains={defaultSelectedFlowChains}
             />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
@@ -74,12 +77,14 @@ function Content({
   mode,
   interopChains,
   protocols,
+  defaultSelectedFlowChains,
 }: {
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
   protocols: (ProtocolDisplayable & {
     id: string
   })[]
+  defaultSelectedFlowChains: string[]
 }) {
   const { selectedChains } = useInteropSelectedChains()
 
@@ -87,7 +92,13 @@ function Content({
     mode === 'public' &&
     (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
   ) {
-    return <FlowsView interopChains={interopChains} protocols={protocols} />
+    return (
+      <FlowsView
+        interopChains={interopChains}
+        protocols={protocols}
+        defaultSelectedChains={defaultSelectedFlowChains}
+      />
+    )
   }
 
   return (

@@ -5,6 +5,7 @@ import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
+import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
@@ -157,8 +158,8 @@ export async function makeConfig(
       flags,
       chains,
       activeChains,
-      isLocal,
     ),
+    backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),

@@ -106,15 +106,6 @@
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
     "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
-      // L1Timelock: scheduledTransactions handler hits a parsing bug at newer blocks
-      "fields": {
-        "scheduledTransactions": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "DISABLED - handler parsing bug"
-          }
-        }
-      },
       "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
     },
     "eth:0x97f63339374fCe157Aa8Ee27830172d2AF76A786": {

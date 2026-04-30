@@ -1,6 +1,6 @@
 {
   "name": "sorare",
-  "timestamp": 1756816898,
+  "timestamp": 1777458958,
   "configHash": "0xfb223c6d9bc36bcdfe85579a62a121681da9092670e0deee8ed7e5aac5170da6",
   "entries": [
     {
@@ -69,7 +69,6 @@
         {
           "permission": "upgrade",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600,
           "role": ".$admin"
         }
       ]
@@ -255,7 +254,6 @@
         {
           "permission": "upgrade",
           "from": "eth:0xF5C9F957705bea56a7e806943f98F7777B995826",
-          "delay": 1209600,
           "role": ".$admin"
         }
       ],
@@ -275,7 +273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -467,15 +465,28 @@
               "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
               "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
+          ],
+          [
+            "2026-04-28T11:42:11.000Z",
+            "0x8133c660c29139f3afcfa0d694829a8e16d5473e74704be6b0aa06869cf329d8",
+            [
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+            ]
           ]
         ],
-        "$upgradeCount": 11,
+        "$upgradeCount": 12,
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 22753,
-        "getOrderRoot": "107157959766960481243605837973049768291631189236109371831339864617484556353",
+        "getLastBatchId": 25370,
+        "getOrderRoot": "841632563200266250706867073538812408901181168390740335644475484027849413838",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "eth:0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -485,10 +496,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 22621,
-        "getUpgradeActivationDelay": 1209600,
+        "getSequenceNumber": 25238,
+        "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1073817572309527979611633770676795352977281329424524720776632075177889791093",
+        "getValidiumVaultRoot": "1302135318326809880635672396036338167780808880057291258920160007815441189244",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -504,7 +515,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
-        "StarkWareDiamond_upgradeDelay": 1209600,
+        "StarkWareDiamond_upgradeDelay": 0,
         "tokenAdmins": [
           "eth:0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815",
           "eth:0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19"
@@ -950,6 +961,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 23275484 },
-  "permissionsConfigHash": "0xb74b4c6e3bbcebf661680cdc27dc049cad85280b62f36b801f73676872eae7fd"
+  "usedBlockNumbers": { "ethereum": 24985182 },
+  "permissionsConfigHash": "0x7a98c26eb90dea74f52c5b9cceceb348eb00069ebb9c3d92427ba59305389149"
 }
