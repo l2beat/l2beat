@@ -1,1 +1,4 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json" }
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data."
+}

@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["getPendingMessageHash", "currentNonce"],
-  "description": "Contract handling outbound messages for the Hashi protocol."
+  "description": "Outbound dispatcher in Hashi. It commits message hashes, emits `MessageDispatched`, and can call reporters to forward those hashes to remote adapters."
 }

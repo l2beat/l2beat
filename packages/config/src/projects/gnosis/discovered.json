@@ -1,13 +1,21 @@
 {
   "name": "gnosis",
   "timestamp": 1777539411,
-  "configHash": "0x90ebe45d728460a85908744b425ade6c04f1d292b62973187b93d35d1a94f68d",
+  "configHash": "0xe20eda7eb40253356cf912df4b25145a7268ec3f74c44bde074170dc38b9f5bf",
   "entries": [
     {
       "name": "Giveth EOA 2",
       "address": "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
@@ -18,13 +26,29 @@
       "name": "Safe EOA 1",
       "address": "eth:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "Safe EOA 2",
       "address": "eth:0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "Yaru",
@@ -35,7 +59,7 @@
         "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
       ],
       "proxyType": "immutable",
-      "description": "Contract handling inbound messages for the Hashi protocol.",
+      "description": "Inbound executor in Hashi. It reconstructs message IDs, asks Hashi whether enough adapters agreed on the hash, and then calls the target bridge receiver.",
       "sinceTimestamp": 1726020995,
       "sinceBlock": 20724328,
       "values": {
@@ -43,6 +67,20 @@
         "HASHI": "eth:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
         "SOURCE_CHAIN_ID": 100,
         "YAHO": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      },
+      "fieldMeta": {
+        "HASHI": {
+          "severity": "HIGH",
+          "description": "Hashi aggregator used to check whether the configured adapter threshold agreed on a message hash."
+        },
+        "YAHO": {
+          "severity": "HIGH",
+          "description": "Expected Yaho dispatcher address whose `MessageDispatched` events define valid message IDs for this Yaru instance."
+        },
+        "SOURCE_CHAIN_ID": {
+          "severity": "HIGH",
+          "description": "Source chain whose Yaho-dispatched messages this Yaru instance accepts."
+        }
       },
       "implementationNames": {
         "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba": "Yaru"
@@ -54,7 +92,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Gnosis Bridge Multisig",
+      "name": "Gnosis Bridge Multisig (Ethereum)",
       "address": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -63,7 +101,62 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "description": "15-member / 8-threshold multisig that owns and upgrades the Ethereum-side canonical bridge contracts, including the xDAI bridge, AMB bridge, Omnibridge, and the BridgeRouter ProxyAdmin.",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "description": "change bridge limits, gas and confirmation parameters, and the optional Hashi validation manager for the xDAI bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "description": "claim tokens held by the bridge and recover legacy transfers that remain locked in the contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "description": "claim tokens accidentally held by the AMB bridge contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
+          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, the wrapped token factory, gas settings, token pairs, and per-token bridge limits for Omnibridge transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
+          "description": "change the DAI and USDS bridge routes and recover ETH or ERC20 tokens locked in the router.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a",
+          "description": "claim ETH or ERC20 tokens that remain stuck in the WETH Omnibridge router.",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
@@ -157,7 +250,15 @@
       "name": "Protofire EOA 2",
       "address": "eth:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "XDaiForeignBridge",
@@ -169,6 +270,7 @@
         "0x31707ec58aa0ebd43328575885a3495f21a2d3e21890280fafe5cbaf1ab5938b"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Ethereum-side ERC20-to-native bridge used to lock DAI or USDS on Ethereum and authorize xDAI minting on Gnosis. Message execution is validated by a dedicated validator set and can additionally be gated by Hashi.",
       "ignoreInWatchMode": [
         "getCurrentDay",
         "maxAvailablePerTx",
@@ -267,14 +369,28 @@
         "version": 10,
         "versionRecipient": "1.0.1"
       },
-      "fieldMeta": { "HASHI_IS_MANDATORY": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, validator-approved bridge messages also require Hashi validation before execution."
+        },
+        "validatorContract": {
+          "severity": "HIGH",
+          "description": "Validator contract that must sign xDAI bridge messages before they can be executed on Ethereum."
+        },
+        "hashiManager": {
+          "severity": "HIGH",
+          "description": "Optional Hashi-based validation manager used as an additional verification layer for xDAI bridge messages from Gnosis."
+        }
+      },
       "implementationNames": {
         "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "EternalStorageProxy",
         "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49": "XDaiForeignBridge"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Hashi Multisig",
+      "name": "Hashi Multisig (Ethereum)",
       "address": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -283,17 +399,18 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "description": "2-of-3 multisig that owns and upgrades the Ethereum-side Hashi managers used by the bridge validation path.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "description": "change the configured reporters, adapters, thresholds, Yaho or Yaru endpoints, and the remote target routing used for Hashi validation.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "description": "change the configured reporters, adapters, thresholds, Yaho or Yaru endpoints, and the remote target routing used for Hashi validation.",
           "role": ".owner"
         },
         {
@@ -341,6 +458,7 @@
         "0x5d956ab2f7704c419737b2e96845631d87156578b49801dde52cc9e56eaa182f"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Ethereum-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Gnosis. Hashi can be enabled as an additional verification layer.",
       "sinceTimestamp": 1579258532,
       "sinceBlock": 9298324,
       "values": {
@@ -404,17 +522,39 @@
         "validatorContract": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
         "version": 6
       },
-      "fieldMeta": { "HASHI_IS_MANDATORY": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, validator-approved AMB messages also require Hashi validation before execution."
+        },
+        "validatorContract": {
+          "severity": "HIGH",
+          "description": "Validator contract that must sign AMB bridge messages before they can be executed on Ethereum."
+        },
+        "hashiManager": {
+          "severity": "HIGH",
+          "description": "Optional Hashi-based validation manager used as an additional verification layer for AMB messages from Gnosis."
+        }
+      },
       "implementationNames": {
         "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "EternalStorageProxy",
         "eth:0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316": "ForeignAMB"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Protofire EOA 1",
       "address": "eth:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf",
@@ -439,15 +579,56 @@
     {
       "address": "eth:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+          "description": "change which LayerZero source endpoint IDs and reporter addresses are allowed to write hashes into the adapter.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
-      "name": "TokenFactory",
+      "name": "ForeignOmnibridge TokenFactory",
       "address": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
       "type": "Contract",
       "template": "gnosis/TokenFactory",
@@ -455,6 +636,7 @@
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
       ],
       "proxyType": "immutable",
+      "description": "Factory used by Omnibridge to deploy wrapped tokens representing assets native to the other chain.",
       "sinceTimestamp": 1634280699,
       "sinceBlock": 13421129,
       "values": {
@@ -463,8 +645,45 @@
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "tokenImage": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3"
       },
+      "fieldMeta": {
+        "tokenImage": {
+          "severity": "HIGH",
+          "description": "Template implementation cloned for newly deployed Omnibridge wrapped tokens."
+        }
+      },
       "implementationNames": {
         "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424": "TokenFactory"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "LayerZeroAdapter",
+      "address": "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+      "type": "Contract",
+      "template": "gnosis/LayerZeroAdapter",
+      "sourceHashes": [
+        "0xfe0e5c810459ca8daab7faf04bce3cf62afcbce5c1feb22e05e5b989136d1b32"
+      ],
+      "proxyType": "immutable",
+      "description": "Hashi adapter that receives message-hash batches over LayerZero and stores them under the configured source chain for later Hashi aggregation.",
+      "sinceTimestamp": 1727855615,
+      "sinceBlock": 20876445,
+      "values": {
+        "$immutable": true,
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "LAYER_ZERO_ENDPOINT": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "owner": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+        "PROVIDER": "layer-zero"
+      },
+      "fieldMeta": {
+        "LAYER_ZERO_ENDPOINT": {
+          "severity": "HIGH",
+          "description": "LayerZero endpoint that is allowed to call `lzReceive` on this adapter."
+        }
+      },
+      "implementationNames": {
+        "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": "LayerZeroAdapter"
       }
     },
     {
@@ -541,6 +760,7 @@
         "0xb84afd7276ac99834f5104f7c4f890572ffc31fadd9629aabd82017025e7ada2"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Ethereum-side Omnibridge mediator used for arbitrary token transfers between Ethereum and Gnosis via the AMB bridge.",
       "ignoreInWatchMode": ["getCurrentDay"],
       "sinceTimestamp": 1596501090,
       "sinceBlock": 10590093,
@@ -586,20 +806,42 @@
         "getCurrentDay": 20573,
         "implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
-        "mediatorContractOnOtherSide": "eth:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "mediatorContractOnOtherSide": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requestGasLimit": 2000000,
         "tokenFactory": "eth:0x71d5ba4e37de72415F685490B684538Aae8f0424",
         "upgradeabilityOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "version": 6
       },
+      "fieldMeta": {
+        "bridgeContract": {
+          "severity": "HIGH",
+          "description": "AMB bridge endpoint used as the cross-chain messaging layer for the Ethereum-side Omnibridge mediator."
+        },
+        "mediatorContractOnOtherSide": {
+          "severity": "HIGH",
+          "description": "Counterpart Omnibridge mediator on Gnosis."
+        },
+        "requestGasLimit": {
+          "severity": "HIGH",
+          "description": "Gas limit forwarded for Omnibridge message execution on Gnosis."
+        },
+        "tokenFactory": {
+          "severity": "HIGH",
+          "description": "Factory used to deploy wrapped tokens for assets bridged from Gnosis to Ethereum."
+        }
+      },
       "implementationNames": {
         "eth:0x88ad09518695c6c3712AC10a214bE5109a655671": "EternalStorageProxy",
         "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347": "ForeignOmnibridge"
-      }
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "HashiManager",
+      "name": "ForeignAMB HashiManager",
       "address": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
       "type": "Contract",
       "template": "gnosis/HashiManager",
@@ -608,7 +850,7 @@
         "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "description": "Configuration contract that tells bridge contracts how to use Hashi as an additional message-validation layer.",
       "sinceTimestamp": 1726023347,
       "sinceBlock": 20724523,
       "values": {
@@ -629,7 +871,7 @@
         "implementation": "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,
         "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
-        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "reporters": ["eth:0x0000000000000000000000000000000000000000"],
         "targetAddress": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
         "targetChainId": 100,
         "threshold": 1,
@@ -639,25 +881,41 @@
         "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
       },
       "fieldMeta": {
-        "HASHI_IS_MANDATORY": {
-          "severity": "HIGH",
-          "description": "If true, Hashi validation is mandatory"
-        },
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
+          "description": "Remote bridge contract whose messages are being validated through this HashiManager."
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
+          "description": "Remote adapter contracts whose stored hashes are aggregated by Hashi during message validation."
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
+          "description": "Reporter contracts used when forwarding Yaho-dispatched hashes toward the remote adapters. Some adapters use `address(0)` because they verify Yaho events directly."
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
+          "description": "Minimum number of adapters that must agree on a hash for Hashi validation to pass."
+        },
+        "expectedThreshold": {
+          "severity": "HIGH",
+          "description": "Expected adapter threshold encoded in incoming Hashi messages before the bridge accepts them."
+        },
+        "expectedAdaptersHash": {
+          "severity": "HIGH",
+          "description": "Keccak256 hash of the adapter set expected in incoming Hashi messages."
+        },
+        "targetChainId": {
+          "severity": "HIGH",
+          "description": "Chain ID of the remote chain whose messages this HashiManager validates."
+        },
+        "yaho": {
+          "severity": "HIGH",
+          "description": "Outbound Hashi dispatcher used to commit and relay message hashes from this chain."
+        },
+        "yaru": {
+          "severity": "HIGH",
+          "description": "Inbound Hashi executor used to consume validated message hashes on this chain."
         }
       },
       "implementationNames": {
@@ -670,7 +928,15 @@
       "name": "Gnosis DAO EOA 1",
       "address": "eth:0x97630E2aE609D4104aBdA91F3066C556403182dd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "BridgeRouter",
@@ -682,6 +948,7 @@
         "0x37d8700c46ff24301a79f113be414a05ece6295f8b9fa0679df63f815cff396b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Entry router for bridging between Ethereum and Gnosis. It routes DAI and USDS through the legacy xDAI bridge, ETH through the WETH Omnibridge router, and other ERC20 tokens through Omnibridge.",
       "sinceTimestamp": 1745836823,
       "sinceBlock": 22367028,
       "values": {
@@ -708,13 +975,32 @@
         "USDS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "WETH_OMNIBRIDGE_ROUTER": "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a"
       },
+      "fieldMeta": {
+        "FOREIGN_XDAIBRIDGE": {
+          "severity": "HIGH",
+          "description": "Legacy DAI or USDS bridge used for canonical stablecoin transfers between Ethereum and Gnosis."
+        },
+        "FOREIGN_AMB": {
+          "severity": "HIGH",
+          "description": "Ethereum-side Arbitrary Message Bridge endpoint used by the Gnosis bridge system for cross-chain calls."
+        },
+        "FOREIGN_OMNIBRIDGE": {
+          "severity": "HIGH",
+          "description": "Ethereum-side Omnibridge mediator used for arbitrary token transfers between Ethereum and Gnosis."
+        },
+        "WETH_OMNIBRIDGE_ROUTER": {
+          "severity": "HIGH",
+          "description": "ETH-specific router that wraps ETH into WETH before sending it through Omnibridge."
+        }
+      },
       "implementationNames": {
         "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0": "TransparentUpgradeableProxy",
         "eth:0x74899961224538E423eFfD1A0Ff3346adf3F4C56": "BridgeRouter"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "HashiManager",
+      "name": "XDaiForeignBridge HashiManager",
       "address": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
       "type": "Contract",
       "template": "gnosis/HashiManager",
@@ -723,7 +1009,7 @@
         "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "description": "Configuration contract that tells bridge contracts how to use Hashi as an additional message-validation layer.",
       "sinceTimestamp": 1738140599,
       "sinceBlock": 21729100,
       "values": {
@@ -744,7 +1030,7 @@
         "implementation": "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83",
         "isInitialized": true,
         "owner": "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
-        "reporters": ["gno:0x0000000000000000000000000000000000000000"],
+        "reporters": ["eth:0x0000000000000000000000000000000000000000"],
         "targetAddress": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
         "targetChainId": 100,
         "threshold": 1,
@@ -754,25 +1040,41 @@
         "yaru": "eth:0x30f64a297cc66a873FB603d1e89D5891962C25ba"
       },
       "fieldMeta": {
-        "HASHI_IS_MANDATORY": {
-          "severity": "HIGH",
-          "description": "If true, Hashi validation is mandatory"
-        },
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
+          "description": "Remote bridge contract whose messages are being validated through this HashiManager."
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
+          "description": "Remote adapter contracts whose stored hashes are aggregated by Hashi during message validation."
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
+          "description": "Reporter contracts used when forwarding Yaho-dispatched hashes toward the remote adapters. Some adapters use `address(0)` because they verify Yaho events directly."
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
+          "description": "Minimum number of adapters that must agree on a hash for Hashi validation to pass."
+        },
+        "expectedThreshold": {
+          "severity": "HIGH",
+          "description": "Expected adapter threshold encoded in incoming Hashi messages before the bridge accepts them."
+        },
+        "expectedAdaptersHash": {
+          "severity": "HIGH",
+          "description": "Keccak256 hash of the adapter set expected in incoming Hashi messages."
+        },
+        "targetChainId": {
+          "severity": "HIGH",
+          "description": "Chain ID of the remote chain whose messages this HashiManager validates."
+        },
+        "yaho": {
+          "severity": "HIGH",
+          "description": "Outbound Hashi dispatcher used to commit and relay message hashes from this chain."
+        },
+        "yaru": {
+          "severity": "HIGH",
+          "description": "Inbound Hashi executor used to consume validated message hashes on this chain."
         }
       },
       "implementationNames": {
@@ -795,6 +1097,7 @@
         "0x18759236610feb6952e897ade6b43506d161d78d8954c89f9e8a74a88bd0fcde"
       ],
       "proxyType": "immutable",
+      "description": "Router that wraps native ETH into WETH before sending it through Omnibridge and unwraps it again on Gnosis when bridge messages are executed.",
       "sinceTimestamp": 1634369300,
       "sinceBlock": 13427688,
       "values": {
@@ -803,9 +1106,16 @@
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "bridge": {
+          "severity": "HIGH",
+          "description": "ForeignOmnibridge mediator used as the actual cross-chain bridge for ETH transfers."
+        }
+      },
       "implementationNames": {
         "eth:0xa6439Ca0FCbA1d0F80df0bE6A17220feD9c9038a": "WETHOmnibridgeRouter"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Hashi",
@@ -816,6 +1126,7 @@
         "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
       ],
       "proxyType": "immutable",
+      "description": "Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.",
       "sinceTimestamp": 1720770791,
       "sinceBlock": 20289052,
       "values": { "$immutable": true },
@@ -826,7 +1137,15 @@
     {
       "address": "eth:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -847,7 +1166,7 @@
         "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
       ],
       "proxyType": "immutable",
-      "description": "Contract handling outbound messages for the Hashi protocol.",
+      "description": "Outbound dispatcher in Hashi. It commits message hashes, emits `MessageDispatched`, and can call reporters to forward those hashes to remote adapters.",
       "sinceTimestamp": 1720772543,
       "sinceBlock": 20289197,
       "values": { "$immutable": true },
@@ -859,7 +1178,15 @@
       "name": "Gnosis DAO EOA 2",
       "address": "eth:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0xBF3d6f830CE263CAE987193982192Cd990442B53",
@@ -870,7 +1197,15 @@
       "name": "Giveth EOA 1",
       "address": "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
@@ -880,7 +1215,15 @@
     {
       "address": "eth:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "eth:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -898,7 +1241,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "BridgeRouter ProxyAdmin",
       "address": "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd",
       "type": "Contract",
       "template": "global/ProxyAdmin",
@@ -906,6 +1249,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "description": "ProxyAdmin that controls BridgeRouter upgrades. It is owned by the Ethereum-side bridge multisig.",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -930,7 +1274,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BridgeValidators",
+      "name": "XDai Bridge Validators",
       "address": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
@@ -939,7 +1283,7 @@
         "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom multisignature contract for Validator addresses.",
+      "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
       "sinceTimestamp": 1539028018,
       "sinceBlock": 6478411,
       "values": {
@@ -994,7 +1338,7 @@
       }
     },
     {
-      "name": "BridgeValidators",
+      "name": "AMB Bridge Validators",
       "address": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
@@ -1003,7 +1347,7 @@
         "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom multisignature contract for Validator addresses.",
+      "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
       "sinceTimestamp": 1579258396,
       "sinceBlock": 9298314,
       "values": {
@@ -1057,12 +1401,12 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+      "address": "gno:0x0000000000000000000000000000000000000000",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x0000000000000000000000000000000000000000",
+      "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1070,7 +1414,15 @@
       "name": "Giveth EOA 2",
       "address": "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
@@ -1080,7 +1432,15 @@
     {
       "address": "gno:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "Yaru",
@@ -1091,7 +1451,7 @@
         "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
       ],
       "proxyType": "immutable",
-      "description": "Contract handling inbound messages for the Hashi protocol.",
+      "description": "Inbound executor in Hashi. It reconstructs message IDs, asks Hashi whether enough adapters agreed on the hash, and then calls the target bridge receiver.",
       "sinceTimestamp": 1726019595,
       "sinceBlock": 35938697,
       "values": {
@@ -1100,15 +1460,72 @@
         "SOURCE_CHAIN_ID": 1,
         "YAHO": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
       },
+      "fieldMeta": {
+        "HASHI": {
+          "severity": "HIGH",
+          "description": "Hashi aggregator used to check whether the configured adapter threshold agreed on a message hash."
+        },
+        "YAHO": {
+          "severity": "HIGH",
+          "description": "Expected Yaho dispatcher address whose `MessageDispatched` events define valid message IDs for this Yaru instance."
+        },
+        "SOURCE_CHAIN_ID": {
+          "severity": "HIGH",
+          "description": "Source chain whose Yaho-dispatched messages this Yaru instance accepts."
+        }
+      },
       "implementationNames": {
         "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": "Yaru"
       }
     },
     {
+      "name": "PermittableToken",
+      "address": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4",
+      "type": "Contract",
+      "template": "gnosis/PermittableToken",
+      "sourceHashes": [
+        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1634244030,
+      "sinceBlock": 18573208,
+      "values": {
+        "$immutable": true,
+        "bridgeContract": "gno:0x0000000000000000000000000000000000000000",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0x75d2243c5f16e74af316608b1c54f2c34da1e0ff0e551af68c80e7c57328d85e",
+        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
+        "mintingFinished": false,
+        "name": "''",
+        "owner": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+        "symbol": "''",
+        "totalSupply": 0,
+        "version": "1"
+      },
+      "implementationNames": {
+        "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
+      }
+    },
+    {
+      "address": "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Safe EOA 2",
       "address": "gno:0x258667E543C913264388B33328337257aF208a8f",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
@@ -1119,7 +1536,15 @@
       "name": "Protofire EOA 2",
       "address": "gno:0x459A3bd49F1ff109bc90b76125533699AaAAf9A6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "BlockRewardAuRa",
@@ -1131,7 +1556,7 @@
         "0xb4d65f4db42588aff7744de5b0db9776382bfcf1bba7cfd0cb99cb8abc859cf4"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Part of the deprecated AuRa (Authority Round)  proof-of-authority consensus model. Gnosis switched to an Ethereum-like consensus but some contracts like this one are still used. Mints of the gas token xDAI are queued in this contract (`addExtraReceiver(amount, recipient)`) and then executed by the gnosis execution client. There are more AuRa contracts this depends on which are not tracked here.",
+      "description": "Part of the deprecated AuRa proof-of-authority consensus model. Gnosis switched to an Ethereum-like consensus, but this contract is still used as the legacy xDAI mint queue for Ethereum-to-Gnosis bridge messages.",
       "ignoreInWatchMode": [
         "extraReceiversQueueSize",
         "mintedTotally",
@@ -1235,15 +1660,30 @@
         "tokenRewardUndistributed": "15544386896005470943146",
         "validatorSetContract": "gno:0xB87BE9f7196F2AE084Ca1DE6af5264292976e013"
       },
+      "fieldMeta": {
+        "ercToNativeBridgesAllowed": {
+          "severity": "HIGH",
+          "description": "Bridge contracts allowed to queue xDAI minting through the legacy BlockRewardAuRa contract."
+        }
+      },
       "implementationNames": {
         "gno:0x481c034c6d9441db23Ea48De68BCAe812C5d39bA": "AdminUpgradeabilityProxy",
         "gno:0x8B5B50ef60382f2264F47cbfBD387B8bF68AAa7e": "BlockRewardAuRa"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "gno:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
@@ -1290,7 +1730,48 @@
       }
     },
     {
-      "name": "HashiManager",
+      "name": "HomeOmnibridge Fee Manager",
+      "address": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+      "type": "Contract",
+      "template": "gnosis/OmnibridgeFeeManager",
+      "sourceHashes": [
+        "0xdcb8211bc83ab560c19e3bc532a958bc0582fa7a02d0c53df72f3cf293f598d5"
+      ],
+      "proxyType": "immutable",
+      "description": "Fee manager used by HomeOmnibridge to calculate and distribute bridge fees to a configured reward address list.",
+      "sinceTimestamp": 1634245065,
+      "sinceBlock": 18573414,
+      "values": {
+        "$immutable": true,
+        "FOREIGN_TO_HOME_FEE": "0x03be2b2875cb41e0e77355e802a16769bb8dfcf825061cde185c73bf94f12625",
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "HOME_TO_FOREIGN_FEE": "0x741ede137d0537e88e0ea0ff25b1f22d837903dbbee8980b4a06e8523247ee26",
+        "mediator": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "rewardAddressCount": 1,
+        "rewardAddressList": ["gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0"]
+      },
+      "fieldMeta": {
+        "mediator": {
+          "severity": "HIGH",
+          "description": "HomeOmnibridge mediator allowed to route fees through this manager."
+        },
+        "rewardAddressList": {
+          "description": "Addresses that receive fees distributed by the HomeOmnibridge fee manager."
+        }
+      },
+      "implementationNames": {
+        "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": "OmnibridgeFeeManager"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeBridgeErcToNative HashiManager",
       "address": "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49",
       "type": "Contract",
       "template": "gnosis/HashiManager",
@@ -1299,7 +1780,7 @@
         "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "description": "Configuration contract that tells bridge contracts how to use Hashi as an additional message-validation layer.",
       "sinceTimestamp": 1738140935,
       "sinceBlock": 38285863,
       "values": {
@@ -1313,7 +1794,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"],
+        "adapters": ["eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"],
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0xc3952ca09544b604f7d61555626b0438b4e81891017c42d0f32125fbaca634e9",
         "expectedThreshold": 1,
@@ -1321,7 +1802,7 @@
         "isInitialized": true,
         "owner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "reporters": ["gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"],
-        "targetAddress": "gno:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+        "targetAddress": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
         "targetChainId": 1,
         "threshold": 1,
         "upgradeabilityOwner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
@@ -1330,47 +1811,133 @@
         "yaru": "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
       },
       "fieldMeta": {
-        "HASHI_IS_MANDATORY": {
-          "severity": "HIGH",
-          "description": "If true, Hashi validation is mandatory"
-        },
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
+          "description": "Remote bridge contract whose messages are being validated through this HashiManager."
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
+          "description": "Remote adapter contracts whose stored hashes are aggregated by Hashi during message validation."
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
+          "description": "Reporter contracts used when forwarding Yaho-dispatched hashes toward the remote adapters. Some adapters use `address(0)` because they verify Yaho events directly."
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
+          "description": "Minimum number of adapters that must agree on a hash for Hashi validation to pass."
+        },
+        "expectedThreshold": {
+          "severity": "HIGH",
+          "description": "Expected adapter threshold encoded in incoming Hashi messages before the bridge accepts them."
+        },
+        "expectedAdaptersHash": {
+          "severity": "HIGH",
+          "description": "Keccak256 hash of the adapter set expected in incoming Hashi messages."
+        },
+        "targetChainId": {
+          "severity": "HIGH",
+          "description": "Chain ID of the remote chain whose messages this HashiManager validates."
+        },
+        "yaho": {
+          "severity": "HIGH",
+          "description": "Outbound Hashi dispatcher used to commit and relay message hashes from this chain."
+        },
+        "yaru": {
+          "severity": "HIGH",
+          "description": "Inbound Hashi executor used to consume validated message hashes on this chain."
         }
       },
       "implementationNames": {
         "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49": "EternalStorageProxy",
         "gno:0x5483eBC7522C5e2669a887a7a1eDF256b3E4440D": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B",
+          "description": "change the chain-to-endpoint mapping, LayerZero execution gas setting, and refund address used for LayerZero deliveries.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "HomeOmnibridge Gas Limit Manager",
+      "address": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+      "type": "Contract",
+      "template": "gnosis/SelectorTokenGasLimitManager",
+      "sourceHashes": [
+        "0x40a5e7e16f2ed78de499e7ab33bb60f2d3e668b003b8253c8ed3659066c6bee2"
+      ],
+      "proxyType": "immutable",
+      "description": "Module used by HomeOmnibridge to choose default, selector-specific, and token-specific gas limits for cross-chain Omnibridge message execution.",
+      "sinceTimestamp": 1634246385,
+      "sinceBlock": 18573677,
+      "values": {
+        "$immutable": true,
+        "bridge": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "requestGasLimit": 600000
+      },
+      "fieldMeta": {
+        "bridge": {
+          "severity": "HIGH",
+          "description": "AMB bridge that reads gas limits from this manager for HomeOmnibridge messages."
+        },
+        "requestGasLimit": {
+          "severity": "HIGH",
+          "description": "Default gas limit used for Omnibridge message execution on Ethereum unless a selector-specific or token-specific override is configured."
+        }
+      },
+      "implementationNames": {
+        "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": "SelectorTokenGasLimitManager"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "gno:0x7117F73aFBDec3221bDD50DdCbf73204b3998302",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        },
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "HomeBridgeErcToNative",
@@ -1382,6 +1949,7 @@
         "0xc326acd9113b3ffcddf749fa75e1bb239c6efaf18aa8f4af6bd562480bcda7fb"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Gnosis-side native token bridge that burns xDAI and releases DAI or USDS on Ethereum. It still depends on the legacy BlockRewardAuRa contract to mint xDAI when messages arrive from Ethereum.",
       "ignoreInWatchMode": ["getCurrentDay", "nonce", "outOfLimitAmount"],
       "sinceTimestamp": 1539027985,
       "sinceBlock": 761,
@@ -1461,14 +2029,32 @@
         "validatorContract": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
         "version": 7
       },
-      "fieldMeta": { "HASHI_IS_MANDATORY": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, validator-approved bridge messages also require Hashi validation before execution."
+        },
+        "blockRewardContract": {
+          "severity": "HIGH",
+          "description": "Legacy BlockRewardAuRa contract used to queue xDAI minting after Ethereum-to-Gnosis bridge messages are validated."
+        },
+        "validatorContract": {
+          "severity": "HIGH",
+          "description": "Validator contract that must sign xDAI bridge messages before they can be executed on Gnosis."
+        },
+        "hashiManager": {
+          "severity": "HIGH",
+          "description": "Optional Hashi-based validation manager used as an additional verification layer for xDAI bridge messages from Ethereum."
+        }
+      },
       "implementationNames": {
         "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": "EternalStorageProxy",
         "gno:0xe6998b0C03D3cb9ee8C04f266e573c7Fa8782846": "HomeBridgeErcToNative"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "HashiManager",
+      "name": "HomeAMB HashiManager",
       "address": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
       "type": "Contract",
       "template": "gnosis/HashiManager",
@@ -1477,7 +2063,7 @@
         "0x824f58e3acf3f9403dc26549af4869336347109f24d07d82aa11897bed907b17"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
+      "description": "Configuration contract that tells bridge contracts how to use Hashi as an additional message-validation layer.",
       "sinceTimestamp": 1726022850,
       "sinceBlock": 35939330,
       "values": {
@@ -1491,7 +2077,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "adapters": ["gno:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"],
+        "adapters": ["eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418"],
         "deployedAtBlock": 0,
         "expectedAdaptersHash": "0xc3952ca09544b604f7d61555626b0438b4e81891017c42d0f32125fbaca634e9",
         "expectedThreshold": 1,
@@ -1499,7 +2085,7 @@
         "isInitialized": true,
         "owner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
         "reporters": ["gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B"],
-        "targetAddress": "gno:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+        "targetAddress": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "targetChainId": 1,
         "threshold": 1,
         "upgradeabilityOwner": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
@@ -1508,32 +2094,48 @@
         "yaru": "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
       },
       "fieldMeta": {
-        "HASHI_IS_MANDATORY": {
-          "severity": "HIGH",
-          "description": "If true, Hashi validation is mandatory"
-        },
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
+          "description": "Remote bridge contract whose messages are being validated through this HashiManager."
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
+          "description": "Remote adapter contracts whose stored hashes are aggregated by Hashi during message validation."
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
+          "description": "Reporter contracts used when forwarding Yaho-dispatched hashes toward the remote adapters. Some adapters use `address(0)` because they verify Yaho events directly."
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
+          "description": "Minimum number of adapters that must agree on a hash for Hashi validation to pass."
+        },
+        "expectedThreshold": {
+          "severity": "HIGH",
+          "description": "Expected adapter threshold encoded in incoming Hashi messages before the bridge accepts them."
+        },
+        "expectedAdaptersHash": {
+          "severity": "HIGH",
+          "description": "Keccak256 hash of the adapter set expected in incoming Hashi messages."
+        },
+        "targetChainId": {
+          "severity": "HIGH",
+          "description": "Chain ID of the remote chain whose messages this HashiManager validates."
+        },
+        "yaho": {
+          "severity": "HIGH",
+          "description": "Outbound Hashi dispatcher used to commit and relay message hashes from this chain."
+        },
+        "yaru": {
+          "severity": "HIGH",
+          "description": "Inbound Hashi executor used to consume validated message hashes on this chain."
         }
       },
       "implementationNames": {
         "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": "EternalStorageProxy",
         "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "HomeAMB",
@@ -1545,6 +2147,7 @@
         "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
       "sinceTimestamp": 1579258310,
       "sinceBlock": 7904954,
       "values": {
@@ -1608,13 +2211,70 @@
         "validatorContract": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
         "version": 6
       },
+      "fieldMeta": {
+        "validatorContract": {
+          "severity": "HIGH",
+          "description": "Validator contract that must sign AMB bridge messages before they can be executed on Gnosis."
+        },
+        "hashiManager": {
+          "severity": "HIGH",
+          "description": "Optional Hashi-based validation manager used as an additional verification layer for AMB messages from Ethereum."
+        },
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, validator-approved AMB messages also require Hashi validation before execution."
+        }
+      },
       "implementationNames": {
         "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": "EternalStorageProxy",
         "gno:0xA033535983d1aBcc2648af730EDCb198909903D7": "HomeAMB"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Omnibridge Fee Distributor Safe",
+      "address": "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "description": "Safe that currently receives Omnibridge fees distributed by the HomeOmnibridge fee manager.",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1651741965,
+      "sinceBlock": 21984719,
+      "values": {
+        "$immutable": false,
+        "$implementation": "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
+          "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
+          "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
+          "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
+          "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
+          "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
+          "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
+          "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
+          "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
+          "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xe9d8755bcaa93e2e65b2f4c443dbab1d20f6c0f357b1ca5b3437ae3bbdb4b788",
+        "getChainId": 100,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 10 (30%)",
+        "nonce": 8,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": "GnosisSafeProxy",
+        "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "Gnosis Bridge Multisig (Gnosis)",
       "address": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1623,7 +2283,50 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "description": "15-member / 8-threshold multisig that owns and upgrades the Gnosis-side canonical bridge contracts, including the xDAI bridge, AMB bridge, HomeOmnibridge, and the legacy BlockRewardAuRa contract.",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x481c034c6d9441db23Ea48De68BCAe812C5d39bA",
+          "description": "allow which legacy bridge contracts may queue xDAI minting through this contract and change the token minter used by the deprecated AuRa reward path.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+          "description": "change Omnibridge fee schedules and the list of addresses that receive distributed bridge fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+          "description": "change default, selector-specific, and token-specific gas limits used by HomeOmnibridge cross-chain messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
+          "description": "change bridge limits, gas and confirmation parameters, fee manager configuration, and the optional Hashi validation manager for the xDAI bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6",
+          "description": "fix bridge imbalances and claim unsupported tokens or coins held by the xDAI bridge contract.",
+          "role": ".upgradeabilityOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "description": "change validator and Hashi-based message verification settings, chain identifiers, gas parameters, and reentrancy policy for AMB messages.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "description": "claim tokens accidentally held by the AMB bridge contract.",
+          "role": ".upgradeabilityOwner"
+        },
         {
           "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
@@ -1635,6 +2338,30 @@
           "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+          "description": "change which Omnibridge transfers are routed through the oracle-driven lane or forced into the manual lane.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+          "description": "change the token implementation used for newly deployed Omnibridge wrapped tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "description": "fix bridge imbalances and claim unsupported tokens or assets held by the mediator or bridged token contracts.",
+          "role": ".upgradeabilityOwner"
         },
         {
           "permission": "upgrade",
@@ -1659,6 +2386,11 @@
         {
           "permission": "upgrade",
           "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
           "role": "admin"
         }
       ],
@@ -1740,9 +2472,22 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x97630E2aE609D4104aBdA91F3066C556403182dd",
+      "address": "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0x97630E2aE609D4104aBdA91F3066C556403182dd",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "name": "SP1HeliosAdapter",
@@ -1753,6 +2498,7 @@
         "0x2cd195f97f037ce704ea4e143bdfa9e5fa791b350bcca9c8f248e4256fb9d829"
       ],
       "proxyType": "immutable",
+      "description": "Light-client-style Hashi adapter that verifies source-chain consensus data with SP1 Helios proofs and stores block or message hashes for later Hashi aggregation.",
       "sinceTimestamp": 1748856160,
       "sinceBlock": 40374946,
       "values": {
@@ -1761,6 +2507,20 @@
         "SOURCE_CHAIN_ID": 1,
         "SOURCE_YAHO": "eth:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
         "SP1_HELIOS_ADDRESS": "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8"
+      },
+      "fieldMeta": {
+        "SP1_HELIOS_ADDRESS": {
+          "severity": "HIGH",
+          "description": "SP1 Helios light client used to verify source-chain headers before hashes are stored."
+        },
+        "SOURCE_YAHO": {
+          "severity": "HIGH",
+          "description": "Expected source-chain Yaho dispatcher whose `MessageDispatched` event is verified before storing message hashes."
+        },
+        "SOURCE_CHAIN_ID": {
+          "severity": "HIGH",
+          "description": "Source chain whose headers and Yaho-dispatched messages this adapter verifies."
+        }
       },
       "implementationNames": {
         "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": "SP1HeliosAdapter"
@@ -1773,7 +2533,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BridgeValidators",
+      "address": "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeAMB Validators",
       "address": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
@@ -1782,7 +2547,7 @@
         "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom multisignature contract for Validator addresses.",
+      "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
       "sinceTimestamp": 1579258260,
       "sinceBlock": 7904944,
       "values": {
@@ -1849,6 +2614,7 @@
         "0x0e7d2e1e33610c83b21dc833813267f01fc57f23563ee910c54e98baf36e4c8a"
       ],
       "proxyType": "immutable",
+      "description": "Hashi reporter that forwards Yaho-dispatched block or message hashes through LayerZero to a remote adapter.",
       "sinceTimestamp": 1726195205,
       "sinceBlock": 35972951,
       "values": {
@@ -1861,6 +2627,20 @@
         "owner": "gno:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
         "PROVIDER": "layer-zero",
         "YAHO": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
+      },
+      "fieldMeta": {
+        "YAHO": {
+          "severity": "HIGH",
+          "description": "Yaho contract allowed to ask this reporter to forward message hashes."
+        },
+        "LAYER_ZERO_ENDPOINT": {
+          "severity": "HIGH",
+          "description": "LayerZero endpoint used to send the encoded hashes to the remote adapter."
+        },
+        "fee": {
+          "severity": "HIGH",
+          "description": "Executor gas option requested for remote LayerZero message delivery."
+        }
       },
       "implementationNames": {
         "gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B": "LayerZeroReporter"
@@ -1896,6 +2676,7 @@
         "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
       ],
       "proxyType": "immutable",
+      "description": "Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.",
       "sinceTimestamp": 1720614180,
       "sinceBlock": 34894600,
       "values": { "$immutable": true },
@@ -1906,10 +2687,18 @@
     {
       "address": "gno:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
-      "name": "BridgeValidators",
+      "name": "HomeBridge Validators",
       "address": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
       "type": "Contract",
       "template": "gnosis/BridgeValidators_gno",
@@ -1918,6 +2707,7 @@
         "0x7783b756bb712cc5395fe51a373eeead8b45629656efbcd64c327ab8e2ee4c69"
       ],
       "proxyType": "Eternal Storage proxy",
+      "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
       "sinceTimestamp": 1539027960,
       "sinceBlock": 756,
       "values": {
@@ -1977,6 +2767,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Yaho",
       "address": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
       "type": "Contract",
@@ -1985,7 +2780,7 @@
         "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
       ],
       "proxyType": "immutable",
-      "description": "Contract handling outbound messages for the Hashi protocol.",
+      "description": "Outbound dispatcher in Hashi. It commits message hashes, emits `MessageDispatched`, and can call reporters to forward those hashes to remote adapters.",
       "sinceTimestamp": 1720614455,
       "sinceBlock": 34894655,
       "values": { "$immutable": true },
@@ -1997,12 +2792,33 @@
       "name": "Gnosis DAO EOA 2",
       "address": "gno:0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe",
       "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
+    },
+    {
+      "address": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
+      "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "gno:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
@@ -2012,7 +2828,15 @@
     {
       "address": "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "description": "can sign bridge messages between Ethereum and Gnosis.",
+          "role": ".$members"
+        }
+      ]
     },
     {
       "address": "gno:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -2021,6 +2845,33 @@
     },
     {
       "address": "gno:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeOmnibridge Forwarding Rules Manager",
+      "address": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+      "type": "Contract",
+      "template": "gnosis/MultiTokenForwardingRulesManager",
+      "sourceHashes": [
+        "0x7f6c0a3df8db7d08785d2a343cc1b3c8584ec7c60e54c2cf81d7bc9898d441d5"
+      ],
+      "proxyType": "immutable",
+      "description": "Module used by HomeOmnibridge to decide whether specific tokens, senders, or receivers must use the oracle-driven lane or the manual lane for bridge requests.",
+      "sinceTimestamp": 1634246015,
+      "sinceBlock": 18573603,
+      "values": {
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd"
+      },
+      "implementationNames": {
+        "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": "MultiTokenForwardingRulesManager"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2035,7 +2886,46 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GnosisSafeL2",
+      "address": "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeOmnibridge TokenFactory",
+      "address": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+      "type": "Contract",
+      "template": "gnosis/TokenFactory",
+      "sourceHashes": [
+        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+      ],
+      "proxyType": "immutable",
+      "description": "Factory used by Omnibridge to deploy wrapped tokens representing assets native to the other chain.",
+      "sinceTimestamp": 1634244420,
+      "sinceBlock": 18573286,
+      "values": {
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "tokenImage": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4"
+      },
+      "fieldMeta": {
+        "tokenImage": {
+          "severity": "HIGH",
+          "description": "Template implementation cloned for newly deployed Omnibridge wrapped tokens."
+        }
+      },
+      "implementationNames": {
+        "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": "TokenFactory"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Hashi Multisig (Gnosis)",
       "address": "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2044,17 +2934,18 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "description": "2-of-3 multisig that owns and upgrades the Gnosis-side Hashi managers used by the bridge validation path.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "description": "change the configured reporters, adapters, thresholds, Yaho or Yaru endpoints, and the remote target routing used for Hashi validation.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
-          "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
+          "description": "change the configured reporters, adapters, thresholds, Yaho or Yaru endpoints, and the remote target routing used for Hashi validation.",
           "role": ".owner"
         },
         {
@@ -2094,6 +2985,120 @@
     },
     {
       "address": "gno:0xf59E447E97bC03c2B0C5719e2E551F0B15b724e5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HomeOmnibridge",
+      "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+      "type": "Contract",
+      "template": "gnosis/HomeOmnibridge",
+      "sourceHashes": [
+        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
+        "0x054fd17b3f8e15a00d9fd1d8e96c3b2769ae32765e5babae32ca4fd2deae564b"
+      ],
+      "proxyType": "Eternal Storage proxy",
+      "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",
+      "sinceTimestamp": 1596501010,
+      "sinceBlock": 11300566,
+      "values": {
+        "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "$implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
+        "$pastUpgrades": [
+          [
+            "2020-08-04T00:30:55.000Z",
+            "0x287a396848e8c4d96873999dbca59aaeb8c9550110ef487670879d08e1bb0c5a",
+            ["gno:0xcEb06eCea3F588Cb60e39BD4DB7869013C6f65a5"]
+          ],
+          [
+            "2020-08-22T22:09:10.000Z",
+            "0xbf5aad84a9e42e20bbb7dcbe07bc905112307c3f5ab47b4fa6f5957032226356",
+            ["gno:0x3068E52FfD384689F815D7bAF81fc34f649919d4"]
+          ],
+          [
+            "2020-12-06T22:11:05.000Z",
+            "0xe01549ba626337cc9a2b327acde465f2969d4bf5a54f201ba067e299c9926d49",
+            ["gno:0x7aa0062b833714A1c345966A21D93D13264Ef92D"]
+          ],
+          [
+            "2020-12-11T13:24:00.000Z",
+            "0xd169a2b716ace4a3b261823ebad4b52ebb621189294dd62df6df9c9418d56253",
+            ["gno:0x0FCdADb9E445D88D200e9Fd79a2F3f49eEfcc15E"]
+          ],
+          [
+            "2021-02-03T01:06:30.000Z",
+            "0x45cf70ff0700446b66f7fb071d080e3cc91b56e2b265740fa3945ce6b56374c6",
+            ["gno:0x574b4D060420d75866567d0E52cE98C4eb146639"]
+          ],
+          [
+            "2021-02-04T22:31:30.000Z",
+            "0x84939fcb6af541b6db5b77018047dbf120bb5bdecf43ac2a26a76f67084db6e7",
+            ["gno:0x5CbE9bb92fd026691C694A8F3acAc76B9Fa1CC18"]
+          ],
+          [
+            "2021-03-15T14:03:10.000Z",
+            "0x78941e51d725344759812aaaa6c6e027ae44cac59eeca718ce0bfdf98c2ac90d",
+            ["gno:0xe17738Aa9FDD50ad50644cFD563964A530c64715"]
+          ],
+          [
+            "2021-10-15T19:02:01.000Z",
+            "0x490609cf911ff3de84d50c9b75a1bd8f3f375d4c3ead65cda3e0dc0b28a2828c",
+            ["gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "bridgeContract": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+        "feeManager": "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55",
+        "forwardingRulesManager": "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286",
+        "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
+        "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
+        "getBridgeMode": "0xb1516c26",
+        "getCurrentDay": 20573,
+        "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
+        "isInitialized": true,
+        "mediatorContractOnOtherSide": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "tokenFactory": "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2",
+        "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "version": 8
+      },
+      "fieldMeta": {
+        "bridgeContract": {
+          "severity": "HIGH",
+          "description": "AMB bridge endpoint used as the cross-chain messaging layer for the Gnosis-side Omnibridge mediator."
+        },
+        "mediatorContractOnOtherSide": {
+          "severity": "HIGH",
+          "description": "Counterpart Omnibridge mediator on Ethereum."
+        },
+        "tokenFactory": {
+          "severity": "HIGH",
+          "description": "Factory used to deploy wrapped tokens for assets bridged from Ethereum to Gnosis."
+        },
+        "feeManager": {
+          "severity": "HIGH",
+          "description": "Module that computes and distributes Omnibridge fees on Gnosis."
+        },
+        "forwardingRulesManager": {
+          "severity": "HIGH",
+          "description": "Module that chooses whether Omnibridge requests use the oracle-driven lane or the manual lane."
+        },
+        "gasLimitManager": {
+          "severity": "HIGH",
+          "description": "Module that chooses request gas limits for Omnibridge cross-chain messages."
+        }
+      },
+      "implementationNames": {
+        "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": "EternalStorageProxy",
+        "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": "HomeOmnibridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -2430,6 +3435,38 @@
       "function tokenRoutes(address) view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": [
+      "constructor(address lzEndpoint, address delegate)",
+      "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
+      "error InvalidBlockHeaderRLP()",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error NoPeer(uint32 eid)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error UnauthorizedLayerZeroReceive()",
+      "event HashStored(uint256 indexed id, bytes32 indexed hash)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event ReporterSet(uint256 indexed chainId, uint32 indexed endpointId, address indexed reporter)",
+      "function LAYER_ZERO_ENDPOINT() view returns (address)",
+      "function PROVIDER() view returns (string)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function chainIds(uint32) view returns (uint256)",
+      "function enabledReporters(uint32) view returns (address)",
+      "function endpoint() view returns (address)",
+      "function getHash(uint256 domain, uint256 id) view returns (bytes32)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32, bytes _message, address, bytes) payable",
+      "function nextNonce(uint32, bytes32) pure returns (uint64 nonce)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function proveAncestralBlockHashes(uint256 chainId, bytes[] blockHeaders)",
+      "function renounceOwnership()",
+      "function setDelegate(address _delegate)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setReporterByChain(uint256 chainId, uint32 endpointId, address reporter)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3": [
       "function mintingFinished() view returns (bool)",
       "function name() view returns (string)",
@@ -2748,6 +3785,54 @@
       "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
       "function executed(uint256) view returns (bool)"
     ],
+    "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": [
+      "function mintingFinished() view returns (bool)",
+      "function name() view returns (string)",
+      "function approve(address _to, uint256 _value) returns (bool result)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function decimals() view returns (uint8)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function burn(uint256 _value)",
+      "function version() view returns (string)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function claimTokens(address _token, address _to)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function isBridge(address _address) view returns (bool)",
+      "function finishMinting() returns (bool)",
+      "function nonces(address) view returns (uint256)",
+      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function symbol() view returns (string)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function push(address _to, uint256 _amount)",
+      "function move(address _from, address _to, uint256 _amount)",
+      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
+      "function bridgeContract() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function pull(address _from, uint256 _amount)",
+      "function transferOwnership(address _newOwner)",
+      "function expirations(address, address) view returns (uint256)",
+      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
+      "event Mint(address indexed to, uint256 amount)",
+      "event MintFinished()",
+      "event OwnershipRenounced(address indexed previousOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Burn(address indexed burner, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
+    ],
     "gno:0x26FC9FC1C98607E1634f87B47E6798D436823299": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() view returns (uint64 major, uint64 minor, uint64 patch)",
@@ -2766,6 +3851,78 @@
       "event ValidatorRemoved(address indexed validator)",
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
+    ],
+    "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": [
+      "constructor(string _suffix)",
+      "event DailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
+      "event FailedMessageFixed(bytes32 indexed messageId, address token, address recipient, uint256 value)",
+      "event FeeDistributed(uint256 fee, address indexed token, bytes32 indexed messageId)",
+      "event FeeDistributionFailed(address indexed token, uint256 fee)",
+      "event NewTokenRegistered(address indexed nativeToken, address indexed bridgedToken)",
+      "event OwnershipTransferred(address previousOwner, address newOwner)",
+      "event TokensBridged(address indexed token, address indexed recipient, uint256 value, bytes32 indexed messageId)",
+      "event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)",
+      "function bridgeContract() view returns (address)",
+      "function bridgedTokenAddress(address _nativeToken) view returns (address)",
+      "function claimTokens(address _token, address _to)",
+      "function claimTokensFromTokenContract(address _bridgedToken, address _token, address _to)",
+      "function dailyLimit(address _token) view returns (uint256)",
+      "function deployAndHandleBridgedTokens(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value)",
+      "function deployAndHandleBridgedTokensAndCall(address _token, string _name, string _symbol, uint8 _decimals, address _recipient, uint256 _value, bytes _data)",
+      "function executionDailyLimit(address _token) view returns (uint256)",
+      "function executionMaxPerTx(address _token) view returns (uint256)",
+      "function feeManager() view returns (address)",
+      "function fixFailedMessage(bytes32 _messageId)",
+      "function fixMediatorBalance(address _token, address _receiver)",
+      "function foreignTokenAddress(address _homeToken) view returns (address)",
+      "function forwardingRulesManager() view returns (address)",
+      "function gasLimitManager() view returns (address)",
+      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function getBridgeMode() pure returns (bytes4 _data)",
+      "function getCurrentDay() view returns (uint256)",
+      "function handleBridgedTokens(address _token, address _recipient, uint256 _value)",
+      "function handleBridgedTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function handleNativeTokens(address _token, address _recipient, uint256 _value)",
+      "function handleNativeTokensAndCall(address _token, address _recipient, uint256 _value, bytes _data)",
+      "function homeTokenAddress(address _foreignToken) view returns (address)",
+      "function initialize(address _bridgeContract, address _mediatorContract, uint256[3] _dailyLimitMaxPerTxMinPerTxArray, uint256[2] _executionDailyLimitExecutionMaxPerTxArray, address _gasLimitManager, address _owner, address _tokenFactory, address _feeManager, address _forwardingRulesManager) returns (bool)",
+      "function isBridgedTokenDeployAcknowledged(address _token) view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isRegisteredAsNativeToken(address _token) view returns (bool)",
+      "function isTokenRegistered(address _token) view returns (bool)",
+      "function maxAvailablePerTx(address _token) view returns (uint256)",
+      "function maxPerTx(address _token) view returns (uint256)",
+      "function mediatorBalance(address _token) view returns (uint256)",
+      "function mediatorContractOnOtherSide() view returns (address)",
+      "function messageFixed(bytes32 _messageId) view returns (bool)",
+      "function migrateTo_3_3_0(address _tokenFactory, address _forwardingRulesManager, address _gasLimitManager, address _feeManager)",
+      "function minPerTx(address _token) view returns (uint256)",
+      "function nativeTokenAddress(address _bridgedToken) view returns (address)",
+      "function onTokenTransfer(address _from, uint256 _value, bytes _data) returns (bool)",
+      "function owner() view returns (address)",
+      "function relayTokens(address token, uint256 _value)",
+      "function relayTokens(address token, address _receiver, uint256 _value)",
+      "function relayTokensAndCall(address token, address _receiver, uint256 _value, bytes _data)",
+      "function requestFailedMessageFix(bytes32 _messageId)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function setCustomTokenAddressPair(address _nativeToken, address _bridgedToken)",
+      "function setDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionDailyLimit(address _token, uint256 _dailyLimit)",
+      "function setExecutionMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setFeeManager(address _feeManager)",
+      "function setForwardingRulesManager(address _manager)",
+      "function setGasLimitManager(address _manager)",
+      "function setMaxPerTx(address _token, uint256 _maxPerTx)",
+      "function setMediatorContractOnOtherSide(address _mediatorContract)",
+      "function setMinPerTx(address _token, uint256 _minPerTx)",
+      "function setTokenFactory(address _tokenFactory)",
+      "function tokenFactory() view returns (address)",
+      "function totalExecutedPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function totalSpentPerDay(address _token, uint256 _day) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
+      "function withinLimit(address _token, uint256 _amount) view returns (bool)"
     ],
     "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
@@ -2855,6 +4012,25 @@
       "function relayTokens(address recipient) payable",
       "function xDAIBridge() view returns (address)"
     ],
+    "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": [
+      "constructor(address _mediator, address _owner, address[] _rewardAddresses, uint256[2] _fees)",
+      "event FeeUpdated(bytes32 feeType, address indexed token, uint256 fee)",
+      "function FOREIGN_TO_HOME_FEE() view returns (bytes32)",
+      "function HOME_TO_FOREIGN_FEE() view returns (bytes32)",
+      "function addRewardAddress(address _addr)",
+      "function calculateFee(bytes32 _feeType, address _token, uint256 _value) view returns (uint256)",
+      "function distributeFee(address _token)",
+      "function getFee(bytes32 _feeType, address _token) view returns (uint256)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function isRewardAddress(address _addr) view returns (bool)",
+      "function mediator() view returns (address)",
+      "function owner() view returns (address)",
+      "function removeRewardAddress(address _addr)",
+      "function rewardAddressCount() view returns (uint256)",
+      "function rewardAddressList() view returns (address[])",
+      "function setFee(bytes32 _feeType, address _token, uint256 _fee)",
+      "function transferOwnership(address _newOwner)"
+    ],
     "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
@@ -2864,6 +4040,23 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": [
+      "constructor(address _bridge, address _owner, uint256 _gasLimit)",
+      "function bridge() view returns (address)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function requestGasLimit(bytes4 _selector, address _token) view returns (uint256)",
+      "function requestGasLimit() view returns (uint256)",
+      "function requestGasLimit(bytes4 _selector) view returns (uint256)",
+      "function requestGasLimit(bytes _data) view returns (uint256)",
+      "function setBridgedTokenRequestGasLimits(address _token, uint256[] _gasLimits)",
+      "function setCommonRequestGasLimits(uint256[] _gasLimits)",
+      "function setNativeTokenRequestGasLimits(address _token, uint256[] _gasLimits)",
+      "function setRequestGasLimit(bytes4 _selector, uint256 _gasLimit)",
+      "function setRequestGasLimit(bytes4 _selector, address _token, uint256 _gasLimit)",
+      "function setRequestGasLimit(uint256 _gasLimit)",
+      "function transferOwnership(address _newOwner)"
     ],
     "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": [
       "function setExpectedThreshold(uint256 expectedThreshold_)",
@@ -2919,6 +4112,9 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": [
+      "constructor(address _singleton)"
     ],
     "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": [
       "constructor(address _masterCopy)"
@@ -3218,6 +4414,20 @@
       "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
       "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
     ],
+    "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": [
+      "constructor(address _owner)",
+      "event ForwardingRuleUpdated(address token, address sender, address receiver, int256 lane)",
+      "function destinationLane(address _token, address _sender, address _receiver) view returns (int256)",
+      "function forwardingRule(address, address, address) view returns (int256)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function setReceiverExceptionForTokenForwardingRule(address _token, address _receiver, bool _enable)",
+      "function setReceiverForwardingRule(address _receiver, bool _enable)",
+      "function setSenderExceptionForTokenForwardingRule(address _token, address _sender, bool _enable)",
+      "function setSenderForwardingRule(address _sender, bool _enable)",
+      "function setTokenForwardingRule(address _token, bool _enable)",
+      "function transferOwnership(address _newOwner)"
+    ],
     "gno:0xe6998b0C03D3cb9ee8C04f266e573c7Fa8782846": [
       "function numMessagesSigned(bytes32 _message) view returns (uint256)",
       "function totalBurntCoins() view returns (uint256)",
@@ -3300,35 +4510,59 @@
       "event AmountLimitExceeded(address recipient, uint256 value, bytes32 indexed transactionHash, bytes32 messageId)",
       "event AssetAboveLimitsFixed(bytes32 indexed messageId, uint256 value, uint256 remaining)"
     ],
+    "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": [
+      "constructor(address _owner, address _tokenImage)",
+      "function deploy(string _name, string _symbol, uint8 _decimals, uint256 _chainId) returns (address)",
+      "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function setTokenImage(address _tokenImage)",
+      "function tokenImage() view returns (address)",
+      "function transferOwnership(address _newOwner)"
+    ],
     "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": [
       "constructor(address _singleton)"
+    ],
+    "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": [
+      "function upgradeTo(uint256 version, address implementation)",
+      "function version() view returns (uint256)",
+      "function implementation() view returns (address)",
+      "function upgradeabilityOwner() view returns (address)",
+      "function upgradeToAndCall(uint256 version, address implementation, bytes data) payable",
+      "function transferProxyOwnership(address newOwner)",
+      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
+      "event Upgraded(uint256 version, address indexed implementation)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "gnosis/BlockRewardAuRa": "0xdd799c9842e3b65eb5776f1bcb49acaeeb3f2cfa46c903f0e955d3a0ea1006e7",
-    "gnosis/BridgeRouter": "0xfc8fa888254087f49ef93c5873d376b88761b661d02cff5ef2b69f59da4115f8",
+    "gnosis/BlockRewardAuRa": "0xa62cd6ea779dbe4a07dd45f1195a10a5a94e13396cc8f61e348b24477440d588",
+    "gnosis/BridgeRouter": "0x908249a79f82ee0ad86c54633e5d1e8e4677c0c13c1402a91370e634df5afd93",
     "gnosis/BridgeValidators": "0x897057a079a579bb068ff172ecfa93504ba751b86ed162bdaa079902fb6686a1",
     "gnosis/BridgeValidators_gno": "0x58969c8af73a25c3b49fd4b762b4356b9d9300cc69fa6103913c4baa72adbe12",
-    "gnosis/ForeignAMB": "0x31becdec641493702e1a8d13b91479a9584d325d04ece2004e492606c378880c",
-    "gnosis/ForeignOmnibridge": "0x873bc736f7019c50d509fd6b272f0c15c877e40bcb245eafdc7bacb23161b794",
+    "gnosis/ForeignAMB": "0x8431edb390e8a98a1d8c69096a632942bc847c7bc2242c22ddc937785ead94a2",
+    "gnosis/ForeignOmnibridge": "0xc508783037f36a089c8ed30736663e8bd0defc0bb0122574cd5fb57914083642",
     "gnosis/Hashi": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosis/HashiManager": "0x1b1859044f9a6939ca08c418234395d808cffdf0c2a654419bf89a26a090b674",
-    "gnosis/HomeAMB": "0xb0fd959386a7c98bde0421e524231d8b817d7e62d81dd3b7edb281cc74a4c2e3",
-    "gnosis/HomeBridgeErcToNative": "0x8087a9c9f67d523f146635c4a5e3c1e4ea6f7ed75e060db9284baab7769d4ad9",
-    "gnosis/LayerZeroReporter": "0x296f7bba1557de64958f28ceb730823d533395bca7d5dded60fc639bbd74550b",
+    "gnosis/HashiManager": "0xf429a327cdbcc1f762e654885152ddfcdea3f9c425f905492a63754ceb3c664d",
+    "gnosis/HomeAMB": "0xff95622aded9385583869a6873c3c7c765bfbf0d7d91247c167c42c7dd933b30",
+    "gnosis/HomeBridgeErcToNative": "0x0f08bf034263fe6b8adfd1a36bc9d5d2f8f179617c1f8e3cc73764bbe43b95a7",
+    "gnosis/HomeOmnibridge": "0xfa9c8af7bcaf1cdf62afc7fba34137436b99c719952f84aff580784c7a2579bf",
+    "gnosis/LayerZeroAdapter": "0x4e75e2fc8739df11648b7d6ab883e1c6294d86774dca65e02d39e66d5c5136fc",
+    "gnosis/LayerZeroReporter": "0x47f9ad80e38c54efba68c5ee1e5d4a77867f50c987d84fb19308a1a0a034a5fe",
+    "gnosis/MultiTokenForwardingRulesManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "gnosis/OmnibridgeFeeManager": "0xa13c6d2ef4d3c64fbe9591a57652efec1256c9d4c6700b6783bb6cd57c34f728",
     "gnosis/PermittableToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "gnosis/SelectorTokenGasLimitManager": "0x71f7df8b7b26c5ade2d9e300655c136dff1241342458ed8f5171207f18de44fd",
     "gnosis/SP1Helios": "0x4c7d7f4fc083d46d80c4261c13db9b134917fcfd509c6481f6730a9b6b3aa790",
-    "gnosis/SP1HeliosAdapter": "0x09fb193f313e9fba5467ed9d8723ebb1e0ff90399e55b9a907981d052c22e03a",
-    "gnosis/TokenFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "gnosis/SP1HeliosAdapter": "0x1240d0d0d8113eaf85e0ca529fc58ca4280e40ff4375fe26ddcafb6012dd9943",
+    "gnosis/TokenFactory": "0x9c8dcde701b5b6be9f8f6e370b5ad7c46eb8e02ad75b71ca02cf83fad123c0b9",
     "gnosis/USDSDepositContract": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "gnosis/WETHOmnibridgeRouter": "0x3e2aba362bb78dd03e3318d35d11b64273dea796663a446cf6ba23a11b729135",
-    "gnosis/XDaiForeignBridge": "0x3339c79a3a07924cb0d282016b6ea21d7c66a8afff1e3a43f146b0b6da047648",
+    "gnosis/WETHOmnibridgeRouter": "0x4f94ed25c734e47e0c0868cd8f2fc7e566cd1a01f082b30993251062f3695e41",
+    "gnosis/XDaiForeignBridge": "0x80281d259df89f537b9ffc8f274fa006d47ff30c1095b2b7441e0195713ee1d7",
     "gnosis/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
-    "gnosis/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
+    "gnosis/Yaru": "0xa0b2da4bb791f5122f5aeaf4624768720053750b21b4814768d5494c1f026906",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24991869, "gnosis": 45931894 },
-  "permissionsConfigHash": "0x15f39c1a303477aed2800b5e39c6ea4d13e130ef5a385ea346fd78a19ac1d96e"
+  "permissionsConfigHash": "0x53bbca6e4b044690bb48fbbfaf032b3aef36be5279edb69d8d293e316b539e82"
 }

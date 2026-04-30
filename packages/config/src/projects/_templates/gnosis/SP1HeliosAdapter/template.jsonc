@@ -1,4 +1,19 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "fields": { "SOURCE_YAHO": { "edit": ["format", "EthereumAddress"] } }
+  "description": "Light-client-style Hashi adapter that verifies source-chain consensus data with SP1 Helios proofs and stores block or message hashes for later Hashi aggregation.",
+  "fields": {
+    "SP1_HELIOS_ADDRESS": {
+      "description": "SP1 Helios light client used to verify source-chain headers before hashes are stored.",
+      "severity": "HIGH"
+    },
+    "SOURCE_YAHO": {
+      "description": "Expected source-chain Yaho dispatcher whose `MessageDispatched` event is verified before storing message hashes.",
+      "severity": "HIGH",
+      "edit": ["format", "EthereumAddress"]
+    },
+    "SOURCE_CHAIN_ID": {
+      "description": "Source chain whose headers and Yaho-dispatched messages this adapter verifies.",
+      "severity": "HIGH"
+    }
+  }
 }

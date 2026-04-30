@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Ethereum-side ERC20-to-native bridge used to lock DAI or USDS on Ethereum and authorize xDAI minting on Gnosis. Message execution is validated by a dedicated validator set and can additionally be gated by Hashi.",
   "ignoreRelatives": [
     "sDaiToken",
     "DAI_USDS",
@@ -14,7 +16,36 @@
     "maxPerTx",
     "nonce"
   ],
-  "fields": { "HASHI_IS_MANDATORY": { "severity": "HIGH" } },
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change bridge limits, gas and confirmation parameters, and the optional Hashi validation manager for the xDAI bridge."
+        }
+      ]
+    },
+    "upgradeabilityOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "claim tokens held by the bridge and recover legacy transfers that remain locked in the contract."
+        }
+      ]
+    },
+    "HASHI_IS_MANDATORY": {
+      "description": "If true, validator-approved bridge messages also require Hashi validation before execution.",
+      "severity": "HIGH"
+    },
+    "validatorContract": {
+      "description": "Validator contract that must sign xDAI bridge messages before they can be executed on Ethereum.",
+      "severity": "HIGH"
+    },
+    "hashiManager": {
+      "description": "Optional Hashi-based validation manager used as an additional verification layer for xDAI bridge messages from Gnosis.",
+      "severity": "HIGH"
+    }
+  },
   "ignoreMethods": [
     "totalExecutedPerDay",
     "totalSpentPerDay",

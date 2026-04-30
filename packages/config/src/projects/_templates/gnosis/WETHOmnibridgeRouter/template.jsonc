@@ -1,4 +1,20 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["WETH"]
+  "category": "bridge-canonical",
+  "description": "Router that wraps native ETH into WETH before sending it through Omnibridge and unwraps it again on Gnosis when bridge messages are executed.",
+  "ignoreRelatives": ["WETH"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "claim ETH or ERC20 tokens that remain stuck in the WETH Omnibridge router."
+        }
+      ]
+    },
+    "bridge": {
+      "description": "ForeignOmnibridge mediator used as the actual cross-chain bridge for ETH transfers.",
+      "severity": "HIGH"
+    }
+  }
 }

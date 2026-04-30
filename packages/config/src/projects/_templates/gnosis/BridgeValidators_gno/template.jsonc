@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
   "fields": {
     "$members": {
       "handler": {
@@ -10,7 +11,13 @@
           "event": "event ValidatorRemoved(address indexed validator)"
         }
       },
-      "description": "Array of the signers in the validator multisig"
+      "description": "Array of the signers in the validator multisig",
+      "permissions": [
+        {
+          "type": "validate",
+          "description": "can sign bridge messages between Ethereum and Gnosis."
+        }
+      ]
     },
     "$threshold": {
       "handler": { "type": "call", "method": "requiredSignatures", "args": [] }

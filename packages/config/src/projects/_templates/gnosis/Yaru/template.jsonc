@@ -1,5 +1,19 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["executed"],
-  "description": "Contract handling inbound messages for the Hashi protocol."
+  "description": "Inbound executor in Hashi. It reconstructs message IDs, asks Hashi whether enough adapters agreed on the hash, and then calls the target bridge receiver.",
+  "fields": {
+    "HASHI": {
+      "description": "Hashi aggregator used to check whether the configured adapter threshold agreed on a message hash.",
+      "severity": "HIGH"
+    },
+    "YAHO": {
+      "description": "Expected Yaho dispatcher address whose `MessageDispatched` events define valid message IDs for this Yaru instance.",
+      "severity": "HIGH"
+    },
+    "SOURCE_CHAIN_ID": {
+      "description": "Source chain whose Yaho-dispatched messages this Yaru instance accepts.",
+      "severity": "HIGH"
+    }
+  }
 }
