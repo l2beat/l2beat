@@ -1113,6 +1113,14 @@ export interface GovernanceConfig {
 export interface ReviewConfig {
   version: string
   lastModified: string
+  /** First time the review-config was created. Preserved across regenerations. */
+  publishedAt?: string
+  /**
+   * Researcher attestation flag. Missing = treated as verified (legacy reviews
+   * were researcher-curated). New AI-generated reviews must explicitly write
+   * `false`. Toggled via the TerminalExtensions button.
+   */
+  verified?: boolean
   protocolSlug: string
   protocolName: string
   tokenName: string

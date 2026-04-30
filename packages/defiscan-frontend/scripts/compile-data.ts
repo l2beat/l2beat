@@ -9,6 +9,9 @@ const __dirname = dirname(__filename)
 // Minimal subset of CompiledReview (from src/types.ts) — only fields needed for index aggregation.
 // Keep in sync with the full type when adding new aggregated fields.
 interface CompiledReview {
+  // Optional for back-compat with older compiled-review.json files that
+  // predate this field. Resolved as `verified ?? true` at read time.
+  verified?: boolean
   metadata: {
     protocolName: string
     protocolSlug: string
@@ -105,6 +108,7 @@ function main() {
     chain: string
     projectType: string
     tokenName: string
+    verified: boolean
     totals: CompiledReview['totals']
   }> = []
 
@@ -206,6 +210,9 @@ function main() {
       chain: review.metadata.chain,
       projectType: review.metadata.projectType,
       tokenName: review.metadata.tokenName,
+      // Legacy compiled reviews predate this field — treat missing as verified
+      // (they were researcher-curated). New AI reviews must explicitly set false.
+      verified: review.verified ?? true,
       totals: {
         ...review.totals,
         totalTokenValue: totalTokenValueForProtocol,

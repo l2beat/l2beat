@@ -1,0 +1,1068 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-30T10:16:28.518Z",
+  "contracts": {
+    "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": {
+      "functions": [
+        {
+          "functionName": "setName",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.483Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.483Z"
+          }
+        },
+        {
+          "functionName": "setSymbol",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.485Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.485Z"
+          }
+        },
+        {
+          "functionName": "setCurator",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.474Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.474Z"
+          }
+        },
+        {
+          "functionName": "setIsAllocator",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.477Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.477Z"
+          }
+        },
+        {
+          "functionName": "setSkimRecipient",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.479Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.479Z"
+          }
+        },
+        {
+          "functionName": "submitTimelock",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+            "fieldName": "timelock"
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Timelock can only be set in [1, 14] days",
+              "valueRange": {
+                "min": "1",
+                "max": "14",
+                "unit": "Days"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.501Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.501Z"
+          }
+        },
+        {
+          "functionName": "setFee",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Maximum fee is 50%",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "0"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "50"
+                },
+                "unit": "%"
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                "fieldName": "fee"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.489Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.489Z"
+          }
+        },
+        {
+          "functionName": "setFeeRecipient",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.481Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.481Z"
+          }
+        },
+        {
+          "functionName": "submitGuardian",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+            "fieldName": "timelock"
+          },
+          "timestamp": "2026-04-30T09:29:29.503Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.503Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.523Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.523Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.525Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.525Z"
+          }
+        },
+        {
+          "functionName": "submitCap",
+          "isPermissioned": true,
+          "score": "unscored",
+          "ownerDefinitions": [
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+            "fieldName": "timelock"
+          },
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A"
+            },
+            {
+              "contractAddress": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79"
+            },
+            {
+              "contractAddress": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
+            },
+            {
+              "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+            },
+            {
+              "contractAddress": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1"
+            },
+            {
+              "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+            },
+            {
+              "contractAddress": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd"
+            },
+            {
+              "contractAddress": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
+            },
+            {
+              "contractAddress": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
+            },
+            {
+              "contractAddress": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81"
+            },
+            {
+              "contractAddress": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1"
+            },
+            {
+              "contractAddress": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                "fieldName": "timelock"
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x2665701293fCbEB223D11A08D826563EDcCE423A"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x4F67e4d9BD67eFa28236013288737D39AeF48e79"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T10:16:28.516Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T10:16:28.516Z"
+          }
+        },
+        {
+          "functionName": "submitMarketRemoval",
+          "isPermissioned": true,
+          "score": "unscored",
+          "ownerDefinitions": [
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+            "fieldName": "timelock"
+          },
+          "timestamp": "2026-04-30T09:29:29.507Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.507Z"
+          }
+        },
+        {
+          "functionName": "setSupplyQueue",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.allocators"
+            },
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.509Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.509Z"
+          }
+        },
+        {
+          "functionName": "updateWithdrawQueue",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.allocators"
+            },
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.510Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.510Z"
+          }
+        },
+        {
+          "functionName": "reallocate",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.allocators"
+            },
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.512Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.512Z"
+          }
+        },
+        {
+          "functionName": "revokePendingTimelock",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.guardian"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "Veto-only",
+              "description": "Only revokes pending owner/curator submissions during the timelock window. Cannot extract funds or initiate state changes.",
+              "scopedTo": {
+                "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
+                "type": "admin"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.514Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.514Z"
+          }
+        },
+        {
+          "functionName": "revokePendingGuardian",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.guardian"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "Veto-only",
+              "description": "Only revokes pending owner/curator submissions during the timelock window. Cannot extract funds or initiate state changes.",
+              "scopedTo": {
+                "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
+                "type": "admin"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.516Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.516Z"
+          }
+        },
+        {
+          "functionName": "revokePendingCap",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.guardian"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "Veto-only",
+              "description": "Only revokes pending owner/curator submissions during the timelock window. Cannot extract funds or initiate state changes.",
+              "scopedTo": {
+                "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
+                "type": "admin"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.518Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.518Z"
+          }
+        },
+        {
+          "functionName": "revokePendingMarketRemoval",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.curator"
+            },
+            {
+              "path": "$self.guardian"
+            },
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "Veto-only",
+              "description": "Only revokes pending owner/curator submissions during the timelock window. Cannot extract funds or initiate state changes.",
+              "scopedTo": {
+                "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
+                "type": "admin"
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T09:29:29.520Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T09:29:29.520Z"
+          }
+        },
+        {
+          "functionName": "acceptCap",
+          "isPermissioned": false,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A"
+            },
+            {
+              "contractAddress": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79"
+            },
+            {
+              "contractAddress": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
+            },
+            {
+              "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+            },
+            {
+              "contractAddress": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1"
+            },
+            {
+              "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+            },
+            {
+              "contractAddress": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd"
+            },
+            {
+              "contractAddress": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
+            },
+            {
+              "contractAddress": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
+            },
+            {
+              "contractAddress": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81"
+            },
+            {
+              "contractAddress": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1"
+            },
+            {
+              "contractAddress": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x2665701293fCbEB223D11A08D826563EDcCE423A"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x4F67e4d9BD67eFa28236013288737D39AeF48e79"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            },
+            {
+              "type": "other",
+              "label": "Per-market cap",
+              "description": "Capital exposure under this feed is bounded by the aggregate USDC supply caps of every Morpho Blue market that consumes it.",
+              "scopedTo": {
+                "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+                "type": "dependency"
+              },
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+                  "fieldName": "feedCap_0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+                },
+                "unit": {
+                  "kind": "scaler",
+                  "factor": "1e6"
+                }
+              }
+            }
+          ],
+          "timestamp": "2026-04-30T10:16:28.518Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T10:16:28.518Z"
+          }
+        }
+      ]
+    },
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "functions": [
+        {
+          "functionName": "liquidate",
+          "isPermissioned": false,
+          "dependencies": [
+            {
+              "contractAddress": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A"
+            },
+            {
+              "contractAddress": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79"
+            },
+            {
+              "contractAddress": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22"
+            },
+            {
+              "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+            },
+            {
+              "contractAddress": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1"
+            },
+            {
+              "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6"
+            },
+            {
+              "contractAddress": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd"
+            },
+            {
+              "contractAddress": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c"
+            },
+            {
+              "contractAddress": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961"
+            },
+            {
+              "contractAddress": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81"
+            },
+            {
+              "contractAddress": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1"
+            },
+            {
+              "contractAddress": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+            }
+          ],
+          "timestamp": "2026-04-30T10:16:28.508Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-30T10:16:28.508Z"
+          }
+        }
+      ]
+    }
+  }
+}

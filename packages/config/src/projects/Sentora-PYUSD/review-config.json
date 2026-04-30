@@ -1,0 +1,140 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-30T11:51:00.372Z",
+  "protocolSlug": "Sentora-PYUSD",
+  "protocolName": "Sentora PYUSD",
+  "tokenName": "senPYUSD",
+  "chain": "Ethereum",
+  "projectType": "lending",
+  "verified": true,
+  "description": "Sentora PYUSD is a MetaMorpho V1.1 ERC4626 vault that allocates PayPal USD deposits across Morpho Blue lending markets selected by Sentora as curator. The vault inherits the standard MetaMorpho contract surface: a 3-day timelock on owner-initiated parameter changes, a per-market supply-cap mechanism, and a guardian veto over pending submissions. As of the most recent discovery the vault holds {{vaultPositionsTotal}} on Morpho Blue against an active cap envelope of 400M PYUSD spread across five markets (cbBTC, wstETH, weETH, an ETH-collateralized market, and WBTC), plus four decommissioned markets that retain only legacy positions. Pricing is provided by ten oracle adapters that route to Chainlink, RedStone, and Lido feeds.",
+  "admins": {
+    "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008": {
+      "name": "Sentora Owner 1/1 Multisig",
+      "description": "Single-signer Gnosis Safe controlling all owner-only vault parameters: fee, fee recipient, curator, allocator set, name and symbol, and the timelock and guardian submission flow. Owner-initiated changes to timelock, guardian, and per-market caps are all delay-protected for 3 days. Reaches {{ownerSafeReachableCapital}} in vault deposits via the standard MetaMorpho permission set."
+    },
+    "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0": {
+      "name": "Sentora Curator/Guardian 1/1 Multisig",
+      "description": "Single-signer Gnosis Safe holding both the curator role (submit and accept market caps and removals, delay-protected) and the guardian role (veto-only revoke of pending owner and curator submissions during the timelock window). Holds {{curatorGuardianReachableCapital}} in reachable capital but its non-veto reach is bounded by per-market caps; veto power is the only path that can act without a delay."
+    },
+    "eth:0xC4Ba4e822C420452fe2BAB93211208D3CcBd79D3": {
+      "name": "Allocator EOA (0xC4Ba...6b31)",
+      "description": "Externally-owned account designated as an allocator. Can call setSupplyQueue, updateWithdrawQueue, and reallocate to move funds between already-capped markets. Cannot create new market exposure — every market it can route to must first be approved through the curator's timelocked submitCap flow."
+    }
+  },
+  "dependencies": {
+    "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": {
+      "name": "Morpho Blue",
+      "description": "Singleton lending primitive that holds every vault deposit. The vault routes PYUSD into Morpho Blue markets via supply, withdraw, and supplyCollateral calls; vault accounting reads positions back through Morpho Blue's market state. A bug in Morpho Blue would directly expose the entire {{vaultPositionsTotal}} held by the vault."
+    },
+    "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D": {
+      "name": "Morpho PublicAllocator",
+      "description": "Permissionless rebalancer that anyone can call to move liquidity between Morpho Blue markets within bounds set by the vault's allocators. Pre-registered as an allocator on this vault, so its on-chain configuration constrains the maximum reallocation it can trigger per call."
+    },
+    "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A": {
+      "name": "Chainlink BTC/USD",
+      "description": "Prices the cbBTC market (200M PYUSD cap). A stale or manipulated read drives bad-debt or under-collateralized borrows on the cbBTC collateral."
+    },
+    "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": {
+      "name": "Chainlink BTC/USD (alt)",
+      "description": "Prices both the weETH market (via the LBTC fundamental adapter) and the WBTC market (50M PYUSD each, 100M combined cap). Shared between two BTC-correlated markets."
+    },
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
+      "name": "Chainlink WBTC/BTC",
+      "description": "WBTC peg ratio used by the WBTC market (50M PYUSD cap). De-pegging or feed failure on this single feed unbalances the WBTC borrow side without affecting the broader BTC pricing."
+    },
+    "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": {
+      "name": "Lido WstETHPriceFeed",
+      "description": "Tracks wstETH/stETH conversion. Feeds the wstETH market (50M PYUSD cap)."
+    },
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+      "name": "Chainlink ETH/USD",
+      "description": "Prices ETH-correlated collateral in the wstETH market and one additional ETH-denominated market (100M PYUSD combined cap)."
+    },
+    "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": {
+      "name": "Chainlink (ETH-correlated)",
+      "description": "Base feed for the secondary ETH-denominated market (50M PYUSD cap)."
+    },
+    "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": {
+      "name": "RedStone LBTC Fundamental",
+      "description": "Custodian-attestation-driven LBTC reserve feed used in the weETH market's adapter (50M PYUSD cap)."
+    },
+    "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": {
+      "name": "Chainlink USDC/USD",
+      "description": "Quote feed used by every active market to denominate the loan-asset (PYUSD/USD via USDC proxy). Aggregates across the full 400M PYUSD active-market cap envelope: a stale read here affects every active market simultaneously."
+    },
+    "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": {
+      "name": "Chainlink (decommissioned)",
+      "description": "Base feed for the decommissioned sUSDe market (cap=0) and a co-base feed for the decommissioned Pendle PT market. Vault no longer accepts new supply against this feed."
+    },
+    "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1": {
+      "name": "Chainlink (decommissioned)",
+      "description": "Base feed for the decommissioned sUSDS market (cap=0). No active risk surface."
+    },
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {
+      "name": "Chainlink (decommissioned)",
+      "description": "Base feed for the decommissioned syrupUSDC (Maple) market (cap=0). No active risk surface."
+    },
+    "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd": {
+      "name": "Pendle Chainlink Oracle (decommissioned)",
+      "description": "Pendle PT pricing adapter for the decommissioned Pendle market (cap=0). No active risk surface."
+    }
+  },
+  "funds": {
+    "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": {
+      "name": "MetaMorphoV1_1 (PYUSD)",
+      "description": "The vault contract itself, holding {{vaultPositionsTotal}} as Morpho Blue supply positions. Depositors mint senPYUSD shares against this position; the vault's allocators can move the underlying PYUSD between approved Morpho Blue markets without an additional delay, but cannot route into markets that have not been timelocked-approved by the curator."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "vaultPositionsTotal": "fundsdata.contracts[\"eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55\"].positions.totalUsdValue",
+    "ownerSafeReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008\"].totalReachableCapital",
+    "curatorGuardianReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0\"].totalReachableCapital"
+  },
+  "publishedAt": "2026-04-30T09:55:00.000Z"
+}

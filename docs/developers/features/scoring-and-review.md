@@ -228,13 +228,30 @@ Each file has its own backend CRUD module under `packages/l2b/src/implementation
 - `TimestampsFooter` (rendered as the final section of `ReportView`, below Protocol Activity) → three pills side-by-side: Published (`publishedAt`, with `(last modified <date>)` parenthetical appended from `lastModified`) / Latest activity (newest `activity[].timestamp`, renders "Not monitored" when empty) / On-chain data (`compiledAt`)
 - `ActivityView` "Last Verified" → `compiledAt` (semantically matches: "the last time we verified on-chain state")
 - `LandingPage` "recently updated" ordering → `lastModified`
-- Gallery cards use `activity[].timestamp` (via the shared `getLatestActivityTimestamp` helper in `pages/review/views/activityTimestamp.ts`) for both the UPDATED status badge (< 7 days) and the "Last Activity" stat
+- Gallery cards use `activity[].timestamp` (via the shared `getLatestActivityTimestamp` helper in `pages/review/views/activityTimestamp.ts`) for the "Last Activity" subtext on each card. The previous UPDATED status badge (< 7 days) was removed — the gallery and hero now render a `VERIFIED` / `UNVERIFIED` pill driven by `CompiledReview.verified` instead.
 
 **Schema notes**:
 
 - `ReviewConfig.publishedAt?: string` is **optional** on the type for backwards compatibility, but `getReviewConfig` backfills it to `lastModified` on read, so in-memory instances always have a value.
 - `ResourcesFile.lastModified?: string` is also optional — legacy `resources.json` files that predate this model return `undefined` from `getResourcesLastModified`, at which point the compiler falls back to `reviewConfig.lastModified`. The first researcher edit stamps the field.
 - `governance.json` has no schema change — we use filesystem mtime because it has no compile-time mutation path, so mtime cleanly tracks researcher edits.
+
+### Verified / Unverified status
+
+Reviews carry a researcher-attestation flag that drives the `VERIFIED` / `UNVERIFIED` pill on Gallery cards and the report Hero:
+
+- `ReviewConfig.verified?: boolean` — optional in the type. **Missing field reads as `true`** (legacy reviews were researcher-curated). New AI-generated reviews must explicitly write `false`.
+- `CompiledReview.verified: boolean` — sourced as `reviewConfig.verified ?? true` in `buildCompiledReview`. Mirrored into `ProtocolSummary.verified` in `index.json` by `compile-data.ts` so Gallery filtering and the pill render without loading every full review.
+- The frontend `StatusPill` (`pages/review/views/StatusPill.tsx`) is the single place colors and labels live; it has two variants (`'card'` for Gallery, `'hero'` for the report hero).
+
+**Lifecycle rules**:
+
+1. **First-time creation** (no prior `review-config.json`): the `/generate-review` skill writes `verified: false`. The protocol enters the system as a draft awaiting researcher review.
+2. **Regeneration**: the skill **preserves** the prior value via the out-of-band `/tmp/review-config-$0-verified.txt` file (the existing review-config is moved aside before generation, so the field has to be captured separately). Re-running the skill on a Verified protocol keeps it Verified.
+3. **Researcher edits via the editor panels**: do NOT change `verified`. `writeReviewConfig` reads the existing file and copies the field over when the incoming payload doesn't include it, so a description tweak doesn't accidentally re-flip the flag. Only an explicit toggle does.
+4. **Explicit toggle**: the **Mark as Verified / Mark as Unverified** button in `TerminalExtensions` (protocolbeat) reads the current config via `getReviewConfig`, flips `verified`, and PUTs the full config through the same `updateReviewConfig` endpoint used by the editors. No separate API.
+
+The previous `ACTIVE` / `UPDATED` status (driven by a 7-day window on the newest activity event) was abandoned with this change. `getLatestActivityTimestamp` is still used for the "Last Activity" subtext on Gallery cards and the hero/footer "Latest activity" lines — those are independent informative timestamps and unaffected.
 
 ### Resources
 

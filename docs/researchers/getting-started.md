@@ -234,6 +234,25 @@ Use the **Resources** panel to manage project links (frontends, website, documen
 
 Each audit entry has `author` (auditing firm), `date` (`YYYY-MM`), optional `scope`, and optional `bounty` (max USD payout, used for the Bug Bounty stat in the public frontend).
 
+## Mark the review as Verified
+
+Every review carries a `verified` flag that drives a **VERIFIED** / **UNVERIFIED** pill on the public Gallery and report hero. The flag is a researcher attestation: it means a human has reviewed the AI-generated content and signed off on it.
+
+- **AI-generated drafts start as Unverified.** When `/generate-review` creates a `review-config.json` for the first time, it writes `verified: false` — the protocol enters the public site as a draft.
+- **Re-running `/generate-review` preserves your prior attestation.** If you've already marked a protocol Verified and you regenerate, the flag stays at `true`. (If you want to revoke and re-attest, click the toggle described below.)
+- **Edits via the Review Builder do not touch the flag.** Tweaking descriptions, audits, or governance keeps the current state.
+
+Once you've reviewed the AI-generated content and made any edits you want, promote the review to Verified:
+
+1. Open the **Terminal** panel.
+2. Click the **✓ Verified — Mark as Unverified** / **Unverified — Mark as Verified** button (next to *Compile Review*). The label and color reflect the current state — green when verified, amber when unverified.
+3. Click **Compile Review** so `compiled-review.json` reflects the new flag.
+4. The next deploy of the public frontend (or a local dev refresh) shows the **VERIFIED** pill on the Gallery card and report hero. The Gallery filter pills let visitors restrict to Verified or Unverified subsets.
+
+If the toggle is greyed out, no `review-config.json` exists yet for the project — author one through the Review Builder first.
+
+> Legacy reviews authored before this flag existed are treated as Verified by default — if you don't see `verified` in `review-config.json`, the public site assumes the review was researcher-curated. The flag is only persisted to the file when you click the toggle (or when `/generate-review` writes a fresh draft).
+
 ## Compile and view the review
 
 Once analysis is complete (discovery, permissions, call graph, funds, review config), compile the review and preview it.

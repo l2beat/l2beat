@@ -1,0 +1,82 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://www.sentora.com",
+      "label": "Sentora"
+    },
+    {
+      "type": "frontend",
+      "url": "https://app.morpho.org/ethereum/vault/0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55/sentora-pyusd",
+      "frontendSubtype": "third-party",
+      "label": "Morpho App"
+    },
+    {
+      "type": "frontend",
+      "url": "https://fallback.morpho.org",
+      "frontendSubtype": "third-party",
+      "label": "Morpho Fallback"
+    },
+    {
+      "type": "frontend",
+      "url": "https://github.com/morpho-org/morpho-lite-apps",
+      "frontendSubtype": "self-hosted",
+      "label": "Morpho Lite Apps"
+    },
+    {
+      "type": "docs",
+      "url": "https://sentora.com/research",
+      "label": "Sentora Research"
+    },
+    {
+      "type": "docs",
+      "url": "https://docs.morpho.org",
+      "label": "Morpho Docs"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/morpho-org/metamorpho",
+      "label": "MetaMorpho Contracts"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/SentoraHQ",
+      "label": "Sentora"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/LICENSE",
+      "label": "GPL-2.0-or-later",
+      "licenseScope": "Morpho Contracts"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2023-11-14-metamorpho-cantina-managed-review.pdf",
+      "author": "Cantina",
+      "date": "2023-11-14",
+      "scope": "MetaMorpho v1"
+    },
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2023-11-16-morpho-blue-periphery-open-zeppelin.pdf",
+      "author": "OpenZeppelin",
+      "date": "2023-11-16",
+      "scope": "MetaMorpho v1"
+    },
+    {
+      "url": "https://github.com/morpho-org/metamorpho/blob/main/audits/2024-01-05-periphery-cantina-competition.pdf",
+      "author": "Cantina",
+      "date": "2024-01-05",
+      "scope": "MetaMorpho v1 competition"
+    },
+    {
+      "url": "https://immunefi.com/bug-bounty/morpho/",
+      "author": "Immunefi",
+      "date": "2024-01",
+      "scope": "Bug Bounty Program",
+      "bounty": 1500000
+    }
+  ],
+  "linesOfCode": 4991,
+  "lastModified": "2026-04-30T09:33:27.404Z"
+}

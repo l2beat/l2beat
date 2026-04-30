@@ -12,6 +12,12 @@ export interface CompiledReview {
    * discovery cycle; researcher-triggered recompiles keep it unchanged.
    */
   compiledAt: string
+  /**
+   * Researcher attestation flag. true = a researcher has reviewed and verified
+   * the AI-generated content. false = AI-generated draft awaiting review.
+   * Drives the Verified/Unverified status pill in Gallery and Hero.
+   */
+  verified: boolean
   project: string
 
   metadata: {
@@ -335,6 +341,9 @@ export interface ProtocolSummary {
   chain: string
   projectType: string
   tokenName: string
+  /** Mirror of CompiledReview.verified — exposed in index.json so Gallery
+   *  can filter and render the status pill without loading every review. */
+  verified: boolean
   totals: CompiledReview['totals']
 }
 

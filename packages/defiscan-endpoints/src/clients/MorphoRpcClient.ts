@@ -10,8 +10,8 @@ const MORPHO_BLUE = '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb'
 const FACTORY_ABI = ['function isMetaMorpho(address) view returns (bool)']
 
 const VAULT_ABI = [
-  'function supplyQueueLength() view returns (uint256)',
-  'function supplyQueue(uint256) view returns (bytes32)',
+  'function withdrawQueueLength() view returns (uint256)',
+  'function withdrawQueue(uint256) view returns (bytes32)',
   'function asset() view returns (address)',
 ]
 
@@ -57,16 +57,19 @@ export class MorphoRpcClient {
   ): Promise<MorphoMarketPosition[]> {
     const vault = new Contract(vaultAddress, VAULT_ABI, this.provider)
 
-    // Step 1: Get supply queue
-    const queueLength: bigint = (await vault.supplyQueueLength()).toBigInt()
-    this.logger.info('Vault supply queue length', {
+    // Step 1: Walk withdrawQueue (full universe of markets the vault may hold positions in).
+    // supplyQueue is the active *deposit* target — for a vault with one idle market in supplyQueue
+    // and capital spread across N markets in withdrawQueue, supplyQueue would only see the idle
+    // portion and miss the rest of the TVS.
+    const queueLength: bigint = (await vault.withdrawQueueLength()).toBigInt()
+    this.logger.info('Vault withdraw queue length', {
       vaultAddress,
       queueLength: queueLength.toString(),
     })
 
     const marketIds: string[] = []
     for (let i = 0; i < Number(queueLength); i++) {
-      const marketId: string = await vault.supplyQueue(i)
+      const marketId: string = await vault.withdrawQueue(i)
       marketIds.push(marketId)
     }
 

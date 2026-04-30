@@ -1,0 +1,253 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Sentora-PYUSD",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55"],
+  "maxAddresses": 100,
+  "maxDepth": 5,
+  "overrides": {
+    // Underlying asset (PYUSD) — never want to walk into the token graph
+    "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": {
+      "ignoreMethods": [
+        "convertToShares",
+        "convertToAssets",
+        "previewDeposit",
+        "previewMint",
+        "previewRedeem",
+        "previewWithdraw"
+      ],
+      "fields": {
+        "supplyQueue": {
+          "handler": {
+            "type": "array",
+            "method": "supplyQueue",
+            "length": "{{ supplyQueueLength }}"
+          }
+        },
+        "withdrawQueue": {
+          "handler": {
+            "type": "array",
+            "method": "withdrawQueue",
+            "length": "{{ withdrawQueueLength }}"
+          }
+        },
+        "marketParams": {
+          "handler": {
+            "type": "morphoMarkets",
+            "morphoAddressField": "MORPHO",
+            "queueField": "withdrawQueue",
+            "ignoreRelative": true
+          }
+        },
+        "marketOracles": {
+          "handler": {
+            "type": "morphoMarkets",
+            "extractField": "oracle",
+            "sourceField": "marketParams"
+          }
+        },
+        "allocators": {
+          "handler": {
+            "type": "event",
+            "select": "allocator",
+            "add": {
+              "event": "SetIsAllocator",
+              "where": ["=", "#isAllocator", true]
+            },
+            "remove": {
+              "event": "SetIsAllocator",
+              "where": ["!=", "#isAllocator", true]
+            }
+          }
+        },
+        "MAX_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 1209600 },
+          "description": "Maximum timelock delay (2 weeks)"
+        },
+        "MIN_TIMELOCK": {
+          "handler": { "type": "hardcoded", "value": 86400 },
+          "description": "Minimum timelock delay (1 day)"
+        },
+        "MAX_QUEUE_LENGTH": {
+          "handler": { "type": "hardcoded", "value": 30 },
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "handler": { "type": "hardcoded", "value": "500000000000000000" },
+          "description": "Maximum fee (50%, represented as 0.5e18)"
+        },
+        "fee": { "severity": "HIGH" },
+        // Per-market caps (one per non-idle market)
+        "marketCap_oracle_0x7681692A9F228fd7dAc0679238D467729Af4E9ca": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xd8a8e6667f58aa9229e8979bd619742b1660ee856c200a93e407dbccb7222323" }
+        },
+        "marketCap_oracle_0x9f02D619a875B0CA383D21772e136fC18B637916": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xf5c5df23559b0fb56560a7578ea17d81e245153ba64b8132df026c9358864d27" }
+        },
+        "marketCap_oracle_0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0x90ef0c5a0dc7c4de4ad4585002d44e9d411d212d2f6258e94948beecf8b4c0d5" }
+        },
+        "marketCap_oracle_0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xa5beccdffd156dfe8c0871f143648c512f0a34f37c8a4ae2ff31ebfe944641d1" }
+        },
+        "marketCap_oracle_0xc8043d248551Ed19B33cbc89dCCd69148c827039": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xc9629945524f3fde56c7e8854a6c3d48e76b9d97236abbe73c750fcc7aeb8501" }
+        },
+        "marketCap_oracle_0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0x6a7e36eb088bd501d73f7ab4c5b8671358559341a78ce521c9e499dc0bc642b9" }
+        },
+        "marketCap_oracle_0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0x85d59152eeeab7ca024804895b358868d8dd1e134171be400d7792d5604a212c" }
+        },
+        "marketCap_oracle_0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xcb12dcbc7c6c4f20ca1537a3cc1a41ec27501f85a3e322a710d9a16a88a28c0e" }
+        },
+        "marketCap_oracle_0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": {
+          "handler": { "type": "metaMorphoCap", "mode": "market", "marketId": "0xbe50eed784490d6c32f398902b55eb5e1bd5af89e1f554993ad5fea899be090b" }
+        },
+        // Per-feed caps: SUM of caps across markets that consume this Chainlink/RedStone feed
+        // queueField=withdrawQueue so the cap aggregation considers the full universe (the handler skips oracle=0x0)
+        "feedCap_0x2665701293fCbEB223D11A08D826563EDcCE423A": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x2665701293fCbEB223D11A08D826563EDcCE423A", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0x4F67e4d9BD67eFa28236013288737D39AeF48e79": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x4F67e4d9BD67eFa28236013288737D39AeF48e79", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xfF30586cD0F29eD462364C7e81375FC0C71219b1", "queueField": "withdrawQueue" }
+        },
+        "feedCap_0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": {
+          "handler": { "type": "metaMorphoCap", "mode": "feed", "feed": "0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23", "queueField": "withdrawQueue" }
+        }
+      },
+      "ignoreInWatchMode": [
+        "totalAssets", "totalSupply", "lastTotalAssets",
+        "marketCap_oracle_0x7681692A9F228fd7dAc0679238D467729Af4E9ca",
+        "marketCap_oracle_0x9f02D619a875B0CA383D21772e136fC18B637916",
+        "marketCap_oracle_0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E",
+        "marketCap_oracle_0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4",
+        "marketCap_oracle_0xc8043d248551Ed19B33cbc89dCCd69148c827039",
+        "marketCap_oracle_0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f",
+        "marketCap_oracle_0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11",
+        "marketCap_oracle_0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA",
+        "marketCap_oracle_0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D",
+        "feedCap_0x2665701293fCbEB223D11A08D826563EDcCE423A",
+        "feedCap_0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+        "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22",
+        "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
+        "feedCap_0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+        "feedCap_0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd",
+        "feedCap_0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+        "feedCap_0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
+        "feedCap_0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
+        "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1",
+        "feedCap_0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23"
+      ]
+    },
+    // === Chainlink EACAggregatorProxy: tighter prune than the shared template ===
+    // Template only prunes "aggregator"; we also prune proposedAggregator, accessController, owner
+    // to keep the underlying OCR aggregators out of the graph
+    "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1": { "ignoreRelatives": ["aggregator", "proposedAggregator", "accessController", "owner"], "ignoreInWatchMode": ["latestRoundData", "latestAnswer"] },
+    // === RedStone-style multi-feed adapters ===
+    "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C": { "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner"], "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
+    "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": { "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner"], "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
+    // === MorphoChainlinkOracleV2 adapters: keep BASE_FEED_*/QUOTE_FEED_* references walked once but not deeper ===
+    // These already get their fields read; suppress price ticking and any vault token refs
+    "eth:0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": { "ignoreInWatchMode": ["price"] },
+    "eth:0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": { "ignoreInWatchMode": ["price"] },
+    "eth:0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": { "ignoreInWatchMode": ["price"] },
+    "eth:0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": { "ignoreInWatchMode": ["price"] },
+    "eth:0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": { "ignoreInWatchMode": ["price"] },
+    "eth:0x7681692A9F228fd7dAc0679238D467729Af4E9ca": { "ignoreInWatchMode": ["price"] },
+    "eth:0x9f02D619a875B0CA383D21772e136fC18B637916": { "ignoreInWatchMode": ["price"] },
+    "eth:0xc8043d248551Ed19B33cbc89dCCd69148c827039": { "ignoreInWatchMode": ["price"] },
+    "eth:0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E": { "ignoreInWatchMode": ["price"] },
+    // Lido WstETHPriceFeed and Pendle Chainlink adapter
+    "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": { "ignoreInWatchMode": ["latestAnswer", "latestRoundData"] },
+    "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd": { "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
+    // === Pendle: prune all internal addresses to keep them as named leaves ===
+    "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883": { "ignoreRelatives": ["SY", "PT", "YT", "factory", "router"] },
+    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": { "ignoreRelatives": ["SY", "YT", "factory"] },
+    "eth:0x30775B422b9c7415349855346352FAA61fD97E41": { "ignoreRelatives": ["SY", "PT", "factory"] },
+    "eth:0xBF98480425A29197e5d99D003017f63a1e595D02": { "ignoreRelatives": ["yieldToken", "factory"] },
+    "eth:0x2A73e899389cABa2a2f648BaBA35e67f5C00EFee": { "ignoreRelatives": ["owner"] },
+    "eth:0x6d247b1c044fA1E22e6B04fA9F71Baf99EB29A9f": { "ignoreRelatives": ["owner", "treasury"] },
+    "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2": { "ignoreRelatives": ["owner"] },
+    "eth:0xE463cD473EcC1d1A4ecF20b62624D84DD20a8339": { "ignoreRelatives": ["owner"] },
+    "eth:0x8223a6271d1e0BDA019Ee55d545d7B86eFF1F573": { "ignoreRelatives": ["owner"] },
+    // === Maple: prune all internal addresses ===
+    "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": { "ignoreRelatives": ["asset", "manager", "implementation", "$admin", "$implementation"] },
+    "eth:0x7aD5fFa5fdF509E30186F4609c2f6269f4B6158F": { "ignoreRelatives": ["asset", "owner", "pool", "poolDelegate", "poolDelegateCover", "withdrawalManager", "loanManagerList", "globals", "$admin", "$implementation"] },
+    "eth:0x4A1c3F0D9aD0b3f9dA085bEBfc22dEA54263371b": { "ignoreRelatives": ["fundsAsset", "pool", "poolManager", "globals", "$admin", "$implementation"] },
+    "eth:0x6ACEb4cAbA81Fa6a8065059f3A944fb066A10fAc": { "ignoreRelatives": ["fundsAsset", "pool", "poolManager", "globals", "$admin", "$implementation"] },
+    "eth:0x804a6F5F667170F545Bf14e5DDB48C70B788390C": { "ignoreRelatives": ["governor", "operationalAdmin", "mapleTreasury", "securityAdmin", "$admin", "$implementation"] },
+    "eth:0x9e62FE15d0E99cE2b30CE0D256e9Ab7b6893AfF5": { "ignoreRelatives": ["pool"] },
+    "eth:0x560B3A85Af1cEF113BB60105d0Cf21e1d05F91d4": { "ignoreRelatives": ["pool", "poolManager", "fundsAsset", "$admin", "$implementation"] },
+    "eth:0x859C9980931fa0A63765fD8EF2e29918Af5b038C": { "ignoreRelatives": ["pool", "poolManager", "fundsAsset", "$admin", "$implementation"] },
+    "eth:0x1bc47a0Dd0FdaB96E9eF982fdf1F34DC6207cfE3": { "ignoreRelatives": ["pool", "poolManager", "$admin", "$implementation"] },
+    "eth:0xBe10aDcE8B6E3E02Db384E7FaDA5395DD113D8b3": { "ignoreRelatives": ["governor", "permissionAdmin", "$admin", "$implementation"] },
+    // === Ethena ===
+    "eth:0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3": { "ignoreRelatives": ["usde", "owner", "admin", "_custodianAddresses", "_supportedAssets"] },
+    "eth:0x7FC7c91D556B400AFa565013E3F32055a0713425": { "ignoreRelatives": ["USDE", "STAKING_VAULT"] },
+    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": { "ignoreRelatives": ["owner", "minter"] },
+    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": { "ignoreRelatives": ["asset", "owner", "silo"] },
+    // === MakerDAO ===
+    "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": { "ignoreRelatives": ["wards"] },
+    "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466": { "ignoreRelatives": ["wards", "vat", "flopper", "flapper"] },
+    "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB": { "ignoreRelatives": ["wards", "vat", "usds"] },
+    "eth:0xA41B6EF151E06da0e34B009B86E828308986736D": { "ignoreRelatives": ["wards", "vat", "vow"] },
+    "eth:0xBF7111F13386d23cb2Fba5A538107A73f6872bCF": { "ignoreRelatives": ["wards"] },
+    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": { "ignoreRelatives": ["owner", "executor"] },
+    "eth:0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b": { "ignoreRelatives": ["admin", "wards"] },
+    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": { "ignoreRelatives": ["wards", "usds", "$admin", "$implementation"] },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": { "ignoreRelatives": ["wards", "$admin", "$implementation"] },
+    // === External multisigs (Maple/Pendle/Ethena owners) ===
+    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": { "ignoreRelatives": ["$members"] },
+    "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862": { "ignoreRelatives": ["$members"] },
+    "eth:0x6906F3a09BCc1b7cd3b0C8626724299618dF4472": { "ignoreRelatives": ["$members"] },
+    // === Pendle Token (PENDLE governance token) ===
+    "eth:0x808507121B80c02388fAd14726482e061B8da827": { "ignoreRelatives": ["owner", "_minter"] },
+    // === New Pendle governance contracts (round 2) ===
+    "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e": { "ignoreRelatives": ["owner", "$admin", "$implementation"] },
+    "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1": { "ignoreRelatives": ["$members"] },
+    "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64": { "ignoreRelatives": ["owner"] },
+    "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606": { "ignoreRelatives": ["$members"] }
+  }
+}

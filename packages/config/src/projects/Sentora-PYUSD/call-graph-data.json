@@ -1,0 +1,1423 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-30T09:17:50.906Z",
+  "contracts": {
+    "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": {
+      "address": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+      "name": "MetaMorphoV1_1",
+      "externalCalls": [
+        {
+          "callerFunction": "acceptCap",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "acceptCap",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "acceptCap",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToAssets",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToAssets",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToAssets",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToAssets",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToAssets",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToShares",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToShares",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToShares",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToShares",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "convertToShares",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "supply",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "deposit",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxDeposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxDeposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxDeposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxDeposit",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxMint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "TMP_1724",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxRedeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "TMP_1724",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "maxWithdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "supply",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "previewDeposit",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewDeposit",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewDeposit",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewDeposit",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewDeposit",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewMint",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewMint",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewMint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewMint",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewMint",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewRedeem",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewRedeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewRedeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewRedeem",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewRedeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewWithdraw",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewWithdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewWithdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewWithdraw",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "previewWithdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "reallocate",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "reallocate",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "supply",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "reallocate",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "reallocate",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "reallocate",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "TMP_1724",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "setFee",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "setFee",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "setFee",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "setFee",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "setFeeRecipient",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "setFeeRecipient",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "setFeeRecipient",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "setFeeRecipient",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "skim",
+          "storageVariable": "TMP_1594",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "skim",
+          "storageVariable": "token",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "submitCap",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "submitCap",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "submitCap",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "submitCap",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "totalAssets",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "totalAssets",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "totalAssets",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "totalAssets",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "totalAssets",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "updateWithdrawQueue",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "idToMarketParams",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "TMP_54",
+          "interfaceType": "IIrm",
+          "calledFunction": "borrowRateView"
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "morpho",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "TMP_1724",
+          "interfaceType": "ERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "extSloads",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "market",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "withdraw",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "MORPHO",
+          "interfaceType": "IMorpho",
+          "calledFunction": "accrueInterest",
+          "resolvedAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "resolvedContractName": "Morpho",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "_asset",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
+          "resolvedContractName": "MetaMorphoV1_1",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-04-30T09:17:48.458Z"
+    },
+    "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0": {
+      "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
+      "name": "Safe",
+      "externalCalls": [
+        {
+          "callerFunction": "checkNSignatures",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "checkSignatures",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_275",
+          "interfaceType": "Guard",
+          "calledFunction": "checkTransaction"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_299",
+          "interfaceType": "Guard",
+          "calledFunction": "checkAfterExecution"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "setGuard",
+          "storageVariable": "TMP_2",
+          "interfaceType": "Guard",
+          "calledFunction": "supportsInterface"
+        }
+      ],
+      "generatedAt": "2026-04-30T09:17:50.896Z"
+    },
+    "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008": {
+      "address": "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008",
+      "name": "Safe",
+      "externalCalls": [
+        {
+          "callerFunction": "checkNSignatures",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "checkSignatures",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_275",
+          "interfaceType": "Guard",
+          "calledFunction": "checkTransaction"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_299",
+          "interfaceType": "Guard",
+          "calledFunction": "checkAfterExecution"
+        },
+        {
+          "callerFunction": "execTransaction",
+          "storageVariable": "TMP_355",
+          "interfaceType": "ISignatureValidator",
+          "calledFunction": "isValidSignature"
+        },
+        {
+          "callerFunction": "setGuard",
+          "storageVariable": "TMP_2",
+          "interfaceType": "Guard",
+          "calledFunction": "supportsInterface"
+        }
+      ],
+      "generatedAt": "2026-04-30T09:17:50.905Z"
+    }
+  }
+}

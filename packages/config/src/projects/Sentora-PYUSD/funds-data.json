@@ -1,0 +1,199 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-30T10:23:02.360Z",
+  "contracts": {
+    "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": {
+      "lastFetched": "2026-04-30T10:22:55.452Z",
+      "balances": {
+        "tokens": [
+          {
+            "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
+            "symbol": "HEX",
+            "name": "HEX",
+            "balance": "100000000",
+            "decimals": 8,
+            "usdValue": 0.0005909683066267785
+          }
+        ],
+        "totalUsdValue": 0.0005909683066267785,
+        "timestamp": "2026-04-30T10:22:55.920Z",
+        "source": "debank"
+      },
+      "positions": {
+        "protocols": [
+          {
+            "id": "morphoblue",
+            "name": "Morpho Blue",
+            "chain": "eth",
+            "items": [
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 11181123.369731616,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 11181123.369731616
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 11177770.03872,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 21493585.11916324,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 21493585.11916324
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 21487138.97747,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 5469015.888143632,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 5469015.888143632
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 5467375.675441,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 100067918.44064055,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 100067918.44064055
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 100037907.06852,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 30887.231160330997,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 30887.231160330997
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 30877.96777,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 15007122.57650499,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 15007122.57650499
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 15002621.789968,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 18481266.074656293,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 18481266.074656293
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 18475723.357649,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 49461981.98380683,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 49461981.98380683
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 49447147.839455,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 9465696.606043614,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 9465696.606043614
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 9462857.748719,
+                    "price": 1.0003
+                  }
+                ]
+              },
+              {
+                "name": "Supply",
+                "stats": {
+                  "assetUsdValue": 95694.2529669903,
+                  "debtUsdValue": 0,
+                  "netUsdValue": 95694.2529669903
+                },
+                "tokens": [
+                  {
+                    "symbol": "PYUSD",
+                    "name": "PayPal USD",
+                    "amount": 95665.553301,
+                    "price": 1.0003
+                  }
+                ]
+              }
+            ],
+            "totalUsdValue": 230754291.54281816
+          }
+        ],
+        "totalUsdValue": 230754291.54281816,
+        "timestamp": "2026-04-30T10:23:02.355Z",
+        "source": "onchain/debank"
+      }
+    }
+  }
+}

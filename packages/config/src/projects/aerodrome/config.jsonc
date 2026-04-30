@@ -22,7 +22,12 @@
       "ignoreDiscovery": true
     },
     "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5": {
-      "ignoreInWatchMode": ["activePeriod", "weekly", "teamRate"]
+      "ignoreInWatchMode": [
+        "activePeriod",
+        "epochCount",
+        "teamRate",
+        "weekly"
+      ]
     },
     "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4": {
       "ignoreMethods": [
@@ -46,6 +51,12 @@
         "managedToFree",
         "managedToLocked",
         "ownerOf"
+      ],
+      "ignoreInWatchMode": [
+        "clock",
+        "epoch",
+        "permanentLockBalance",
+        "tokenId"
       ]
     },
     "base:0x227f65131A261548b057215bB1D5Ab2997964C7d": {
@@ -144,7 +155,10 @@
     },
     "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": {
       "ignoreMethods": ["positions", "tokenByIndex", "WETH9"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": [
+        "tokenURI",
+        "totalSupply"
+      ]
     },
     "base:0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43": {
       "ignoreMethods": ["weth"]
@@ -165,7 +179,18 @@
     },
     "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53": {
       "ignoreMethods": ["positions", "tokenByIndex"],
-      "ignoreInWatchMode": ["totalSupply"]
+      "ignoreInWatchMode": [
+        "WETH9",
+        "positions",
+        "tokenByIndex",
+        "tokenURI",
+        "totalSupply"
+      ]
+    },
+    "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15": {
+      "ignoreInWatchMode": [
+        "activePeriod"
+      ]
     }
   }
 }

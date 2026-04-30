@@ -961,6 +961,13 @@ export interface ReviewConfig {
   lastModified: string
   /** First time the review-config was created. Preserved across regenerations. */
   publishedAt?: string
+  /**
+   * Researcher attestation flag. Missing = treated as verified (legacy reviews
+   * were researcher-curated). New AI-generated reviews must explicitly write
+   * `false`. Toggled via the TerminalExtensions button. Researcher edits via
+   * the editor panels do NOT change this — only the explicit toggle does.
+   */
+  verified?: boolean
   protocolSlug: string
   protocolName: string
   tokenName: string

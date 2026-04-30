@@ -11,6 +11,7 @@ import { MoreInfoButton } from '../../../../components/MoreInfoButton'
 import { ShareButton } from '../../../../components/ShareButton'
 import { deriveRadarData } from '../../../../utils/radar'
 import { getLatestActivityTimestamp } from '../activityTimestamp'
+import { StatusPill } from '../StatusPill'
 
 interface HeroSectionProps {
   review: CompiledReview
@@ -36,9 +37,7 @@ export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionPro
       <div className="col-span-12 lg:col-span-7 flex flex-col justify-center py-8 lg:py-12">
         {/* Date row */}
         <div className="flex items-center gap-3 mb-4">
-          <span className="bg-[#059669] text-white font-bold text-[10px] uppercase tracking-[0.5px] px-[10px] py-[2px] rounded-[2px]">
-            Active
-          </span>
+          <StatusPill verified={review.verified !== false} variant="hero" />
           {activityDate && (
             <span className="font-mono text-xs text-text-muted uppercase">
               Latest activity: {activityDate}

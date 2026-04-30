@@ -101,26 +101,31 @@ function writeReviewConfig(
     fs.mkdirSync(dir, { recursive: true })
   }
 
-  // Preserve publishedAt across writes: it's set exactly once (first time
-  // a config is created) and must survive every subsequent save, including
-  // the wipe-and-rewrite performed by /generate-review via the API path.
-  // Note: /generate-review bypasses this chokepoint entirely (it writes via
-  // the Write tool directly), so the skill itself must also preserve the
-  // field — see the generate-review SKILL.md.
-  if (!config.publishedAt) {
-    let existingPublishedAt: string | undefined
-    if (fs.existsSync(configPath)) {
-      try {
-        const existing = JSON.parse(
-          fs.readFileSync(configPath, 'utf8'),
-        ) as ReviewConfig
-        existingPublishedAt = existing.publishedAt
-      } catch (_) {
-        // ignore parse errors — treat as fresh create
-      }
+  // Preserve publishedAt and verified across writes. Both are set out-of-band
+  // (publishedAt at first create, verified via the explicit toggle button) and
+  // must survive routine edits coming through this chokepoint that don't
+  // include the field in their payload (e.g. the description editor).
+  // Note: /generate-review bypasses this chokepoint entirely (writes via the
+  // Write tool), so the skill itself must also preserve these fields — see
+  // generate-review SKILL.md.
+  let existing: ReviewConfig | undefined
+  if (fs.existsSync(configPath)) {
+    try {
+      existing = JSON.parse(fs.readFileSync(configPath, 'utf8')) as ReviewConfig
+    } catch (_) {
+      // ignore parse errors — treat as fresh create
     }
+  }
+
+  if (!config.publishedAt) {
     config.publishedAt =
-      existingPublishedAt || config.lastModified || new Date().toISOString()
+      existing?.publishedAt || config.lastModified || new Date().toISOString()
+  }
+
+  // verified === false is a valid intentional value (Unverified), so guard
+  // strictly on undefined rather than truthiness.
+  if (config.verified === undefined && existing?.verified !== undefined) {
+    config.verified = existing.verified
   }
 
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2))

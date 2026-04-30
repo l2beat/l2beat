@@ -13,6 +13,11 @@ import { formatUsdValue } from '../../utils/format'
 import { isHumanAdminType } from '../../utils/admins'
 import { ProtocolLogo } from '../../components/ProtocolLogo'
 import { getLatestActivityTimestamp } from '../review/views/activityTimestamp'
+import {
+  StatusPill,
+  STATUS_FILTER_LABELS,
+  type ReviewStatus,
+} from '../review/views/StatusPill'
 import type { CompiledReview, ProtocolSummary, CompiledAdmin, CompiledDependency } from '../../types'
 
 const PAGE_SIZE_MOBILE = 12
@@ -21,18 +26,14 @@ const PAGE_SIZE_DESKTOP = 24
 const ACCENT_COLOR = '#2563eb'
 const ACCENT_GRID_COLOR = 'rgba(37,99,235,0.12)'
 
-type Status = 'active' | 'updated'
+type Status = ReviewStatus
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
-
-function deriveStatus(review: CompiledReview): Status {
-  const newest = getLatestActivityTimestamp(review)
-  if (!newest) return 'active'
-  return Date.now() - new Date(newest).getTime() < SEVEN_DAYS_MS
-    ? 'updated'
-    : 'active'
+// `verified` is sourced from index.json (compile-data.ts copies it from
+// CompiledReview.verified). Missing on legacy data → treated as verified.
+function statusFromVerified(verified: boolean | undefined): Status {
+  return verified === false ? 'unverified' : 'verified'
 }
 
 function adminSummary(admins: CompiledAdmin[]): string {
@@ -100,13 +101,6 @@ function MetaTag({ label }: { label: string }) {
   )
 }
 
-// ─── Status badge ─────────────────────────────────────────────────────────────
-
-const STATUS_CFG: Record<Status, { label: string; cls: string }> = {
-  active: { label: 'ACTIVE', cls: 'bg-status-green/10 text-status-green' },
-  updated: { label: 'UPDATED', cls: 'bg-status-amber/10 text-status-amber' },
-}
-
 // ─── Protocol Card ────────────────────────────────────────────────────────────
 
 function ProtocolCard({
@@ -121,8 +115,11 @@ function ProtocolCard({
     protocol.totals.totalTokenValue ?? protocol.totals.totalTokenValueAtRisk
   const tvs = tvl + token
 
-  const status: Status = review ? deriveStatus(review) : 'active'
-  const statusCfg = STATUS_CFG[status]
+  // Prefer the per-review value when available (most accurate) but fall back
+  // to the index summary so the pill renders on first paint, before reviews
+  // finish loading.
+  const verified =
+    review !== undefined ? review.verified : protocol.verified
 
   const adminsText = review
     ? adminSummary(review.admins)
@@ -161,12 +158,7 @@ function ProtocolCard({
             </div>
           </div>
         </div>
-        <span
-          className={`shrink-0 ml-2 px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-[0.5px] ${statusCfg.cls}`}
-          title={status === 'updated' ? 'Activity event detected within the last 7 days' : 'Actively monitored'}
-        >
-          {statusCfg.label}
-        </span>
+        <StatusPill verified={verified !== false} variant="card" />
       </div>
 
       {/* Radar chart */}
@@ -290,12 +282,12 @@ function FilterPill({
 
 export function GalleryPage() {
   const { data: indexData, isLoading: indexLoading } = useIndex()
-  const { data: allReviews, isLoading: reviewsLoading } = useAllReviews()
+  const { data: allReviews } = useAllReviews()
 
   const [ecosystemFilter, setEcosystemFilter] = useState('All')
   const [typeFilter, setTypeFilter] = useState('All')
   const [activeStatuses, setActiveStatuses] = useState<Set<Status>>(
-    new Set(['active', 'updated']),
+    new Set(['verified', 'unverified']),
   )
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGE_SIZE_DESKTOP)
@@ -348,12 +340,12 @@ export function GalleryPage() {
     if (typeFilter !== 'All') {
       list = list.filter((p) => p.projectType === typeFilter)
     }
-    if (reviewsLoading) return list
-
     list = list.filter((p) => {
       const review = reviewMap.get(p.slug)
-      const status = review ? deriveStatus(review) : 'active'
-      return activeStatuses.has(status)
+      // Prefer the per-review value when available; fall back to the index
+      // summary so the filter works before reviews finish loading.
+      const verified = review !== undefined ? review.verified : p.verified
+      return activeStatuses.has(statusFromVerified(verified))
     })
 
     const tvsOf = (p: ProtocolSummary) => {
@@ -364,7 +356,7 @@ export function GalleryPage() {
     list = [...list].sort((a, b) => tvsOf(b) - tvsOf(a))
 
     return list
-  }, [protocols, ecosystemFilter, typeFilter, activeStatuses, reviewMap, reviewsLoading])
+  }, [protocols, ecosystemFilter, typeFilter, activeStatuses, reviewMap])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
   const safePage = Math.min(page, totalPages)
@@ -455,16 +447,16 @@ export function GalleryPage() {
           <span className="text-[10px] font-bold text-text-muted uppercase tracking-[1.2px] shrink-0">
             Status
           </span>
-          {(['active', 'updated'] as Status[]).map((s) => (
+          {(['verified', 'unverified'] as Status[]).map((s) => (
             <FilterPill
               key={s}
-              label={STATUS_CFG[s].label}
+              label={STATUS_FILTER_LABELS[s]}
               active={activeStatuses.has(s)}
               onClick={() => toggleStatus(s)}
               activeClass={
-                s === 'active'
+                s === 'verified'
                   ? 'bg-green-100 text-green-700'
-                  : 'bg-amber-100 text-amber-700' // updated
+                  : 'bg-amber-100 text-amber-700' // unverified
               }
             />
           ))}
