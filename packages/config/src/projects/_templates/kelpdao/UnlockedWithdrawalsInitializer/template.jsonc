@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UnlockedWithdrawalsInitializer",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Holds the UNLOCKED_WITHDRAWAL_INITIALIZER role on LRTConfig. Initiates withdrawal flows on LRTWithdrawalManager that bypass the standard cooldown — used for emergency or operational unlocks."
+}

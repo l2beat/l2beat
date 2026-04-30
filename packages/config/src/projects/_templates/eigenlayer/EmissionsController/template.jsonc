@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EmissionsController",
+  "description": "EigenLayer emissions distributor. Streams EIGEN rewards to KelpDAO based on configured distributions.",
+  "ignoreRelatives": [
+    "getDistribution",
+    "BACKING_EIGEN",
+    "EIGEN"
+  ]
+}

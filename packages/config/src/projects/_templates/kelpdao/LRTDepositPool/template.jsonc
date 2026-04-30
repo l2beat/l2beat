@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LRTDepositPool",
+  "category": "core",
+  "description": "Main user entrypoint for KelpDAO restaking. Accepts supported LSTs (stETH, ETHx) and native ETH, mints rsETH, and routes deposits to NodeDelegators which delegate to EigenLayer operators.",
+  "ignoreMethods": ["nodeDelegatorQueue"]
+}

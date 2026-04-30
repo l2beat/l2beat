@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LRTOracle",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "Computes the rsETH/ETH exchange rate used by LRTDepositPool. Aggregates per-LST oracle adapters and the total restaked balance reported by NodeDelegators."
+}

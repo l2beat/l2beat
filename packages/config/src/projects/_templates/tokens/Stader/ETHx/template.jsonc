@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ETHx",
+  "category": "shared",
+  "description": "Stader ETHx liquid staking token — accepted as a deposit asset by KelpDAO. Discovered as a leaf in this project; Stader has its own discovery for its admin chain."
+}

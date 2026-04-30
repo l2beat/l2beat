@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolInstance",
+  "description": "Aave V3 main lending pool. KelpDAO deposits WETH here to earn yield used for instant withdrawal liquidity.",
+  "ignoreRelatives": [
+    "getReservesList",
+    "getBorrowLogic",
+    "getFlashLoanLogic",
+    "getLiquidationLogic",
+    "getPoolLogic",
+    "getSupplyLogic",
+    "ADDRESSES_PROVIDER",
+    "RESERVE_INTEREST_RATE_STRATEGY"
+  ]
+}

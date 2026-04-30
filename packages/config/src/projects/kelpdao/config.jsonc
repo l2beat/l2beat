@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "kelpdao",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
+  "initialAddresses": ["eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"],
+  "names": {
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": "KelpAdminMultisig",
+    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": "KelpManagerMultisig",
+    "eth:0xEe68dF9f661da6ED968Ea4cbF7EC68fcFE375bc6": "KelpRewardReceiverMultisig",
+    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF": "ELOperator_A",
+    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5": "ELOperator_B",
+    "eth:0xFc561966ceaAa09f4d6CBa4AdD54778c2bF1cB85": "NodeDelegator_A1",
+    "eth:0x395884D1974a839702bcFCBa176AC7871c788946": "NodeDelegator_A2",
+    "eth:0x4C798C4653b1257D5149910523D7a6eeD5712F83": "NodeDelegator_A3",
+    "eth:0x545D69B99759E7b670Df243b882700121d6d3AB9": "NodeDelegator_A4",
+    "eth:0xee5470E1519972C3eA95249d60EBD064af2D53D3": "NodeDelegator_A5",
+    "eth:0x049EA11D337f185b1Aa910d98e8Fbd991f0FBA7B": "NodeDelegator_B1",
+    "eth:0x79f17234746344E0365D40be50d8d43DB9082c32": "NodeDelegator_B2",
+    "eth:0x322F2d4bFe8280EeB713B7C51EEbA42590C36f78": "KelpProtocolTreasury",
+    "eth:0x4E24A7E8B276b8ed42124C9e09C811f3eDC98c62": "KelpAssetTransferMultisig",
+    "eth:0x23Bd955B62027AA2b1060c6f79B4a8281c049667": "KelpInstantWithdrawalFeeRecipient",
+    "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": "KelpPauserMultisig",
+    "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2": "KelpLegacyProtocolTreasury",
+    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": "KelpOperatorEOA"
+  },
+  "overrides": {
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      "category": "shared",
+      "description": "Lido stETH — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Lido's internal admin/locator chain is not walked (Lido has its own discovery).",
+      "ignoreRelatives": [
+        "eip712Domain",
+        "getEIP712StETH",
+        "getEVMScriptRegistry",
+        "getLidoLocator",
+        "getTreasury",
+        "kernel"
+      ]
+    },
+    "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
+      "category": "shared",
+      "description": "Stader ETHx — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Stader's StaderConfig chain is not walked.",
+      "ignoreRelatives": [
+        "$admin",
+        "staderConfig"
+      ]
+    },
+    "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE": {
+      "category": "shared",
+      "description": "Native ETH sentinel address used by LRTConfig.supportedAssetList to mark native ETH as an accepted deposit (not a real contract)."
+    },
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": {
+      "description": "KelpAdminMultisig — root admin of the rsETH protocol. Holds DEFAULT_ADMIN_ROLE on LRTConfig: can grant/revoke any role on every Kelp contract (including MINTER_ROLE and BURNER_ROLE on rsETH), re-point any entry in LRTConfig's bytes32 contract registry (so it can effectively replace LRTDepositPool, LRTOracle, LRTWithdrawalManager or rsETH itself), and add/remove supported deposit assets and their EigenLayer strategies. Also set as rsETH.custodyAddress, the ASSET_TRANSFER_ROLE-style endpoint stored on the rsETH token. There is no timelock on these operations except for adding new supported assets (which is gated by TIME_LOCK_ROLE / 10-day timelock). In short: this multisig can stop, replace, or reroute every component that mints, burns, or backs rsETH."
+    },
+    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": {
+      "description": "KelpManagerMultisig — operational admin of the rsETH protocol. Holds three roles on LRTConfig: MANAGER (can raise per-asset deposit limits, change protocolFeeInBPS — which directly affects how much rsETH is minted to the treasury on every LRTOracle rebase, and set the EigenLayer reward receiver), PAUSER_ROLE (can pause LRTDepositPool, LRTOracle, LRTWithdrawalManager and rsETH transfers), and OPERATOR_ROLE (can drive NodeDelegator workflows: deposit pooled LSTs into EigenLayer strategies, queue/complete withdrawals, manage validators). Cannot grant roles or replace contracts. Effectively controls the day-to-day economics and operational state of rsETH issuance and redemption."
+    },
+    "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": {
+      "description": "KelpPauserMultisig — secondary pause-only authority. Holds PAUSER_ROLE on LRTConfig. Can pause LRTDepositPool (block new deposits / rsETH minting), LRTOracle (freeze the rsETH/ETH rate and stop fee-mints), LRTWithdrawalManager (block redemptions / rsETH burning), and rsETH transfers. Cannot unpause — that requires MANAGER or DEFAULT_ADMIN. Pure circuit breaker for rsETH user flows."
+    },
+    "eth:0x4E24A7E8B276b8ed42124C9e09C811f3eDC98c62": {
+      "description": "KelpAssetTransferMultisig — holds ASSET_TRANSFER_ROLE on LRTConfig. Can move pooled LSTs/ETH between LRTDepositPool, NodeDelegators and LRTUnstakingVault. Does not change rsETH supply, but controls the assets that back rsETH at any given moment, so it can rebalance Kelp's restaked vs idle balance."
+    },
+    "eth:0xEe68dF9f661da6ED968Ea4cbF7EC68fcFE375bc6": {
+      "description": "KelpRewardReceiverMultisig — set as LRTConfig.eigenLayerRewardReceiver. Receives EigenLayer rewards earned by Kelp's NodeDelegators. Does not directly mint or burn rsETH, but holds the reward value that ultimately backs rsETH; how this multisig redistributes those rewards (e.g. forwarding into LRTDepositPool) is what makes the rewards actually flow into the rsETH backing."
+    },
+    "eth:0x322F2d4bFe8280EeB713B7C51EEbA42590C36f78": {
+      "description": "KelpProtocolTreasury — registered under PROTOCOL_TREASURY in LRTConfig. Receives the rsETH that LRTOracle.updateRSETHPrice() mints as the protocol fee on every rebase (sized by protocolFeeInBPS, capped by the daily fee-mint limit). This multisig holds the realized rsETH protocol revenue."
+    },
+    "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2": {
+      "description": "KelpLegacyProtocolTreasury — referenced from FeeReceiver._legacyProtocolTreasury. Historical destination for protocol fees before the current FeeReceiver / PROTOCOL_TREASURY split was introduced. No active write authority over rsETH; kept on-chain for backward reference."
+    },
+    "eth:0x23Bd955B62027AA2b1060c6f79B4a8281c049667": {
+      "description": "KelpInstantWithdrawalFeeRecipient — set as LRTWithdrawalManager.instantWithdrawalFeeRecipient. Collects the fee users pay (in WETH) for taking the instant-withdrawal path instead of the standard EigenLayer-cooldown queue. Does not mint or burn rsETH directly, but the instant path always burns rsETH against Aave-backed WETH liquidity, so this multisig is the economic counterparty for every instant rsETH redemption."
+    },
+    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": {
+      "description": "KelpOperatorEOA — single externally-owned account holding OPERATOR_ROLE on LRTConfig (one of three holders, alongside KelpManagerMultisig and a second EOA). Does not directly mint or burn rsETH, but as an OPERATOR can drive every NodeDelegator workflow that moves Kelp's pooled LSTs into and out of EigenLayer: deposit assets into EigenLayer strategies, queue and complete EigenLayer withdrawals, claim rewards, and register beacon-chain validators through EigenPods. The full LST/ETH backing of rsETH is exposed to whoever controls this single private key — slashing or operational disruption from this key propagates into the rsETH/ETH exchange rate computed by LRTOracle.\n\nIf this EOA was hacked, the adversary could:\n- Call NodeDelegator.stake32Eth with attacker-chosen validator pubkey/signature, registering 32-ETH validators whose consensus keys the attacker controls. Withdrawal credentials are hardcoded to the EigenPod, so the principal cannot be stolen directly — but the attacker can force slashing (signing conflicting attestations / proposals → up to ~1 ETH lost per validator), siphon block proposal tips and MEV, or refuse to attest (inactivity-leak drain). Each event reduces the ETH backing rsETH and lowers the LRTOracle-reported rate.\n- Call NodeDelegator.initiateUnstaking on any subset of strategies/shares to queue large EigenLayer withdrawals (7–14 day cooldown). The withdrawer is hardcoded to the NodeDelegator so funds cannot be redirected, but an adversary can deliberately starve LRTWithdrawalManager of redemption liquidity, force users onto the costly Aave-backed instant path, and create a sustained discount on rsETH's secondary-market price.\n- Call NodeDelegator.depositAssetIntoStrategy to lock pooled LSTs into the configured EigenLayer strategy at adversarial moments (e.g. just before a known slashing event on that strategy).\n- Call NodeDelegator.processClaim with malformed or stale Merkle proofs to grief reward distribution. Rewards still flow to lrtConfig.eigenLayerRewardReceiver (set by MANAGER), so the destination cannot be redirected.\n- Call NodeDelegator.startCheckpoint / verifyWithdrawalCredentials at adversarial timings to crystallise slashing losses into rsETH's accounting earlier than otherwise.\n\nWhat the adversary cannot do with only this key: change the EigenLayer operator delegation (gated by MANAGER), redirect unstaked LSTs or rewards (recipients hardcoded to NodeDelegator / LRTConfig-stored), mint or burn rsETH, pause Kelp contracts, grant or revoke roles, or replace any contract in LRTConfig's registry. Net effect: cannot directly steal rsETH backing, but can systematically destroy value through slashing and liquidity disruption until KelpAdminMultisig revokes the role."
+    }
+  }
+}

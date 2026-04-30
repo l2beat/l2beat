@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LRTUnstakingVault",
+  "category": "core",
+  "description": "Holds and accounts for LST balances queued for unstaking from EigenLayer. Receives unstaked LSTs from NodeDelegators and forwards them to LRTWithdrawalManager."
+}

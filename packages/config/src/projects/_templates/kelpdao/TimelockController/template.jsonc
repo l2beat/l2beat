@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TimelockController",
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "OpenZeppelin TimelockController. Owns Kelp's ProxyAdmin (so all proxy upgrades flow through it) and holds LRTConfig's TIME_LOCK_ROLE (so adding a new supported deposit asset is timelocked). Minimum delay is 10 days; the canceller can cancel before execution.",
+  "fields": {
+    "accessControl": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5": "TIMELOCK_ADMIN_ROLE",
+          "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "PROPOSER_ROLE",
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+          "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": "CANCELLER_ROLE"
+        }
+      }
+    },
+    "proposers": {
+      "copy": "accessControl",
+      "edit": ["get", "PROPOSER_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "schedule any timelocked operation: proxy upgrades on Kelp's ProxyAdmin and adding new supported deposit assets on LRTConfig. Operations execute after a 10-day delay." }
+      ]
+    },
+    "executors": {
+      "copy": "accessControl",
+      "edit": ["get", "EXECUTOR_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "execute scheduled operations after the 10-day delay has passed." }
+      ]
+    },
+    "cancellers": {
+      "copy": "accessControl",
+      "edit": ["get", "CANCELLER_ROLE", "members"],
+      "permissions": [
+        { "type": "guard", "description": "cancel any scheduled but not-yet-executed timelocked operation." }
+      ]
+    },
+    "timelockAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "TIMELOCK_ADMIN_ROLE", "members"]
+    },
+    "getMinDelay": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Minimum delay in seconds between scheduling and executing an operation."
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NodeDelegator",
+  "category": "core",
+  "description": "Per-operator delegator. Holds Kelp's deposited LSTs in EigenLayer strategies, runs an EigenPod for native ETH, and delegates voting power to a single EigenLayer operator. Deployed as multiple instances; each is paired one-to-one with the EigenLayer operator address it delegates to.",
+  "fields": {
+    "elOperatorDelegatedTo": {
+      "severity": "HIGH",
+      "type": "EXTERNAL",
+      "description": "EigenLayer operator address this delegator has delegated to. The operator gains voting power over the AVSes Kelp opts into and is the slashing-relevant party for this delegator's restaked LSTs."
+    },
+    "eigenPod": {
+      "severity": "HIGH",
+      "type": "EXTERNAL",
+      "description": "EigenLayer EigenPod owned by this delegator. Holds beacon-chain ETH credentials and is the entry point for native restaking via EigenPodManager."
+    }
+  }
+}
