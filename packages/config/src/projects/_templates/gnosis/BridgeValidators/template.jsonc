@@ -6,18 +6,17 @@
   "fields": {
     "$members": {
       "handler": {
-        "type": "call",
-        "method": "validatorList",
-        "args": []
+        "type": "event",
+        "select": ["validator"],
+        "add": { "event": "event ValidatorAdded(address indexed validator)" },
+        "remove": {
+          "event": "event ValidatorRemoved(address indexed validator)"
+        }
       },
       "description": "Array of the signers in the validator multisig"
     },
     "$threshold": {
-      "handler": {
-        "type": "call",
-        "method": "requiredSignatures",
-        "args": []
-      }
+      "handler": { "type": "call", "method": "requiredSignatures", "args": [] }
     },
     "owner": {
       "permissions": [

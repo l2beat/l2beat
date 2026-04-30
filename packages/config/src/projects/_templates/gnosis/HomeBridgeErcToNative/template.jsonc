@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreInWatchMode": ["getCurrentDay", "nonce", "outOfLimitAmount"],
+  "fields": { "HASHI_IS_MANDATORY": { "severity": "HIGH" } },
+  "ignoreMethods": [
+    "isAlreadyProcessed",
+    "totalExecutedPerDay",
+    "totalSpentPerDay",
+    "withinExecutionLimit",
+    "withinLimit"
+  ]
+}

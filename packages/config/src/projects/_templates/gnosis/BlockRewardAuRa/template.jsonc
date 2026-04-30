@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "epochsPoolGotRewardFor",
+    "mintedInBlock",
+    "validatorMinRewardPercent",
+    "validatorRewardPercent"
+  ],
+  "ignoreInWatchMode": [
+    "extraReceiversQueueSize",
+    "mintedTotally",
+    "nativeRewardUndistributed",
+    "tokenRewardUndistributed"
+  ],
+  "ignoreRelatives": ["validatorSetContract", "tokenMinterContract"],
+  "description": "Part of the deprecated AuRa (Authority Round)  proof-of-authority consensus model. Gnosis switched to an Ethereum-like consensus but some contracts like this one are still used. Mints of the gas token xDAI are queued in this contract (`addExtraReceiver(amount, recipient)`) and then executed by the gnosis execution client. There are more AuRa contracts this depends on which are not tracked here."
+}

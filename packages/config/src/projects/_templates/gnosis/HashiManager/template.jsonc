@@ -32,13 +32,6 @@
     "threshold": {
       "description": "Threshold of the adapters on GnosisChain",
       "severity": "HIGH"
-    },
-    "AdaptersFromStorage": {
-      "handler": {
-        "type": "storage",
-        "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
-        "returnType": "address"
-      }
     }
   }
 }

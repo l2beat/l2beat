@@ -1,5 +1,81 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gnosis",
-  "import": ["../globalConfig.jsonc"]
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "initialAddresses": [
+    "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0"
+  ],
+  "overrides": {
+    "eth:0x9f7Ce792d0ee09a6ce89eC2B9B236A44B0aCf73e": {
+      "ignoreDiscovery": true // triggers flattener bug
+    },
+    "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": { // eternal storage proxies are not autodetected
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0x88ad09518695c6c3712AC10a214bE5109a655671": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49": {
+      "proxyType": "Eternal Storage proxy",
+      "adapters": {
+        "description": "Array of the adapters on Ethereum",
+        "severity": "HIGH",
+        "edit": [
+          "map",
+          [
+            "format",
+            "EthereumAddress"
+          ]
+        ]
+      },
+      "targetAddress": {
+        "description": "Address of the target contract on Ethereum",
+        "severity": "HIGH",
+        "edit": [
+          "format",
+          "EthereumAddress"
+        ]
+      },
+      "ignoreRelatives": [
+        "adapters",
+        "targetAddress"
+      ]
+    },
+    "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D": {
+      "proxyType": "Eternal Storage proxy"
+    },
+    "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
+      "proxyType": "Eternal Storage proxy",
+      "ignoreRelatives": [
+        "adapters",
+        "targetAddress"
+      ]
+    },
+    "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
+      "proxyType": "Eternal Storage proxy"
+    }
+  }
 }

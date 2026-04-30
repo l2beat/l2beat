@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["endpoint", "LAYER_ZERO_ENDPOINT", "HEADER_STORAGE"],
+  "ignoreMethods": ["endpointIds"]
+}
