@@ -22,6 +22,11 @@ export function getInteropProtocolSections({
     return []
   }
 
+  const sortedChains = sortChainsByFlowVolume(interopChains, protocolData.flows)
+  const defaultSelectedChains = sortedChains
+    .slice(0, MAX_SELECTED_CHAINS)
+    .map((chain) => chain.id)
+
   const sections: ProjectDetailsSection[] = []
 
   if (protocolData.flows.length > 0) {
@@ -31,8 +36,8 @@ export function getInteropProtocolSections({
         id: 'interop-volume',
         title: 'Volume and flows',
         protocolData,
-        interopChains,
-        defaultSelectedChains: getDefaultSelectedChains(protocolData.flows),
+        interopChains: sortedChains,
+        defaultSelectedChains,
       },
     })
   }
@@ -56,16 +61,17 @@ export function getInteropProtocolSections({
       title: 'Transfers',
       apiSelection,
       protocolData,
-      interopChains,
+      interopChains: sortedChains,
     },
   })
 
   return sections
 }
 
-function getDefaultSelectedChains(
+function sortChainsByFlowVolume(
+  chains: InteropChainWithIcon[],
   flows: InteropProtocolDashboardData['flows'],
-): string[] {
+): InteropChainWithIcon[] {
   const volumePerChain = new Map<string, number>()
   for (const flow of flows) {
     volumePerChain.set(
@@ -77,8 +83,7 @@ function getDefaultSelectedChains(
       (volumePerChain.get(flow.dstChain) ?? 0) + flow.volume,
     )
   }
-  return Array.from(volumePerChain.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map(([chainId]) => chainId)
+  return chains.toSorted(
+    (a, b) => (volumePerChain.get(b.id) ?? 0) - (volumePerChain.get(a.id) ?? 0),
+  )
 }
