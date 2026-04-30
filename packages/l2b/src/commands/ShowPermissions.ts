@@ -119,7 +119,7 @@ export const ShowPermissions = command({
         console.log(`  - ${s.chain}: ${s.name} (${s.address})`)
       }
       console.log(
-        `\nEach is a Contract that does not look like a multisig — likely an intermediary that escaped the auto-rule. Add \`canActIndependently: false\` to the corresponding template, then re-run \`l2b model-permissions\` and check again.`,
+        '\nEach is a Contract that does not look like a multisig — likely an intermediary that escaped the auto-rule. Add `canActIndependently: false` to the corresponding template, then re-run `l2b model-permissions` and check again.',
       )
     }
   },
