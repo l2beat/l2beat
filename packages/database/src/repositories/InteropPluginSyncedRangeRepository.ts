@@ -145,6 +145,17 @@ export class InteropPluginSyncedRangeRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getSyncedChains(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('InteropPluginSyncedRange')
+      .select('chain')
+      .distinct()
+      .orderBy('chain')
+      .execute()
+
+    return rows.map((r) => r.chain)
+  }
+
   async deleteNotInPluginNames(validPluginNames: string[]): Promise<number> {
     if (validPluginNames.length === 0) {
       return 0

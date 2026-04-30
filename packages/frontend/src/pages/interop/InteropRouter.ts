@@ -5,7 +5,9 @@ import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getInteropBridgesData } from './bridges/getInteropBridgesData'
 import { getInteropBurnAndMintData } from './burn-and-mint/getInteropBurnAndMintData'
+import { getInteropFrameworksData } from './frameworks/getInteropFrameworksData'
 import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMintData'
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
@@ -87,6 +89,18 @@ export function createInteropRouter(
       res.status(200).send(html)
     },
   )
+
+  router.get('/interop/intent', async (req, res) => {
+    const data = await getInteropBridgesData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/interop/multichain', async (req, res) => {
+    const data = await getInteropFrameworksData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
 
   if (env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
     router.get(
