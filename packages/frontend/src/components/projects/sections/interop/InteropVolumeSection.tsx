@@ -25,11 +25,13 @@ import type { ProjectSectionProps } from '../types'
 export interface InteropVolumeSectionProps extends ProjectSectionProps {
   protocolData: InteropProtocolDashboardData
   interopChains: InteropChainWithIcon[]
+  defaultSelectedChains: string[]
 }
 
 export function InteropVolumeSection({
   protocolData,
   interopChains,
+  defaultSelectedChains,
   ...sectionProps
 }: InteropVolumeSectionProps) {
   const entry = protocolData.entry
@@ -37,7 +39,11 @@ export function InteropVolumeSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <InteropFlowsProvider chains={interopChains} protocols={[entry]}>
+      <InteropFlowsProvider
+        chains={interopChains}
+        protocols={[entry]}
+        defaultSelectedChains={defaultSelectedChains}
+      >
         <Content interopChains={interopChains} />
       </InteropFlowsProvider>
     </ProjectSection>

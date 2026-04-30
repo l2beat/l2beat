@@ -2,6 +2,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropSelection } from '../utils/types'
 
 interface GetInteropProtocolSectionsOptions {
@@ -31,6 +32,7 @@ export function getInteropProtocolSections({
         title: 'Volume and flows',
         protocolData,
         interopChains,
+        defaultSelectedChains: getDefaultSelectedChains(protocolData.flows),
       },
     })
   }
@@ -59,4 +61,24 @@ export function getInteropProtocolSections({
   })
 
   return sections
+}
+
+function getDefaultSelectedChains(
+  flows: InteropProtocolDashboardData['flows'],
+): string[] {
+  const volumePerChain = new Map<string, number>()
+  for (const flow of flows) {
+    volumePerChain.set(
+      flow.srcChain,
+      (volumePerChain.get(flow.srcChain) ?? 0) + flow.volume,
+    )
+    volumePerChain.set(
+      flow.dstChain,
+      (volumePerChain.get(flow.dstChain) ?? 0) + flow.volume,
+    )
+  }
+  return Array.from(volumePerChain.entries())
+    .toSorted((a, b) => b[1] - a[1])
+    .slice(0, MAX_SELECTED_CHAINS)
+    .map(([chainId]) => chainId)
 }
