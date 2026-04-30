@@ -422,6 +422,22 @@ export class ParsedFilesManager {
     return matchingFile
   }
 
+  findFileRootDeclaring(declarationName: string): ParsedFile {
+    const matchingFile = findOne(this.files, (f) =>
+      f.topLevelDeclarations.some(
+        (c) =>
+          c.name === declarationName &&
+          (c.type === 'library' || c.type === 'contract'),
+      ),
+    )
+    assert(
+      matchingFile !== undefined,
+      `Failed to find file declaring ${declarationName}`,
+    )
+
+    return matchingFile
+  }
+
   findDeclaration(
     declarationName: string,
     file?: ParsedFile,
@@ -446,7 +462,7 @@ export class ParsedFilesManager {
   ): DeclarationFilePair {
     const file = path
       ? this.findFile(path)
-      : this.findFileDeclaring(declarationName)
+      : this.findFileRootDeclaring(declarationName)
 
     const matchingDeclaration = findOne(
       file.topLevelDeclarations,
