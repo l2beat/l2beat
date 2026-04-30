@@ -103,8 +103,8 @@ export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  expectedTransferCount: v.number(),
-  expectedVolume: v.number(),
+  expectedTransferCount: v.number().optional(),
+  expectedVolume: v.number().optional(),
   snapshotTimestamp: v.number(),
   cursor: v.number().optional(),
 })
@@ -143,6 +143,7 @@ export type InteropProtocolTransferStats = {
 
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
+  totalCount: number
   hasIntegrityMismatch: boolean
   nextCursor: number | undefined
 }

@@ -56,6 +56,7 @@ export async function getInteropProtocolTransfers({
   if (from.length === 0 || to.length === 0) {
     return {
       items: [],
+      totalCount: 0,
       hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
@@ -68,6 +69,7 @@ export async function getInteropProtocolTransfers({
   if (!interopProject?.interopConfig) {
     return {
       items: [],
+      totalCount: 0,
       hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
@@ -81,6 +83,7 @@ export async function getInteropProtocolTransfers({
   if (plugins.length === 0) {
     return {
       items: [],
+      totalCount: 0,
       hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
@@ -113,15 +116,19 @@ export async function getInteropProtocolTransfers({
       }),
   )
 
-  const hasIntegrityMismatch = hasTransferStatsMismatch(
-    result.transferStats,
-    expectedTransferCount,
-    expectedVolume,
-  )
+  const hasIntegrityMismatch =
+    expectedTransferCount !== undefined &&
+    expectedVolume !== undefined &&
+    hasTransferStatsMismatch(
+      result.transferStats,
+      expectedTransferCount,
+      expectedVolume,
+    )
 
   if (hasIntegrityMismatch) {
     return {
       items: [],
+      totalCount: 0,
       hasIntegrityMismatch: true,
       nextCursor: undefined,
     }
@@ -141,6 +148,7 @@ export async function getInteropProtocolTransfers({
         result.tokensDetailsMap,
       ),
     ),
+    totalCount: result.items.length,
     hasIntegrityMismatch: false,
     nextCursor,
   }

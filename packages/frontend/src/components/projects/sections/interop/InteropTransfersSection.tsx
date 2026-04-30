@@ -1,6 +1,6 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   getPaginationItems,
   Pagination,
@@ -11,6 +11,7 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   columns,
   type TransferRow,
@@ -20,6 +21,7 @@ import type { InteropProtocolDashboardData } from '~/server/features/scaling/int
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import { ChainMultiSelect } from './ChainMultiSelect'
 
 const TRANSFERS_PER_PAGE = 8
 
@@ -27,16 +29,24 @@ export interface InteropTransfersSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
+  interopChains: InteropChainWithIcon[]
 }
 
 export function InteropTransfersSection({
   projectId,
   apiSelection,
   protocolData,
+  interopChains,
   ...sectionProps
 }: InteropTransfersSectionProps) {
   const entry = protocolData.entry
-  const totalCount = entry?.transferCount ?? 0
+
+  const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
+  const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
+
+  const isFiltered =
+    selectedFrom.length !== apiSelection.from.length ||
+    selectedTo.length !== apiSelection.to.length
 
   const {
     data: transfersData,
@@ -46,14 +56,21 @@ export function InteropTransfersSection({
     isFetchingNextPage,
   } = api.interop.transfers.useInfiniteQuery(
     {
-      ...apiSelection,
+      from: selectedFrom,
+      to: selectedTo,
       id: projectId,
-      expectedTransferCount: totalCount,
-      expectedVolume: entry?.volume ?? 0,
+      expectedTransferCount: isFiltered
+        ? undefined
+        : (entry?.transferCount ?? 0),
+      expectedVolume: isFiltered ? undefined : (entry?.volume ?? 0),
       snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
     },
     {
-      enabled: !!entry?.snapshotTimestamp && totalCount > 0,
+      enabled:
+        !!entry?.snapshotTimestamp &&
+        (entry?.transferCount ?? 0) > 0 &&
+        selectedFrom.length > 0 &&
+        selectedTo.length > 0,
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   )
@@ -63,6 +80,7 @@ export function InteropTransfersSection({
     [transfersData],
   )
   const hasIntegrityMismatch = !!transfersData?.pages[0]?.hasIntegrityMismatch
+  const totalCount = transfersData?.pages[0]?.totalCount ?? 0
 
   const table = useTable<TransferRow>({
     data: fetchedItems,
@@ -71,7 +89,7 @@ export function InteropTransfersSection({
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
     manualFiltering: true,
-    pageCount: Math.ceil(totalCount / TRANSFERS_PER_PAGE),
+    pageCount: Math.max(1, Math.ceil(totalCount / TRANSFERS_PER_PAGE)),
     initialState: {
       pagination: {
         pageSize: TRANSFERS_PER_PAGE,
@@ -79,6 +97,15 @@ export function InteropTransfersSection({
       },
     },
   })
+
+  const handleFromChange = (next: string[]) => {
+    setSelectedFrom(next)
+    table.setPageIndex(0)
+  }
+  const handleToChange = (next: string[]) => {
+    setSelectedTo(next)
+    table.setPageIndex(0)
+  }
 
   const currentPage = table.getState().pagination.pageIndex
   const pageCount = table.getPageCount()
@@ -94,10 +121,13 @@ export function InteropTransfersSection({
     }
   }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
+  const isEmptySelection = selectedFrom.length === 0 || selectedTo.length === 0
+
   const isLoading =
-    ((isTransfersLoading || hasIntegrityMismatch) &&
+    !isEmptySelection &&
+    (((isTransfersLoading || hasIntegrityMismatch) &&
       fetchedItems.length === 0) ||
-    needsMoreRows
+      needsMoreRows)
 
   const paginationItems = useMemo(
     () => getPaginationItems(pageCount, currentPage),
@@ -106,8 +136,24 @@ export function InteropTransfersSection({
 
   return (
     <ProjectSection {...sectionProps}>
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <ChainMultiSelect
+          label="From"
+          chains={interopChains}
+          selected={selectedFrom}
+          onChange={handleFromChange}
+        />
+        <ChainMultiSelect
+          label="To"
+          chains={interopChains}
+          selected={selectedTo}
+          onChange={handleToChange}
+        />
+      </div>
       {hasIntegrityMismatch ? (
         <TransfersResyncNotice />
+      ) : isEmptySelection ? (
+        <EmptySelectionNotice />
       ) : (
         <BasicTable
           skeletonCount={TRANSFERS_PER_PAGE}
@@ -116,7 +162,7 @@ export function InteropTransfersSection({
           isLoading={isLoading}
         />
       )}
-      {!hasIntegrityMismatch && pageCount > 1 && (
+      {!hasIntegrityMismatch && !isEmptySelection && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
             <PaginationContent className="justify-center">
@@ -151,6 +197,14 @@ function TransfersResyncNotice() {
   return (
     <div className="mb-3 flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-2 font-medium text-paragraph-12 text-secondary">
       Transfer data is resyncing. It will be available soon.
+    </div>
+  )
+}
+
+function EmptySelectionNotice() {
+  return (
+    <div className="mb-3 flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-2 font-medium text-paragraph-12 text-secondary">
+      Select at least one source and destination chain to display transfers.
     </div>
   )
 }

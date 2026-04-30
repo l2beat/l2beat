@@ -54,6 +54,7 @@ export function getInteropProtocolSections({
       title: 'Transfers',
       apiSelection,
       protocolData,
+      interopChains,
     },
   })
 
