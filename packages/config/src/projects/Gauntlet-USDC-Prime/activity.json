@@ -1,6 +1,23 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777455292,
-  "lastConsumedUpdateNotifierId": 142,
-  "events": []
+  "lastReconciledAt": 1777541956,
+  "lastConsumedUpdateNotifierId": 146,
+  "events": [
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 146,
+      "address": "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
+      "contractName": "MorphoChainlinkOracleV2",
+      "isDependency": true,
+      "entity": "Morpho",
+      "id": "146:base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.price",
+          "before": "770541958200300000000000000000000000000"
+        }
+      ]
+    }
+  ]
 }

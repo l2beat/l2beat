@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-27T08:30:00.000Z",
   "lastModified": "2026-04-27T07:02:11.871Z",
-  "compiledAt": "2026-04-29T09:21:18.000Z",
+  "compiledAt": "2026-04-30T09:26:35.000Z",
   "project": "Tether-Gold",
   "metadata": {
     "protocolName": "Tether Gold (XAUT)",
@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "stablecoin",
     "tokenName": "XAUT",
-    "description": "Tether Gold (XAUt) is an ERC-20 token issued by TG Commodities Limited where each unit represents one troy ounce of physical gold held in custody, with a current circulating market value of $3.23B. The token is deployed behind an EIP-1967 transparent proxy and exposes off-chain controlled administrative functions: a single owner can mint new supply, freeze and destroy balances on a blocklist, and an upgrade authority can replace the implementation contract at any time. Both the token's `owner` and the proxy's upgrade authority resolve to the same custom 3-of-6 MultiSigWallet, making the multisig the single point of trust for supply, censorship, and code changes. There is no on-chain timelock or upgrade delay — once three signers confirm a transaction it executes immediately. This review covers only the Ethereum-native XAUt contract; XAUT0, the cross-chain version available on other networks, is a separate offering issued by Everdawn Labs via LayerZero and is out of scope here."
+    "description": "Tether Gold (XAUt) is an ERC-20 token issued by TG Commodities Limited where each unit represents one troy ounce of physical gold held in custody, with a current circulating market value of $3.27B. The token is deployed behind an EIP-1967 transparent proxy and exposes off-chain controlled administrative functions: a single owner can mint new supply, freeze and destroy balances on a blocklist, and an upgrade authority can replace the implementation contract at any time. Both the token's `owner` and the proxy's upgrade authority resolve to the same custom 3-of-6 MultiSigWallet, making the multisig the single point of trust for supply, censorship, and code changes. There is no on-chain timelock or upgrade delay — once three signers confirm a transaction it executes immediately. This review covers only the Ethereum-native XAUt contract; XAUT0, the cross-chain version available on other networks, is a separate offering issued by Everdawn Labs via LayerZero and is out of scope here."
   },
   "totals": {
     "contractCount": 3,
@@ -19,8 +19,8 @@
     "adminCount": 7,
     "dependencyCount": 0,
     "totalCapitalAtRisk": 0,
-    "totalTokenValueAtRisk": 3231007010.7028003,
-    "totalTokenValue": 3231007010.7028003,
+    "totalTokenValueAtRisk": 3266465139.8617,
+    "totalTokenValue": 3266465139.8617,
     "linesOfCode": 1561,
     "verifiedContractCount": 3,
     "coverage": 100
@@ -57,7 +57,7 @@
           "functionName": "changeAdmin",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -67,7 +67,7 @@
           "impact": "critical",
           "isUpgrade": true,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -77,14 +77,14 @@
           "impact": "critical",
           "isUpgrade": true,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 3231007010.7028003,
+      "totalDirectTokenValue": 3266465139.8617,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 3231007010.7028003
+      "totalReachableTokenValue": 3266465139.8617
     },
     {
       "address": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
@@ -99,7 +99,7 @@
           "functionName": "addToBlockedList",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -108,7 +108,7 @@
           "functionName": "destroyBlockedFunds",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -117,7 +117,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -153,7 +153,7 @@
           "functionName": "transferOwnership",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 3231007010.7028003,
+          "directTokenValueUsd": 3266465139.8617,
           "reachableContracts": []
         },
         {
@@ -212,7 +212,7 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 3231007010.7028003,
+              "tokenValueUsd": 3266465139.8617,
               "fundsAtRisk": true
             }
           ]
@@ -246,7 +246,7 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 3231007010.7028003,
+              "tokenValueUsd": 3266465139.8617,
               "fundsAtRisk": true
             }
           ]
@@ -271,7 +271,7 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 3231007010.7028003,
+              "tokenValueUsd": 3266465139.8617,
               "fundsAtRisk": true
             }
           ]
@@ -296,16 +296,16 @@
                 "upgradeTo"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 3231007010.7028003,
+              "tokenValueUsd": 3266465139.8617,
               "fundsAtRisk": true
             }
           ]
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 3231007010.7028003,
+      "totalDirectTokenValue": 3266465139.8617,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 3231007010.7028003
+      "totalReachableTokenValue": 3266465139.8617
     },
     {
       "address": "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
@@ -550,7 +550,7 @@
   ],
   "adminTotals": {
     "totalFundsAtRisk": 0,
-    "totalTokenValueAtRisk": 3231007010.7028003
+    "totalTokenValueAtRisk": 3266465139.8617
   },
   "dependencies": [],
   "dependencyEntityGroups": [],
@@ -562,14 +562,14 @@
     {
       "address": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
       "name": "Tether Gold Token (XAUt)",
-      "description": "ERC-20 contract for the XAUt token, currently representing $3.23B of circulating gold-backed claims. The contract itself does not custody collateral — physical gold is held off-chain — but it controls who can hold and transfer those claims, and the `mint`, `addToBlockedList`, and `destroyBlockedFunds` permissions on this contract directly determine total supply and individual holder balances.",
+      "description": "ERC-20 contract for the XAUt token, currently representing $3.27B of circulating gold-backed claims. The contract itself does not custody collateral — physical gold is held off-chain — but it controls who can hold and transfer those claims, and the `mint`, `addToBlockedList`, and `destroyBlockedFunds` permissions on this contract directly determine total supply and individual holder balances.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "XAUt",
-        "price": 4565.2,
+        "price": 4615.3,
         "totalSupply": "707747089000",
-        "tokenValue": 3231007010.7028003
+        "tokenValue": 3266465139.8617
       },
       "aggregate": null
     }

@@ -1,6 +1,6 @@
 {
   "name": "aerodrome",
-  "timestamp": 1777454478,
+  "timestamp": 1777541195,
   "configHash": "0x9706bc9c646bbc06cce0d1f040b1c3fb0411b44a1fee3aa5eb567ed7b07c97ec",
   "entries": [
     {
@@ -160,7 +160,7 @@
       "sinceBlock": 44394726,
       "values": {
         "$immutable": true,
-        "activePeriod": 1776902400,
+        "activePeriod": 1777507200,
         "defaultCap": 500,
         "defaultMinStakeTime": 10,
         "emissionAdmin": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
@@ -178,7 +178,7 @@
         "TAIL_START_TIMESTAMP": 1733356800,
         "voter": "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5",
         "WEEKLY_DECAY": 9900,
-        "weeklyEmissions": "3958216030134542946609161"
+        "weeklyEmissions": "3967811100899974126063697"
       },
       "fieldMeta": {
         "MAX_BPS": { "severity": "HIGH" },
@@ -232,7 +232,7 @@
       "sinceBlock": 3200559,
       "values": {
         "$immutable": true,
-        "allPoolsLength": 22405,
+        "allPoolsLength": 27380,
         "feeManager": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
         "implementation": "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7",
         "isPaused": false,
@@ -450,7 +450,7 @@
         "minter": "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5",
         "name": "Aerodrome",
         "symbol": "AERO",
-        "totalSupply": "1884864776254544260290077090"
+        "totalSupply": "1889433857571416250506522725"
       },
       "implementationNames": {
         "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631": "Aero"
@@ -559,7 +559,7 @@
         "currentCumulativePrices": {
           "reserve0Cumulative": 0,
           "reserve1Cumulative": 0,
-          "blockTimestamp": 1777454477
+          "blockTimestamp": 1777541195
         },
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x92f73ceb4d20761a35aaeeac8587c5805fc0329c5f16b4ab68866001e57c83f7",
@@ -636,7 +636,7 @@
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "AERO-CL-POS",
         "tokenDescriptor": "base:0xf632031B94D72deE0D99DeF846c9b6211041337f",
-        "totalSupply": 3390820
+        "totalSupply": 3398387
       },
       "implementationNames": {
         "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": "NonfungiblePositionManager"
@@ -683,7 +683,7 @@
       "sinceBlock": 36953962,
       "values": {
         "$immutable": true,
-        "activePeriod": 1776902400,
+        "activePeriod": 1777507200,
         "defaultCap": 500,
         "emissionAdmin": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
         "implementation": "base:0xC0d2086B6f70C0C40423626167096c6196cFA0c8",
@@ -697,7 +697,7 @@
         "TAIL_START_TIMESTAMP": 1733356800,
         "voter": "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5",
         "WEEKLY_DECAY": 9900,
-        "weeklyEmissions": "3958216030134542946609161"
+        "weeklyEmissions": "3967811100899974126063697"
       },
       "implementationNames": {
         "base:0xB630227a79707D517320b6c0f885806389dFcbB3": "CLGaugeFactory"
@@ -954,7 +954,7 @@
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "AERO-CL-POS",
         "tokenDescriptor": "base:0xc85C126442bb5B654792A70135805a9778C8e3fE",
-        "totalSupply": 102675
+        "totalSupply": 104316
       },
       "implementationNames": {
         "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53": "NonfungiblePositionManager"
@@ -990,7 +990,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 2343,
+        "nonce": 2350,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1011,10 +1011,10 @@
       "sinceBlock": 3200617,
       "values": {
         "$immutable": true,
-        "activePeriod": 1776902400,
+        "activePeriod": 1777507200,
         "aero": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
         "calculateGrowth": [0, 0, 0, 0, 0],
-        "epochCount": 139,
+        "epochCount": 140,
         "initialized": true,
         "MAX_BPS": 10000,
         "MAXIMUM_TAIL_RATE": 100,
@@ -1058,21 +1058,21 @@
         "$immutable": true,
         "allowedManager": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
         "artProxy": "base:0xd4C6eDDBE963aFA2D7b1562d0F2F3F9462E6525b",
-        "clock": 1777454477,
+        "clock": 1777541195,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DELEGATION_TYPEHASH": "0x9947d5709c1682eaa3946b2d84115c9c0d1c946b149d76e69b457458b42ea29e",
         "distributor": "base:0x227f65131A261548b057215bB1D5Ab2997964C7d",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "epoch": 793593,
+        "epoch": 797195,
         "factoryRegistry": "base:0x5C3F18F06CC09CA1910767A34a20F771039E37C0",
         "forwarder": "base:0x15e62707FCA7352fbE35F51a8D6b0F8066A05DCc",
         "name": "veNFT",
-        "permanentLockBalance": "945671980949682250311554725",
+        "permanentLockBalance": "946264471795205800339688480",
         "symbol": "veNFT",
         "team": "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15",
         "token": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
-        "tokenId": 118601,
+        "tokenId": 118670,
         "version": "2.0.0",
         "voter": "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5"
       },
@@ -1137,7 +1137,7 @@
       "sinceBlock": 44394727,
       "values": {
         "$immutable": true,
-        "activePeriod": 1776902400,
+        "activePeriod": 1777507200,
         "escrow": "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4",
         "gaugeFactory": "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB",
         "keeper": "base:0x7766Eb408B671BE8bc237639b20A0eC45e2750C7",
@@ -2621,9 +2621,9 @@
   "usedTemplates": {
     "aerodrome/CLFactory": "0xa5ed8b5db5382f352b2c9a8f7d248f6c031e00f12144b520d64f05b8574009f8",
     "aerodrome/NonfungiblePositionManager": "0x9ca7590d0625eaf3d352e1af544d2c25bd11800881769c9ef62a42616173ec81",
-    "aerodrome/VotingEscrow": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aerodrome/VotingEscrow": "0x1ca70958c640ca8928980b4dcf2a867edc6396968c7b6ec74818c9244bae7340",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "base": 45332565 },
+  "usedBlockNumbers": { "base": 45375924 },
   "permissionsConfigHash": "0xcc94398e70cfaa90a487d3984b67193eec574dee1aba80591bca9c802b160412"
 }

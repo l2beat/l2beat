@@ -1,7 +1,7 @@
 {
   "name": "Gauntlet-USDC-Prime",
-  "timestamp": 1777454478,
-  "configHash": "0x547097110ec9926270481009cc7b82750a7e825be8f7f647672d1f47fe2902e5",
+  "timestamp": 1777541195,
+  "configHash": "0x2f7d2bf12bfbfafcc93154502188422448af32fcf114b0517596498c0bf382e2",
   "entries": [
     {
       "address": "base:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
@@ -133,7 +133,6 @@
         "BASE_FEED_2": "base:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "base:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "770541958200300000000000000000000000000",
         "QUOTE_FEED_1": "base:0x0000000000000000000000000000000000000000",
         "QUOTE_FEED_2": "base:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "base:0x0000000000000000000000000000000000000000",
@@ -284,7 +283,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 154,
+        "nonce": 159,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -472,7 +471,7 @@
         "feedCap_64c911996D3c6aC71f9b455B1E8E7266BcbD848F": "750000000000000",
         "feeRecipient": "base:0x82C30B9DB2e3B92ACe4E1593B32890dCf8612D03",
         "guardian": "base:0x7084bF4dB6c21e1834dD6482f6056a39A33584cD",
-        "lastTotalAssets": 354473136376777,
+        "lastTotalAssets": 355773510855945,
         "marketCap_oracle_663BECd10daE6C4A3Dcd89F1d76c1174199639B9": "750000000000000",
         "marketOracles": [
           "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
@@ -517,8 +516,8 @@
         "supplyQueueLength": 2,
         "symbol": "gtUSDCp",
         "timelock": 604800,
-        "totalAssets": 354473139040487,
-        "totalSupply": "324196086350311339227461895",
+        "totalAssets": 355773574442318,
+        "totalSupply": "325350003448037024986913621",
         "withdrawQueueLength": 8
       },
       "fieldMeta": {
@@ -570,7 +569,7 @@
           "base:0xf3c72D97A5Dcf0449e89BBCE1A0581d8d15c0237"
         ],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 322,
+        "nonce": 324,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1080,6 +1079,6 @@
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682",
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921"
   },
-  "usedBlockNumbers": { "base": 45332565 },
+  "usedBlockNumbers": { "base": 45375924 },
   "permissionsConfigHash": "0xf9463efddf7d3a9200331d65ef01997844cdf031fa7b8fee82b9e542e48dbe27"
 }

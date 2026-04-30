@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777369004,
-  "lastConsumedUpdateNotifierId": 136,
+  "lastReconciledAt": 1777541216,
+  "lastConsumedUpdateNotifierId": 143,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2474,6 +2474,74 @@
       "contractName": "AssetList",
       "entity": null,
       "id": "136:eth:0x841c4bcde4670F16C9e699Db75635395B3090947:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 143,
+      "address": "eth:0x841c4bcde4670F16C9e699Db75635395B3090947",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "143:eth:0x841c4bcde4670F16C9e699Db75635395B3090947:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 143,
+      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "contractName": "cUSDTv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "143:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.assetList",
+          "before": "eth:0x841c4bcde4670F16C9e699Db75635395B3090947",
+          "after": "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92"
+        },
+        {
+          "field": "values.isBuyPaused",
+          "before": true,
+          "after": false
+        },
+        {
+          "field": "values.$pastUpgrades.52",
+          "after": [
+            "2026-04-29T12:47:59.000Z",
+            "0x54d922d60d98a94569c50291f791472a67894924d43ff48371793290cd38b95d",
+            [
+              "eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 52,
+          "after": 53
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7",
+          "after": "eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9"
+        },
+        {
+          "field": "implementationNames.eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9",
+          "after": "CometWithExtendedAssetList"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 143,
+      "address": "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92",
+      "contractName": "AssetList",
+      "entity": null,
+      "id": "143:eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92:contract-added",
       "type": "contract-added"
     }
   ]

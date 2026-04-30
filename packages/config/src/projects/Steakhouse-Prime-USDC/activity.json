@@ -1,0 +1,111 @@
+{
+  "version": "1.1",
+  "lastReconciledAt": 1777541513,
+  "lastConsumedUpdateNotifierId": 144,
+  "events": [
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 144,
+      "address": "base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00",
+      "contractName": "MorphoHelper",
+      "isDependency": true,
+      "entity": "Morpho",
+      "id": "144:base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "sourceHashes.0",
+          "before": "0x26274c5681c6c5d59ff215bd1252aeccd72c888c25ee5c4d9ef3e74e798dcffd",
+          "after": "0x5404271138b0a8eeb253b0a8b01434566bac9455ab63a4d849fa8f1831dcf644"
+        },
+        {
+          "field": "implementationNames.base:0x08bbBAD7a91827b5c2eB1efe1a8C6E17c12b1b00",
+          "before": "MorphoHelper",
+          "after": "MorphoHelperProxy"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 144,
+      "address": "base:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "contractName": "SafeL2",
+      "entity": null,
+      "id": "144:base:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.multisigThreshold",
+          "before": "5 of 8 (63%)",
+          "after": "5 of 9 (56%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 144,
+      "address": "base:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "contractName": "SafeL2",
+      "entity": null,
+      "id": "144:base:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.0",
+          "after": "base:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-30T09:26:35.000Z",
+      "updateNotifierId": 144,
+      "address": "base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2",
+      "contractName": "MetaMorphoV1_1",
+      "isDependency": false,
+      "entity": null,
+      "id": "144:base:0xBEEFE94c8aD530842bfE7d8B397938fFc1cb83b2:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.marketOracles.3",
+          "before": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A"
+        },
+        {
+          "field": "values.marketOracles.4",
+          "after": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A"
+        },
+        {
+          "field": "values.marketParams.3",
+          "before": {
+            "marketId": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae",
+            "loanToken": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "collateralToken": "base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+            "oracle": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+            "irm": "base:0x46415998764C29aB2a25CbeA6254146D50D22687",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.marketParams.4",
+          "after": {
+            "marketId": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae",
+            "loanToken": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "collateralToken": "base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+            "oracle": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+            "irm": "base:0x46415998764C29aB2a25CbeA6254146D50D22687",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.supplyQueue.3",
+          "before": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae"
+        },
+        {
+          "field": "values.supplyQueue.4",
+          "after": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae"
+        }
+      ]
+    }
+  ]
+}

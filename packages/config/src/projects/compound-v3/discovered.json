@@ -1,8 +1,23 @@
 {
   "name": "compound-v3",
-  "timestamp": 1777454478,
+  "timestamp": 1777541195,
   "configHash": "0x7adb18c8899a16d2bca5647a972f2b6b17b002c1d72a57394e049470212434bb",
   "entries": [
+    {
+      "name": "AssetList",
+      "address": "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe31915f5f9f093183b616044a9f6bf0259fd4d26110d444d688fa07d4709d73c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1777466879,
+      "sinceBlock": 24985841,
+      "values": { "$immutable": true, "numAssets": 17 },
+      "implementationNames": {
+        "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92": "AssetList"
+      }
+    },
     {
       "address": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
       "type": "EOA",
@@ -458,21 +473,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AssetList",
-      "address": "eth:0x841c4bcde4670F16C9e699Db75635395B3090947",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe31915f5f9f093183b616044a9f6bf0259fd4d26110d444d688fa07d4709d73c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1777347803,
-      "sinceBlock": 24975944,
-      "values": { "$immutable": true, "numAssets": 17 },
-      "implementationNames": {
-        "eth:0x841c4bcde4670F16C9e699Db75635395B3090947": "AssetList"
-      }
-    },
-    {
       "name": "EACAggregatorProxy",
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "type": "Contract",
@@ -556,7 +556,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54330687256700490",
+        "totalSupply": "54303728480184603",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -604,7 +604,7 @@
       "sinceBlock": 16400710,
       "values": {
         "$admin": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
-        "$implementation": "eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7",
+        "$implementation": "eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9",
         "$pastUpgrades": [
           [
             "2023-01-13T21:58:23.000Z",
@@ -865,10 +865,15 @@
             "2026-04-28T03:43:23.000Z",
             "0xd3cc478a428537ccf8cda8c83b6e4bb544cb163df85875ae5d5ce0bd4d83bb8d",
             ["eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7"]
+          ],
+          [
+            "2026-04-29T12:47:59.000Z",
+            "0x54d922d60d98a94569c50291f791472a67894924d43ff48371793290cd38b95d",
+            ["eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9"]
           ]
         ],
-        "$upgradeCount": 52,
-        "assetList": "eth:0x841c4bcde4670F16C9e699Db75635395B3090947",
+        "$upgradeCount": 53,
+        "assetList": "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92",
         "baseBorrowMin": "100000000000000000",
         "baseMinForRewards": "1000000000000000000000",
         "baseScale": "1000000000000000000",
@@ -885,12 +890,12 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "958462752665755330747",
+        "getReserves": "958686054357187444914",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "943823074078809453",
+        "getUtilization": "942584312073955882",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
-        "isBuyPaused": true,
+        "isBuyPaused": false,
         "isSupplyPaused": false,
         "isTransferPaused": true,
         "isWithdrawPaused": true,
@@ -902,8 +907,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 8561643835,
         "supplyPerSecondInterestRateSlopeLow": 634195839,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "53206330184242607096843",
-        "totalSupply": "56373175302075163715847",
+        "totalBorrow": "53211168233563107858537",
+        "totalSupply": "56452400049704232363374",
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -913,7 +918,7 @@
       },
       "implementationNames": {
         "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": "TransparentUpgradeableProxy",
-        "eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7": "CometWithExtendedAssetList"
+        "eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9": "CometWithExtendedAssetList"
       }
     },
     {
@@ -1005,7 +1010,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
         "NAME": "Gnosis Safe",
-        "nonce": 89,
+        "nonce": 91,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1053,7 +1058,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1827251069733723700994895"
+        "totalSupply": "1852280103218982599739641"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1410,9 +1415,9 @@
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 13954856727311,
+        "getReserves": 13955067654324,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "767610582764983349",
+        "getUtilization": "764384444039083685",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1427,8 +1432,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 267904686072129,
-        "totalSupply": 349010917135057,
+        "totalBorrow": 268503086325909,
+        "totalSupply": 351267014782942,
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -1470,8 +1475,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1777454459,
-          "updatedAt": 1777454459,
+          "startedAt": 1777541183,
+          "updatedAt": 1777541183,
           "answeredInRound": 1
         },
         "version": 1
@@ -1520,6 +1525,15 @@
     }
   ],
   "abis": {
+    "eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92": [
+      "constructor(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
+      "error BadAsset()",
+      "error BadDecimals()",
+      "error BorrowCFTooLarge()",
+      "error LiquidateCFTooLarge()",
+      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
+      "function numAssets() view returns (uint8)"
+    ],
     "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3": [
       "constructor(tuple(bytes32 name32, bytes32 symbol32) config, address assetListFactoryAddress)",
       "error BadAmount()",
@@ -1945,15 +1959,6 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "eth:0x841c4bcde4670F16C9e699Db75635395B3090947": [
-      "constructor(tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs)",
-      "error BadAsset()",
-      "error BadDecimals()",
-      "error BorrowCFTooLarge()",
-      "error LiquidateCFTooLarge()",
-      "function getAssetInfo(uint8 i) view returns (tuple(uint8 offset, address asset, address priceFeed, uint64 scale, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap))",
-      "function numAssets() view returns (uint8)"
-    ],
     "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": [
       "constructor(address _aggregator, address _accessController)",
       "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
@@ -2044,7 +2049,7 @@
       "function userNonce(address) view returns (uint256)",
       "function version() view returns (string)"
     ],
-    "eth:0xb6e867F112cf5376820581EDc8Ef134fE33292D7": [
+    "eth:0xb979f2Ef3b117082a899Bc4Ed01987BEeF184cd9": [
       "constructor(tuple(address governor, address pauseGuardian, address baseToken, address baseTokenPriceFeed, address extensionDelegate, uint64 supplyKink, uint64 supplyPerYearInterestRateSlopeLow, uint64 supplyPerYearInterestRateSlopeHigh, uint64 supplyPerYearInterestRateBase, uint64 borrowKink, uint64 borrowPerYearInterestRateSlopeLow, uint64 borrowPerYearInterestRateSlopeHigh, uint64 borrowPerYearInterestRateBase, uint64 storeFrontPriceFactor, uint64 trackingIndexScale, uint64 baseTrackingSupplySpeed, uint64 baseTrackingBorrowSpeed, uint104 baseMinForRewards, uint104 baseBorrowMin, uint104 targetReserves, tuple(address asset, address priceFeed, uint8 decimals, uint64 borrowCollateralFactor, uint64 liquidateCollateralFactor, uint64 liquidationFactor, uint128 supplyCap)[] assetConfigs) config)",
       "error Absurd()",
       "error AlreadyInitialized()",
@@ -2418,6 +2423,6 @@
     "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb"
   },
-  "usedBlockNumbers": { "ethereum": 24984809 },
-  "permissionsConfigHash": "0xeb7aee4f20003a253abf7b18a66d49988431099c28675dd91116d21266ace88a"
+  "usedBlockNumbers": { "ethereum": 24992017 },
+  "permissionsConfigHash": "0xcf70bbbefa7e8cd597869782415ab1ec4f9d554f16e4733d56d76e51312ab393"
 }
