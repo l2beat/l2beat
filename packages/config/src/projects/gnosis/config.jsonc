@@ -4,7 +4,6 @@
   "import": [
     "../globalConfig.jsonc"
   ],
-  "maxAddresses": 150,
   "initialAddresses": [
     "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0"
   ],
@@ -31,14 +30,8 @@
     "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": "HomeOmnibridge Fee Manager"
   },
   "overrides": {
-    "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": {
-      "description": "15-member / 8-threshold multisig that owns and upgrades the Ethereum-side canonical bridge contracts, including the xDAI bridge, AMB bridge, Omnibridge, and the BridgeRouter ProxyAdmin."
-    },
     "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
       "proxyType": "Eternal Storage proxy"
-    },
-    "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": {
-      "description": "2-of-3 multisig that owns and upgrades the Ethereum-side Hashi managers used by the bridge validation path."
     },
     "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
       "proxyType": "Eternal Storage proxy"
@@ -50,10 +43,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "GnosisAddress"]
+          "edit": [
+            "format",
+            "GnosisAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "GnosisAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "GnosisAddress"
+            ]
+          ]
         }
       }
     },
@@ -61,18 +63,24 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "GnosisAddress"]
+          "edit": [
+            "format",
+            "GnosisAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "GnosisAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "GnosisAddress"
+            ]
+          ]
         }
       }
     },
     "eth:0x9f7Ce792d0ee09a6ce89eC2B9B236A44B0aCf73e": {
       "ignoreDiscovery": true // triggers flattener bug
-    },
-    "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd": {
-      "description": "ProxyAdmin that controls BridgeRouter upgrades. It is owned by the Ethereum-side bridge multisig."
     },
     "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
       "proxyType": "Eternal Storage proxy"
@@ -84,10 +92,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "EthereumAddress"]
+          "edit": [
+            "format",
+            "EthereumAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "EthereumAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "EthereumAddress"
+            ]
+          ]
         }
       }
     },
@@ -98,10 +115,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "EthereumAddress"]
+          "edit": [
+            "format",
+            "EthereumAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "EthereumAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "EthereumAddress"
+            ]
+          ]
         }
       }
     },
@@ -111,17 +137,11 @@
     "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": {
       "description": "Safe that currently receives Omnibridge fees distributed by the HomeOmnibridge fee manager."
     },
-    "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": {
-      "description": "15-member / 8-threshold multisig that owns and upgrades the Gnosis-side canonical bridge contracts, including the xDAI bridge, AMB bridge, HomeOmnibridge, and the legacy BlockRewardAuRa contract."
-    },
     "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
       "proxyType": "Eternal Storage proxy"
     },
     "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D": {
       "proxyType": "Eternal Storage proxy"
-    },
-    "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": {
-      "description": "2-of-3 multisig that owns and upgrades the Gnosis-side Hashi managers used by the bridge validation path."
     },
     "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
       "proxyType": "Eternal Storage proxy"

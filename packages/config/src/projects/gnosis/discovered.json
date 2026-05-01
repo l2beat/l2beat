@@ -1,7 +1,7 @@
 {
   "name": "gnosis",
   "timestamp": 1777539411,
-  "configHash": "0xe20eda7eb40253356cf912df4b25145a7268ec3f74c44bde074170dc38b9f5bf",
+  "configHash": "0x3b6b7c2b4fbefb4eca3da52243e4be5ab8845ed14356c37cc2456d8623d8d108",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -101,7 +101,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "description": "15-member / 8-threshold multisig that owns and upgrades the Ethereum-side canonical bridge contracts, including the xDAI bridge, AMB bridge, Omnibridge, and the BridgeRouter ProxyAdmin.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -399,7 +398,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "description": "2-of-3 multisig that owns and upgrades the Ethereum-side Hashi managers used by the bridge validation path.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -592,19 +590,6 @@
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
-          "description": "change which LayerZero source endpoint IDs and reporter addresses are allowed to write hashes into the adapter.",
-          "role": ".owner"
         }
       ]
     },
@@ -1249,7 +1234,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "description": "ProxyAdmin that controls BridgeRouter upgrades. It is owned by the Ethereum-side bridge multisig.",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1406,11 +1390,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Giveth EOA 2",
       "address": "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
@@ -1428,19 +1407,6 @@
       "address": "gno:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
     },
     {
       "name": "Yaru",
@@ -1507,11 +1473,6 @@
       "implementationNames": {
         "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
       }
-    },
-    {
-      "address": "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Safe EOA 2",
@@ -1673,19 +1634,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "gno:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "address": "gno:0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1764,11 +1712,6 @@
         "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": "OmnibridgeFeeManager"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "HomeBridgeErcToNative HashiManager",
@@ -1870,19 +1813,6 @@
           "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
-        }
-      ]
-    },
-    {
-      "address": "gno:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B",
-          "description": "change the chain-to-endpoint mapping, LayerZero execution gas setting, and refund address used for LayerZero deliveries.",
-          "role": ".owner"
         }
       ]
     },
@@ -2283,7 +2213,6 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "description": "15-member / 8-threshold multisig that owns and upgrades the Gnosis-side canonical bridge contracts, including the xDAI bridge, AMB bridge, HomeOmnibridge, and the legacy BlockRewardAuRa contract.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2472,24 +2401,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0x97630E2aE609D4104aBdA91F3066C556403182dd",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "name": "SP1HeliosAdapter",
       "address": "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf",
       "type": "Contract",
@@ -2529,11 +2440,6 @@
     },
     {
       "address": "gno:0xA07888742c18d7e658132AE0148fF205fFF46481",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2668,36 +2574,6 @@
       }
     },
     {
-      "name": "Hashi",
-      "address": "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
-      "type": "Contract",
-      "template": "gnosis/Hashi",
-      "sourceHashes": [
-        "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
-      ],
-      "proxyType": "immutable",
-      "description": "Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.",
-      "sinceTimestamp": 1720614180,
-      "sinceBlock": 34894600,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
-      }
-    },
-    {
-      "address": "gno:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "name": "HomeBridge Validators",
       "address": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
       "type": "Contract",
@@ -2767,11 +2643,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Yaho",
       "address": "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
       "type": "Contract",
@@ -2808,35 +2679,9 @@
       "proxyType": "EOA"
     },
     {
-      "address": "gno:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
-    },
-    {
       "address": "gno:0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0xCC46a3873BfCaa08a6a946a308bB621535D6E6Dd",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
-          "description": "can sign bridge messages between Ethereum and Gnosis.",
-          "role": ".$members"
-        }
-      ]
     },
     {
       "address": "gno:0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -2871,27 +2716,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "gno:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2934,7 +2764,6 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "description": "2-of-3 multisig that owns and upgrades the Gnosis-side Hashi managers used by the bridge validation path.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3096,11 +2925,6 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -4352,16 +4176,6 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
-      "error AdaptersDisagree(address adapterOne, address adapterTwo)",
-      "error HashNotAvailableInAdapter(address adapter)",
-      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
-      "error NoAdaptersGiven()",
-      "function checkHashWithThresholdFromAdapters(uint256 domain, uint256 id, uint256 threshold, address[] adapters) view returns (bool)",
-      "function getHash(uint256 domain, uint256 id, address[] adapters) view returns (bytes32 hash)",
-      "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
-      "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
-    ],
     "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -4564,5 +4378,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24991869, "gnosis": 45931894 },
-  "permissionsConfigHash": "0x53bbca6e4b044690bb48fbbfaf032b3aef36be5279edb69d8d293e316b539e82"
+  "permissionsConfigHash": "0x543f49bc0a4b4de5b80c8781b7a6cbe920087c697ebe0a75a47c0e88b4c4fd2f"
 }

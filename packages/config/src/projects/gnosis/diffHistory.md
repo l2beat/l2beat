@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3a5b4182e5cf2079bb2e144dd696da561f7c14de
+Generated with discovered.json: 0xf76ff9e0fee484477e065d53f1dead6761cd7f89
 
-# Diff at Thu, 30 Apr 2026 15:03:18 GMT:
+# Diff at Fri, 01 May 2026 07:31:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1777539411
@@ -20,7 +20,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract Gnosis Bridge Multisig (Ethereum) (eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6)
-    +++ description: 15-member / 8-threshold multisig that owns and upgrades the Ethereum-side canonical bridge contracts, including the xDAI bridge, AMB bridge, Omnibridge, and the BridgeRouter ProxyAdmin.
+    +++ description: None
 ```
 
 ```diff
@@ -32,7 +32,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract Hashi Multisig (Ethereum) (eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
-    +++ description: 2-of-3 multisig that owns and upgrades the Ethereum-side Hashi managers used by the bridge validation path.
+    +++ description: None
 ```
 
 ```diff
@@ -110,7 +110,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract BridgeRouter ProxyAdmin (eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd)
-    +++ description: ProxyAdmin that controls BridgeRouter upgrades. It is owned by the Ethereum-side bridge multisig.
+    +++ description: None
 ```
 
 ```diff
@@ -194,7 +194,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract Gnosis Bridge Multisig (Gnosis) (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd)
-    +++ description: 15-member / 8-threshold multisig that owns and upgrades the Gnosis-side canonical bridge contracts, including the xDAI bridge, AMB bridge, HomeOmnibridge, and the legacy BlockRewardAuRa contract.
+    +++ description: None
 ```
 
 ```diff
@@ -229,12 +229,6 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 
 ```diff
 +   Status: CREATED
-    contract Hashi (gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
-    +++ description: Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.
-```
-
-```diff
-+   Status: CREATED
     contract HomeBridge Validators (gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D)
     +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
 ```
@@ -260,7 +254,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract Hashi Multisig (Gnosis) (gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623)
-    +++ description: 2-of-3 multisig that owns and upgrades the Gnosis-side Hashi managers used by the bridge validation path.
+    +++ description: None
 ```
 
 ```diff
