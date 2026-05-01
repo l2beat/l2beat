@@ -1,6 +1,6 @@
 {
   "name": "Sentora-PYUSD",
-  "timestamp": 1777540375,
+  "timestamp": 1777626700,
   "configHash": "0x78195ca14b667790df8308b862b685410031ae5eb40b84e5391ced5e7c4bb5b6",
   "entries": [
     {
@@ -20,7 +20,7 @@
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "763082716402065829565921398743151106154",
+        "price": "776496625360542386026982267358759648004",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -97,9 +97,9 @@
         "fee": 0,
         "feedCap_0x2665701293fCbEB223D11A08D826563EDcCE423A": "200000000000000",
         "feedCap_0x4F67e4d9BD67eFa28236013288737D39AeF48e79": "50000000000000",
-        "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": "50000000000000",
-        "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "100000000000000",
-        "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": "400000000000000",
+        "feedCap_0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22": "75000000000000",
+        "feedCap_0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "125000000000000",
+        "feedCap_0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": "425000000000000",
         "feedCap_0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": "0",
         "feedCap_0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": "0",
         "feedCap_0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": "50000000000000",
@@ -109,10 +109,10 @@
         "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1": "0",
         "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
         "guardian": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
-        "lastTotalAssets": 230691024402205,
+        "lastTotalAssets": 238009690359025,
         "lostAssets": 0,
         "marketCap_oracle_0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": "50000000000000",
-        "marketCap_oracle_0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": "50000000000000",
+        "marketCap_oracle_0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": "75000000000000",
         "marketCap_oracle_0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": "0",
         "marketCap_oracle_0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": "50000000000000",
         "marketCap_oracle_0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": "0",
@@ -234,8 +234,8 @@
         "supplyQueueLength": 1,
         "symbol": "senPYUSD",
         "timelock": 259200,
-        "totalAssets": 230691784100476,
-        "totalSupply": "114683094307037845878913440",
+        "totalAssets": 238009697072531,
+        "totalSupply": "118312784378825611155493482",
         "withdrawQueue": [
           "0xf8c13c80ab8666c21fc5afa13105745cae7c1da13df596eb5054319f36655cc9",
           "0xd8a8e6667f58aa9229e8979bd619742b1660ee856c200a93e407dbccb7222323",
@@ -282,7 +282,7 @@
         "BASE_FEED_2": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "2460532154042367694699029599",
+        "price": "2494251129884701722594929250",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -410,13 +410,13 @@
         "name": "YT Ethena sUSDE 7MAY2026",
         "postExpiry": { "firstPYIndex": 0, "totalSyInterestForTreasury": 0 },
         "PT": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
-        "pyIndexLastUpdatedBlock": 24991945,
-        "pyIndexStored": "1229635157135545408",
+        "pyIndexLastUpdatedBlock": 24999045,
+        "pyIndexStored": "1229784119104951898",
         "reentrancyGuardEntered": false,
         "SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
         "symbol": "YT-sUSDE-7MAY2026",
-        "syReserve": "145943122802400061383472881",
-        "totalSupply": "179026915759830562496317105",
+        "syReserve": "145800678784849577834585890",
+        "totalSupply": "178906740261066760583629069",
         "VERSION": 6
       },
       "errors": { "getPostExpiryData": "Processing error occurred." },
@@ -441,10 +441,10 @@
       "sinceBlock": 8928152,
       "values": {
         "$immutable": true,
-        "debt": "12573781821336060572258705742758867768519327723614344116",
-        "Line": "15030272751368327897532830280141437797815963069095766322",
+        "debt": "13200492031806421978636308524516022506154106657903187880",
+        "Line": "15313847438406519897532830280055466294991634477167631052",
         "live": 1,
-        "vice": "561842318548191100432966888507018021113871484393281836"
+        "vice": "562452440937014573726241407266858525011118025892074936"
       },
       "implementationNames": {
         "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": "Vat"
@@ -467,7 +467,7 @@
         "BASE_FEED_2": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "997853281182346108490923",
+        "price": "998176801964854810638371",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -518,7 +518,7 @@
         "reentrancyGuardEntered": false,
         "SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
         "symbol": "PT-sUSDE-7MAY2026",
-        "totalSupply": "179026915759830562496317105",
+        "totalSupply": "178906740261066760583629069",
         "VERSION": 6,
         "YT": "eth:0x30775B422b9c7415349855346352FAA61fD97E41"
       },
@@ -543,7 +543,7 @@
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "758151716127981099855461037458333044220",
+        "price": "771492164986348601589355475829256223352",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -582,7 +582,7 @@
         "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDe",
-        "totalSupply": "3891887827720787627523503861"
+        "totalSupply": "3903991845445573027523503861"
       },
       "implementationNames": {
         "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": "USDe"
@@ -604,11 +604,11 @@
         "decimals": 8,
         "description": "Custom price feed for wstETH / ETH",
         "latestRoundData": {
-          "roundId": "36893488147419103989",
-          "answer": 123141891,
-          "startedAt": 1777499584,
-          "updatedAt": 1777499603,
-          "answeredInRound": "36893488147419103989"
+          "roundId": "36893488147419103990",
+          "answer": 123148159,
+          "startedAt": 1777586004,
+          "updatedAt": 1777586015,
+          "answeredInRound": "36893488147419103990"
         },
         "stETHtoETHPriceFeed": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
         "stETHToETHPriceFeedDecimals": 18,
@@ -637,7 +637,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
         "BASE_VAULT_CONVERSION_SAMPLE": "1000000000000000000",
-        "price": "1094193402672949609535898",
+        "price": "1094409160695055491802269",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -724,7 +724,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "754547956149322707694298704484339159516",
+        "price": "762805690442639609541332251325621095390",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -753,10 +753,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1233166992292519963",
+        "stEthPerToken": "1233257307607299565",
         "symbol": "wstETH",
-        "tokensPerStEth": "810920180519062789",
-        "totalSupply": "3385117013781465194717790"
+        "tokensPerStEth": "810860794281565600",
+        "totalSupply": "3375816011244289271793897"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -828,8 +828,8 @@
         "previewRedeem": [0, 0, 0, 0, 0],
         "previewWithdraw": [0, 0, 0, 0, 0],
         "symbol": "syrupUSDC",
-        "totalAssets": 1193154182231652,
-        "totalSupply": 1026817920295061,
+        "totalAssets": 1199696148386327,
+        "totalSupply": 1032330185351484,
         "unrealizedLosses": 0
       },
       "errors": {
@@ -856,23 +856,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1619411021,
       "sinceBlock": 12313756,
@@ -897,7 +880,24 @@
       "implementationNames": {
         "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1": "Proxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
@@ -943,10 +943,10 @@
       "sinceBlock": 24188933,
       "values": {
         "_storage": {
-          "totalPt": "1900874180661192855386582",
-          "totalSy": "9097152617530300147641277",
-          "lastLnImpliedRate": "52571600382174792",
-          "observationIndex": 47,
+          "totalPt": "1780695307624130101204525",
+          "totalSy": "9164955449688737348325552",
+          "lastLnImpliedRate": "49530614534600941",
+          "observationIndex": 55,
           "observationCardinality": 100,
           "observationCardinalityNext": 100
         },
@@ -957,7 +957,7 @@
         "getNonOverrideLnFeeRateRoot": "9950330853168082",
         "getRewardTokens": ["eth:0x808507121B80c02388fAd14726482e061B8da827"],
         "isExpired": false,
-        "lastRewardBlock": 24985922,
+        "lastRewardBlock": 24996926,
         "name": "PLP Ethena sUSDE 7MAY2026",
         "observations": [
           [1776969623, "374399179809811449215652", true],
@@ -973,8 +973,8 @@
         },
         "reentrancyGuardEntered": false,
         "symbol": "PLP-sUSDE-7MAY2026",
-        "totalActiveSupply": "1770002294136815815941911",
-        "totalSupply": "4368077569228099717142738",
+        "totalActiveSupply": "1765102210428345676805464",
+        "totalSupply": "4355827359956924369301620",
         "VERSION": 6
       },
       "errors": { "observations": "Processing error occurred." },
@@ -1111,8 +1111,8 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getUnvestedAmount": "89291424251071428571429",
-        "lastDistributionTimestamp": 1777536731,
+        "getUnvestedAmount": "51543801866666666666665",
+        "lastDistributionTimestamp": 1777623167,
         "MAX_COOLDOWN_DURATION": 7776000,
         "name": "Staked USDe",
         "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
@@ -1122,9 +1122,9 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "silo": "eth:0x7FC7c91D556B400AFa565013E3F32055a0713425",
         "symbol": "sUSDe",
-        "totalAssets": "2127485793267301428625808167",
-        "totalSupply": "1730176313355493283364640590",
-        "vestingAmount": "102193332476190476190477"
+        "totalAssets": "2095677775631898088051907193",
+        "totalSupply": "1704100808900289941716974089",
+        "vestingAmount": "58711497142857142857142"
       },
       "errors": {
         "convertToAssets": "Processing error occurred.",
@@ -1160,7 +1160,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 34,
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1185,7 +1185,7 @@
         "BASE_FEED_2": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "2777468391432781790138336722",
+        "price": "2815428005049869494351705766",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1205,13 +1205,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1702883459,
       "sinceBlock": 18811307,
       "values": {
@@ -1220,7 +1213,14 @@
       },
       "implementationNames": {
         "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "Savings USDS Token",
@@ -1245,7 +1245,7 @@
         ],
         "$upgradeCount": 1,
         "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chi": "1094924741291414782117619532",
+        "chi": "1095032079010641244213676519",
         "convertToAssets": [0, 1, 2, 3, 4],
         "convertToShares": [0, 0, 1, 2, 3],
         "decimals": 18,
@@ -1257,11 +1257,11 @@
         "previewMint": [0, 2, 3, 4, 5],
         "previewRedeem": [0, 1, 2, 3, 4],
         "previewWithdraw": [0, 1, 2, 3, 4],
-        "rho": 1777540367,
+        "rho": 1777626599,
         "ssr": "1000000001136785036595443334",
         "symbol": "sUSDS",
-        "totalAssets": "4884131171069208870363516160",
-        "totalSupply": "4460700344855295265700384774",
+        "totalAssets": "5553720967949996310454571330",
+        "totalSupply": "5071742229363084445347821163",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "usds": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "usdsJoin": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
@@ -1372,8 +1372,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100381661,
-          "startedAt": 1777454339,
-          "updatedAt": 1777454339,
+          "startedAt": 1777605251,
+          "updatedAt": 1777605251,
           "answeredInRound": 1
         },
         "version": 1
@@ -1433,9 +1433,9 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "exchangeRate": "1229635255577663404",
+        "exchangeRate": "1229785095275146971",
         "getAbsoluteSupplyCap": "2500000000000000000000000000",
-        "getAbsoluteTotalSupply": "155636346149447523698586593",
+        "getAbsoluteTotalSupply": "155813748041820321926330871",
         "getRewardTokens": [],
         "getTokensIn": [
           "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
@@ -1449,7 +1449,7 @@
         "rewardIndexesStored": [],
         "supplyCap": "2500000000000000000000000000",
         "symbol": "SY-sUSDE",
-        "totalSupply": "155636346149447523698586593",
+        "totalSupply": "155813748041820321926330871",
         "yieldToken": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
       },
       "implementationNames": {
@@ -1486,9 +1486,9 @@
         "fromTokenScale": "1000000000000000000",
         "latestRoundData": {
           "roundId": 0,
-          "answer": "999047519001938293",
+          "answer": "999238059427206416",
           "startedAt": 0,
-          "updatedAt": 1777540367,
+          "updatedAt": 1777626683,
           "answeredInRound": 0
         },
         "market": "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883",
@@ -1517,7 +1517,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
         "BASE_VAULT_CONVERSION_SAMPLE": 1000000,
-        "price": "1161459999722451918144191947454309196",
+        "price": "1161721835574889755299409738529356741",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1560,7 +1560,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 277,
+        "nonce": 279,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1607,7 +1607,7 @@
         ],
         "$upgradeCount": 3,
         "getUniqueSignersThreshold": 3,
-        "priceOfETH": "2256760602130000000000"
+        "priceOfETH": "2285079905400000000000"
       },
       "errors": {
         "extractTimestampsAndAssertAllAreEqual": "Processing error occurred.",
@@ -1646,7 +1646,7 @@
         "name": "USDS Stablecoin",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "USDS",
-        "totalSupply": "7445989755760234190416195342",
+        "totalSupply": "8090844122236183750387631147",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
@@ -1678,7 +1678,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
         "BASE_VAULT_CONVERSION_SAMPLE": "1000000000000000000",
-        "price": "1228165378621278211048371",
+        "price": "1228478981484607744243099",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1711,7 +1711,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 172,
+        "nonce": 175,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3620,6 +3620,6 @@
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24991949 },
+  "usedBlockNumbers": { "ethereum": 24999113 },
   "permissionsConfigHash": "0x38fc79d5205856f14762e96c71e7c84a7886fffe421ec76e14024e764e206b80"
 }

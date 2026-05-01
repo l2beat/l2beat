@@ -2,7 +2,8 @@
   "version": "1.0",
   "publishedAt": "2026-04-17T11:50:00.000Z",
   "lastModified": "2026-04-19T09:31:22.607Z",
-  "compiledAt": "2026-04-30T09:26:35.000Z",
+  "compiledAt": "2026-05-01T09:11:40.000Z",
+  "verified": true,
   "project": "uniswap-v3",
   "metadata": {
     "protocolName": "Uniswap V3",
@@ -18,8 +19,8 @@
     "scoredFunctionCount": 34,
     "adminCount": 2,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 1010907924.78133,
-    "totalTokenValueAtRisk": 63980000,
+    "totalCapitalAtRisk": 1038621933.14303,
+    "totalTokenValueAtRisk": 64340000,
     "totalTokenValue": 0,
     "linesOfCode": 7933,
     "verifiedContractCount": 12,
@@ -110,9 +111,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -308,9 +309,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -453,9 +454,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -681,7 +682,7 @@
           "functionName": "setMinter",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 63980000,
+          "directTokenValueUsd": 64340000,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -718,7 +719,7 @@
                 "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
                 "fieldName": "minter"
               },
-              "impactCapUsd": 63980000
+              "impactCapUsd": 64340000
             }
           ]
         },
@@ -728,7 +729,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 63980000,
+          "directTokenValueUsd": 64340000,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -765,7 +766,7 @@
                 "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
                 "fieldName": "totalSupply"
               },
-              "impactCapUsd": 63980000
+              "impactCapUsd": 64340000
             },
             {
               "type": "delay",
@@ -1093,9 +1094,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 63980000,
+      "totalDirectTokenValue": 64340000,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 63980000
+      "totalReachableTokenValue": 64340000
     },
     {
       "address": "eth:0x0000000000000000000000000000000000000000",
@@ -1185,9 +1186,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -1239,7 +1240,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 63980000
+      "totalReachableTokenValue": 64340000
     },
     {
       "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
@@ -1320,9 +1321,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -1453,9 +1454,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -1586,9 +1587,9 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             },
             {
               "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -1651,7 +1652,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 63980000
+      "totalReachableTokenValue": 64340000
     },
     {
       "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
@@ -1744,7 +1745,7 @@
   ],
   "adminTotals": {
     "totalFundsAtRisk": 0,
-    "totalTokenValueAtRisk": 63980000
+    "totalTokenValueAtRisk": 64340000
   },
   "dependencies": [],
   "dependencyEntityGroups": [],
@@ -1761,7 +1762,7 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 1010907924.78133,
+        "totalUsdValue": 1038621933.14303,
         "contractCount": 0,
         "handlerName": "uniswap-v3-factory",
         "label": "All Uniswap-v3 Pools"
@@ -1993,7 +1994,7 @@
             "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
             "fieldName": "minter"
           },
-          "impactCapUsd": 63980000
+          "impactCapUsd": 64340000
         }
       ]
     },
@@ -2037,7 +2038,7 @@
             "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
             "fieldName": "totalSupply"
           },
-          "impactCapUsd": 63980000
+          "impactCapUsd": 64340000
         },
         {
           "type": "delay",

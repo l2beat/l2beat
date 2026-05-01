@@ -2,7 +2,8 @@
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
   "lastModified": "2026-04-16T15:45:40.573Z",
-  "compiledAt": "2026-04-30T09:26:35.000Z",
+  "compiledAt": "2026-05-01T09:11:40.000Z",
+  "verified": true,
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -10,7 +11,7 @@
     "chain": "Ethereum",
     "projectType": "dex",
     "tokenName": "UNI",
-    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $812.80M."
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $822.62M."
   },
   "totals": {
     "contractCount": 12,
@@ -18,8 +19,8 @@
     "scoredFunctionCount": 2,
     "adminCount": 2,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 812799761.1792052,
-    "totalTokenValueAtRisk": 63980000,
+    "totalCapitalAtRisk": 822618515.3323019,
+    "totalTokenValueAtRisk": 64340000,
     "totalTokenValue": 0,
     "linesOfCode": 1979,
     "verifiedContractCount": 12,
@@ -50,9 +51,9 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 63980000,
+              "tokenValueUsd": 64340000,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 63980000
+              "effectiveCapUsd": 64340000
             }
           ]
         }
@@ -60,7 +61,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 63980000
+      "totalReachableTokenValue": 64340000
     },
     {
       "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
@@ -75,7 +76,7 @@
           "functionName": "setMinter",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 63980000,
+          "directTokenValueUsd": 64340000,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -112,7 +113,7 @@
                 "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
                 "fieldName": "minter"
               },
-              "impactCapUsd": 63980000
+              "impactCapUsd": 64340000
             }
           ]
         },
@@ -122,7 +123,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 63980000,
+          "directTokenValueUsd": 64340000,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -159,7 +160,7 @@
                 "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
                 "fieldName": "totalSupply"
               },
-              "impactCapUsd": 63980000
+              "impactCapUsd": 64340000
             },
             {
               "type": "delay",
@@ -174,14 +175,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 63980000,
+      "totalDirectTokenValue": 64340000,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 63980000
+      "totalReachableTokenValue": 64340000
     }
   ],
   "adminTotals": {
     "totalFundsAtRisk": 0,
-    "totalTokenValueAtRisk": 63980000
+    "totalTokenValueAtRisk": 64340000
   },
   "dependencies": [],
   "dependencyEntityGroups": [],
@@ -193,13 +194,13 @@
     {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "name": "UniswapV2Factory (All Pairs)",
-      "description": "Factory contract that has deployed 499648 liquidity pair contracts holding $812.80M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "description": "Factory contract that has deployed 500032 liquidity pair contracts holding $822.62M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 812799761.1792052,
-        "contractCount": 499648,
+        "totalUsdValue": 822618515.3323019,
+        "contractCount": 500032,
         "handlerName": "uniswap-v2-factory",
         "label": "All Uniswap-v2 Pairs"
       }
@@ -252,7 +253,7 @@
             "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
             "fieldName": "minter"
           },
-          "impactCapUsd": 63980000
+          "impactCapUsd": 64340000
         }
       ]
     },
@@ -296,7 +297,7 @@
             "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
             "fieldName": "totalSupply"
           },
-          "impactCapUsd": 63980000
+          "impactCapUsd": 64340000
         },
         {
           "type": "delay",

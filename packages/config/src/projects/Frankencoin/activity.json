@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776762470,
-  "lastConsumedUpdateNotifierId": 116,
+  "lastReconciledAt": 1777627212,
+  "lastConsumedUpdateNotifierId": 147,
   "events": [
     {
       "timestamp": "2026-04-21T09:00:35.000Z",
@@ -78,6 +78,49 @@
       "contractName": "CCIPAdmin",
       "entity": null,
       "id": "116:eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-01T09:11:40.000Z",
+      "updateNotifierId": 147,
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "contractName": "Frankencoin",
+      "isDependency": false,
+      "entity": null,
+      "id": "147:eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.activeMinters.10",
+          "after": "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-01T09:11:40.000Z",
+      "updateNotifierId": 147,
+      "address": "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1",
+      "contractName": "StablecoinBridge",
+      "entity": null,
+      "id": "147:eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-01T09:11:40.000Z",
+      "updateNotifierId": 147,
+      "address": "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78",
+      "contractName": "AllUnity",
+      "entity": null,
+      "id": "147:eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-01T09:11:40.000Z",
+      "updateNotifierId": 147,
+      "address": "eth:0xEAFBa0d16D6a0Ff3C6c5d0A46ca7b8fbFf21A9d3",
+      "contractName": "BlacklistManagement",
+      "entity": null,
+      "id": "147:eth:0xEAFBa0d16D6a0Ff3C6c5d0A46ca7b8fbFf21A9d3:contract-added",
       "type": "contract-added"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "aerodrome",
-  "timestamp": 1777541195,
-  "configHash": "0x9706bc9c646bbc06cce0d1f040b1c3fb0411b44a1fee3aa5eb567ed7b07c97ec",
+  "timestamp": 1777626700,
+  "configHash": "0xbd0f1c69ac230476b009528c77d0fee53f7b251715787f798e8dba21eafea289",
   "entries": [
     {
       "name": "DynamicSwapFeeModule",
@@ -232,7 +232,7 @@
       "sinceBlock": 3200559,
       "values": {
         "$immutable": true,
-        "allPoolsLength": 27380,
+        "allPoolsLength": 27415,
         "feeManager": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
         "implementation": "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7",
         "isPaused": false,
@@ -559,7 +559,7 @@
         "currentCumulativePrices": {
           "reserve0Cumulative": 0,
           "reserve1Cumulative": 0,
-          "blockTimestamp": 1777541195
+          "blockTimestamp": 1777626699
         },
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x92f73ceb4d20761a35aaeeac8587c5805fc0329c5f16b4ab68866001e57c83f7",
@@ -621,7 +621,7 @@
         "0xcfcdc190b759b4ee386fa15ea2c261f66f241842b2634a098c452f01081fd92f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreInWatchMode": ["tokenURI", "totalSupply"],
       "sinceTimestamp": 1760697283,
       "sinceBlock": 36953968,
       "values": {
@@ -636,7 +636,7 @@
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "AERO-CL-POS",
         "tokenDescriptor": "base:0xf632031B94D72deE0D99DeF846c9b6211041337f",
-        "totalSupply": 3398387
+        "totalSupply": 3398453
       },
       "implementationNames": {
         "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": "NonfungiblePositionManager"
@@ -931,7 +931,13 @@
         "0xcfcdc190b759b4ee386fa15ea2c261f66f241842b2634a098c452f01081fd92f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["totalSupply"],
+      "ignoreInWatchMode": [
+        "WETH9",
+        "positions",
+        "tokenByIndex",
+        "tokenURI",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1775578807,
       "sinceBlock": 44394730,
       "values": {
@@ -954,7 +960,7 @@
         "PERMIT_TYPEHASH": "0x49ecf333e5b8c95c40fdafc95c1ad136e8914a8fb55e9dc8bb01eaa83a2df9ad",
         "symbol": "AERO-CL-POS",
         "tokenDescriptor": "base:0xc85C126442bb5B654792A70135805a9778C8e3fE",
-        "totalSupply": 104316
+        "totalSupply": 106060
       },
       "implementationNames": {
         "base:0xe1f8cd9AC4e4A65F54f38a5CdAfCA44f6dD68b53": "NonfungiblePositionManager"
@@ -1006,7 +1012,7 @@
         "0xb5c8d1f0edcc20f9aad8c07d4893acb46fb0f4e4fff36b44f7f4d3f915378a06"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["activePeriod", "weekly", "teamRate"],
+      "ignoreInWatchMode": ["activePeriod", "epochCount", "teamRate", "weekly"],
       "sinceTimestamp": 1693190581,
       "sinceBlock": 3200617,
       "values": {
@@ -1052,27 +1058,33 @@
         "0xfe4f6ab44daf15ff9bc2720239c52bf55b094392cd81647fa15818b1a3045118"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "clock",
+        "epoch",
+        "permanentLockBalance",
+        "tokenId"
+      ],
       "sinceTimestamp": 1693190515,
       "sinceBlock": 3200584,
       "values": {
         "$immutable": true,
         "allowedManager": "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
         "artProxy": "base:0xd4C6eDDBE963aFA2D7b1562d0F2F3F9462E6525b",
-        "clock": 1777541195,
+        "clock": 1777626699,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DELEGATION_TYPEHASH": "0x9947d5709c1682eaa3946b2d84115c9c0d1c946b149d76e69b457458b42ea29e",
         "distributor": "base:0x227f65131A261548b057215bB1D5Ab2997964C7d",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "epoch": 797195,
+        "epoch": 798296,
         "factoryRegistry": "base:0x5C3F18F06CC09CA1910767A34a20F771039E37C0",
         "forwarder": "base:0x15e62707FCA7352fbE35F51a8D6b0F8066A05DCc",
         "name": "veNFT",
-        "permanentLockBalance": "946264471795205800339688480",
+        "permanentLockBalance": "946095883589487641991118516",
         "symbol": "veNFT",
         "team": "base:0xEe5b3C7b333e2870B746b3B2b168EF0958e55e15",
         "token": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
-        "tokenId": 118670,
+        "tokenId": 118716,
         "version": "2.0.0",
         "voter": "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5"
       },
@@ -1133,6 +1145,7 @@
         "0xa8d7ed99a0cda7aa877fa4fc934e1d1d8e3ac93901dfe171fe57ad1ae30be1b6"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["activePeriod"],
       "sinceTimestamp": 1775578801,
       "sinceBlock": 44394727,
       "values": {
@@ -2624,6 +2637,6 @@
     "aerodrome/VotingEscrow": "0x1ca70958c640ca8928980b4dcf2a867edc6396968c7b6ec74818c9244bae7340",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "base": 45375924 },
+  "usedBlockNumbers": { "base": 45418676 },
   "permissionsConfigHash": "0xcc94398e70cfaa90a487d3984b67193eec574dee1aba80591bca9c802b160412"
 }
