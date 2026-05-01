@@ -1,8 +1,13 @@
 {
   "name": "gnosis",
   "timestamp": 1777539411,
-  "configHash": "0x3b6b7c2b4fbefb4eca3da52243e4be5ab8845ed14356c37cc2456d8623d8d108",
+  "configHash": "0x0cdfb342cf62fb5ca25aea489ff9bdcde0e8dc5032a89e70a4810d15c4a3efb6",
   "entries": [
+    {
+      "address": "eth:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "Giveth EOA 2",
       "address": "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
@@ -590,6 +595,19 @@
           "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+          "description": "change which LayerZero source endpoint IDs and reporter addresses are allowed to write hashes into the adapter.",
+          "role": ".owner"
         }
       ]
     },
@@ -1390,6 +1408,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Giveth EOA 2",
       "address": "gno:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
       "type": "EOA",
@@ -1487,6 +1510,11 @@
       "implementationNames": {
         "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
       }
+    },
+    {
+      "address": "gno:0x1B0C638616Ed79dB430Edbf549ad9512FF4a8ed1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Safe EOA 2",
@@ -1742,6 +1770,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "gno:0x5fFDAB6A4907E9e65B342d9b2929960b0989a246",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "HomeBridgeErcToNative HashiManager",
       "address": "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49",
       "type": "Contract",
@@ -1841,6 +1874,19 @@
           "from": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
           "description": "can sign bridge messages between Ethereum and Gnosis.",
           "role": ".$members"
+        }
+      ]
+    },
+    {
+      "address": "gno:0x67E5855Aa4D5786c086b7FC6B4203a5Ea50E93F8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B",
+          "description": "change the chain-to-endpoint mapping, LayerZero execution gas setting, and refund address used for LayerZero deliveries.",
+          "role": ".owner"
         }
       ]
     },
@@ -2430,6 +2476,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "gno:0x8fd960F1B9D68BAD2B97bD232FB75CC1f186B064",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Gnosis DAO EOA 1",
       "address": "gno:0x97630E2aE609D4104aBdA91F3066C556403182dd",
       "type": "EOA",
@@ -2483,6 +2534,11 @@
     },
     {
       "address": "gno:0xA07888742c18d7e658132AE0148fF205fFF46481",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xA1cf7F847eCD82459ce05a218EaA38a9D92E7b6b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2617,6 +2673,23 @@
       }
     },
     {
+      "name": "Hashi",
+      "address": "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
+      "type": "Contract",
+      "template": "gnosis/Hashi",
+      "sourceHashes": [
+        "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
+      ],
+      "proxyType": "immutable",
+      "description": "Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.",
+      "sinceTimestamp": 1720614180,
+      "sinceBlock": 34894600,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
+      }
+    },
+    {
       "address": "gno:0xAeE7C90Ef0fC461ec63c4d451B12c340642bc656",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2695,6 +2768,11 @@
     },
     {
       "address": "gno:0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xbaB04858C4eBBb226DD12B38639e59450820536F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2799,12 +2877,27 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "gno:0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "gno:0xd722EC6853e6EbAaf8664602A37855FAe872E482",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "gno:0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "gno:0xe9eB7DA58f6B5CE5b0a6cFD778A2fa726203AAD5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3008,6 +3101,11 @@
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "gno:0xFcf00B0fEdBc8f2F35a3B8d4B858d5805f2Bb05D",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -4259,6 +4357,16 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
+      "error AdaptersDisagree(address adapterOne, address adapterTwo)",
+      "error HashNotAvailableInAdapter(address adapter)",
+      "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
+      "error NoAdaptersGiven()",
+      "function checkHashWithThresholdFromAdapters(uint256 domain, uint256 id, uint256 threshold, address[] adapters) view returns (bool)",
+      "function getHash(uint256 domain, uint256 id, address[] adapters) view returns (bytes32 hash)",
+      "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
+      "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
+    ],
     "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -4461,5 +4569,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24991869, "gnosis": 45931894 },
-  "permissionsConfigHash": "0x2ac1b091d0677edb295004a739610c11c420b21a155ff146408e7403ef0d0477"
+  "permissionsConfigHash": "0xd944859c69072cf096e0f3f4b38660974b29c8a403100fc74cac4f1d82deb5c1"
 }

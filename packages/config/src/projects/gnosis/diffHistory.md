@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7432922c68adeeaeda125a6fb8e3f62a4fcb1e02
+Generated with discovered.json: 0x94cb98912035ee1ce60fdf5acd2669c0c5a7f0cb
 
-# Diff at Fri, 01 May 2026 07:31:15 GMT:
+# Diff at Fri, 01 May 2026 09:26:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1777539411
@@ -225,6 +225,12 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 +   Status: CREATED
     contract SP1Verifier (gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd)
     +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract Hashi (gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: Hashi is an EVM hash oracle aggregator. It checks whether a configurable threshold of adapters agree on a block or message hash before downstream contracts accept that data.
 ```
 
 ```diff

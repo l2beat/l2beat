@@ -1,8 +1,14 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gnosis",
-  "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "maxAddresses": 200,
+  "initialAddresses": [
+    "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
+    "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9" // beacon chain deposit contract
+  ],
   "names": {
     "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig (Ethereum)",
     "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "Hashi Multisig (Ethereum)",
@@ -43,10 +49,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "GnosisAddress"]
+          "edit": [
+            "format",
+            "GnosisAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "GnosisAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "GnosisAddress"
+            ]
+          ]
         }
       }
     },
@@ -54,10 +69,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "GnosisAddress"]
+          "edit": [
+            "format",
+            "GnosisAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "GnosisAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "GnosisAddress"
+            ]
+          ]
         }
       }
     },
@@ -74,10 +98,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "EthereumAddress"]
+          "edit": [
+            "format",
+            "EthereumAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "EthereumAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "EthereumAddress"
+            ]
+          ]
         }
       }
     },
@@ -88,10 +121,19 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": ["format", "EthereumAddress"]
+          "edit": [
+            "format",
+            "EthereumAddress"
+          ]
         },
         "adapters": {
-          "edit": ["map", ["format", "EthereumAddress"]]
+          "edit": [
+            "map",
+            [
+              "format",
+              "EthereumAddress"
+            ]
+          ]
         }
       }
     },
