@@ -1,9 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
+import { ScalingProject } from '../../internalTypes'
 
 const chainId = 100
 
-export const gnosis: BaseProject = {
+export const gnosis: ScalingProject = {
   id: ProjectId('gnosis'),
   slug: 'gnosis',
   name: 'Gnosis Chain',
@@ -17,11 +18,32 @@ export const gnosis: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
+    name: 'Gnosis Chain',
+    slug: 'gnosis'
+    purposes: ['Universal'],
     description:
-      "Gnosis Chain is a community-owned EVM-based network operated by a diverse set of validators around the world. It is one of Ethereum's first sidechains.",
-    links: {},
-    badges: [],
+      "Gnosis Chain is a community-owned EVM-based network operated by a diverse set of validators around the world. It is one of Ethereum's first sidechains and is building the Ethereum Economic Zone (EEZ).",
+    links: {
+      websites: ['https://gnosis.io/chain'],
+      explorers: ['https://gnosisscan.io/', 'https://gnosis.blockscout.com/'],
+      bridges: ['https://bridge.gnosischain.com'],
+      repositories: ['https://github.com/gnosischain/go-ethereum'],
+      documentation: ['https://docs.gnosischain.com/'],
+      socialMedia: ['https://x.com/gnosischain', 'https://discord.com/invite/gnosis', 'https://t.me/gnosischain', 'https://forum.gnosis.io/', 'https://gnosis.io/blog']
+    },
   },
+  proofSystem: undefined,
+  stage: {
+  stage: 'NotApplicable'
+  },
+  config: {
+  associatedTokens: ['GNO'],
+  escrows: [],
+  activityConfig: {
+  type: 'block',
+  startBlock: 1
+  }
+  }
   chainConfig: {
     name: 'gnosis',
     chainId,
