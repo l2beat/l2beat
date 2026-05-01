@@ -1,12 +1,8 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gnosis",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
-  "initialAddresses": [
-    "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0"
-  ],
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0"],
   "names": {
     "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig (Ethereum)",
     "eth:0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "Hashi Multisig (Ethereum)",
@@ -16,13 +12,17 @@
     "eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd": "BridgeRouter ProxyAdmin",
     "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "XDai Bridge Validators",
     "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "AMB Bridge Validators",
+    "gno:0x1312E98995bbCc30fc63Db3cef807e20CDd33dca": "Safe EOA 1",
+    "gno:0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051": "Protofire EOA 1",
     "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49": "HomeBridgeErcToNative HashiManager",
     "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": "HomeOmnibridge Gas Limit Manager",
     "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": "HomeAMB HashiManager",
     "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": "Omnibridge Fee Distributor Safe",
     "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": "Gnosis Bridge Multisig (Gnosis)",
+    "gno:0x97630E2aE609D4104aBdA91F3066C556403182dd": "Gnosis DAO EOA 1",
     "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": "HomeAMB Validators",
     "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D": "HomeBridge Validators",
+    "gno:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506": "Giveth EOA 1",
     "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": "HomeOmnibridge TokenFactory",
     "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": "Hashi Multisig (Gnosis)",
     "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": "HomeOmnibridge Forwarding Rules Manager",
@@ -43,19 +43,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "GnosisAddress"
-          ]
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "GnosisAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "GnosisAddress"]]
         }
       }
     },
@@ -63,19 +54,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "GnosisAddress"
-          ]
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "GnosisAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "GnosisAddress"]]
         }
       }
     },
@@ -92,19 +74,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "EthereumAddress"
-          ]
+          "edit": ["format", "EthereumAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "EthereumAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "EthereumAddress"]]
         }
       }
     },
@@ -115,19 +88,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "EthereumAddress"
-          ]
+          "edit": ["format", "EthereumAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "EthereumAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "EthereumAddress"]]
         }
       }
     },
@@ -135,7 +99,8 @@
       "proxyType": "Eternal Storage proxy"
     },
     "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": {
-      "description": "Safe that currently receives Omnibridge fees distributed by the HomeOmnibridge fee manager."
+      "description": "Safe that currently receives Omnibridge fees distributed by the HomeOmnibridge fee manager.",
+      "category": "spam"
     },
     "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
       "proxyType": "Eternal Storage proxy"
