@@ -1,0 +1,1321 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-05-01T00:00:00.000Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0x1562F1b2487F892BBA8Ef325aF054Fd157510a71",
+      "isExternal": true,
+      "entity": "Polygon Bridge",
+      "timestamp": "2026-05-01T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xB7a6618df58626C3a122ABAFD6Ee63Af63f3Ef29",
+      "isExternal": true,
+      "entity": "Chainlink CCIP",
+      "timestamp": "2026-05-01T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x8410d9BD353b420ebA8C48ff1B0518426C280FCC",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-05-01T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x01dcb90Cf13b82Cde4A0BAcC655585a83Af3cCC1",
+      "isExternal": true,
+      "entity": "Hyperlane",
+      "timestamp": "2026-05-01T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-21T08:41:19.954Z"
+    },
+    {
+      "contractAddress": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-21T08:41:19.961Z"
+    },
+    {
+      "contractAddress": "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-21T08:41:19.969Z"
+    },
+    {
+      "contractAddress": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "dependencyFields": [
+        "getReservesList"
+      ]
+    },
+    {
+      "contractAddress": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "dependencyFields": [
+        "getReservesList"
+      ]
+    },
+    {
+      "contractAddress": "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "dependencyFields": [
+        "getReservesList"
+      ]
+    },
+    {
+      "contractAddress": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "isExternal": true,
+      "isToken": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Aave"
+    },
+    {
+      "contractAddress": "eth:0xa198Fac58E02A5C5F8F7e877895d50cFa9ad1E04",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-21T09:02:34.464Z"
+    },
+    {
+      "contractAddress": "eth:0x4457cA11E90f416Cc1D3a8E1cA41C0cdEcC251d4",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-21T09:02:34.472Z"
+    },
+    {
+      "contractAddress": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-21T09:02:34.488Z"
+    },
+    {
+      "contractAddress": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "dependencyFields": [
+        "getReservesList"
+      ]
+    },
+    {
+      "contractAddress": "eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-04-21T09:12:25.855Z"
+    },
+    {
+      "contractAddress": "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T11:35:59.570Z"
+    },
+    {
+      "contractAddress": "eth:0x00907f9921424583e7ffBfEdf84F92B7B2Be4977",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:28:25.333Z"
+    },
+    {
+      "contractAddress": "eth:0x018008bfb33d285247A21d44E50697654f754e63",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:28:55.786Z"
+    },
+    {
+      "contractAddress": "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x95E3015c67EF62B866cC28ca5A9AB5017A55e336",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630C",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x08b798c40b9AB931356d9aB4235F548325C4cb80",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x09AA30b182488f769a9824F15E6Ce58591Da4781",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x0B925eD163218f6662a35e0f0371Ac234f9E9371",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x0C0d01AbF3e6aDfcA0989eBbA9d6e85dD58EaB1E",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x10Ac93971cdb1F5c778144084242374473c350Da",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x1241ec22C9BdF16BA1Eb636F2a8de7e28A4343Cf",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x12b70410D60f926558245f769059eA3Fc7A7353E",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x18eFE565A5373f430e2F809b97De30335B3ad96A",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x1bA9843bD4327c6c77011406dE5fA8749F7E3479",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x24Ab03a9a5Bc2C49E5523e8d915A3536ac38B91D",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x2516E7B3F76294e03C42AA4c5b5b4DCE9C436fB8",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x285866acB0d60105B4Ed350a463361c2d9afA0E2",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x2A1FBcb52Ed4d9b23daD17E1E8Aed4BB0E6079b8",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x2D62109243b87C4bA3EE7bA1D91B0dD0A074d7b1",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x2eDff5AF94334fBd7C38ae318edf1c40e072b73B",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x312ffC57778CEfa11989733e6E08143E7E229c1c",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x32a6268f9Ba3642Dda7892aDd74f1D34469A4259",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x38A5357Ce55c81add62aBc84Fb32981e2626ADEf",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x38C503a438185cDE29b5cF4dC1442FD6F074F1cc",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4579a27aF00A62C0EB156349f31B345c08386419",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x481a2acf3A72ffDc602A9541896Ca1DB87f86cf7",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4B0821e768Ed9039a70eD1E80E15E76a5bE5Df5F",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4E2a4d9B3DF7Aae73b418Bd39F3af9e148E3F479",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4E58a2E433A739726134c83d2f07b2562e8dFdB3",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4F5923Fc5FD4a93352581b38B7cD26943012DECF",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x56D919E7B25aA42F3F8a4BC77b8982048F2E84B4",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5F9190496e0DFC831C3bd307978de4a245E2F5cD",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5b502e3796385E1e9755d7043B9C945C3aCCeC9C",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5f4a0873a3A02f7C0CB0e13a1d4362a1AD90e751",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x5fefd7069a7D91d01f269DADE14526CCF3487810",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x65906988ADEe75306021C417a1A3458040239602",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x68215B6533c47ff9f7125aC95adf00fE4a62f79e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x71Aef7b30728b9BB371578f36c5A1f1502a5723e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x7380c583cDe4409eFF5DD3320D93a45D96B80E2e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x74e5664394998f13B07aF42446380ACef637969f",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x7c0477d085ECb607CF8429f3eC91Ae5E1e460F4F",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x81b76ff3FeD28BA0B4a5D4c76Bd5C13Bd0641d86",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x82F9c5ad306BBa1AD0De49bB5FA6F01bf61085ef",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x844f07AB09aa5dBDCE6A9b1206CE150E1eaDacCb",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x8A2b6f94Ff3A89a03E8c02Ee92b55aF90c9454A2",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x8A458A9dc9048e005d22849F470891b840296619",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x927709711794F3De5DdBF1D176bEE2D55Ba13c21",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x946281A2d0DD6e650d08f74833323D66AE4c8b12",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x977b6fc5dE62598B08C85AC8Cf2b745874E8b78c",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x9A44fd41566876A39655f74971a3A6eA0a17a454",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xA78Eba24D89e70A03ddB7AC195A15E53315aA5b4",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xA9ecb0503075124cc0B786096849A331FBe9EE6D",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xAA6e91C82942aeAE040303Bf96c15a6dBcB82CA0",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xAa0200d169fF3ba9385c12E073c5d1d30434AE7b",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xB0EC6c4482Ac1Ef77bE239C0AC833CF37A27c876",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xB76CF92076adBF1D9C39294FA8e7A67579FDe357",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xBdfa7b7893081B35Fb54027489e2Bc7A38275129",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xC035a7cf15375cE2706766804551791aD035E0C2",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xC7B4c17861357B8ABB91F25581E7263E08DCB59c",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xCc9EE9483f662091a1de4795249E24aC0aC2630f",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xE036478Da9A7ed89b56FE39A06e1FC1a4b38D4Ea",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xE1CfD16b8E4B1C86Bb5b7A104cfEFbc7b09326dD",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xE728577e9a1Fe7032bc309B4541F58f45443866e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xEc4ef66D4fCeEba34aBB4dE69dB391Bc5476ccc8",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xFa82580c16A31D0c1bC632A36F82e83EfEF3Eec0",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xb82fa9f31612989525992FCfBB09AB22Eff5c85A",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xbe1F842e7e0afd2c2322aae5d34bA899544b29db",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xbe54767735fB7Acca2aa7E2d209a6f705073536D",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xc167932AC4EEc2B65844EF00D31b4550250536A5",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xc2015641564a5914A17CB9A92eC8d8feCfa8f2D0",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xc293744fFbcf46696D589f5C415e71BC491519cD",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xcCA43ceF272c30415866914351fdfc3E881bb7c2",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xce8c60fd8390eFCc3Fc66A3f0bd64BEb969e750E",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xd4e245848d6E1220DBE62e155d89fa327E43CB06",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xdF7f48892244C6106EA784609f7de10AB36F9c7e",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0xfA1fDbBD71B0aA16162D76914d69cD8CB3Ef92da",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-22T21:29:56.174Z"
+    },
+    {
+      "contractAddress": "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Hashnote"
+    },
+    {
+      "contractAddress": "eth:0x14Bdc3A3AE09f5518b923b69489CBcAfB238e617",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Superstate"
+    },
+    {
+      "contractAddress": "eth:0x17418038ecF73BA4026c4f428547BF099706F27B",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Securitize"
+    },
+    {
+      "contractAddress": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Threshold tBTC"
+    },
+    {
+      "contractAddress": "eth:0x1F84a51296691320478c98b8d77f2Bbd17D34350",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Circle EUROC"
+    },
+    {
+      "contractAddress": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Uniswap"
+    },
+    {
+      "contractAddress": "eth:0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Securitize"
+    },
+    {
+      "contractAddress": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "BitGo WBTC"
+    },
+    {
+      "contractAddress": "eth:0x26C46B7aD0012cA71F2298ada567dC9Af14E7f2A",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Frax"
+    },
+    {
+      "contractAddress": "eth:0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Maple"
+    },
+    {
+      "contractAddress": "eth:0x3b3fB9C57858EF816833dC91565EFcd85D96f634",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Superstate"
+    },
+    {
+      "contractAddress": "eth:0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Ethena"
+    },
+    {
+      "contractAddress": "eth:0x50D2C7992b802Eef16c04FeADAB310f31866a545",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x5424384B256154046E9667dDFaaa5e550145215e",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x553303d460EE0afB37EdFf9bE42922D8FF63220e",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Lido"
+    },
+    {
+      "contractAddress": "eth:0x5C00128d4d1c2F4f652C267d7bcdD7aC99C16E16",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Janus Henderson"
+    },
+    {
+      "contractAddress": "eth:0x5ed77a9D9b7cc80E9d0D7711024AF38C2643C1c4",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Liquity"
+    },
+    {
+      "contractAddress": "eth:0x60AEd7d20AC6328f7BA771aD58931c996aff30E8",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x62C6E813b9589C3631Ba0Cdb013acdB8544038B7",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "EtherFi"
+    },
+    {
+      "contractAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Tether Gold"
+    },
+    {
+      "contractAddress": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "MakerDAO"
+    },
+    {
+      "contractAddress": "eth:0x6Ebc52C8C1089be9eB3945C4350B68B8E4C2233f",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "PayPal PYUSD"
+    },
+    {
+      "contractAddress": "eth:0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Aave"
+    },
+    {
+      "contractAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Lido"
+    },
+    {
+      "contractAddress": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Lombard"
+    },
+    {
+      "contractAddress": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "AnchorageStablecoin"
+    },
+    {
+      "contractAddress": "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "MakerDAO"
+    },
+    {
+      "contractAddress": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Frax"
+    },
+    {
+      "contractAddress": "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Janus Henderson"
+    },
+    {
+      "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0x90D2af7d622ca3141efA4d8f1F24d86E5974Cc8F",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Ethereal"
+    },
+    {
+      "contractAddress": "eth:0x917459337CaAC939D41d7493B3999f571D20D667",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Ethena"
+    },
+    {
+      "contractAddress": "eth:0x9F56094C450763769BA0EA9Fe2876070c0fD5F77",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "MakerDAO"
+    },
+    {
+      "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Circle USDC"
+    },
+    {
+      "contractAddress": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Kelp"
+    },
+    {
+      "contractAddress": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Stader"
+    },
+    {
+      "contractAddress": "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Stargate"
+    },
+    {
+      "contractAddress": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Lombard"
+    },
+    {
+      "contractAddress": "eth:0xBC6736d346a5eBC0dEbc997397912CD9b8FAe10a",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Coinbase"
+    },
+    {
+      "contractAddress": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Synthetix"
+    },
+    {
+      "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Wrapped Ether"
+    },
+    {
+      "contractAddress": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Ethena"
+    },
+    {
+      "contractAddress": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "ENS"
+    },
+    {
+      "contractAddress": "eth:0xC7e9b623ed51F033b32AE7f1282b1AD62C28C183",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "FBTC"
+    },
+    {
+      "contractAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "EtherFi"
+    },
+    {
+      "contractAddress": "eth:0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "TAsset"
+    },
+    {
+      "contractAddress": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Rocket Pool"
+    },
+    {
+      "contractAddress": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Curve"
+    },
+    {
+      "contractAddress": "eth:0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xE8483517077afa11A9B07f849cee2552f040d7b2",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0xE8E65Fb9116875012F5990Ecaab290B3531DbeB9",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xF02C1e2A3B77c1cacC72f72B44f7d0a4c62e4a85",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Mantle MUSD"
+    },
+    {
+      "contractAddress": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Rocket Pool"
+    },
+    {
+      "contractAddress": "eth:0xb41E773f507F7a7EA890b1afB7d2b660c30C8B0A",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Balancer"
+    },
+    {
+      "contractAddress": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Renzo"
+    },
+    {
+      "contractAddress": "eth:0xc929ad75B72593967DE83E7F7Cda0493458261D9",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Coinbase"
+    },
+    {
+      "contractAddress": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Tether USDT"
+    },
+    {
+      "contractAddress": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Sky"
+    },
+    {
+      "contractAddress": "eth:0xdF2917806E30300537aEB49A7663062F4d1F2b5F",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Kyber"
+    },
+    {
+      "contractAddress": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Global Dollar Network"
+    },
+    {
+      "contractAddress": "eth:0xe6A934089BBEe34F832060CE98848359883749B3",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Pendle"
+    },
+    {
+      "contractAddress": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "StakeWise"
+    },
+    {
+      "contractAddress": "eth:0xf8fF43E991A81e6eC886a3D281A2C6cC19aE70Fc",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Chainlink"
+    },
+    {
+      "contractAddress": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+      "isExternal": true,
+      "timestamp": "2026-04-29T13:02:46.832235Z",
+      "entity": "Curve"
+    },
+    {
+      "contractAddress": "eth:0x3E7d1eAB13ad0104d2750B8863b489D65364e32D",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x1E41Ef40AC148706c114534E8192Ca608f80fC48",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x19e2d716288751c5A59deaB61af012D5DF895962",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xee10fE5E7aa92dd7b136597449c3d5813cFC5F18",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x04F84020Fdf10d9ee64D1dcC2986EDF2F556DA11",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xb49f677943BC038e9857d61E7d053CaA2C1734C1",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xEEf0C605546958c1f899b6fB336C20671f9cD49F",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xEa674bBC33AE708Bc9EB4ba348b04E4eB55b496b",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0xde49c7B5C0E54b1624ED21C7D88bA6593d444Aa0",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "eth:0x23adce82907D20c509101E2Af0723A9e16224EFb",
+      "isExternal": true,
+      "entity": "Chainlink",
+      "timestamp": "2026-04-30T00:00:00.000Z"
+    }
+  ]
+}

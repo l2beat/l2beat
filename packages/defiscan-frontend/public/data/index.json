@@ -14,9 +14,9 @@
         "scoredFunctionCount": 84,
         "adminCount": 38,
         "dependencyCount": 7,
-        "totalCapitalAtRisk": 617504108.7062671,
-        "totalTokenValueAtRisk": 5950370275.535411,
-        "totalTokenValue": 5950370275.535411,
+        "totalCapitalAtRisk": 558165823.4899848,
+        "totalTokenValueAtRisk": 5839536755.377698,
+        "totalTokenValue": 5839536755.377698,
         "linesOfCode": 18031,
         "verifiedContractCount": 71,
         "coverage": 99
@@ -30,16 +30,16 @@
       "tokenName": "ZCHF",
       "verified": true,
       "totals": {
-        "contractCount": 25,
+        "contractCount": 28,
         "permissionedFunctionCount": 73,
         "scoredFunctionCount": 18,
         "adminCount": 2,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 87282571.21994862,
+        "totalCapitalAtRisk": 87804728.82998136,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 35479529.22932519,
+        "totalTokenValue": 36006178.65517385,
         "linesOfCode": 1976,
-        "verifiedContractCount": 25,
+        "verifiedContractCount": 28,
         "coverage": 100
       }
     },
@@ -56,7 +56,7 @@
         "scoredFunctionCount": 12,
         "adminCount": 4,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 354448083.80669177,
+        "totalCapitalAtRisk": 352660180.1727359,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 6004,
@@ -70,18 +70,18 @@
       "chain": "Ethereum",
       "projectType": "lending",
       "tokenName": "senPYUSD",
-      "verified": false,
+      "verified": true,
       "totals": {
-        "contractCount": 6,
+        "contractCount": 49,
         "permissionedFunctionCount": 20,
         "scoredFunctionCount": 14,
         "adminCount": 3,
-        "dependencyCount": 1,
-        "totalCapitalAtRisk": 11183358.924328987,
+        "dependencyCount": 3,
+        "totalCapitalAtRisk": 247196806.8619957,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 4991,
-        "verifiedContractCount": 6,
+        "verifiedContractCount": 49,
         "coverage": 100
       }
     },
@@ -98,7 +98,7 @@
         "scoredFunctionCount": 16,
         "adminCount": 5,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 469923710.0874472,
+        "totalCapitalAtRisk": 468171821.4187057,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 8190,
@@ -119,7 +119,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 126488957.58238931,
+        "totalCapitalAtRisk": 125884605.38315542,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 8842,
@@ -141,10 +141,31 @@
         "adminCount": 7,
         "dependencyCount": 0,
         "totalCapitalAtRisk": 0,
-        "totalTokenValueAtRisk": 3231007010.7028003,
-        "totalTokenValue": 3231007010.7028003,
+        "totalTokenValueAtRisk": 3255303968.26817,
+        "totalTokenValue": 3255303968.26817,
         "linesOfCode": 1561,
         "verifiedContractCount": 3,
+        "coverage": 100
+      }
+    },
+    {
+      "slug": "aave-v3",
+      "name": "Aave V3",
+      "chain": "Ethereum",
+      "projectType": "lending",
+      "tokenName": "GHO",
+      "verified": true,
+      "totals": {
+        "contractCount": 499,
+        "permissionedFunctionCount": 1206,
+        "scoredFunctionCount": 1206,
+        "adminCount": 30,
+        "dependencyCount": 98,
+        "totalCapitalAtRisk": 67139742.4153961,
+        "totalTokenValueAtRisk": 22047738450.75237,
+        "totalTokenValue": 22694532830.32528,
+        "linesOfCode": 38915,
+        "verifiedContractCount": 499,
         "coverage": 100
       }
     },
@@ -161,9 +182,9 @@
         "scoredFunctionCount": 175,
         "adminCount": 4,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 344256336.537792,
+        "totalCapitalAtRisk": 340753584.5712191,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 902509891.3611064,
+        "totalTokenValue": 863973808.3950865,
         "linesOfCode": 15990,
         "verifiedContractCount": 36,
         "coverage": 100
@@ -182,9 +203,9 @@
         "scoredFunctionCount": 11,
         "adminCount": 1,
         "dependencyCount": 5,
-        "totalCapitalAtRisk": 817064405.417985,
+        "totalCapitalAtRisk": 820069296.7634187,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 237800000,
+        "totalTokenValue": 231600000,
         "linesOfCode": 8966,
         "verifiedContractCount": 22,
         "coverage": 100
@@ -203,9 +224,9 @@
         "scoredFunctionCount": 214,
         "adminCount": 33,
         "dependencyCount": 1,
-        "totalCapitalAtRisk": 2786009518.7485137,
-        "totalTokenValueAtRisk": 21673850151.445507,
-        "totalTokenValue": 21673850151.445507,
+        "totalCapitalAtRisk": 1824250543.9560914,
+        "totalTokenValueAtRisk": 20885234389.2637,
+        "totalTokenValue": 20885234389.2637,
         "linesOfCode": 38231,
         "verifiedContractCount": 183,
         "coverage": 100
@@ -226,7 +247,7 @@
         "dependencyCount": 2,
         "totalCapitalAtRisk": 0,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 61075183.15223574,
+        "totalTokenValue": 59146969.315050095,
         "linesOfCode": 6930,
         "verifiedContractCount": 18,
         "coverage": 100
@@ -247,7 +268,7 @@
         "dependencyCount": 3,
         "totalCapitalAtRisk": 0,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 34424194.14698179,
+        "totalTokenValue": 34444019.92105733,
         "linesOfCode": 12870,
         "verifiedContractCount": 41,
         "coverage": 100
@@ -266,9 +287,9 @@
         "scoredFunctionCount": 198,
         "adminCount": 8,
         "dependencyCount": 17,
-        "totalCapitalAtRisk": 3487029469.6053596,
-        "totalTokenValueAtRisk": 379450000,
-        "totalTokenValue": 379450000,
+        "totalCapitalAtRisk": 3515103540.513633,
+        "totalTokenValueAtRisk": 373120000,
+        "totalTokenValue": 373120000,
         "linesOfCode": 14735,
         "verifiedContractCount": 93,
         "coverage": 100
@@ -287,8 +308,8 @@
         "scoredFunctionCount": 2,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 837047705.9876485,
-        "totalTokenValueAtRisk": 65540000,
+        "totalCapitalAtRisk": 827138630.1598841,
+        "totalTokenValueAtRisk": 64040000,
         "totalTokenValue": 0,
         "linesOfCode": 1979,
         "verifiedContractCount": 12,
@@ -308,8 +329,8 @@
         "scoredFunctionCount": 34,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 1016654337.3451,
-        "totalTokenValueAtRisk": 65540000,
+        "totalCapitalAtRisk": 1047012969.91885,
+        "totalTokenValueAtRisk": 64040000,
         "totalTokenValue": 0,
         "linesOfCode": 7933,
         "verifiedContractCount": 12,
@@ -318,20 +339,60 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 10954892563.969473,
-    "totalTokenValueAtRisk": 32506067329.044823,
-    "totalTokenValue": 32637046235.573368,
-    "protocolsReviewed": 15,
-    "totalContractCount": 572,
-    "totalAdminCount": 111,
-    "totalUpdateCount": 758
+    "totalCapitalAtRisk": 10281352274.455051,
+    "totalTokenValueAtRisk": 54271381751.62993,
+    "totalTokenValue": 54400978919.52122,
+    "protocolsReviewed": 16,
+    "totalContractCount": 1117,
+    "totalAdminCount": 141,
+    "totalUpdateCount": 1379
   },
   "dependencies": [
+    {
+      "address": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
+      "name": "Chronicle Aggor ETH/USD",
+      "entity": "Chronicle",
+      "totalFundsAtRisk": 2578750718.6919003,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
+      "name": "Chainlink BTC/USD",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 2432722519.6265984,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39",
+      "name": "WSTETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 2232722519.6265984,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
     {
       "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "name": "Ethereum Beacon Chain DepositContract",
       "entity": "Ethereum",
-      "totalFundsAtRisk": 2821065184.635564,
+      "totalFundsAtRisk": 1835137074.8779347,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -344,46 +405,10 @@
       ]
     },
     {
-      "address": "eth:0x2750e4CB635aF1FCCFB10C0eA54B5b5bfC2759b6",
-      "name": "Chronicle Aggor ETH/USD",
-      "entity": "Chronicle",
-      "totalFundsAtRisk": 2527323750.6308894,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xE98d51fa014C7Ed68018DbfE6347DE9C3f39Ca39",
-      "name": "WSTETHExchangeRateOracle",
-      "entity": null,
-      "totalFundsAtRisk": 2170328313.34411,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
-      "name": "EACAggregatorProxy",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 2170328313.34411,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
       "address": "base:0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F",
       "name": "Chainlink BTC/USD Aggregator",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 824371793.894139,
+      "totalFundsAtRisk": 820832001.5914416,
       "protocols": [
         {
           "slug": "Gauntlet-USDC-Prime",
@@ -399,7 +424,7 @@
       "address": "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
       "entity": "Morpho",
-      "totalFundsAtRisk": 824371793.894139,
+      "totalFundsAtRisk": 820832001.5914416,
       "protocols": [
         {
           "slug": "Gauntlet-USDC-Prime",
@@ -413,10 +438,18 @@
     },
     {
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
-      "name": "EACAggregatorProxy",
+      "name": "Chainlink (decommissioned)",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 657983553.6713051,
+      "totalFundsAtRisk": 662089764.1448998,
       "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
         {
           "slug": "compound-v3",
           "name": "Compound V3"
@@ -425,10 +458,14 @@
     },
     {
       "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "name": "Circle USDC Token",
+      "name": "Circle USDC",
       "entity": "Circle USDC",
-      "totalFundsAtRisk": 657983553.6713051,
+      "totalFundsAtRisk": 662088640.036739,
       "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
         {
           "slug": "compound-v3",
           "name": "Compound V3"
@@ -436,10 +473,26 @@
       ]
     },
     {
+      "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "name": "Coinbase cbETH Token",
+      "entity": "Coinbase cbETH",
+      "totalFundsAtRisk": 558144569.7601722,
+      "protocols": [
+        {
+          "slug": "EtherFi-Stake",
+          "name": "EtherFi Stake"
+        },
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
       "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
       "name": "EigenLayer DelegationManager",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -451,7 +504,7 @@
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "name": "EigenLayer StrategyManager",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -463,7 +516,7 @@
       "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
       "name": "Lido WithdrawalQueueERC721",
       "entity": "Lido",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -475,7 +528,7 @@
       "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
       "name": "EigenLayer RewardsCoordinator",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -487,19 +540,7 @@
       "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "name": "Lido stETH Token",
       "entity": "Lido stETH",
-      "totalFundsAtRisk": 617481503.1172402,
-      "protocols": [
-        {
-          "slug": "EtherFi-Stake",
-          "name": "EtherFi Stake"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
-      "name": "Coinbase cbETH Token",
-      "entity": "Coinbase cbETH",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -511,7 +552,7 @@
       "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
       "name": "Curve WrapTokenV3ETH",
       "entity": "Curve",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -523,7 +564,7 @@
       "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
       "name": "Curve Vyper_contract",
       "entity": "Curve",
-      "totalFundsAtRisk": 617481503.1172402,
+      "totalFundsAtRisk": 558143445.6526022,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -532,11 +573,67 @@
       ]
     },
     {
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "name": "Chainlink ETH/USD",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 441706518.0520452,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
+        {
+          "slug": "liquity-v1",
+          "name": "Liquity V1"
+        },
+        {
+          "slug": "liquity-v2",
+          "name": "Liquity V2"
+        }
+      ]
+    },
+    {
       "address": "eth:0x42a03F81dd8A1cEcD746dc262e4d1CD9fD39F777",
       "name": "FixedPriceOracle",
       "entity": "Fixed Price Oracle",
-      "totalFundsAtRisk": 378329679.515565,
+      "totalFundsAtRisk": 395485780.9359328,
       "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 373081412.2451511,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "name": "Chainlink BTC/USD (alt)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 330217389.6506816,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
         {
           "slug": "spark",
           "name": "Spark"
@@ -547,7 +644,7 @@
       "address": "eth:0x4219aA1A99f3fe90C2ACB97fCbc1204f6485B537",
       "name": "Chronicle Aggor BTC/USD",
       "entity": "Chronicle",
-      "totalFundsAtRisk": 354504457.6813813,
+      "totalFundsAtRisk": 310759336.29273254,
       "protocols": [
         {
           "slug": "spark",
@@ -556,18 +653,34 @@
       ]
     },
     {
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "name": "Chainlink ETH/USD Price Feed",
+      "address": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
+      "name": "Chainlink USDC/USD",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 319749411.637836,
+      "totalFundsAtRisk": 285499713.9514575,
       "protocols": [
         {
-          "slug": "liquity-v1",
-          "name": "Liquity V1"
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
         },
         {
-          "slug": "liquity-v2",
-          "name": "Liquity V2"
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "name": "Chainlink WBTC/BTC",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 280217389.6506816,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "spark",
+          "name": "Spark"
         }
       ]
     },
@@ -596,58 +709,10 @@
       ]
     },
     {
-      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
-      "name": "Chainlink DAI/USD Aggregator Proxy",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 226982339.58199763,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
-      "name": "Chainlink BTC/USD Aggregator Proxy",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 226982339.58199763,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
       "address": "eth:0x230E0321Cf38F09e247e50Afc7801EA2351fe56F",
       "name": "CLSynchronicityPriceAdapterPegToBase (WBTC)",
       "entity": null,
-      "totalFundsAtRisk": 226982339.58199763,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-      "name": "weETH (Ether.fi)",
-      "entity": "Ether.fi",
-      "totalFundsAtRisk": 211787643.64886308,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xBE21C54Dff3b2F1708970d185aa5b0eEB70556f1",
-      "name": "WEETHExchangeRateOracle",
-      "entity": null,
-      "totalFundsAtRisk": 211787643.64886308,
+      "totalFundsAtRisk": 230217389.65068164,
       "protocols": [
         {
           "slug": "spark",
@@ -671,7 +736,7 @@
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
-      "totalFundsAtRisk": 189939909.74061343,
+      "totalFundsAtRisk": 187836115.5576422,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -680,11 +745,43 @@
       ]
     },
     {
-      "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
-      "name": "ConstantPriceFeed (USDT)",
-      "entity": null,
-      "totalFundsAtRisk": 159080851.74667996,
+      "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "name": "EtherFi",
+      "entity": "EtherFi",
+      "totalFundsAtRisk": 161166941.92176285,
       "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBE21C54Dff3b2F1708970d185aa5b0eEB70556f1",
+      "name": "WEETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 161165817.81419283,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "name": "Wrapped Ether",
+      "entity": "Wrapped Ether",
+      "totalFundsAtRisk": 157980656.72667974,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
         {
           "slug": "compound-v3",
           "name": "Compound V3"
@@ -692,10 +789,10 @@
       ]
     },
     {
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "name": "Wrapped Ether (WETH)",
+      "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
+      "name": "ConstantPriceFeed (USDT)",
       "entity": null,
-      "totalFundsAtRisk": 159080851.74667996,
+      "totalFundsAtRisk": 157980656.72667974,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -705,10 +802,14 @@
     },
     {
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
-      "name": "RocketPool rETH Token",
-      "entity": "RocketPool",
-      "totalFundsAtRisk": 156264813.46107206,
+      "name": "Rocket Pool",
+      "entity": "Rocket Pool",
+      "totalFundsAtRisk": 148865312.9131583,
       "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
         {
           "slug": "liquity-v2",
           "name": "Liquity V2"
@@ -720,15 +821,11 @@
       ]
     },
     {
-      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-      "name": "Morpho Blue",
-      "entity": "Morpho",
-      "totalFundsAtRisk": 137672316.5067183,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "name": "Chainlink USDC/USD Price Feed",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 125884605.38315542,
       "protocols": [
-        {
-          "slug": "Sentora-PYUSD",
-          "name": "Sentora PYUSD"
-        },
         {
           "slug": "Steakhouse-USDC",
           "name": "Steakhouse USDC"
@@ -736,14 +833,18 @@
       ]
     },
     {
-      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
-      "name": "Chainlink USDC/USD Price Feed",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 126488957.58238931,
+      "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+      "name": "Wrapped liquid staked Ether 2.0 Token (Lido)",
+      "entity": "Lido",
+      "totalFundsAtRisk": 124617943.15857227,
       "protocols": [
         {
-          "slug": "Steakhouse-USDC",
-          "name": "Steakhouse USDC"
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
+        {
+          "slug": "liquity-v2",
+          "name": "Liquity V2"
         }
       ]
     },
@@ -751,7 +852,7 @@
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "name": "Chainlink stETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 125661841.49396814,
+      "totalFundsAtRisk": 124616819.05100223,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -760,14 +861,38 @@
       ]
     },
     {
-      "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-      "name": "Lido wstETH Token",
-      "entity": "Lido",
-      "totalFundsAtRisk": 125661841.49396813,
+      "address": "eth:0x5c9C449BbC9a6075A2c061dF312a35fd1E05fF22",
+      "name": "Chainlink (ETH-correlated)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 75000000,
       "protocols": [
         {
-          "slug": "liquity-v2",
-          "name": "Liquity V2"
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+      "name": "Lido WstETHPriceFeed",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 50000000,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
+      "name": "RedStone LBTC Fundamental",
+      "entity": "RedStone",
+      "totalFundsAtRisk": 50000000,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
         }
       ]
     },
@@ -787,7 +912,7 @@
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 42533846.506688304,
+      "totalFundsAtRisk": 42239925.6361334,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -796,11 +921,39 @@
       ]
     },
     {
-      "address": "eth:0x74a09653A083691711cF8215a6ab074BB4e99ef5",
-      "name": "RestakeManager",
-      "entity": "Renzo",
-      "totalFundsAtRisk": 35142271.84469835,
+      "address": "eth:0xb41E773f507F7a7EA890b1afB7d2b660c30C8B0A",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 38302907.08828014,
       "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+      "name": "Lombard Staked Bitcoin Token",
+      "entity": "Lombard",
+      "totalFundsAtRisk": 38302907.08828014,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "name": "Renzo",
+      "entity": "Renzo",
+      "totalFundsAtRisk": 34788176.477040045,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        },
         {
           "slug": "spark",
           "name": "Spark"
@@ -808,10 +961,10 @@
       ]
     },
     {
-      "address": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-      "name": "ezETH (Renzo)",
+      "address": "eth:0x74a09653A083691711cF8215a6ab074BB4e99ef5",
+      "name": "RestakeManager",
       "entity": "Renzo",
-      "totalFundsAtRisk": 35142271.84469835,
+      "totalFundsAtRisk": 34787052.3688792,
       "protocols": [
         {
           "slug": "spark",
@@ -823,43 +976,7 @@
       "address": "eth:0x52E85eB49e07dF74c8A9466D2164b4C4cA60014A",
       "name": "EZETHExchangeRateOracle",
       "entity": null,
-      "totalFundsAtRisk": 35142271.84469835,
-      "protocols": [
-        {
-          "slug": "spark",
-          "name": "Spark"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-      "name": "EigenLayer EigenPodManager",
-      "entity": "EigenLayer",
-      "totalFundsAtRisk": 35055665.88705025,
-      "protocols": [
-        {
-          "slug": "EtherFi-Stake",
-          "name": "EtherFi Stake"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
-      "name": "LayerZero EndpointV2",
-      "entity": "LayerZero",
-      "totalFundsAtRisk": 35055665.88705025,
-      "protocols": [
-        {
-          "slug": "EtherFi-Stake",
-          "name": "EtherFi Stake"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xFDdf8D19D092839A26b31365c927cA236B5086cf",
-      "name": "RETHExchangeRateOracle",
-      "entity": null,
-      "totalFundsAtRisk": 26455311.563849516,
+      "totalFundsAtRisk": 34787052.3688792,
       "protocols": [
         {
           "slug": "spark",
@@ -880,10 +997,46 @@
       ]
     },
     {
+      "address": "eth:0xFDdf8D19D092839A26b31365c927cA236B5086cf",
+      "name": "RETHExchangeRateOracle",
+      "entity": null,
+      "totalFundsAtRisk": 19994910.41875528,
+      "protocols": [
+        {
+          "slug": "spark",
+          "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "name": "EigenLayer EigenPodManager",
+      "entity": "EigenLayer",
+      "totalFundsAtRisk": 10886530.921843199,
+      "protocols": [
+        {
+          "slug": "EtherFi-Stake",
+          "name": "EtherFi Stake"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+      "name": "LayerZero EndpointV2",
+      "entity": "LayerZero",
+      "totalFundsAtRisk": 10886530.921843199,
+      "protocols": [
+        {
+          "slug": "EtherFi-Stake",
+          "name": "EtherFi Stake"
+        }
+      ]
+    },
+    {
       "address": "eth:0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7",
       "name": "Sky Pot (DSR)",
       "entity": "Sky",
-      "totalFundsAtRisk": 3517692.9757552817,
+      "totalFundsAtRisk": 3518312.8945202846,
       "protocols": [
         {
           "slug": "spark",
@@ -895,7 +1048,7 @@
       "address": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
       "name": "sUSDS (Sky Savings USDS)",
       "entity": "Sky",
-      "totalFundsAtRisk": 3472635.6707679336,
+      "totalFundsAtRisk": 3473253.285150172,
       "protocols": [
         {
           "slug": "spark",
@@ -907,7 +1060,7 @@
       "address": "eth:0x27f3A665c75aFdf43CfbF6B3A859B698f46ef656",
       "name": "SavingsDaiOracle (sDAI)",
       "entity": null,
-      "totalFundsAtRisk": 3472635.6707679336,
+      "totalFundsAtRisk": 3473253.285150172,
       "protocols": [
         {
           "slug": "spark",
@@ -919,7 +1072,7 @@
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNX Franc (VCHF)",
       "entity": "VCHF",
-      "totalFundsAtRisk": 444879.775787972,
+      "totalFundsAtRisk": 448624.37457028916,
       "protocols": [
         {
           "slug": "Frankencoin",
@@ -931,7 +1084,7 @@
       "address": "eth:0x349A73444b1a310BAe67ef67973022020d70020d",
       "name": "LRTOracle",
       "entity": "Kelp",
-      "totalFundsAtRisk": 97770.3033973563,
+      "totalFundsAtRisk": 95789.75072242662,
       "protocols": [
         {
           "slug": "spark",
@@ -943,7 +1096,7 @@
       "address": "eth:0x0c0864837C7e65458aCD3C665222203217019436",
       "name": "SavingsDaiOracle (sUSDS)",
       "entity": null,
-      "totalFundsAtRisk": 83129.91959265256,
+      "totalFundsAtRisk": 82749.48940691192,
       "protocols": [
         {
           "slug": "spark",
@@ -955,7 +1108,7 @@
       "address": "eth:0x70942D6b580741CF50A7906f4100063EE037b8eb",
       "name": "RSETHExchangeRateOracle",
       "entity": null,
-      "totalFundsAtRisk": 76265.05969879759,
+      "totalFundsAtRisk": 75495.11120432799,
       "protocols": [
         {
           "slug": "spark",
@@ -967,7 +1120,7 @@
       "address": "eth:0x31BFA908637C29707e155Cfac3a50C9823bF8723",
       "name": "MedianGNOUSD (Sky)",
       "entity": "Sky",
-      "totalFundsAtRisk": 38132.864842455754,
+      "totalFundsAtRisk": 37747.87469196161,
       "protocols": [
         {
           "slug": "spark",
@@ -979,11 +1132,1119 @@
       "address": "eth:0x4A7Ad931cb40b564A1C453545059131B126BC828",
       "name": "Fig (Chronicle Oracle Wrapper)",
       "entity": null,
-      "totalFundsAtRisk": 38132.864842455754,
+      "totalFundsAtRisk": 37747.87469196161,
       "protocols": [
         {
           "slug": "spark",
           "name": "Spark"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xEa674bBC33AE708Bc9EB4ba348b04E4eB55b496b",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 2063.4249916799868,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xD110cac5d8682A3b045D5524a9903E031d70FCCd",
+      "name": "GhoOracle",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1087516629111,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "name": "Gho Token (Aave)",
+      "entity": "Aave",
+      "totalFundsAtRisk": 1124.1087516629111,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1",
+      "name": "Chainlink (decommissioned)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        },
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3E7d1eAB13ad0104d2750B8863b489D65364e32D",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5424384B256154046E9667dDFaaa5e550145215e",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x19e2d716288751c5A59deaB61af012D5DF895962",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x14CB2E810Eb93b79363f489D45a972b609E47230",
+      "name": "ScaledPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xF3d49021fF3bbBFDfC1992A4b09E5D1d141D044C",
+      "name": "EzETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x94C7FD62fd0506e71d8142E9D36687fC72A86B02",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xe1D97bF61901B075E9626c8A2340a7De385861Ef",
+      "name": "WstETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x60AEd7d20AC6328f7BA771aD58931c996aff30E8",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3f73F03aa83B2A48ed27E964eD0fDb590332095B",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+      "name": "Ethena",
+      "entity": "Ethena",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x42bc86f2f08419280a99d8fbEa4672e7c30a86ec",
+      "name": "SUSDePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+      "name": "Kelp",
+      "entity": "Kelp",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7292C95A5f6A501a9c4B34f6393e221F2A0139c3",
+      "name": "RsETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x23adce82907D20c509101E2Af0723A9e16224EFb",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xfAB6790E399f0481e1303167c655b3c39ee6e7A0",
+      "name": "ScaledPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
+      "name": "TAsset",
+      "entity": "TAsset",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x85968026294b8f8Fb86d6bF3Cda079f9376aD05A",
+      "name": "TETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xde49c7B5C0E54b1624ED21C7D88bA6593d444Aa0",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5Ae4D93B9b9626Dc3289e1Afb14b821FD3C95F44",
+      "name": "ScaledPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1E41Ef40AC148706c114534E8192Ca608f80fC48",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xF77f2537dba4ffD60f77fACdfB2c1706364fA03d",
+      "name": "ScaledPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xE8E65Fb9116875012F5990Ecaab290B3531DbeB9",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x26C46B7aD0012cA71F2298ada567dC9Af14E7f2A",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5ed77a9D9b7cc80E9d0D7711024AF38C2643C1c4",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1081608472962,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC26D4a1c46d884cfF6dE9800B6aE7A8Cf48B4Ff8",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5c66322CA59bB61e867B28195576DbD8dA4b08dE",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xEEf0C605546958c1f899b6fB336C20671f9cD49F",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9Dc30dc58c72f5B669aEa01d02A2e4da194eE893",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0a72df02CE3E4185b6CEDf561f0AE651E9BeE235",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+      "name": "Stader",
+      "entity": "Stader",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xd7b163B671f8cE9379DF8Ff7F75fA72Ccec1841c",
+      "name": "EthXPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x36964C0579D02E0a5AaAb89E24Cf8d7CDF3549EE",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x889399C34461b25d70d43931e6cE9E40280E617B",
+      "name": "CbETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8B17C02d22EE7D6B8D6829ceB710A458de41E84a",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB539C6C0fc36ff1572B13ACec343B854937db576",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x90498d4334259FA769830ccA9114D8bcF3745F6c",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x03f9bA9A897241985c1f12bCe97fAC1B0bd4a7A7",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x260326c220E469358846b187eE53328303Efe19C",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D",
+      "name": "Maple",
+      "entity": "Maple",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x982aC260B5a4e5bCAb6A437e79168390cFbDe70D",
+      "name": "SyrupUSDTPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdF2917806E30300537aEB49A7663062F4d1F2b5F",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf8fF43E991A81e6eC886a3D281A2C6cC19aE70Fc",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8B8B73598a2c4b1de6d3b075618434CfC4826632",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6A196A7B498C4EFBFEfB55364106EC80CceF0C3F",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6b99e86B48Fee533B7Bee602e7959f024051Eca0",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xEbb721daf3DA9f1b3dcEc590cDf648137172d7CB",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5292AB3292D076271f853Ed8e05e61cc02F0A2C6",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xDaa4B74C6bAc4e25188e64ebc68DB5050b690cAc",
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC7e9b623ed51F033b32AE7f1282b1AD62C28C183",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x03bB418e89B75407585f8198178f253DA3216218",
+      "name": "EBTCPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x90D2af7d622ca3141efA4d8f1F24d86E5974Cc8F",
+      "name": "Ethereal",
+      "entity": "Ethereal",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc7Ad695ac0ae38Ae308640897E51468977A862a2",
+      "name": "EUSDePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf83B85205241c3BCCA0a09D32FaE65c16e0CF236",
+      "name": "sDAIMainnetPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xF29b1e3b68Fd59DD0a413811fD5d0AbaE653216d",
+      "name": "FixedPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5C00128d4d1c2F4f652C267d7bcdD7aC99C16E16",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7585693910f39df4959912B27D09EAEef06C1a93",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf8c04B50499872A5B5137219DEc0F791f7f620D0",
+      "name": "LBTCPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6Ebc52C8C1089be9eB3945C4350B68B8E4C2233f",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xeF50f8DC65402c3019586bc8725fCD0b99B8AAd7",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x04F84020Fdf10d9ee64D1dcC2986EDF2F556DA11",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xb49f677943BC038e9857d61E7d053CaA2C1734C1",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xa6aB031A4d189B24628EC9Eb155F0a0f1A0E55a3",
+      "name": "EURPriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xee10fE5E7aa92dd7b136597449c3d5813cFC5F18",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x44Bb2a64bAf94210B583338D3D97b1e8288Bd478",
+      "name": "DiscountedMKRSKYAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc929ad75B72593967DE83E7F7Cda0493458261D9",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xa0dc0249c32fa79e8B9b17c735908a60b1141B40",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x87625393534d5C102cADB66D37201dF24cc26d4C",
+      "name": "WeETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2b86D519eF34f8Adfc9349CDeA17c09Aa9dB60E2",
+      "name": "OsETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x759B9B72700A129CD7AD8e53F9c99cb48Fd57105",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
+      "name": "StakeWise",
+      "entity": "StakeWise",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xb01e6C9af83879B8e06a092f0DD94309c0D497E4",
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9f336eB940730596548C342A8BF1fC530B10cc96",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xc35D319FA5FEc2BBE0eB4d0a826465b60f821F81",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xF02C1e2A3B77c1cacC72f72B44f7d0a4c62e4a85",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4e89f87F24C13819bBDDb56f99b38746C91677D8",
+      "name": "PendlePriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8adb5187695F773513dEC4b569d21db0341931dA",
+      "name": "FixedPriceAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6929706c42d637DF5Ebf7F0BcfF2aF47F84Ea69D",
+      "name": "RETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf0eaC18E908B34770FDEe46d069c846bDa866759",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x88025072A7dB6Db5e54E46d43850bb44CA93D6C0",
+      "name": "OneUSDFixedAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x553303d460EE0afB37EdFf9bE42922D8FF63220e",
+      "name": "EACAggregatorProxy (Chainlink)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 1124.1075700316812,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
         }
       ]
     },
@@ -1148,6 +2409,30 @@
       ]
     },
     {
+      "address": "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd",
+      "name": "Pendle Chainlink Oracle (decommissioned)",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
+      "name": "Chainlink (decommissioned)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Sentora-PYUSD",
+          "name": "Sentora PYUSD"
+        }
+      ]
+    },
+    {
       "address": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
       "name": "Morpho PublicAllocator",
       "entity": "Morpho",
@@ -1256,6 +2541,714 @@
         {
           "slug": "Steakhouse-USDC",
           "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "name": "MakerDAO",
+      "entity": "MakerDAO",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c",
+      "name": "Superstate",
+      "entity": "Superstate",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "name": "Sky",
+      "entity": "Sky",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
+      "name": "PayPal PYUSD",
+      "entity": "PayPal PYUSD",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+      "name": "Threshold tBTC",
+      "entity": "Threshold tBTC",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "name": "Lombard",
+      "entity": "Lombard",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf112aF6F0A332B815fbEf3Ff932c057E570b62d3",
+      "name": "WeETHPriceCapAdapter",
+      "entity": null,
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+      "name": "Stargate",
+      "entity": "Stargate",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "name": "Tether USDT",
+      "entity": "Tether USDT",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xba100000625a3754423978a60c9317c58a424e3D",
+      "name": "Balancer",
+      "entity": "Balancer",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xe6A934089BBEe34F832060CE98848359883749B3",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x14Bdc3A3AE09f5518b923b69489CBcAfB238e617",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x917459337CaAC939D41d7493B3999f571D20D667",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBC6736d346a5eBC0dEbc997397912CD9b8FAe10a",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x62C6E813b9589C3631Ba0Cdb013acdB8544038B7",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+      "name": "Liquity",
+      "entity": "Liquity",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x50D2C7992b802Eef16c04FeADAB310f31866a545",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+      "name": "MakerDAO",
+      "entity": "MakerDAO",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+      "name": "Aave Token",
+      "entity": "Aave",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e",
+      "name": "Superstate",
+      "entity": "Superstate",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "name": "Ethena",
+      "entity": "Ethena",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+      "name": "ENS",
+      "entity": "ENS",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202",
+      "name": "Kyber",
+      "entity": "Kyber",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "name": "Coinbase",
+      "entity": "Coinbase",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "name": "Chainlink",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "name": "BitGo WBTC",
+      "entity": "BitGo WBTC",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9F56094C450763769BA0EA9Fe2876070c0fD5F77",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+      "name": "EtherFi",
+      "entity": "EtherFi",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e",
+      "name": "Frax",
+      "entity": "Frax",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x111111111117dC0aa78b770fA6A738034120C302",
+      "name": "eth:0x111111111117dC0aa78b770fA6A738034120C302",
+      "entity": null,
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB6557F02F0a5dA7b9D3C2d979cc19e00e756F6dA",
+      "name": "PriceCapAdapterStable",
+      "entity": null,
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52",
+      "name": "Curve",
+      "entity": "Curve",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D",
+      "name": "Global Dollar Network",
+      "entity": "Global Dollar Network",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+      "name": "Frax",
+      "entity": "Frax",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86",
+      "name": "Janus Henderson",
+      "entity": "Janus Henderson",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+      "name": "Euro Coin Token (Circle EUROC)",
+      "entity": "Circle EUROC",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+      "name": "Tether Gold",
+      "entity": "Tether Gold",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+      "name": "MakerDAO",
+      "entity": "MakerDAO",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+      "name": "Lido",
+      "entity": "Lido",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA",
+      "name": "Mantle MUSD",
+      "entity": "Mantle MUSD",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64",
+      "name": "Janus Henderson",
+      "entity": "Janus Henderson",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+      "name": "Rocket Pool",
+      "entity": "Rocket Pool",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+      "name": "Curve",
+      "entity": "Curve",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xE8483517077afa11A9B07f849cee2552f040d7b2",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b",
+      "name": "Hashnote",
+      "entity": "Hashnote",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x17418038ecF73BA4026c4f428547BF099706F27B",
+      "name": "Securitize",
+      "entity": "Securitize",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+      "name": "Synthetix",
+      "entity": "Synthetix",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "name": "FBTC",
+      "entity": "FBTC",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x3b3fB9C57858EF816833dC91565EFcd85D96f634",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01",
+      "name": "Securitize",
+      "entity": "Securitize",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+      "name": "AnchorageStablecoin",
+      "entity": "AnchorageStablecoin",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1F84a51296691320478c98b8d77f2Bbd17D34350",
+      "name": "Pendle",
+      "entity": "Pendle",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C",
+      "name": "Ethena",
+      "entity": "Ethena",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "name": "Uniswap",
+      "entity": "Uniswap",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "aave-v3",
+          "name": "Aave V3"
         }
       ]
     }

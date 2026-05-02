@@ -1,0 +1,12 @@
+{
+  "ATokenInstance": {
+    "hash": "0xefea04565e79439351c9fb83b636fe0c5f7799f319437b7dd5ad8e01f396fb18",
+    "address": "eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA",
+    "blockNumber": 22188285
+  },
+  "ATokenInstance_v2": {
+    "hash": "0xdecb08e6a2cb8764fa51a3afcf28d8d0c895a6c601d3ae994b6fa2c5979916ae",
+    "address": "eth:0x9EB507147b99D3Cde32A53Bd5cd12bDEEaC26E5c",
+    "blockNumber": 22188285
+  }
+}

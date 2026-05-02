@@ -800,6 +800,22 @@
                     {
                       "type": "object",
                       "properties": {
+                        "type": { "const": "aaveReserveTokens" },
+                        "tokenType": {
+                          "anyOf": [
+                            { "const": "variableDebt" },
+                            { "const": "stableDebt" },
+                            { "const": "aToken" }
+                          ]
+                        },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type", "tokenType"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
                         "type": { "const": "metaMorphoCap" },
                         "mode": {
                           "anyOf": [{ "const": "market" }, { "const": "feed" }]

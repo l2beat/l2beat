@@ -135,6 +135,10 @@ import {
   LayerZeroOAppConfigHandlerDefinition,
 } from '../defidisco/LayerZeroOAppConfigHandler'
 import {
+  AaveReserveTokensHandler,
+  AaveReserveTokensHandlerDefinition,
+} from '../defidisco/AaveReserveTokensHandler'
+import {
   MetaMorphoCapHandler,
   MetaMorphoCapHandlerDefinition,
 } from '../defidisco/MetaMorphoCapHandler'
@@ -177,6 +181,7 @@ const DEFINITIONS = [
   EnumerableRolesHandlerDefinition,
   CCIPRateLimitHandlerDefinition,
   LayerZeroOAppConfigHandlerDefinition,
+  AaveReserveTokensHandlerDefinition,
   MetaMorphoCapHandlerDefinition,
 ] as const
 
@@ -226,6 +231,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   enumerableRoles: EnumerableRolesHandlerDefinition,
   ccipRateLimit: CCIPRateLimitHandlerDefinition,
   layerZeroOAppConfig: LayerZeroOAppConfigHandlerDefinition,
+  aaveReserveTokens: AaveReserveTokensHandlerDefinition,
   metaMorphoCap: MetaMorphoCapHandlerDefinition,
 }
 
@@ -309,6 +315,8 @@ export function getUserHandler(
       return new CCIPRateLimitHandler(field, definition)
     case 'layerZeroOAppConfig':
       return new LayerZeroOAppConfigHandler(field, definition)
+    case 'aaveReserveTokens':
+      return new AaveReserveTokensHandler(field, definition, abi)
     case 'metaMorphoCap':
       return new MetaMorphoCapHandler(field, definition, abi)
   }

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  // Aave V3 aToken with governance delegation (used for aAAVE).
+  // Admin is always 0x0 (immutable proxy, upgrades permanently locked at proxy level).
+  // Implementation can only be replaced by re-initializing the reserve via PoolConfigurator.
+  "ignoreInWatchMode": [
+    "ATOKEN_REVISION",
+    "decimals",
+    "DELEGATE_BY_TYPE_TYPEHASH",
+    "DELEGATE_TYPEHASH",
+    "DOMAIN_SEPARATOR",
+    "EIP712_REVISION",
+    "name",
+    "PERMIT_TYPEHASH",
+    "POWER_SCALE_FACTOR",
+    "scaledTotalSupply",
+    "symbol",
+    "totalSupply"
+  ]
+}

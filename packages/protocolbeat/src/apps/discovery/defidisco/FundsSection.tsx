@@ -618,6 +618,15 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     const fundsEntries: [string, ContractFundsData][] = []
     if (fundsData?.contracts) {
       for (const [address, data] of Object.entries(fundsData.contracts)) {
+        // Skip implementation-mirror entries — enrichFundsWithImplementations
+        // copies proxy data to impl addresses for scoring purposes only.
+        // They have no graph node and are already represented by their proxy.
+        if (
+          data.proxyAddress &&
+          normalizeForLookup(data.proxyAddress) !== normalizeForLookup(address)
+        ) {
+          continue
+        }
         const normalized = normalizeForLookup(address)
         if (tokenAddressSet.has(normalized)) {
           tokenEntries.push([address, data])

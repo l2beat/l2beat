@@ -1,0 +1,37 @@
+[
+  {
+    "address": "eth:0x7F8Fc14D462bdF93c681c1f2Fd615389bF969Fb2",
+    "contractName": "ATokenInstance",
+    "tokenName": "ATOKEN_IMPL",
+    "pool": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
+    "reason": "Bare AToken implementation contract — not a proxied instance. name/symbol return ATOKEN_IMPL, UNDERLYING_ASSET_ADDRESS = 0x000, totalSupply = 0."
+  },
+  {
+    "address": "eth:0xaFFA06528Bd92625de2e7A0cfa0119319265Ea4b",
+    "contractName": "ATokenInstance",
+    "tokenName": "ATOKEN_IMPL",
+    "pool": "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0",
+    "reason": "Bare AToken implementation contract — not a proxied instance. name/symbol return ATOKEN_IMPL, UNDERLYING_ASSET_ADDRESS = 0x000, totalSupply = 0."
+  },
+  {
+    "address": "eth:0x3E59212c34588a63350142EFad594a20C88C2CEd",
+    "contractName": "VariableDebtTokenInstance",
+    "tokenName": "VARIABLE_DEBT_TOKEN_IMPL",
+    "pool": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
+    "reason": "Bare VariableDebtToken implementation contract — not a proxied instance. name/symbol return VARIABLE_DEBT_TOKEN_IMPL, UNDERLYING_ASSET_ADDRESS = 0x000, totalSupply = 0."
+  },
+  {
+    "address": "eth:0xBb077DaFFeb23B2126E7358b0b122ba6838FB881",
+    "contractName": "VariableDebtTokenInstance",
+    "tokenName": "VARIABLE_DEBT_TOKEN_IMPL",
+    "pool": "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0",
+    "reason": "Bare VariableDebtToken implementation contract — not a proxied instance. name/symbol return VARIABLE_DEBT_TOKEN_IMPL, UNDERLYING_ASSET_ADDRESS = 0x000, totalSupply = 0."
+  },
+  {
+    "address": "eth:0xb53F0547722AE5fa5b433a7acc44571aD68CEdAA",
+    "contractName": "StableDebtTokenInstance",
+    "tokenName": "STABLE_DEBT_TOKEN_IMPL",
+    "pool": "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0",
+    "reason": "Bare StableDebtToken implementation contract — not a proxied instance. name/symbol return STABLE_DEBT_TOKEN_IMPL, UNDERLYING_ASSET_ADDRESS = 0x000, totalSupply = 0."
+  }
+]

@@ -447,7 +447,7 @@ export class ReviewCompiler {
       fs.mkdirSync(slugDir, { recursive: true })
 
       const outputPath = path.join(slugDir, 'compiled-review.json')
-      fs.writeFileSync(outputPath, JSON.stringify(compiled, null, 2))
+      fs.writeFileSync(outputPath, JSON.stringify(compiled))
 
       this.log(`Review compiled successfully: ${outputPath}`)
 

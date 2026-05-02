@@ -8,6 +8,7 @@ import {
   type ApiFundsDataResponse,
   type CallGraphTraversalResult,
   type FunctionCapitalAnalysis,
+  type FunctionEntry,
   type Impact,
   type ReachableContract,
 } from './types'
@@ -34,6 +35,17 @@ export class CapitalAnalysisCalculator {
   // Used to look up function metadata that is stored at an impl address when
   // the caller is iterating by proxy (shared-impl patterns like Aave AToken).
   private proxyToImpls: Map<string, Set<string>>
+  // Pre-built lookup: normalized contract address → (functionName → FunctionEntry).
+  // Replaces the O(N) Object.entries scan that findFunctionMeta used to do
+  // on every BFS-edge visit.
+  private functionsByContract: Map<string, Map<string, FunctionEntry>>
+  // Cache of completed analyzeFunctionCapital results.
+  // Repeated `(contract, fn)` calls across multiple admins re-ran the BFS
+  // for no reason. The result is owner-independent unless the project has
+  // owner-scoped impactCap mitigations — in that case we include the owner
+  // in the cache key.
+  private analysisCache: Map<string, FunctionCapitalAnalysis> = new Map()
+  private cacheKeyIncludesOwner: boolean
 
   constructor(
     enhancedGraph: EnhancedGraph,
@@ -51,6 +63,24 @@ export class CapitalAnalysisCalculator {
     this.implToProxy = implToProxy ?? new Map()
     this.resolvedImpactCaps = resolvedImpactCaps ?? new Map()
     this.proxyToImpls = proxyToImpls ?? new Map()
+
+    this.functionsByContract = new Map()
+    for (const [addr, entry] of Object.entries(functionsData.contracts ?? {})) {
+      const normalized = normalizeChainAddress(addr)
+      const fnMap = new Map<string, FunctionEntry>()
+      for (const fn of entry.functions) fnMap.set(fn.functionName, fn)
+      this.functionsByContract.set(normalized, fnMap)
+    }
+
+    // Cap keys are `<contract>|<fn>` (global) or `<contract>|<fn>|<owner>`
+    // (scoped). Without any scoped caps, owner doesn't affect the BFS.
+    this.cacheKeyIncludesOwner = false
+    for (const key of this.resolvedImpactCaps.keys()) {
+      if (key.split('|').length >= 3) {
+        this.cacheKeyIncludesOwner = true
+        break
+      }
+    }
   }
 
   /**
@@ -64,20 +94,13 @@ export class CapitalAnalysisCalculator {
     functionName: string,
   ): { score?: string } | undefined {
     const normalized = normalizeChainAddress(contractAddress)
-    const candidates: string[] = [normalized]
+    const direct = this.functionsByContract.get(normalized)?.get(functionName)
+    if (direct) return direct
     const impls = this.proxyToImpls.get(normalized)
-    if (impls) {
-      for (const impl of impls) candidates.push(impl)
-    }
-    for (const candidate of candidates) {
-      const contractEntry = Object.entries(
-        this.functionsData.contracts ?? {},
-      ).find(([key]) => normalizeChainAddress(key) === candidate)
-      if (!contractEntry) continue
-      const func = contractEntry[1].functions.find(
-        (f) => f.functionName === functionName,
-      )
-      if (func) return func
+    if (!impls) return undefined
+    for (const impl of impls) {
+      const fn = this.functionsByContract.get(impl)?.get(functionName)
+      if (fn) return fn
     }
     return undefined
   }
@@ -412,13 +435,24 @@ export class CapitalAnalysisCalculator {
     impact: Impact,
     ownerAddress?: string,
   ): FunctionCapitalAnalysis {
+    const cacheKey = this.cacheKeyIncludesOwner
+      ? `${normalizeChainAddress(contractAddress)}|${functionName}|${ownerAddress ? normalizeChainAddress(ownerAddress) : ''}`
+      : `${normalizeChainAddress(contractAddress)}|${functionName}`
+    const cached = this.analysisCache.get(cacheKey)
+    if (cached) {
+      // Shallow clone so callers can attach per-owner data (e.g., mitigations)
+      // without leaking into other cache consumers. Inner arrays/objects are
+      // read-only at the consumer sites and safe to share.
+      return { ...cached }
+    }
+
     // Get direct funds and token value in the contract containing this function
     // If function is explicitly marked no-impact, zero out direct funds
     const isNoImpact = this.functionIsNoImpact(contractAddress, functionName)
 
     // If function is explicitly marked no-impact, skip traversal entirely
     if (isNoImpact) {
-      return {
+      const result: FunctionCapitalAnalysis = {
         contractAddress,
         contractName,
         functionName,
@@ -430,6 +464,8 @@ export class CapitalAnalysisCalculator {
         totalReachableTokenValueUsd: 0,
         unresolvedCallsCount: 0,
       }
+      this.analysisCache.set(cacheKey, result)
+      return { ...result }
     }
 
     const directFundsUsd = this.getContractFunds(contractAddress)
@@ -523,7 +559,7 @@ export class CapitalAnalysisCalculator {
       }
     }
 
-    return {
+    const result: FunctionCapitalAnalysis = {
       contractAddress,
       contractName,
       functionName,
@@ -537,6 +573,8 @@ export class CapitalAnalysisCalculator {
       unresolvedCallsCount: 0,
       impactCapUsd: selfCap,
     }
+    this.analysisCache.set(cacheKey, result)
+    return { ...result }
   }
 
   /**

@@ -1171,6 +1171,46 @@ export class ProjectAnalysis {
       }
     }
 
+    // Inject field-declared external dependencies.
+    // Contracts tagged with dependencyFields declare discovered value arrays
+    // (e.g. allUnderlyingAssets, allReserveSources) whose addresses should
+    // appear as external dependencies without requiring full discovery entries.
+    for (const tag of this.contractTags.tags ?? []) {
+      if (!tag.dependencyFields?.length) continue
+      if (
+        contractFilter &&
+        !this.matchesContractFilter(tag.contractAddress, contractFilter)
+      ) {
+        continue
+      }
+      const entry = this.discovered.entries?.find(
+        (e: any) =>
+          e.type === 'Contract' &&
+          addressesEqual(e.address, tag.contractAddress),
+      )
+      if (!entry) continue
+
+      for (const fieldName of tag.dependencyFields) {
+        const fieldValue = entry.values?.[fieldName]
+        if (!Array.isArray(fieldValue)) continue
+
+        for (const addr of fieldValue) {
+          const key = normalizeChainAddress(addr)
+          if (depMap.has(key)) continue
+          const addrTag = this.tagsByAddress.get(key)
+          depMap.set(key, {
+            address: addr,
+            name: addrTag?.entity ?? addr,
+            entity: addrTag?.entity,
+            isAutoDetected: true,
+            dependencyType: undefined,
+            calledFunctions: new Set(),
+            functions: [],
+          })
+        }
+      }
+    }
+
     // Build final dependencies with aggregated capital
     const dependencies: DependencyEntry[] = []
     for (const dep of depMap.values()) {

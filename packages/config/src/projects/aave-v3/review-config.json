@@ -1,0 +1,1596 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-05-01T14:46:59.000Z",
+  "protocolSlug": "aave-v3",
+  "protocolName": "Aave V3",
+  "tokenName": "GHO",
+  "chain": "Ethereum",
+  "projectType": "lending",
+  "description": "Aave V3 is a multi-pool overcollateralised lending market on Ethereum with four parallel deployments \u2014 Main, Lido, Prime/EtherFi, and Horizon RWA \u2014 each with its own Pool/PoolConfigurator/ACLManager triplet and a shared Aave Governance V3 root. Borrowers deposit collateral (ATokens) against which they take variable-rate debt (VariableDebtTokens), with valuations driven by Chainlink primary feeds and Aave-deployed CAPO adapters that bound liquid-staking and yield-bearing collateral ratios. The protocol is upgradeable: all pool implementations sit behind InitializableImmutableAdminUpgradeabilityProxies whose immutable admin is the PoolAddressesProvider, itself controlled by the on-chain governance Executor (0x5300A1a1...). Operationally relevant capital reachable from at least one admin is {{totalProtocolCapital}}, and the GHO stablecoin (the protocol's native asset) has a market cap of {{ghoMarketCap}}.",
+  "admins": {
+    "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": {
+      "name": "Executor",
+      "description": "Internal protocol contract (Executor) holding admin-role privileges over 721 functions across 274 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Direct capital exposure: {{a5300a1a1DirectCapital}}."
+    },
+    "eth:0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e": {
+      "name": "PoolAddressesProvider",
+      "description": "Internal protocol contract (PoolAddressesProvider) holding admin-role privileges over 4 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Direct capital exposure: {{a2f39d218DirectCapital}}."
+    },
+    "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27": {
+      "name": "PoolConfiguratorInstance",
+      "description": "Upgradeable internal contract (PoolConfiguratorInstance) holding admin privileges over 291 functions across 138 contracts. Implementation upgradeable via Aave Governance V3. Direct capital exposure: {{a64b761d8DirectCapital}}."
+    },
+    "eth:0xD400fc38ED4732893174325693a63C30ee3881a8": {
+      "name": "Umbrella",
+      "description": "Upgradeable internal contract (Umbrella) holding admin privileges over 30 functions across 7 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{ad400fc38ReachableTokenValue}}."
+    },
+    "eth:0xcfBf336fe147D643B9Cb705648500e101504B16d": {
+      "name": "PoolAddressesProvider",
+      "description": "Internal protocol contract (PoolAddressesProvider) holding admin-role privileges over 4 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{acfbf336fReachableTokenValue}}."
+    },
+    "eth:0xeBa440B438Ad808101d1c451C1C5322c90BEFCdA": {
+      "name": "PoolAddressesProvider",
+      "description": "Internal protocol contract (PoolAddressesProvider) holding admin-role privileges over 4 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{aeba440b4ReachableTokenValue}}."
+    },
+    "eth:0x5D39E06b825C1F2B80bf2756a73e28eFAA128ba0": {
+      "name": "PoolAddressesProvider",
+      "description": "Internal protocol contract (PoolAddressesProvider) holding admin-role privileges over 4 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a5d39e06bReachableTokenValue}}."
+    },
+    "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517": {
+      "name": "PoolConfiguratorInstance",
+      "description": "Upgradeable internal contract (PoolConfiguratorInstance) holding admin privileges over 55 functions across 186 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a342631c6ReachableTokenValue}}."
+    },
+    "eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d": {
+      "name": "PoolConfiguratorInstance",
+      "description": "Upgradeable internal contract (PoolConfiguratorInstance) holding admin privileges over 32 functions across 154 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a8438f4d2ReachableTokenValue}}."
+    },
+    "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F": {
+      "name": "PoolConfiguratorInstance",
+      "description": "Upgradeable internal contract (PoolConfiguratorInstance) holding admin privileges over 48 functions across 185 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a83cb1b4aReachableTokenValue}}."
+    },
+    "eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3": {
+      "name": "4 of 6 (67%) Multisig",
+      "description": "4 of 6 (67%) Gnosis Safe controlling 81 permissioned functions across 205 contracts. Reachable token value: {{a13b57382ReachableTokenValue}}."
+    },
+    "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34": {
+      "name": "Unknown (0x9821...Ae34)",
+      "description": "Unverified contract or unlabelled address controlling 51 functions across 201 contracts. Reachable token value: {{a98217a06ReachableTokenValue}}."
+    },
+    "eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E": {
+      "name": "Unknown (0xFCE5...171E)",
+      "description": "Unverified contract or unlabelled address controlling 51 functions across 201 contracts. Reachable token value: {{afce59786ReachableTokenValue}}."
+    },
+    "eth:0x5513224daaEABCa31af5280727878d52097afA05": {
+      "name": "GhoDirectMinter",
+      "description": "Upgradeable internal contract (GhoDirectMinter) holding admin privileges over 53 functions across 202 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a5513224dReachableTokenValue}}."
+    },
+    "eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4": {
+      "name": "AaveEModeAgent",
+      "description": "Internal protocol contract (AaveEModeAgent) holding admin-role privileges over 51 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a4f2858d4ReachableTokenValue}}."
+    },
+    "eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d": {
+      "name": "AaveDiscountRateAgent",
+      "description": "Internal protocol contract (AaveDiscountRateAgent) holding admin-role privileges over 51 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a1b3bd355ReachableTokenValue}}."
+    },
+    "eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6": {
+      "name": "AaveRatesAgent",
+      "description": "Internal protocol contract (AaveRatesAgent) holding admin-role privileges over 51 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{ada626e64ReachableTokenValue}}."
+    },
+    "eth:0xCc18Be380838956aad41FD22466085eD66aaBB46": {
+      "name": "AaveCapoAgent",
+      "description": "Internal protocol contract (AaveCapoAgent) holding admin-role privileges over 68 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{acc18be38ReachableTokenValue}}."
+    },
+    "eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30": {
+      "name": "5 of 9 (56%) Multisig",
+      "description": "5 of 9 (56%) Gnosis Safe controlling 39 permissioned functions across 198 contracts. Reachable token value: {{a2cfe3ec4ReachableTokenValue}}."
+    },
+    "eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285": {
+      "name": "GhoDirectMinter",
+      "description": "Upgradeable internal contract (GhoDirectMinter) holding admin privileges over 53 functions across 202 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a2ce01c87ReachableTokenValue}}."
+    },
+    "eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731": {
+      "name": "GhoAaveSteward",
+      "description": "Internal protocol contract (GhoAaveSteward) operated by the 3-of-4 GHO Risk Council Safe (RISK_COUNCIL = 0x8513e6F3...) within DAO-configured bounds; owned by Aave Governance V3 Executor 0x5300A1a1.... RISK_COUNCIL can call updateGhoBorrowRate, updateGhoBorrowCap, and updateGhoSupplyCap. Per-parameter cooldown and bounded per-update change are set by the DAO via setBorrowRateConfig. Reachable token value: {{a5c905d62ReachableTokenValue}}."
+    },
+    "eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3": {
+      "name": "RiskSteward",
+      "description": "Internal protocol contract (RiskSteward Core) operated by the 2-of-2 Risk Stewards Council Safe (RISK_COUNCIL = 0x47c71dFE...) within DAO-configured bounds; owned by Aave Governance V3 Executor 0x5300A1a1.... The council currently exposes only updateCaps (borrow/supply caps - no impact on existing positions); other parameter-update entry points exist on the contract but are not active in this configuration. Per-asset 3-day cooldown and DAO-set maxPercentChange limits enforced via _validateParamUpdate. Reachable token value: {{a7e6a6b11ReachableTokenValue}}."
+    },
+    "eth:0x52E652182b22C41d0202bB8D834982F43B12Cd21": {
+      "name": "AaveRatesAgent",
+      "description": "Internal protocol contract (AaveRatesAgent) holding admin-role privileges over 51 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a52e65218ReachableTokenValue}}."
+    },
+    "eth:0x09e8E1408a68778CEDdC1938729Ea126710E7Dda": {
+      "name": "Executor",
+      "description": "Internal protocol contract (Executor) holding admin-role privileges over 38 functions across 202 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a09e8e140ReachableTokenValue}}."
+    },
+    "eth:0xE6ec1f0Ae6Cd023bd0a9B4d0253BDC755103253c": {
+      "name": "3 of 4 (75%) Multisig",
+      "description": "3 of 4 (75%) Gnosis Safe controlling 34 permissioned functions across 201 contracts. Reachable token value: {{ae6ec1f0aReachableTokenValue}}."
+    },
+    "eth:0xe10C78A3AC7f016eD2DE1A89c5479b1039EAB9eA": {
+      "name": "GhoDirectMinter",
+      "description": "Upgradeable internal contract (GhoDirectMinter) holding admin privileges over 36 functions across 202 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{ae10c78a3ReachableTokenValue}}."
+    },
+    "eth:0x1EBdbE77bbDDD284BdCE8D7981D7eD26D6af58cA": {
+      "name": "CapsPlusRiskSteward",
+      "description": "Internal protocol contract (CapsPlusRiskSteward) operated by the 2-of-2 Risk Stewards Council Safe (RISK_COUNCIL = 0x47c71dFE...) within DAO-configured bounds. Single function updateCaps adjusts borrow/supply caps on Lido reserves; caps only affect new positions. Per-asset 3-day cooldown enforced by the underlying ConfigEngine. Reachable token value: {{a1ebdbe77ReachableTokenValue}}."
+    },
+    "eth:0xBF79d8339303148E345277a994Eb2cD5d82F0067": {
+      "name": "RiskSteward",
+      "description": "Internal protocol contract (RiskSteward Lido) operated by the 2-of-2 Risk Stewards Council Safe (RISK_COUNCIL = 0x47c71dFE...) within DAO-configured bounds; owned by Aave Governance V3 Executor 0x5300A1a1.... RISK_COUNCIL can adjust caps, interest rates, LTV / LiquidationThreshold / LiquidationBonus / DebtCeiling, and LST/stable price-cap ceilings on Lido reserves. Per-asset, per-parameter 3-day cooldown; per-update bounds (e.g. 50 bps absolute LT change, 100 bps absolute base rate change, 5% relative LST price-cap change) are configured by the DAO via setRiskConfig. Reachable token value: {{abf79d833ReachableTokenValue}}."
+    },
+    "eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974": {
+      "name": "Unknown (0x223d...d974)",
+      "description": "Unverified contract or unlabelled address controlling 14 functions across 3 contracts. Reachable token value: {{a223d844fReachableTokenValue}}."
+    },
+    "eth:0x46Aa1063e5265b43663E81329333B47c517A5409": {
+      "name": "GhoBucketSteward",
+      "description": "Internal protocol contract (GhoBucketSteward) operated by the 3-of-4 GHO Risk Council Safe (RISK_COUNCIL = 0x8513e6F3...) within DAO-configured bounds; owned by Aave Governance V3 Executor 0x5300A1a1.... Single operator function updateFacilitatorBucketCapacity adjusts each whitelisted facilitator's GHO mint capacity within DAO-set per-facilitator caps managed via setControlledFacilitator. Reachable token value: {{a46aa1063ReachableTokenValue}}."
+    },
+    "eth:0xb639D208Bcf0589D54FaC24E655C79EC529762B8": {
+      "name": "GhoFlashMinter",
+      "description": "Internal protocol contract (GhoFlashMinter) holding admin-role privileges over 2 functions across 1 contract; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{ab639d208ReachableTokenValue}}."
+    },
+    "eth:0x2bd010Ab5393AB51b601B99C4B33ba148d9466e9": {
+      "name": "GhoDirectFacilitator",
+      "description": "Internal protocol contract (GhoDirectFacilitator) holding admin-role privileges over 2 functions across 1 contract; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a2bd010abReachableTokenValue}}."
+    },
+    "eth:0xE9ac5231fAecb633dA0Fe85Fcb2785b8363427d2": {
+      "name": "GhoDirectFacilitator",
+      "description": "Internal protocol contract (GhoDirectFacilitator) holding admin-role privileges over 2 functions across 1 contract; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{ae9ac5231ReachableTokenValue}}."
+    },
+    "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 16 functions across 274 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Direct capital exposure: {{ad3cf979eDirectCapital}}."
+    },
+    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": {
+      "name": "GHO Risk Council (3/4 Safe)",
+      "description": "3 of 4 Gnosis Safe operating Aave's GHO Risk Stewards (RISK_COUNCIL on GhoAaveSteward 0x5C905d... and GhoBucketSteward 0x46Aa10...). Within DAO-set bounds the council can adjust GHO borrow rate / borrow cap / supply cap (GhoAaveSteward) and per-facilitator bucket capacities (GhoBucketSteward). Both stewards are owned by Aave Governance V3 Executor 0x5300A1a1... which can revoke RISK_COUNCIL at any time. Reachable token value: {{a8513e6f3ReachableTokenValue}}."
+    },
+    "eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 4 functions across 274 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a86c3ffeeReachableTokenValue}}."
+    },
+    "eth:0x40E4243C9471bb0a84Ba0968bccc9b8975E5Ee62": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 203 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a40e4243cReachableTokenValue}}."
+    },
+    "eth:0x8aBd1892a1c31b8e52fC1210098fE4cAc4E52aCc": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 203 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a8abd1892ReachableTokenValue}}."
+    },
+    "eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710": {
+      "name": "5 of 9 (56%) Multisig",
+      "description": "5 of 9 (56%) Gnosis Safe controlling 7 permissioned functions across 274 contracts. Reachable token value: {{ace52ab41ReachableTokenValue}}."
+    },
+    "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1": {
+      "name": "CrossChainControllerUpgradeRev3",
+      "description": "Upgradeable internal contract (CrossChainControllerUpgradeRev3) holding admin privileges over 1 function across 274 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{aed42a7d8ReachableTokenValue}}."
+    },
+    "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5": {
+      "name": "PayloadsController",
+      "description": "Upgradeable internal contract (PayloadsController) holding admin privileges over 6 functions across 274 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{adabad81aReachableTokenValue}}."
+    },
+    "eth:0x4457cA11E90f416Cc1D3a8E1cA41C0cdEcC251d4": {
+      "name": "GranularGuardianAccessControl",
+      "description": "Internal protocol contract (GranularGuardianAccessControl) holding admin-role privileges over 3 functions across 274 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a4457ca11ReachableTokenValue}}."
+    },
+    "eth:0xb812d0944f8F581DfAA3a93Dda0d22EcEf51A9CF": {
+      "name": "2 of 3 (67%) Multisig",
+      "description": "2 of 3 (67%) Gnosis Safe controlling 2 permissioned functions across 0 contracts."
+    },
+    "eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630C": {
+      "name": "AaveEcosystemReserveController",
+      "description": "Internal protocol contract (AaveEcosystemReserveController) holding admin-role privileges over 8 functions across 140 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Direct capital exposure: {{a3d569673DirectCapital}}."
+    },
+    "eth:0xf00E2de0E78DFf055A92AD4719a179CE275b6Ef7": {
+      "name": "ClinicSteward",
+      "description": "Internal protocol contract (ClinicSteward) operated by the Clinic Cleanup Safe (3-of-5 0xdeadD8aB...) and a hot-wallet bot (0x3Cbded22...) holding CLEANUP_ROLE; owned by Aave Governance V3 Executor 0x5300A1a1.... Operators can call batchRepayBadDebt and batchLiquidate to clear insolvent positions using AaveCollector funds. Per-call Collector outflow is debited from `availableBudget` (USD, currently ~$13,771); once exhausted, the function reverts until the DAO calls setAvailableBudget (DEFAULT_ADMIN_ROLE). Direct capital exposure: {{af00e2de0DirectCapital}}."
+    },
+    "eth:0x7571F419F7Df2d0622C1A20154a0D4250B2265cC": {
+      "name": "ClinicSteward",
+      "description": "Internal protocol contract (ClinicSteward) operated by the Clinic Cleanup Safe (3-of-5 0xdeadD8aB...) and a hot-wallet bot (0x3Cbded22...) holding CLEANUP_ROLE; owned by Aave Governance V3 Executor 0x5300A1a1.... Operators can call batchRepayBadDebt and batchLiquidate to clear insolvent positions using AaveCollector funds. Per-call Collector outflow is debited from `availableBudget` (USD, currently ~$4,992); once exhausted, the function reverts until the DAO calls setAvailableBudget (DEFAULT_ADMIN_ROLE). Direct capital exposure: {{a7571f419DirectCapital}}."
+    },
+    "eth:0x22aC12a6937BBBC0a301AF9154d08EaD95673122": {
+      "name": "PoolExposureSteward",
+      "description": "Internal protocol contract (PoolExposureSteward) holding FUNDS_ADMIN on the AaveCollector to manage Treasury exposure to Aave V2/V3 pools. Owned by Aave Governance V3 Executor 0x5300A1a1...; the 3-of-5 Treasury Steward Guardian Safe 0x22740deB... shares onlyOwnerOrGuardian access on depositV3 / withdrawV3 / withdrawV2 / migrateV2toV3 / migrateBetweenV3 and updateGuardian, and can act on the DAO's behalf. Direct capital exposure: {{a22ac12a6DirectCapital}}."
+    },
+    "eth:0x6A14eBe9A934c8EFE15C3811a999149472876b56": {
+      "name": "ClinicStewardV2",
+      "description": "Internal protocol contract (ClinicStewardV2) operated by the Clinic Cleanup Safe (3-of-5 0xdeadD8aB...) and a hot-wallet bot (0x9148eCDA...) holding CLEANUP_ROLE; owned by Aave Governance V3 Executor 0x5300A1a1.... Operators can call batchRepayBadDebt and batchLiquidate to clear insolvent positions using AaveCollector funds. Per-call Collector outflow is debited from `availableBudget` (USD, currently ~$722,600); once exhausted, the function reverts until the DAO calls setAvailableBudget (DEFAULT_ADMIN_ROLE). Direct capital exposure: {{a6a14ebe9DirectCapital}}."
+    },
+    "eth:0xE1e62c3ee0c581F715fBb0e23CDA536Fc29eeB2c": {
+      "name": "ClinicStewardV2",
+      "description": "Internal protocol contract (ClinicStewardV2) operated by the Clinic Cleanup Safe (3-of-5 0xdeadD8aB...) and a hot-wallet bot (0x9148eCDA...) holding CLEANUP_ROLE; owned by Aave Governance V3 Executor 0x5300A1a1.... Operators can call batchRepayBadDebt and batchLiquidate to clear insolvent positions using AaveCollector funds. Per-call Collector outflow is debited from `availableBudget` (USD, currently ~$2,500); once exhausted, the function reverts until the DAO calls setAvailableBudget (DEFAULT_ADMIN_ROLE). Direct capital exposure: {{ae1e62c3eDirectCapital}}."
+    },
+    "eth:0xb7D402138Cb01BfE97d95181C849379d6AD14d19": {
+      "name": "MainnetSwapSteward",
+      "description": "Internal protocol contract (MainnetSwapSteward) holding FUNDS_ADMIN on the AaveCollector to execute treasury asset swaps. Owned by Aave Governance V3 Executor 0x5300A1a1...; the 3-of-5 Treasury Steward Guardian Safe 0x22740deB... shares onlyOwnerOrGuardian access on swap / limitSwap / twapSwap and the cancel* counterparts and can act on the DAO's behalf. Direct capital exposure: {{ab7d40213DirectCapital}}."
+    },
+    "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957": {
+      "name": "Executor",
+      "description": "Internal protocol contract (Executor) holding admin-role privileges over 3 functions across 4 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a17dd33edReachableTokenValue}}."
+    },
+    "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2": {
+      "name": "PoolInstance",
+      "description": "Upgradeable internal contract (PoolInstance) holding admin privileges over 528 functions across 138 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a87870bcaReachableTokenValue}}."
+    },
+    "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1": {
+      "name": "PoolInstance",
+      "description": "Upgradeable internal contract (PoolInstance) holding admin privileges over 72 functions across 157 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a4e033931ReachableTokenValue}}."
+    },
+    "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0": {
+      "name": "PoolInstance",
+      "description": "Upgradeable internal contract (PoolInstance) holding admin privileges over 32 functions across 154 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a0aa97c28ReachableTokenValue}}."
+    },
+    "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": {
+      "name": "PoolInstance",
+      "description": "Upgradeable internal contract (PoolInstance) holding admin privileges over 80 functions across 185 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{aae05cd22ReachableTokenValue}}."
+    },
+    "eth:0xC2201708289b2C6A1d461A227A7E5ee3e7fE9A2F": {
+      "name": "EmissionManager",
+      "description": "Internal protocol contract (EmissionManager) holding admin-role privileges over 6 functions across 5 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{ac2201708ReachableTokenValue}}."
+    },
+    "eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8": {
+      "name": "Risk Stewards Council (2/2 Safe)",
+      "description": "2 of 2 Gnosis Safe operating Aave's Core and Lido Risk Stewards (RISK_COUNCIL on RiskSteward 0x7e6a6B..., RiskSteward 0xBF79d8..., CapsPlusRiskSteward 0x1EBdbE...). Within DAO-set bounds (e.g. +/-50 bps absolute on LTV / LiquidationThreshold / LiquidationBonus, +/-100 bps absolute on base rate, all per-asset per 3-day cooldown), the council can adjust caps, interest rates, collateral parameters, and price-cap ceilings on those reserves. The DAO Executor owns every steward and can revoke RISK_COUNCIL at any time."
+    },
+    "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85": {
+      "name": "3 of 7 (43%) Multisig",
+      "description": "3 of 7 (43%) Gnosis Safe controlling 7 permissioned functions across 1 contract."
+    },
+    "eth:0x95E3015c67EF62B866cC28ca5A9AB5017A55e336": {
+      "name": "AgentHub",
+      "description": "Upgradeable internal contract (AgentHub) holding admin privileges over 5 functions across 0 contracts. Implementation upgradeable via Aave Governance V3."
+    },
+    "eth:0xDE9F8379a5a972100d0373103a849E8ABdf56a9a": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 146 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{ade9f8379ReachableTokenValue}}."
+    },
+    "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 146 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a22ce00cbReachableTokenValue}}."
+    },
+    "eth:0x7385F804BCAa42D7019299Aa0857b37CdE458bc3": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 146 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a7385f804ReachableTokenValue}}."
+    },
+    "eth:0x71B40923a23557820773cc061888bCD704F19594": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 146 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a71b40923ReachableTokenValue}}."
+    },
+    "eth:0xfD57dE1F38e3F730E0BEb7238dD50E396851dda0": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 151 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{afd57de1fReachableTokenValue}}."
+    },
+    "eth:0xEbAEacB6102B21D7996524D8ad47b33a3115ba69": {
+      "name": "ProxyAdmin",
+      "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 140 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{aebaeacb6ReachableTokenValue}}."
+    },
+    "eth:0x2759de67aD133C747C9f41d56F1b8A343cE679a1": {
+      "name": "Executor",
+      "description": "Internal protocol contract (Executor) holding admin-role privileges over 1 function across 140 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a2759de67ReachableTokenValue}}."
+    },
+    "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa": {
+      "name": "Treasury Steward Guardian (3/5 Safe)",
+      "description": "3 of 5 Gnosis Safe acting as guardian on MainnetSwapSteward 0xb7D402... and PoolExposureSteward 0x22aC12..., which together hold FUNDS_ADMIN on the AaveCollector and execute treasury swaps and Pool deposits/withdrawals on the DAO's behalf. The guardian shares onlyOwnerOrGuardian access with the DAO Executor (the steward owner), so it can directly invoke swap / limitSwap / twapSwap / depositV3 / withdrawV3 / migrateV2toV3 / migrateBetweenV3 and the cancel* counterparts. Reachable token value: {{a22740debReachableTokenValue}}."
+    },
+    "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b": {
+      "name": "Clinic Cleanup Safe (3/5)",
+      "description": "3 of 5 Gnosis Safe holding CLEANUP_ROLE on the four ClinicStewards (0x7571F4..., 0xf00E2d..., 0x6A14eB..., 0xE1e62c...). The role can call batchRepayBadDebt and batchLiquidate, which pull AaveCollector treasury funds and route excess back to the Collector. Total per-steward outflow is bounded by each steward's `availableBudget` (USD, currently ~$4,992 / $13,771 / $722,600 / $2,500 across the four ClinicStewards). The DAO Executor sets each budget via setAvailableBudget and can revoke CLEANUP_ROLE at any time."
+    },
+    "eth:0x3Cbded22F878aFC8d39dCD744d3Fe62086B76193": {
+      "name": "Clinic Cleanup Bot (V1)",
+      "description": "Hot-wallet operator key holding CLEANUP_ROLE on ClinicSteward 0x7571F4... and ClinicSteward 0xf00E2d..., used to automate batchRepayBadDebt / batchLiquidate / renewAllowance calls against insolvent positions. Per-steward fund impact bounded by `availableBudget` on each ClinicSteward (currently ~$4,992 + ~$13,771); the DAO Executor (DEFAULT_ADMIN_ROLE) can revoke this key at any time."
+    },
+    "eth:0x9148eCDA02859142D06B1591a4C2d6702d4C214D": {
+      "name": "Clinic Cleanup Bot (V2)",
+      "description": "Hot-wallet operator key holding CLEANUP_ROLE on ClinicStewardV2 0x6A14eB... and ClinicStewardV2 0xE1e62c..., used to automate batchRepayBadDebt / batchLiquidate / renewAllowance calls against insolvent positions. Per-steward fund impact bounded by `availableBudget` on each ClinicStewardV2 (currently ~$722,600 + ~$2,500); the DAO Executor (DEFAULT_ADMIN_ROLE) can revoke this key at any time."
+    }
+  },
+  "dependencies": {
+    "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      "name": "Wrapped liquid staked Ether 2.0 Token (Lido)",
+      "description": "Lido staking infrastructure; the wstETH token contract whose balanceOf and rate determine the value of wstETH-denominated collateral."
+    },
+    "eth:0xb41E773f507F7a7EA890b1afB7d2b660c30C8B0A": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x8236a87084f8B84306f72007F36F2618A5634494": {
+      "name": "Lombard Staked Bitcoin Token",
+      "description": "Lombard staked Bitcoin token; balance and rate feed the price oracle for LBTC-denominated reserves."
+    },
+    "eth:0x3E7d1eAB13ad0104d2750B8863b489D65364e32D": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
+      "name": "Gho Token (Aave)",
+      "description": "Aave token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xEa674bBC33AE708Bc9EB4ba348b04E4eB55b496b": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9": {
+      "name": "Aave Token",
+      "description": "Aave token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x04F84020Fdf10d9ee64D1dcC2986EDF2F556DA11": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c": {
+      "name": "Euro Coin Token (Circle EUROC)",
+      "description": "Circle EUROC token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xfF30586cD0F29eD462364C7e81375FC0C71219b1": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xEEf0C605546958c1f899b6fB336C20671f9cD49F": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xb49f677943BC038e9857d61E7d053CaA2C1734C1": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x26C46B7aD0012cA71F2298ada567dC9Af14E7f2A": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "name": "Wrapped Ether",
+      "description": "Wrapped Ether token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      "name": "BitGo WBTC",
+      "description": "BitGo WBTC token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "name": "Circle USDC",
+      "description": "Circle USDC token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "name": "MakerDAO",
+      "description": "MakerDAO contract used as price reference and/or as the source for sUSDS exchange rate consumed by the price oracle."
+    },
+    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      "name": "Chainlink",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": {
+      "name": "Coinbase",
+      "description": "Coinbase token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      "name": "Tether USDT",
+      "description": "Tether USDT token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
+      "name": "Rocket Pool",
+      "description": "Rocket Pool token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0": {
+      "name": "Liquity",
+      "description": "Liquity token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xD533a949740bb3306d119CC777fa900bA034cd52": {
+      "name": "Curve",
+      "description": "Curve token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2": {
+      "name": "MakerDAO",
+      "description": "MakerDAO contract used as price reference and/or as the source for sUSDS exchange rate consumed by the price oracle."
+    },
+    "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F": {
+      "name": "Synthetix",
+      "description": "Synthetix token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xba100000625a3754423978a60c9317c58a424e3D": {
+      "name": "Balancer",
+      "description": "Balancer token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": {
+      "name": "Uniswap",
+      "description": "Uniswap token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": {
+      "name": "Lido",
+      "description": "Lido staking infrastructure; the wstETH token contract whose balanceOf and rate determine the value of wstETH-denominated collateral."
+    },
+    "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72": {
+      "name": "ENS",
+      "description": "ENS token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x111111111117dC0aa78b770fA6A738034120C302": {
+      "name": "eth:0x111111111117dC0aa78b770fA6A738034120C302",
+      "description": "External dependency. Protocol behaviour depends on its continued availability and correctness."
+    },
+    "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e": {
+      "name": "Frax",
+      "description": "Frax token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": {
+      "name": "Rocket Pool",
+      "description": "Rocket Pool token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA": {
+      "name": "MakerDAO",
+      "description": "MakerDAO contract used as price reference and/or as the source for sUSDS exchange rate consumed by the price oracle."
+    },
+    "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": {
+      "name": "Stargate",
+      "description": "Stargate token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202": {
+      "name": "Kyber",
+      "description": "Kyber token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": {
+      "name": "Frax",
+      "description": "Frax token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E": {
+      "name": "Curve",
+      "description": "Curve token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8": {
+      "name": "PayPal PYUSD",
+      "description": "PayPal PYUSD token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
+      "name": "EtherFi",
+      "description": "EtherFi liquid restaking token contract; ratio between weETH and underlying ETH stake feeds CAPO-bounded oracle reads."
+    },
+    "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38": {
+      "name": "StakeWise",
+      "description": "StakeWise token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": {
+      "name": "Ethena",
+      "description": "Ethena synthetic-dollar contract; sUSDe/USDe rates feed the Aave oracle for Ethena-collateralised reserves."
+    },
+    "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
+      "name": "Stader",
+      "description": "Stader token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
+      "name": "Ethena",
+      "description": "Ethena synthetic-dollar contract; sUSDe/USDe rates feed the Aave oracle for Ethena-collateralised reserves."
+    },
+    "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": {
+      "name": "Threshold tBTC",
+      "description": "Threshold tBTC token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": {
+      "name": "Coinbase",
+      "description": "Coinbase token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+      "name": "Sky",
+      "description": "Sky token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      "name": "Kelp",
+      "description": "Kelp token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642": {
+      "name": "EtherFi",
+      "description": "EtherFi liquid restaking token contract; ratio between weETH and underlying ETH stake feeds CAPO-bounded oracle reads."
+    },
+    "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD": {
+      "name": "AnchorageStablecoin",
+      "description": "AnchorageStablecoin token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x50D2C7992b802Eef16c04FeADAB310f31866a545": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x3b3fB9C57858EF816833dC91565EFcd85D96f634": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C": {
+      "name": "Ethena",
+      "description": "Ethena synthetic-dollar contract; sUSDe/USDe rates feed the Aave oracle for Ethena-collateralised reserves."
+    },
+    "eth:0x917459337CaAC939D41d7493B3999f571D20D667": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x14Bdc3A3AE09f5518b923b69489CBcAfB238e617": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x90D2af7d622ca3141efA4d8f1F24d86E5974Cc8F": {
+      "name": "Ethereal",
+      "description": "Ethereal token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364": {
+      "name": "FBTC",
+      "description": "FBTC token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x9F56094C450763769BA0EA9Fe2876070c0fD5F77": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xBC6736d346a5eBC0dEbc997397912CD9b8FAe10a": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8": {
+      "name": "TAsset",
+      "description": "TAsset token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": {
+      "name": "Renzo",
+      "description": "Renzo token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38": {
+      "name": "Tether Gold",
+      "description": "Tether Gold token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xe6A934089BBEe34F832060CE98848359883749B3": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x62C6E813b9589C3631Ba0Cdb013acdB8544038B7": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x1F84a51296691320478c98b8d77f2Bbd17D34350": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xE8483517077afa11A9B07f849cee2552f040d7b2": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA": {
+      "name": "Mantle MUSD",
+      "description": "Mantle MUSD token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x356B8d89c1e1239Cbbb9dE4815c39A1474d5BA7D": {
+      "name": "Maple",
+      "description": "Maple token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D": {
+      "name": "Global Dollar Network",
+      "description": "Global Dollar Network token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": {
+      "name": "Lombard",
+      "description": "Lombard staked Bitcoin token; balance and rate feed the price oracle for LBTC-denominated reserves."
+    },
+    "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548": {
+      "name": "Pendle",
+      "description": "Pendle Principal Token contract; Pendle valuation feeds into the Aave price oracle for that PT reserve via a CAPO adapter."
+    },
+    "eth:0x43415eB6ff9DB7E26A15b704e7A3eDCe97d31C4e": {
+      "name": "Superstate",
+      "description": "Superstate token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c": {
+      "name": "Superstate",
+      "description": "Superstate token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x136471a34f6ef19fE571EFFC1CA711fdb8E49f2b": {
+      "name": "Hashnote",
+      "description": "Hashnote token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x8c213ee79581Ff4984583C6a801e5263418C4b86": {
+      "name": "Janus Henderson",
+      "description": "Janus Henderson token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x5a0F93D040De44e78F251b03c43be9CF317Dcf64": {
+      "name": "Janus Henderson",
+      "description": "Janus Henderson token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x2255718832bC9fD3bE1CaF75084F4803DA14FF01": {
+      "name": "Securitize",
+      "description": "Securitize token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x17418038ecF73BA4026c4f428547BF099706F27B": {
+      "name": "Securitize",
+      "description": "Securitize token contract listed as a reserve in one or more Aave V3 pools; protocol relies on its non-malicious behaviour and on its underlying issuer/staking infrastructure."
+    },
+    "eth:0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x4E155eD98aFE9034b7A5962f6C84c86d869daA9d": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x5424384B256154046E9667dDFaaa5e550145215e": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x553303d460EE0afB37EdFf9bE42922D8FF63220e": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x5C00128d4d1c2F4f652C267d7bcdD7aC99C16E16": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x5ed77a9D9b7cc80E9d0D7711024AF38C2643C1c4": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x60AEd7d20AC6328f7BA771aD58931c996aff30E8": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x6Ebc52C8C1089be9eB3945C4350B68B8E4C2233f": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x7A9f34a0Aa917D438e9b6E630067062B7F8f6f3d": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xC7e9b623ed51F033b32AE7f1282b1AD62C28C183": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xE8E65Fb9116875012F5990Ecaab290B3531DbeB9": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xF02C1e2A3B77c1cacC72f72B44f7d0a4c62e4a85": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xc929ad75B72593967DE83E7F7Cda0493458261D9": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xdF2917806E30300537aEB49A7663062F4d1F2b5F": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xf8fF43E991A81e6eC886a3D281A2C6cC19aE70Fc": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x1E41Ef40AC148706c114534E8192Ca608f80fC48": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x19e2d716288751c5A59deaB61af012D5DF895962": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xee10fE5E7aa92dd7b136597449c3d5813cFC5F18": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xde49c7B5C0E54b1624ED21C7D88bA6593d444Aa0": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0x23adce82907D20c509101E2Af0723A9e16224EFb": {
+      "name": "EACAggregatorProxy (Chainlink)",
+      "description": "Chainlink price feed used by the Aave price oracle to value collateral and debt for one or more reserves."
+    },
+    "eth:0xD110cac5d8682A3b045D5524a9903E031d70FCCd": {
+      "name": "GhoOracle",
+      "description": "Aave-deployed GHO price oracle that returns the protocol's hardcoded GHO/USD valuation regardless of secondary market trading. Consumed by AaveOracle for the GHO reserve."
+    },
+    "eth:0xC26D4a1c46d884cfF6dE9800B6aE7A8Cf48B4Ff8": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x5c66322CA59bB61e867B28195576DbD8dA4b08dE": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x9Dc30dc58c72f5B669aEa01d02A2e4da194eE893": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x0a72df02CE3E4185b6CEDf561f0AE651E9BeE235": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xd7b163B671f8cE9379DF8Ff7F75fA72Ccec1841c": {
+      "name": "EthXPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x14CB2E810Eb93b79363f489D45a972b609E47230": {
+      "name": "ScaledPriceAdapter",
+      "description": "Aave-deployed price adapter that scales a source feed by a fixed multiplier. Used to translate decimals or normalize across heterogenous price sources."
+    },
+    "eth:0xF3d49021fF3bbBFDfC1992A4b09E5D1d141D044C": {
+      "name": "EzETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x94C7FD62fd0506e71d8142E9D36687fC72A86B02": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0xe1D97bF61901B075E9626c8A2340a7De385861Ef": {
+      "name": "WstETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x36964C0579D02E0a5AaAb89E24Cf8d7CDF3549EE": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x889399C34461b25d70d43931e6cE9E40280E617B": {
+      "name": "CbETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x8B17C02d22EE7D6B8D6829ceB710A458de41E84a": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xB539C6C0fc36ff1572B13ACec343B854937db576": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xf112aF6F0A332B815fbEf3Ff932c057E570b62d3": {
+      "name": "WeETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x90498d4334259FA769830ccA9114D8bcF3745F6c": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x03f9bA9A897241985c1f12bCe97fAC1B0bd4a7A7": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x260326c220E469358846b187eE53328303Efe19C": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x982aC260B5a4e5bCAb6A437e79168390cFbDe70D": {
+      "name": "SyrupUSDTPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x8B8B73598a2c4b1de6d3b075618434CfC4826632": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x3f73F03aa83B2A48ed27E964eD0fDb590332095B": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x42bc86f2f08419280a99d8fbEa4672e7c30a86ec": {
+      "name": "SUSDePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x7292C95A5f6A501a9c4B34f6393e221F2A0139c3": {
+      "name": "RsETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x6A196A7B498C4EFBFEfB55364106EC80CceF0C3F": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x6b99e86B48Fee533B7Bee602e7959f024051Eca0": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xfAB6790E399f0481e1303167c655b3c39ee6e7A0": {
+      "name": "ScaledPriceAdapter",
+      "description": "Aave-deployed price adapter that scales a source feed by a fixed multiplier. Used to translate decimals or normalize across heterogenous price sources."
+    },
+    "eth:0xEbb721daf3DA9f1b3dcEc590cDf648137172d7CB": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x5292AB3292D076271f853Ed8e05e61cc02F0A2C6": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xDaa4B74C6bAc4e25188e64ebc68DB5050b690cAc": {
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "description": "Aave-deployed peg adapter that prices a yield-bearing asset by combining the underlying Chainlink quote feed with the asset-to-base ratio. Consumed by AaveOracle."
+    },
+    "eth:0x03bB418e89B75407585f8198178f253DA3216218": {
+      "name": "EBTCPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x85968026294b8f8Fb86d6bF3Cda079f9376aD05A": {
+      "name": "TETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0xc7Ad695ac0ae38Ae308640897E51468977A862a2": {
+      "name": "EUSDePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0xf83B85205241c3BCCA0a09D32FaE65c16e0CF236": {
+      "name": "sDAIMainnetPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing sDAI by reading the Maker DSR (`Pot`) yield rate and applying a yearly growth ceiling enforced by Aave Risk Council parameters. Consumed by AaveOracle for the sDAI reserve."
+    },
+    "eth:0x5Ae4D93B9b9626Dc3289e1Afb14b821FD3C95F44": {
+      "name": "ScaledPriceAdapter",
+      "description": "Aave-deployed price adapter that scales a source feed by a fixed multiplier. Used to translate decimals or normalize across heterogenous price sources."
+    },
+    "eth:0xF29b1e3b68Fd59DD0a413811fD5d0AbaE653216d": {
+      "name": "FixedPriceAdapter",
+      "description": "Aave-deployed fixed-price oracle adapter returning a hardcoded USD value. Used where market price discovery is intentionally suppressed."
+    },
+    "eth:0x7585693910f39df4959912B27D09EAEef06C1a93": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xf8c04B50499872A5B5137219DEc0F791f7f620D0": {
+      "name": "LBTCPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0xeF50f8DC65402c3019586bc8725fCD0b99B8AAd7": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0xa6aB031A4d189B24628EC9Eb155F0a0f1A0E55a3": {
+      "name": "EURPriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x44Bb2a64bAf94210B583338D3D97b1e8288Bd478": {
+      "name": "DiscountedMKRSKYAdapter",
+      "description": "Aave-deployed adapter pricing MKR via the official MKR\u2194SKY conversion rate with a discount applied. Used during the MKR-to-SKY token migration window."
+    },
+    "eth:0xB6557F02F0a5dA7b9D3C2d979cc19e00e756F6dA": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0xa0dc0249c32fa79e8B9b17c735908a60b1141B40": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x87625393534d5C102cADB66D37201dF24cc26d4C": {
+      "name": "WeETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0xF77f2537dba4ffD60f77fACdfB2c1706364fA03d": {
+      "name": "ScaledPriceAdapter",
+      "description": "Aave-deployed price adapter that scales a source feed by a fixed multiplier. Used to translate decimals or normalize across heterogenous price sources."
+    },
+    "eth:0x2b86D519eF34f8Adfc9349CDeA17c09Aa9dB60E2": {
+      "name": "OsETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0x759B9B72700A129CD7AD8e53F9c99cb48Fd57105": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xb01e6C9af83879B8e06a092f0DD94309c0D497E4": {
+      "name": "CLSynchronicityPriceAdapterPegToBase",
+      "description": "Aave-deployed peg adapter that prices a yield-bearing asset by combining the underlying Chainlink quote feed with the asset-to-base ratio. Consumed by AaveOracle."
+    },
+    "eth:0x9f336eB940730596548C342A8BF1fC530B10cc96": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0xc35D319FA5FEc2BBE0eB4d0a826465b60f821F81": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x4e89f87F24C13819bBDDb56f99b38746C91677D8": {
+      "name": "PendlePriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter pricing a Pendle Principal Token reserve. Wraps the underlying base asset oracle and applies Aave's `MAX_DISCOUNT_RATE_PER_YEAR` and `MINIMAL_DISCOUNT_RATE` cap parameters governed by the Aave Risk Council; consumed by AaveOracle for the corresponding PT reserve."
+    },
+    "eth:0x8adb5187695F773513dEC4b569d21db0341931dA": {
+      "name": "FixedPriceAdapter",
+      "description": "Aave-deployed fixed-price oracle adapter returning a hardcoded USD value. Used where market price discovery is intentionally suppressed."
+    },
+    "eth:0x6929706c42d637DF5Ebf7F0BcfF2aF47F84Ea69D": {
+      "name": "RETHPriceCapAdapter",
+      "description": "Aave-deployed CAPO adapter that bounds a liquid-staking, restaking, or yield-bearing asset's exchange rate. Reads the underlying ratio provider and a Chainlink base feed, applies `MAX_RATIO_GROWTH_PER_SECOND` and a snapshot-based ceiling; cap parameters are set by the Aave Risk Council. Consumed by AaveOracle for the corresponding reserve."
+    },
+    "eth:0xf0eaC18E908B34770FDEe46d069c846bDa866759": {
+      "name": "PriceCapAdapterStable",
+      "description": "Aave-deployed CAPO adapter for a stablecoin reserve. Wraps a Chainlink price feed and applies a hardcoded USD price ceiling. Cap parameters are managed by the Aave Risk Council; consumed by AaveOracle."
+    },
+    "eth:0x88025072A7dB6Db5e54E46d43850bb44CA93D6C0": {
+      "name": "OneUSDFixedAdapter",
+      "description": "Aave-deployed fixed-price adapter that returns a constant $1 valuation. Used as the price source for the USDtb (US Treasury Bill backed) reserve."
+    }
+  },
+  "funds": {
+    "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2": {
+      "name": "PoolInstance",
+      "description": "Holds {{f87870bcaBalances}} in token balances."
+    },
+    "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1": {
+      "name": "PoolInstance",
+      "description": "Holds {{f4e033931Balances}} in token balances."
+    },
+    "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
+      "name": "Gho Token (GHO)",
+      "description": "GHO token contract with circulating value of {{f40d16fc0TokenValue}}."
+    },
+    "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c": {
+      "name": "CollectorWithCustomImpl",
+      "description": "Holds {{f464c71f6Balances}} in token balances."
+    },
+    "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": {
+      "name": "PoolInstance",
+      "description": "Holds {{fae05cd22Balances}} in token balances."
+    },
+    "eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491": {
+      "name": "AaveEcosystemReserveV2",
+      "description": "Holds {{f25f2226bBalances}} in token balances."
+    },
+    "eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5": {
+      "name": "StakedAaveV3 (stkAAVE)",
+      "description": "stkAAVE token contract with circulating value of {{f4da27a54TokenValue}}."
+    },
+    "eth:0x00907f9921424583e7ffBfEdf84F92B7B2Be4977": {
+      "name": "ATokenInstance (aEthGHO)",
+      "description": "AToken receipt for the EthGHO reserve, with total deposits of {{f00907f99TokenValue}}."
+    },
+    "eth:0x018008bfb33d285247A21d44E50697654f754e63": {
+      "name": "ATokenInstance (aEthDAI)",
+      "description": "AToken receipt for the EthDAI reserve, with total deposits of {{f018008bfTokenValue}}."
+    },
+    "eth:0x08b798c40b9AB931356d9aB4235F548325C4cb80": {
+      "name": "RwaATokenInstance (aHorRwaUSCC)",
+      "description": "AToken receipt for the HorRwaUSCC reserve, with total deposits of {{f08b798c4TokenValue}}."
+    },
+    "eth:0x09AA30b182488f769a9824F15E6Ce58591Da4781": {
+      "name": "ATokenInstance (aEthLidoUSDS)",
+      "description": "AToken receipt for the EthLidoUSDS reserve, with total deposits of {{f09aa30b1TokenValue}}."
+    },
+    "eth:0x0B925eD163218f6662a35e0f0371Ac234f9E9371": {
+      "name": "ATokenInstance (aEthwstETH)",
+      "description": "AToken receipt for the EthwstETH reserve, with total deposits of {{f0b925ed1TokenValue}}."
+    },
+    "eth:0x0C0d01AbF3e6aDfcA0989eBbA9d6e85dD58EaB1E": {
+      "name": "ATokenInstance (aEthPYUSD)",
+      "description": "AToken receipt for the EthPYUSD reserve, with total deposits of {{f0c0d01abTokenValue}}."
+    },
+    "eth:0x10Ac93971cdb1F5c778144084242374473c350Da": {
+      "name": "ATokenInstance (aEthtBTC)",
+      "description": "AToken receipt for the EthtBTC reserve, with total deposits of {{f10ac9397TokenValue}}."
+    },
+    "eth:0x1241ec22C9BdF16BA1Eb636F2a8de7e28A4343Cf": {
+      "name": "ATokenInstance (aEthPT_srUSDe_2APR2026)",
+      "description": "AToken receipt for the EthPT_srUSDe_2APR2026 reserve, with total deposits of {{f1241ec22TokenValue}}."
+    },
+    "eth:0x12b70410D60f926558245f769059eA3Fc7A7353E": {
+      "name": "ATokenInstance (aEthBTCb)",
+      "description": "AToken receipt for the EthBTCb reserve, with total deposits of {{f12b70410TokenValue}}."
+    },
+    "eth:0x18eFE565A5373f430e2F809b97De30335B3ad96A": {
+      "name": "ATokenInstance (aEthLidoGHO)",
+      "description": "AToken receipt for the EthLidoGHO reserve, with total deposits of {{f18efe565TokenValue}}."
+    },
+    "eth:0x1bA9843bD4327c6c77011406dE5fA8749F7E3479": {
+      "name": "ATokenInstance (aEthSTG)",
+      "description": "AToken receipt for the EthSTG reserve, with total deposits of {{f1ba9843bTokenValue}}."
+    },
+    "eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002": {
+      "name": "ATokenInstance (aEthETHx)",
+      "description": "AToken receipt for the EthETHx reserve, with total deposits of {{f1c0e06a0TokenValue}}."
+    },
+    "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a": {
+      "name": "ATokenInstance (aEthUSDT)",
+      "description": "AToken receipt for the EthUSDT reserve, with total deposits of {{f23878914TokenValue}}."
+    },
+    "eth:0x24Ab03a9a5Bc2C49E5523e8d915A3536ac38B91D": {
+      "name": "ATokenInstance (aEthsyrupUSDT)",
+      "description": "AToken receipt for the EthsyrupUSDT reserve, with total deposits of {{f24ab03a9TokenValue}}."
+    },
+    "eth:0x2516E7B3F76294e03C42AA4c5b5b4DCE9C436fB8": {
+      "name": "ATokenInstance (aEthBAL)",
+      "description": "AToken receipt for the EthBAL reserve, with total deposits of {{f2516e7b3TokenValue}}."
+    },
+    "eth:0x285866acB0d60105B4Ed350a463361c2d9afA0E2": {
+      "name": "ATokenInstance (aEthPT_sUSDe_27NOV2025)",
+      "description": "AToken receipt for the EthPT_sUSDe_27NOV2025 reserve, with total deposits of {{f285866acTokenValue}}."
+    },
+    "eth:0x2A1FBcb52Ed4d9b23daD17E1E8Aed4BB0E6079b8": {
+      "name": "ATokenInstance (aEthLidoUSDC)",
+      "description": "AToken receipt for the EthLidoUSDC reserve, with total deposits of {{f2a1fbcb5TokenValue}}."
+    },
+    "eth:0x2D62109243b87C4bA3EE7bA1D91B0dD0A074d7b1": {
+      "name": "ATokenInstance (aEthrsETH)",
+      "description": "AToken receipt for the EthrsETH reserve, with total deposits of {{f2d621092TokenValue}}."
+    },
+    "eth:0x2eDff5AF94334fBd7C38ae318edf1c40e072b73B": {
+      "name": "ATokenInstance (aEthPT_eUSDe_14AUG2025)",
+      "description": "AToken receipt for the EthPT_eUSDe_14AUG2025 reserve, with total deposits of {{f2edff5afTokenValue}}."
+    },
+    "eth:0x312ffC57778CEfa11989733e6E08143E7E229c1c": {
+      "name": "ATokenInstance (aEthPT_USDe_31JUL2025)",
+      "description": "AToken receipt for the EthPT_USDe_31JUL2025 reserve, with total deposits of {{f312ffc57TokenValue}}."
+    },
+    "eth:0x32a6268f9Ba3642Dda7892aDd74f1D34469A4259": {
+      "name": "ATokenInstance (aEthUSDS)",
+      "description": "AToken receipt for the EthUSDS reserve, with total deposits of {{f32a6268fTokenValue}}."
+    },
+    "eth:0x38A5357Ce55c81add62aBc84Fb32981e2626ADEf": {
+      "name": "ATokenInstance (aEthPT_USDe_25SEP2025)",
+      "description": "AToken receipt for the EthPT_USDe_25SEP2025 reserve, with total deposits of {{f38a5357cTokenValue}}."
+    },
+    "eth:0x38C503a438185cDE29b5cF4dC1442FD6F074F1cc": {
+      "name": "ATokenInstance (aEthPT_USDe_27NOV2025)",
+      "description": "AToken receipt for the EthPT_USDe_27NOV2025 reserve, with total deposits of {{f38c503a4TokenValue}}."
+    },
+    "eth:0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9": {
+      "name": "ATokenInstance (aEthLUSD)",
+      "description": "AToken receipt for the EthLUSD reserve, with total deposits of {{f3fe6a295TokenValue}}."
+    },
+    "eth:0x4579a27aF00A62C0EB156349f31B345c08386419": {
+      "name": "ATokenInstance (aEthsUSDe)",
+      "description": "AToken receipt for the EthsUSDe reserve, with total deposits of {{f4579a27aTokenValue}}."
+    },
+    "eth:0x481a2acf3A72ffDc602A9541896Ca1DB87f86cf7": {
+      "name": "ATokenInstance (aEthtETH)",
+      "description": "AToken receipt for the EthtETH reserve, with total deposits of {{f481a2acfTokenValue}}."
+    },
+    "eth:0x4B0821e768Ed9039a70eD1E80E15E76a5bE5Df5F": {
+      "name": "ATokenInstance (aEthPT_eUSDE_29MAY2025)",
+      "description": "AToken receipt for the EthPT_eUSDE_29MAY2025 reserve, with total deposits of {{f4b0821e7TokenValue}}."
+    },
+    "eth:0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c": {
+      "name": "ATokenInstance (aEthsDAI)",
+      "description": "AToken receipt for the EthsDAI reserve, with total deposits of {{f4c612e3bTokenValue}}."
+    },
+    "eth:0x4E2a4d9B3DF7Aae73b418Bd39F3af9e148E3F479": {
+      "name": "ATokenInstance (aEthezETH)",
+      "description": "AToken receipt for the EthezETH reserve, with total deposits of {{f4e2a4d9bTokenValue}}."
+    },
+    "eth:0x4E58a2E433A739726134c83d2f07b2562e8dFdB3": {
+      "name": "RwaATokenInstance (aHorRwaUSTB)",
+      "description": "AToken receipt for the HorRwaUSTB reserve, with total deposits of {{f4e58a2e4TokenValue}}."
+    },
+    "eth:0x4F5923Fc5FD4a93352581b38B7cD26943012DECF": {
+      "name": "ATokenInstance (aEthUSDe)",
+      "description": "AToken receipt for the EthUSDe reserve, with total deposits of {{f4f5923fcTokenValue}}."
+    },
+    "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8": {
+      "name": "ATokenInstance (aEthWETH)",
+      "description": "AToken receipt for the EthWETH reserve, with total deposits of {{f4d5f47faTokenValue}}."
+    },
+    "eth:0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e": {
+      "name": "ATokenInstance (aEthENS)",
+      "description": "AToken receipt for the EthENS reserve, with total deposits of {{f545bd6c0TokenValue}}."
+    },
+    "eth:0x56D919E7B25aA42F3F8a4BC77b8982048F2E84B4": {
+      "name": "ATokenInstance (aEthLidorsETH)",
+      "description": "AToken receipt for the EthLidorsETH reserve, with total deposits of {{f56d919e7TokenValue}}."
+    },
+    "eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a": {
+      "name": "ATokenInstance (aEthLINK)",
+      "description": "AToken receipt for the EthLINK reserve, with total deposits of {{f5e8c8a72TokenValue}}."
+    },
+    "eth:0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8": {
+      "name": "ATokenInstance (aEthWBTC)",
+      "description": "AToken receipt for the EthWBTC reserve, with total deposits of {{f5ee5bf7aTokenValue}}."
+    },
+    "eth:0x5F9190496e0DFC831C3bd307978de4a245E2F5cD": {
+      "name": "ATokenInstance (aEtheUSDe)",
+      "description": "AToken receipt for the EtheUSDe reserve, with total deposits of {{f5f919049TokenValue}}."
+    },
+    "eth:0x5b502e3796385E1e9755d7043B9C945C3aCCeC9C": {
+      "name": "ATokenInstance (aEthKNC)",
+      "description": "AToken receipt for the EthKNC reserve, with total deposits of {{f5b502e37TokenValue}}."
+    },
+    "eth:0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd": {
+      "name": "ATokenInstance (aEthcbBTC)",
+      "description": "AToken receipt for the EthcbBTC reserve, with total deposits of {{f5c647ce0TokenValue}}."
+    },
+    "eth:0x5f4a0873a3A02f7C0CB0e13a1d4362a1AD90e751": {
+      "name": "ATokenInstance (aEthPT_sUSDE_25SEP2025)",
+      "description": "AToken receipt for the EthPT_sUSDE_25SEP2025 reserve, with total deposits of {{f5f4a0873TokenValue}}."
+    },
+    "eth:0x5fefd7069a7D91d01f269DADE14526CCF3487810": {
+      "name": "ATokenInstance (aEtheBTC)",
+      "description": "AToken receipt for the EtheBTC reserve, with total deposits of {{f5fefd706TokenValue}}."
+    },
+    "eth:0x65906988ADEe75306021C417a1A3458040239602": {
+      "name": "ATokenInstance (aEthLBTC)",
+      "description": "AToken receipt for the EthLBTC reserve, with total deposits of {{f65906988TokenValue}}."
+    },
+    "eth:0x68215B6533c47ff9f7125aC95adf00fE4a62f79e": {
+      "name": "ATokenInstance (aHorRwaUSDC)",
+      "description": "AToken receipt for the HorRwaUSDC reserve, with total deposits of {{f68215b65TokenValue}}."
+    },
+    "eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956": {
+      "name": "ATokenInstance (aEthEtherFiFRAX)",
+      "description": "AToken receipt for the EthEtherFiFRAX reserve, with total deposits of {{f6914eccfTokenValue}}."
+    },
+    "eth:0x71Aef7b30728b9BB371578f36c5A1f1502a5723e": {
+      "name": "ATokenInstance (aEth1INCH)",
+      "description": "AToken receipt for the Eth1INCH reserve, with total deposits of {{f71aef7b3TokenValue}}."
+    },
+    "eth:0x7380c583cDe4409eFF5DD3320D93a45D96B80E2e": {
+      "name": "ATokenInstance (aEthEtherFiUSDC)",
+      "description": "AToken receipt for the EthEtherFiUSDC reserve, with total deposits of {{f7380c583TokenValue}}."
+    },
+    "eth:0x74e5664394998f13B07aF42446380ACef637969f": {
+      "name": "ATokenInstance (aEthLidoezETH)",
+      "description": "AToken receipt for the EthLidoezETH reserve, with total deposits of {{f74e56643TokenValue}}."
+    },
+    "eth:0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65": {
+      "name": "ATokenInstance (aEthCRV)",
+      "description": "AToken receipt for the EthCRV reserve, with total deposits of {{f7b95ec87TokenValue}}."
+    },
+    "eth:0x7c0477d085ECb607CF8429f3eC91Ae5E1e460F4F": {
+      "name": "ATokenInstance (aEthUSDG)",
+      "description": "AToken receipt for the EthUSDG reserve, with total deposits of {{f7c0477d0TokenValue}}."
+    },
+    "eth:0x81b76ff3FeD28BA0B4a5D4c76Bd5C13Bd0641d86": {
+      "name": "ATokenInstance (aEthPT_sUSDe_7MAY2026)",
+      "description": "AToken receipt for the EthPT_sUSDe_7MAY2026 reserve, with total deposits of {{f81b76ff3TokenValue}}."
+    },
+    "eth:0x82F9c5ad306BBa1AD0De49bB5FA6F01bf61085ef": {
+      "name": "ATokenInstance (aEthFXS)",
+      "description": "AToken receipt for the EthFXS reserve, with total deposits of {{f82f9c5adTokenValue}}."
+    },
+    "eth:0x8A2b6f94Ff3A89a03E8c02Ee92b55aF90c9454A2": {
+      "name": "ATokenInstance (aEthXAUt)",
+      "description": "AToken receipt for the EthXAUt reserve, with total deposits of {{f8a2b6f94TokenValue}}."
+    },
+    "eth:0x8A458A9dc9048e005d22849F470891b840296619": {
+      "name": "ATokenInstance (aEthMKR)",
+      "description": "AToken receipt for the EthMKR reserve, with total deposits of {{f8a458a9dTokenValue}}."
+    },
+    "eth:0x927709711794F3De5DdBF1D176bEE2D55Ba13c21": {
+      "name": "ATokenInstance (aEthosETH)",
+      "description": "AToken receipt for the EthosETH reserve, with total deposits of {{f92770971TokenValue}}."
+    },
+    "eth:0x946281A2d0DD6e650d08f74833323D66AE4c8b12": {
+      "name": "ATokenInstance (aHorRwaGHO)",
+      "description": "AToken receipt for the HorRwaGHO reserve, with total deposits of {{f946281a2TokenValue}}."
+    },
+    "eth:0x977b6fc5dE62598B08C85AC8Cf2b745874E8b78c": {
+      "name": "ATokenInstance (aEthcbETH)",
+      "description": "AToken receipt for the EthcbETH reserve, with total deposits of {{f977b6fc5TokenValue}}."
+    },
+    "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c": {
+      "name": "ATokenInstance (aEthUSDC)",
+      "description": "AToken receipt for the EthUSDC reserve, with total deposits of {{f98c23e9dTokenValue}}."
+    },
+    "eth:0x9A44fd41566876A39655f74971a3A6eA0a17a454": {
+      "name": "ATokenInstance (aEthLDO)",
+      "description": "AToken receipt for the EthLDO reserve, with total deposits of {{f9a44fd41TokenValue}}."
+    },
+    "eth:0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9": {
+      "name": "ATokenWithDelegationInstance (aEthAAVE)",
+      "description": "AToken receipt for the EthAAVE reserve, with total deposits of {{fa700b4ebTokenValue}}."
+    },
+    "eth:0xA78Eba24D89e70A03ddB7AC195A15E53315aA5b4": {
+      "name": "ATokenInstance (aEthPT_srUSDe_25JUN2026)",
+      "description": "AToken receipt for the EthPT_srUSDe_25JUN2026 reserve, with total deposits of {{fa78eba24TokenValue}}."
+    },
+    "eth:0xA9ecb0503075124cc0B786096849A331FBe9EE6D": {
+      "name": "ATokenInstance (aEthPT_USDG_28MAY2026)",
+      "description": "AToken receipt for the EthPT_USDG_28MAY2026 reserve, with total deposits of {{fa9ecb050TokenValue}}."
+    },
+    "eth:0xAA6e91C82942aeAE040303Bf96c15a6dBcB82CA0": {
+      "name": "ATokenInstance (aEthEURC)",
+      "description": "AToken receipt for the EthEURC reserve, with total deposits of {{faa6e91c8TokenValue}}."
+    },
+    "eth:0xAa0200d169fF3ba9385c12E073c5d1d30434AE7b": {
+      "name": "ATokenInstance (aEthmUSD)",
+      "description": "AToken receipt for the EthmUSD reserve, with total deposits of {{faa0200d1TokenValue}}."
+    },
+    "eth:0xB0EC6c4482Ac1Ef77bE239C0AC833CF37A27c876": {
+      "name": "RwaATokenInstance (aHorRwaJAAA)",
+      "description": "AToken receipt for the HorRwaJAAA reserve, with total deposits of {{fb0ec6c44TokenValue}}."
+    },
+    "eth:0xB76CF92076adBF1D9C39294FA8e7A67579FDe357": {
+      "name": "ATokenInstance (aEthRPL)",
+      "description": "AToken receipt for the EthRPL reserve, with total deposits of {{fb76cf920TokenValue}}."
+    },
+    "eth:0xBdfa7b7893081B35Fb54027489e2Bc7A38275129": {
+      "name": "ATokenInstance (aEthweETH)",
+      "description": "AToken receipt for the EthweETH reserve, with total deposits of {{fbdfa7b78TokenValue}}."
+    },
+    "eth:0xC035a7cf15375cE2706766804551791aD035E0C2": {
+      "name": "ATokenInstance (aEthLidowstETH)",
+      "description": "AToken receipt for the EthLidowstETH reserve, with total deposits of {{fc035a7cfTokenValue}}."
+    },
+    "eth:0xC7B4c17861357B8ABB91F25581E7263E08DCB59c": {
+      "name": "ATokenInstance (aEthSNX)",
+      "description": "AToken receipt for the EthSNX reserve, with total deposits of {{fc7b4c178TokenValue}}."
+    },
+    "eth:0xCc9EE9483f662091a1de4795249E24aC0aC2630f": {
+      "name": "ATokenInstance (aEthrETH)",
+      "description": "AToken receipt for the EthrETH reserve, with total deposits of {{fcc9ee948TokenValue}}."
+    },
+    "eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864": {
+      "name": "ATokenInstance (aEthPT_sUSDE_31JUL2025)",
+      "description": "AToken receipt for the EthPT_sUSDE_31JUL2025 reserve, with total deposits of {{fde6ef6cbTokenValue}}."
+    },
+    "eth:0xE036478Da9A7ed89b56FE39A06e1FC1a4b38D4Ea": {
+      "name": "ATokenInstance (aEthPT_USDe_7MAY2026)",
+      "description": "AToken receipt for the EthPT_USDe_7MAY2026 reserve, with total deposits of {{fe036478dTokenValue}}."
+    },
+    "eth:0xE1CfD16b8E4B1C86Bb5b7A104cfEFbc7b09326dD": {
+      "name": "RwaATokenInstance (aHorRwaVBILL)",
+      "description": "AToken receipt for the HorRwaVBILL reserve, with total deposits of {{fe1cfd16bTokenValue}}."
+    },
+    "eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB": {
+      "name": "ATokenInstance (aHorRwaRLUSD)",
+      "description": "AToken receipt for the HorRwaRLUSD reserve, with total deposits of {{fe3190143TokenValue}}."
+    },
+    "eth:0xE728577e9a1Fe7032bc309B4541F58f45443866e": {
+      "name": "ATokenInstance (aEthPT_USDE_5FEB_2026)",
+      "description": "AToken receipt for the EthPT_USDE_5FEB_2026 reserve, with total deposits of {{fe728577eTokenValue}}."
+    },
+    "eth:0xEc4ef66D4fCeEba34aBB4dE69dB391Bc5476ccc8": {
+      "name": "ATokenInstance (aEthUSDtb)",
+      "description": "AToken receipt for the EthUSDtb reserve, with total deposits of {{fec4ef66dTokenValue}}."
+    },
+    "eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18": {
+      "name": "ATokenInstance (aEthUNI)",
+      "description": "AToken receipt for the EthUNI reserve, with total deposits of {{ff6d22249TokenValue}}."
+    },
+    "eth:0xFa82580c16A31D0c1bC632A36F82e83EfEF3Eec0": {
+      "name": "ATokenInstance (aEthRLUSD)",
+      "description": "AToken receipt for the EthRLUSD reserve, with total deposits of {{ffa82580cTokenValue}}."
+    },
+    "eth:0xb82fa9f31612989525992FCfBB09AB22Eff5c85A": {
+      "name": "ATokenInstance (aEthcrvUSD)",
+      "description": "AToken receipt for the EthcrvUSD reserve, with total deposits of {{fb82fa9f3TokenValue}}."
+    },
+    "eth:0xbe1F842e7e0afd2c2322aae5d34bA899544b29db": {
+      "name": "ATokenInstance (aEthEtherFiweETH)",
+      "description": "AToken receipt for the EthEtherFiweETH reserve, with total deposits of {{fbe1f842eTokenValue}}."
+    },
+    "eth:0xbe54767735fB7Acca2aa7E2d209a6f705073536D": {
+      "name": "ATokenInstance (aEthPT_sUSDe_5FEB_2026)",
+      "description": "AToken receipt for the EthPT_sUSDe_5FEB_2026 reserve, with total deposits of {{fbe547677TokenValue}}."
+    },
+    "eth:0xc2015641564a5914A17CB9A92eC8d8feCfa8f2D0": {
+      "name": "ATokenInstance (aEthLidosUSDe)",
+      "description": "AToken receipt for the EthLidosUSDe reserve, with total deposits of {{fc2015641TokenValue}}."
+    },
+    "eth:0xcCA43ceF272c30415866914351fdfc3E881bb7c2": {
+      "name": "ATokenInstance (aEthFBTC)",
+      "description": "AToken receipt for the EthFBTC reserve, with total deposits of {{fcca43cefTokenValue}}."
+    },
+    "eth:0xce8c60fd8390eFCc3Fc66A3f0bd64BEb969e750E": {
+      "name": "ATokenInstance (aEthLidotETH)",
+      "description": "AToken receipt for the EthLidotETH reserve, with total deposits of {{fce8c60fdTokenValue}}."
+    },
+    "eth:0xd4e245848d6E1220DBE62e155d89fa327E43CB06": {
+      "name": "ATokenInstance (aEthFRAX)",
+      "description": "AToken receipt for the EthFRAX reserve, with total deposits of {{fd4e24584TokenValue}}."
+    },
+    "eth:0xdF7f48892244C6106EA784609f7de10AB36F9c7e": {
+      "name": "ATokenInstance (aEthEtherFiPYUSD)",
+      "description": "AToken receipt for the EthEtherFiPYUSD reserve, with total deposits of {{fdf7f4889TokenValue}}."
+    },
+    "eth:0xfA1fDbBD71B0aA16162D76914d69cD8CB3Ef92da": {
+      "name": "ATokenInstance (aEthLidoWETH)",
+      "description": "AToken receipt for the EthLidoWETH reserve, with total deposits of {{ffa1fdbbdTokenValue}}."
+    },
+    "eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA": {
+      "name": "aEthRLUSD",
+      "description": "AToken receipt for the EthRLUSD reserve, with total deposits of {{fadc45df3TokenValue}}."
+    },
+    "eth:0x5148d810B1DaE509d68f9d9219AD1d004EA32545": {
+      "name": "aHorRwaVBILL",
+      "description": "AToken receipt for the HorRwaVBILL reserve, with total deposits of {{f5148d810TokenValue}}."
+    },
+    "eth:0x80D786DF608603cCDcC83F5712B97C185A6A948d": {
+      "name": "aEthLidoWETH",
+      "description": "AToken receipt for the EthLidoWETH reserve, with total deposits of {{f80d786dfTokenValue}}."
+    },
+    "eth:0x10c74b37Ad4541E394c607d78062e6d22D9ad632": {
+      "name": "Fund",
+      "description": "Holds {{f10c74b37Balances}} in token balances."
+    },
+    "eth:0x83b7Ce402A0E756E901C4A9d1cAfa27cA9572afC": {
+      "name": "Fund",
+      "description": "Holds {{f83b7ce40Balances}} in token balances."
+    },
+    "eth:0x0fE58FE1CaA69951dC924A8c222bE19013B89476": {
+      "name": "stkAAVE",
+      "description": "stkAAVE token contract with circulating value of {{f0fe58fe1TokenValue}}."
+    },
+    "eth:0xC313A383D1838dCDA96f4c97698238F0A5499eA4": {
+      "name": "Fund",
+      "description": "Holds {{fc313a383Balances}} in token balances."
+    },
+    "eth:0x9EB507147b99D3Cde32A53Bd5cd12bDEEaC26E5c": {
+      "name": "aHorRwaRLUSD",
+      "description": "AToken receipt for the HorRwaRLUSD reserve, with total deposits of {{f9eb50714TokenValue}}."
+    },
+    "eth:0xdc7B6B0Acf2FB6927526E2C501De41eaeae8702A": {
+      "name": "aEthEtherFiPYUSD",
+      "description": "AToken receipt for the EthEtherFiPYUSD reserve, with total deposits of {{fdc7b6b0aTokenValue}}."
+    },
+    "eth:0x8147b99DF7672A21809c9093E6F6CE1a60F119Bd": {
+      "name": "Fund",
+      "description": "Holds {{f8147b99dBalances}} in token balances."
+    },
+    "eth:0x38769a7DA85429aC9d61167FdFECCaAE8AA11766": {
+      "name": "aEthAAVE",
+      "description": "AToken receipt for the EthAAVE reserve, with total deposits of {{f38769a7dTokenValue}}."
+    },
+    "eth:0xcD8B9aC3B72E81fD8A0c9a0dBba583597E48A23a": {
+      "name": "Fund",
+      "description": "Holds {{fcd8b9ac3Balances}} in token balances."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "a5300a1a1DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A\"].totalDirectCapital",
+    "a5300a1a1ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A\"].totalReachableTokenValue",
+    "a2f39d218DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e\"].totalDirectCapital",
+    "a2f39d218ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e\"].totalReachableTokenValue",
+    "a64b761d8DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27\"].totalDirectCapital",
+    "a64b761d8ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27\"].totalReachableTokenValue",
+    "ad400fc38ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xD400fc38ED4732893174325693a63C30ee3881a8\"].totalReachableTokenValue",
+    "acfbf336fReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xcfBf336fe147D643B9Cb705648500e101504B16d\"].totalReachableTokenValue",
+    "aeba440b4ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xeBa440B438Ad808101d1c451C1C5322c90BEFCdA\"].totalReachableTokenValue",
+    "a5d39e06bReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x5D39E06b825C1F2B80bf2756a73e28eFAA128ba0\"].totalReachableTokenValue",
+    "a342631c6ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517\"].totalReachableTokenValue",
+    "a8438f4d2ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d\"].totalReachableTokenValue",
+    "a83cb1b4aReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F\"].totalReachableTokenValue",
+    "a13b57382ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3\"].totalReachableTokenValue",
+    "a98217a06ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34\"].totalReachableTokenValue",
+    "afce59786ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E\"].totalReachableTokenValue",
+    "a5513224dReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x5513224daaEABCa31af5280727878d52097afA05\"].totalReachableTokenValue",
+    "a4f2858d4ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4\"].totalReachableTokenValue",
+    "a1b3bd355ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d\"].totalReachableTokenValue",
+    "ada626e64ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6\"].totalReachableTokenValue",
+    "acc18be38ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xCc18Be380838956aad41FD22466085eD66aaBB46\"].totalReachableTokenValue",
+    "a2cfe3ec4ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30\"].totalReachableTokenValue",
+    "a2ce01c87ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285\"].totalReachableTokenValue",
+    "a5c905d62ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731\"].totalReachableTokenValue",
+    "a7e6a6b11ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3\"].totalReachableTokenValue",
+    "a52e65218ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x52E652182b22C41d0202bB8D834982F43B12Cd21\"].totalReachableTokenValue",
+    "a09e8e140ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x09e8E1408a68778CEDdC1938729Ea126710E7Dda\"].totalReachableTokenValue",
+    "ae6ec1f0aReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xE6ec1f0Ae6Cd023bd0a9B4d0253BDC755103253c\"].totalReachableTokenValue",
+    "ae10c78a3ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xe10C78A3AC7f016eD2DE1A89c5479b1039EAB9eA\"].totalReachableTokenValue",
+    "a1ebdbe77ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x1EBdbE77bbDDD284BdCE8D7981D7eD26D6af58cA\"].totalReachableTokenValue",
+    "abf79d833ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xBF79d8339303148E345277a994Eb2cD5d82F0067\"].totalReachableTokenValue",
+    "a223d844fReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x223d844fc4B006D67c0cDbd39371A9F73f69d974\"].totalReachableTokenValue",
+    "a46aa1063ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x46Aa1063e5265b43663E81329333B47c517A5409\"].totalReachableTokenValue",
+    "ab639d208ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xb639D208Bcf0589D54FaC24E655C79EC529762B8\"].totalReachableTokenValue",
+    "a2bd010abReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x2bd010Ab5393AB51b601B99C4B33ba148d9466e9\"].totalReachableTokenValue",
+    "ae9ac5231ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xE9ac5231fAecb633dA0Fe85Fcb2785b8363427d2\"].totalReachableTokenValue",
+    "ad3cf979eDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xD3cF979e676265e4f6379749DECe4708B9A22476\"].totalDirectCapital",
+    "ad3cf979eReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xD3cF979e676265e4f6379749DECe4708B9A22476\"].totalReachableTokenValue",
+    "a8513e6f3ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60\"].totalReachableTokenValue",
+    "a86c3ffeeReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517\"].totalReachableTokenValue",
+    "a40e4243cReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x40E4243C9471bb0a84Ba0968bccc9b8975E5Ee62\"].totalReachableTokenValue",
+    "a8abd1892ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x8aBd1892a1c31b8e52fC1210098fE4cAc4E52aCc\"].totalReachableTokenValue",
+    "ace52ab41ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710\"].totalReachableTokenValue",
+    "aed42a7d8ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1\"].totalReachableTokenValue",
+    "adabad81aReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5\"].totalReachableTokenValue",
+    "a4457ca11ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x4457cA11E90f416Cc1D3a8E1cA41C0cdEcC251d4\"].totalReachableTokenValue",
+    "a3d569673DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630C\"].totalDirectCapital",
+    "a3d569673ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x3d569673dAa0575c936c7c67c4E6AedA69CC630C\"].totalReachableTokenValue",
+    "af00e2de0DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xf00E2de0E78DFf055A92AD4719a179CE275b6Ef7\"].totalDirectCapital",
+    "af00e2de0ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xf00E2de0E78DFf055A92AD4719a179CE275b6Ef7\"].totalReachableTokenValue",
+    "a7571f419DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x7571F419F7Df2d0622C1A20154a0D4250B2265cC\"].totalDirectCapital",
+    "a7571f419ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x7571F419F7Df2d0622C1A20154a0D4250B2265cC\"].totalReachableTokenValue",
+    "a22ac12a6DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x22aC12a6937BBBC0a301AF9154d08EaD95673122\"].totalDirectCapital",
+    "a22ac12a6ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x22aC12a6937BBBC0a301AF9154d08EaD95673122\"].totalReachableTokenValue",
+    "a6a14ebe9DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x6A14eBe9A934c8EFE15C3811a999149472876b56\"].totalDirectCapital",
+    "a6a14ebe9ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x6A14eBe9A934c8EFE15C3811a999149472876b56\"].totalReachableTokenValue",
+    "ae1e62c3eDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xE1e62c3ee0c581F715fBb0e23CDA536Fc29eeB2c\"].totalDirectCapital",
+    "ae1e62c3eReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xE1e62c3ee0c581F715fBb0e23CDA536Fc29eeB2c\"].totalReachableTokenValue",
+    "ab7d40213DirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xb7D402138Cb01BfE97d95181C849379d6AD14d19\"].totalDirectCapital",
+    "ab7d40213ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xb7D402138Cb01BfE97d95181C849379d6AD14d19\"].totalReachableTokenValue",
+    "a17dd33edReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957\"].totalReachableTokenValue",
+    "a87870bcaReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2\"].totalReachableTokenValue",
+    "a4e033931ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x4e033931ad43597d96D6bcc25c280717730B58B1\"].totalReachableTokenValue",
+    "a0aa97c28ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0\"].totalReachableTokenValue",
+    "aae05cd22ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8\"].totalReachableTokenValue",
+    "ac2201708ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xC2201708289b2C6A1d461A227A7E5ee3e7fE9A2F\"].totalReachableTokenValue",
+    "ade9f8379ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xDE9F8379a5a972100d0373103a849E8ABdf56a9a\"].totalReachableTokenValue",
+    "a22ce00cbReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432\"].totalReachableTokenValue",
+    "a7385f804ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x7385F804BCAa42D7019299Aa0857b37CdE458bc3\"].totalReachableTokenValue",
+    "a71b40923ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x71B40923a23557820773cc061888bCD704F19594\"].totalReachableTokenValue",
+    "afd57de1fReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xfD57dE1F38e3F730E0BEb7238dD50E396851dda0\"].totalReachableTokenValue",
+    "aebaeacb6ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0xEbAEacB6102B21D7996524D8ad47b33a3115ba69\"].totalReachableTokenValue",
+    "a2759de67ReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x2759de67aD133C747C9f41d56F1b8A343cE679a1\"].totalReachableTokenValue",
+    "a22740debReachableTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa\"].totalReachableTokenValue",
+    "f87870bcaBalances": "fundsdata.contracts[\"eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2\"].balances.totalUsdValue",
+    "f4e033931Balances": "fundsdata.contracts[\"eth:0x4e033931ad43597d96D6bcc25c280717730B58B1\"].balances.totalUsdValue",
+    "f40d16fc0TokenValue": "fundsdata.contracts[\"eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f\"].tokenInfo.tokenValue",
+    "f464c71f6Balances": "fundsdata.contracts[\"eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c\"].balances.totalUsdValue",
+    "fae05cd22Balances": "fundsdata.contracts[\"eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8\"].balances.totalUsdValue",
+    "f25f2226bBalances": "fundsdata.contracts[\"eth:0x25F2226B597E8F9514B3F68F00f494cF4f286491\"].balances.totalUsdValue",
+    "f4da27a54TokenValue": "fundsdata.contracts[\"eth:0x4da27a545c0c5B758a6BA100e3a049001de870f5\"].tokenInfo.tokenValue",
+    "f00907f99TokenValue": "fundsdata.contracts[\"eth:0x00907f9921424583e7ffBfEdf84F92B7B2Be4977\"].tokenInfo.tokenValue",
+    "f018008bfTokenValue": "fundsdata.contracts[\"eth:0x018008bfb33d285247A21d44E50697654f754e63\"].tokenInfo.tokenValue",
+    "f08b798c4TokenValue": "fundsdata.contracts[\"eth:0x08b798c40b9AB931356d9aB4235F548325C4cb80\"].tokenInfo.tokenValue",
+    "f09aa30b1TokenValue": "fundsdata.contracts[\"eth:0x09AA30b182488f769a9824F15E6Ce58591Da4781\"].tokenInfo.tokenValue",
+    "f0b925ed1TokenValue": "fundsdata.contracts[\"eth:0x0B925eD163218f6662a35e0f0371Ac234f9E9371\"].tokenInfo.tokenValue",
+    "f0c0d01abTokenValue": "fundsdata.contracts[\"eth:0x0C0d01AbF3e6aDfcA0989eBbA9d6e85dD58EaB1E\"].tokenInfo.tokenValue",
+    "f10ac9397TokenValue": "fundsdata.contracts[\"eth:0x10Ac93971cdb1F5c778144084242374473c350Da\"].tokenInfo.tokenValue",
+    "f1241ec22TokenValue": "fundsdata.contracts[\"eth:0x1241ec22C9BdF16BA1Eb636F2a8de7e28A4343Cf\"].tokenInfo.tokenValue",
+    "f12b70410TokenValue": "fundsdata.contracts[\"eth:0x12b70410D60f926558245f769059eA3Fc7A7353E\"].tokenInfo.tokenValue",
+    "f18efe565TokenValue": "fundsdata.contracts[\"eth:0x18eFE565A5373f430e2F809b97De30335B3ad96A\"].tokenInfo.tokenValue",
+    "f1ba9843bTokenValue": "fundsdata.contracts[\"eth:0x1bA9843bD4327c6c77011406dE5fA8749F7E3479\"].tokenInfo.tokenValue",
+    "f1c0e06a0TokenValue": "fundsdata.contracts[\"eth:0x1c0E06a0b1A4c160c17545FF2A951bfcA57C0002\"].tokenInfo.tokenValue",
+    "f23878914TokenValue": "fundsdata.contracts[\"eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a\"].tokenInfo.tokenValue",
+    "f24ab03a9TokenValue": "fundsdata.contracts[\"eth:0x24Ab03a9a5Bc2C49E5523e8d915A3536ac38B91D\"].tokenInfo.tokenValue",
+    "f2516e7b3TokenValue": "fundsdata.contracts[\"eth:0x2516E7B3F76294e03C42AA4c5b5b4DCE9C436fB8\"].tokenInfo.tokenValue",
+    "f285866acTokenValue": "fundsdata.contracts[\"eth:0x285866acB0d60105B4Ed350a463361c2d9afA0E2\"].tokenInfo.tokenValue",
+    "f2a1fbcb5TokenValue": "fundsdata.contracts[\"eth:0x2A1FBcb52Ed4d9b23daD17E1E8Aed4BB0E6079b8\"].tokenInfo.tokenValue",
+    "f2d621092TokenValue": "fundsdata.contracts[\"eth:0x2D62109243b87C4bA3EE7bA1D91B0dD0A074d7b1\"].tokenInfo.tokenValue",
+    "f2edff5afTokenValue": "fundsdata.contracts[\"eth:0x2eDff5AF94334fBd7C38ae318edf1c40e072b73B\"].tokenInfo.tokenValue",
+    "f312ffc57TokenValue": "fundsdata.contracts[\"eth:0x312ffC57778CEfa11989733e6E08143E7E229c1c\"].tokenInfo.tokenValue",
+    "f32a6268fTokenValue": "fundsdata.contracts[\"eth:0x32a6268f9Ba3642Dda7892aDd74f1D34469A4259\"].tokenInfo.tokenValue",
+    "f38a5357cTokenValue": "fundsdata.contracts[\"eth:0x38A5357Ce55c81add62aBc84Fb32981e2626ADEf\"].tokenInfo.tokenValue",
+    "f38c503a4TokenValue": "fundsdata.contracts[\"eth:0x38C503a438185cDE29b5cF4dC1442FD6F074F1cc\"].tokenInfo.tokenValue",
+    "f3fe6a295TokenValue": "fundsdata.contracts[\"eth:0x3Fe6a295459FAe07DF8A0ceCC36F37160FE86AA9\"].tokenInfo.tokenValue",
+    "f4579a27aTokenValue": "fundsdata.contracts[\"eth:0x4579a27aF00A62C0EB156349f31B345c08386419\"].tokenInfo.tokenValue",
+    "f481a2acfTokenValue": "fundsdata.contracts[\"eth:0x481a2acf3A72ffDc602A9541896Ca1DB87f86cf7\"].tokenInfo.tokenValue",
+    "f4b0821e7TokenValue": "fundsdata.contracts[\"eth:0x4B0821e768Ed9039a70eD1E80E15E76a5bE5Df5F\"].tokenInfo.tokenValue",
+    "f4c612e3bTokenValue": "fundsdata.contracts[\"eth:0x4C612E3B15b96Ff9A6faED838F8d07d479a8dD4c\"].tokenInfo.tokenValue",
+    "f4e2a4d9bTokenValue": "fundsdata.contracts[\"eth:0x4E2a4d9B3DF7Aae73b418Bd39F3af9e148E3F479\"].tokenInfo.tokenValue",
+    "f4e58a2e4TokenValue": "fundsdata.contracts[\"eth:0x4E58a2E433A739726134c83d2f07b2562e8dFdB3\"].tokenInfo.tokenValue",
+    "f4f5923fcTokenValue": "fundsdata.contracts[\"eth:0x4F5923Fc5FD4a93352581b38B7cD26943012DECF\"].tokenInfo.tokenValue",
+    "f4d5f47faTokenValue": "fundsdata.contracts[\"eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8\"].tokenInfo.tokenValue",
+    "f545bd6c0TokenValue": "fundsdata.contracts[\"eth:0x545bD6c032eFdde65A377A6719DEF2796C8E0f2e\"].tokenInfo.tokenValue",
+    "f56d919e7TokenValue": "fundsdata.contracts[\"eth:0x56D919E7B25aA42F3F8a4BC77b8982048F2E84B4\"].tokenInfo.tokenValue",
+    "f5e8c8a72TokenValue": "fundsdata.contracts[\"eth:0x5E8C8A7243651DB1384C0dDfDbE39761E8e7E51a\"].tokenInfo.tokenValue",
+    "f5ee5bf7aTokenValue": "fundsdata.contracts[\"eth:0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8\"].tokenInfo.tokenValue",
+    "f5f919049TokenValue": "fundsdata.contracts[\"eth:0x5F9190496e0DFC831C3bd307978de4a245E2F5cD\"].tokenInfo.tokenValue",
+    "f5b502e37TokenValue": "fundsdata.contracts[\"eth:0x5b502e3796385E1e9755d7043B9C945C3aCCeC9C\"].tokenInfo.tokenValue",
+    "f5c647ce0TokenValue": "fundsdata.contracts[\"eth:0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd\"].tokenInfo.tokenValue",
+    "f5f4a0873TokenValue": "fundsdata.contracts[\"eth:0x5f4a0873a3A02f7C0CB0e13a1d4362a1AD90e751\"].tokenInfo.tokenValue",
+    "f5fefd706TokenValue": "fundsdata.contracts[\"eth:0x5fefd7069a7D91d01f269DADE14526CCF3487810\"].tokenInfo.tokenValue",
+    "f65906988TokenValue": "fundsdata.contracts[\"eth:0x65906988ADEe75306021C417a1A3458040239602\"].tokenInfo.tokenValue",
+    "f68215b65TokenValue": "fundsdata.contracts[\"eth:0x68215B6533c47ff9f7125aC95adf00fE4a62f79e\"].tokenInfo.tokenValue",
+    "f6914eccfTokenValue": "fundsdata.contracts[\"eth:0x6914ECCf50837dC61b43ee478a9BD9B439648956\"].tokenInfo.tokenValue",
+    "f71aef7b3TokenValue": "fundsdata.contracts[\"eth:0x71Aef7b30728b9BB371578f36c5A1f1502a5723e\"].tokenInfo.tokenValue",
+    "f7380c583TokenValue": "fundsdata.contracts[\"eth:0x7380c583cDe4409eFF5DD3320D93a45D96B80E2e\"].tokenInfo.tokenValue",
+    "f74e56643TokenValue": "fundsdata.contracts[\"eth:0x74e5664394998f13B07aF42446380ACef637969f\"].tokenInfo.tokenValue",
+    "f7b95ec87TokenValue": "fundsdata.contracts[\"eth:0x7B95Ec873268a6BFC6427e7a28e396Db9D0ebc65\"].tokenInfo.tokenValue",
+    "f7c0477d0TokenValue": "fundsdata.contracts[\"eth:0x7c0477d085ECb607CF8429f3eC91Ae5E1e460F4F\"].tokenInfo.tokenValue",
+    "f81b76ff3TokenValue": "fundsdata.contracts[\"eth:0x81b76ff3FeD28BA0B4a5D4c76Bd5C13Bd0641d86\"].tokenInfo.tokenValue",
+    "f82f9c5adTokenValue": "fundsdata.contracts[\"eth:0x82F9c5ad306BBa1AD0De49bB5FA6F01bf61085ef\"].tokenInfo.tokenValue",
+    "f8a2b6f94TokenValue": "fundsdata.contracts[\"eth:0x8A2b6f94Ff3A89a03E8c02Ee92b55aF90c9454A2\"].tokenInfo.tokenValue",
+    "f8a458a9dTokenValue": "fundsdata.contracts[\"eth:0x8A458A9dc9048e005d22849F470891b840296619\"].tokenInfo.tokenValue",
+    "f92770971TokenValue": "fundsdata.contracts[\"eth:0x927709711794F3De5DdBF1D176bEE2D55Ba13c21\"].tokenInfo.tokenValue",
+    "f946281a2TokenValue": "fundsdata.contracts[\"eth:0x946281A2d0DD6e650d08f74833323D66AE4c8b12\"].tokenInfo.tokenValue",
+    "f977b6fc5TokenValue": "fundsdata.contracts[\"eth:0x977b6fc5dE62598B08C85AC8Cf2b745874E8b78c\"].tokenInfo.tokenValue",
+    "f98c23e9dTokenValue": "fundsdata.contracts[\"eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c\"].tokenInfo.tokenValue",
+    "f9a44fd41TokenValue": "fundsdata.contracts[\"eth:0x9A44fd41566876A39655f74971a3A6eA0a17a454\"].tokenInfo.tokenValue",
+    "fa700b4ebTokenValue": "fundsdata.contracts[\"eth:0xA700b4eB416Be35b2911fd5Dee80678ff64fF6C9\"].tokenInfo.tokenValue",
+    "fa78eba24TokenValue": "fundsdata.contracts[\"eth:0xA78Eba24D89e70A03ddB7AC195A15E53315aA5b4\"].tokenInfo.tokenValue",
+    "fa9ecb050TokenValue": "fundsdata.contracts[\"eth:0xA9ecb0503075124cc0B786096849A331FBe9EE6D\"].tokenInfo.tokenValue",
+    "faa6e91c8TokenValue": "fundsdata.contracts[\"eth:0xAA6e91C82942aeAE040303Bf96c15a6dBcB82CA0\"].tokenInfo.tokenValue",
+    "faa0200d1TokenValue": "fundsdata.contracts[\"eth:0xAa0200d169fF3ba9385c12E073c5d1d30434AE7b\"].tokenInfo.tokenValue",
+    "fb0ec6c44TokenValue": "fundsdata.contracts[\"eth:0xB0EC6c4482Ac1Ef77bE239C0AC833CF37A27c876\"].tokenInfo.tokenValue",
+    "fb76cf920TokenValue": "fundsdata.contracts[\"eth:0xB76CF92076adBF1D9C39294FA8e7A67579FDe357\"].tokenInfo.tokenValue",
+    "fbdfa7b78TokenValue": "fundsdata.contracts[\"eth:0xBdfa7b7893081B35Fb54027489e2Bc7A38275129\"].tokenInfo.tokenValue",
+    "fc035a7cfTokenValue": "fundsdata.contracts[\"eth:0xC035a7cf15375cE2706766804551791aD035E0C2\"].tokenInfo.tokenValue",
+    "fc7b4c178TokenValue": "fundsdata.contracts[\"eth:0xC7B4c17861357B8ABB91F25581E7263E08DCB59c\"].tokenInfo.tokenValue",
+    "fcc9ee948TokenValue": "fundsdata.contracts[\"eth:0xCc9EE9483f662091a1de4795249E24aC0aC2630f\"].tokenInfo.tokenValue",
+    "fde6ef6cbTokenValue": "fundsdata.contracts[\"eth:0xDE6eF6CB4aBd3A473ffC2942eEf5D84536F8E864\"].tokenInfo.tokenValue",
+    "fe036478dTokenValue": "fundsdata.contracts[\"eth:0xE036478Da9A7ed89b56FE39A06e1FC1a4b38D4Ea\"].tokenInfo.tokenValue",
+    "fe1cfd16bTokenValue": "fundsdata.contracts[\"eth:0xE1CfD16b8E4B1C86Bb5b7A104cfEFbc7b09326dD\"].tokenInfo.tokenValue",
+    "fe3190143TokenValue": "fundsdata.contracts[\"eth:0xE3190143Eb552456F88464662f0c0C4aC67A77eB\"].tokenInfo.tokenValue",
+    "fe728577eTokenValue": "fundsdata.contracts[\"eth:0xE728577e9a1Fe7032bc309B4541F58f45443866e\"].tokenInfo.tokenValue",
+    "fec4ef66dTokenValue": "fundsdata.contracts[\"eth:0xEc4ef66D4fCeEba34aBB4dE69dB391Bc5476ccc8\"].tokenInfo.tokenValue",
+    "ff6d22249TokenValue": "fundsdata.contracts[\"eth:0xF6D2224916DDFbbab6e6bd0D1B7034f4Ae0CaB18\"].tokenInfo.tokenValue",
+    "ffa82580cTokenValue": "fundsdata.contracts[\"eth:0xFa82580c16A31D0c1bC632A36F82e83EfEF3Eec0\"].tokenInfo.tokenValue",
+    "fb82fa9f3TokenValue": "fundsdata.contracts[\"eth:0xb82fa9f31612989525992FCfBB09AB22Eff5c85A\"].tokenInfo.tokenValue",
+    "fbe1f842eTokenValue": "fundsdata.contracts[\"eth:0xbe1F842e7e0afd2c2322aae5d34bA899544b29db\"].tokenInfo.tokenValue",
+    "fbe547677TokenValue": "fundsdata.contracts[\"eth:0xbe54767735fB7Acca2aa7E2d209a6f705073536D\"].tokenInfo.tokenValue",
+    "fc2015641TokenValue": "fundsdata.contracts[\"eth:0xc2015641564a5914A17CB9A92eC8d8feCfa8f2D0\"].tokenInfo.tokenValue",
+    "fcca43cefTokenValue": "fundsdata.contracts[\"eth:0xcCA43ceF272c30415866914351fdfc3E881bb7c2\"].tokenInfo.tokenValue",
+    "fce8c60fdTokenValue": "fundsdata.contracts[\"eth:0xce8c60fd8390eFCc3Fc66A3f0bd64BEb969e750E\"].tokenInfo.tokenValue",
+    "fd4e24584TokenValue": "fundsdata.contracts[\"eth:0xd4e245848d6E1220DBE62e155d89fa327E43CB06\"].tokenInfo.tokenValue",
+    "fdf7f4889TokenValue": "fundsdata.contracts[\"eth:0xdF7f48892244C6106EA784609f7de10AB36F9c7e\"].tokenInfo.tokenValue",
+    "ffa1fdbbdTokenValue": "fundsdata.contracts[\"eth:0xfA1fDbBD71B0aA16162D76914d69cD8CB3Ef92da\"].tokenInfo.tokenValue",
+    "fadc45df3TokenValue": "fundsdata.contracts[\"eth:0xadC45Df3cf1584624C97338BEF33363BF5b97AdA\"].tokenInfo.tokenValue",
+    "f5148d810TokenValue": "fundsdata.contracts[\"eth:0x5148d810B1DaE509d68f9d9219AD1d004EA32545\"].tokenInfo.tokenValue",
+    "f80d786dfTokenValue": "fundsdata.contracts[\"eth:0x80D786DF608603cCDcC83F5712B97C185A6A948d\"].tokenInfo.tokenValue",
+    "f10c74b37Balances": "fundsdata.contracts[\"eth:0x10c74b37Ad4541E394c607d78062e6d22D9ad632\"].balances.totalUsdValue",
+    "f83b7ce40Balances": "fundsdata.contracts[\"eth:0x83b7Ce402A0E756E901C4A9d1cAfa27cA9572afC\"].balances.totalUsdValue",
+    "f0fe58fe1TokenValue": "fundsdata.contracts[\"eth:0x0fE58FE1CaA69951dC924A8c222bE19013B89476\"].tokenInfo.tokenValue",
+    "fc313a383Balances": "fundsdata.contracts[\"eth:0xC313A383D1838dCDA96f4c97698238F0A5499eA4\"].balances.totalUsdValue",
+    "f9eb50714TokenValue": "fundsdata.contracts[\"eth:0x9EB507147b99D3Cde32A53Bd5cd12bDEEaC26E5c\"].tokenInfo.tokenValue",
+    "fdc7b6b0aTokenValue": "fundsdata.contracts[\"eth:0xdc7B6B0Acf2FB6927526E2C501De41eaeae8702A\"].tokenInfo.tokenValue",
+    "f8147b99dBalances": "fundsdata.contracts[\"eth:0x8147b99DF7672A21809c9093E6F6CE1a60F119Bd\"].balances.totalUsdValue",
+    "f38769a7dTokenValue": "fundsdata.contracts[\"eth:0x38769a7DA85429aC9d61167FdFECCaAE8AA11766\"].tokenInfo.tokenValue",
+    "fcd8b9ac3Balances": "fundsdata.contracts[\"eth:0xcD8B9aC3B72E81fD8A0c9a0dBba583597E48A23a\"].balances.totalUsdValue",
+    "totalProtocolCapital": "v2score.inventory.admins.totalCapitalAtRisk",
+    "ghoMarketCap": "fundsdata.contracts[\"eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f\"].tokenInfo.tokenValue"
+  }
+}

@@ -189,31 +189,34 @@
     "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C": { "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner"], "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
     "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": { "ignoreRelatives": ["$admin", "$implementation", "admin", "implementation", "owner"], "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
     // === MorphoChainlinkOracleV2 adapters: keep BASE_FEED_*/QUOTE_FEED_* references walked once but not deeper ===
-    // These already get their fields read; suppress price ticking and any vault token refs
-    "eth:0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": { "ignoreInWatchMode": ["price"] },
-    "eth:0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": { "ignoreInWatchMode": ["price"] },
-    "eth:0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": { "ignoreInWatchMode": ["price"] },
-    "eth:0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": { "ignoreInWatchMode": ["price"] },
-    "eth:0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": { "ignoreInWatchMode": ["price"] },
-    "eth:0x7681692A9F228fd7dAc0679238D467729Af4E9ca": { "ignoreInWatchMode": ["price"] },
-    "eth:0x9f02D619a875B0CA383D21772e136fC18B637916": { "ignoreInWatchMode": ["price"] },
-    "eth:0xc8043d248551Ed19B33cbc89dCCd69148c827039": { "ignoreInWatchMode": ["price"] },
-    "eth:0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E": { "ignoreInWatchMode": ["price"] },
+    // These already get their fields read; suppress price ticking and prune BASE_VAULT/QUOTE_VAULT
+    // so newly-added markets with share-priced collateral don't drag the underlying token's
+    // protocol graph (Maple/Ethena/Pendle/MakerDAO) into discovery
+    "eth:0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x7681692A9F228fd7dAc0679238D467729Af4E9ca": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0x9f02D619a875B0CA383D21772e136fC18B637916": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0xc8043d248551Ed19B33cbc89dCCd69148c827039": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
+    "eth:0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E": { "ignoreRelatives": ["BASE_VAULT", "QUOTE_VAULT"], "ignoreInWatchMode": ["price"] },
     // Lido WstETHPriceFeed and Pendle Chainlink adapter
     "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": { "ignoreInWatchMode": ["latestAnswer", "latestRoundData"] },
     "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd": { "ignoreInWatchMode": ["latestAnswer", "latestRoundData", "price"] },
-    // === Pendle: prune all internal addresses to keep them as named leaves ===
-    "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883": { "ignoreRelatives": ["SY", "PT", "YT", "factory", "router"] },
-    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": { "ignoreRelatives": ["SY", "YT", "factory"] },
-    "eth:0x30775B422b9c7415349855346352FAA61fD97E41": { "ignoreRelatives": ["SY", "PT", "factory"] },
-    "eth:0xBF98480425A29197e5d99D003017f63a1e595D02": { "ignoreRelatives": ["yieldToken", "factory"] },
+    // === Pendle: collateral-side leaves (PT/YT/SY/Market) — no perms, no funds, just value ticks ===
+    "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883": { "ignoreDiscovery": true },
+    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": { "ignoreDiscovery": true },
+    "eth:0x30775B422b9c7415349855346352FAA61fD97E41": { "ignoreDiscovery": true },
+    "eth:0xBF98480425A29197e5d99D003017f63a1e595D02": { "ignoreDiscovery": true },
     "eth:0x2A73e899389cABa2a2f648BaBA35e67f5C00EFee": { "ignoreRelatives": ["owner"] },
     "eth:0x6d247b1c044fA1E22e6B04fA9F71Baf99EB29A9f": { "ignoreRelatives": ["owner", "treasury"] },
     "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2": { "ignoreRelatives": ["owner"] },
     "eth:0xE463cD473EcC1d1A4ecF20b62624D84DD20a8339": { "ignoreRelatives": ["owner"] },
     "eth:0x8223a6271d1e0BDA019Ee55d545d7B86eFF1F573": { "ignoreRelatives": ["owner"] },
     // === Maple: prune all internal addresses ===
-    "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": { "ignoreRelatives": ["asset", "manager", "implementation", "$admin", "$implementation"] },
+    // MaplePool itself is a collateral-side leaf — no perms relevant to PYUSD vault
+    "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": { "ignoreDiscovery": true },
     "eth:0x7aD5fFa5fdF509E30186F4609c2f6269f4B6158F": { "ignoreRelatives": ["asset", "owner", "pool", "poolDelegate", "poolDelegateCover", "withdrawalManager", "loanManagerList", "globals", "$admin", "$implementation"] },
     "eth:0x4A1c3F0D9aD0b3f9dA085bEBfc22dEA54263371b": { "ignoreRelatives": ["fundsAsset", "pool", "poolManager", "globals", "$admin", "$implementation"] },
     "eth:0x6ACEb4cAbA81Fa6a8065059f3A944fb066A10fAc": { "ignoreRelatives": ["fundsAsset", "pool", "poolManager", "globals", "$admin", "$implementation"] },
@@ -226,18 +229,20 @@
     // === Ethena ===
     "eth:0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3": { "ignoreRelatives": ["usde", "owner", "admin", "_custodianAddresses", "_supportedAssets"] },
     "eth:0x7FC7c91D556B400AFa565013E3F32055a0713425": { "ignoreRelatives": ["USDE", "STAKING_VAULT"] },
-    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": { "ignoreRelatives": ["owner", "minter"] },
-    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": { "ignoreRelatives": ["asset", "owner", "silo"] },
+    // USDe / sUSDe are collateral-side leaves — Ethena admins aren't PYUSD's surface
+    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": { "ignoreDiscovery": true },
+    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": { "ignoreDiscovery": true },
     // === MakerDAO ===
-    "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": { "ignoreRelatives": ["wards"] },
+    // Vat / Savings USDS / USDS are MakerDAO-side leaves; their wards aren't PYUSD's surface
+    "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": { "ignoreDiscovery": true },
     "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466": { "ignoreRelatives": ["wards", "vat", "flopper", "flapper"] },
     "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB": { "ignoreRelatives": ["wards", "vat", "usds"] },
     "eth:0xA41B6EF151E06da0e34B009B86E828308986736D": { "ignoreRelatives": ["wards", "vat", "vow"] },
     "eth:0xBF7111F13386d23cb2Fba5A538107A73f6872bCF": { "ignoreRelatives": ["wards"] },
     "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": { "ignoreRelatives": ["owner", "executor"] },
     "eth:0x2eFFf88747EB5a3FF00d4d8d0f0800E306C0426b": { "ignoreRelatives": ["admin", "wards"] },
-    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": { "ignoreRelatives": ["wards", "usds", "$admin", "$implementation"] },
-    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": { "ignoreRelatives": ["wards", "$admin", "$implementation"] },
+    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": { "ignoreDiscovery": true },
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": { "ignoreDiscovery": true },
     // === External multisigs (Maple/Pendle/Ethena owners) ===
     "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": { "ignoreRelatives": ["$members"] },
     "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862": { "ignoreRelatives": ["$members"] },

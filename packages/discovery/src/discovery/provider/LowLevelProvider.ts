@@ -331,7 +331,8 @@ function isServerError(e: unknown): boolean {
         !(topError.error?.error?.message ?? '').includes('out of gas') &&
         topError.error?.error?.message !== 'execution reverted' &&
         topError.error?.error?.message !== 'gas uint64 overflow' &&
-        topError.error?.error?.message !== 'invalid opcode: INVALID'
+        topError.error?.error?.message !== 'invalid opcode: INVALID' &&
+        !(topError.error?.error?.message ?? '').startsWith('EVM error:')
     } else {
       isServerError ||= topError.status >= 400
       isServerError ||=

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  // Aave V3 RWA aToken proxy — receipt token for Horizon RWA market deposits.
+  // Admin is always 0x0 (immutable proxy, upgrades permanently locked at proxy level).
+  // Implementation can only be replaced by re-initializing the reserve via PoolConfigurator.
+  "ignoreInWatchMode": [
+    "ATOKEN_REVISION",
+    "decimals",
+    "DOMAIN_SEPARATOR",
+    "EIP712_REVISION",
+    "name",
+    "PERMIT_TYPEHASH",
+    "scaledTotalSupply",
+    "symbol",
+    "totalSupply"
+  ]
+}

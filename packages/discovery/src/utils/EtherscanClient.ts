@@ -33,7 +33,7 @@ const shouldRetry = Retries.exponentialBackOff({
 
 export class EtherscanClient implements IEtherscanClient {
   protected readonly rateLimiter = new RateLimiter({
-    callsPerMinute: 150,
+    callsPerMinute: 120,
   })
   protected readonly timeoutMs = 20_000
 

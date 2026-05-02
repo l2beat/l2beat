@@ -94,6 +94,12 @@ export function updateContractTag(
         : updateRequest.aggregateLabel
       : existingTag?.aggregateLabel
     : undefined
+  const newDependencyFields =
+    updateRequest.dependencyFields !== undefined
+      ? updateRequest.dependencyFields === null
+        ? undefined
+        : updateRequest.dependencyFields
+      : existingTag?.dependencyFields
 
   // Check if any meaningful tag data exists
   const hasAnyTagData =
@@ -102,7 +108,8 @@ export function updateContractTag(
     newFetchBalances ||
     newFetchPositions ||
     newIsToken ||
-    newFetchAggregate
+    newFetchAggregate ||
+    (newDependencyFields && newDependencyFields.length > 0)
 
   if (hasAnyTagData) {
     // Create or update tag entry
@@ -117,6 +124,10 @@ export function updateContractTag(
       fetchAggregate: newFetchAggregate || undefined, // Only store if true
       aggregateHandler: newAggregateHandler || undefined,
       aggregateLabel: newAggregateLabel || undefined,
+      dependencyFields:
+        newDependencyFields && newDependencyFields.length > 0
+          ? newDependencyFields
+          : undefined,
       timestamp: new Date().toISOString(),
     }
 

@@ -624,6 +624,7 @@ export interface ContractTag {
   fetchAggregate?: boolean
   aggregateHandler?: string
   aggregateLabel?: string
+  dependencyFields?: string[]
   timestamp: string
 }
 
@@ -638,6 +639,7 @@ export interface ApiContractTagsUpdateRequest {
   fetchAggregate?: boolean
   aggregateHandler?: string | null
   aggregateLabel?: string | null
+  dependencyFields?: string[] | null
 }
 
 // Funds data types

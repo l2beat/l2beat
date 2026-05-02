@@ -22,7 +22,21 @@ import type { Mitigation } from './types'
  * (legacy compatibility). If the hex part is invalid the input is returned
  * unchanged so callers don't crash on non-address strings.
  */
+// Memoization cache. EthereumAddress() runs an ERC-55 keccak256 per call,
+// which dominates compile time when the BFS hits ~500 unique addresses
+// millions of times. A pure-function cache collapses this to one hash per
+// unique input. ~50 byte values × thousands of keys is negligible memory.
+const normalizeChainAddressCache = new Map<string, string>()
+
 export function normalizeChainAddress(raw: string): string {
+  const cached = normalizeChainAddressCache.get(raw)
+  if (cached !== undefined) return cached
+  const result = computeNormalizeChainAddress(raw)
+  normalizeChainAddressCache.set(raw, result)
+  return result
+}
+
+function computeNormalizeChainAddress(raw: string): string {
   const colonIdx = raw.indexOf(':')
 
   let chain: string
