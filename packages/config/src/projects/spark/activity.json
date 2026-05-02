@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777369903,
-  "lastConsumedUpdateNotifierId": 139,
+  "lastReconciledAt": 1777711586,
+  "lastConsumedUpdateNotifierId": 150,
   "events": [
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
@@ -111,6 +111,50 @@
           "field": "values.latestAnswer",
           "before": 117481826,
           "after": 117485533
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 150,
+      "address": "eth:0x349A73444b1a310BAe67ef67973022020d70020d",
+      "contractName": "LRTOracle",
+      "isDependency": true,
+      "entity": "Kelp",
+      "id": "150:eth:0x349A73444b1a310BAe67ef67973022020d70020d:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.maxFeeMintAmountPerDay",
+          "before": "20000000000000000000",
+          "after": "200000000000000000000"
+        },
+        {
+          "field": "values.remainingDailyFeeMintLimit",
+          "before": "20000000000000000000",
+          "after": "200000000000000000000"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 150,
+      "address": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+      "contractName": "rsETH Token",
+      "isDependency": true,
+      "entity": "Kelp",
+      "id": "150:eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.maxMintAmountPerDay",
+          "before": "300000000000000000000000",
+          "after": "5000000000000000000000"
+        },
+        {
+          "field": "values.remainingDailyMintLimit",
+          "before": "300000000000000000000000",
+          "after": "5000000000000000000000"
         }
       ]
     }

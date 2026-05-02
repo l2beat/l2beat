@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-28T16:50:00.000Z",
   "lastModified": "2026-04-28T16:50:00.000Z",
-  "compiledAt": "2026-05-01T09:11:40.000Z",
+  "compiledAt": "2026-05-02T08:28:45.000Z",
   "verified": true,
   "project": "Gauntlet-USDC-Prime",
   "metadata": {
@@ -11,7 +11,7 @@
     "chain": "Base",
     "projectType": "yield",
     "tokenName": "gtUSDCp",
-    "description": "Gauntlet USDC Prime is a MetaMorpho ERC4626 vault that allocates USDC deposits across selected Morpho Blue lending markets, currently a single cbBTC/USDC market at 86% LLTV. The vault is immutable, with no upgrade path; all parameter changes flow through the MetaMorpho role hierarchy (owner, curator, guardian, allocators) under a 7-day timelock. Total deposits stand at $354.27M, sourced from Morpho Blue lending positions priced via Chainlink BTC/USD. Gauntlet operates the owner, curator, and guardian roles via three independent multisigs of differing thresholds."
+    "description": "Gauntlet USDC Prime is a MetaMorpho ERC4626 vault that allocates USDC deposits across selected Morpho Blue lending markets, currently a single cbBTC/USDC market at 86% LLTV. The vault is immutable, with no upgrade path; all parameter changes flow through the MetaMorpho role hierarchy (owner, curator, guardian, allocators) under a 7-day timelock. Total deposits stand at $352.66M, sourced from Morpho Blue lending positions priced via Chainlink BTC/USD. Gauntlet operates the owner, curator, and guardian roles via three independent multisigs of differing thresholds."
   },
   "totals": {
     "contractCount": 12,
@@ -19,7 +19,7 @@
     "scoredFunctionCount": 12,
     "adminCount": 4,
     "dependencyCount": 3,
-    "totalCapitalAtRisk": 354270102.37377363,
+    "totalCapitalAtRisk": 352660180.1727359,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
     "linesOfCode": 6004,
@@ -30,7 +30,7 @@
     {
       "address": "base:0x5a4E19842e09000a582c20A4f524C26Fb48Dd4D0",
       "name": "Gauntlet 4/7 Multisig (Owner)",
-      "description": "The vault owner. Can replace the curator and guardian, add or remove allocators, set the management fee (capped at 50% of yield) and its recipient, and submit a new timelock (1-14 days). All owner actions on capped/timelocked parameters route through the (N/A) delay, during which the guardian can revoke. Controls $354.27M in reachable capital.",
+      "description": "The vault owner. Can replace the curator and guardian, add or remove allocators, set the management fee (capped at 50% of yield) and its recipient, and submit a new timelock (1-14 days). All owner actions on capped/timelocked parameters route through the (N/A) delay, during which the guardian can revoke. Controls $352.66M in reachable capital.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -154,7 +154,7 @@
           "contractName": "MetaMorpho",
           "functionName": "transferOwnership",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -163,7 +163,7 @@
           "contractName": "MetaMorpho",
           "functionName": "renounceOwnership",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -172,7 +172,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -214,7 +214,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -261,7 +261,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -270,7 +270,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -279,7 +279,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -288,20 +288,20 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 354270102.37377363,
+      "totalDirectCapital": 352660180.1727359,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 354270102.37377363,
+      "totalReachableCapital": 352660180.1727359,
       "totalReachableTokenValue": 0
     },
     {
       "address": "base:0x9E33faAE38ff641094fa68c65c2cE600b3410585",
       "name": "Gauntlet 3/7 Multisig (Curator)",
-      "description": "The vault curator. Submits per-market USDC supply caps and market removals (both timelocked 7 days) and reorders the supply and withdraw queues. Reallocations are bounded by the existing per-market caps. Controls $354.27M in reachable capital.",
+      "description": "The vault curator. Submits per-market USDC supply caps and market removals (both timelocked 7 days) and reorders the supply and withdraw queues. Reallocations are bounded by the existing per-market caps. Controls $352.66M in reachable capital.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -310,7 +310,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -352,7 +352,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -399,7 +399,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -408,14 +408,14 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 354270102.37377363,
+      "totalDirectCapital": 352660180.1727359,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 354270102.37377363,
+      "totalReachableCapital": 352660180.1727359,
       "totalReachableTokenValue": 0
     },
     {
@@ -461,7 +461,7 @@
     {
       "address": "base:0x7084bF4dB6c21e1834dD6482f6056a39A33584cD",
       "name": "Gauntlet 3/7 Multisig (Guardian)",
-      "description": "The vault guardian. Holds revokePending* permissions over the entire vault and could in principle stall every owner/curator submission across $354.27M of reachable capital. Veto-only — cannot initiate state changes, raise caps, move funds, or change the guardian itself; the only action available is cancelling pending timelocked submissions before they execute.",
+      "description": "The vault guardian. Holds revokePending* permissions over the entire vault and could in principle stall every owner/curator submission across $352.66M of reachable capital. Veto-only — cannot initiate state changes, raise caps, move funds, or change the guardian itself; the only action available is cancelling pending timelocked submissions before they execute.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -470,7 +470,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -490,7 +490,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -510,7 +510,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -530,7 +530,7 @@
           "contractName": "MetaMorpho",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -546,14 +546,14 @@
           ]
         }
       ],
-      "totalDirectCapital": 354270102.37377363,
+      "totalDirectCapital": 352660180.1727359,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 354270102.37377363,
+      "totalReachableCapital": 352660180.1727359,
       "totalReachableTokenValue": 0
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 354270102.37377363,
+    "totalFundsAtRisk": 352660180.1727359,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -580,7 +580,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -612,7 +612,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -657,13 +657,13 @@
           ]
         }
       ],
-      "totalFundsAtRisk": 354270102.37377363,
+      "totalFundsAtRisk": 352660180.1727359,
       "totalTokenValueAtRisk": 0
     },
     {
       "address": "base:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
-      "description": "The immutable Morpho Blue lending protocol, where all vault deposits are allocated as supply positions. Vault TVS of $354.27M sits inside Morpho Blue markets, exposed to its accounting, liquidation, and oracle-consumption logic.",
+      "description": "The immutable Morpho Blue lending protocol, where all vault deposits are allocated as supply positions. Vault TVS of $352.66M sits inside Morpho Blue markets, exposed to its accounting, liquidation, and oracle-consumption logic.",
       "entity": "Morpho",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -681,7 +681,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -690,7 +690,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -699,7 +699,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -717,7 +717,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -765,7 +765,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -802,12 +802,12 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 354270102.37377363,
+          "directFundsUsd": 352660180.1727359,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 354270102.37377363,
+      "totalFundsAtRisk": 352660180.1727359,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -860,29 +860,29 @@
   "dependencyEntityGroups": [
     {
       "entity": "Chainlink",
-      "totalFundsAtRisk": 354270102.37377363,
+      "totalFundsAtRisk": 352660180.1727359,
       "totalTokenValueAtRisk": 0
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 354270102.37377363,
+      "totalFundsAtRisk": 352660180.1727359,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 354270102.37377363,
+    "totalFundsAtRisk": 352660180.1727359,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
     {
       "address": "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61",
       "name": "Gauntlet USDC Prime Vault (USDC)",
-      "description": "The MetaMorpho vault contract. Holds $354.27M in Morpho Blue Supply positions denominated in USDC, deposited by users into the cbBTC/USDC market. Yield accrues from borrower interest on Morpho Blue.",
+      "description": "The MetaMorpho vault contract. Holds $352.66M in Morpho Blue Supply positions denominated in USDC, deposited by users into the cbBTC/USDC market. Yield accrues from borrower interest on Morpho Blue.",
       "balances": {
-        "totalUsdValue": 0.00015782053948681154
+        "totalUsdValue": 0.000159614713241383
       },
       "positions": {
-        "totalUsdValue": 354270102.3736158
+        "totalUsdValue": 352660180.1725763
       },
       "tokenInfo": null,
       "aggregate": null

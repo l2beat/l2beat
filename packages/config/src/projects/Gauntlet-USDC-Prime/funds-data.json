@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-05-01T09:32:24.755Z",
+  "lastModified": "2026-05-02T08:46:45.875Z",
   "contracts": {
     "base:0xeE8F4eC5672F09119b96Ab6fB59C27E1b7e44b61": {
-      "lastFetched": "2026-05-01T09:32:23.484Z",
+      "lastFetched": "2026-05-02T08:46:44.496Z",
       "balances": {
         "tokens": [
           {
@@ -684,7 +684,7 @@
             "name": "Wrapped Ether",
             "balance": "1",
             "decimals": 18,
-            "usdValue": 2.28433e-15
+            "usdValue": 2.30371e-15
           },
           {
             "assetAddress": "0x4280c2c2a91a9257f32d034eba6dc9de44baa112",
@@ -2156,7 +2156,7 @@
             "name": "Cypher",
             "balance": "18445209263787390",
             "decimals": 18,
-            "usdValue": 0.0001558201394045112
+            "usdValue": 0.00015761431315906328
           },
           {
             "assetAddress": "0xd26ca3d6fdc71a900ef17f1976d9ef3e3de739f1",
@@ -2711,8 +2711,8 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 0.00015782053948681154,
-        "timestamp": "2026-05-01T09:32:24.228Z",
+        "totalUsdValue": 0.000159614713241383,
+        "timestamp": "2026-05-02T08:46:45.655Z",
         "source": "debank"
       },
       "positions": {
@@ -2726,15 +2726,15 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 857638.2102213214,
+                  "assetUsdValue": 857710.6124441697,
                   "debtUsdValue": 0,
-                  "netUsdValue": 857638.2102213214
+                  "netUsdValue": 857710.6124441697
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 857466.6825792772,
+                    "amount": 857539.0703216809,
                     "price": 1.0002000400080016
                   }
                 ]
@@ -2742,15 +2742,15 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 335929402.46488816,
+                  "assetUsdValue": 334318011.06338346,
                   "debtUsdValue": 0,
-                  "netUsdValue": 335929402.46488816
+                  "netUsdValue": 334318011.06338346
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 335862216.5843952,
+                    "amount": 334251147.4611708,
                     "price": 1.0002000400080016
                   }
                 ]
@@ -2758,15 +2758,15 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 9.885522857482098e-7,
+                  "assetUsdValue": 9.886311913504443e-7,
                   "debtUsdValue": 0,
-                  "netUsdValue": 9.885522857482098e-7
+                  "netUsdValue": 9.886311913504443e-7
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 9.883545752910602e-7,
+                    "amount": 9.884334651121744e-7,
                     "price": 1.0002000400080016
                   }
                 ]
@@ -2774,15 +2774,15 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 132355.46375173025,
+                  "assetUsdValue": 132365.95835242877,
                   "debtUsdValue": 0,
-                  "netUsdValue": 132355.46375173025
+                  "netUsdValue": 132365.95835242877
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 132328.9926589799,
+                    "amount": 132339.48516075828,
                     "price": 1.0002000400080016
                   }
                 ]
@@ -2790,15 +2790,15 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 647977.5157597162,
+                  "assetUsdValue": 648029.4314718426,
                   "debtUsdValue": 0,
-                  "netUsdValue": 647977.5157597162
+                  "netUsdValue": 648029.4314718426
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 647847.9202565643,
+                    "amount": 647899.8255855482,
                     "price": 1.0002000400080016
                   }
                 ]
@@ -2806,25 +2806,25 @@
               {
                 "name": "Deposit",
                 "stats": {
-                  "assetUsdValue": 16702728.71899382,
+                  "assetUsdValue": 16704063.106923375,
                   "debtUsdValue": 0,
-                  "netUsdValue": 16702728.71899382
+                  "netUsdValue": 16704063.106923375
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 16699388.173250021,
+                    "amount": 16700722.29430199,
                     "price": 1.0002000400080016
                   }
                 ]
               }
             ],
-            "totalUsdValue": 354270102.3736158
+            "totalUsdValue": 352660180.1725763
           }
         ],
-        "totalUsdValue": 354270102.3736158,
-        "timestamp": "2026-05-01T09:32:24.755Z",
+        "totalUsdValue": 352660180.1725763,
+        "timestamp": "2026-05-02T08:46:45.874Z",
         "source": "debank"
       }
     }

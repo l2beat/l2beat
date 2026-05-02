@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-21T15:04:03.292Z",
   "lastModified": "2026-04-21T15:04:03.292Z",
-  "compiledAt": "2026-05-01T09:11:40.000Z",
+  "compiledAt": "2026-05-02T08:28:45.000Z",
   "verified": true,
   "project": "aerodrome",
   "metadata": {
@@ -11,7 +11,7 @@
     "chain": "Base",
     "projectType": "dex",
     "tokenName": "AERO",
-    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $870.46M."
+    "description": "Aerodrome is a ve(3,3) decentralized exchange on Base, forked from Velodrome V2. It combines concentrated and volatile/stable AMM liquidity pools with a vote-escrow governance model where AERO token holders lock tokens as veNFTs to direct weekly emissions to gauges. All core contracts are immutable, but protocol parameters (swap fees, emission caps, factory registrations) are controlled by a 3/7 multisig acting as governor. The AERO token has a market cap of $863.97M."
   },
   "totals": {
     "contractCount": 36,
@@ -19,9 +19,9 @@
     "scoredFunctionCount": 175,
     "adminCount": 4,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 341720407.8711123,
+    "totalCapitalAtRisk": 340753584.5712191,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 870455513.505768,
+    "totalTokenValue": 863973808.3950865,
     "linesOfCode": 15990,
     "verifiedContractCount": 36,
     "coverage": 100
@@ -2017,7 +2017,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 870455513.505768,
+              "tokenValueUsd": 863973808.3950865,
               "fundsAtRisk": true
             },
             {
@@ -2256,7 +2256,7 @@
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 870455513.505768
+      "totalReachableTokenValue": 863973808.3950865
     },
     {
       "address": "base:0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a",
@@ -2572,14 +2572,14 @@
     {
       "address": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
       "name": "Aerodrome Token (AERO)",
-      "description": "The AERO governance and utility token with a market cap of $870.46M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
+      "description": "The AERO governance and utility token with a market cap of $863.97M. Used for vote-escrow locking (veNFTs), gauge emissions, and LP incentives. Weekly emissions are managed by the Minter contract with a decaying schedule transitioning to tail emissions.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "AERO",
-        "price": 0.4606964726590683,
+        "price": 0.45726597146173475,
         "totalSupply": "1889433857571416250506522725",
-        "tokenValue": 870455513.505768
+        "tokenValue": 863973808.3950865
       },
       "aggregate": null
     },
@@ -2591,8 +2591,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 210053264.15096447,
-        "contractCount": 5058,
+        "totalUsdValue": 208910783.18662372,
+        "contractCount": 5062,
         "handlerName": "aerodrome-cl-factory",
         "label": "CL Factory TVL"
       }
@@ -2605,8 +2605,8 @@
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 131667143.7201478,
-        "contractCount": 27415,
+        "totalUsdValue": 131842801.38459536,
+        "contractCount": 27419,
         "handlerName": "aerodrome-v2-factory",
         "label": "V2 Factory TVL"
       }

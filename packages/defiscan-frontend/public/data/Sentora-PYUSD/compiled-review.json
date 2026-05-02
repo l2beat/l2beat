@@ -2,7 +2,7 @@
   "version": "1.0",
   "publishedAt": "2026-04-30T09:55:00.000Z",
   "lastModified": "2026-04-30T11:51:00.372Z",
-  "compiledAt": "2026-05-01T09:11:40.000Z",
+  "compiledAt": "2026-05-02T08:28:45.000Z",
   "verified": true,
   "project": "Sentora-PYUSD",
   "metadata": {
@@ -11,7 +11,7 @@
     "chain": "Ethereum",
     "projectType": "lending",
     "tokenName": "senPYUSD",
-    "description": "Sentora PYUSD is a MetaMorpho V1.1 ERC4626 vault that allocates PayPal USD deposits across Morpho Blue lending markets selected by Sentora as curator. The vault inherits the standard MetaMorpho contract surface: a 3-day timelock on owner-initiated parameter changes, a per-market supply-cap mechanism, and a guardian veto over pending submissions. As of the most recent discovery the vault holds $238.05M on Morpho Blue against an active cap envelope of 400M PYUSD spread across five markets (cbBTC, wstETH, weETH, an ETH-collateralized market, and WBTC), plus four decommissioned markets that retain only legacy positions. Pricing is provided by ten oracle adapters that route to Chainlink, RedStone, and Lido feeds."
+    "description": "Sentora PYUSD is a MetaMorpho V1.1 ERC4626 vault that allocates PayPal USD deposits across Morpho Blue lending markets selected by Sentora as curator. The vault inherits the standard MetaMorpho contract surface: a 3-day timelock on owner-initiated parameter changes, a per-market supply-cap mechanism, and a guardian veto over pending submissions. As of the most recent discovery the vault holds $247.20M on Morpho Blue against an active cap envelope of 400M PYUSD spread across five markets (cbBTC, wstETH, weETH, an ETH-collateralized market, and WBTC), plus four decommissioned markets that retain only legacy positions. Pricing is provided by ten oracle adapters that route to Chainlink, RedStone, and Lido feeds."
   },
   "totals": {
     "contractCount": 49,
@@ -19,7 +19,7 @@
     "scoredFunctionCount": 14,
     "adminCount": 3,
     "dependencyCount": 14,
-    "totalCapitalAtRisk": 238054307.5251666,
+    "totalCapitalAtRisk": 247196806.8619957,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
     "linesOfCode": 4991,
@@ -30,7 +30,7 @@
     {
       "address": "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008",
       "name": "Sentora Owner 1/1 Multisig",
-      "description": "Single-signer Gnosis Safe controlling all owner-only vault parameters: fee, fee recipient, curator, allocator set, name and symbol, and the timelock and guardian submission flow. Owner-initiated changes to timelock, guardian, and per-market caps are all delay-protected for 3 days. Reaches $238.05M in vault deposits via the standard MetaMorpho permission set.",
+      "description": "Single-signer Gnosis Safe controlling all owner-only vault parameters: fee, fee recipient, curator, allocator set, name and symbol, and the timelock and guardian submission flow. Owner-initiated changes to timelock, guardian, and per-market caps are all delay-protected for 3 days. Reaches $247.20M in vault deposits via the standard MetaMorpho permission set.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -172,7 +172,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "transferOwnership",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -181,7 +181,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "renounceOwnership",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -190,7 +190,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -232,7 +232,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -279,7 +279,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -288,7 +288,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -297,7 +297,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -306,20 +306,20 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 238054307.5251666,
+      "totalDirectCapital": 247196806.8619957,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 238054307.5251666,
+      "totalReachableCapital": 247196806.8619957,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
       "name": "Sentora Curator/Guardian 1/1 Multisig",
-      "description": "Single-signer Gnosis Safe holding both the curator role (submit and accept market caps and removals, delay-protected) and the guardian role (veto-only revoke of pending owner and curator submissions during the timelock window). Holds $238.05M in reachable capital but its non-veto reach is bounded by per-market caps; veto power is the only path that can act without a delay.",
+      "description": "Single-signer Gnosis Safe holding both the curator role (submit and accept market caps and removals, delay-protected) and the guardian role (veto-only revoke of pending owner and curator submissions during the timelock window). Holds $247.20M in reachable capital but its non-veto reach is bounded by per-market caps; veto power is the only path that can act without a delay.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -328,7 +328,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -370,7 +370,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -417,7 +417,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingTimelock",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -437,7 +437,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingGuardian",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -457,7 +457,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingCap",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -477,7 +477,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "revokePendingMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -493,9 +493,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 238054307.5251666,
+      "totalDirectCapital": 247196806.8619957,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 238054307.5251666,
+      "totalReachableCapital": 247196806.8619957,
       "totalReachableTokenValue": 0
     },
     {
@@ -540,14 +540,14 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 238054307.5251666,
+    "totalFundsAtRisk": 247196806.8619957,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
     {
       "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
-      "description": "Singleton lending primitive that holds every vault deposit. The vault routes PYUSD into Morpho Blue markets via supply, withdraw, and supplyCollateral calls; vault accounting reads positions back through Morpho Blue's market state. A bug in Morpho Blue would directly expose the entire $238.05M held by the vault.",
+      "description": "Singleton lending primitive that holds every vault deposit. The vault routes PYUSD into Morpho Blue markets via supply, withdraw, and supplyCollateral calls; vault accounting reads positions back through Morpho Blue's market state. A bug in Morpho Blue would directly expose the entire $247.20M held by the vault.",
       "entity": "Morpho",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -565,7 +565,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -574,7 +574,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -583,7 +583,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -601,7 +601,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -649,7 +649,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -686,12 +686,12 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 238054307.5251666,
+      "totalFundsAtRisk": 247196806.8619957,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -1121,7 +1121,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "acceptCap",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -1153,7 +1153,7 @@
           "contractName": "MetaMorphoV1_1",
           "functionName": "submitCap",
           "viewOnlyPath": false,
-          "directFundsUsd": 238054307.5251666,
+          "directFundsUsd": 247196806.8619957,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -1207,7 +1207,7 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 238054307.5251666,
+      "totalFundsAtRisk": 247196806.8619957,
       "totalTokenValueAtRisk": 0
     },
     {
@@ -1980,12 +1980,12 @@
   "dependencyEntityGroups": [
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 238054307.5251666,
+      "totalFundsAtRisk": 247196806.8619957,
       "totalTokenValueAtRisk": 0
     },
     {
       "entity": "Chainlink",
-      "totalFundsAtRisk": 238054307.5251666,
+      "totalFundsAtRisk": 247196806.8619957,
       "totalTokenValueAtRisk": 0
     },
     {
@@ -1995,19 +1995,19 @@
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 238054307.5251666,
+    "totalFundsAtRisk": 247196806.8619957,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
     {
       "address": "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55",
       "name": "MetaMorphoV1_1 (PYUSD)",
-      "description": "The vault contract itself, holding $238.05M as Morpho Blue supply positions. Depositors mint senPYUSD shares against this position; the vault's allocators can move the underlying PYUSD between approved Morpho Blue markets without an additional delay, but cannot route into markets that have not been timelocked-approved by the curator.",
+      "description": "The vault contract itself, holding $247.20M as Morpho Blue supply positions. Depositors mint senPYUSD shares against this position; the vault's allocators can move the underlying PYUSD between approved Morpho Blue markets without an additional delay, but cannot route into markets that have not been timelocked-approved by the curator.",
       "balances": {
-        "totalUsdValue": 0.0005949357158602017
+        "totalUsdValue": 0.0005932197714179452
       },
       "positions": {
-        "totalUsdValue": 238054307.52457166
+        "totalUsdValue": 247196806.86140248
       },
       "tokenInfo": null,
       "aggregate": null
@@ -2698,6 +2698,276 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x30775B422b9c7415349855346352FAA61fD97E41",
+      "contractName": "PendleYieldToken",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "151:eth:0x30775B422b9c7415349855346352FAA61fD97E41:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.syReserve",
+          "before": "145800678784849577834585890",
+          "after": "145814211012573363973703756"
+        },
+        {
+          "field": "values.totalSupply",
+          "before": "178906740261066760583629069",
+          "after": "178923934680164488042464043"
+        },
+        {
+          "field": "values.pyIndexStored",
+          "before": "1229784119104951898",
+          "after": "1229884243057337538"
+        },
+        {
+          "field": "values.pyIndexLastUpdatedBlock",
+          "before": 24999045,
+          "after": 25005940
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
+      "contractName": "Vat",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "151:eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.Line",
+          "before": "15313847438406519897532830280055466294991634477167631052",
+          "after": "15727530903814245318887501003937996733563838382599431527"
+        },
+        {
+          "field": "values.debt",
+          "before": "13200492031806421978636308524516022506154106657903187880",
+          "after": "13161588525087318067109440615765378542154483681930563852"
+        },
+        {
+          "field": "values.vice",
+          "before": "562452440937014573726241407266858525011118025892074936",
+          "after": "563056810276861449630405874744366736042082502692237826"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
+      "contractName": "PendlePrincipalToken",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "151:eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "178906740261066760583629069",
+          "after": "178923934680164488042464043"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "contractName": "USDe Token",
+      "isDependency": true,
+      "entity": "Ethena",
+      "id": "151:eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "3903991845445573027523503861",
+          "after": "3903972292088883027523503861"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
+      "contractName": "MaplePool",
+      "isDependency": true,
+      "entity": "Maple",
+      "id": "151:eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalAssets",
+          "before": 1199696148386327,
+          "after": 1203988079144814
+        },
+        {
+          "field": "values.totalSupply",
+          "before": 1032330185351484,
+          "after": 1035890716060333
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883",
+      "contractName": "PendleMarketV6",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "151:eth:0x8dAe8ECe668cf80d348873F23D456448E8694883:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values._storage.totalPt",
+          "before": "1780695307624130101204525",
+          "after": "1797010469656392490203462"
+        },
+        {
+          "field": "values._storage.totalSy",
+          "before": "9164955449688737348325552",
+          "after": "9132272618700876003938805"
+        },
+        {
+          "field": "values._storage.observationIndex",
+          "before": 55,
+          "after": 61
+        },
+        {
+          "field": "values._storage.lastLnImpliedRate",
+          "before": "49530614534600941",
+          "after": "50061356593420095"
+        },
+        {
+          "field": "values.totalSupply",
+          "before": "4355827359956924369301620",
+          "after": "4347853486273792895573805"
+        },
+        {
+          "field": "values.lastRewardBlock",
+          "before": 24996926,
+          "after": 25000200
+        },
+        {
+          "field": "values.totalActiveSupply",
+          "before": "1765102210428345676805464",
+          "after": "1761912660955093087314338"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+      "contractName": "Staked USDe Token",
+      "isDependency": true,
+      "entity": "Ethena",
+      "id": "151:eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalAssets",
+          "before": "2095677775631898088051907193",
+          "after": "2046921389156948657563427181"
+        },
+        {
+          "field": "values.totalSupply",
+          "before": "1704100808900289941716974089",
+          "after": "1664317498195758126921623881"
+        },
+        {
+          "field": "values.getUnvestedAmount",
+          "before": "51543801866666666666665",
+          "after": "56876762857142857142856"
+        },
+        {
+          "field": "values.lastDistributionTimestamp",
+          "before": 1777623167,
+          "after": 1777709603
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+      "contractName": "Savings USDS Token",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "151:eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.chi",
+          "before": "1095032079010641244213676519",
+          "after": "1095136319891282529653540603"
+        },
+        {
+          "field": "values.rho",
+          "before": 1777626599,
+          "after": 1777710335
+        },
+        {
+          "field": "values.totalAssets",
+          "before": "5553720967949996310454571330",
+          "after": "5532371319285623697457033478"
+        },
+        {
+          "field": "values.totalSupply",
+          "before": "5071742229363084445347821163",
+          "after": "5051764024467105163375189618"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
+      "contractName": "PendleSUSDESY",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "151:eth:0xBF98480425A29197e5d99D003017f63a1e595D02:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "155813748041820321926330871",
+          "after": "156450598773718098734722732"
+        },
+        {
+          "field": "values.exchangeRate",
+          "before": "1229785095275146971",
+          "after": "1229886359649502650"
+        },
+        {
+          "field": "values.getAbsoluteTotalSupply",
+          "before": "155813748041820321926330871",
+          "after": "156450598773718098734722732"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-02T08:28:45.000Z",
+      "updateNotifierId": 151,
+      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "contractName": "USDS Stablecoin Token",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "151:eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "8090844122236183750387631147",
+          "after": "8068012648119188215341544303"
+        }
+      ]
+    },
     {
       "timestamp": "2026-05-01T09:11:40.000Z",
       "updateNotifierId": 148,
