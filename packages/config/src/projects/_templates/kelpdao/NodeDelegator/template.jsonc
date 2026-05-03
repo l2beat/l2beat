@@ -2,17 +2,33 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NodeDelegator",
   "category": "core",
-  "description": "Per-operator delegator. Holds Kelp's deposited LSTs in EigenLayer strategies, runs an EigenPod for native ETH, and delegates voting power to a single EigenLayer operator. Deployed as multiple instances; each is paired one-to-one with the EigenLayer operator address it delegates to.",
+  "description": "Per-instance EigenLayer staker: holds an EigenPod for native-ETH restaking, ERC20 strategy shares for LST restaking, and delegates the resulting stake to a single EigenLayer operator via DelegationManager. Role checks consult IAccessControl on lrtConfig. Role gates: OPERATOR_ROLE: depositAssetIntoStrategy (deposits this contract's full balance of asset into IStrategy(lrtConfig.assetStrategy(asset)) via EIGEN_STRATEGY_MANAGER, recipient is address(this)), stake32Eth and stake32EthValidated (each consume 32 ether of this contract's ETH balance to register a validator via EigenPodManager.stake; withdrawal credentials derived from eigenPod, pubkey deduplicated through PUBKEY_REGISTRY, stakedButUnverifiedNativeETH += 32 ether), verifyWithdrawalCredentials (proves validators against eigenPod, stakedButUnverifiedNativeETH -= 32 ether per validator), startCheckpoint, processClaim (recipient is lrtConfig.eigenLayerRewardReceiver()), initiateUnstaking (withdrawer is address(this), bumps LRT_UNSTAKING_VAULT.uncompletedWithdrawalCount), completeUnstaking (forwards the resulting balance delta to LRT_UNSTAKING_VAULT when receiveAsTokens). MANAGER: delegateTo (caller picks the EigenLayer operator and supplies the operator's approverSignatureAndExpiry), createEigenPod (calls EigenPodManager.createPod and writes eigenPod, reverts if already set), undelegate (auto-queues one forced withdrawal per active strategy), maxApproveToEigenStrategyManager / revokeApprovalToEigenStrategyManager. ASSET_TRANSFER_ROLE: transferBackToLRTDepositPool, transferETHToLRTUnstakingVault. PAUSER_ROLE: pause. DEFAULT_ADMIN_ROLE: unpause. Caller-restricted: sendETHFromDepositPoolToNDC requires msg.sender == LRT_DEPOSIT_POOL, sendETHFromUnstakingVaultToNDC requires msg.sender == LRT_UNSTAKING_VAULT, receive() accepts ETH from any caller. eigenPod is also written lazily by stake32Eth on the first call when it is still zero (read from EigenPodManager.ownerToPod). whenNotPaused gates only depositAssetIntoStrategy, stake32Eth, processClaim, undelegate, initiateUnstaking, completeUnstaking, transferBackToLRTDepositPool and transferETHToLRTUnstakingVault; delegateTo, createEigenPod, verifyWithdrawalCredentials, startCheckpoint, the approve helpers, pause and unpause execute regardless of paused state.",
   "fields": {
-    "elOperatorDelegatedTo": {
+    "lrtConfig": {
       "severity": "HIGH",
-      "type": "EXTERNAL",
-      "description": "EigenLayer operator address this delegator has delegated to. The operator gains voting power over the AVSes Kelp opts into and is the slashing-relevant party for this delegator's restaked LSTs."
+      "type": "CODE_CHANGE",
+      "description": "Address of the LRTConfig used for every role check on this contract (onlyLRTAdmin, onlyLRTManager, onlyLRTOperator, onlyAssetTransferRole, onlyRole(PAUSER_ROLE)) and every registry lookup (getContract for EIGEN_STRATEGY_MANAGER, EIGEN_DELEGATION_MANAGER, EIGEN_POD_MANAGER, EIGEN_REWARDS_COORDINATOR, BEACON_CHAIN_ETH_STRATEGY, LRT_DEPOSIT_POOL, LRT_UNSTAKING_VAULT, PUBKEY_REGISTRY, plus assetStrategy(asset), eigenLayerRewardReceiver(), and isSupportedAsset(asset) reads). Set in initialize and not updateable by any function on this contract."
+    },
+    "paused": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Inherited PausableUpgradeable state. Set true by pause() (PAUSER_ROLE on lrtConfig) and false by unpause() (DEFAULT_ADMIN_ROLE on lrtConfig). Blocks only the whenNotPaused-gated subset of functions (depositAssetIntoStrategy, stake32Eth, processClaim, undelegate, initiateUnstaking, completeUnstaking, transferBackToLRTDepositPool, transferETHToLRTUnstakingVault); MANAGER's delegateTo / createEigenPod / approve helpers and OPERATOR's verifyWithdrawalCredentials / startCheckpoint continue to execute while paused."
     },
     "eigenPod": {
       "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "EigenPod owned by this NodeDelegator and used for native-ETH restaking. Written by createEigenPod (MANAGER, reverts if already set) or lazily by stake32Eth (OPERATOR, when still zero, by reading EigenPodManager.ownerToPod(address(this))). Once set, the field is not cleared by any function on this contract. Used as the verify / checkpoint target by verifyWithdrawalCredentials and startCheckpoint, and as the implicit destination of validator beacon-chain withdrawals (the validator's withdrawal credentials are determined by the EigenPod, not by callers of stake32Eth)."
+    },
+    "elOperatorDelegatedTo": {
+      "severity": "HIGH",
       "type": "EXTERNAL",
-      "description": "EigenLayer EigenPod owned by this delegator. Holds beacon-chain ETH credentials and is the entry point for native restaking via EigenPodManager."
+      "description": "EigenLayer operator this NodeDelegator's restaked stake is currently delegated to. Not a stored value; resolved live by calling EIGEN_DELEGATION_MANAGER.delegatedTo(address(this)). Changed only by MANAGER, via delegateTo (sets it to a caller-supplied operator that has approved this delegation, either by having no approver set or by signing the supplied approverSignatureAndExpiry) or undelegate (clears it and queues one forced withdrawal per active strategy)."
+    },
+    "stakedButUnverifiedNativeETH": {
+      "description": "Running total (in wei) of ETH staked into beacon-chain validators via stake32Eth whose withdrawal credentials have not yet been proven against the EigenPod. Incremented by exactly 32 ether on each successful stake32Eth and decremented by 32 ether per validator on each successful verifyWithdrawalCredentials. Read by getEffectivePodShares as part of the ETH backing this NDC reports to the rest of the protocol; an unproven-or-stuck validator therefore keeps inflating this counter and the reported pod shares until verifyWithdrawalCredentials lands."
+    },
+    "getEffectivePodShares": {
+      "description": "View returning stakedButUnverifiedNativeETH plus the withdrawable share read from IStrategy(lrtConfig.beaconChainETHStrategy()) for this contract. Represents the ETH-equivalent native-restaking position this NDC contributes to the protocol-wide TVL. The withdrawable-share component is read from EigenLayer state and reflects beacon-chain balance changes (rewards, slashing, exits) at call time."
     }
   }
 }

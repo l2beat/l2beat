@@ -2,5 +2,35 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LRTUnstakingVault",
   "category": "core",
-  "description": "Holds and accounts for LST balances queued for unstaking from EigenLayer. Receives unstaked LSTs from NodeDelegators and forwards them to LRTWithdrawalManager."
+  "canActIndependently": false,
+  "description": "Forwarder vault sitting between NodeDelegators (post-EigenLayer-unstake) and the withdrawal manager. Holds whatever LST and ETH balances arrive from NodeDelegators (after their completeUnstaking forwards balance deltas) and from LRT_DEPOSIT_POOL (via ASSET_TRANSFER_ROLE transfers); pushes them out only through redeem(), which is callable solely by the LRT_WITHDRAW_MANAGER-registered address. Inherits PausableUpgradeable but exposes no pause() / unpause() and no function uses whenNotPaused, so the inherited paused field is permanently false. Function gates: onlyLRTWithdrawalManager (msg.sender == lrtConfig.withdrawManager()): redeem (sends asset/ETH to msg.sender; the only outflow path on this contract). onlyLRTNodeDelegator (msg.sender registered in ILRTDepositPool.isNodeDelegator): increaseUncompletedWithdrawalCount, decreaseUncompletedWithdrawalCount. ASSET_TRANSFER_ROLE: transferAssetToNodeDelegator, transferETHToNodeDelegator (ndcIndex resolves through LRTDepositPool.getNodeDelegatorQueue). MANAGER: setMaxUncompletedWithdrawalCount (hard-capped at 80 by the setter), setUncompletedWithdrawalCount (recomputes the counter by iterating LRTDepositPool.getNodeDelegatorQueue and summing EIGEN_DELEGATION_MANAGER.getQueuedWithdrawals lengths). OPERATOR_ROLE: setQueuedWithdrawalsBuffer (per-asset reservation subtracted from balanceOf inside getAssetsAvailableForInstantWithdrawal). Permissionless: receive() (logs only), receiveFromLRTDepositPool and receiveFromNodeDelegator (no-op payable hooks).",
+  "fields": {
+    "lrtConfig": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address of the LRTConfig used for every role check (onlyLRTManager, onlyLRTOperator, onlyAssetTransferRole) and every registry lookup (getContract for LRT_DEPOSIT_POOL, LRT_WITHDRAW_MANAGER, EIGEN_DELEGATION_MANAGER plus depositPool() / withdrawManager() / strategyManager() helpers). Set in initialize and not updateable by any function on this contract."
+    },
+    "paused": {
+      "description": "Inherited PausableUpgradeable storage. No function on this contract calls _pause / _unpause, no function uses whenNotPaused / whenPaused, and there is no pause() or unpause() entrypoint, so this slot is permanently false on this bytecode."
+    },
+    "uncompletedWithdrawalCount": {
+      "description": "Counter of EigenLayer-side withdrawals queued by NodeDelegators that have not yet been completed back into this vault. Incremented by any address registered in LRTDepositPool.isNodeDelegator via increaseUncompletedWithdrawalCount, decremented (clamped at 0) by the same callers via decreaseUncompletedWithdrawalCount, or rewritten to the live total by MANAGER via setUncompletedWithdrawalCount (which sums IDelegationManager.getQueuedWithdrawals lengths across every entry in LRTDepositPool.getNodeDelegatorQueue)."
+    },
+    "maxUncompletedWithdrawalCount": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Cap exposed for external callers; not enforced on this contract. NodeDelegator.initiateUnstaking and NodeDelegator.undelegate both read uncompletedWithdrawalCount() and maxUncompletedWithdrawalCount() on this vault and revert if a new queued withdrawal would exceed the cap. Settable only by MANAGER via setMaxUncompletedWithdrawalCount, which itself reverts if the new value exceeds 80."
+    },
+    "queuedWithdrawalsBuffer": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-asset value of the queuedWithdrawalsBuffer[asset] mapping: amount of asset on this vault reserved for queued (non-instant) withdrawals and therefore subtracted from balanceOf(asset) inside getAssetsAvailableForInstantWithdrawal. Writeable only by OPERATOR_ROLE via setQueuedWithdrawalsBuffer.",
+      "handler": {
+        "type": "event",
+        "select": "buffer",
+        "set": { "event": "QueuedWithdrawalsBufferUpdated" },
+        "groupBy": "asset"
+      }
+    }
+  }
 }

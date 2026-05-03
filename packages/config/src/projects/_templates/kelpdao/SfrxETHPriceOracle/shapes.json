@@ -1,0 +1,8 @@
+{
+  "SfrxETHPriceOracle": {
+    "hash": "0x7a72f845c0725228085b554806a79e71a1420d21e31079bf27e5a4421c8a21c6",
+    "address": "eth:0xD7DB9604EF925aF96CDa6B45026Be64C691C7704",
+    "chain": "ethereum",
+    "blockNumber": 24978836
+  }
+}

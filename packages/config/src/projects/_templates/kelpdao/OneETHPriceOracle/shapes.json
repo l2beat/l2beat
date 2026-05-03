@@ -1,0 +1,8 @@
+{
+  "OneETHPriceOracle": {
+    "hash": "0xd173811173c00cd6d5d92196c7d1630fb11f1b7e3e04197060e54d4062116682",
+    "address": "eth:0x4cB8d6DCd56d6b371210E70837753F2a835160c4",
+    "chain": "ethereum",
+    "blockNumber": 24978836
+  }
+}

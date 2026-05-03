@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SfrxETHPriceOracle",
+  "category": "core",
+  "canActIndependently": false,
+  "description": "IPriceFetcher implementation for one specific LST. getAssetPrice reverts unless the supplied asset equals sfrxETHContractAddress; otherwise it returns ISfrxETH(sfrxETHContractAddress).pricePerShare() as the asset/ETH rate. sfrxETHContractAddress is set once in initialize and has no setter; the implementation behind the proxy is upgradeable through the proxy admin.",
+  "ignoreRelatives": ["sfrxETHContractAddress"],
+  "fields": {
+    "sfrxETHContractAddress": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address whose pricePerShare() return value getAssetPrice forwards as the asset/ETH rate, and the only asset address that getAssetPrice will accept (it reverts on any other input). Set once in initialize and not updateable by any function on this contract. Walks into the foreign Frax stack and is therefore listed in ignoreRelatives so the BFS does not follow it."
+    }
+  }
+}

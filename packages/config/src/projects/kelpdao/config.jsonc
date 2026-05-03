@@ -2,8 +2,14 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "kelpdao",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 200,
-  "initialAddresses": ["eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"],
+  "maxAddresses": 1500,
+  "initialAddresses": [
+    "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+    // AVSDirectory: pulled into the discovery explicitly so the kelpOperatorAvsRegistrations
+    // override below fires. Otherwise it would only be reachable via ProtocolRegistry.getAllDeployments,
+    // which we cut to keep EigenLayer's full deployment registry out of this project's surface.
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+  ],
   "names": {
     "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": "KelpAdminMultisig",
     "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": "KelpManagerMultisig",
@@ -25,6 +31,143 @@
     "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": "KelpOperatorEOA"
   },
   "overrides": {
+    // Source code on this contract triggers a flattener crash ("Failed to find file declaring ProxyAdmin").
+    // Skipping discovery on this single address; the contract is downstream of one of the AVSes Kelp's
+    // operators are registered with.
+    "eth:0x42A72499eDDB0374ebFba44Fc880F82CCe736614": {
+      "ignoreDiscovery": true
+    },
+    // Triggers a blip runtime error in a templated edit path; ignoring for now
+    // to unblock the AVS discovery, downstream of one of the AVSes.
+    "eth:0x75351d49229aa42Df7fEBfbEa0c7cECC881ad7E7": {
+      "ignoreDiscovery": true
+    },
+    // Unverified-source AVS internals; Etherscan returns no contract name so no template can be derived.
+    // Each lives downstream of one of the AVSes Kelp's operators are registered with; ignoring discovery
+    // keeps them as opaque addresses in the values without breaking the BFS.
+    "eth:0x10aD871Ad645A63113E1dAE7a71Cbd0E2F7443eE": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x11afc5adeD8346e147504f84BE7CBb80a9B93aDe": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x51288463A0a430c94603221242A5084070D9Aed6": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x56979Fd34a06518B918BFda0B50d62Cc856f6064": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x67c929b7e86B3210517A45C3767e2828037de968": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x95199F7890887408e50E3bA704f04FbcE10A66C9": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xa918A7b8217639723055b302abf0336694993ac7": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xa937396c34d8B5F7A89A97c4796bf0f6A1d732fb": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3": {
+      "ignoreDiscovery": true
+    },
+    // EigenLayer's central deployments registry. getAllDeployments returns 36 EigenLayer infrastructure
+    // addresses that are the trust surface of EigenLayer-the-system, not Kelp; they are covered by the
+    // shared-eigenlayer project. Cut here so kelpdao stays focused on Kelp + its operators' AVS exposure.
+    "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
+      "ignoreRelatives": ["getAllDeployments"]
+    },
+    // EigenDA's ServiceManager. Treated as a leaf for trust analysis: keep visible because Kelp's
+    // operators are registered with it, but cut its middleware (registries, payment vault, etc.) since
+    // the eigenda project is the proper home for those internals.
+    "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": {
+      "ignoreRelatives": [
+        "blsApkRegistry",
+        "registryCoordinator",
+        "stakeRegistry",
+        "pauserRegistry",
+        "paymentVault",
+        "eigenDADisperserRegistry",
+        "eigenDARelayRegistry",
+        "eigenDAThresholdRegistry",
+        "rewardsInitiator",
+        "batchConfirmers"
+      ]
+    },
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      "description": "AVSDirectory: legacy EigenLayer (operator, AVS) registration registry. The override below adds a kelp-scoped derived field that walks every AVS Kelp's two operators (ELOperator_A, ELOperator_B) are currently registered with on this directory, so the BFS pulls their internals (ServiceManager, registries, slasher chain) into this discovery automatically. List refreshes on every discovery run; the only deployment-stable inputs hardcoded in the where clauses are the two operator addresses (which are also named in this project and would surface as a separate diff if MANAGER ever undelegates and re-delegates).",
+      "fields": {
+        "kelpOperatorAvsRegistrations": {
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "description": "Per-operator set of AVS addresses each Kelp NodeDelegator-delegated EigenLayer operator is currently REGISTERED with on this AVSDirectory. Reconstructed live from OperatorAVSRegistrationStatusUpdated events restricted to Kelp's two operators; entries appear when the operator's status flips to REGISTERED (1) and disappear when it flips to DEREGISTERED (0). The address values are walked by the BFS so each AVS's middleware stack is pulled into this discovery; the (operator) keys are not walked.",
+          "edit": [
+            "pick",
+            "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF",
+            "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+          ],
+          "handler": {
+            "type": "event",
+            "select": "avs",
+            "groupBy": "operator",
+            "ignoreRelative": true,
+            "add": [
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                  ],
+                  ["=", "#status", 1]
+                ]
+              },
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                  ],
+                  ["=", "#status", 1]
+                ]
+              }
+            ],
+            "remove": [
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                  ],
+                  ["=", "#status", 0]
+                ]
+              },
+              {
+                "event": "OperatorAVSRegistrationStatusUpdated",
+                "where": [
+                  "and",
+                  [
+                    "=",
+                    "#operator",
+                    "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                  ],
+                  ["=", "#status", 0]
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
     "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
       "category": "shared",
       "description": "Lido stETH — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Lido's internal admin/locator chain is not walked (Lido has its own discovery).",
@@ -40,10 +183,7 @@
     "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
       "category": "shared",
       "description": "Stader ETHx — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Stader's StaderConfig chain is not walked.",
-      "ignoreRelatives": [
-        "$admin",
-        "staderConfig"
-      ]
+      "ignoreRelatives": ["$admin", "staderConfig"]
     },
     "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE": {
       "category": "shared",
@@ -53,7 +193,7 @@
       "description": "KelpAdminMultisig — root admin of the rsETH protocol. Holds DEFAULT_ADMIN_ROLE on LRTConfig: can grant/revoke any role on every Kelp contract (including MINTER_ROLE and BURNER_ROLE on rsETH), re-point any entry in LRTConfig's bytes32 contract registry (so it can effectively replace LRTDepositPool, LRTOracle, LRTWithdrawalManager or rsETH itself), and add/remove supported deposit assets and their EigenLayer strategies. Also set as rsETH.custodyAddress, the ASSET_TRANSFER_ROLE-style endpoint stored on the rsETH token. There is no timelock on these operations except for adding new supported assets (which is gated by TIME_LOCK_ROLE / 10-day timelock). In short: this multisig can stop, replace, or reroute every component that mints, burns, or backs rsETH."
     },
     "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": {
-      "description": "KelpManagerMultisig — operational admin of the rsETH protocol. Holds three roles on LRTConfig: MANAGER (can raise per-asset deposit limits, change protocolFeeInBPS — which directly affects how much rsETH is minted to the treasury on every LRTOracle rebase, and set the EigenLayer reward receiver), PAUSER_ROLE (can pause LRTDepositPool, LRTOracle, LRTWithdrawalManager and rsETH transfers), and OPERATOR_ROLE (can drive NodeDelegator workflows: deposit pooled LSTs into EigenLayer strategies, queue/complete withdrawals, manage validators). Cannot grant roles or replace contracts. Effectively controls the day-to-day economics and operational state of rsETH issuance and redemption."
+      "description": "KelpManagerMultisig, operational admin of the rsETH protocol. Holds three roles on LRTConfig. MANAGER lets it set protocolFeeInBPS (the rsETH protocol fee LRTOracle mints to the treasury on every rebase, capped at 1500 bps by the setter) and per-asset deposit limits, tune LRTOracle parameters (maxFeeMintAmountPerDay, the manager-only updateRSETHPriceAsManager that bypasses the price-percentage limit) and LRTWithdrawalManager parameters (withdrawal delay, instant-withdrawal enable/fee/fee-recipient), set rsETH's daily mint cap, blocklist any rsETH holder for 24h via blockUserTransfers, mark addresses as permanently exempt from such freezes, call delegateTo / undelegate / createEigenPod on the NodeDelegators (changes which EigenLayer operator each NodeDelegator delegates to), and call stakeEthForStETH on LRTDepositPool. PAUSER_ROLE lets it pause every Kelp contract via LRTConfig.pauseAll or each individual pause function. OPERATOR_ROLE lets it drive NodeDelegator workflows (depositAssetIntoStrategy, stake32Eth, verifyWithdrawalCredentials, startCheckpoint, initiateUnstaking, processClaim) and the operator-gated paths on LRTDepositPool (internal swaps), LRTWithdrawalManager (completeWithdrawalForUser, depositIdleETHToAave, collectInterestToTreasury, unlockQueue) and LRTUnstakingVault. Cannot grant roles, replace contracts in the LRTConfig registry, set the EigenLayer reward receiver, change the dust threshold, or unpause anything (those are DEFAULT_ADMIN), and cannot move pooled LST/ETH balances between LRTDepositPool, NodeDelegators and LRTUnstakingVault (that is ASSET_TRANSFER_ROLE)."
     },
     "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": {
       "description": "KelpPauserMultisig — secondary pause-only authority. Holds PAUSER_ROLE on LRTConfig. Can pause LRTDepositPool (block new deposits / rsETH minting), LRTOracle (freeze the rsETH/ETH rate and stop fee-mints), LRTWithdrawalManager (block redemptions / rsETH burning), and rsETH transfers. Cannot unpause — that requires MANAGER or DEFAULT_ADMIN. Pure circuit breaker for rsETH user flows."

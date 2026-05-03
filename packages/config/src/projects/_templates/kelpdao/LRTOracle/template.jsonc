@@ -3,5 +3,59 @@
   "displayName": "LRTOracle",
   "category": "core",
   "canActIndependently": false,
-  "description": "Computes the rsETH/ETH exchange rate used by LRTDepositPool. Aggregates per-LST oracle adapters and the total restaked balance reported by NodeDelegators."
+  "description": "Computes the rsETH/ETH exchange rate (rsETHPrice) on demand and mints the protocol fee. Two entrypoints: updateRSETHPrice is callable by anyone when this contract is not paused; updateRSETHPriceAsManager is callable by MANAGER and ignores both the paused gate and the upper-bound percentage check. Each successful update sums per-asset getTotalAssetDeposits read from the LRT_DEPOSIT_POOL-registered address times the per-asset assetPriceOracle reading, takes protocolFeeInBPS / 10000 of any TVL increase, mints that as rsETH to the PROTOCOL_TREASURY-registered address (capped per 24h by maxFeeMintAmountPerDay, skipped while this contract or the LRT_DEPOSIT_POOL or LRT_WITHDRAW_MANAGER address is paused), then writes rsETHPrice = (totalETHInProtocol - fee) / rsETH.totalSupply. Two non-obvious behaviours: a price increase exceeding pricePercentageLimit reverts the public path (only updateRSETHPriceAsManager can push it through), and a price decrease exceeding pricePercentageLimit auto-pauses this contract and calls pause() on the LRT_DEPOSIT_POOL- and LRT_WITHDRAW_MANAGER-registered addresses. All role checks (onlyLRTAdmin / onlyLRTManager / onlyRole(PAUSER_ROLE)) consult the IAccessControl interface on the address held in lrtConfig.",
+  "fields": {
+    "lrtConfig": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address of the LRTConfig used for every role check on this contract (onlyLRTAdmin, onlyLRTManager, onlyRole(PAUSER_ROLE)) and every registry lookup (getContract for LRT_DEPOSIT_POOL, LRT_WITHDRAW_MANAGER and PROTOCOL_TREASURY, plus getSupportedAssetList in _updateRsETHPrice). Set in initialize and not updateable by any function on this contract."
+    },
+    "rsETHPrice": {
+      "description": "Current rsETH/ETH exchange rate in 1e18 precision (1e18 == 1.0 ETH per rsETH). Writeable only by _updateRsETHPrice, reachable through updateRSETHPrice (public, blocked while paused) or updateRSETHPriceAsManager (MANAGER, bypasses paused). When rsETH.totalSupply == 0, _updateRsETHPrice short-circuits and writes 1 ether without further computation."
+    },
+    "highestRsethPrice": {
+      "description": "All-time-high rsETH price observed by _updateRsETHPrice (1e18 precision). Auto-updated whenever a new price exceeds it. Used as the reference value that pricePercentageLimit is multiplied against to derive both the up-revert threshold and the down-pause threshold inside _updateRsETHPrice. No setter; advanced only by the price-update path."
+    },
+    "pricePercentageLimit": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Threshold in 1e18 precision (1e18 == 100%, 1e16 == 1%) controlling _updateRsETHPrice's tolerance for large moves vs highestRsethPrice. If the new price exceeds highestRsethPrice + (limit * highestRsethPrice / 1e18), public updateRSETHPrice reverts and only updateRSETHPriceAsManager (MANAGER) can push through. If the new price falls below highestRsethPrice - (limit * highestRsethPrice / 1e18), _updateRsETHPrice auto-pauses this contract and calls pause() on the LRT_DEPOSIT_POOL- and LRT_WITHDRAW_MANAGER-registered addresses. A value of 0 disables both checks. Writeable only by DEFAULT_ADMIN_ROLE on lrtConfig via setPricePercentageLimit."
+    },
+    "maxFeeMintAmountPerDay": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Cap (in rsETH wei) on the total protocol fee that _updateRsETHPrice can mint within a 24h window anchored on feePeriodStartTime. _updateRsETHPrice reverts if the period's accumulated mint plus the next fee would exceed this. A value of 0 effectively disables fee minting (remainingDailyFeeMintLimit returns 0). Writeable only by MANAGER on lrtConfig via setMaxFeeMintAmountPerDay."
+    },
+    "currentPeriodMintedFeeAmount": {
+      "description": "Running total (in rsETH wei) of protocol fee minted by _updateRsETHPrice within the current 24h period. Auto-incremented on each successful fee mint and auto-reset to 0 by _checkAndUpdateDailyFeeMintLimit when block.timestamp crosses feePeriodStartTime + 1 day. No external setter."
+    },
+    "feePeriodStartTime": {
+      "description": "Anchor timestamp from which the 24h fee-mint windows are measured. Initial value set by the one-shot reinitialize (reinitializer(2), MANAGER), which requires the supplied timestamp to be no older than 24h and not in the future. Subsequently auto-rolled forward by _checkAndUpdateDailyFeeMintLimit (it is set to getCurrentPeriodStartTime() each time a new day begins)."
+    },
+    "getCurrentPeriodStartTime": {
+      "description": "View getter returning feePeriodStartTime + floor((block.timestamp - feePeriodStartTime) / 1 day) * 1 day, i.e. the aligned start of the 24h fee-mint period that contains block.timestamp."
+    },
+    "getNextDailyLimitResetTimestamp": {
+      "description": "View getter returning getCurrentPeriodStartTime() + 1 day. The earliest block.timestamp at which currentPeriodMintedFeeAmount is treated as reset and the full maxFeeMintAmountPerDay becomes available again."
+    },
+    "remainingDailyFeeMintLimit": {
+      "description": "View getter returning max(maxFeeMintAmountPerDay - effectiveMinted, 0), where effectiveMinted is currentPeriodMintedFeeAmount during the active period and 0 once block.timestamp >= feePeriodStartTime + 1 day. Returns 0 whenever maxFeeMintAmountPerDay is 0."
+    },
+    "paused": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Boolean state. Set true by pause() (gated to PAUSER_ROLE on lrtConfig, only when not already paused) and by _updateRsETHPrice itself when a price decrease exceeds pricePercentageLimit. Set false by unpause() (gated to DEFAULT_ADMIN_ROLE on lrtConfig). While true, the public updateRSETHPrice reverts; updateRSETHPriceAsManager (MANAGER) can still execute and re-set the price."
+    },
+    "assetPriceOracles": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-asset value of the assetPriceOracle[asset] mapping, the address whose getAssetPrice(asset) reading _updateRsETHPrice multiplies by the per-asset getTotalAssetDeposits to compute the asset's contribution to totalETHInProtocol. Writeable only by DEFAULT_ADMIN_ROLE on lrtConfig via updatePriceOracleFor (no sanity check) or updatePriceOracleForValidated (which additionally requires the resulting price to lie between 1e16 and 1e19). The mapping is not zeroed by any code path on this contract, so historical entries persist for assets that have been removed from the supported-asset list at lrtConfig.",
+      "handler": {
+        "type": "event",
+        "select": "priceOracle",
+        "set": { "event": "AssetPriceOracleUpdate" },
+        "groupBy": "asset"
+      }
+    }
+  }
 }

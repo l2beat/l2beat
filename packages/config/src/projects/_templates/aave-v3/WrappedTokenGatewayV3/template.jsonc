@@ -2,8 +2,5 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "WrappedTokenGatewayV3",
   "description": "Aave V3 ETH gateway. Wraps ETH to WETH on deposits to the Aave main pool.",
-  "ignoreRelatives": [
-    "owner",
-    "getWETHAddress"
-  ]
+  "ignoreRelatives": ["owner", "getWETHAddress"]
 }

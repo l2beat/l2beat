@@ -2,6 +2,36 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LRTDepositPool",
   "category": "core",
-  "description": "Main user entrypoint for KelpDAO restaking. Accepts supported LSTs (stETH, ETHx) and native ETH, mints rsETH, and routes deposits to NodeDelegators which delegate to EigenLayer operators.",
-  "ignoreMethods": ["nodeDelegatorQueue"]
+  "canActIndependently": false,
+  "description": "User deposit entrypoint and asset-routing hub. Holds idle LST and ETH balances, mints rsETH on deposit at the LRTOracle quote, maintains the NodeDelegator queue used to forward balances to the EigenLayer side, and exposes the protocol-wide per-asset accounting view (getTotalAssetDeposits / getAssetDistributionData / getETHDistributionData), which sums balances across this contract, every entry in nodeDelegatorQueue (via NodeDelegator getAssetBalance / getAssetUnstaking / getEffectivePodShares), the LRT_UNSTAKING_VAULT-registered address, and the LRT_CONVERTER-registered address. All role checks consult IAccessControl on the address held in lrtConfig. Role-by-role gates: DEFAULT_ADMIN_ROLE: setMaxNegligibleAmount, setMinAmountToDeposit, updateMaxNodeDelegatorLimit, addNodeDelegatorContractToQueue (rejects beyond maxNodeDelegatorLimit), removeNodeDelegatorContractFromQueue and removeManyNodeDelegatorContractsFromQueue (each rejects unless every supported-asset balance plus EigenPod shares plus the unstaking-queue balance on the NDC are at or below maxNegligibleAmount), unpause. MANAGER: stakeEthForStETH (calls Lido submit() with this contract's ETH balance), maxApproveToLRTConverter, revokeApproveToLRTConverter. OPERATOR_ROLE: swapETHForAssetWithinDepositPool, swapAssetForETHWithinDepositPool (both quote against LRTOracle.getAssetPrice). ASSET_TRANSFER_ROLE: transferAssetToNodeDelegator, transferETHToNodeDelegator, transferAssetToLRTUnstakingVault, transferETHToLRTUnstakingVault. PAUSER_ROLE: pause. Three non-obvious behaviours: (1) only depositETH and depositAsset (the user-facing entrypoints) carry whenNotPaused; the admin / manager / operator / asset-transfer functions all run while this contract is paused. (2) The deposit-cap check is asymmetric for ETH: for ERC20 assets _beforeDeposit reverts when current totalAssetDeposits + amount > depositLimitByAsset, but for native ETH it reverts only if the current totalAssetDeposits is already strictly above the limit, so a single ETH deposit can push the total over the cap as long as the cap was not already exceeded before the call. (3) getRsETHAmountToMint reads LRTOracle.getAssetPrice and rsETHPrice with no bounds check, so a corrupted oracle reading translates directly into the rsETH minted to the depositor.",
+  "ignoreMethods": ["nodeDelegatorQueue"],
+  "fields": {
+    "lrtConfig": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address of the LRTConfig used for every role check on this contract (onlyLRTAdmin, onlyLRTManager, onlyLRTOperator, onlyAssetTransferRole, onlyRole(PAUSER_ROLE)) and every registry lookup (getContract for LRT_ORACLE, LRT_UNSTAKING_VAULT, LRT_CONVERTER, plus rsETH() and getLSTToken(ST_ETH_TOKEN) reads). Set in initialize and not updateable by any function on this contract."
+    },
+    "paused": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Inherited PausableUpgradeable state. Set true by pause() (PAUSER_ROLE) and by any external caller that holds PAUSER_ROLE on lrtConfig and invokes pause() directly. Set false by unpause() (DEFAULT_ADMIN_ROLE). Only blocks the user-facing depositETH and depositAsset entrypoints; admin, manager, operator and asset-transfer functions on this contract continue to execute while paused."
+    },
+    "maxNodeDelegatorLimit": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Cap on nodeDelegatorQueue.length. addNodeDelegatorContractToQueue reverts when adding would cross this cap. Initialized to 10 in initialize and updateable only by DEFAULT_ADMIN_ROLE via updateMaxNodeDelegatorLimit; the setter has no upper bound."
+    },
+    "minAmountToDeposit": {
+      "description": "Minimum acceptable deposit amount enforced by _beforeDeposit; depositETH and depositAsset revert with InvalidAmountToDeposit when the supplied amount is zero or below this. Updateable only by DEFAULT_ADMIN_ROLE via setMinAmountToDeposit."
+    },
+    "maxNegligibleAmount": {
+      "description": "Dust threshold (in wei, 18-decimal asset units) gating NodeDelegator removal. removeNodeDelegatorContractFromQueue and removeManyNodeDelegatorContractsFromQueue revert unless the target NodeDelegator's residual native ETH balance, getEffectivePodShares, getAssetUnstaking(ETH_TOKEN), and per-supported-asset getAssetBalance + getAssetUnstaking are each at or below this. Updateable only by DEFAULT_ADMIN_ROLE via setMaxNegligibleAmount."
+    },
+    "getETHDistributionData": {
+      "description": "Per-bucket native ETH accounting snapshot used to drive getTotalAssetDeposits(ETH_TOKEN). Sums: this contract's balance (ethLyingInDepositPool); for every NDC in nodeDelegatorQueue, the NDC's balance plus its getEffectivePodShares plus its getAssetUnstaking(ETH_TOKEN) (split between ethLyingInNDCs / ethStakedInEigenLayer / ethUnstakingFromEigenLayer); the LRT_UNSTAKING_VAULT-registered address's balance (ethLyingInUnstakingVault); the LRT_CONVERTER-registered address's ethValueInWithdrawal() (ethLyingInConverter). Pure read; sensitive to every NDC and to whatever lives at LRT_UNSTAKING_VAULT and LRT_CONVERTER on lrtConfig at call time."
+    },
+    "getNodeDelegatorQueue": {
+      "description": "Array view returning every address marked isNodeDelegator[ndc] == 1. The index of each entry is the ndcIndex parameter required by transferAssetToNodeDelegator and transferETHToNodeDelegator. Mutated by addNodeDelegatorContractToQueue (DEFAULT_ADMIN_ROLE, bounded by maxNodeDelegatorLimit) and removeNodeDelegatorContractFromQueue / removeManyNodeDelegatorContractsFromQueue (DEFAULT_ADMIN_ROLE, gated by the maxNegligibleAmount dust check). Order is not stable across removals: removal swaps the removed entry with the array tail and pops, so any cached ndcIndex from before a removal can refer to a different NDC after."
+    }
+  }
 }

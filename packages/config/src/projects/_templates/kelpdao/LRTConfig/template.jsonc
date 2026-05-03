@@ -3,16 +3,41 @@
   "displayName": "LRTConfig",
   "category": "gov",
   "canActIndependently": false,
-  "description": "KelpDAO's central registry and access-control hub. Stores supported deposit assets, asset-to-strategy and asset-to-deposit-limit configuration, and the addresses of every other Kelp contract via a bytes32-keyed registry. Holds the OZ AccessControl role table that every other Kelp contract (LRTDepositPool, NodeDelegator, rsETH, ...) checks against — granting or revoking a role here propagates to the whole protocol.",
-  "ignoreRelatives": [
-    "getSupportedAssetList",
-    "registeredTokens"
-  ],
+  "description": "OZ AccessControl + bytes32-keyed configuration store designed to be shared by a multi-contract protocol. Sibling contracts read role membership via IAccessControl and look up sibling addresses via getContract(KEY) / getLSTToken(KEY). The only state-changing function on this contract that consumes the registry is pauseAll, which fans pause() out to the addresses under LRT_DEPOSIT_POOL, LRT_WITHDRAW_MANAGER and LRT_ORACLE, to the rsETH address, and to every NodeDelegator returned by getNodeDelegatorQueue(). Five of the role identifiers declared in the embedded LRTConstants library (MINTER_ROLE, BURNER_ROLE, OPERATOR_ROLE, ASSET_TRANSFER_ROLE, UNLOCKED_WITHDRAWAL_INITIALIZER) are not gated by any function on this contract; they exist only for sibling contracts to query.",
+  "ignoreRelatives": ["getSupportedAssetList", "registeredTokens"],
+  "types": {
+    "ContractRegistryKey": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x0900d19e2faab4e79535bcc1cfdb63996d43c8e38d9a260cf2b01e820b5f84d4": "LRT_ORACLE",
+        "0x7a8fe1bac8d7638862c53b62ffada56d0a56c381287c35f66503b5b86fa88b85": "LRT_DEPOSIT_POOL",
+        "0x1ffe5e31b761569011f2c9443332f6f987c9e37f8311474a33f44970a97038a0": "LRT_WITHDRAW_MANAGER",
+        "0xe1defbdba228c2f450cc8f3382e0fb463dd4233b2b59c3d3ed9e518e77222ed3": "LRT_UNSTAKING_VAULT",
+        "0x305e5896d422923741b53f048a145a568046f2ae0bba25aa944a6839a26690ef": "LRT_CONVERTER",
+        "0xdf8b503c62789922a81d42505af77cf221dd1889e0d4d810b4d4f10f4494bce7": "REWARD_RECEIVER",
+        "0x1541fdd8528986f8978a20cc3e2a7f06166bc4e636cbe12e45e82b00f91dec5a": "PROTOCOL_TREASURY",
+        "0x6c484c5b446e03c8deb0dddb93e7ef3ffe281049ab3883410f48e491f00fd7f4": "PUBKEY_REGISTRY",
+        "0x893174bb117dfb6bad763bc2a86a0d666364de88c2b918f8e333af7c789de70e": "BEACON_CHAIN_ETH_STRATEGY",
+        "0x6bc2c4778697d26fe430a785767cb8ca8f3834a5938a17a9b2fd8a5dab5a19ec": "EIGEN_STRATEGY_MANAGER",
+        "0xfa35f8e3786b5a503b997a59c721169d947268d05decc8725b4881abe793c5e7": "EIGEN_POD_MANAGER",
+        "0xe6f126e6caa9e3ecec885b4018b5fc7b4be7215ed294516a21548156199de5b5": "EIGEN_DELEGATION_MANAGER",
+        "0xf46c3b79e66af56112a77e501b5ab3329c9c95469b9c972cdbd8023a848c621e": "EIGEN_REWARDS_COORDINATOR"
+      }
+    },
+    "TokenRegistryKey": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x5ab93526e86faeda0b6e64b0938936c8ae1511dfade61703cbe8e2f09eac2834": "ST_ETH_TOKEN",
+        "0xac2b7f58bafcd59e47d98c6938f7cb948e0439f65b24f245f5301670fbd13eba": "ETHX_TOKEN",
+        "0x2e2f0e2a70f080617e0515b639c3a5ca169a7cae0981947b6d995226fc7a7898": "SFRX_ETH_TOKEN"
+      }
+    }
+  },
   "fields": {
     "accessControl": {
       "severity": "HIGH",
       "type": "PERMISSION",
-      "description": "The full OZ AccessControl role table for the entire Kelp protocol. Every other Kelp contract (LRTDepositPool, LRTWithdrawalManager, NodeDelegators, rsETH, ...) checks roles against this table.",
+      "description": "Role-by-role gates on functions in this contract. DEFAULT_ADMIN_ROLE: setContract, setToken, setRSETH, setEigenLayerRewardReceiver, setMaxNegligibleAmount, removeSupportedAsset (reverts unless the asset's getTotalAssetDeposits at the LRT_DEPOSIT_POOL-registered address is at or below maxNegligibleAmount), updateAssetStrategy (reverts if any entry returned by getNodeDelegatorQueue() has non-zero shares in the previous strategy), plus the OZ-default grantRole / revokeRole of every other role. MANAGER: setProtocolFeeBps (reverts if value > 1500, i.e. 15%), updateAssetDepositLimit (any already-supported asset). PAUSER_ROLE: pauseAll only. TIME_LOCK_ROLE: addNewSupportedAsset only (and the depositLimit > 0 invariant is enforced by the setter).",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -28,104 +53,168 @@
       }
     },
     "defaultAdmins": {
-      "description": "Holders of DEFAULT_ADMIN_ROLE — root admin of the entire Kelp protocol. Can grant or revoke any role on LRTConfig (which propagates to every Kelp contract that checks against it), re-point any entry in the bytes32 contract registry (effectively swapping LRTDepositPool, LRTOracle, NodeDelegators, EigenLayer endpoints), and add or remove supported deposit assets and their strategies.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of the root admin role. Powers on this contract: setContract, setToken, setRSETH, setEigenLayerRewardReceiver, setMaxNegligibleAmount, removeSupportedAsset (subject to the maxNegligibleAmount dust gate against ILRTDepositPool.getTotalAssetDeposits), updateAssetStrategy (subject to the no-shares-in-prev-strategy check across the NodeDelegator queue), and the OZ-default grantRole / revokeRole of every role on this contract (since DEFAULT_ADMIN_ROLE is the role admin of every role here). Membership is changed by current DEFAULT_ADMIN_ROLE holders only.",
       "copy": "accessControl",
       "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
       "permissions": [
-        { "type": "interact", "description": "grant or revoke any role on LRTConfig, propagating immediately to LRTDepositPool, LRTWithdrawalManager, NodeDelegators, rsETH and every other Kelp contract." },
-        { "type": "interact", "description": "register or replace any contract in the LRTConfig bytes32 registry (LRT_DEPOSIT_POOL, LRT_ORACLE, LRT_WITHDRAW_MANAGER, NodeDelegators, EigenLayer endpoints)." },
-        { "type": "interact", "description": "register or remove supported deposit assets and reassign their EigenLayer strategies." }
+        {
+          "type": "interact",
+          "description": "grant or revoke any role on this contract."
+        },
+        {
+          "type": "interact",
+          "description": "swap any address in the bytes32 contract or token registries, or the rsETH pointer."
+        },
+        {
+          "type": "interact",
+          "description": "set eigenLayerRewardReceiver, set maxNegligibleAmount, reassign an asset's EigenLayer strategy (subject to the no-shares-in-prev-strategy check), and remove a supported asset (subject to the dust check)."
+        }
       ]
     },
     "managers": {
-      "description": "Holders of MANAGER role — day-to-day operational admin. Can raise per-asset deposit limits, update the protocol fee, set the EigenLayer reward receiver, set the rsETH custody address, and tune other operational parameters. Cannot grant roles or replace registered contracts.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of the operational-config role. Powers on this contract: setProtocolFeeBps (caps protocolFeeInBPS at 1500, i.e. 15%) and updateAssetDepositLimit (any already-supported asset). Cannot grant or revoke roles, swap registry entries, or pause anything. Membership is changed by DEFAULT_ADMIN_ROLE holders.",
       "copy": "accessControl",
       "edit": ["get", "MANAGER", "members"],
       "permissions": [
-        { "type": "interact", "description": "raise per-asset deposit limits and update protocol fee parameters." },
-        { "type": "interact", "description": "set the EigenLayer reward receiver, the rsETH custody address, and other operational parameters." }
+        {
+          "type": "interact",
+          "description": "set protocolFeeInBPS (capped at 15%) and update depositLimitByAsset for any supported asset."
+        }
       ]
     },
     "pausers": {
-      "description": "Holders of PAUSER_ROLE — circuit breaker. Can pause user-facing flows on LRTDepositPool (deposits), LRTOracle (rate updates and fee minting), LRTWithdrawalManager (withdrawals), rsETH (transfers) and any other Kelp contract that gates entrypoints on this role. Cannot unpause — that requires MANAGER or DEFAULT_ADMIN.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of the circuit-breaker role. The only function on this contract gated to this role is pauseAll, which iterates over the LRT_DEPOSIT_POOL / LRT_WITHDRAW_MANAGER / LRT_ORACLE addresses, the rsETH address, and every NodeDelegator returned by getNodeDelegatorQueue(), and calls IPausable(...).pause() on each (skipping any target already paused). There is no unpause function on this contract. Membership is changed by DEFAULT_ADMIN_ROLE holders.",
       "copy": "accessControl",
       "edit": ["get", "PAUSER_ROLE", "members"],
       "permissions": [
-        { "type": "interact", "description": "pause LRTDepositPool, LRTOracle, LRTWithdrawalManager, rsETH and other Kelp contracts that gate user-facing flows on the PAUSER_ROLE." }
+        {
+          "type": "interact",
+          "description": "fan pause() out to the addresses under LRT_DEPOSIT_POOL, LRT_WITHDRAW_MANAGER, LRT_ORACLE, the rsETH address, and every NodeDelegator returned by getNodeDelegatorQueue(), via pauseAll."
+        }
       ]
     },
     "minters": {
-      "description": "Holders of MINTER_ROLE — can mint rsETH. Two legitimate minters: LRTDepositPool (mints rsETH to depositors against incoming LSTs/ETH) and LRTOracle (mints the protocol fee in rsETH to the treasury on every updateRSETHPrice() rebase, capped by a daily fee-mint limit).",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of MINTER_ROLE. Not consumed by any function on this contract; the role identifier is declared in the embedded LRTConstants library so sibling contracts can read membership via IAccessControl. Membership is changed by DEFAULT_ADMIN_ROLE holders on this contract.",
       "copy": "accessControl",
       "edit": ["get", "MINTER_ROLE", "members"]
     },
     "burners": {
-      "description": "Holders of BURNER_ROLE — can burn rsETH from any address. In the canonical configuration this is LRTWithdrawalManager only.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of BURNER_ROLE. Not consumed by any function on this contract; the role identifier is declared in the embedded LRTConstants library so sibling contracts can read membership via IAccessControl. Membership is changed by DEFAULT_ADMIN_ROLE holders on this contract.",
       "copy": "accessControl",
       "edit": ["get", "BURNER_ROLE", "members"]
     },
     "operators": {
-      "description": "Holders of OPERATOR_ROLE — automation principals that drive NodeDelegator workflows. Can deposit Kelp's pooled LSTs into EigenLayer strategies, queue and complete EigenLayer withdrawals on behalf of NodeDelegators, and manage the validator set used for native ETH restaking through EigenPods.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of OPERATOR_ROLE. Not consumed by any function on this contract; the role identifier is declared in the embedded LRTConstants library so sibling contracts can read membership via IAccessControl. Membership is changed by DEFAULT_ADMIN_ROLE holders on this contract.",
       "copy": "accessControl",
-      "edit": ["get", "OPERATOR_ROLE", "members"],
-      "permissions": [
-        { "type": "interact", "description": "drive NodeDelegator operations: deposit assets into EigenLayer strategies, queue/complete withdrawals, manage the validator set." }
-      ]
+      "edit": ["get", "OPERATOR_ROLE", "members"]
     },
     "assetTransferRole": {
-      "description": "Holders of ASSET_TRANSFER_ROLE — can move pooled LST/ETH balances between LRTDepositPool, NodeDelegators and LRTUnstakingVault. Used to rebalance liquidity for restaking, withdrawals and EigenLayer queue management.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of ASSET_TRANSFER_ROLE. Not consumed by any function on this contract; the role identifier is declared in the embedded LRTConstants library so sibling contracts can read membership via IAccessControl. Membership is changed by DEFAULT_ADMIN_ROLE holders on this contract.",
       "copy": "accessControl",
-      "edit": ["get", "ASSET_TRANSFER_ROLE", "members"],
-      "permissions": [
-        { "type": "interact", "description": "move LST/ETH balances between LRTDepositPool, NodeDelegators and LRTUnstakingVault." }
-      ]
+      "edit": ["get", "ASSET_TRANSFER_ROLE", "members"]
     },
     "timelockRole": {
-      "description": "Holders of TIME_LOCK_ROLE — gated principals for the one operation that LRTConfig requires to be timelocked: adding a new supported deposit asset (addNewSupportedAsset). In the canonical configuration this is the TimelockController, so adding a new asset goes through the 10-day delay.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Holders of TIME_LOCK_ROLE. The only function on this contract gated to this role is addNewSupportedAsset, which appends an asset to supportedAssetList, marks it isSupportedAsset, and writes its initial depositLimitByAsset (with a depositLimit > 0 invariant). Membership is changed by DEFAULT_ADMIN_ROLE holders.",
       "copy": "accessControl",
       "edit": ["get", "TIME_LOCK_ROLE", "members"],
       "permissions": [
-        { "type": "interact", "description": "add new supported deposit assets — the only operation gated to the timelocked role." }
+        {
+          "type": "interact",
+          "description": "register a new deposit asset via addNewSupportedAsset."
+        }
       ]
     },
     "unlockedWithdrawalInitializers": {
-      "description": "Holders of UNLOCKED_WITHDRAWAL_INITIALIZER role — can initiate withdrawal flows on LRTWithdrawalManager that bypass the standard cooldown. Intended for emergency or operational unlocks; in the canonical configuration the only holder is the dedicated UnlockedWithdrawalsInitializer contract.",
+      "description": "Holders of UNLOCKED_WITHDRAWAL_INITIALIZER role. Not consumed by any function on this contract; the role identifier is declared in the embedded LRTConstants library so sibling contracts can read membership via IAccessControl. Membership is changed by DEFAULT_ADMIN_ROLE holders on this contract.",
       "copy": "accessControl",
-      "edit": ["get", "UNLOCKED_WITHDRAWAL_INITIALIZER", "members"],
-      "permissions": [
-        { "type": "interact", "description": "initiate unlocked withdrawal flows on LRTWithdrawalManager (bypassing the standard cooldown)." }
-      ]
+      "edit": ["get", "UNLOCKED_WITHDRAWAL_INITIALIZER", "members"]
     },
     "registeredContracts": {
       "severity": "HIGH",
       "type": "CODE_CHANGE",
-      "description": "Per-key latest address registered in the bytes32-keyed contract registry, derived from SetContract events. Maps logical contract roles (LRT_DEPOSIT_POOL, LRT_ORACLE, EIGEN_STRATEGY_MANAGER, ...) to their current addresses. Re-pointing a key to a different contract effectively swaps that role's implementation.",
+      "description": "bytes32-keyed contract registry (contractMap). Writeable only by DEFAULT_ADMIN_ROLE via setContract. Read on this contract only by pauseAll (LRT_DEPOSIT_POOL, LRT_WITHDRAW_MANAGER, LRT_ORACLE keys), removeSupportedAsset (LRT_DEPOSIT_POOL) and updateAssetStrategy (LRT_DEPOSIT_POOL); the other keys are stored solely for sibling contracts to look up via getContract(KEY).",
       "handler": {
         "type": "event",
         "select": "contractAddr",
         "set": { "event": "SetContract" },
         "groupBy": "key"
-      }
+      },
+      "edit": ["map_keys", ["format", "ContractRegistryKey"]]
     },
     "registeredTokens": {
-      "description": "Per-key latest token address registered via SetToken events. Same set as supportedAssetList.",
+      "description": "bytes32-keyed token registry (tokenMap). Writeable by DEFAULT_ADMIN_ROLE via setToken; the ST_ETH_TOKEN and ETHX_TOKEN keys are also seeded by the initialize function. No state-changing function on this contract reads from it; sibling contracts look up tokens via the getLSTToken(KEY) view.",
       "handler": {
         "type": "event",
         "select": "tokenAddr",
         "set": { "event": "SetToken" },
         "groupBy": "key"
-      }
+      },
+      "edit": ["map_keys", ["format", "TokenRegistryKey"]]
     },
     "eigenLayerRewardReceiver": {
       "severity": "HIGH",
       "type": "PERMISSION",
-      "description": "Receives EigenLayer rewards on behalf of KelpDAO. Settable by MANAGER."
+      "description": "Address stored on this contract and exposed via the public eigenLayerRewardReceiver getter. Writeable only by DEFAULT_ADMIN_ROLE via setEigenLayerRewardReceiver. Not consumed by any function on this contract; sibling contracts read it for their own reward-routing logic."
     },
     "rsETH": {
-      "description": "The rsETH liquid restaking token controlled by this Kelp deployment."
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Address of the rsETH token contract. Initialized in initialize and replaceable by DEFAULT_ADMIN_ROLE via setRSETH (a dedicated setter, separate from the bytes32 contract registry). Read on this contract only by pauseAll, which calls IPausable(rsETH).pause()."
     },
     "supportedAssetList": {
-      "description": "Deposit assets accepted by LRTDepositPool. Currently stETH, ETHx and native ETH (sentinel 0xEeee...EEeE)."
+      "description": "Array of deposit assets accepted by the protocol, mirrored by isSupportedAsset[asset]. Native ETH is represented by the LRTConstants.ETH_TOKEN sentinel (0xEeee...EEeE). Appended by addNewSupportedAsset (TIME_LOCK_ROLE). Removed by removeSupportedAsset (DEFAULT_ADMIN_ROLE), which reverts unless the asset's getTotalAssetDeposits at the LRT_DEPOSIT_POOL-registered address is at or below maxNegligibleAmount. The onlySupportedAsset modifier (used on updateAssetDepositLimit, updateAssetStrategy and removeSupportedAsset) checks against this list."
+    },
+    "getSupportedAssetList": {
+      "description": "View getter that returns the entire supportedAssetList in one call. Same content as supportedAssetList; provided so callers can fetch the full list without iterating the indexed array getter."
+    },
+    "protocolFeeInBPS": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Protocol fee in basis points (1 = 0.01%). Writeable only by MANAGER via setProtocolFeeBps, which reverts if the new value exceeds 1500 (15%). Not consumed by any function on this contract; sibling contracts read it via the public protocolFeeInBPS getter."
+    },
+    "maxNegligibleAmount": {
+      "description": "Dust threshold in 18-decimal asset units. Writeable only by DEFAULT_ADMIN_ROLE via setMaxNegligibleAmount. On this contract it gates removeSupportedAsset, which reverts unless the asset's getTotalAssetDeposits reading from the LRT_DEPOSIT_POOL-registered address is at or below this value. Sibling contracts read the public getter for their own dust-tolerance checks."
+    },
+    "assetStrategies": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-asset value of the assetStrategy[asset] mapping. Writeable only by DEFAULT_ADMIN_ROLE via updateAssetStrategy, which reverts if any entry returned by getNodeDelegatorQueue() on the LRT_DEPOSIT_POOL-registered address has non-zero shares in the previous strategy. Removed assets ghost: removeSupportedAsset zeroes assetStrategy[asset] in storage but emits no AssetStrategyUpdate event, so an asset that was once supported keeps its last-seen strategy in this view; cross-reference supportedAssetList for the currently-active set.",
+      "handler": {
+        "type": "event",
+        "select": "strategy",
+        "set": { "event": "AssetStrategyUpdate" },
+        "groupBy": "asset"
+      }
+    },
+    "assetDepositLimits": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-asset value of the depositLimitByAsset[asset] mapping (in 18-decimal asset units). Initial value set by addNewSupportedAsset (TIME_LOCK_ROLE, with a depositLimit > 0 invariant). Updates by updateAssetDepositLimit (MANAGER, requires onlySupportedAsset). Removed assets ghost: removeSupportedAsset zeroes the storage entry but emits no AssetDepositLimitUpdate event, so removed assets keep their last-seen limit in this view; cross-reference supportedAssetList for the currently-active set.",
+      "handler": {
+        "type": "event",
+        "select": "depositLimit",
+        "set": [
+          { "event": "AddedNewSupportedAsset" },
+          { "event": "AssetDepositLimitUpdate" }
+        ],
+        "groupBy": "asset"
+      }
     }
   }
 }
