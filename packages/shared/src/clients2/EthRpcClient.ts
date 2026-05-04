@@ -158,7 +158,6 @@ export class EthRpcClient {
     block: BlockParameter,
     includeTransactions: boolean,
   ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
-    console.log('getBlockByNumber', block, includeTransactions)
     const data = await this.rawCall('eth_getBlockByNumber', [
       encodeBlock(block),
       includeTransactions,
