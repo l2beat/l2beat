@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1777038237,
+  "timestamp": 1777390883,
   "configHash": "0x5f6a42276cf8f372c3a6eef5a1675fdb096f62c32011d6406f791d8d919ed61b",
   "entries": [
     {
@@ -239,7 +239,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621212",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621219",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -800,7 +800,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1506,12 +1506,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x86db918E197fa560bfFF5C6DCA97DDE91f3E5AB2",
+        "anchorGame": "eth:0x40349deC7610DA9703F4cD528a289D58f24D2316",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7c9560397d2aeaca0729d9a185c28fc6246ecf23bd3ae6accdb7f4697ec6f21c",
-          64530498
+          "0x3a729ecdd0a326ea6b2c4aa05c485b1b29937712cc806b19d3d71ee677c1fab1",
+          64883298
         ],
         "initVersion": 1,
         "paused": false,
@@ -1734,12 +1734,81 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 30,
+        "nonce": 31,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "OPSuccinctFaultDisputeGame",
+      "address": "eth:0xA35d2A7F365b42EcFCB7Db9240c3973Fc8e65139",
+      "type": "Contract",
+      "template": "succinct/OPSuccinct/OPSuccinctFaultDisputeGame",
+      "sourceHashes": [
+        "0xf7e6253e33073d03e58dd85db83b34b568e76fe6b4e84c838357ac993d91bf1e"
+      ],
+      "proxyType": "immutable",
+      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "sinceTimestamp": 1776775511,
+      "sinceBlock": 24928379,
+      "values": {
+        "$immutable": true,
+        "accessManager": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+        "aggregationVkey": "0x003ff44df02a49f7ca06641411c6d1f34e71b3a17c6aa0087091ff193458e10b",
+        "anchorStateRegistry": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
+        "bondDistributionMode": 0,
+        "challengerBond": "10000000000000000",
+        "claimData": {
+          "parentIndex": 0,
+          "counteredBy": "eth:0x0000000000000000000000000000000000000000",
+          "prover": "eth:0x0000000000000000000000000000000000000000",
+          "claim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "status": 0,
+          "deadline": 0
+        },
+        "createdAt": 0,
+        "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+        "extraData": "0x000000000000000000000000000000000000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
+        "gameData": {
+          "gameType_": 42,
+          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData_": "0x000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "gameOver": true,
+        "gameType": 42,
+        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "l2BlockNumber": 0,
+        "l2SequenceNumber": 0,
+        "maxChallengeDuration": 302400,
+        "maxProveDuration": 86400,
+        "parentIndex": 0,
+        "rangeVkeyCommitment": "0x5b3aba7b278d553e2e973a7950e953095d9567595429c20f66df6a664a3c5e4a",
+        "resolvedAt": 0,
+        "rollupConfigHash": "0x0961504b7d498af8f8606bfd4e5fe8e14f7882ed3116b1c59ddfe51d4125633e",
+        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "SP1_VERIFIER": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+        "sp1Verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+        "startingBlockNumber": 0,
+        "startingOutputRoot": {
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "l2SequenceNumber": 0
+        },
+        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "status": 0,
+        "version": "2.0.0",
+        "wasRespectedGameTypeWhenCreated": false
+      },
+      "fieldMeta": {
+        "SP1_VERIFIER": {
+          "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA35d2A7F365b42EcFCB7Db9240c3973Fc8e65139": "OPSuccinctFaultDisputeGame"
       }
     },
     {
@@ -1938,7 +2007,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2099,8 +2168,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 463628,
-          "prevBlockNum": 24945635
+          "prevBoughtGas": 516982,
+          "prevBlockNum": 24978770
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2336,75 +2405,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "OPSuccinctFaultDisputeGame",
-      "address": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
-      "type": "Contract",
-      "template": "succinct/OPSuccinct/OPSuccinctFaultDisputeGame",
-      "sourceHashes": [
-        "0xf7e6253e33073d03e58dd85db83b34b568e76fe6b4e84c838357ac993d91bf1e"
-      ],
-      "proxyType": "immutable",
-      "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
-      "sinceTimestamp": 1774368779,
-      "sinceBlock": 24728513,
-      "values": {
-        "$immutable": true,
-        "accessManager": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
-        "aggregationVkey": "0x004f4bbc8b8599a08bb3715b9a18bb53996ac81d558a0ac094f6e97c71b70377",
-        "anchorStateRegistry": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
-        "bondDistributionMode": 0,
-        "challengerBond": "10000000000000000",
-        "claimData": {
-          "parentIndex": 0,
-          "counteredBy": "eth:0x0000000000000000000000000000000000000000",
-          "prover": "eth:0x0000000000000000000000000000000000000000",
-          "claim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "status": 0,
-          "deadline": 0
-        },
-        "createdAt": 0,
-        "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
-        "extraData": "0x000000000000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
-        "gameData": {
-          "gameType_": 42,
-          "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extraData_": "0x000000000000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "gameOver": true,
-        "gameType": 42,
-        "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "l2BlockNumber": 0,
-        "l2SequenceNumber": 0,
-        "maxChallengeDuration": 302400,
-        "maxProveDuration": 86400,
-        "parentIndex": 0,
-        "rangeVkeyCommitment": "0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c",
-        "resolvedAt": 0,
-        "rollupConfigHash": "0x0961504b7d498af8f8606bfd4e5fe8e14f7882ed3116b1c59ddfe51d4125633e",
-        "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "SP1_VERIFIER": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-        "sp1Verifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-        "startingBlockNumber": 0,
-        "startingOutputRoot": {
-          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2SequenceNumber": 0
-        },
-        "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "status": 0,
-        "version": "2.0.0",
-        "wasRespectedGameTypeWhenCreated": false
-      },
-      "fieldMeta": {
-        "SP1_VERIFIER": {
-          "description": "The SP1 verifier contract used to verify ZK proofs. Set in constructor."
-        }
-      },
-      "implementationNames": {
-        "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1": "OPSuccinctFaultDisputeGame"
-      }
-    },
-    {
       "address": "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2435,7 +2435,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1777037507,
+        "getLastProposalTimestamp": 1777390007,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2500,8 +2500,8 @@
         "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
-        "game42": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
-        "gameCount": 32565,
+        "game42": "eth:0xA35d2A7F365b42EcFCB7Db9240c3973Fc8e65139",
+        "gameCount": 32761,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3184,6 +3184,68 @@
     "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": [
       "constructor(address _singleton)"
     ],
+    "eth:0xA35d2A7F365b42EcFCB7Db9240c3973Fc8e65139": [
+      "constructor(uint64 _maxChallengeDuration, uint64 _maxProveDuration, address _disputeGameFactory, address _sp1Verifier, bytes32 _rollupConfigHash, bytes32 _aggregationVkey, bytes32 _rangeVkeyCommitment, uint256 _challengerBond, address _anchorStateRegistry, address _accessManager)",
+      "error AlreadyInitialized()",
+      "error BadAuth()",
+      "error BondTransferFailed()",
+      "error ClaimAlreadyChallenged()",
+      "error ClaimAlreadyResolved()",
+      "error GameNotFinalized()",
+      "error GameNotOver()",
+      "error GameOver()",
+      "error IncorrectBondAmount()",
+      "error IncorrectDisputeGameFactory()",
+      "error InvalidBondDistributionMode()",
+      "error InvalidParentGame()",
+      "error InvalidProposalStatus()",
+      "error NoCreditToClaim()",
+      "error ParentGameNotResolved()",
+      "error UnexpectedRootClaim(bytes32 rootClaim)",
+      "event Challenged(address indexed challenger)",
+      "event GameClosed(uint8 bondDistributionMode)",
+      "event Proved(address indexed prover)",
+      "event Resolved(uint8 indexed status)",
+      "function accessManager() view returns (address accessManager_)",
+      "function aggregationVkey() view returns (bytes32 aggregationVkey_)",
+      "function anchorStateRegistry() view returns (address registry_)",
+      "function bondDistributionMode() view returns (uint8)",
+      "function challenge() payable returns (uint8)",
+      "function challengerBond() view returns (uint256 challengerBond_)",
+      "function claimCredit(address _recipient)",
+      "function claimData() view returns (uint32 parentIndex, address counteredBy, address prover, bytes32 claim, uint8 status, uint64 deadline)",
+      "function closeGame()",
+      "function createdAt() view returns (uint64)",
+      "function credit(address _recipient) view returns (uint256 credit_)",
+      "function disputeGameFactory() view returns (address disputeGameFactory_)",
+      "function extraData() pure returns (bytes extraData_)",
+      "function gameCreator() pure returns (address creator_)",
+      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
+      "function gameOver() view returns (bool gameOver_)",
+      "function gameType() view returns (uint32 gameType_)",
+      "function initialize() payable",
+      "function l1Head() pure returns (bytes32 l1Head_)",
+      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
+      "function l2SequenceNumber() pure returns (uint256 l2SequenceNumber_)",
+      "function maxChallengeDuration() view returns (uint64 maxChallengeDuration_)",
+      "function maxProveDuration() view returns (uint64 maxProveDuration_)",
+      "function normalModeCredit(address) view returns (uint256)",
+      "function parentIndex() pure returns (uint32 parentIndex_)",
+      "function prove(bytes proofBytes) returns (uint8)",
+      "function rangeVkeyCommitment() view returns (bytes32 rangeVkeyCommitment_)",
+      "function refundModeCredit(address) view returns (uint256)",
+      "function resolve() returns (uint8)",
+      "function resolvedAt() view returns (uint64)",
+      "function rollupConfigHash() view returns (bytes32 rollupConfigHash_)",
+      "function rootClaim() pure returns (bytes32 rootClaim_)",
+      "function sp1Verifier() view returns (address verifier_)",
+      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
+      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
+      "function startingRootHash() view returns (bytes32 startingRootHash_)",
+      "function status() view returns (uint8)",
+      "function version() view returns (string)",
+      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
+    ],
     "eth:0xA59b2eBf8231f0e31508Bd18e9185BeB5Ab1C038": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
@@ -3661,68 +3723,6 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() pure returns (string)"
     ],
-    "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1": [
-      "constructor(uint64 _maxChallengeDuration, uint64 _maxProveDuration, address _disputeGameFactory, address _sp1Verifier, bytes32 _rollupConfigHash, bytes32 _aggregationVkey, bytes32 _rangeVkeyCommitment, uint256 _challengerBond, address _anchorStateRegistry, address _accessManager)",
-      "error AlreadyInitialized()",
-      "error BadAuth()",
-      "error BondTransferFailed()",
-      "error ClaimAlreadyChallenged()",
-      "error ClaimAlreadyResolved()",
-      "error GameNotFinalized()",
-      "error GameNotOver()",
-      "error GameOver()",
-      "error IncorrectBondAmount()",
-      "error IncorrectDisputeGameFactory()",
-      "error InvalidBondDistributionMode()",
-      "error InvalidParentGame()",
-      "error InvalidProposalStatus()",
-      "error NoCreditToClaim()",
-      "error ParentGameNotResolved()",
-      "error UnexpectedRootClaim(bytes32 rootClaim)",
-      "event Challenged(address indexed challenger)",
-      "event GameClosed(uint8 bondDistributionMode)",
-      "event Proved(address indexed prover)",
-      "event Resolved(uint8 indexed status)",
-      "function accessManager() view returns (address accessManager_)",
-      "function aggregationVkey() view returns (bytes32 aggregationVkey_)",
-      "function anchorStateRegistry() view returns (address registry_)",
-      "function bondDistributionMode() view returns (uint8)",
-      "function challenge() payable returns (uint8)",
-      "function challengerBond() view returns (uint256 challengerBond_)",
-      "function claimCredit(address _recipient)",
-      "function claimData() view returns (uint32 parentIndex, address counteredBy, address prover, bytes32 claim, uint8 status, uint64 deadline)",
-      "function closeGame()",
-      "function createdAt() view returns (uint64)",
-      "function credit(address _recipient) view returns (uint256 credit_)",
-      "function disputeGameFactory() view returns (address disputeGameFactory_)",
-      "function extraData() pure returns (bytes extraData_)",
-      "function gameCreator() pure returns (address creator_)",
-      "function gameData() view returns (uint32 gameType_, bytes32 rootClaim_, bytes extraData_)",
-      "function gameOver() view returns (bool gameOver_)",
-      "function gameType() view returns (uint32 gameType_)",
-      "function initialize() payable",
-      "function l1Head() pure returns (bytes32 l1Head_)",
-      "function l2BlockNumber() pure returns (uint256 l2BlockNumber_)",
-      "function l2SequenceNumber() pure returns (uint256 l2SequenceNumber_)",
-      "function maxChallengeDuration() view returns (uint64 maxChallengeDuration_)",
-      "function maxProveDuration() view returns (uint64 maxProveDuration_)",
-      "function normalModeCredit(address) view returns (uint256)",
-      "function parentIndex() pure returns (uint32 parentIndex_)",
-      "function prove(bytes proofBytes) returns (uint8)",
-      "function rangeVkeyCommitment() view returns (bytes32 rangeVkeyCommitment_)",
-      "function refundModeCredit(address) view returns (uint256)",
-      "function resolve() returns (uint8)",
-      "function resolvedAt() view returns (uint64)",
-      "function rollupConfigHash() view returns (bytes32 rollupConfigHash_)",
-      "function rootClaim() pure returns (bytes32 rootClaim_)",
-      "function sp1Verifier() view returns (address verifier_)",
-      "function startingBlockNumber() view returns (uint256 startingBlockNumber_)",
-      "function startingOutputRoot() view returns (bytes32 root, uint256 l2SequenceNumber)",
-      "function startingRootHash() view returns (bytes32 startingRootHash_)",
-      "function status() view returns (uint8)",
-      "function version() view returns (string)",
-      "function wasRespectedGameTypeWhenCreated() view returns (bool)"
-    ],
     "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": [
       "constructor(uint256 _disputeGameFinalityDelaySeconds)",
       "error AnchorStateRegistry_InvalidAnchorGame()",
@@ -3873,6 +3873,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24950202 },
-  "permissionsConfigHash": "0xbbf69680b43e5ab646c03408a33a865ac0f34249efebd4621d33cf64ac871937"
+  "usedBlockNumbers": { "ethereum": 24979522 },
+  "permissionsConfigHash": "0xa82b7cf87a8096cc6d8e9547f832611988e3348b3dc3b03056df2b2dab0510ab"
 }
