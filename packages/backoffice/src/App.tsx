@@ -23,7 +23,7 @@ import { TransferDetailsPage } from './pages/interop/transfers/TransferDetailsPa
 import { TransfersPage } from './pages/interop/transfers/TransfersPage'
 import { BackofficeLandingPage } from './pages/landing/BackofficeLandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-import { TrackedTxsStatusPage } from './pages/website/tracked-txs-status/TrackedTxsStatusPage'
+import { TrackedTxsStatusPage } from './pages/website/status/tracked-txs/TrackedTxsStatusPage'
 import { TRPCReactProvider } from './react-query/trpc'
 
 export function App() {
@@ -93,7 +93,7 @@ export function App() {
               />
               <Route path="/interop/insights/memory" element={<MemoryPage />} />
               <Route
-                path="/website/tracked-txs-status"
+                path="/website/status/tracked-txs"
                 element={<TrackedTxsStatusPage />}
               />
               <Route path="/not-found" element={<NotFoundPage />} />

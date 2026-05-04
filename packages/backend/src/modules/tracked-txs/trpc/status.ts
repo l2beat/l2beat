@@ -85,7 +85,9 @@ export function getTrackedTxsStatusRows({
       continue
     }
 
-    for (const config of project.configurations.filter(isActiveConfig)) {
+    const activeConfigurations = project.configurations.filter(isActiveConfig)
+
+    for (const config of activeConfigurations) {
       const key = getGroupKey(
         config.type,
         project.id.toString(),

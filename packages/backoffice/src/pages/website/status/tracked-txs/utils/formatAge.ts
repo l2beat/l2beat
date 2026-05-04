@@ -1,7 +1,3 @@
-export function formatTimestamp(timestamp: number): string {
-  return new Date(timestamp * 1000).toISOString().slice(0, 19).replace('T', ' ')
-}
-
 export function formatAge(seconds: number | undefined): string {
   if (seconds === undefined) {
     return 'n/a'
@@ -27,15 +23,4 @@ export function formatAge(seconds: number | undefined): string {
   }
 
   return parts.join(' ')
-}
-
-export function statusRank(status: 'missing' | 'stale' | 'fresh') {
-  switch (status) {
-    case 'missing':
-      return 0
-    case 'stale':
-      return 1
-    case 'fresh':
-      return 2
-  }
 }

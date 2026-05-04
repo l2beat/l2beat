@@ -34,7 +34,7 @@ export function TrackedTxsStatusPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0 flex-1 space-y-2">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <CardTitle>Tracked Txs status</CardTitle>
+                  <CardTitle>Tracked txs status</CardTitle>
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary">{rows.length} rows</Badge>
                     <Badge
