@@ -1,15 +1,16 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
-import { Button } from '~/components/core/Button'
 import {
+  getPaginationItems,
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
+  PaginationLink,
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { ChevronIcon } from '~/icons/Chevron'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   columns,
@@ -73,6 +74,7 @@ export function InteropTransfersSection({
   )
   const fetchedPageCount = Math.ceil(fetchedItems.length / TRANSFERS_PER_PAGE)
   const loadedPageCount = Math.max(1, fetchedPageCount)
+  const pageCount = loadedPageCount + (hasNextPage ? 1 : 0)
 
   const table = useTable<TransferRow>({
     data: fetchedItems,
@@ -81,10 +83,7 @@ export function InteropTransfersSection({
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
     manualFiltering: true,
-    pageCount: Math.max(
-      loadedPageCount,
-      fetchedPageCount + (hasNextPage ? 1 : 0),
-    ),
+    pageCount,
     initialState: {
       pagination: {
         pageSize: TRANSFERS_PER_PAGE,
@@ -103,37 +102,34 @@ export function InteropTransfersSection({
   }
 
   const currentPage = table.getState().pagination.pageIndex
+  const paginationItems = useMemo(
+    () => getPaginationItems(pageCount, currentPage),
+    [pageCount, currentPage],
+  )
 
   const isEmptySelection = selectedFrom.length === 0 || selectedTo.length === 0
   const isInitialLoading =
     !isEmptySelection && isTransfersLoading && fetchedItems.length === 0
-  const canGoPrevious = currentPage > 0
-  const canGoNext = currentPage < loadedPageCount - 1 || !!hasNextPage
 
-  const handlePreviousPage = () => {
-    if (canGoPrevious) {
-      table.setPageIndex(currentPage - 1)
+  const handlePageClick = async (pageIndex: number) => {
+    if (pageIndex < loadedPageCount) {
+      table.setPageIndex(pageIndex)
+      return
     }
-  }
-
-  const handleNextPage = async () => {
-    if (currentPage < loadedPageCount - 1) {
-      table.setPageIndex(currentPage + 1)
+    if (pageIndex !== loadedPageCount || !hasNextPage || isFetchingNextPage) {
       return
     }
 
-    if (!hasNextPage || isFetchingNextPage) {
-      return
-    }
-
-    const previousPageCount = loadedPageCount
     const result = await fetchNextPage()
     const nextItemCount =
       result.data?.pages.reduce((sum, page) => sum + page.items.length, 0) ?? 0
-    const nextPageCount = Math.ceil(nextItemCount / TRANSFERS_PER_PAGE)
+    const nextLoadedPageCount = Math.max(
+      1,
+      Math.ceil(nextItemCount / TRANSFERS_PER_PAGE),
+    )
 
-    if (nextPageCount > previousPageCount) {
-      table.setPageIndex(currentPage + 1)
+    if (pageIndex < nextLoadedPageCount) {
+      table.setPageIndex(pageIndex)
     }
   }
 
@@ -163,39 +159,39 @@ export function InteropTransfersSection({
           isLoading={isInitialLoading}
         />
       )}
-      {!isEmptySelection && fetchedItems.length > 0 && (
+      {!isEmptySelection && fetchedItems.length > 0 && pageCount > 1 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
-            <PaginationContent className="justify-center gap-2">
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={!canGoPrevious || isFetchingNextPage}
-                  onClick={handlePreviousPage}
-                  className="h-7 rounded-md px-2 font-medium text-label-value-12 disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  <ChevronIcon className="mr-1 size-2.5 rotate-90 fill-current" />
-                  Previous
-                </Button>
-              </PaginationItem>
-              <PaginationItem>
-                <span className="flex h-7 items-center px-2 font-medium text-label-value-12 text-secondary">
-                  Page {currentPage + 1}
-                </span>
-              </PaginationItem>
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={!canGoNext || isFetchingNextPage}
-                  onClick={handleNextPage}
-                  className="h-7 rounded-md px-2 font-medium text-label-value-12 disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {isFetchingNextPage ? 'Loading...' : 'Next'}
-                  <ChevronIcon className="-rotate-90 ml-1 size-2.5 fill-current" />
-                </Button>
-              </PaginationItem>
+            <PaginationContent className="justify-center">
+              {paginationItems.map((item) =>
+                item.type === 'ellipsis' ? (
+                  <PaginationItem key={item.key}>
+                    <PaginationEllipsis className="text-secondary" />
+                  </PaginationItem>
+                ) : (
+                  <PaginationLink
+                    key={item.index}
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      void handlePageClick(item.index)
+                    }}
+                    isActive={currentPage === item.index}
+                    className={
+                      item.index >= loadedPageCount && isFetchingNextPage
+                        ? 'pointer-events-none opacity-40'
+                        : undefined
+                    }
+                  >
+                    {item.index + 1}
+                  </PaginationLink>
+                ),
+              )}
+              {hasNextPage && (
+                <PaginationItem>
+                  <PaginationEllipsis className="text-secondary" />
+                </PaginationItem>
+              )}
             </PaginationContent>
           </Pagination>
         </div>
