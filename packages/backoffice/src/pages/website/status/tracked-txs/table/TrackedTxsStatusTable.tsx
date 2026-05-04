@@ -32,10 +32,12 @@ export function TrackedTxsStatusTable({
       { id: 'latestTimestamp', desc: false },
       { id: 'projectId', desc: false },
       { id: 'feature', desc: false },
+      { id: 'configId', desc: false },
     ],
+    initialColumnFilters: [{ id: 'status', value: ['stale', 'fresh'] }],
     initialPageSizeOption: 'all',
-    getRowId: (row) => `${row.feature}:${row.projectId}:${row.subtype}`,
-    searchPlaceholder: 'Search projects, features, subtypes, and formulas',
+    getRowId: (row) => row.configId,
+    searchPlaceholder: 'Search projects, config IDs, features, and formulas',
   })
 
   return (
@@ -62,6 +64,9 @@ export function TrackedTxsStatusTable({
 function getRowClassName(row: Row<TrackedTxsStatusRow>) {
   if (row.original.status === 'fresh') {
     return undefined
+  }
+  if (row.original.status === 'missing') {
+    return 'bg-yellow-50/80 text-yellow-950 odd:bg-yellow-50/80 hover:bg-yellow-50 odd:hover:bg-yellow-50 dark:bg-yellow-950/20 dark:text-yellow-100 dark:odd:bg-yellow-950/20 dark:hover:bg-yellow-950/30 dark:odd:hover:bg-yellow-950/30'
   }
   return 'bg-red-50/80 text-red-950 odd:bg-red-50/80 hover:bg-red-50 odd:hover:bg-red-50 dark:bg-red-950/20 dark:text-red-100 dark:odd:bg-red-950/20 dark:hover:bg-red-950/30 dark:odd:hover:bg-red-950/30'
 }

@@ -14,15 +14,32 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
         statusRank(rowB.getValue<TrackedTxsStatusRow['status']>(columnId)),
       cell: ({ getValue }) => {
         const value = getValue()
+        const className =
+          value === 'missing'
+            ? 'border-transparent bg-yellow-100 text-yellow-900 dark:bg-yellow-900/40 dark:text-yellow-100'
+            : undefined
 
         return (
-          <Badge variant={value === 'fresh' ? 'secondary' : 'destructive'}>
+          <Badge
+            variant={value === 'stale' ? 'destructive' : 'secondary'}
+            className={className}
+          >
             {value}
           </Badge>
         )
       },
       meta: {
         csvHeader: 'Status',
+        filter: { kind: 'select' },
+      },
+    }),
+    columnHelper.accessor('configId', {
+      header: 'Config ID',
+      cell: ({ getValue }) => (
+        <span className="font-mono text-xs">{getValue()}</span>
+      ),
+      meta: {
+        csvHeader: 'Config ID',
         filter: { kind: 'select' },
       },
     }),
@@ -50,14 +67,13 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
         filter: { kind: 'select' },
       },
     }),
-    columnHelper.accessor((row) => row.formulas.join(', '), {
-      id: 'formulas',
-      header: 'Formulas',
+    columnHelper.accessor('formula', {
+      header: 'Formula',
       cell: ({ getValue }) => (
         <span className="font-mono text-xs">{getValue()}</span>
       ),
       meta: {
-        csvHeader: 'Formulas',
+        csvHeader: 'Formula',
         filter: { kind: 'select' },
       },
     }),
@@ -88,37 +104,6 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
       meta: {
         csvHeader: 'Age',
         getCsvValue: ({ row }) => formatAge(row.original.ageSeconds),
-      },
-    }),
-    columnHelper.accessor('configsWithDataCount', {
-      header: 'Configs with data',
-      cell: ({ row }) => (
-        <span className="font-mono text-xs">
-          {row.original.configsWithDataCount}/{row.original.configsCount}
-        </span>
-      ),
-      meta: {
-        csvHeader: 'Configs with data',
-        getCsvValue: ({ row }) =>
-          `${row.original.configsWithDataCount}/${row.original.configsCount}`,
-      },
-    }),
-    columnHelper.accessor('missingConfigsCount', {
-      header: 'Missing configs',
-      cell: ({ getValue }) => (
-        <span className="font-mono text-xs">{getValue()}</span>
-      ),
-      meta: {
-        csvHeader: 'Missing configs',
-      },
-    }),
-    columnHelper.accessor('staleConfigsCount', {
-      header: 'Stale configs',
-      cell: ({ getValue }) => (
-        <span className="font-mono text-xs">{getValue()}</span>
-      ),
-      meta: {
-        csvHeader: 'Stale configs',
       },
     }),
     columnHelper.accessor('sinceTimestamp', {

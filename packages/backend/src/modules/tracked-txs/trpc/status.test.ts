@@ -7,7 +7,7 @@ import { getTrackedTxsStatusRows, STALE_AFTER_SECONDS } from './status'
 describe(getTrackedTxsStatusRows.name, () => {
   const now = UnixTime(1_700_000_000)
 
-  it('returns active config groups for each feature', () => {
+  it('returns active configs for each feature', () => {
     const result = getTrackedTxsStatusRows({
       projects: [
         mockProject('project-a', [
@@ -38,10 +38,15 @@ describe(getTrackedTxsStatusRows.name, () => {
     })
 
     expect(
-      result.map((row) => [row.feature, row.projectId, row.subtype]),
+      result.map((row) => [
+        row.configId,
+        row.feature,
+        row.projectId,
+        row.subtype,
+      ]),
     ).toEqual([
-      ['l2costs', 'project-a', 'stateUpdates'],
-      ['liveness', 'project-a', 'stateUpdates'],
+      ['active-costs', 'l2costs', 'project-a', 'stateUpdates'],
+      ['active-liveness', 'liveness', 'project-a', 'stateUpdates'],
     ])
   })
 
@@ -99,13 +104,13 @@ describe(getTrackedTxsStatusRows.name, () => {
     })
 
     expect(result.map((row) => [row.projectId, row.status])).toEqual([
-      ['missing-project', 'missing'],
       ['stale-project', 'stale'],
+      ['missing-project', 'missing'],
       ['fresh-project', 'fresh'],
     ])
   })
 
-  it('marks a subtype group fresh when at least one config has fresh data', () => {
+  it('returns one status row for each active config', () => {
     const result = getTrackedTxsStatusRows({
       projects: [
         mockProject('project-a', [
@@ -130,22 +135,53 @@ describe(getTrackedTxsStatusRows.name, () => {
       now,
     })
 
-    expect(result).toHaveLength(1)
-
-    const row = result[0]
-
-    expect(row!.projectId).toEqual('project-a')
-    expect(row!.feature).toEqual('liveness')
-    expect(row!.subtype).toEqual('stateUpdates')
-    expect(row!.status).toEqual('fresh')
-    expect(row!.latestTimestamp).toEqual(now - UnixTime.HOUR)
-    expect(row!.ageSeconds).toEqual(UnixTime.HOUR)
-    expect(row!.configsCount).toEqual(3)
-    expect(row!.configsWithDataCount).toEqual(2)
-    expect(row!.missingConfigsCount).toEqual(1)
-    expect(row!.staleConfigsCount).toEqual(1)
-    expect(row!.formulas).toEqual(['transfer'])
-    expect(row!.sinceTimestamp).toEqual(1_600_000_000)
+    expect(
+      result.map((row) => ({
+        configId: row.configId,
+        projectId: row.projectId,
+        feature: row.feature,
+        subtype: row.subtype,
+        status: row.status,
+        latestTimestamp: row.latestTimestamp,
+        ageSeconds: row.ageSeconds,
+        formula: row.formula,
+        sinceTimestamp: row.sinceTimestamp,
+      })),
+    ).toEqual([
+      {
+        configId: 'stale',
+        projectId: 'project-a',
+        feature: 'liveness',
+        subtype: 'stateUpdates',
+        status: 'stale',
+        latestTimestamp: now - STALE_AFTER_SECONDS - 1,
+        ageSeconds: STALE_AFTER_SECONDS + 1,
+        formula: 'transfer',
+        sinceTimestamp: 1_600_000_000,
+      },
+      {
+        configId: 'missing',
+        projectId: 'project-a',
+        feature: 'liveness',
+        subtype: 'stateUpdates',
+        status: 'missing',
+        latestTimestamp: undefined,
+        ageSeconds: undefined,
+        formula: 'transfer',
+        sinceTimestamp: 1_600_000_000,
+      },
+      {
+        configId: 'fresh',
+        projectId: 'project-a',
+        feature: 'liveness',
+        subtype: 'stateUpdates',
+        status: 'fresh',
+        latestTimestamp: now - UnixTime.HOUR,
+        ageSeconds: UnixTime.HOUR,
+        formula: 'transfer',
+        sinceTimestamp: 1_600_000_000,
+      },
+    ])
   })
 })
 

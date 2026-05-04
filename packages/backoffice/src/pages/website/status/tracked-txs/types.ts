@@ -1,14 +1,11 @@
 export interface TrackedTxsStatusRow {
+  configId: string
   feature: 'liveness' | 'l2costs'
   projectId: string
   subtype: string
   sinceTimestamp: number
   latestTimestamp: number | undefined
   ageSeconds: number | undefined
-  configsCount: number
-  configsWithDataCount: number
-  missingConfigsCount: number
-  staleConfigsCount: number
-  formulas: string[]
+  formula: string
   status: 'missing' | 'stale' | 'fresh'
 }

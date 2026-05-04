@@ -38,7 +38,12 @@ export function TrackedTxsStatusPage() {
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary">{rows.length} rows</Badge>
                     <Badge
-                      variant={missingCount > 0 ? 'destructive' : 'secondary'}
+                      variant="secondary"
+                      className={
+                        missingCount > 0
+                          ? 'border-transparent bg-yellow-100 text-yellow-900 dark:bg-yellow-900/40 dark:text-yellow-100'
+                          : undefined
+                      }
                     >
                       {missingCount} missing
                     </Badge>
