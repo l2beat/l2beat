@@ -16,7 +16,7 @@ const UNKNOWN_CHAIN_NAME = 'UnknownChainName'
 
 export async function getProvider(
   rpcUrl: string,
-  explorer?: ExplorerConfig,
+  explorer?: ExplorerConfig[],
   chainName?: string,
 ): Promise<IProvider> {
   const httpClient = new HttpClient()
@@ -32,12 +32,14 @@ export async function getProvider(
       name: effectiveChainName,
       rpcUrl,
       multicall: getMulticall3Config(Number.MAX_SAFE_INTEGER),
-      explorer: explorer ?? {
-        type: 'etherscan',
-        url: 'ERROR',
-        apiKey: 'ERROR',
-        chainId: -1,
-      },
+      explorer: explorer ?? [
+        {
+          type: 'etherscan',
+          url: 'ERROR',
+          apiKey: 'ERROR',
+          chainId: -1,
+        },
+      ],
     },
   ]
 
