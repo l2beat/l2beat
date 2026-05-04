@@ -24,7 +24,7 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-export function ClusterLayoutButton() {
+export function ClusterLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const selected = useStore((state) => state.selected)
@@ -101,6 +101,7 @@ export function ClusterLayoutButton() {
     <ControlButton
       disabled={updatingLayout}
       onClick={() => setUpdatingLayout(true)}
+      className={className}
     >
       {updatingLayout ? 'Wait...' : 'Cluster layout'}
     </ControlButton>

@@ -3,7 +3,7 @@ import { useStore } from '../store/store'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 
-export function StackLayoutButton() {
+export function StackLayoutButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const layout = useStore((state) => state.layout)
@@ -18,6 +18,7 @@ export function StackLayoutButton() {
   return (
     <ControlButton
       onClick={() => layout(stackAutoLayout(visibleNodes, considerAllNodes))}
+      className={className}
     >
       Stack layout
     </ControlButton>

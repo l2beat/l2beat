@@ -12,7 +12,7 @@ export function ControlButton(props: {
       disabled={props.disabled}
       className={clsx(
         'w-full whitespace-pre border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs',
-        !props.disabled && '',
+        !props.disabled && 'hover:bg-coffee-700',
         props.disabled && 'text-coffee-400',
         props.className,
       )}

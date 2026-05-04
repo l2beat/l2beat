@@ -12,15 +12,14 @@ import { ValuesButton } from './ValuesButton'
 export function Controls() {
   return (
     <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <div className="flex flex-col gap-1">
-        <ClusterLayoutButton />
-        <StackLayoutButton />
+      <div className="flex flex-col gap-1 self-stretch">
+        <ClusterLayoutButton className="flex flex-1 items-center justify-center" />
+        <StackLayoutButton className="flex flex-1 items-center justify-center" />
       </div>
-      <span className="text-coffee-600">|</span>
+      <div className="min-h-full w-[1px] border border-coffee-600 border-r" />
       <div className="flex flex-col gap-1">
         <div className="flex gap-1">
           <ShowButton />
-          <Settings />
         </div>
 
         <HideUnknownsButton />
@@ -37,7 +36,8 @@ export function Controls() {
         <ValuesButton />
       </div>
       <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
+        <Settings />
         <LayoutFileButtons />
       </div>
     </div>
