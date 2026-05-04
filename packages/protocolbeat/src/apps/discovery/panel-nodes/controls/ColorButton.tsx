@@ -1,42 +1,68 @@
-import { useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
+import { useEffect, useMemo, useState } from 'react'
+import type { Node as DiscoveryNode } from '../store/State'
 import { useStore } from '../store/store'
 import { SELECTABLE_COLORS } from '../view/colors/colors'
 import { oklchColorToCSS } from '../view/colors/oklch'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../../../../components/Popover'
 import { ControlButton } from './ControlButton'
+import { IconControlPalette } from './icons/IconControlPalette'
 
-export function ColorButton() {
-  const ref = useRef<HTMLDivElement>(null)
+const AUTO_SWATCH_BACKGROUND =
+  'conic-gradient(#9ED110, #50B517, #179067, #476EAF, #9F49AC, #CC42A2, #FF3BA7, #FF5800, #FF8100, #FEAC00, #FFCC00, #EDE604, #9ED110)'
+
+const COLOR_LABELS = [
+  'Red',
+  'Orange',
+  'Yellow',
+  'Teal',
+  'Green',
+  'Cyan',
+  'Blue',
+  'Purple',
+  'Pink',
+  'White',
+  'Black',
+] as const
+
+const COLOR_OPTIONS = [
+  {
+    id: 0,
+    label: 'Auto',
+    background: AUTO_SWATCH_BACKGROUND,
+  },
+  ...SELECTABLE_COLORS.map((entry, index) => ({
+    id: index + 1,
+    label: COLOR_LABELS[index] ?? `Color ${index + 1}`,
+    background: oklchColorToCSS(entry.color),
+  })),
+]
+
+type SelectionColorState =
+  | { kind: 'none' }
+  | { kind: 'mixed' }
+  | { kind: 'single'; color: number }
+
+export function ColorButton({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
-  const selectionExists = useStore((state) => state.selected.length > 0)
+  const selected = useStore((state) => state.selected)
+  const nodes = useStore((state) => state.nodes)
   const colorSelected = useStore((state) => state.colorSelected)
+  const selectionExists = selected.length > 0
+  const selectionColorState = useMemo(
+    () => getSelectionColorState(nodes, selected),
+    [nodes, selected],
+  )
 
   useEffect(() => {
-    if (!open) {
-      return
+    if (!selectionExists) {
+      setOpen(false)
     }
-    function onClick(e: MouseEvent) {
-      const box = ref.current?.getBoundingClientRect()
-      if (
-        !box ||
-        e.clientX < box.left ||
-        e.clientX > box.right ||
-        e.clientY < box.top ||
-        e.clientY > box.bottom
-      ) {
-        setOpen(false)
-      }
-    }
-
-    // We use setTimeout to ignore the click on the button to open
-    const timeout = setTimeout(
-      () => window.addEventListener('click', onClick),
-      0,
-    )
-    return () => {
-      clearTimeout(timeout)
-      window.removeEventListener('click', onClick)
-    }
-  }, [ref, open, setOpen])
+  }, [selectionExists])
 
   function changeColor(color: number) {
     colorSelected(color)
@@ -44,45 +70,157 @@ export function ColorButton() {
   }
 
   return (
-    <>
-      <ControlButton disabled={!selectionExists} onClick={() => setOpen(true)}>
-        Color
-      </ControlButton>
-      {open && (
-        <div
-          ref={ref}
-          className="-translate-x-1/2 absolute bottom-14 left-1/2 w-max"
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <ControlButton
+          disabled={!selectionExists}
+          title="Node color"
+          aria-label="Change node color"
+          className={clsx('h-full px-3 py-2.5', className)}
         >
-          <ColorPicker onColorChange={changeColor} />
-        </div>
-      )}
-    </>
+          <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
+            <IconControlPalette />
+            {selectionColorState.kind !== 'none' && (
+              <span
+                className="h-3 w-3 shrink-0 rounded-full border border-coffee-500"
+                style={getSwatchStyle(selectionColorState)}
+              />
+            )}
+          </span>
+        </ControlButton>
+      </PopoverTrigger>
+      <PopoverContent
+        side="top"
+        align="center"
+        sideOffset={10}
+        className="w-max max-w-[calc(100vw-2rem)] p-3"
+      >
+        <ColorPicker
+          selectedCount={selected.length}
+          selectionColorState={selectionColorState}
+          onColorChange={changeColor}
+        />
+      </PopoverContent>
+    </Popover>
   )
 }
 
 interface ColorPickerProps {
+  selectedCount: number
+  selectionColorState: SelectionColorState
   onColorChange: (color: number) => void
 }
 
-function ColorPicker({ onColorChange }: ColorPickerProps) {
+function ColorPicker({
+  selectedCount,
+  selectionColorState,
+  onColorChange,
+}: ColorPickerProps) {
   return (
-    <div className="grid w-max grid-cols-6 place-items-center gap-3">
-      <button
-        style={{
-          background:
-            'conic-gradient(#9ED110, #50B517, #179067, #476EAF, #9f49ac, #CC42A2, #FF3BA7, #FF5800, #FF8100, #FEAC00, #FFCC00, #EDE604, #9ED110)',
-        }}
-        className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
-        onClick={() => onColorChange(0)}
-      />
-      {SELECTABLE_COLORS.map((c, i) => (
-        <button
-          style={{ backgroundColor: oklchColorToCSS(c.color) }}
-          className="h-12 w-12 rounded border border-coffee-600 shadow-xl hover:ring"
-          key={i}
-          onClick={() => onColorChange(i + 1)}
-        />
-      ))}
+    <div>
+      <div className="mb-3 border-coffee-600/70 border-b pb-2">
+        <div className="font-medium text-coffee-100 text-sm">Node color</div>
+        <div className="text-[11px] text-coffee-300 leading-tight">
+          {selectedCount} selected
+          {' · '}
+          {describeSelectionColor(selectionColorState)}
+        </div>
+      </div>
+      <div className="grid grid-cols-6 gap-2">
+        {COLOR_OPTIONS.map((option) => {
+          const active =
+            selectionColorState.kind === 'single' &&
+            selectionColorState.color === option.id
+
+          return (
+            <button
+              key={option.id}
+              type="button"
+              title={option.label}
+              aria-label={`Set node color to ${option.label}`}
+              aria-pressed={active}
+              onClick={() => onColorChange(option.id)}
+              className={clsx(
+                'flex items-center justify-center rounded-lg border border-coffee-600 bg-coffee-800 p-2 transition-colors',
+                active
+                  ? 'border-autumn-300 bg-coffee-700'
+                  : 'hover:bg-coffee-700',
+              )}
+            >
+              <span
+                className={clsx(
+                  'h-5 w-5 rounded-full border',
+                  option.label === 'White'
+                    ? 'border-coffee-500'
+                    : option.label === 'Black'
+                      ? 'border-coffee-400'
+                      : 'border-black/10',
+                )}
+                style={{ background: option.background }}
+              />
+            </button>
+          )
+        })}
+      </div>
+      <div className="mt-2 text-[11px] text-coffee-300 leading-tight">
+        The first swatch resets selected nodes to their automatic chain color.
+      </div>
     </div>
   )
+}
+
+function getSelectionColorState(
+  nodes: readonly DiscoveryNode[],
+  selectedIds: readonly string[],
+): SelectionColorState {
+  if (selectedIds.length === 0) {
+    return { kind: 'none' }
+  }
+
+  const selectedIdSet = new Set(selectedIds)
+  const selectedColors = new Set(
+    nodes
+      .filter((node) => selectedIdSet.has(node.id))
+      .map((node) => node.color),
+  )
+
+  if (selectedColors.size !== 1) {
+    return { kind: 'mixed' }
+  }
+
+  const [color] = selectedColors
+  return color === undefined ? { kind: 'none' } : { kind: 'single', color }
+}
+
+function describeSelectionColor(selectionColorState: SelectionColorState) {
+  if (selectionColorState.kind === 'mixed') {
+    return 'Mixed colors'
+  }
+
+  if (selectionColorState.kind === 'single') {
+    const option = COLOR_OPTIONS.find(
+      (entry) => entry.id === selectionColorState.color,
+    )
+    return option ? `Current: ${option.label}` : 'Current color'
+  }
+
+  return 'No color'
+}
+
+function getSwatchStyle(selectionColorState: SelectionColorState) {
+  if (selectionColorState.kind === 'mixed') {
+    return {
+      background:
+        'linear-gradient(135deg, rgb(252 211 77) 0%, rgb(252 211 77) 48%, rgb(59 130 246) 52%, rgb(59 130 246) 100%)',
+    }
+  }
+
+  if (selectionColorState.kind === 'single') {
+    const option = COLOR_OPTIONS.find(
+      (entry) => entry.id === selectionColorState.color,
+    )
+    return option ? { background: option.background } : undefined
+  }
+
+  return undefined
 }

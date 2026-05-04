@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import {
   forceCenter,
   forceLink,
@@ -11,6 +12,7 @@ import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
+import { IconControlCluster } from './icons/IconControlCluster'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes
@@ -101,9 +103,11 @@ export function ClusterLayoutButton({ className }: { className?: string }) {
     <ControlButton
       disabled={updatingLayout}
       onClick={() => setUpdatingLayout(true)}
-      className={className}
+      className={clsx('px-3 py-2.5', className)}
     >
-      {updatingLayout ? 'Wait...' : 'Cluster layout'}
+      <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
+        <IconControlCluster />
+      </span>
     </ControlButton>
   )
 }

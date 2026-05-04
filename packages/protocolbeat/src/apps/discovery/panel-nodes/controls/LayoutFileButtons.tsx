@@ -20,10 +20,15 @@ interface LoadError {
   message: string
 }
 
-export function LayoutFileButtons() {
+export function LayoutFileButtons(props?: {
+  orientation?: 'column' | 'row'
+  className?: string
+  buttonClassName?: string
+}) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [pending, setPending] = useState<PendingLayout | null>(null)
   const [error, setError] = useState<LoadError | null>(null)
+  const orientation = props?.orientation ?? 'column'
   const clear = () => {
     setPending(null)
     setError(null)
@@ -78,11 +83,23 @@ export function LayoutFileButtons() {
 
   return (
     <>
-      <div className="flex flex-1 flex-col gap-1">
-        <ControlButton onClick={onLoadClick}>
+      <div
+        className={clsx(
+          'flex self-stretch gap-2',
+          orientation === 'row' ? 'flex-row' : 'flex-1 flex-col',
+          props?.className,
+        )}
+      >
+        <ControlButton
+          onClick={onLoadClick}
+          className={clsx('h-full', props?.buttonClassName)}
+        >
           <IconFileUp />
         </ControlButton>
-        <ControlButton onClick={onSave}>
+        <ControlButton
+          onClick={onSave}
+          className={clsx('h-full', props?.buttonClassName)}
+        >
           <IconDownload />
         </ControlButton>
         <input
