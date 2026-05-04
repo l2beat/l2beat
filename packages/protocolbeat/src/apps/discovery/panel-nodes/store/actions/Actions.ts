@@ -22,6 +22,8 @@ export interface Actions {
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
+  undo: () => void
+  redo: () => void
   applyStoredLayout: (saved: StoredNodeLayout, mode: ApplyLayoutMode) => void
   hideSelected: () => void
   hideUnknowns: () => void

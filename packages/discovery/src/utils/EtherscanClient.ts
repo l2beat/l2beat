@@ -166,7 +166,7 @@ export class EtherscanClient implements IEtherscanClient {
 
     return {
       name: this.parseContractName(name),
-      rootFile: result.ContractFileName,
+      rootFile: parsePath(result.ContractFileName),
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       solidityVersion,
@@ -314,6 +314,19 @@ interface DecodedSource {
   libraries: Record<string, EthereumAddress>
 }
 
+function parsePath(path: string | undefined): string | undefined {
+  if (path === undefined) return undefined
+
+  if (path.includes(':')) {
+    const parts = path.split(':')
+    assert(parts.length === 2, 'Expected only a single colon')
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
+    return parts[0]!
+  }
+
+  return path
+}
+
 function decodeEtherscanSource(
   name: string,
   source: string,
@@ -364,7 +377,7 @@ function decodeEtherscanSource(
 
   return {
     sources: Object.entries(validated).map(([name, { content }]) => [
-      name,
+      parsePath(name) ?? name,
       content,
     ]),
     remappings,
