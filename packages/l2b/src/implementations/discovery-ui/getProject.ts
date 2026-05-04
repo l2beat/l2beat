@@ -45,8 +45,6 @@ export function getProject(
     config: configReader.readConfig(discovery.name),
   }))
 
-  console.dir({ msg: 'opts', maxDepth, singleDiscovery })
-
   const reachableEntries = getReachableEntries(
     data
       .flatMap((x) => x.discovery.entries)
