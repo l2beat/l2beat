@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6713cb585d61b94f376e29b691ae8c4836328db6
+Generated with discovered.json: 0xa6bbf0ae4277a9b40d41c9d90b0a526efeb3a552
 
-# Diff at Mon, 04 May 2026 08:29:16 GMT:
+# Diff at Mon, 04 May 2026 13:52:34 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777296071
@@ -41,12 +41,68 @@ This multisig is also made the only entity that can precommit, commit, revert, p
 ```
 
 ```diff
+    EOA  (eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":".validatorVTL"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":".validatorVTL"}
+    }
+```
+
+```diff
     contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
-    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.$threshold:
+-        0
++        3
 +++ severity: HIGH
       values.threshold:
 -        0
 +        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777296071 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"initiate batch execution on L1 if approved by enough Validator Multisig members.","role":".executor"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"initiate batch execution on L1 if approved by enough Validator Multisig members.","role":".executor"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping."
++        "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA."
+      values.$members:
++        ["eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7","eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693","eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F","eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b","eth:0x6D290f04A5908F0390647d9903230de3844e5cA0","eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b","eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726","eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"]
+      values.$threshold:
++        0
+      values.executor:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]}
     }
 ```
 

@@ -430,9 +430,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         technologyDA(daProvider),
-      operator:
-        templateVars.nonTemplateTechnology?.operator ??
-        OPERATOR.CENTRALIZED_OPERATOR,
+      operator: getTechnologyOperator(templateVars),
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
         name: 'Users can force any transaction via L1',
@@ -615,6 +613,45 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo([templateVars.discovery]),
+  }
+}
+
+function getTechnologyOperator(
+  templateVars: ZkStackConfigCommon,
+): ProjectTechnologyChoice {
+  if (templateVars.nonTemplateTechnology?.operator !== undefined) {
+    return templateVars.nonTemplateTechnology.operator
+  }
+
+  if (!templateVars.discovery.hasContract('EraMultisigValidator')) {
+    return OPERATOR.CENTRALIZED_OPERATOR
+  }
+
+  const eraMultisigValidator = templateVars.discovery.getContract(
+    'EraMultisigValidator',
+  )
+
+  return {
+    ...OPERATOR.CENTRALIZED_OPERATOR,
+    description:
+      OPERATOR.CENTRALIZED_OPERATOR.description +
+      '\n\n' +
+      'Batch execution is initiated by permissioned executor EOAs, but each batch also requires approval from the sufficient number of EraMultisigValidator members before it can be executed on L1.',
+    references: [
+      {
+        title: `${eraMultisigValidator.name} - Etherscan proxy contract`,
+        url: `https://etherscan.io/address/${ChainSpecificAddress.address(
+          eraMultisigValidator.address,
+        )}`,
+      },
+    ],
+    risks: [
+      ...OPERATOR.CENTRALIZED_OPERATOR.risks,
+      {
+        category: 'Users can be censored if',
+        text: 'the validator multisig does not approve batch execution.',
+      },
+    ],
   }
 }
 

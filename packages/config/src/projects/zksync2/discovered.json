@@ -837,6 +837,19 @@
       "targetProject": "shared-zk-stack"
     },
     {
+      "address": "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
+    },
+    {
       "address": "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -892,6 +905,19 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
+        }
+      ]
     },
     {
       "address": "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
@@ -952,7 +978,7 @@
         "0x315e1d3b3696636efa0d248c975aa4b01c6122915580099acaf0da0bffa4f224"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.",
+      "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
@@ -965,6 +991,16 @@
       "values": {
         "$admin": "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB",
         "$implementation": "eth:0xc954B4D51031870624f3e779Ead14C57249C111D",
+        "$members": [
+          "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
+          "eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693",
+          "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
+          "eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b",
+          "eth:0x6D290f04A5908F0390647d9903230de3844e5cA0",
+          "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b",
+          "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
+          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"
+        ],
         "$pastUpgrades": [
           [
             "2026-04-08T16:41:35.000Z",
@@ -972,6 +1008,7 @@
             ["eth:0xc954B4D51031870624f3e779Ead14C57249C111D"]
           ]
         ],
+        "$threshold": 3,
         "$upgradeCount": 1,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
@@ -987,6 +1024,12 @@
         },
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
+        "executor": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
+            "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+          ]
+        },
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getName": "ValidatorTimelock",
         "multisigMembers": [
@@ -1604,11 +1647,11 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xa6ebcb5e864b4bf305c01ab9f721b5ceff5b3ba41f9bd9f98bc6db590b197023",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x55d204472e25f4714e0b26d4449b39099a93ef829660099d6504ef808f61138e",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25020439 },
-  "permissionsConfigHash": "0x6c07b057cea946df9b72a5218ae321aa508f1b59373dceac28a4f8c0f0b453cb"
+  "permissionsConfigHash": "0xd4f5b4fc3f3d925dce692a79570ca40a5b8444cb8c18901952363a55bf71b8e2"
 }
