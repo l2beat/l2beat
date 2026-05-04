@@ -7,11 +7,19 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from './constants'
 
-export function updateNodePositions(state: State): State {
+// Apply a partial state update, then recompute node, field, and connection
+// geometry against the previous state so unchanged refs can still be reused.
+export function updateNodePositions(
+  state: State,
+  update?: Partial<State>,
+): State {
   return perfStats.time('updateNodePositions', () => {
-    let dx = state.input.mouseX - state.input.mouseStartX
-    let dy = state.input.mouseY - state.input.mouseStartY
-    if (state.input.shiftPressed) {
+    const nextState = update ? { ...state, ...update } : state
+    const previousNodes = new Map(state.nodes.map((node) => [node.id, node]))
+
+    let dx = nextState.input.mouseX - nextState.input.mouseStartX
+    let dy = nextState.input.mouseY - nextState.input.mouseStartY
+    if (nextState.input.shiftPressed) {
       if (Math.abs(dx) > Math.abs(dy)) {
         dy = 0
       } else {
@@ -24,8 +32,9 @@ export function updateNodePositions(state: State): State {
     // moved) is a candidate for full-ref reuse.
     const nextBoxes = new Map<string, Box>()
     const movedIds = new Set<string>()
-    for (const node of state.nodes) {
-      const start = state.positionsBeforeMove[node.id]
+    for (const node of nextState.nodes) {
+      const previousNode = previousNodes.get(node.id)
+      const start = nextState.positionsBeforeMove[node.id]
       const hiddenFieldsHeight =
         node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
       const nextBox: Box = {
@@ -39,7 +48,9 @@ export function updateNodePositions(state: State): State {
         y: start ? start.y + dy : node.box.y,
       }
       nextBoxes.set(node.id, nextBox)
-      if (!boxesEqual(nextBox, node.box)) {
+      const boxMoved =
+        previousNode === undefined || !boxesEqual(nextBox, previousNode.box)
+      if (boxMoved) {
         movedIds.add(node.id)
       }
     }
@@ -47,18 +58,28 @@ export function updateNodePositions(state: State): State {
     // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
     // structurally identical so React.memo and useMemo deps can short-circuit.
     let anyNodeChanged = false
-    const nextNodes: Node[] = new Array(state.nodes.length)
-    for (let n = 0; n < state.nodes.length; n++) {
-      const node = state.nodes[n] as Node
+    const nextNodes: Node[] = new Array(nextState.nodes.length)
+    for (let n = 0; n < nextState.nodes.length; n++) {
+      const node = nextState.nodes[n] as Node
+      const previousNode = previousNodes.get(node.id)
       const nextBox = nextBoxes.get(node.id) as Box
 
       const ownBoxMoved = movedIds.has(node.id)
       const targetMoved = ownBoxMoved || nodeHasMovedTarget(node, movedIds)
+      const fieldsUnchanged = previousNode?.fields === node.fields
+      const hiddenFieldsUnchanged =
+        previousNode?.hiddenFields === node.hiddenFields
 
       // If there are no hidden fields, field boxes and connection anchors are
       // fully determined by the node box and target boxes, so we can skip the
       // per-field walk entirely.
-      if (!ownBoxMoved && !targetMoved && node.hiddenFields.length === 0) {
+      if (
+        !ownBoxMoved &&
+        !targetMoved &&
+        node.hiddenFields.length === 0 &&
+        fieldsUnchanged &&
+        hiddenFieldsUnchanged
+      ) {
         nextNodes[n] = node
         continue
       }
@@ -122,11 +143,11 @@ export function updateNodePositions(state: State): State {
     }
 
     if (!anyNodeChanged) {
-      return state
+      return nextState
     }
 
     return {
-      ...state,
+      ...nextState,
       nodes: nextNodes,
     }
   })

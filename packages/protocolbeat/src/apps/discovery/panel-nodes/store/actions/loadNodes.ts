@@ -12,8 +12,8 @@ import {
   recallNodeLayout,
   type StoredNodeLayout,
 } from '../utils/storage'
+import { updateNodePositions } from '../utils/updateNodePositions'
 import { layout } from './other'
-import { setNodes as applyNodePositions } from './setNodes'
 
 const NEW_NODE_HORIZONTAL_GAP = 120
 const NEW_NODE_VERTICAL_GAP = 40
@@ -118,13 +118,12 @@ export function loadNodes(
           }
         })
 
-  return applyNodePositions(
-    {
-      ...baseState,
-      nodes: nodesWithFallback,
-    },
-    nodesWithFallback,
-  )
+  return updateNodePositions(state, {
+    hidden: hiddenNodes,
+    nodes: nodesWithFallback,
+    projectId,
+    loaded: true,
+  })
 }
 
 function createUnknownNodes(nodes: Node[]): Node[] {

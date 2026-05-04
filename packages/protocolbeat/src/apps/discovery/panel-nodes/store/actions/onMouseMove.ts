@@ -60,8 +60,7 @@ export function onMouseMove(
             : other,
         )
 
-        return updateNodePositions({
-          ...state,
+        return updateNodePositions(state, {
           input: { ...state.input, mouseX: x, mouseY: y },
           nodes,
         })
@@ -81,8 +80,7 @@ export function onMouseMove(
       case 'drag': {
         const { x, y } = toViewCoordinates(event, container, state.transform)
 
-        return updateNodePositions({
-          ...state,
+        return updateNodePositions(state, {
           mouseUpAction: undefined,
           input: { ...state.input, mouseX: x, mouseY: y },
         })

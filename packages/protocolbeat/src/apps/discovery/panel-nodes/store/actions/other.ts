@@ -83,8 +83,5 @@ export function layout(state: State, locations: NodeLocations): Partial<State> {
     },
   }))
 
-  return updateNodePositions({
-    ...state,
-    nodes: movedNodes,
-  })
+  return updateNodePositions(state, { nodes: movedNodes })
 }
