@@ -15,9 +15,11 @@ import {
   colorSelected,
   hideSelected,
   hideUnknowns,
+  hideUnreachable,
   layout,
   setPreferences,
   showHidden,
+  showUnreachable,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
@@ -64,6 +66,8 @@ export const useStore = create<State & Actions>()(
       colorSelected: wrapAction(set, colorSelected),
       hideSelected: wrapAction(set, hideSelected),
       hideUnknowns: wrapAction(set, hideUnknowns),
+      hideUnreachable: wrapAction(set, hideUnreachable),
+      showUnreachable: wrapAction(set, showUnreachable),
       showHidden: wrapAction(set, showHidden),
       clear: wrapAction(set, clear),
       layout: wrapAction(set, layout),

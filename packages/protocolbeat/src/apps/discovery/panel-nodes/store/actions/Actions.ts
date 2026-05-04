@@ -23,6 +23,8 @@ export interface Actions {
   layout: (locations: NodeLocations) => void
   hideSelected: () => void
   hideUnknowns: () => void
+  hideUnreachable: () => void
+  showUnreachable: () => void
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: string) => void

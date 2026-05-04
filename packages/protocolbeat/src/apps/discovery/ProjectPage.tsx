@@ -15,6 +15,7 @@ import { PreviewPanel } from './panel-preview/PreviewPanel'
 import { TemplatePanel } from './panel-template/TemplatePanel'
 import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
+import { useGlobalSettingsStore } from './store/global-settings-store'
 import { usePanelStore } from './store/panel-store'
 
 export function ProjectPage() {
@@ -22,9 +23,14 @@ export function ProjectPage() {
   if (!project) {
     throw new Error('Missing project!')
   }
+  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+  const singleDiscoveryMode = useGlobalSettingsStore(
+    (s) => s.singleDiscoveryMode,
+  )
   const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
+    queryKey: ['projects', project, maxReachableDepth, singleDiscoveryMode],
+    queryFn: () =>
+      getProject(project, maxReachableDepth ?? undefined, singleDiscoveryMode),
   })
   const select = usePanelStore((state) => state.select)
   const selectedAddress = usePanelStore((state) => state.selected)

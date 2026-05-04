@@ -33,19 +33,26 @@ export function getProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   project: string,
+  maxDepth?: number,
+  singleDiscovery?: boolean,
 ): ApiProjectResponse {
-  const discoveries = configReader.readDiscoveryWithReferences(project)
+  const discoveries = singleDiscovery
+    ? [configReader.readDiscovery(project)]
+    : configReader.readDiscoveryWithReferences(project)
   const discovery = discoveries[0]
   const data = discoveries.map((discovery) => ({
     discovery,
     config: configReader.readConfig(discovery.name),
   }))
 
+  console.dir({ msg: 'opts', maxDepth, singleDiscovery })
+
   const reachableEntries = getReachableEntries(
     data
       .flatMap((x) => x.discovery.entries)
       .filter((e) => e.type !== 'Reference'),
     discovery.entries.map((e) => e.address),
+    maxDepth,
   ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }
