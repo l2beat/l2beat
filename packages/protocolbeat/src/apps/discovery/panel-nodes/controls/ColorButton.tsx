@@ -1,14 +1,14 @@
 import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
-import type { Node as DiscoveryNode } from '../store/State'
-import { useStore } from '../store/store'
-import { SELECTABLE_COLORS } from '../view/colors/colors'
-import { oklchColorToCSS } from '../view/colors/oklch'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '../../../../components/Popover'
+import type { Node as DiscoveryNode } from '../store/State'
+import { useStore } from '../store/store'
+import { SELECTABLE_COLORS } from '../view/colors/colors'
+import { oklchColorToCSS } from '../view/colors/oklch'
 import { ControlButton } from './ControlButton'
 import { IconControlPalette } from './icons/IconControlPalette'
 

@@ -85,7 +85,7 @@ export function LayoutFileButtons(props?: {
     <>
       <div
         className={clsx(
-          'flex self-stretch gap-2',
+          'flex gap-2 self-stretch',
           orientation === 'row' ? 'flex-row' : 'flex-1 flex-col',
           props?.className,
         )}
