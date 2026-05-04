@@ -1,0 +1,258 @@
+{
+  "title": "Monthly Updates - April 2026",
+  "startDate": "2026-04-01",
+  "endDate": "2026-04-30",
+  "publishedOn": "2026-05-01",
+  "description": "Explore the most important April developments across major ecosystems — from agent permissions and enterprise rollups to tokenized finance, governance actions, verifiable AI, and protocol upgrades.",
+  "updates": [
+    {
+      "type": "ecosystem",
+      "ecosystemId": "arbitrum-orbit",
+      "news": [
+        {
+          "title": "Arbitrum Freezes Funds Linked to KelpDAO Exploit",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2046435443680346189) that its Security Council executed an emergency action to freeze 30,766 ETH linked to the KelpDAO exploit.\n\nThe funds were transferred to a secured intermediary wallet following coordination with law enforcement and technical review, without impacting users or the broader network state. Any further movement of funds will require governance action.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Proposal Seeks Release of Frozen ETH for KelpDAO Recovery",
+          "content": "A new governance proposal [submitted](https://forum.arbitrum.foundation/t/constitutional-aip-approve-release-of-frozen-eth/30825) by Aave Labs and ecosystem partners suggests releasing the ~30,765 ETH previously frozen by the Arbitrum Security Council following the KelpDAO exploit.\n\nThe funds would support a coordinated recovery effort aimed at restoring the backing of rsETH and compensating affected users. The proposal outlines a multi-step governance process, including delegate feedback, a potential temperature check, and a full on-chain vote.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Security Council Elections: The Results Are In",
+          "content": "The March 2026 Security Council election cycle [officially concluded](https://www.tally.xyz/gov/arbitrum/council/security-council/election/5/round-2) on May 3. After a process involving 16 applicants and a decay-based voting mechanism, the community selected six members to join the council:\n\n- Michael Lewellen\n- DZack23\n- yoav.eth\n- Certora\n- bartek.eth\n- Pablo Sabbatella (OPSEK)",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Introduces Dynamic Reserve Pricing for Timeboost",
+          "content": "Offchain Labs [announced](https://forum.arbitrum.foundation/t/announcement-of-dynamic-reserve-price-change/30833) an update to Arbitrum’s Timeboost mechanism, replacing the static reserve price with a dynamically adjusted model.\n\nThe new system updates the reserve price every minute based on market conditions and participant behavior, with data accessible through a public API. The change aims to improve auction efficiency, maintain competitive transaction ordering, and support more consistent revenue generation for the DAO."
+        },
+        {
+          "title": "Arbitrum Votes on Proposal to Deploy 6,000 ETH into Treasury Strategies",
+          "content": "Arbitrum Governance is [currently voting](https://www.tally.xyz/gov/arbitrum/proposal/86654545843645364200491220873325841239317939837732580673532485559601859962180?govId=eip155:42161:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) on a proposal to transfer 6,000 ETH and idle stablecoins from the DAO treasury into its Treasury Management Portfolio.\n\nThe initiative aims to reduce idle capital and generate yield through strategies such as staking, lending, and liquidity provision. The vote is expected to conclude on May 7.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Arbitrum Enables ERC-7715 for Wallet Execution Permissions",
+          "content": "Arbitrum [announced](https://x.com/ArbitrumDevs/status/2041509978453004766) that ERC-7715 is now live on the network, allowing applications and agents to request scoped execution permissions from MetaMask users.\n\nThe standard reduces the need for repeated approvals, supports improved UX, and unlocks new use cases for autonomous on-chain applications."
+        },
+        {
+          "title": "Arbitrum Selects First Cohort for Mentorship Program",
+          "content": "Arbitrum [announced](https://x.com/arbitrum/status/2049485352155726207) the first cohort of its Mentorship Program, selecting 13 teams from over 900 applicants to build new products on the network.\n\nThe selected teams span AI, payments, RWAs, and DeFi. Over eight weeks, they will receive support across product strategy, go-to-market, liquidity design, and fundraising, with guidance from ecosystem partners such as Pendle and IOSG Ventures."
+        },
+        {
+          "title": "Praxis Launches on Arbitrum to Support Agent-Driven Activity",
+          "content": "Arbitrum [highlighted](https://x.com/Praxis_Protocol/status/2042195846205170038) that Praxis is now live on the network, expanding its footprint into the ecosystem.\n\nThe launch reflects growing alignment around Arbitrum as a settlement layer for emerging agent-driven on-chain activity."
+        },
+        {
+          "title": "Jumper Users Prefer Arbitrum for L2 Trade Execution",
+          "content": "Arbitrum [highlighted](https://x.com/arbitrum/status/2039365325238505844) that Jumper users are increasingly choosing the network as their preferred L2 for trade execution.\n\nThe trend reflects how predictable fees and deep liquidity are positioning Arbitrum as a primary venue for DeFi aggregators and high-volume on-chain trading."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "the-elastic-network",
+      "news": [
+        {
+          "title": "ZKsync Staking Pilot Season 1 Set to Conclude in May",
+          "content": "ZKsync [announced](https://forum.zknation.io/t/zknomics-staking-pilot-season-1-end-date-reminder-may-8th/956) that Season 1 of its ZKnomics staking pilot program will conclude on May 8, marking the end of the initial rewards phase.\n\nThe pilot is part of ZKsync’s broader token mechanics experimentation, with administrators expected to evaluate results before deciding whether to continue, modify, or pause the initiative in a potential second season."
+        },
+        {
+          "title": "ZKsync Proposes v31 Upgrade with Native Interoperability Features",
+          "content": "ZKsync [introduced](https://forum.zknation.io/t/zip-16-v31-interop-bundles-upgrade/979) ZIP-16, a proposal for the v31 protocol upgrade currently under discussion. The upgrade focuses on expanding interoperability across the Elastic Chain through new interop bundles, enabling native cross-chain token transfers and interactions between ZKsync chains connected via the Gateway.\n\nBeyond interoperability, the proposal introduces a dual fee model, Priority Mode for L1-settling chains, and broader compatibility work for ZKsync OS.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Matter Labs Joins Linux Foundation’s Decentralized Trust Initiative",
+          "content": "ZKsync [announced](https://www.zksync.io/blog/matter-labs-joins-linux-foundation-decentralized-trust) that Matter Labs has joined the Linux Foundation’s Decentralized Trust initiative as a general member. The consortium focuses on open standards for blockchain, identity, and tokenization technologies.\n\nMatter Labs will contribute expertise in zero-knowledge systems and privacy-preserving infrastructure, particularly for institutional adoption and compliant digital asset systems."
+        },
+        {
+          "title": "ZKsync to Deprecate Lite Network in May",
+          "content": "ZKsync [announced](https://x.com/zksync/status/2043791687772950923) that ZKsync Lite will be fully deprecated on May 4, marking the end of its original payments-focused rollup.\n\nLite played a key role in demonstrating ZK scaling in production. The shutdown is part of a planned transition, with block production stopping and the final state becoming permanently frozen, while not affecting ZKsync Era or other chains in the ecosystem."
+        },
+        {
+          "title": "ZKsync Joins Blockchain Association Tokenization Workstream",
+          "content": "ZKsync [announced](https://x.com/zksync/status/2046589817983754613) its participation in the Blockchain Association’s Tokenization Workstream, a policy-focused initiative aimed at shaping tokenized capital markets in the U.S.\n\nThe move reflects ZKsync’s growing involvement in policy and standard-setting efforts as tokenization gains traction across traditional finance."
+        },
+        {
+          "title": "ZKsync Publishes Overview of Prividium and Tokenized Deposits Infrastructure",
+          "content": "ZKsync [shared](https://x.com/reflexivityres/status/2049115233768358315) an overview of how Prividium enables regulated financial institutions to issue tokenized deposits on-chain while maintaining compliance, privacy, and balance sheet control.\n\nThe piece highlights traction from Cari Network, where five U.S. banks representing over $600B in deposits are building on Prividium, as well as integrations with institutional providers like BitGo."
+        },
+        {
+          "title": "ZKsync Governance Approves Security Council Restructuring",
+          "content": "ZKsync Governance [approved](https://www.tally.xyz/gov/zksync/proposal/38457812855457311077054202023053780960745243426690711582482794483162556902949?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) ZIP-15, restructuring the Security Council to better align with the network’s current stage of maturity.\n\nThe update reduces the number of signers from 12 to 8 and adjusts member compensation to $3,000 per month, effective May 1, 2026. It also shifts the council toward an entity-only composition, reflecting preferences from institutional partners and banks building on Prividium.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Optimism Enables Execution Permissions for dApps and Agents via ERC-7715",
+          "content": "Optimism [highlighted](https://x.com/Optimism/status/2042586117686300878) that builders can now request wallet execution permissions on OP Mainnet through MetaMask’s implementation of ERC-7715.\n\nThe standard enables dApps and agents to execute transactions on behalf of users under predefined constraints, expanding the design space for permissioned interactions and more advanced account abstraction use cases."
+        },
+        {
+          "title": "Ether.fi Brings Largest DeFi Card Deployment to OP Mainnet",
+          "content": "Optimism [highlighted](https://x.com/Optimism/status/2044412607931822187) that Ether.fi launched its non-custodial crypto card on OP Mainnet, migrating over $220M in TVL, 300,000 accounts, and 70,000 active cards.\n\nThe migration was completed in three days with no downtime, maintaining full card functionality throughout. The launch represents the largest single TVL event in OP Mainnet history."
+        },
+        {
+          "title": "Optimism Experiments with Stake-Based Transaction Ordering",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2044836121860002191) a new experiment introducing stake-based transaction ordering, allowing users to stake OP to gain priority access to blockspace.\n\nThe model explores alternatives to pure gas auctions by incorporating stake size and duration into transaction ordering, while maintaining safeguards such as instant unstaking and rollback mechanisms. The experiment is currently live on Sepolia."
+        },
+        {
+          "title": "Optimism Expands PrivacyBoost Across OP Stack",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2046591718695256329) the launch and expansion of PrivacyBoost, a confidential computing solution developed by Sunnyside, now live on OP Mainnet and integrated with OP Stack chains like Soneium.\n\nThe system combines zero-knowledge proofs with trusted execution environments (TEE) to enable privacy-preserving applications with sub-500ms proof generation and high throughput."
+        },
+        {
+          "title": "Optimism Outlines Enterprise-Focused L2 Strategy with OP Enterprise",
+          "content": "Optimism [published](https://x.com/optimism/status/2049156827527434610?s=46&t=q4Q232TdEyWIiMZPfDpI4A) an article explaining its enterprise adoption strategy through the OP Stack. The piece frames L2 evolution as moving from bespoke designs to standardization and now toward specialization.\n\nOP Enterprise is positioned as a way for companies to deploy customizable chains while preserving interoperability, allowing enterprises to tailor execution, data availability, and proof systems while staying connected to the broader ecosystem."
+        },
+        {
+          "title": "Optimism Supports OKX’s Agent Payments Protocol",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2049493923819638990) support for OKX’s Agent Payments Protocol (APP), an open standard designed to enable agents to execute full commerce flows on-chain.\n\nThe protocol expands agent capabilities beyond payments to include quoting, negotiation, and programmable transactions."
+        },
+        {
+          "title": "Optimism Enables Circle Nanopayments for Agent Transactions",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2049848848898502794) that Circle’s nanopayments infrastructure is now live on OP Mainnet, enabling transactions as small as $0.000001 with no per-transaction gas fees.\n\nThe system allows AI agents to autonomously pay for services using USDC and the x402 protocol, supporting high-frequency, low-value machine-to-machine payments."
+        },
+        {
+          "title": "Mitsui Launches Zipangcoin on OP Mainnet",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2045142814166847877) that Zipangcoin, a commodity-backed cryptoasset issued by Mitsui & Co. Digital Commodities, is now live on OP Mainnet.\n\nThe asset is backed by precious metals such as gold, silver, and platinum, marking the first cryptoasset from a Japanese company on the network."
+        },
+        {
+          "title": "Optimism Announces op-geth Deprecation and Migration to op-reth",
+          "content": "Optimism [announced](https://x.com/Optimism/status/2047314666129604839) that op-geth will be deprecated on May 31, requiring OP Stack chain operators to migrate to op-reth validator nodes.\n\nThe transition aims to standardize the execution client stack, with operators encouraged to begin setup early to avoid disruptions ahead of the deadline."
+        },
+        {
+          "title": "Optimism Opens Security Council Elections for Cohort B",
+          "content": "Optimism Governance [launched](https://gov.optimism.io/t/season-9-security-council-cohort-b-elections/10656) the Season 9 Security Council elections process for Cohort B, initiating the nomination phase for new members.\n\nCandidates can self-nominate through OP Atlas and require approval from top delegates to advance to the voting phase. Elected participants will serve a 12-month term starting in August.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Ronin to Migrate to Ethereum Using the OP Stack",
+          "content": "Optimism [highlighted](https://x.com/Optimism/status/2047695423435858233) that Ronin will migrate to Ethereum using the OP Stack, with the transition scheduled for May 12.\n\nOriginally built to support Axie Infinity and onboard millions of players on-chain, Ronin’s move reflects a broader trend of application-specific chains adopting the OP Stack to reconnect with Ethereum while maintaining performance and scalability."
+        }
+      ]
+    },
+    {
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "news": [
+        {
+          "title": "Visa Expands Stablecoin Settlement to Polygon",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2049460816169341341) that Visa has integrated the network into its global stablecoin settlement program, enabling partners to use Polygon rails for instant money movement.\n\nThe integration supports real-time settlement with low transaction costs and high reliability, positioning Polygon as infrastructure for enterprise-grade financial activity."
+        },
+        {
+          "title": "Polygon Launches sPOL Native Liquid Staking Token",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2044057720874033406) the launch of sPOL, its native liquid staking token designed to unlock liquidity for staked POL and improve returns for validators and delegators.\n\nThe token allows users to stake POL while maintaining liquidity and introduces a mechanism for sharing priority transaction fees with stakers, aligning network activity with validator incentives."
+        },
+        {
+          "title": "Polygon Deploys Giugliano Upgrade to Improve Performance",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2041899889630859674) the Giugliano upgrade on mainnet, introducing improvements in transaction finality, network throughput, and fee transparency.\n\nThe upgrade reduces finality times by approximately two seconds, increases peer-to-peer throughput under load by up to 4x, and enhances on-chain visibility into gas fees."
+        },
+        {
+          "title": "Polygon Enables ERC-7715 for Wallet Execution Permissions",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2041550102917963908) that ERC-7715 is now live on the network, enabling applications and agents to request scoped execution permissions from MetaMask users.\n\nThe standard reduces repeated transaction approvals and unlocks new interaction models for dApps and autonomous on-chain agents."
+        },
+        {
+          "title": "MoonPay Launches Zero-Fee Stablecoin Onramps on Polygon for Agents",
+          "content": "Polygon [highlighted](https://x.com/moonpay/status/2039439600905503093) that MoonPay introduced zero-fee stablecoin onramps for agents on the network.\n\nThe integration enables users to convert fiat to stablecoins without fees or spread, simplifying access to on-chain liquidity and supporting agent-driven activity."
+        },
+        {
+          "title": "Euclid Launches on Polygon to Enable Cross-Chain Liquidity Access",
+          "content": "Polygon [highlighted](https://x.com/EuclidProtocol/status/2040083489933168798) the launch of Euclid Protocol on the network, bringing access to unified liquidity across 40+ chains.\n\nThe integration enables users and applications on Polygon to swap assets across networks without relying on wrapped tokens, helping reduce liquidity fragmentation."
+        },
+        {
+          "title": "Surf Launches AI-Powered Stablecoin Vaults on Polygon",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2039712115385352343) the launch of Surf, an AI-powered savings vault platform for stablecoins, now live on the network.\n\nThe product gives users non-custodial accounts to earn yield on USDC across lending markets, leveraging Morpho for execution and cross-chain routing infrastructure for automation."
+        },
+        {
+          "title": "Polygon Joins x402 Foundation to Advance Internet-Native Payments",
+          "content": "Polygon [announced](https://x.com/0xPolygon/status/2039697080789217724) its participation in the x402 Foundation, an initiative aimed at building open standards for internet-native payments.\n\nThe group includes companies such as Coinbase, AWS, Google, Stripe, Visa, and Mastercard, and focuses on infrastructure for seamless value transfer across applications, APIs, and agents."
+        },
+        {
+          "title": "Polygon Launches Private Mempool for MEV Protection",
+          "content": "Polygon [introduced](https://polygon.technology/blog/polygon-launches-private-mempool-mev-protection-is-now-a-one-line-integration) a Private Mempool, a transaction submission endpoint designed to protect users from frontrunning and sandwich attacks.\n\nTransactions can bypass the public mempool and be sent directly to block producers, improving execution integrity with a simple RPC endpoint change."
+        },
+        {
+          "title": "Polygon Highlights AggLayer Resilience Following KelpDAO Exploit",
+          "content": "Polygon [published](https://polygon.technology/blog/agglayer-processed-200m-post-hack-with-zero-incidents-zk-proofs-are-why) an analysis detailing how AggLayer continued operating during the KelpDAO exploit, processing approximately $200M in cross-chain volume without disruption.\n\nThe report contrasts AggLayer’s zero-knowledge proof-based architecture with traditional bridge designs that rely on operator committees, positioning AggLayer as a robust interoperability layer for high-value use cases."
+        }
+      ]
+    },
+    {
+      "type": "data-availability",
+      "id": "eigenlayer",
+      "daLayerId": "eigenda",
+      "name": "EigenLayer",
+      "news": [
+        {
+          "title": "EigenLayer Thesis Explores the Rise of “Agentic Companies”",
+          "content": "EigenLayer co-founder Sreeram Kannan [published](https://blog.eigencloud.xyz/agents-will-become-companies/) a piece outlining the concept of “agentic companies,” arguing that AI and crypto will enable software-native businesses owned and operated by autonomous agents.\n\nThe article frames blockchains as coordination and capital formation infrastructure for agents, allowing them to function as independent economic entities rather than tools."
+        },
+        {
+          "title": "Eigen Labs Explores Distributed AI Inference with Project Darkbloom",
+          "content": "Eigen Labs [introduced](https://x.com/eigencloud/status/2044072648372863091) Project Darkbloom, a research initiative exploring how idle compute from consumer hardware, particularly Apple Silicon devices, can power distributed AI inference networks.\n\nThe model uses verified nodes, secure enclaves, and attestation mechanisms to provide hardware-backed privacy guarantees while improving capital efficiency versus centralized infrastructure."
+        },
+        {
+          "title": "EigenLayer Highlights Throughput Expansion with EigenDA",
+          "content": "EigenLayer [published](https://blog.eigencloud.xyz/living-outside-the-box-how-eigenda-unlocks-the-expansion-of-blockchain-throughput/) an overview explaining how EigenDA expands blockchain throughput by increasing data availability capacity.\n\nBy distributing data across a network of operators with cryptographic guarantees, EigenDA allows rollups to process higher volumes of transactions without being bottlenecked by Ethereum’s native data capacity."
+        },
+        {
+          "title": "EigenLayer Highlights Verifiable AI Agent Use Cases from Hackathon",
+          "content": "EigenLayer [shared](https://blog.eigencloud.xyz/ai-gent-hackathon-sythesis/) a recap of standout Synthesis hackathon projects focused on verifiable AI agents.\n\nFeatured examples include Bob Is Alive, an autonomous on-chain artist running inside a trusted execution environment; DealForge, a machine-to-machine deal protocol; and Boss Raid, a multi-agent coordination system for task execution."
+        }
+      ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind Open-Sources DeFi Transaction Builder for AI Agents",
+          "content": "Nethermind [announced](https://x.com/Nethermind/status/2039252686663475560) the release of an open-source DeFi transaction builder designed for AI agents.\n\nThe tool uses JSON-based playbooks to define protocol interactions, while resolvers handle parameters such as token addresses, slippage, and approvals to return deterministic transaction data."
+        },
+        {
+          "title": "Nethermind Joins Ethereum Security Subsidy Program Committee",
+          "content": "Nethermind [announced](https://x.com/Nethermind/status/2044773038768390378) its participation in the Expert Committee for the Ethereum Security Subsidy Program, alongside organizations such as the Ethereum Foundation, Chainlink Labs, and Areta.\n\nThe initiative allocates $1M to subsidize security reviews for Ethereum mainnet builders, with Nethermind contributing auditing, formal verification, and AI-assisted vulnerability detection expertise."
+        },
+        {
+          "title": "Nethermind Releases Client v1.37.1 with Performance and Architecture Upgrades",
+          "content": "Nethermind [announced](https://x.com/Nethermind/status/2049460446541885659) client version 1.37.1, introducing performance improvements and architectural updates.\n\nThe release includes a refactored world state backend with pluggable storage support, optimizations to EVM execution and log indexing, initial groundwork for zkEVM compatibility, and updated networking standards."
+        }
+      ]
+    },
+    {
+      "name": "Cartesi",
+      "type": "upcoming-project",
+      "projectId": "cartesi",
+      "news": [
+        {
+          "title": "Cartesi Machine Emulator Brings Major Performance and Proof System Upgrades",
+          "content": "Cartesi [released](https://github.com/cartesi/machine-emulator/releases/tag/v0.20.0) Machine Emulator v0.20.0, introducing zero-knowledge proof support, faster state hashing, disk-backed machine state handling, and more efficient proof generation for long-running computations.\n\nAlongside this release, Machine Solidity Step [v0.14.0](https://github.com/cartesi/machine-solidity-step/releases/tag/v0.14.0) was published to maintain compatibility between on-chain machine contracts and the latest emulator."
+        },
+        {
+          "title": "Emergency Withdrawals Added to the Fraud-Proof System",
+          "content": "Cartesi [released](https://github.com/cartesi/rollups-contracts/releases/tag/v3.0.0-alpha.3) Rollups Contracts v3.0.0-alpha.3, introducing preliminary support for emergency withdrawals alongside stronger deployment and claim safeguards.\n\nThe new fraud-proof system [v3.0.0-alpha.0](https://github.com/cartesi/dave/releases/tag/v3.0.0-alpha.0) integrates with the updated contracts to support emergency withdrawals within Cartesi’s dispute-resolution framework, improving settlement safety and deployment flexibility."
+        },
+        {
+          "title": "Rollups Node Update Released With Higher Throughput and Stronger Reliability",
+          "content": "Cartesi [released](https://github.com/cartesi/rollups-node/releases/tag/v2.0.0-alpha.11) Rollups Node 2.0.0-alpha.11, focused on performance, restart resilience, and smoother operations.\n\nThe release improves workload processing across multiple applications, strengthens recovery after interruptions, adds diagnostic tooling for on-chain visibility, and includes security and stability enhancements."
+        },
+        {
+          "title": "Cartesi CLI Gets Updated with the Latest Rollups Node",
+          "content": "Cartesi published CLI [2.0.0-alpha.34](https://github.com/cartesi/cli/releases/tag/%40cartesi%2Fcli%402.0.0-alpha.34), a developer-focused preview release for the upcoming Rollups Node v2.\n\nThe update refreshes compatibility with the latest Rollups Node alpha and introduces the new Rollups Explorer, which connects to supported nodes through the JSON-RPC API for easier inspection and testing workflows."
+        },
+        {
+          "title": "DeFi-on-Linux Educational Resources",
+          "content": "Cartesi published new DeFi-focused educational resources showing what Linux on a rollup can unlock for builders. A new [blog](https://cartesi.io/blog/defi-execution-layer/) argues that DeFi has been constrained by limited execution environments, while Cartesi’s Linux runtime opens on-chain finance to Python, Rust, Go, and mature developer tooling.\n\nAdditional examples include a [Pandas tutorial](https://x.com/cartesiproject/status/2044763094363386215) for managing liquidity pools and user positions on-chain, and a vibe-coding experiment by [Shaheen Ahmed](https://x.com/riseandshaheen/status/2047247344828395616) using Cartesi Machine compute, Chainlink price feeds, and lightweight [cartesi-skills](https://github.com/Mugen-Builders/cartesi-skills) instructions for builders."
+        }
+      ]
+    }
+  ]
+}
