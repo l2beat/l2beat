@@ -158,6 +158,7 @@ export class EthRpcClient {
     block: BlockParameter,
     includeTransactions: boolean,
   ): Promise<RpcBlock | RpcBlockWithTransactions | null> {
+    console.log('getBlockByNumber', block, includeTransactions)
     const data = await this.rawCall('eth_getBlockByNumber', [
       encodeBlock(block),
       includeTransactions,
@@ -425,7 +426,7 @@ const RpcTransaction = v.passthroughObject({
   input: vNullableData.optional(),
   // optional on base
   nonce: vQuantity.optional(),
-  to: v.union([v.null(), vAddress]),
+  to: vNullableAddress.optional(),
   transactionIndex: v.union([v.null(), vQuantity]),
   // optional on custom transaction types
   value: vNullableQuantity.optional(),
