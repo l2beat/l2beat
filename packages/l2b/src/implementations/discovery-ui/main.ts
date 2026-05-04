@@ -112,7 +112,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project } = paramsValidation.data
     const { maxDepth } = queryValidation.data
 
-    const response = getProject(configReader, templateService, project, maxDepth)
+    const response = getProject(
+      configReader,
+      templateService,
+      project,
+      maxDepth,
+    )
     res.json(response)
   })
 
