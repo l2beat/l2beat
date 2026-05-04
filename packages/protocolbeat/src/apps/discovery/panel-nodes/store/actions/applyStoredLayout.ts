@@ -17,7 +17,7 @@ export function applyStoredLayout(
     if (mode === 'replace') {
       return {
         ...node,
-        color: savedColor ?? 0,
+        color: typeof savedColor === 'number' ? savedColor : 0,
         hiddenFields: savedHiddenFields ?? [],
         box: {
           ...node.box,
@@ -40,7 +40,7 @@ export function applyStoredLayout(
         },
       }
     }
-    if (savedColor !== undefined) {
+    if (typeof savedColor === 'number') {
       next = { ...next, color: savedColor }
     }
     if (savedHiddenFields !== undefined) {

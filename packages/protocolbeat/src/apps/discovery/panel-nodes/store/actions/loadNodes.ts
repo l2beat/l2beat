@@ -48,7 +48,8 @@ export function loadNodes(
       (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
-    const color = saved?.colors?.[node.id] ?? node.color
+    const savedColor = saved?.colors?.[node.id]
+    const color = typeof savedColor === 'number' ? savedColor : node.color
 
     if (!box) {
       nodesWithoutSavedLayout.add(node.id)

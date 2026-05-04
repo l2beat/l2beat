@@ -12,7 +12,20 @@ const NodeLocations = v.record(
   }),
 )
 
-const NodeColors = v.record(v.string(), v.number())
+// Accepts the legacy { l, c, h } oklch object form for backward compatibility
+// with localStorage entries written before colors became a numeric palette
+// index. Readers must coerce non-numeric entries to 0.
+const NodeColors = v.record(
+  v.string(),
+  v.union([
+    v.object({
+      l: v.number(),
+      c: v.number(),
+      h: v.number(),
+    }),
+    v.number(),
+  ]),
+)
 
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
 const HiddenNodes = v.array(v.string())
