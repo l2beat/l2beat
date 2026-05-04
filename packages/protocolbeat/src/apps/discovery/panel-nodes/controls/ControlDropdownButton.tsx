@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { type ReactNode, useState } from 'react'
 import {
   Popover,
@@ -6,6 +5,7 @@ import {
   PopoverTrigger,
 } from '../../../../components/Popover'
 import { IconChevronDown } from '../../../../icons/IconChevronDown'
+import { cn } from '../../../../utils/cn'
 import { ControlButton } from './ControlButton'
 
 interface DropdownOption {
@@ -30,7 +30,7 @@ export function ControlDropdownButton(props: {
       <PopoverTrigger asChild>
         <ControlButton
           disabled={props.disabled}
-          className={clsx('h-full px-3 py-2.5', props.className)}
+          className={cn('h-full px-3 py-2.5', props.className)}
         >
           <span className="flex items-center gap-2">
             <span className="flex items-center gap-2">
@@ -40,7 +40,7 @@ export function ControlDropdownButton(props: {
               </span>
             </span>
             <IconChevronDown
-              className={clsx(
+              className={cn(
                 'shrink-0 text-coffee-300 transition-transform',
                 open && 'rotate-180',
               )}
@@ -63,7 +63,7 @@ export function ControlDropdownButton(props: {
               option.onSelect()
               setOpen(false)
             }}
-            className={clsx(
+            className={cn(
               'flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-coffee-100 text-xs transition-colors',
               i !== props.options.length - 1 && 'border-coffee-600/70 border-b',
               !option.disabled && 'hover:bg-coffee-800',

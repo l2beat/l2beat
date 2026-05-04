@@ -1,10 +1,10 @@
-import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '../../../../components/Popover'
+import { cn } from '../../../../utils/cn'
 import type { Node as DiscoveryNode } from '../store/State'
 import { useStore } from '../store/store'
 import { SELECTABLE_COLORS } from '../view/colors/colors'
@@ -76,7 +76,7 @@ export function ColorButton({ className }: { className?: string }) {
           disabled={!selectionExists}
           title="Node color"
           aria-label="Change node color"
-          className={clsx('h-full px-3 py-2.5', className)}
+          className={cn('h-full px-3 py-2.5', className)}
         >
           <span className="flex items-center justify-center gap-2 text-center text-coffee-100">
             <IconControlPalette />
@@ -140,7 +140,7 @@ function ColorPicker({
               aria-label={`Set node color to ${option.label}`}
               aria-pressed={active}
               onClick={() => onColorChange(option.id)}
-              className={clsx(
+              className={cn(
                 'flex items-center justify-center rounded-lg border border-coffee-600 bg-coffee-800 p-2 transition-colors',
                 active
                   ? 'border-autumn-300 bg-coffee-700'
@@ -148,7 +148,7 @@ function ColorPicker({
               )}
             >
               <span
-                className={clsx(
+                className={cn(
                   'h-5 w-5 rounded-full border',
                   option.label === 'White'
                     ? 'border-coffee-500'
