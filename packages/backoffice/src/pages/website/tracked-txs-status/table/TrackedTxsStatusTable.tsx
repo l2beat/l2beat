@@ -31,10 +31,11 @@ export function TrackedTxsStatusTable({
       { id: 'status', desc: false },
       { id: 'latestTimestamp', desc: false },
       { id: 'projectId', desc: false },
+      { id: 'feature', desc: false },
     ],
     initialPageSizeOption: 'all',
-    getRowId: (row) => `${row.projectId}:${row.subtype}`,
-    searchPlaceholder: 'Search projects, subtypes, and formulas',
+    getRowId: (row) => `${row.feature}:${row.projectId}:${row.subtype}`,
+    searchPlaceholder: 'Search projects, features, subtypes, and formulas',
   })
 
   return (
@@ -42,7 +43,7 @@ export function TrackedTxsStatusTable({
       table={table}
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
-      emptyMessage="No active liveness tracked tx configs found."
+      emptyMessage="No active tracked tx configs found."
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `tracked-txs-status-${new Date().toISOString()}.csv`

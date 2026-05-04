@@ -34,6 +34,14 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
         filter: { kind: 'select' },
       },
     }),
+    columnHelper.accessor('feature', {
+      header: 'Feature',
+      cell: ({ getValue }) => <Badge variant="outline">{getValue()}</Badge>,
+      meta: {
+        csvHeader: 'Feature',
+        filter: { kind: 'select' },
+      },
+    }),
     columnHelper.accessor('subtype', {
       header: 'Subtype',
       cell: ({ getValue }) => <Badge variant="outline">{getValue()}</Badge>,

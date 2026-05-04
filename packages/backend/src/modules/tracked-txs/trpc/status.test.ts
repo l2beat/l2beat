@@ -7,7 +7,7 @@ import { getTrackedTxsStatusRows, STALE_AFTER_SECONDS } from './status'
 describe(getTrackedTxsStatusRows.name, () => {
   const now = UnixTime(1_700_000_000)
 
-  it('returns only active liveness config groups', () => {
+  it('returns active config groups for each feature', () => {
     const result = getTrackedTxsStatusRows({
       projects: [
         mockProject('project-a', [
@@ -20,21 +20,28 @@ describe(getTrackedTxsStatusRows.name, () => {
           mockConfig({ id: 'active-costs', type: 'l2costs' }),
         ]),
       ],
-      latestTimestamps: [
-        {
-          configurationId: 'active-liveness',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
-        {
-          configurationId: 'active-costs',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
-      ],
+      latestTimestamps: {
+        liveness: [
+          {
+            configurationId: 'active-liveness',
+            latestTimestamp: now - UnixTime.HOUR,
+          },
+        ],
+        l2costs: [
+          {
+            configurationId: 'active-costs',
+            latestTimestamp: now - UnixTime.HOUR,
+          },
+        ],
+      },
       now,
     })
 
-    expect(result.map((row) => [row.projectId, row.subtype])).toEqual([
-      ['project-a', 'stateUpdates'],
+    expect(
+      result.map((row) => [row.feature, row.projectId, row.subtype]),
+    ).toEqual([
+      ['l2costs', 'project-a', 'stateUpdates'],
+      ['liveness', 'project-a', 'stateUpdates'],
     ])
   })
 
@@ -47,12 +54,15 @@ describe(getTrackedTxsStatusRows.name, () => {
           true,
         ),
       ],
-      latestTimestamps: [
-        {
-          configurationId: 'archived-liveness',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
-      ],
+      latestTimestamps: {
+        liveness: [
+          {
+            configurationId: 'archived-liveness',
+            latestTimestamp: now - UnixTime.HOUR,
+          },
+        ],
+        l2costs: [],
+      },
       now,
     })
 
@@ -72,16 +82,19 @@ describe(getTrackedTxsStatusRows.name, () => {
           mockConfig({ id: 'stale', type: 'liveness' }),
         ]),
       ],
-      latestTimestamps: [
-        {
-          configurationId: 'fresh',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
-        {
-          configurationId: 'stale',
-          latestTimestamp: now - STALE_AFTER_SECONDS - 1,
-        },
-      ],
+      latestTimestamps: {
+        liveness: [
+          {
+            configurationId: 'fresh',
+            latestTimestamp: now - UnixTime.HOUR,
+          },
+          {
+            configurationId: 'stale',
+            latestTimestamp: now - STALE_AFTER_SECONDS - 1,
+          },
+        ],
+        l2costs: [],
+      },
       now,
     })
 
@@ -101,16 +114,19 @@ describe(getTrackedTxsStatusRows.name, () => {
           mockConfig({ id: 'fresh', type: 'liveness' }),
         ]),
       ],
-      latestTimestamps: [
-        {
-          configurationId: 'stale',
-          latestTimestamp: now - STALE_AFTER_SECONDS - 1,
-        },
-        {
-          configurationId: 'fresh',
-          latestTimestamp: now - UnixTime.HOUR,
-        },
-      ],
+      latestTimestamps: {
+        liveness: [
+          {
+            configurationId: 'stale',
+            latestTimestamp: now - STALE_AFTER_SECONDS - 1,
+          },
+          {
+            configurationId: 'fresh',
+            latestTimestamp: now - UnixTime.HOUR,
+          },
+        ],
+        l2costs: [],
+      },
       now,
     })
 
@@ -119,6 +135,7 @@ describe(getTrackedTxsStatusRows.name, () => {
     const row = result[0]
 
     expect(row!.projectId).toEqual('project-a')
+    expect(row!.feature).toEqual('liveness')
     expect(row!.subtype).toEqual('stateUpdates')
     expect(row!.status).toEqual('fresh')
     expect(row!.latestTimestamp).toEqual(now - UnixTime.HOUR)

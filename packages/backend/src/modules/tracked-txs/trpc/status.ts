@@ -7,6 +7,7 @@ import { protectedProcedure } from '../../../trpc/procedures'
 export const STALE_AFTER_SECONDS = 2 * UnixTime.DAY
 
 export interface TrackedTxsStatusRow {
+  feature: TrackedTxConfigEntry['type']
   projectId: string
   subtype: string
   sinceTimestamp: number
@@ -25,12 +26,18 @@ export function createTrackedTxsStatusRouter(deps: {
 }) {
   return router({
     configs: protectedProcedure.query(async ({ ctx }) => {
-      const latestTimestamps =
-        await ctx.db.liveness.getLatestTimestampsByConfigId()
+      const [livenessLatestTimestamps, l2CostsLatestTimestamps] =
+        await Promise.all([
+          ctx.db.liveness.getLatestTimestampsByConfigId(),
+          ctx.db.l2Cost.getLatestTimestampsByConfigId(),
+        ])
 
       return getTrackedTxsStatusRows({
         projects: deps.projects,
-        latestTimestamps,
+        latestTimestamps: {
+          liveness: livenessLatestTimestamps,
+          l2costs: l2CostsLatestTimestamps,
+        },
         now: UnixTime.now(),
       })
     }),
@@ -43,15 +50,34 @@ export function getTrackedTxsStatusRows({
   now,
 }: {
   projects: TrackedTxProject[]
-  latestTimestamps: { configurationId: string; latestTimestamp: UnixTime }[]
+  latestTimestamps: Record<
+    TrackedTxConfigEntry['type'],
+    { configurationId: string; latestTimestamp: UnixTime }[]
+  >
   now: UnixTime
 }): TrackedTxsStatusRow[] {
-  const latestByConfigId = new Map(
-    latestTimestamps.map((row) => [row.configurationId, row.latestTimestamp]),
-  )
+  const latestByConfigId = {
+    liveness: new Map(
+      latestTimestamps.liveness.map((row) => [
+        row.configurationId,
+        row.latestTimestamp,
+      ]),
+    ),
+    l2costs: new Map(
+      latestTimestamps.l2costs.map((row) => [
+        row.configurationId,
+        row.latestTimestamp,
+      ]),
+    ),
+  }
   const groups = new Map<
     string,
-    { projectId: string; subtype: string; configs: TrackedTxConfigEntry[] }
+    {
+      feature: TrackedTxConfigEntry['type']
+      projectId: string
+      subtype: string
+      configs: TrackedTxConfigEntry[]
+    }
   >()
 
   for (const project of projects) {
@@ -59,11 +85,14 @@ export function getTrackedTxsStatusRows({
       continue
     }
 
-    for (const config of project.configurations.filter(
-      isActiveLivenessConfig,
-    )) {
-      const key = getGroupKey(project.id.toString(), config.subtype)
+    for (const config of project.configurations.filter(isActiveConfig)) {
+      const key = getGroupKey(
+        config.type,
+        project.id.toString(),
+        config.subtype,
+      )
       const group = groups.get(key) ?? {
+        feature: config.type,
         projectId: project.id.toString(),
         subtype: config.subtype,
         configs: [],
@@ -74,16 +103,17 @@ export function getTrackedTxsStatusRows({
   }
 
   return Array.from(groups.values())
-    .map((group) => toStatusRow(group, latestByConfigId, now))
+    .map((group) => toStatusRow(group, latestByConfigId[group.feature], now))
     .sort(compareStatusRows)
 }
 
-function isActiveLivenessConfig(config: TrackedTxConfigEntry): boolean {
-  return config.type === 'liveness' && config.untilTimestamp === undefined
+function isActiveConfig(config: TrackedTxConfigEntry): boolean {
+  return config.untilTimestamp === undefined
 }
 
 function toStatusRow(
   group: {
+    feature: TrackedTxConfigEntry['type']
     projectId: string
     subtype: string
     configs: TrackedTxConfigEntry[]
@@ -109,6 +139,7 @@ function toStatusRow(
   const missingConfigsCount = configs.length - configsWithDataCount
 
   return {
+    feature: group.feature,
     projectId: group.projectId,
     subtype: group.subtype,
     sinceTimestamp: Math.min(...configs.map((config) => config.sinceTimestamp)),
@@ -142,7 +173,10 @@ function compareStatusRows(a: TrackedTxsStatusRow, b: TrackedTxsStatusRow) {
   const projectDiff = a.projectId.localeCompare(b.projectId)
   if (projectDiff !== 0) return projectDiff
 
-  return a.subtype.localeCompare(b.subtype)
+  const subtypeDiff = a.subtype.localeCompare(b.subtype)
+  if (subtypeDiff !== 0) return subtypeDiff
+
+  return a.feature.localeCompare(b.feature)
 }
 
 function statusRank(status: TrackedTxsStatusRow['status']) {
@@ -156,6 +190,10 @@ function statusRank(status: TrackedTxsStatusRow['status']) {
   }
 }
 
-function getGroupKey(projectId: string, subtype: string) {
-  return `${projectId}:${subtype}`
+function getGroupKey(
+  feature: TrackedTxConfigEntry['type'],
+  projectId: string,
+  subtype: string,
+) {
+  return `${feature}:${projectId}:${subtype}`
 }

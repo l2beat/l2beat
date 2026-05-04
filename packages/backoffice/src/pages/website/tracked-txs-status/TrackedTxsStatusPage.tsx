@@ -36,7 +36,7 @@ export function TrackedTxsStatusPage() {
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                   <CardTitle>Tracked Txs status</CardTitle>
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge variant="secondary">{rows.length} configs</Badge>
+                    <Badge variant="secondary">{rows.length} rows</Badge>
                     <Badge
                       variant={missingCount > 0 ? 'destructive' : 'secondary'}
                     >
@@ -51,8 +51,8 @@ export function TrackedTxsStatusPage() {
                   </div>
                 </div>
                 <CardDescription>
-                  Active liveness tracked transaction configs and their latest
-                  indexed data point.
+                  Active tracked transaction configs and their latest indexed
+                  data point.
                 </CardDescription>
               </div>
               <Button

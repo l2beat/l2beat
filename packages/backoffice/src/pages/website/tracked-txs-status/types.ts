@@ -1,4 +1,5 @@
 export interface TrackedTxsStatusRow {
+  feature: 'liveness' | 'l2costs'
   projectId: string
   subtype: string
   sinceTimestamp: number
