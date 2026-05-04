@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x94cb98912035ee1ce60fdf5acd2669c0c5a7f0cb
+Generated with discovered.json: 0xf41ba4fabc985c436ab8fcc0f7d73a31b34365dd
 
-# Diff at Fri, 01 May 2026 09:26:41 GMT:
+# Diff at Mon, 04 May 2026 14:08:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1777539411
+- current timestamp: 1777903608
 
 ## Description
 
@@ -127,6 +127,12 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 
 ```diff
 +   Status: CREATED
+    contract SBCDepositContract (gno:0x0B98057eA310F4d31F2a452B414647007d1645d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Yaru (gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5)
     +++ description: Inbound executor in Hashi. It reconstructs message IDs, asks Hashi whether enough adapters agreed on the hash, and then calls the target bridge receiver.
 ```
@@ -200,6 +206,12 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract SP1Helios (gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermittableToken (gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb)
     +++ description: None
 ```
 

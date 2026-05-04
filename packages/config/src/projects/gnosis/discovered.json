@@ -1,13 +1,8 @@
 {
   "name": "gnosis",
-  "timestamp": 1777539411,
-  "configHash": "0x0cdfb342cf62fb5ca25aea489ff9bdcde0e8dc5032a89e70a4810d15c4a3efb6",
+  "timestamp": 1777903608,
+  "configHash": "0x1179ab98c0f416073bbe10557869c27ce1acba26ece6e674be1cbdd6554b5093",
   "entries": [
-    {
-      "address": "eth:0x0B98057eA310F4d31F2a452B414647007d1645d9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "Giveth EOA 2",
       "address": "eth:0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d",
@@ -351,17 +346,17 @@
         "gasPrice": 100000000000,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20573,
+        "getCurrentDay": 20577,
         "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
         "HASHI_IS_ENABLED": true,
         "HASHI_IS_MANDATORY": false,
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0x257bDD093Cab1Bd39eBF837dCB60f33d031d7d49",
         "isInitialized": true,
-        "maxAvailablePerTx": "9991995632667016013058962",
+        "maxAvailablePerTx": "9874719199695875463570963",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 5393,
+        "nonce": 5469,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -806,7 +801,7 @@
         "bridgeContract": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20573,
+        "getCurrentDay": 20577,
         "implementation": "eth:0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
@@ -1408,6 +1403,50 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SBCDepositContract",
+      "address": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x91ee7f17620851e78dd7d4756c1092392843316b21dfe9b939bf840efe30d291",
+        "0x8ed126164e79f30a4d20b9c831af078f671bfcdd195e47adecadd2164648f504"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1638944505,
+      "sinceBlock": 19469077,
+      "values": {
+        "$admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "$implementation": "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708",
+        "$pastUpgrades": [
+          [
+            "2021-12-08T06:21:45.000Z",
+            "0xdf2c22a1da1f6213504a97df248609764beb5ab1cb8977e7eac09f8ccc0500ff",
+            ["gno:0x6DA1365c3baAD9b6cCB76C2560523dBBBCc94Cde"]
+          ],
+          [
+            "2023-07-24T07:27:25.000Z",
+            "0x38ba82a7fe6aa86d2275207582b3b35a72185ff60fe52ceca5b9f46394c87579",
+            ["gno:0x4feF25519256e24A1FC536F7677152dA742Fe3Ef"]
+          ],
+          [
+            "2025-05-02T10:25:05.000Z",
+            "0x48814bb8f2830145f38a4f8a7a8efbb839aa1be43aa50d9ce41407a29e56912d",
+            ["gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "admin": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
+        "get_deposit_count": "0x1d92080000000000",
+        "get_deposit_root": "0x0da26093fc3fded8a66e38e1b6a4522f3aa1d2ffbb8d4bcf6cdb957641403d9d",
+        "implementation": "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708",
+        "paused": false,
+        "stake_token": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb"
+      },
+      "implementationNames": {
+        "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9": "SBCDepositContractProxy",
+        "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708": "SBCDepositContract"
+      }
+    },
+    {
       "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1655,12 +1694,12 @@
         "extraReceiversQueueSize": 0,
         "implementation": "gno:0x8B5B50ef60382f2264F47cbfBD387B8bF68AAa7e",
         "isInitialized": true,
-        "mintedTotally": "1302520406729366751796139404",
+        "mintedTotally": "1314302427265532083622753576",
         "nativeRewardUndistributed": 0,
         "nativeToErcBridgesAllowed": [],
         "STAKE_TOKEN_INFLATION_RATE": 3125000000000000,
         "tokenMinterContract": "gno:0x857DD07866C1e19eb2CDFceF7aE655cE7f9E560d",
-        "tokenRewardUndistributed": "15544386896005470943146",
+        "tokenRewardUndistributed": "15636365516691893848135",
         "validatorSetContract": "gno:0xB87BE9f7196F2AE084Ca1DE6af5264292976e013"
       },
       "fieldMeta": {
@@ -2009,7 +2048,7 @@
         "getAmountToBurn": [],
         "getBridgeInterfacesVersion": { "major": 6, "minor": 1, "patch": 0 },
         "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20573,
+        "getCurrentDay": 20577,
         "getFeeManagerMode": "0x00000000",
         "getForeignFee": 0,
         "getHomeFee": 0,
@@ -2018,16 +2057,16 @@
         "hashiManager": "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49",
         "implementation": "gno:0xe6998b0C03D3cb9ee8C04f266e573c7Fa8782846",
         "isInitialized": true,
-        "maxAvailablePerTx": "9999810060423610378015225",
+        "maxAvailablePerTx": "9715350814539591341083695",
         "maxPerTx": "10000000000000000000000000",
         "minPerTx": "10000000000000000000",
-        "nonce": 4152,
-        "outOfLimitAmount": "100763362150242159039134636",
+        "nonce": 4186,
+        "outOfLimitAmount": "110338737749137802913473489",
         "owner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "proxyOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "requiredBlockConfirmations": 20,
         "requiredSignatures": 4,
-        "totalBurntCoins": "1210191667851220280888246756",
+        "totalBurntCoins": "1220883806488337802666177184",
         "upgradeabilityOwner": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "usdsDepositContract": "gno:0x5C183C8A49aBA6e31049997a56D75600E27FF8c9",
         "validatorContract": "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D",
@@ -2369,6 +2408,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "gno:0x481c034c6d9441db23Ea48De68BCAe812C5d39bA",
           "role": "admin"
         },
@@ -2493,6 +2537,42 @@
           "role": ".$members"
         }
       ]
+    },
+    {
+      "name": "PermittableToken",
+      "address": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+      "type": "Contract",
+      "template": "gnosis/PermittableToken",
+      "sourceHashes": [
+        "0x61136b0b2e94ba325b5a3ffe47f7adaed12bd5bbe47bdc2ea87b7088e8389adf",
+        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1598213055,
+      "sinceBlock": 11629829,
+      "values": {
+        "$admin": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "$implementation": "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "bridgeContract": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xd65f0648064b5041ce6882cd9c6c27e93eecb32e920d0373c3cf08860e594164",
+        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
+        "implementation": "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9",
+        "mintingFinished": false,
+        "name": "Gnosis Token on xDai",
+        "owner": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+        "symbol": "GNO",
+        "totalSupply": "1401669778697498783998615",
+        "version": "1"
+      },
+      "implementationNames": {
+        "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb": "TokenProxy",
+        "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9": "PermittableToken"
+      }
     },
     {
       "name": "SP1HeliosAdapter",
@@ -3004,6 +3084,13 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "role": "admin"
+        }
+      ],
       "sinceTimestamp": 1596501010,
       "sinceBlock": 11300566,
       "values": {
@@ -3058,7 +3145,7 @@
         "gasLimitManager": "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20573,
+        "getCurrentDay": 20577,
         "implementation": "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -3775,6 +3862,15 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
+    "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9": [
+      "constructor(address _admin, address _sbcDepositContract)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() view returns (address)",
+      "function implementation() view returns (address res)",
+      "function setAdmin(address _admin)",
+      "function upgradeTo(address _implementation)"
+    ],
     "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": [
       "constructor(address hashi, address yaho_, uint256 sourceChainId)",
       "error CallFailed()",
@@ -3988,6 +4084,31 @@
       "constructor(address _logic, address _admin) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708": [
+      "constructor(address _token)",
+      "event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function batchDeposit(bytes pubkeys, bytes withdrawal_credentials, bytes signatures, bytes32[] deposit_data_roots, uint256[] amounts)",
+      "function batchDeposit(bytes pubkeys, bytes withdrawal_credentials, bytes signatures, bytes32[] deposit_data_roots)",
+      "function claimTokens(address _token, address _to)",
+      "function claimWithdrawal(address _address)",
+      "function claimWithdrawals(address[] _addresses)",
+      "function deposit(bytes pubkey, bytes withdrawal_credentials, bytes signature, bytes32 deposit_data_root, uint256 stake_amount)",
+      "function executeSystemWithdrawals(uint64[] _amounts, address[] _addresses)",
+      "function executeSystemWithdrawals(uint256, uint64[] _amounts, address[] _addresses)",
+      "function get_deposit_count() view returns (bytes)",
+      "function get_deposit_root() view returns (bytes32)",
+      "function onTokenTransfer(address, uint256 stake_amount, bytes data) returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function stake_token() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function unpause()",
+      "function unwrapTokens(address _unwrapper, address _token)",
+      "function validator_withdrawal_credentials(bytes) view returns (bytes32)",
+      "function withdrawableAmount(address) view returns (uint256)"
     ],
     "gno:0x5483eBC7522C5e2669a887a7a1eDF256b3E4440D": [
       "function setExpectedThreshold(uint256 expectedThreshold_)",
@@ -4210,6 +4331,10 @@
       "event AddedReceiver(uint256 amount, address indexed receiver, address indexed bridge)",
       "event BridgeNativeRewardAdded(uint256 amount, uint256 cumulativeAmount, address indexed bridge)",
       "event MintedNative(address[] receivers, uint256[] rewards)"
+    ],
+    "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb": [
+      "function implementation() view returns (address impl)",
+      "constructor(address _tokenImage, string _name, string _symbol, uint8 _decimals, uint256 _chainId)"
     ],
     "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": [
       "constructor(address sp1HeliosAddress, uint256 sourceChainId, address sourceYaho)",
@@ -4536,6 +4661,54 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
+    ],
+    "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9": [
+      "function mintingFinished() view returns (bool)",
+      "function name() view returns (string)",
+      "function approve(address _to, uint256 _value) returns (bool result)",
+      "function setBridgeContract(address _bridgeContract)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function decimals() view returns (uint8)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
+      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function burn(uint256 _value)",
+      "function version() view returns (string)",
+      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
+      "function claimTokens(address _token, address _to)",
+      "function balanceOf(address _owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function isBridge(address _address) view returns (bool)",
+      "function finishMinting() returns (bool)",
+      "function nonces(address) view returns (uint256)",
+      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
+      "function owner() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function symbol() view returns (string)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function push(address _to, uint256 _amount)",
+      "function move(address _from, address _to, uint256 _amount)",
+      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
+      "function bridgeContract() view returns (address)",
+      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
+      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function pull(address _from, uint256 _amount)",
+      "function transferOwnership(address _newOwner)",
+      "function expirations(address, address) view returns (uint256)",
+      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
+      "event Mint(address indexed to, uint256 amount)",
+      "event MintFinished()",
+      "event OwnershipRenounced(address indexed previousOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Burn(address indexed burner, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)"
     ]
   },
   "usedTemplates": {
@@ -4568,6 +4741,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24991869, "gnosis": 45931894 },
-  "permissionsConfigHash": "0xd944859c69072cf096e0f3f4b38660974b29c8a403100fc74cac4f1d82deb5c1"
+  "usedBlockNumbers": { "ethereum": 25022121, "gnosis": 46002884 },
+  "permissionsConfigHash": "0xd15dc73cb3d8280684e087163eb4e302804cb4eed30a0ce2e050e1f3d6a7edb8"
 }
