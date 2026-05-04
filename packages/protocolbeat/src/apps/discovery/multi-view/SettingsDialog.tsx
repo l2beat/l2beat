@@ -140,6 +140,9 @@ function DepthSelector(props: {
         BFS depth from initial addresses used to mark entries reachable.
         <br />0 = only entrypoints (useful to surface bridge entries between
         discoveries). Empty = unlimited.
+        <span className="block font-bold italic">
+          Has no effect if single discovery mode is enabled.
+        </span>
       </div>
       {error !== undefined && (
         <div className="pt-1 font-light text-red-400 text-xs">{error}</div>

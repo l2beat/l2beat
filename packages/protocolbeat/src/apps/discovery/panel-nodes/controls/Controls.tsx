@@ -11,17 +11,18 @@ import { ValuesButton } from './ValuesButton'
 export function Controls() {
   return (
     <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         <ClusterLayoutButton />
         <StackLayoutButton />
       </div>
       <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-2">
-        <ShowButton />
+      <div className="flex flex-col gap-1">
         <div className="flex gap-1">
-          <HideUnknownsButton />
+          <ShowButton />
           <Settings />
         </div>
+
+        <HideUnknownsButton />
         <div className="flex gap-1">
           <HideUnreachableButton />
           <ShowUnreachableButton />
@@ -29,14 +30,10 @@ export function Controls() {
       </div>
       <span className="text-coffee-600">|</span>
 
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1">
-          <HideButton />
-          <ColorButton />
-        </div>
-        <div className="flex gap-1">
-          <ValuesButton />
-        </div>
+      <div className="flex flex-col gap-1">
+        <HideButton />
+        <ColorButton />
+        <ValuesButton />
       </div>
     </div>
   )

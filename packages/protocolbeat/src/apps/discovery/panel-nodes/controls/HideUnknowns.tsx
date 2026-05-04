@@ -14,7 +14,7 @@ export function HideUnknownsButton() {
     <ControlButton
       disabled={!anyUnknownsVisible}
       onClick={hideUnknowns}
-      className="p-1"
+      className="flex-1 p-1"
     >
       Hide Unknowns
     </ControlButton>

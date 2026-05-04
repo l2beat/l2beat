@@ -22,6 +22,9 @@ export function BottomBar() {
   const singleDiscoveryMode = useGlobalSettingsStore(
     (s) => s.singleDiscoveryMode,
   )
+  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+
+  const depthSpecified = maxReachableDepth !== null
 
   // By default when using bottom bar
   const useDevMode = true
@@ -83,6 +86,11 @@ export function BottomBar() {
         {singleDiscoveryMode && (
           <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
             Single Discovery Mode
+          </div>
+        )}
+        {depthSpecified && (
+          <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
+            Depth: {maxReachableDepth}
           </div>
         )}
         <StatusRibbon />

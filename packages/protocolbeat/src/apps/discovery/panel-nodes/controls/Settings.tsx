@@ -1,26 +1,11 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { Checkbox } from '../../../../components/Checkbox'
+import { Dialog } from '../../../../components/Dialog'
 import { IconGear } from '../../../../icons/IconGear'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
 
-type SettingsButtonProps = {
-  onClick: () => void
-}
-
 export function Settings() {
-  const [isOpen, setIsOpen] = useState(false)
-  const toggle = () => setIsOpen((state) => !state)
-
-  return (
-    <>
-      <SettingsButton onClick={toggle} />
-      {isOpen && <SettingsTray />}
-    </>
-  )
-}
-
-export function SettingsTray() {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
@@ -43,47 +28,63 @@ export function SettingsTray() {
   }, [preferences.hideLargeArrays, setPreferences])
 
   return (
-    <div className="-translate-x-1/2 absolute bottom-8 left-2/3 flex flex-col gap-2 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <div className="flex flex-col gap-1">
-        <ControlButton
-          onClick={toggleHideUnknowns}
-          className="flex items-center gap-1"
-        >
-          <Checkbox
-            checked={preferences.hideUnknownOnLoad}
-            onClick={toggleHideUnknowns}
-          />
-          <span>Hide unknowns on load</span>
+    <Dialog.Root>
+      <Dialog.Trigger asChild className="max-w-fit">
+        <ControlButton>
+          <IconGear />
         </ControlButton>
-        <ControlButton
-          onClick={toggleEnableDimming}
-          className="flex items-center gap-1"
-        >
-          <Checkbox
-            checked={preferences.enableDimming}
-            onClick={toggleEnableDimming}
-          />
-          <span>Enable dimming on selection</span>
-        </ControlButton>
-        <ControlButton
-          onClick={toggleHideLargeArrays}
-          className="flex items-center gap-1"
-        >
-          <Checkbox
-            checked={preferences.hideLargeArrays}
-            onClick={toggleHideLargeArrays}
-          />
-          <span>Hide large arrays on load</span>
-        </ControlButton>
-      </div>
-    </div>
-  )
-}
+      </Dialog.Trigger>
+      <Dialog.Body>
+        <Dialog.Title className="m-0 font-medium text-lg">
+          Nodes panel settings
+        </Dialog.Title>
+        <Dialog.Description className="mb-5 text-sm leading-normal">
+          Change how nodes are displayed in this panel.
+        </Dialog.Description>
 
-export function SettingsButton(props: SettingsButtonProps) {
-  return (
-    <ControlButton onClick={props.onClick}>
-      <IconGear />
-    </ControlButton>
+        <div className="flex flex-col gap-3">
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleHideUnknowns}
+            >
+              <Checkbox checked={preferences.hideUnknownOnLoad} />
+              Hide unknowns on load
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              Nodes representing unverified or unidentified contracts start
+              hidden when the panel opens. Reveal them later via the show
+              controls.
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleEnableDimming}
+            >
+              <Checkbox checked={preferences.enableDimming} />
+              Enable dimming on selection
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              When a node is selected, unrelated nodes fade out so its direct
+              connections stand out.
+            </div>
+          </div>
+          <div>
+            <div
+              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
+              onClick={toggleHideLargeArrays}
+            >
+              <Checkbox checked={preferences.hideLargeArrays} />
+              Hide large arrays on load
+            </div>
+            <div className="pl-5 font-light text-coffee-400 text-xs">
+              Fields containing long arrays are collapsed by default to keep
+              nodes compact and the graph readable.
+            </div>
+          </div>
+        </div>
+      </Dialog.Body>
+    </Dialog.Root>
   )
 }

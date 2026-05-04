@@ -6,7 +6,7 @@ export function ShowButton() {
   const showHidden = useStore((state) => state.showHidden)
   return (
     <ControlButton disabled={hiddenCount === 0} onClick={showHidden}>
-      Show ({hiddenCount})
+      Show all ({hiddenCount})
     </ControlButton>
   )
 }
