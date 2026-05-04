@@ -67,7 +67,9 @@ export const gnosis: ScalingProject = {
     slug: 'gnosis',
     purposes: ['Universal'],
     description:
-      'Gnosis Chain is a community-owned EVM-based sidechain operated by a proof-of-stake validator set. Its canonical Ethereum bridge is externally validated by dedicated bridge validator multisigs and supports the native xDAI bridge, AMB messages, and Omnibridge token transfers.',
+      'Gnosis Chain is a community-owned EVM-based sidechain operated by a proof-of-stake validator set aiming to be the first chain in the Ethereum Economic Zone (EEZ). Its canonical Ethereum bridge is externally validated by dedicated bridge validator multisigs and supports the native xDAI bridge, AMB messages, and Omnibridge token transfers.',
+    detailedDescription:
+      "Gnosis chain in its current form does not derive or benefit from Ethereum's decentralisation apart from being developed as a close fork to re-use Ethereum tooling and infrastructure. Its censorship resistance comes from an open validator set with over 100 thousand diverse validators, although the clustering and stake distribution among entities is intransparent. Users who are censored selectively on an otherwise live network benefit from the fast 5s block time and non-committee proposer rotation, resulting in an inclusion probability of 99% in less than a minute even if up to 50% of the Gnosis stake is censoring them. There are also a few thousand validators who run custom 'shutter network' nodes that support threshold-encrypted transactions. For a case of active blanket censorship (>50% stake) by all current validators, users have no way apart from a hardfork to get their transactions included or save the chain. In the walkaway scenario, new sequencers can stake and join the set permissionlessly.",
     links: {
       websites: ['https://gnosis.io/chain'],
       explorers: ['https://gnosisscan.io/', 'https://gnosis.blockscout.com/'],
@@ -155,17 +157,17 @@ export const gnosis: ScalingProject = {
       description:
         'Ethereum contracts do not validate Gnosis Chain state transitions. Bridge messages are accepted after threshold signatures from dedicated bridge validators.',
     },
-    dataAvailability: RISK_VIEW.DATA_POS,
+    dataAvailability: RISK_VIEW.DATA_POS_NOBRIDGE,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'warning',
       description:
-        'Users can permissionlessly become a sequencer (validator) by staking 1 GNO per validator to join the queue and wait to obtain block production rights. There is no direct censorship mechanism against selective censorship by the active validator set nor a way to force transactions from Ethereum L1.', // TODO: rm hardcode
+        'Users can permissionlessly become a sequencer (validator) by staking a minimum of 1 GNO to join the queue and wait to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1.', // TODO: rm hardcode
     },
     proposerFailure: {
       value: 'Cannot withdraw',
-      description: `Withdrawals through the xDAI bridge require ${xDaiBridgeRequiredSignatures}/${xDaiBridgeValidatorCount} validator signatures, while AMB and Omnibridge withdrawals require ${ambBridgeRequiredSignatures}/${ambBridgeValidatorCount} validator signatures. If the bridge validators stop signing or Gnosis Chain stops finalizing, withdrawals are frozen.`,
+      description: `The Gnosis Chain bridge is not validated by the PoS validator set. Withdrawals through the xDAI bridge require ${xDaiBridgeRequiredSignatures}/${xDaiBridgeValidatorCount} validator signatures, while AMB and Omnibridge withdrawals require ${ambBridgeRequiredSignatures}/${ambBridgeValidatorCount} validator signatures. If the bridge validators stop signing or Gnosis Chain stops finalizing, withdrawals are frozen. Transactions on Gnosis Chain cannot be forced. If the chain has a full liveness failure due to blanket censorship or operator walkaway the only recourse are new validators joining the open validator set.`,
       sentiment: 'bad',
     },
   },
