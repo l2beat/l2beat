@@ -2,10 +2,7 @@ import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
 import { HideUnknownsButton } from './HideUnknowns'
-import {
-  HideUnreachableButton,
-  ShowUnreachableButton,
-} from './HideUnreachable'
+import { HideUnreachableButton, ShowUnreachableButton } from './HideUnreachable'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'

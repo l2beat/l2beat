@@ -138,8 +138,7 @@ function DepthSelector(props: {
       </label>
       <div className="pl-0 font-light text-coffee-400 text-xs">
         BFS depth from initial addresses used to mark entries reachable.
-        <br />
-        0 = only entrypoints (useful to surface bridge entries between
+        <br />0 = only entrypoints (useful to surface bridge entries between
         discoveries). Empty = unlimited.
       </div>
       {error !== undefined && (
