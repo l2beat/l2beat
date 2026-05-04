@@ -160,7 +160,8 @@ export const gnosis: ScalingProject = {
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'warning',
-      description: `Users can permissionlessly become a sequencer (validator) by staking ${activationThresholdString} to join the queue and wait to obtain block production rights. There is no direct censorship mechanism against selective censorship by the active validator set nor a way to force transactions from Ethereum L1.`,
+      description:
+        'Users can permissionlessly become a sequencer (validator) by staking 1 GNO per validator to join the queue and wait to obtain block production rights. There is no direct censorship mechanism against selective censorship by the active validator set nor a way to force transactions from Ethereum L1.', // TODO: rm hardcode
     },
     proposerFailure: {
       value: 'Cannot withdraw',

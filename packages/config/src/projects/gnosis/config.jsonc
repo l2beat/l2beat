@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gnosis",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "maxAddresses": 200,
   "initialAddresses": [
     "eth:0x9a873656c19Efecbfb4f9FAb5B7acdeAb466a0B0",
@@ -49,19 +47,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "GnosisAddress"
-          ]
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "GnosisAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "GnosisAddress"]]
         }
       }
     },
@@ -69,19 +58,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "GnosisAddress"
-          ]
+          "edit": ["format", "GnosisAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "GnosisAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "GnosisAddress"]]
         }
       }
     },
@@ -98,19 +78,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "EthereumAddress"
-          ]
+          "edit": ["format", "EthereumAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "EthereumAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "EthereumAddress"]]
         }
       }
     },
@@ -121,19 +92,10 @@
       "proxyType": "Eternal Storage proxy",
       "fields": {
         "targetAddress": {
-          "edit": [
-            "format",
-            "EthereumAddress"
-          ]
+          "edit": ["format", "EthereumAddress"]
         },
         "adapters": {
-          "edit": [
-            "map",
-            [
-              "format",
-              "EthereumAddress"
-            ]
-          ]
+          "edit": ["map", ["format", "EthereumAddress"]]
         }
       }
     },
