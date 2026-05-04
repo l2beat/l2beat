@@ -60,7 +60,9 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(0, 3).map((r) => [r.to.toString(), r.input.toString()]),
+          requests
+            .slice(0, 3)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
@@ -69,7 +71,9 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(3, 6).map((r) => [r.to.toString(), r.input.toString()]),
+          requests
+            .slice(3, 6)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
@@ -78,7 +82,9 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(6, 7).map((r) => [r.to.toString(), r.input.toString()]),
+          requests
+            .slice(6, 7)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
