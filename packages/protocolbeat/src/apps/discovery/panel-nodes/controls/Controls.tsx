@@ -40,6 +40,9 @@ export function Controls() {
       <div className="flex flex-col gap-2">
         <UndoButton />
         <RedoButton />
+      </div>
+      <span className="text-coffee-600">|</span>
+      <div className="flex flex-col gap-2">
         <LayoutFileButtons />
       </div>
     </div>
