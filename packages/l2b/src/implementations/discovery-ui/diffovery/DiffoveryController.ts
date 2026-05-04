@@ -106,6 +106,7 @@ export class DiffoveryController {
 
     const flat = flattenBytecodeEquivalentStartingFrom(
       source.name,
+      source.rootFile,
       input,
       source.remappings,
       { includeAll: true },

@@ -1,43 +1,59 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
+import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropSelection } from '../utils/types'
 
 interface GetInteropProtocolSectionsOptions {
   projectId: ProjectId
-  protocolData: InteropProtocolDashboardData
+  projectEntry: InteropProtocolEntry
   apiSelection: InteropSelection
   interopChains: InteropChainWithIcon[]
+
+  data: InteropProtocolDashboardData | undefined
 }
 
 export function getInteropProtocolSections({
   projectId,
-  protocolData,
+  projectEntry,
+  data,
   apiSelection,
   interopChains,
 }: GetInteropProtocolSectionsOptions): ProjectDetailsSection[] {
-  if (!protocolData.entry) {
+  if (!data?.entry) {
     return []
   }
 
-  const sortedChains = sortChainsByFlowVolume(interopChains, protocolData.flows)
+  const sortedChains = sortChainsByFlowVolume(interopChains, data.flows)
   const defaultSelectedChains = sortedChains
     .slice(0, MAX_SELECTED_CHAINS)
     .map((chain) => chain.id)
 
   const sections: ProjectDetailsSection[] = []
 
-  if (protocolData.flows.length > 0) {
+  if (data.flows.length > 0) {
     sections.push({
       type: 'InteropVolumeSection',
       props: {
         id: 'interop-volume',
         title: 'Volume and flows',
-        protocolData,
+        data,
         interopChains: sortedChains,
         defaultSelectedChains,
+      },
+    })
+  }
+
+  if (projectEntry.header.detailedDescription) {
+    sections.push({
+      type: 'DetailedDescriptionSection',
+      props: {
+        id: 'detailed-description',
+        title: 'Description',
+        description: projectEntry.header.description,
+        detailedDescription: projectEntry.header.detailedDescription,
       },
     })
   }
@@ -49,7 +65,7 @@ export function getInteropProtocolSections({
       projectId,
       title: 'Top tokens by volume',
       apiSelection,
-      protocolData,
+      data,
     },
   })
 
@@ -60,7 +76,7 @@ export function getInteropProtocolSections({
       projectId,
       title: 'Transfers',
       apiSelection,
-      protocolData,
+      data,
       interopChains: sortedChains,
     },
   })

@@ -24,6 +24,12 @@ import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class EtherscanError extends Error {}
 
+function isRateLimitError(error: unknown): boolean {
+  if (typeof error !== 'object' || error === null) return false
+  const message = (error as { message?: unknown }).message
+  return typeof message === 'string' && message.includes('rate limit reached')
+}
+
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
   maxAttempts: 10,
@@ -160,6 +166,7 @@ export class EtherscanClient implements IEtherscanClient {
 
     return {
       name: this.parseContractName(name),
+      rootFile: parsePath(result.ContractFileName),
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       solidityVersion,
@@ -249,7 +256,9 @@ export class EtherscanClient implements IEtherscanClient {
         if (result.shouldStop) {
           throw error
         }
-        this.logger.warn('Retrying', { attempts, error })
+        if (!isRateLimitError(error)) {
+          this.logger.warn('Retrying', { attempts, error })
+        }
         await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
       }
     }
@@ -305,6 +314,19 @@ interface DecodedSource {
   libraries: Record<string, EthereumAddress>
 }
 
+function parsePath(path: string | undefined): string | undefined {
+  if (path === undefined) return undefined
+
+  if (path.includes(':')) {
+    const parts = path.split(':')
+    assert(parts.length === 2, 'Expected only a single colon')
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
+    return parts[0]!
+  }
+
+  return path
+}
+
 function decodeEtherscanSource(
   name: string,
   source: string,
@@ -355,7 +377,7 @@ function decodeEtherscanSource(
 
   return {
     sources: Object.entries(validated).map(([name, { content }]) => [
-      name,
+      parsePath(name) ?? name,
       content,
     ]),
     remappings,

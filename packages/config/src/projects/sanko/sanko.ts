@@ -14,6 +14,7 @@ const discovery = new ProjectDiscovery('sanko')
 
 export const sanko: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1716163200), // 2024-05-20T00:00:00Z
+  archivedAt: UnixTime(1777420800), // 2026-04-29T00:00:00Z
   hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
@@ -48,6 +49,7 @@ export const sanko: ScalingProject = orbitStackL3({
     chainId: 1996,
     explorerUrl: 'https://explorer.sanko.xyz',
     sinceTimestamp: UnixTime(1712970000),
+    untilTimestamp: UnixTime(1777420800), // 2026-04-29T00:00:00Z
     coingeckoPlatform: 'sanko',
     multicallContracts: [
       {

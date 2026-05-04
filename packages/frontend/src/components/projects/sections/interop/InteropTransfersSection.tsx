@@ -27,18 +27,18 @@ const TRANSFERS_PER_PAGE = 8
 export interface InteropTransfersSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   apiSelection: InteropSelection
-  protocolData: InteropProtocolDashboardData
+  data: InteropProtocolDashboardData
   interopChains: InteropChainWithIcon[]
 }
 
 export function InteropTransfersSection({
   projectId,
   apiSelection,
-  protocolData,
+  data,
   interopChains,
   ...sectionProps
 }: InteropTransfersSectionProps) {
-  const entry = protocolData.entry
+  const entry = data.entry
 
   const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
   const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)

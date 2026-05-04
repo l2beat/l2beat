@@ -107,6 +107,7 @@ function createShapeDownloader(
           .filter((e) => e.path.endsWith('.sol'))
         const flattenOutput = flattenStartingFrom(
           source.name,
+          source.rootFile,
           flattenInput,
           source.remappings,
         )

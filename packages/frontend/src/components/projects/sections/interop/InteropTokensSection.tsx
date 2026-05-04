@@ -30,31 +30,32 @@ const TOKENS_PER_PAGE = 6
 export interface InteropTokensSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   apiSelection: InteropSelection
-  protocolData: InteropProtocolDashboardData
+  data: InteropProtocolDashboardData
 }
 
 export function InteropTokensSection({
   projectId,
   apiSelection,
-  protocolData,
+  data,
   ...sectionProps
 }: InteropTokensSectionProps) {
-  const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
-    {
-      ...apiSelection,
-      id: projectId,
-    },
-    {
-      enabled: protocolData.entry !== undefined,
-    },
-  )
+  const { data: tokensData, isLoading: isTokensLoading } =
+    api.interop.tokens.useQuery(
+      {
+        ...apiSelection,
+        id: projectId,
+      },
+      {
+        enabled: data.entry !== undefined,
+      },
+    )
 
   const columns = useMemo(
     () => getTopTokensColumns({ hideFlowsColumn: true }),
     [],
   )
 
-  const tableData = useMemo(() => data ?? [], [data])
+  const tableData = useMemo(() => tokensData ?? [], [tokensData])
 
   const table = useTable<TokenRow>({
     data: tableData,

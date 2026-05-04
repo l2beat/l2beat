@@ -60,7 +60,8 @@ function Content({
 }) {
   const sections = getInteropProtocolSections({
     projectId: projectEntry.id,
-    protocolData,
+    projectEntry,
+    data: protocolData,
     apiSelection,
     interopChains,
   })

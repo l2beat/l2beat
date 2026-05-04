@@ -23,18 +23,18 @@ import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 export interface InteropVolumeSectionProps extends ProjectSectionProps {
-  protocolData: InteropProtocolDashboardData
+  data: InteropProtocolDashboardData
   interopChains: InteropChainWithIcon[]
   defaultSelectedChains: string[]
 }
 
 export function InteropVolumeSection({
-  protocolData,
+  data,
   interopChains,
   defaultSelectedChains,
   ...sectionProps
 }: InteropVolumeSectionProps) {
-  const entry = protocolData.entry
+  const entry = data.entry
   if (!entry) return null
 
   return (

@@ -21,6 +21,7 @@ export interface InteropProtocolEntry {
     redWarning?: ProjectRedWarning
     emergencyWarning?: string
     description?: string
+    detailedDescription?: string
     badges?: BadgeWithParams[]
     links?: ProjectLink[]
     hostChain?: string
@@ -42,6 +43,7 @@ export function getInteropProtocolEntry(
     }),
     header: {
       description: project.interopConfig.description,
+      detailedDescription: project.interopConfig.detailedDescription,
       warning: project.statuses?.yellowWarning,
       redWarning: project.statuses?.redWarning,
       emergencyWarning: project.statuses?.emergencyWarning,

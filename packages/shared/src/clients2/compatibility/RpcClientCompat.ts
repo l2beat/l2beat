@@ -237,7 +237,7 @@ export class RpcClientCompat implements IRpcClient {
     const result = await this.ethRpcClient.call(
       {
         to: callParams.to,
-        input: callParams.data.toString(),
+        input: callParams.input.toString(),
       },
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )

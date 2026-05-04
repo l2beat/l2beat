@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2e0a371d03fc595ace2178db2d69a79f7c9a14e3
+Generated with discovered.json: 0x1fc91b136941379b5b28a7b4917a2fe3c0deae1e
 
-# Diff at Wed, 29 Apr 2026 10:37:08 GMT:
+# Diff at Thu, 30 Apr 2026 10:54:32 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@48c82436aca63abdd2a1dd0798daa7eaa9ef5e58 block: 1756816898
-- current timestamp: 1777458958
+- current timestamp: 1777546409
 
 ## Description
 
-Reduced upgrade delay to zero.
+Reduced upgrade delay to zero. Verifier automatically changed hasRegisteredFact flag, indicating that verifier upgrade is not finalized yet.
 
 ## Watched changes
 
@@ -17,6 +17,15 @@ Reduced upgrade delay to zero.
     +++ description: None
       receivedPermissions.2.delay:
 -        1209600
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      values.hasRegisteredFact:
+-        true
++        false
     }
 ```
 

@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x9822caed1aa8f5102cb69c21aeec3c7f786726d6
+
+# Diff at Thu, 30 Apr 2026 10:47:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48c82436aca63abdd2a1dd0798daa7eaa9ef5e58 block: 1769695138
+- current timestamp: 1777545991
+
+## Description
+
+Removed one operator (out of two). Verifier automatically changed hasRegisteredFact flag, indicating that verifier upgrade is not finalized yet.
+
+## Watched changes
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+      values.hasRegisteredFact:
+-        true
++        false
+    }
+```
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.operators.0:
+-        "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e"
+    }
+```
+
 Generated with discovered.json: 0x789ff3acc9ff98947c1e59bed247a529e9d56d19
 
 # Diff at Thu, 29 Jan 2026 14:00:02 GMT:

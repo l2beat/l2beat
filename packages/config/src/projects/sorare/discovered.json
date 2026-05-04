@@ -1,6 +1,6 @@
 {
   "name": "sorare",
-  "timestamp": 1777458958,
+  "timestamp": 1777546409,
   "configHash": "0xfb223c6d9bc36bcdfe85579a62a121681da9092670e0deee8ed7e5aac5170da6",
   "entries": [
     {
@@ -189,7 +189,7 @@
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": true,
+        "hasRegisteredFact": false,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "3174901404014912024702042974619036870715605532092680335571201877913899936957",
         "programHashMapped": "StarkEx Spot v4.0 (RhinoFi, Sorare)"
@@ -485,8 +485,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 25370,
-        "getOrderRoot": "841632563200266250706867073538812408901181168390740335644475484027849413838",
+        "getLastBatchId": 25376,
+        "getOrderRoot": "58605819764519426194372193768207469694717670040482122283434532375278783221",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "eth:0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -496,10 +496,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 25238,
+        "getSequenceNumber": 25244,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "1302135318326809880635672396036338167780808880057291258920160007815441189244",
+        "getValidiumVaultRoot": "2314695108374195772503539582156682914242003392168578887485366538644176232138",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -961,6 +961,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 24985182 },
+  "usedBlockNumbers": { "ethereum": 24992452 },
   "permissionsConfigHash": "0x7a98c26eb90dea74f52c5b9cceceb348eb00069ebb9c3d92427ba59305389149"
 }
