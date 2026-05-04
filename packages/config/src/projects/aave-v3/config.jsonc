@@ -1209,6 +1209,7 @@
         "PERMIT_TYPEHASH",
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
         "symbol",
+        "totalSupply",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH"
       ]
     },
@@ -1322,7 +1323,8 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
         "symbol",
         "totalSupply",
-        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH"
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH",
+        "yield"
       ]
     },
     "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": {
@@ -1536,8 +1538,12 @@
     "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
       "ignoreRelatives": ["$admin", "$implementation", "custodyAddress", "lrtConfig"],
       "ignoreInWatchMode": [
+        "currentPeriodMintedAmount",
+        "getCurrentPeriodStartTime",
         "getNextDailyLimitResetTimestamp",
         "name",
+        "periodStartTime",
+        "remainingDailyMintLimit",
         "symbol",
         "totalSupply"
       ]
@@ -1577,6 +1583,7 @@
         "convertToShares",
         "DOMAIN_SEPARATOR",
         "eip712Domain",
+        "getUnvestedAmount",
         "lastDistributionTimestamp",
         "name",
         "previewDeposit",
@@ -1585,7 +1592,8 @@
         "previewWithdraw",
         "symbol",
         "totalAssets",
-        "totalSupply"
+        "totalSupply",
+        "vestingAmount"
       ]
     },
     "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": {
@@ -1671,6 +1679,7 @@
         "PERMIT_TYPEHASH",
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
         "symbol",
+        "totalSupply",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH"
       ]
     },
@@ -1731,7 +1740,10 @@
       "ignoreInWatchMode": [
         "DOMAIN_SEPARATOR",
         "name",
-        "symbol"
+        "stEthPerToken",
+        "symbol",
+        "tokensPerStEth",
+        "totalSupply"
       ]
     },
     "eth:0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": {
@@ -5001,8 +5013,11 @@
     },
     "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": {
       "ignoreInWatchMode": [
+        "getCollateralRate",
         "getEthValue",
+        "getExchangeRate",
         "getRethValue",
+        "getTotalCollateral",
         "name",
         "symbol",
         "totalSupply"

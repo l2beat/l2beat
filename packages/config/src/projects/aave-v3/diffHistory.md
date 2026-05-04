@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xd597099fc2cd40f26b6322c95cd7d9ad80670563
+
+# Diff at Sun, 03 May 2026 16:12:07 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@6d05051a6ec3488a91eb2447caf9e003b94ab089 block: 1777720451
+- current timestamp: 1777824193
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "1882815136271460370977134"
++        "1889005226569133170134278"
+    }
+```
+
+```diff
+    contract Rocket Pool Protocol Token (eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f) {
+    +++ description: None
+      values.getInflationIntervalsPassed:
+-        23
++        24
+      values.inflationCalculate:
+-        "68872120666371050442981"
++        "71871366632812916126233"
+    }
+```
+
+```diff
+    contract Curve DAO Token (eth:0xD533a949740bb3306d119CC777fa900bA034cd52) {
+    +++ description: None
+      values.available_supply:
+-        "2387184635383524379218269580"
++        "2387564731141864749388585980"
+    }
+```
+
+```diff
+    contract Safe (eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xd7c2b7a7c5082d2c70639e45d29a43f06fcfdc7d
 
 # Diff at Sat, 02 May 2026 11:23:36 GMT:
