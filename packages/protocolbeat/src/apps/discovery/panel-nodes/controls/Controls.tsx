@@ -3,6 +3,7 @@ import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
 import { HideUnknownsButton } from './HideUnknowns'
 import { HideUnreachableButton, ShowUnreachableButton } from './HideUnreachable'
+import { LayoutFileButtons } from './LayoutFileButtons'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
@@ -34,6 +35,10 @@ export function Controls() {
         <HideButton />
         <ColorButton />
         <ValuesButton />
+      </div>
+      <span className="text-coffee-600">|</span>
+      <div className="flex flex-col gap-2">
+        <LayoutFileButtons />
       </div>
     </div>
   )

@@ -71,6 +71,6 @@ const erc20Interface = new utils.Interface([
 export function encodeTotalSupply(token: EthereumAddress): CallParameters {
   return {
     to: token,
-    data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
+    input: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
   }
 }
