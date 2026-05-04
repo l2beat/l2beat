@@ -4,6 +4,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -35,6 +36,10 @@ export function FlowsGeneralStats() {
   const topChainData = topChain
     ? allChains.find((c) => c.id === topChain.chainId)
     : undefined
+  const topChainVolumeShare =
+    topChain && data?.stats.totalVolume
+      ? topChain.totalVolume / data.stats.totalVolume
+      : 0
   const topToken = data?.stats.topToken
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
@@ -97,8 +102,9 @@ export function FlowsGeneralStats() {
               topChain && topChainData ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
                   <span className="text-brand">{topChainData.name}</span>
-                  <span className="font-medium text-secondary">
-                    {formatCurrency(topChain.totalVolume, 'usd')}
+                  <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
+                    {formatPercent(topChainVolumeShare)} of volume (
+                    {formatCurrency(topChain.totalVolume, 'usd')})
                   </span>
                 </div>
               ) : (
