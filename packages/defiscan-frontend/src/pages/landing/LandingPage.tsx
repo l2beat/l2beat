@@ -15,6 +15,7 @@ import {
   ShieldIcon,
   CodeIcon,
   GlobeIcon,
+  SearchIcon,
   ShieldCheckIcon,
 } from '../../components/icons'
 import { ProtocolLogo } from '../../components/ProtocolLogo'
@@ -32,27 +33,50 @@ const methodologyItems = [
   {
     icon: KeyIcon,
     title: 'Admin Control',
-    desc: 'Exhaustive mapping of upgradeability, administrative privileges, protections, and privilege ownership.',
+    desc: 'Mapping of upgradeability, administrative privileges, protections, and privilege ownership.',
   },
   {
     icon: LinkIcon,
     title: 'Dependencies',
-    desc: 'Analysis of underlying protocols, oracles, and infrastructure dependencies.',
+    desc: 'Analysis of underlying protocols, oracles, and infrastructure dependencies that introduce external risk.',
   },
   {
     icon: ShieldIcon,
     title: 'Governance',
-    desc: 'Assessment of the governance process, delays, and potential fund impact governance contracts can exert.',
+    desc: 'Assessment of governance processes, execution delays, and the fund impact governance can exert.',
   },
   {
     icon: CodeIcon,
     title: 'Code Verifiability',
-    desc: 'Analysis of source code accessibility, documentation, and verifiability.',
+    desc: 'Analysis of source code accessibility and on-chain verifiability.',
   },
   {
     icon: GlobeIcon,
-    title: 'Frontends',
-    desc: 'Verification of accessibility of the protocol in terms of diverse frontends.',
+    title: 'Access',
+    desc: 'Verification of protocol accessibility through diverse, independent frontends and interfaces.',
+  },
+]
+
+const audienceItems = [
+  {
+    icon: CoinsIcon,
+    title: 'Capital Allocators',
+    desc: 'Funds and treasuries performing due diligence before deploying capital. Understand exactly what trust assumptions you’re taking on and how they compare across protocols.',
+  },
+  {
+    icon: TeamIcon,
+    title: 'Protocol Teams',
+    desc: 'Demonstrate your security posture to users and integrators. Use DEFISCAN as an independent, credible assessment of your protocol’s trust surface.',
+  },
+  {
+    icon: SearchIcon,
+    title: 'Researchers & Auditors',
+    desc: 'Structured, machine-readable data on protocol governance and permissions. Build on our open-source methodology or integrate our data into your own analysis.',
+  },
+  {
+    icon: ShieldCheckIcon,
+    title: 'Risk & Compliance Teams',
+    desc: 'Evidence-based reporting for regulatory frameworks. Map protocol trust assumptions to compliance requirements with verifiable on-chain data.',
   },
 ]
 
@@ -174,26 +198,18 @@ export function LandingPage() {
         </div>
 
         <div className="relative mx-auto max-w-[896px] px-4 md:px-8 py-16 md:py-28 text-center flex flex-col items-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-xl bg-accent-tint px-3.5 py-1.5 mb-6 md:mb-8">
-            <ShieldCheckIcon className="size-3.5 text-accent shrink-0" />
-            <span className="text-xs font-bold text-text-secondary uppercase tracking-[1.5px]">
-              Continuous Monitoring Active
-            </span>
-          </div>
-
           {/* H1 */}
           <h1 className="font-black text-4xl md:text-7xl lg:text-[96px] leading-tight lg:leading-[96px] tracking-tight lg:tracking-[-4.8px] text-bg-dark">
-            Know what
+            Know your DeFi
             <br />
-            <span className="text-accent-dark">you&apos;re trusting.</span>
+            <span className="text-accent-dark">counterparty risk.</span>
           </h1>
 
           {/* Subtitle */}
           <p className="mt-4 md:mt-6 text-lg md:text-xl font-normal text-text-secondary leading-normal max-w-[612px]">
-            Continuous risk assessment for institutional liquidity. Verify the
-            exposure to trusted code, admin keys and dependencies of any DeFi
-            protocol with on-chain evidence.
+            Continuous risk assessment for DeFi protocols. Verify exposure to
+            trusted code, admin keys, governance, and dependencies with on-chain
+            evidence.
           </p>
 
           {/* Search Bar */}
@@ -254,7 +270,7 @@ export function LandingPage() {
                 <span className="font-medium text-xs text-text-muted uppercase tracking-tight">
                   Updates Identified
                 </span>
-                <span className="font-mono font-bold text-3xl md:text-4xl text-accent-dark tracking-[-1.8px]">
+                <span className="font-mono font-bold text-3xl md:text-4xl text-text-primary tracking-[-1.8px]">
                   {indexData.globalTotals.totalUpdateCount.toLocaleString()}
                 </span>
               </div>
@@ -263,22 +279,51 @@ export function LandingPage() {
         </section>
       )}
 
+      {/* Why This Matters Section */}
+      <section className="border-b border-border/60">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 py-12 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div>
+              <p className="text-[10px] font-bold text-accent uppercase tracking-[1.5px] mb-4">
+                Why This Matters
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-text-primary tracking-heading-2">
+                Access Control Is the Leading Exploit Vector
+              </h2>
+              <p className="mt-4 text-text-secondary leading-relaxed">
+                Counterparty risk in DeFi is real and measurable. Exploits
+                targeting access control mechanisms — compromised admin keys,
+                governance attacks, and privilege escalation — have grown to
+                become the single largest category of losses in the ecosystem.
+              </p>
+              <p className="mt-4 text-text-secondary leading-relaxed">
+                Unlike code vulnerabilities that get patched, access control
+                risks are structural. They persist as long as privileged roles
+                exist. Understanding who holds these privileges, under what
+                constraints, and with what safeguards is essential for anyone
+                with capital at risk.
+              </p>
+            </div>
+            <AccessControlStat />
+          </div>
+        </div>
+      </section>
+
       {/* The Trust Posture / Methodology Section */}
       <section className="bg-bg-muted">
         <div className="mx-auto max-w-7xl px-4 md:px-8 py-12 md:py-20">
           <p className="text-[10px] font-bold text-accent uppercase tracking-[1.5px] mb-4">
-            The Methodology
+            Risk Assessment
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-text-primary tracking-heading-2">
-                The Trust Posture
+                The Risk Radar
               </h2>
               <p className="mt-4 text-text-secondary leading-relaxed">
-                Protocol due diligence should not be static. Our dynamic Trust
-                Posture maps multidimensional risk across five critical trust
-                vectors in real-time without abstracting data into arbitrary
-                scores.
+                Each protocol is assessed across five dimensions of counterparty
+                risk. The Risk Radar gives you a multi-dimensional view of where
+                trust is placed — and where it could be exploited.
               </p>
 
               <div className="mt-8 space-y-5">
@@ -336,7 +381,7 @@ export function LandingPage() {
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
             <p className="text-[10px] font-bold text-accent uppercase tracking-[1.5px] mb-2">
-              Institutional Intelligence
+              Live Data
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary tracking-heading-2">
               Recent Reports
@@ -509,14 +554,23 @@ export function LandingPage() {
 
           {/* Text content */}
           <div>
+            <p className="text-[10px] font-bold text-accent uppercase tracking-[1.5px] mb-4">
+              Methodology
+            </p>
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary tracking-heading-2">
-              Untampered, Real-Time Onchain Evidence
+              On-Chain Evidence, Not Trust
             </h2>
             <p className="mt-4 text-text-secondary leading-relaxed">
-              We don&apos;t trust company statements. We trace the byte-code.
-              Our monitoring agents crawl the chain 24/7 to ensure the
-              &quot;Trust Posture&quot; hasn&apos;t shifted via a silent proxy
-              upgrade.
+              We don&apos;t rely on documentation or team statements. DEFISCAN
+              monitoring agents trace bytecode and verify state directly
+              on-chain — 24/7 — to ensure the trust posture hasn&apos;t shifted
+              via a silent proxy upgrade or admin change.
+            </p>
+            <p className="mt-4 text-text-secondary leading-relaxed">
+              Every data point displayed on DEFISCAN links back to a specific
+              contract address, transaction hash, or governance action. No
+              black boxes, no proprietary scores — just traceable on-chain
+              facts.
             </p>
 
             <div className="mt-8 flex gap-6 md:gap-12">
@@ -525,7 +579,7 @@ export function LandingPage() {
                   Continuous
                 </div>
                 <div className="text-[10px] text-text-muted uppercase tracking-[2px] mt-1">
-                  Onchain Monitoring
+                  On-Chain Monitoring
                 </div>
               </div>
               <div>
@@ -540,6 +594,152 @@ export function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Who It's For Section */}
+      <section className="bg-bg-muted border-t border-b border-border/60">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 py-12 md:py-20">
+          <p className="text-[10px] font-bold text-accent uppercase tracking-[1.5px] mb-2">
+            Use Cases
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-text-primary tracking-heading-2">
+            Who DEFISCAN Is For
+          </h2>
+          <p className="mt-4 text-text-secondary leading-relaxed max-w-[640px]">
+            Whether you&apos;re deploying capital, building protocols, or
+            assessing risk — DEFISCAN provides the on-chain evidence you need.
+          </p>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {audienceItems.map((item) => (
+              <div
+                key={item.title}
+                className="p-7 bg-white border border-border rounded-lg hover:border-accent/30 transition-colors"
+              >
+                <div className="size-10 rounded bg-accent-tint-light flex items-center justify-center mb-4">
+                  <item.icon className="h-5 w-5 text-accent-dark" />
+                </div>
+                <h3 className="text-base font-bold text-text-primary mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 py-16 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary tracking-heading-2 mb-3">
+            Start assessing protocol risk
+          </h2>
+          <p className="text-text-secondary mb-8">
+            Search any tracked protocol and review its full Risk Radar.
+          </p>
+          <Link
+            to="/gallery"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent-dark text-white text-sm font-bold tracking-[1px] rounded-md hover:bg-blue-800 transition-colors"
+          >
+            Explore Protocols
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
+        </div>
+      </section>
     </div>
+  )
+}
+
+function AccessControlStat() {
+  const PCT = 80
+  const radius = 70
+  const stroke = 14
+  const circumference = 2 * Math.PI * radius
+  const offset = circumference * (1 - PCT / 100)
+
+  return (
+    <div className="flex justify-center">
+      <div className="relative size-[260px] md:size-[300px]">
+        <svg
+          viewBox="0 0 180 180"
+          className="size-full -rotate-90"
+          aria-hidden="true"
+        >
+          <circle
+            cx="90"
+            cy="90"
+            r={radius}
+            fill="none"
+            stroke="rgba(37, 99, 235, 0.12)"
+            strokeWidth={stroke}
+          />
+          <circle
+            cx="90"
+            cy="90"
+            r={radius}
+            fill="none"
+            stroke="#2563eb"
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-4xl md:text-5xl font-black text-text-primary tracking-tight leading-none">
+            80%
+          </span>
+          <span className="text-[10px] md:text-xs font-bold uppercase tracking-[1.5px] text-text-muted mt-2">
+            of 2025 losses
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CoinsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="8" cy="8" r="6" />
+      <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
+      <path d="M7 6h1v4" />
+      <path d="m16.71 13.88.7.71-2.82 2.82" />
+    </svg>
+  )
+}
+
+function TeamIcon({ className }: { className?: string }) {
+  // Lucide "users" — 3 figures (center + two flanking)
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
   )
 }

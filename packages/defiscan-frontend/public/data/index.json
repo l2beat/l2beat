@@ -156,7 +156,7 @@
       "tokenName": "GHO",
       "verified": true,
       "totals": {
-        "contractCount": 499,
+        "contractCount": 500,
         "permissionedFunctionCount": 1206,
         "scoredFunctionCount": 1206,
         "adminCount": 30,
@@ -165,7 +165,7 @@
         "totalTokenValueAtRisk": 22047738450.75237,
         "totalTokenValue": 22694532830.32528,
         "linesOfCode": 38915,
-        "verifiedContractCount": 499,
+        "verifiedContractCount": 500,
         "coverage": 100
       }
     },
@@ -343,9 +343,9 @@
     "totalTokenValueAtRisk": 54271381751.62993,
     "totalTokenValue": 54400978919.52122,
     "protocolsReviewed": 16,
-    "totalContractCount": 1117,
+    "totalContractCount": 1118,
     "totalAdminCount": 141,
-    "totalUpdateCount": 1379
+    "totalUpdateCount": 1359
   },
   "dependencies": [
     {

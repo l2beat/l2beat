@@ -1,31 +1,10 @@
-import {
-  CodeIcon,
-  GlobeIcon,
-  KeyIcon,
-  ShieldCheckIcon,
-  ShieldIcon,
-} from '../../components/icons'
-import { useIndex } from '../../data/hooks'
-import { formatUsdValue } from '../../utils/format'
+import { CodeIcon, ShieldCheckIcon } from '../../components/icons'
 
 const REPO_URL = 'https://github.com/deficollective/defiscan-v2'
-const DOCS_URL = 'https://docs.defiscan.info'
 const LENS_URL = 'https://lens.defiscan.info'
-const COLLECTIVE_URL = 'https://deficollective.org/about/'
+const COLLECTIVE_URL = 'https://deficollective.org'
 
 export function AboutPage() {
-  const { data: indexData } = useIndex()
-
-  const protocolCount = indexData?.protocols.length
-  // Total Value Secured across all reviewed protocols = capital at risk (contract
-  // balances) + token value (protocol token market value). Matches the per-protocol
-  // TVS shown on the Landing page. `totalDefiTvl` is the hardcoded industry-wide
-  // TVL used only as a "% of DeFi reviewed" denominator and should NOT be shown here.
-  const totalValueVerified =
-    indexData &&
-    indexData.globalTotals.totalCapitalAtRisk +
-      indexData.globalTotals.totalTokenValue
-
   return (
     <div className="w-full bg-white">
       {/* Hero + Mission + Approach share the same 1536px container and white bg */}
@@ -33,17 +12,16 @@ export function AboutPage() {
         {/* ---------- Hero ---------- */}
         <section className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12">
           <div className="flex flex-col gap-4 lg:col-span-8">
-            <p className="font-bold text-[11px] text-accent-dark uppercase tracking-[0.55px]">
-              Institutional Intelligence
-            </p>
             <h1 className="font-extrabold font-sans text-5xl text-text-primary leading-[1.05] tracking-[-0.04em] sm:text-6xl lg:text-[72px] lg:leading-[72px]">
               The Transparency
               <br />
               Layer for DeFi.
             </h1>
             <p className="max-w-2xl pt-4 text-lg text-text-secondary leading-[1.625] sm:text-xl">
-              DEFISCAN is the definitive open-source infrastructure for on-chain
-              verification, analysis, and protocol risk assessment.
+              DEFISCAN is an open-source platform that continuously monitors
+              DeFi protocols — their smart contracts, admin keys, governance
+              mechanisms, and external dependencies — to make counterparty
+              risk visible and verifiable.
             </p>
           </div>
           <div className="relative aspect-square w-full max-w-[220px] self-center overflow-hidden rounded-lg border border-accent-dark/10 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.1)_0%,rgba(37,99,235,0)_70%)] lg:col-span-4 lg:ml-auto">
@@ -72,44 +50,25 @@ export function AboutPage() {
 
           {/* Right copy + stats — col 7-12 */}
           <div className="flex flex-col gap-6 lg:col-span-6 lg:col-start-7">
-            <h2 className="font-black font-sans text-3xl text-text-primary leading-[1] tracking-[-0.75px] sm:text-4xl">
+            <p className="font-bold text-[11px] text-accent-dark uppercase tracking-[0.55px]">
               Our Mission
+            </p>
+            <h2 className="font-black font-sans text-3xl text-text-primary leading-[1] tracking-[-0.75px] sm:text-4xl">
+              Making Counterparty Risk Verifiable
             </h2>
             <div className="space-y-6 text-base text-text-secondary leading-[26px]">
               <p>
-                In a financial ecosystem governed by code, transparency is not
-                an option—it is the bedrock. Our mission is to provide the
-                "Digital Curator" that the DeFi space deserves, translating
-                complex smart contract interactions into verifiable
-                human-readable intelligence.
+                Every DeFi protocol operates with a set of trust assumptions —
+                who can upgrade contracts, which external systems it depends
+                on, and what governance safeguards are in place. These
+                assumptions define the real risk profile for anyone interacting
+                with the protocol.
               </p>
               <p>
-                We operate as an independent verification layer, ensuring that
-                protocol claims align with on-chain realities. By continuously
-                monitoring protocols' trust posture, we empower institutions and
-                individuals to move to real-time due diligence and base
-                investment decisions on evidence instead of trust.
+                DEFISCAN maps, monitors, and surfaces these trust assumptions
+                in a structured, evidence-based format — enabling informed
+                decision-making grounded in on-chain facts.
               </p>
-            </div>
-            <div className="flex flex-col gap-4 pt-2 sm:flex-row">
-              <div className="flex-1 bg-bg-muted p-6">
-                <p className="font-bold text-[11px] text-accent-dark uppercase leading-[16.5px] tracking-[1.1px]">
-                  Protocols Tracked
-                </p>
-                <p className="mt-2 font-bold font-mono text-3xl text-text-primary leading-9">
-                  {protocolCount !== undefined ? `${protocolCount}+` : '—'}
-                </p>
-              </div>
-              <div className="flex-1 bg-bg-muted p-6">
-                <p className="font-bold text-[11px] text-accent-dark uppercase leading-[16.5px] tracking-[1.1px]">
-                  Total Value Verified
-                </p>
-                <p className="mt-2 font-bold font-mono text-3xl text-text-primary leading-9">
-                  {totalValueVerified !== undefined
-                    ? formatUsdValue(totalValueVerified)
-                    : '—'}
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -125,33 +84,33 @@ export function AboutPage() {
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <ApproachCard
-              icon={<CodeIcon className="h-6 w-6 text-accent-dark" />}
-              title="Open Source Logic"
-              body="Our entire scanning engine is public. Anyone can audit the auditor, ensuring complete neutrality in every report we generate."
-              linkLabel="View Repository"
-              linkHref={REPO_URL}
+              icon={<ClockIcon className="h-6 w-6 text-accent-dark" />}
+              title="Continuous Monitoring"
+              body="Protocols change. Admin keys rotate, governance proposals pass, dependencies update. DEFISCAN continuously verifies the current state of each protocol's trust surface — not a point-in-time snapshot, but a living assessment."
+              linkLabel="Live Ledger"
+              linkHref={LENS_URL}
               bgClass="bg-accent-tint-light"
             />
             <ApproachCard
               icon={<DatabaseIcon className="h-6 w-6 text-accent-dark" />}
-              title="Verifiable Data"
-              body="Every data point displayed on DEFISCAN includes a verifiable source. We don't ask for trust; we provide the evidence."
+              title="On-Chain Evidence"
+              body="Every claim links back to a specific contract, transaction, or governance action. No black boxes, no proprietary scores — traceable on-chain facts that anyone can independently verify."
               linkLabel="Explore Lens"
               linkHref={LENS_URL}
               bgClass="bg-accent-tint-light"
             />
             <ApproachCard
-              icon={<NetworkIcon className="h-6 w-6 text-accent-dark" />}
-              title="Protocol Mapping"
-              body="We map complex smart contract hierarchies to visualize ownership, administrative permissions, and exit flows."
-              linkLabel="Explore Docs"
-              linkHref={DOCS_URL}
+              icon={<CodeIcon className="h-6 w-6 text-accent-dark" />}
+              title="Open Source & Auditable"
+              body="The entire scanning engine is public. Every methodology, every rule, every output can be independently reviewed. The auditor can be audited."
+              linkLabel="View Repository"
+              linkHref={REPO_URL}
               bgClass="bg-accent-tint-light"
             />
           </div>
         </section>
 
-        {/* ---------- Built by DeFi Veterans (contained dark card) ---------- */}
+        {/* ---------- Who We Are (contained dark card) ---------- */}
         <section className="relative overflow-hidden bg-bg-dark p-10 sm:p-16 lg:p-24">
           <svg
             className="pointer-events-none absolute inset-y-0 right-0 h-full w-[70%] opacity-10"
@@ -180,42 +139,22 @@ export function AboutPage() {
           <div className="relative flex max-w-[896px] flex-col gap-8">
             <div className="flex items-center gap-4">
               <span className="inline-flex border border-white/30 px-[9px] py-[3px] font-bold text-[10px] text-bg-primary uppercase leading-[15px] tracking-[-0.5px]">
-                Proven Expertise
+                Team
               </span>
               <div className="h-px w-12 bg-white/30" />
             </div>
             <h2 className="font-black font-sans text-4xl text-bg-primary leading-[1] tracking-[-3px] sm:text-5xl lg:text-6xl lg:leading-[60px]">
-              Built and Backed by DeFi
-              <br />
-              Veterans
+              Who We Are
             </h2>
             <p className="max-w-2xl text-lg text-white/80 leading-[29px]">
-              Our team brings over 30+ years of combined DeFi experience,
-              combining deep expertise across protocol design, cyber security,
-              and regulation. We are supported by DeFi pioneers including the
-              Ethereum Foundation and Liquity.
+              DEFISCAN is built by the{' '}
+              <strong className="text-bg-primary">DeFi Collective</strong> — a
+              team with deep roots in protocol engineering, smart contract
+              security, and financial regulation. With over 30 years of
+              combined experience across these disciplines, we operate as an
+              independent verification layer, aligned with the ecosystem&apos;s
+              long-term need for transparency and accountability.
             </p>
-
-            <div className="grid grid-cols-1 gap-12 pt-8 pb-12 sm:grid-cols-3">
-              <Credential
-                icon={<KeyIcon className="h-5 w-5 text-bg-primary" />}
-                label={
-                  <>
-                    30+ Years
-                    <br />
-                    Experience
-                  </>
-                }
-              />
-              <Credential
-                icon={<GlobeIcon className="h-5 w-5 text-bg-primary" />}
-                label="Supported by the best"
-              />
-              <Credential
-                icon={<ShieldIcon className="h-5 w-5 text-bg-primary" />}
-                label="Multi-disciplinary team"
-              />
-            </div>
 
             <a
               href={COLLECTIVE_URL}
@@ -223,8 +162,36 @@ export function AboutPage() {
               rel="noopener noreferrer"
               className="inline-flex w-fit items-center justify-center bg-accent-dark px-8 py-4 font-bold text-white text-xs uppercase tracking-[1.2px] shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)] transition-opacity hover:opacity-90"
             >
-              Learn More About Our Team
+              Learn more about DeFi Collective
             </a>
+          </div>
+        </section>
+
+        {/* ---------- Partners / Built With ---------- */}
+        <section className="flex flex-col gap-8">
+          <div>
+            <p className="font-bold text-[11px] text-accent-dark uppercase tracking-[0.55px] mb-3">
+              Partners
+            </p>
+            <h2 className="font-black font-sans text-3xl text-text-primary leading-[1.1] tracking-[-0.75px] sm:text-4xl">
+              Built With
+            </h2>
+            <p className="mt-4 max-w-[600px] text-base text-text-secondary leading-[1.75]">
+              DEFISCAN is supported by leading ecosystem partners who share our
+              commitment to transparency and verifiable security in DeFi.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
+            <PartnerLogo
+              name="Ethereum Foundation"
+              src="/partners/ethereum-foundation.svg"
+              href="https://ethereum.foundation"
+            />
+            <PartnerLogo
+              name="Liquity"
+              src="/partners/liquity.png"
+              href="https://www.liquity.org"
+            />
           </div>
         </section>
       </div>
@@ -273,20 +240,32 @@ function ApproachCard({
   )
 }
 
-function Credential({
-  icon,
-  label,
+function PartnerLogo({
+  name,
+  src,
+  href,
 }: {
-  icon: React.ReactNode
-  label: React.ReactNode
+  name: string
+  src: string
+  href: string
 }) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="shrink-0">{icon}</div>
-      <p className="font-bold text-bg-primary text-xl uppercase leading-7 tracking-[-0.5px]">
-        {label}
-      </p>
-    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-[120px] flex-col items-center justify-center gap-3 rounded-lg border border-border bg-white p-5 transition-colors hover:border-accent/40"
+    >
+      <img
+        src={src}
+        alt={`${name} logo`}
+        className="h-10 w-auto max-w-full object-contain opacity-80 transition-opacity group-hover:opacity-100"
+        loading="lazy"
+      />
+      <span className="text-xs font-semibold text-text-secondary uppercase tracking-[0.5px]">
+        {name}
+      </span>
+    </a>
   )
 }
 
@@ -309,7 +288,7 @@ function DatabaseIcon({ className }: { className?: string }) {
   )
 }
 
-function NetworkIcon({ className }: { className?: string }) {
+function ClockIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -321,11 +300,8 @@ function NetworkIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      <rect x="9" y="2" width="6" height="5" rx="1" />
-      <rect x="2" y="17" width="6" height="5" rx="1" />
-      <rect x="16" y="17" width="6" height="5" rx="1" />
-      <path d="M12 7v4" />
-      <path d="M5 17v-2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2" />
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
     </svg>
   )
 }
