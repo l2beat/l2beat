@@ -413,6 +413,7 @@ model InteropTransfer {
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
   @@index([type, duration, srcValueUsd, dstValueUsd])
+  @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
 }
 
 model EcosystemToken {

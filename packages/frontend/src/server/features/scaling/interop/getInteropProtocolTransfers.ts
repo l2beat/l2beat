@@ -1,18 +1,14 @@
 import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
-import {
-  getInteropTransferValue,
-  InMemoryCache,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   InteropProtocolTransferDetailsItem,
-  InteropProtocolTransferStats,
+  InteropProtocolTransfersCursor,
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
 } from './types'
@@ -21,15 +17,14 @@ import {
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
 
-interface TransfersWithStats {
+interface TransfersPage {
   items: InteropTransferRecord[]
-  transferStats: InteropProtocolTransferStats
-  tokensDetailsMap: TokensDetailsMap
+  nextCursor: InteropProtocolTransfersCursor | undefined
 }
 
-const VALUE_TOLERANCE_RATIO = 0.01
-const MIN_VALUE_TOLERANCE = 0.01
-const PAGE_SIZE = 100
+const DEFAULT_PAGE_SIZE = 100
+const MAX_PAGE_SIZE = 100
+const RAW_BATCH_SIZE = 500
 const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
@@ -41,23 +36,19 @@ const INTEROP_CHAIN_ICON_URLS = new Map(
     manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
   ]),
 )
-const interopTransfersCache = new InMemoryCache({})
 
 export async function getInteropProtocolTransfers({
   id,
   from,
   to,
   type,
-  expectedTransferCount,
-  expectedVolume,
   snapshotTimestamp,
+  limit,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
     return {
       items: [],
-      totalCount: 0,
-      hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
   }
@@ -69,8 +60,6 @@ export async function getInteropProtocolTransfers({
   if (!interopProject?.interopConfig) {
     return {
       items: [],
-      totalCount: 0,
-      hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
   }
@@ -83,8 +72,6 @@ export async function getInteropProtocolTransfers({
   if (plugins.length === 0) {
     return {
       items: [],
-      totalCount: 0,
-      hasIntegrityMismatch: false,
       nextCursor: undefined,
     }
   }
@@ -92,113 +79,116 @@ export async function getInteropProtocolTransfers({
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
   const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
-  const result = await interopTransfersCache.get(
-    {
-      key: [
-        'interop-transfers',
-        id.toString(),
-        type ?? 'all',
-        snapshotTimestamp.toString(),
-        [...from].sort().join(','),
-        [...to].sort().join(','),
-        toPluginMatcherCacheKey(plugins),
-      ],
-      ttl: 60 * 10,
-      staleWhileRevalidate: 60 * 15,
-    },
-    () =>
-      getFilteredTransfersWithStats({
-        snapshotTimestamp,
-        sourceChains: from,
-        destinationChains: to,
-        pluginIds,
-        matcher,
-      }),
+  const result = await getFilteredTransfersPage({
+    snapshotTimestamp,
+    sourceChains: from,
+    destinationChains: to,
+    pluginIds,
+    matcher,
+    limit: getPageSize(limit),
+    cursor,
+  })
+  const tokensDetailsMap = await buildTokensDetailsMap(
+    getAbstractTokenIds(result.items),
   )
-
-  const hasIntegrityMismatch =
-    expectedTransferCount !== undefined &&
-    expectedVolume !== undefined &&
-    hasTransferStatsMismatch(
-      result.transferStats,
-      expectedTransferCount,
-      expectedVolume,
-    )
-
-  if (hasIntegrityMismatch) {
-    return {
-      items: [],
-      totalCount: 0,
-      hasIntegrityMismatch: true,
-      nextCursor: undefined,
-    }
-  }
-
-  const startIndex = cursor ?? 0
-  const pagedItems = result.items.slice(startIndex, startIndex + PAGE_SIZE)
-  const nextCursor =
-    startIndex + PAGE_SIZE < result.items.length
-      ? startIndex + PAGE_SIZE
-      : undefined
   return {
-    items: pagedItems.map((transfer) =>
+    items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_EXPLORER_URLS,
-        result.tokensDetailsMap,
+        tokensDetailsMap,
       ),
     ),
-    totalCount: result.items.length,
-    hasIntegrityMismatch: false,
-    nextCursor,
+    nextCursor: result.nextCursor,
   }
 }
 
-async function getFilteredTransfersWithStats({
+async function getFilteredTransfersPage({
   snapshotTimestamp,
   sourceChains,
   destinationChains,
   pluginIds,
   matcher,
+  limit,
+  cursor,
 }: {
-  snapshotTimestamp: UnixTime
+  snapshotTimestamp: number
   sourceChains: string[]
   destinationChains: string[]
   pluginIds: string[]
   matcher: (transfer: InteropTransferRecord) => boolean
-}): Promise<TransfersWithStats> {
+  limit: number
+  cursor: InteropProtocolTransfersCursor | undefined
+}): Promise<TransfersPage> {
   const db = getDb()
-
-  const allTransfers = await db.interopTransfer.getProjectTransfers({
-    plugins: pluginIds,
-    snapshotTimestamp,
-    sourceChains,
-    destinationChains,
-  })
   const items: InteropTransferRecord[] = []
-  let transferCount = 0
-  let volume = 0
+  let dbCursor = cursor
 
-  for (const transfer of allTransfers) {
-    if (!matcher(transfer)) {
-      continue
+  while (items.length < limit) {
+    const transfers = await db.interopTransfer.getProjectTransfersPage({
+      plugins: pluginIds,
+      snapshotTimestamp: UnixTime(snapshotTimestamp),
+      sourceChains,
+      destinationChains,
+      cursor: dbCursor
+        ? {
+            timestamp: UnixTime(dbCursor.timestamp),
+            transferId: dbCursor.transferId,
+          }
+        : undefined,
+      limit: RAW_BATCH_SIZE,
+    })
+
+    if (transfers.length === 0) {
+      return { items, nextCursor: undefined }
     }
 
-    items.push(transfer)
-    transferCount += 1
-    volume += getInteropTransferValue(transfer) ?? 0
+    for (const [i, transfer] of transfers.entries()) {
+      dbCursor = toTransferCursor(transfer)
+
+      if (!matcher(transfer)) {
+        continue
+      }
+
+      items.push(transfer)
+
+      if (items.length === limit) {
+        const stoppedAtEnd =
+          i === transfers.length - 1 && transfers.length < RAW_BATCH_SIZE
+        return {
+          items,
+          nextCursor: stoppedAtEnd ? undefined : toTransferCursor(transfer),
+        }
+      }
+    }
+
+    if (transfers.length < RAW_BATCH_SIZE) {
+      return { items, nextCursor: undefined }
+    }
   }
 
-  const abstractTokenIds = getAbstractTokenIds(items)
-  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+  return { items, nextCursor: undefined }
+}
 
+function getPageSize(limit: number | undefined): number {
+  if (limit === undefined) {
+    return DEFAULT_PAGE_SIZE
+  }
+
+  const pageSize = Math.floor(limit)
+  if (!Number.isFinite(pageSize)) {
+    return DEFAULT_PAGE_SIZE
+  }
+
+  return Math.max(1, Math.min(MAX_PAGE_SIZE, pageSize))
+}
+
+function toTransferCursor(
+  transfer: Pick<InteropTransferRecord, 'timestamp' | 'transferId'>,
+): InteropProtocolTransfersCursor {
   return {
-    items,
-    transferStats: {
-      transferCount,
-      volume,
-    },
-    tokensDetailsMap,
+    timestamp: transfer.timestamp,
+    transferId: transfer.transferId,
   }
 }
 
@@ -284,40 +274,4 @@ function getTxHashHref(
   }
 
   return `${explorerUrl}/tx/${txHash}`
-}
-
-function toPluginMatcherCacheKey(
-  plugins: {
-    plugin: string
-    bridgeType: string
-    chain?: string
-    abstractTokenId?: string
-    transferType?: string
-  }[],
-): string {
-  return plugins
-    .map((plugin) => Object.values(plugin).join(':'))
-    .sort()
-    .join('|')
-}
-
-// Note: We are not summing transfers in exactly the same way as the backend aggregates do.
-// To avoid duplicating all aggregation logic here, we use a simplified calculation on the frontend
-// and add this 1% difference check to allow for minor discrepancies between methods.
-function hasTransferStatsMismatch(
-  transferStats: InteropProtocolTransferStats,
-  expectedTransferCount: number,
-  expectedVolume: number,
-): boolean {
-  if (transferStats.transferCount !== expectedTransferCount) {
-    return true
-  }
-
-  const difference = Math.abs(transferStats.volume - expectedVolume)
-  const tolerance = Math.max(
-    Math.abs(expectedVolume) * VALUE_TOLERANCE_RATIO,
-    MIN_VALUE_TOLERANCE,
-  )
-
-  return difference > tolerance
 }

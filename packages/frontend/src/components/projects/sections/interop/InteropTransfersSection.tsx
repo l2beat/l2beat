@@ -1,16 +1,15 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { Button } from '~/components/core/Button'
 import {
-  getPaginationItems,
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   columns,
@@ -44,10 +43,6 @@ export function InteropTransfersSection({
   const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
   const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
 
-  const isFiltered =
-    selectedFrom.length !== apiSelection.from.length ||
-    selectedTo.length !== apiSelection.to.length
-
   const {
     data: transfersData,
     isLoading: isTransfersLoading,
@@ -59,11 +54,8 @@ export function InteropTransfersSection({
       from: selectedFrom,
       to: selectedTo,
       id: projectId,
-      expectedTransferCount: isFiltered
-        ? undefined
-        : (entry?.transferCount ?? 0),
-      expectedVolume: isFiltered ? undefined : (entry?.volume ?? 0),
       snapshotTimestamp: entry?.snapshotTimestamp ?? 0,
+      limit: TRANSFERS_PER_PAGE,
     },
     {
       enabled:
@@ -79,8 +71,8 @@ export function InteropTransfersSection({
     () => transfersData?.pages.flatMap((page) => page.items) ?? [],
     [transfersData],
   )
-  const hasIntegrityMismatch = !!transfersData?.pages[0]?.hasIntegrityMismatch
-  const totalCount = transfersData?.pages[0]?.totalCount ?? 0
+  const fetchedPageCount = Math.ceil(fetchedItems.length / TRANSFERS_PER_PAGE)
+  const loadedPageCount = Math.max(1, fetchedPageCount)
 
   const table = useTable<TransferRow>({
     data: fetchedItems,
@@ -89,7 +81,10 @@ export function InteropTransfersSection({
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
     manualFiltering: true,
-    pageCount: Math.max(1, Math.ceil(totalCount / TRANSFERS_PER_PAGE)),
+    pageCount: Math.max(
+      loadedPageCount,
+      fetchedPageCount + (hasNextPage ? 1 : 0),
+    ),
     initialState: {
       pagination: {
         pageSize: TRANSFERS_PER_PAGE,
@@ -108,31 +103,39 @@ export function InteropTransfersSection({
   }
 
   const currentPage = table.getState().pagination.pageIndex
-  const pageCount = table.getPageCount()
-
-  const needsMoreRows =
-    !hasIntegrityMismatch &&
-    hasNextPage &&
-    fetchedItems.length < (currentPage + 1) * TRANSFERS_PER_PAGE
-
-  useEffect(() => {
-    if (needsMoreRows && !isFetchingNextPage) {
-      fetchNextPage()
-    }
-  }, [fetchNextPage, isFetchingNextPage, needsMoreRows])
 
   const isEmptySelection = selectedFrom.length === 0 || selectedTo.length === 0
+  const isInitialLoading =
+    !isEmptySelection && isTransfersLoading && fetchedItems.length === 0
+  const canGoPrevious = currentPage > 0
+  const canGoNext = currentPage < loadedPageCount - 1 || !!hasNextPage
 
-  const isLoading =
-    !isEmptySelection &&
-    (((isTransfersLoading || hasIntegrityMismatch) &&
-      fetchedItems.length === 0) ||
-      needsMoreRows)
+  const handlePreviousPage = () => {
+    if (canGoPrevious) {
+      table.setPageIndex(currentPage - 1)
+    }
+  }
 
-  const paginationItems = useMemo(
-    () => getPaginationItems(pageCount, currentPage),
-    [pageCount, currentPage],
-  )
+  const handleNextPage = async () => {
+    if (currentPage < loadedPageCount - 1) {
+      table.setPageIndex(currentPage + 1)
+      return
+    }
+
+    if (!hasNextPage || isFetchingNextPage) {
+      return
+    }
+
+    const previousPageCount = loadedPageCount
+    const result = await fetchNextPage()
+    const nextItemCount =
+      result.data?.pages.reduce((sum, page) => sum + page.items.length, 0) ?? 0
+    const nextPageCount = Math.ceil(nextItemCount / TRANSFERS_PER_PAGE)
+
+    if (nextPageCount > previousPageCount) {
+      table.setPageIndex(currentPage + 1)
+    }
+  }
 
   return (
     <ProjectSection {...sectionProps}>
@@ -150,54 +153,54 @@ export function InteropTransfersSection({
           onChange={handleToChange}
         />
       </div>
-      {hasIntegrityMismatch ? (
-        <TransfersResyncNotice />
-      ) : isEmptySelection ? (
+      {isEmptySelection ? (
         <EmptySelectionNotice />
       ) : (
         <BasicTable
           skeletonCount={TRANSFERS_PER_PAGE}
           table={table}
           tableWrapperClassName="pb-0"
-          isLoading={isLoading}
+          isLoading={isInitialLoading}
         />
       )}
-      {!hasIntegrityMismatch && !isEmptySelection && pageCount > 1 && (
+      {!isEmptySelection && fetchedItems.length > 0 && (
         <div className="mt-4">
           <Pagination className="min-w-full px-1">
-            <PaginationContent className="justify-center">
-              {paginationItems.map((item) =>
-                item.type === 'ellipsis' ? (
-                  <PaginationItem key={item.key}>
-                    <PaginationEllipsis className="text-secondary" />
-                  </PaginationItem>
-                ) : (
-                  <PaginationLink
-                    key={item.index}
-                    size="sm"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      table.setPageIndex(item.index)
-                    }}
-                    isActive={currentPage === item.index}
-                  >
-                    {item.index + 1}
-                  </PaginationLink>
-                ),
-              )}
+            <PaginationContent className="justify-center gap-2">
+              <PaginationItem>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={!canGoPrevious || isFetchingNextPage}
+                  onClick={handlePreviousPage}
+                  className="h-7 rounded-md px-2 font-medium text-label-value-12 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <ChevronIcon className="mr-1 size-2.5 rotate-90 fill-current" />
+                  Previous
+                </Button>
+              </PaginationItem>
+              <PaginationItem>
+                <span className="flex h-7 items-center px-2 font-medium text-label-value-12 text-secondary">
+                  Page {currentPage + 1}
+                </span>
+              </PaginationItem>
+              <PaginationItem>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={!canGoNext || isFetchingNextPage}
+                  onClick={handleNextPage}
+                  className="h-7 rounded-md px-2 font-medium text-label-value-12 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {isFetchingNextPage ? 'Loading...' : 'Next'}
+                  <ChevronIcon className="-rotate-90 ml-1 size-2.5 fill-current" />
+                </Button>
+              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
       )}
     </ProjectSection>
-  )
-}
-
-function TransfersResyncNotice() {
-  return (
-    <div className="mb-3 flex items-center gap-2 rounded-lg bg-surface-secondary px-3 py-2 font-medium text-paragraph-12 text-secondary">
-      Transfer data is resyncing. It will be available soon.
-    </div>
   )
 }
 

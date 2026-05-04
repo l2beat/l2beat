@@ -99,14 +99,20 @@ export const InteropTopItemsParams = v.object({
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
+export type InteropProtocolTransfersCursor = v.infer<
+  typeof InteropProtocolTransfersCursor
+>
+export const InteropProtocolTransfersCursor = v.object({
+  timestamp: v.number(),
+  transferId: v.string(),
+})
 export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  expectedTransferCount: v.number().optional(),
-  expectedVolume: v.number().optional(),
   snapshotTimestamp: v.number(),
-  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
 })
 
 export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
@@ -136,16 +142,9 @@ export type InteropProtocolTransferDetailsItem = {
   dstTxHashHref: string | undefined
 }
 
-export type InteropProtocolTransferStats = {
-  transferCount: number
-  volume: number
-}
-
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
-  totalCount: number
-  hasIntegrityMismatch: boolean
-  nextCursor: number | undefined
+  nextCursor: InteropProtocolTransfersCursor | undefined
 }
 
 export type AggregatedInteropTransferWithTokens =
