@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x6713cb585d61b94f376e29b691ae8c4836328db6
+
+# Diff at Mon, 04 May 2026 08:29:16 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777296071
+- current timestamp: 1777883283
+
+## Description
+
+Era multisig validator now has 3 (out of 8) threshold, instead of 0. This effectively enables the multisig operation. This contract allows registered validators stop block execution.
+
+This multisig is also made the only entity that can precommit, commit, revert, prove and execute blocks, earlier there were also two EOAs with these permissions.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorVTL.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.PRECOMMITTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.COMMITTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.COMMITTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.REVERTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.REVERTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.PROVER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.PROVER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.EXECUTOR_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.EXECUTOR_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.
++++ severity: HIGH
+      values.threshold:
+-        0
++        3
+    }
+```
+
 Generated with discovered.json: 0xdf0dae661450d657979b94193e34cb9fb1316ecc
 
 # Diff at Mon, 27 Apr 2026 14:17:26 GMT:

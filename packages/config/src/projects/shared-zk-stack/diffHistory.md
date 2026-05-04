@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5a69b89cd00554c07332022eefc479de9d18d528
+
+# Diff at Mon, 04 May 2026 08:22:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1776765734
+- current timestamp: 1777882868
+
+## Description
+
+Queued and executed the proposal to reduce security council members from 12 -> 8: https://www.tally.xyz/gov/zksync/proposal/38457812855457311077054202023053780960745243426690711582482794483162556902949?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f. Proposal execution transaction: https://tools.l2beat.com/decoder-new/?hash=0x5d81e1d462ea4b2f1d32929e187576d6b2d18b76feb28fadf4b1f33c80832d22&data=AwA.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        14
++        15
+    }
+```
+
 Generated with discovered.json: 0xcb3d31e72a531f0f58c5d362e07205e8539e02dd
 
 # Diff at Tue, 21 Apr 2026 10:03:29 GMT:

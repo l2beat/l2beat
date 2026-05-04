@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xc2e59c70c122e3ffc83323926b3db6b3a4755cb0
+
+# Diff at Mon, 04 May 2026 10:46:13 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777544162
+- current timestamp: 1777891441
+
+## Description
+
+Verifier upgrade finalized, it is now actively used.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifier (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x39bd6cf02f85348f8dd9eee253a25198a5f6775a
 
 # Diff at Thu, 30 Apr 2026 10:29:01 GMT:

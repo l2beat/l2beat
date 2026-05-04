@@ -76,14 +76,14 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0x321c1f2ac9b466d8c7671ec325b260501541aa373a90d52e1c227452dbaf649b',
+        hash: '0xc50b83a66e621b8f1bea3f5fe17dcb4c7af5706e413038b3486e233a5ae40a1a',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xD76E5C5507C56D721BB9cE6601DCd379d09AFaD2',
+              '0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82',
             ),
           },
         ],

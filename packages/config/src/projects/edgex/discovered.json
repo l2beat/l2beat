@@ -1,6 +1,6 @@
 {
   "name": "edgex",
-  "timestamp": 1777545991,
+  "timestamp": 1777891423,
   "configHash": "0x5cb999bde5dc790f9b1a3de7f6f00d91d9175043b78486af8c31f49184bc94c4",
   "entries": [
     {
@@ -125,7 +125,7 @@
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": false,
+        "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
@@ -273,7 +273,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 523,
+        "nonce": 525,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -464,7 +464,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 59632,
+        "getLastBatchId": 60035,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -475,7 +475,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 59554,
+        "getSequenceNumber": 59957,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1037,6 +1037,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 24992417 },
+  "usedBlockNumbers": { "ethereum": 25021111 },
   "permissionsConfigHash": "0x5aff13ce66c991dfd2a87926b939789e25cc0e298e7a045667283f9e5ece1089"
 }
