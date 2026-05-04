@@ -1,5 +1,5 @@
 import { perfStats } from '../../perf/perfStats'
-import type { Box, Connection, State } from '../State'
+import type { Box, Connection, Field, Node, State } from '../State'
 import {
   BOTTOM_PADDING,
   FIELD_HEIGHT,
@@ -19,12 +19,16 @@ export function updateNodePositions(state: State): State {
       }
     }
 
-    const nodeDimensions: Record<string, Box> = {}
+    // Pass 1: compute next box for every node and remember which boxes
+    // actually moved. Anything else (own box stable + none of its targets
+    // moved) is a candidate for full-ref reuse.
+    const nextBoxes = new Map<string, Box>()
+    const movedIds = new Set<string>()
     for (const node of state.nodes) {
       const start = state.positionsBeforeMove[node.id]
       const hiddenFieldsHeight =
         node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-      nodeDimensions[node.id] = {
+      const nextBox: Box = {
         width: node.box.width,
         height:
           HEADER_HEIGHT +
@@ -34,70 +38,129 @@ export function updateNodePositions(state: State): State {
         x: start ? start.x + dx : node.box.x,
         y: start ? start.y + dy : node.box.y,
       }
+      nextBoxes.set(node.id, nextBox)
+      if (!boxesEqual(nextBox, node.box)) {
+        movedIds.add(node.id)
+      }
     }
 
-    const newState = {
+    // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
+    // structurally identical so React.memo and useMemo deps can short-circuit.
+    let anyNodeChanged = false
+    const nextNodes: Node[] = new Array(state.nodes.length)
+    for (let n = 0; n < state.nodes.length; n++) {
+      const node = state.nodes[n] as Node
+      const nextBox = nextBoxes.get(node.id) as Box
+
+      const ownBoxMoved = movedIds.has(node.id)
+      const targetMoved = ownBoxMoved || nodeHasMovedTarget(node, movedIds)
+
+      // If there are no hidden fields, field boxes and connection anchors are
+      // fully determined by the node box and target boxes, so we can skip the
+      // per-field walk entirely.
+      if (!ownBoxMoved && !targetMoved && node.hiddenFields.length === 0) {
+        nextNodes[n] = node
+        continue
+      }
+
+      const hiddenFieldsSet =
+        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+      let visibleIndex = 0
+      let anyFieldChanged = false
+      const nextFields: Field[] = new Array(node.fields.length)
+      for (let i = 0; i < node.fields.length; i++) {
+        const field = node.fields[i] as Field
+        const targetBox = nextBoxes.get(field.target)
+        if (!targetBox) {
+          throw new Error('missing dimensions for node ' + field.target)
+        }
+
+        const currentVisibleIndex = visibleIndex
+        if (!hiddenFieldsSet?.has(field.name)) {
+          visibleIndex++
+        }
+
+        const nextFieldBox: Box = {
+          x: nextBox.x,
+          y: nextBox.y + HEADER_HEIGHT + i * FIELD_HEIGHT,
+          width: nextBox.width,
+          height: FIELD_HEIGHT,
+        }
+        const nextConnection = processConnection(
+          currentVisibleIndex,
+          nextBox,
+          targetBox,
+        )
+
+        if (
+          boxesEqual(field.box, nextFieldBox) &&
+          connectionsEqual(field.connection, nextConnection)
+        ) {
+          nextFields[i] = field
+          continue
+        }
+
+        anyFieldChanged = true
+        nextFields[i] = {
+          ...field,
+          box: nextFieldBox,
+          connection: nextConnection,
+        }
+      }
+
+      if (!ownBoxMoved && !anyFieldChanged) {
+        nextNodes[n] = node
+        continue
+      }
+
+      anyNodeChanged = true
+      nextNodes[n] = {
+        ...node,
+        box: ownBoxMoved ? nextBox : node.box,
+        fields: anyFieldChanged ? nextFields : node.fields,
+      }
+    }
+
+    if (!anyNodeChanged) {
+      return state
+    }
+
+    return {
       ...state,
-      nodes: state.nodes.map((node) => {
-        const box = nodeDimensions[node.id]
-        if (!box) {
-          // this should never happen
-          throw new Error('missing dimensions for node ' + node.id)
-        }
-
-        const hiddenFieldsSet = new Set(node.hiddenFields)
-
-        let visibleIndex = 0
-
-        const processedFields = node.fields.map((field, index) => {
-          const to = nodeDimensions[field.target]
-          if (!to) {
-            // this should never happen
-            throw new Error('missing dimensions for node ' + field.target)
-          }
-
-          const currentVisibleIndex = visibleIndex
-
-          if (!hiddenFieldsSet.has(field.name)) {
-            visibleIndex++
-          }
-
-          return {
-            ...field,
-            box: {
-              x: box.x,
-              y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-              width: box.width,
-              height: FIELD_HEIGHT,
-            },
-            connection: {
-              nodeId: field.target,
-              ...processConnection(currentVisibleIndex, box, to),
-            },
-          }
-        })
-
-        return {
-          ...node,
-          box,
-          fields: processedFields,
-        }
-      }),
+      nodes: nextNodes,
     }
-
-    return newState
   })
+}
+
+function nodeHasMovedTarget(node: Node, movedIds: Set<string>): boolean {
+  for (const field of node.fields) {
+    if (movedIds.has(field.target)) return true
+  }
+  return false
+}
+
+function boxesEqual(a: Box, b: Box): boolean {
+  return (
+    a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height
+  )
+}
+
+function connectionsEqual(a: Connection, b: Connection): boolean {
+  return (
+    a.from.x === b.from.x &&
+    a.from.y === b.from.y &&
+    a.from.direction === b.from.direction &&
+    a.to.x === b.to.x &&
+    a.to.y === b.to.y &&
+    a.to.direction === b.to.direction
+  )
 }
 
 function processConnection(
   index: number,
-  from: {
-    x: number
-    y: number
-    width: number
-  },
+  from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },
-): Omit<Connection, 'nodeId'> {
+): Connection {
   const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2
 
