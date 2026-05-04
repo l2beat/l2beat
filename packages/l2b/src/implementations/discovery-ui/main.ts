@@ -42,10 +42,7 @@ export const projectParamsSchema = z.object({
 const projectQuerySchema = z.object({
   maxDepth: z
     .string()
-    .check(
-      (v) => /^\d+$/.test(v),
-      'maxDepth must be a non-negative integer',
-    )
+    .check((v) => /^\d+$/.test(v), 'maxDepth must be a non-negative integer')
     .transform((v) => Number(v))
     .optional(),
   singleDiscovery: z
