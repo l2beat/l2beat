@@ -1,4 +1,3 @@
-import { perfStats } from '../../perf/perfStats'
 import type { Box, Connection, Field, Node, State } from '../State'
 import {
   BOTTOM_PADDING,
@@ -13,144 +12,142 @@ export function updateNodePositions(
   state: State,
   update?: Partial<State>,
 ): State {
-  return perfStats.time('updateNodePositions', () => {
-    const nextState = update ? { ...state, ...update } : state
-    const previousNodes = new Map(state.nodes.map((node) => [node.id, node]))
+  const nextState = update ? { ...state, ...update } : state
+  const previousNodes = new Map(state.nodes.map((node) => [node.id, node]))
 
-    let dx = nextState.input.mouseX - nextState.input.mouseStartX
-    let dy = nextState.input.mouseY - nextState.input.mouseStartY
-    if (nextState.input.shiftPressed) {
-      if (Math.abs(dx) > Math.abs(dy)) {
-        dy = 0
-      } else {
-        dx = 0
-      }
+  let dx = nextState.input.mouseX - nextState.input.mouseStartX
+  let dy = nextState.input.mouseY - nextState.input.mouseStartY
+  if (nextState.input.shiftPressed) {
+    if (Math.abs(dx) > Math.abs(dy)) {
+      dy = 0
+    } else {
+      dx = 0
+    }
+  }
+
+  // Pass 1: compute next box for every node and remember which boxes
+  // actually moved. Anything else (own box stable + none of its targets
+  // moved) is a candidate for full-ref reuse.
+  const nextBoxes = new Map<string, Box>()
+  const movedIds = new Set<string>()
+  for (const node of nextState.nodes) {
+    const previousNode = previousNodes.get(node.id)
+    const start = nextState.positionsBeforeMove[node.id]
+    const hiddenFieldsHeight =
+      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+    const nextBox: Box = {
+      width: node.box.width,
+      height:
+        HEADER_HEIGHT +
+        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+        BOTTOM_PADDING +
+        hiddenFieldsHeight,
+      x: start ? start.x + dx : node.box.x,
+      y: start ? start.y + dy : node.box.y,
+    }
+    nextBoxes.set(node.id, nextBox)
+    const boxMoved =
+      previousNode === undefined || !boxesEqual(nextBox, previousNode.box)
+    if (boxMoved) {
+      movedIds.add(node.id)
+    }
+  }
+
+  // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
+  // structurally identical so React.memo and useMemo deps can short-circuit.
+  let anyNodeChanged = false
+  const nextNodes: Node[] = new Array(nextState.nodes.length)
+  for (let n = 0; n < nextState.nodes.length; n++) {
+    const node = nextState.nodes[n] as Node
+    const previousNode = previousNodes.get(node.id)
+    const nextBox = nextBoxes.get(node.id) as Box
+
+    const ownBoxMoved = movedIds.has(node.id)
+    const targetMoved = ownBoxMoved || nodeHasMovedTarget(node, movedIds)
+    const fieldsUnchanged = previousNode?.fields === node.fields
+    const hiddenFieldsUnchanged =
+      previousNode?.hiddenFields === node.hiddenFields
+
+    // If there are no hidden fields, field boxes and connection anchors are
+    // fully determined by the node box and target boxes, so we can skip the
+    // per-field walk entirely.
+    if (
+      !ownBoxMoved &&
+      !targetMoved &&
+      node.hiddenFields.length === 0 &&
+      fieldsUnchanged &&
+      hiddenFieldsUnchanged
+    ) {
+      nextNodes[n] = node
+      continue
     }
 
-    // Pass 1: compute next box for every node and remember which boxes
-    // actually moved. Anything else (own box stable + none of its targets
-    // moved) is a candidate for full-ref reuse.
-    const nextBoxes = new Map<string, Box>()
-    const movedIds = new Set<string>()
-    for (const node of nextState.nodes) {
-      const previousNode = previousNodes.get(node.id)
-      const start = nextState.positionsBeforeMove[node.id]
-      const hiddenFieldsHeight =
-        node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-      const nextBox: Box = {
-        width: node.box.width,
-        height:
-          HEADER_HEIGHT +
-          (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-          BOTTOM_PADDING +
-          hiddenFieldsHeight,
-        x: start ? start.x + dx : node.box.x,
-        y: start ? start.y + dy : node.box.y,
+    const hiddenFieldsSet =
+      node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+    let visibleIndex = 0
+    let anyFieldChanged = false
+    const nextFields: Field[] = new Array(node.fields.length)
+    for (let i = 0; i < node.fields.length; i++) {
+      const field = node.fields[i] as Field
+      const targetBox = nextBoxes.get(field.target)
+      if (!targetBox) {
+        throw new Error('missing dimensions for node ' + field.target)
       }
-      nextBoxes.set(node.id, nextBox)
-      const boxMoved =
-        previousNode === undefined || !boxesEqual(nextBox, previousNode.box)
-      if (boxMoved) {
-        movedIds.add(node.id)
+
+      const currentVisibleIndex = visibleIndex
+      if (!hiddenFieldsSet?.has(field.name)) {
+        visibleIndex++
       }
-    }
 
-    // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
-    // structurally identical so React.memo and useMemo deps can short-circuit.
-    let anyNodeChanged = false
-    const nextNodes: Node[] = new Array(nextState.nodes.length)
-    for (let n = 0; n < nextState.nodes.length; n++) {
-      const node = nextState.nodes[n] as Node
-      const previousNode = previousNodes.get(node.id)
-      const nextBox = nextBoxes.get(node.id) as Box
+      const nextFieldBox: Box = {
+        x: nextBox.x,
+        y: nextBox.y + HEADER_HEIGHT + i * FIELD_HEIGHT,
+        width: nextBox.width,
+        height: FIELD_HEIGHT,
+      }
+      const nextConnection = processConnection(
+        currentVisibleIndex,
+        nextBox,
+        targetBox,
+      )
 
-      const ownBoxMoved = movedIds.has(node.id)
-      const targetMoved = ownBoxMoved || nodeHasMovedTarget(node, movedIds)
-      const fieldsUnchanged = previousNode?.fields === node.fields
-      const hiddenFieldsUnchanged =
-        previousNode?.hiddenFields === node.hiddenFields
-
-      // If there are no hidden fields, field boxes and connection anchors are
-      // fully determined by the node box and target boxes, so we can skip the
-      // per-field walk entirely.
       if (
-        !ownBoxMoved &&
-        !targetMoved &&
-        node.hiddenFields.length === 0 &&
-        fieldsUnchanged &&
-        hiddenFieldsUnchanged
+        boxesEqual(field.box, nextFieldBox) &&
+        connectionsEqual(field.connection, nextConnection)
       ) {
-        nextNodes[n] = node
+        nextFields[i] = field
         continue
       }
 
-      const hiddenFieldsSet =
-        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
-      let visibleIndex = 0
-      let anyFieldChanged = false
-      const nextFields: Field[] = new Array(node.fields.length)
-      for (let i = 0; i < node.fields.length; i++) {
-        const field = node.fields[i] as Field
-        const targetBox = nextBoxes.get(field.target)
-        if (!targetBox) {
-          throw new Error('missing dimensions for node ' + field.target)
-        }
-
-        const currentVisibleIndex = visibleIndex
-        if (!hiddenFieldsSet?.has(field.name)) {
-          visibleIndex++
-        }
-
-        const nextFieldBox: Box = {
-          x: nextBox.x,
-          y: nextBox.y + HEADER_HEIGHT + i * FIELD_HEIGHT,
-          width: nextBox.width,
-          height: FIELD_HEIGHT,
-        }
-        const nextConnection = processConnection(
-          currentVisibleIndex,
-          nextBox,
-          targetBox,
-        )
-
-        if (
-          boxesEqual(field.box, nextFieldBox) &&
-          connectionsEqual(field.connection, nextConnection)
-        ) {
-          nextFields[i] = field
-          continue
-        }
-
-        anyFieldChanged = true
-        nextFields[i] = {
-          ...field,
-          box: nextFieldBox,
-          connection: nextConnection,
-        }
-      }
-
-      if (!ownBoxMoved && !anyFieldChanged) {
-        nextNodes[n] = node
-        continue
-      }
-
-      anyNodeChanged = true
-      nextNodes[n] = {
-        ...node,
-        box: ownBoxMoved ? nextBox : node.box,
-        fields: anyFieldChanged ? nextFields : node.fields,
+      anyFieldChanged = true
+      nextFields[i] = {
+        ...field,
+        box: nextFieldBox,
+        connection: nextConnection,
       }
     }
 
-    if (!anyNodeChanged) {
-      return nextState
+    if (!ownBoxMoved && !anyFieldChanged) {
+      nextNodes[n] = node
+      continue
     }
 
-    return {
-      ...nextState,
-      nodes: nextNodes,
+    anyNodeChanged = true
+    nextNodes[n] = {
+      ...node,
+      box: ownBoxMoved ? nextBox : node.box,
+      fields: anyFieldChanged ? nextFields : node.fields,
     }
-  })
+  }
+
+  if (!anyNodeChanged) {
+    return nextState
+  }
+
+  return {
+    ...nextState,
+    nodes: nextNodes,
+  }
 }
 
 function nodeHasMovedTarget(node: Node, movedIds: Set<string>): boolean {

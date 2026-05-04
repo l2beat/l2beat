@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { SHOW_PERFORMANCE } from '../../../../config/perf'
-import { perfStats } from '../perf/perfStats'
 import type { Actions } from './actions/Actions'
 import { applyStoredLayout } from './actions/applyStoredLayout'
 import { redo, undo } from './actions/history'
@@ -124,16 +122,14 @@ function wrapAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, action, (state, ...args) =>
-    action(state, ...args),
-  )
+  return wrapWithReducer(set, (state, ...args) => action(state, ...args))
 }
 
 function wrapUndoableAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, action, (state, ...args) => {
+  return wrapWithReducer(set, (state, ...args) => {
     const before = captureHistorySnapshot(state)
     const partial = action(state, ...args)
 
@@ -157,7 +153,7 @@ function wrapHistoryResetAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, action, (state, ...args) => ({
+  return wrapWithReducer(set, (state, ...args) => ({
     ...action(state, ...args),
     history: emptyHistoryState(),
   }))
@@ -167,7 +163,7 @@ function wrapHistoryStartAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, action, (state, ...args) => {
+  return wrapWithReducer(set, (state, ...args) => {
     const partial = action(state, ...args)
     const nextState = mergeState(state, partial)
 
@@ -192,7 +188,7 @@ function wrapHistoryEndAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, action, (state, ...args) => {
+  return wrapWithReducer(set, (state, ...args) => {
     const partial = action(state, ...args)
     const pending = state.history.pending
 
@@ -224,19 +220,8 @@ function wrapHistoryEndAction<A extends unknown[]>(
 
 function wrapWithReducer<A extends unknown[]>(
   set: StoreSetter,
-  action: (state: State, ...args: A) => Partial<State>,
   reducer: (state: StoreState, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  if (SHOW_PERFORMANCE) {
-    return (...args: A) => {
-      const startedAt = performance.now()
-      try {
-        set((state) => reducer(state, ...args))
-      } finally {
-        perfStats.recordAction(action.name, performance.now() - startedAt)
-      }
-    }
-  }
   return (...args: A) => set((state) => reducer(state, ...args))
 }
 
