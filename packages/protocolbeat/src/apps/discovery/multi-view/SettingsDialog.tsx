@@ -11,9 +11,6 @@ export function SettingsDialog() {
     (s) => s.markUnreachableEntries,
   )
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
-  const singleDiscoveryMode = useGlobalSettingsStore(
-    (s) => s.singleDiscoveryMode,
-  )
   const setUserSettings = useGlobalSettingsStore((s) => s.setUserSettings)
 
   return (
@@ -57,27 +54,6 @@ export function SettingsDialog() {
             value={maxReachableDepth}
             onChange={(v) => setUserSettings({ maxReachableDepth: v })}
           />
-
-          <h2 className="mt-4 leading-none">Loading</h2>
-          <hr className="mt-1 mb-2 border-coffee-400/30" />
-          <div>
-            <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
-              onClick={() =>
-                setUserSettings({
-                  singleDiscoveryMode: !singleDiscoveryMode,
-                })
-              }
-            >
-              <Checkbox checked={singleDiscoveryMode} />
-              Single discovery mode
-            </div>
-            <div className="flex items-center gap-1 pl-5 font-light text-coffee-400 text-xs">
-              Load only the target project. Skip referenced projects and shared
-              modules. <br />
-              Cross-project address references will appear unnamed.
-            </div>
-          </div>
         </div>
       </Dialog.Body>
     </Dialog.Root>
@@ -140,9 +116,6 @@ function DepthSelector(props: {
         BFS depth from initial addresses used to mark entries reachable.
         <br />0 = only entrypoints (useful to surface bridge entries between
         discoveries). Empty = unlimited.
-        <span className="block font-bold italic">
-          Has no effect if single discovery mode is enabled.
-        </span>
       </div>
       {error !== undefined && (
         <div className="pt-1 font-light text-red-400 text-xs">{error}</div>

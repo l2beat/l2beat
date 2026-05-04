@@ -11,11 +11,6 @@ interface State {
    * `null` means unlimited (server default).
    */
   readonly maxReachableDepth: number | null
-  /**
-   * If true, only the target project is loaded — referenced projects and
-   * shared modules are skipped.
-   */
-  readonly singleDiscoveryMode: boolean
 }
 
 interface Actions {
@@ -25,7 +20,6 @@ interface Actions {
 const INITIAL_STATE: State = {
   markUnreachableEntries: true,
   maxReachableDepth: null,
-  singleDiscoveryMode: false,
 }
 
 export const useGlobalSettingsStore = create<State & Actions>()(

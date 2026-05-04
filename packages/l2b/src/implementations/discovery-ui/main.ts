@@ -45,10 +45,6 @@ const projectQuerySchema = z.object({
     .check((v) => /^\d+$/.test(v), 'maxDepth must be a non-negative integer')
     .transform((v) => Number(v))
     .optional(),
-  singleDiscovery: z
-    .enum(['true', 'false'])
-    .transform((v) => v === 'true')
-    .optional(),
 })
 
 const projectAddressParamsSchema = z.object({
@@ -114,15 +110,9 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       return
     }
     const { project } = paramsValidation.data
-    const { maxDepth, singleDiscovery } = queryValidation.data
+    const { maxDepth } = queryValidation.data
 
-    const response = getProject(
-      configReader,
-      templateService,
-      project,
-      maxDepth,
-      singleDiscovery,
-    )
+    const response = getProject(configReader, templateService, project, maxDepth)
     res.json(response)
   })
 

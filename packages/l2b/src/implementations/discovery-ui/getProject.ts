@@ -34,11 +34,8 @@ export function getProject(
   templateService: TemplateService,
   project: string,
   maxDepth?: number,
-  singleDiscovery?: boolean,
 ): ApiProjectResponse {
-  const discoveries = singleDiscovery
-    ? [configReader.readDiscovery(project)]
-    : configReader.readDiscoveryWithReferences(project)
+  const discoveries = configReader.readDiscoveryWithReferences(project)
   const discovery = discoveries[0]
   const data = discoveries.map((discovery) => ({
     discovery,

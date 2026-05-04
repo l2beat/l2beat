@@ -28,14 +28,10 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
 export async function getProject(
   project: string,
   maxDepth?: number,
-  singleDiscovery?: boolean,
 ): Promise<ApiProjectResponse> {
   const params = new URLSearchParams()
   if (maxDepth !== undefined) {
     params.set('maxDepth', String(maxDepth))
-  }
-  if (singleDiscovery) {
-    params.set('singleDiscovery', 'true')
   }
   const qs = params.toString()
   const res = await fetch(`/api/projects/${project}${qs ? `?${qs}` : ''}`)

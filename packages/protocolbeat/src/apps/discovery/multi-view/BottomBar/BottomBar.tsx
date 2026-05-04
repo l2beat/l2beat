@@ -19,9 +19,6 @@ export function BottomBar() {
   const { discover, killCommand } = useDiscoveryCommand()
   const { altKey } = useIsomorphicKeys()
   const setOpen = useSearchStore((state) => state.setOpen)
-  const singleDiscoveryMode = useGlobalSettingsStore(
-    (s) => s.singleDiscoveryMode,
-  )
   const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
 
   const depthSpecified = maxReachableDepth !== null
@@ -83,11 +80,6 @@ export function BottomBar() {
         )}
       </div>
       <div className="flex gap-4">
-        {singleDiscoveryMode && (
-          <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
-            Single Discovery Mode
-          </div>
-        )}
         {depthSpecified && (
           <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
             Depth: {maxReachableDepth}
