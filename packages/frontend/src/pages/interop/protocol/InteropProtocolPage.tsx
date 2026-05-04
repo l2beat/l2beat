@@ -106,6 +106,7 @@ function Content({
   const showSectionSkeletons = shouldFetchProtocol && isLoading
   const sections = getInteropProtocolSections({
     projectId: projectEntry.id,
+    projectEntry,
     hasSelection: shouldFetchProtocol,
     isLoading,
     data,

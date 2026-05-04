@@ -1,9 +1,11 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
+import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 
 interface GetInteropProtocolSectionsOptions {
   projectId: ProjectId
+  projectEntry: InteropProtocolEntry
   hasSelection: boolean
   isLoading: boolean
   data: InteropProtocolDashboardData | undefined
@@ -11,6 +13,7 @@ interface GetInteropProtocolSectionsOptions {
 
 export function getInteropProtocolSections({
   projectId,
+  projectEntry,
   hasSelection,
   isLoading,
   data,
@@ -28,6 +31,18 @@ export function getInteropProtocolSections({
         id: 'interop-volume',
         projectId,
         title: 'Volume and flows',
+      },
+    })
+  }
+
+  if (projectEntry.header.detailedDescription) {
+    sections.push({
+      type: 'DetailedDescriptionSection',
+      props: {
+        id: 'detailed-description',
+        title: 'Description',
+        description: projectEntry.header.description,
+        detailedDescription: projectEntry.header.detailedDescription,
       },
     })
   }
