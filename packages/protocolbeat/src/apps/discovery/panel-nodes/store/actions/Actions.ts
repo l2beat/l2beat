@@ -1,5 +1,6 @@
 import type { Node, State } from '../State'
-import type { NodeLocations } from '../utils/storage'
+import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
+import type { ApplyLayoutMode } from './applyStoredLayout'
 
 export interface Actions {
   /**
@@ -23,6 +24,7 @@ export interface Actions {
   layout: (locations: NodeLocations) => void
   undo: () => void
   redo: () => void
+  applyStoredLayout: (saved: StoredNodeLayout, mode: ApplyLayoutMode) => void
   hideSelected: () => void
   hideUnknowns: () => void
   showHidden: () => void

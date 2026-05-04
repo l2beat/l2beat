@@ -105,7 +105,7 @@ export function encodeErc20Balance(
 ): CallParameters {
   return {
     to: token,
-    data: Bytes.fromHex(
+    input: Bytes.fromHex(
       erc20Interface.encodeFunctionData('balanceOf', [holder]),
     ),
   }

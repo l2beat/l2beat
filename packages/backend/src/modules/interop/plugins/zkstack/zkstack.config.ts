@@ -349,7 +349,7 @@ export class ZkStackConfigPlugin
   ): Promise<Map<EthereumAddress, `0x${string}`>> {
     const calls: CallParameters[] = tokens.map((token) => ({
       to: contract,
-      data: Bytes.fromHex(
+      input: Bytes.fromHex(
         encodeFunctionData({
           abi: ASSET_ABI,
           functionName: 'assetId',
@@ -407,7 +407,7 @@ export class ZkStackConfigPlugin
 
     const calls: CallParameters[] = assetIds.map((assetId) => ({
       to: l1Vault,
-      data: Bytes.fromHex(
+      input: Bytes.fromHex(
         encodeFunctionData({
           abi: ASSET_ABI,
           functionName: 'originChainId',
@@ -452,7 +452,7 @@ export class ZkStackConfigPlugin
     try {
       const call: CallParameters = {
         to: contract,
-        data: Bytes.fromHex(
+        input: Bytes.fromHex(
           encodeFunctionData({
             abi: ASSET_ABI,
             functionName: 'BASE_TOKEN_ASSET_ID',
@@ -495,7 +495,7 @@ export class ZkStackConfigPlugin
   ): Promise<Map<string, EthereumAddress>> {
     const calls: CallParameters[] = assetIds.map((assetId) => ({
       to: contract,
-      data: Bytes.fromHex(
+      input: Bytes.fromHex(
         encodeFunctionData({
           abi: ASSET_ABI,
           functionName: 'tokenAddress',

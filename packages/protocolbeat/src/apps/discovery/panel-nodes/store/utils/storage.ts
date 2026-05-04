@@ -12,6 +12,9 @@ const NodeLocations = v.record(
   }),
 )
 
+// Accepts the legacy { l, c, h } oklch object form for backward compatibility
+// with localStorage entries written before colors became a numeric palette
+// index. Readers must coerce non-numeric entries to 0.
 const NodeColors = v.record(
   v.string(),
   v.union([
@@ -27,7 +30,7 @@ const NodeColors = v.record(
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
 const HiddenNodes = v.array(v.string())
 
-const StoredNodeLayout = v.object({
+export const StoredNodeLayout = v.object({
   projectId: v.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
@@ -42,11 +45,8 @@ function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`
 }
 
-export function persistNodeLayout(state: State): void {
-  if (state.nodes.length <= 0 || !state.projectId) {
-    return
-  }
-  const locations = {
+export function buildStoredNodeLayout(state: State): StoredNodeLayout {
+  return {
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
     colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
@@ -55,11 +55,17 @@ export function persistNodeLayout(state: State): void {
         .filter((n) => n.hiddenFields.length > 0)
         .map((n) => [n.id, n.hiddenFields]),
     ),
-    hiddenNodes: state.hidden,
+    hiddenNodes: [...state.hidden],
+  }
+}
+
+export function persistNodeLayout(state: State): void {
+  if (state.nodes.length <= 0 || !state.projectId) {
+    return
   }
   localStorage.setItem(
     getLayoutStorageKey(state.projectId),
-    JSON.stringify(locations),
+    JSON.stringify(buildStoredNodeLayout(state)),
   )
 }
 

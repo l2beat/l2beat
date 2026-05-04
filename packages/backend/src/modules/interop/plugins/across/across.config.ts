@@ -135,7 +135,7 @@ export class AcrossConfigPlugin
         args: [BigInt(chain.id)],
       })
 
-      calls.push({ to: HUB_POOL, data: Bytes.fromHex(data) })
+      calls.push({ to: HUB_POOL, input: Bytes.fromHex(data) })
     }
 
     const result = await this.ethereumRpc.multicall(calls, latest)

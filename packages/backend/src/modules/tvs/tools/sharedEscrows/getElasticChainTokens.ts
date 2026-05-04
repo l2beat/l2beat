@@ -71,7 +71,7 @@ export async function getElasticChainTokens(
       id: token.id,
       request: {
         address: escrow.sharedEscrow.l2BridgeAddress,
-        data: Bytes.fromHex(
+        input: Bytes.fromHex(
           bridgeInterface.encodeFunctionData('l2TokenAddress', [token.address]),
         ),
       },
@@ -103,7 +103,7 @@ export async function getElasticChainTokens(
           address,
           request: {
             address: encoded.to,
-            data: encoded.data,
+            input: encoded.input,
           },
         })
         continue

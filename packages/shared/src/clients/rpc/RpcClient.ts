@@ -413,7 +413,7 @@ function encodeBlockNumber(blockNumber: number | 'latest'): string {
 function buildCallObject(callParams: CallParameters): Record<string, string> {
   return {
     to: callParams.to.toString(),
-    data: callParams.data.toString(),
+    input: callParams.input.toString(),
   }
 }
 

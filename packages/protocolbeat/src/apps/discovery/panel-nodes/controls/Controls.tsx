@@ -2,6 +2,7 @@ import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
 import { HideUnknownsButton } from './HideUnknowns'
+import { LayoutFileButtons } from './LayoutFileButtons'
 import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
@@ -39,6 +40,7 @@ export function Controls() {
       <div className="flex flex-col gap-2">
         <UndoButton />
         <RedoButton />
+        <LayoutFileButtons />
       </div>
     </div>
   )
