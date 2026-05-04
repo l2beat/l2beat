@@ -1,7 +1,6 @@
 import {
   Bytes,
   ChainSpecificAddress,
-  EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -86,6 +85,7 @@ describe(AddressAnalyzer.name, () => {
       const implementation = ChainSpecificAddress.random()
       const admin = ChainSpecificAddress.random()
       const owner = ChainSpecificAddress.random()
+      const deployer = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -147,7 +147,7 @@ describe(AddressAnalyzer.name, () => {
             deployment: {
               timestamp: UnixTime(1234),
               blockNumber: 9876,
-              deployer: EthereumAddress.random(),
+              deployer,
               transactionHash: Hash256.random(),
             },
             addresses: [],
@@ -176,6 +176,7 @@ describe(AddressAnalyzer.name, () => {
         address,
         name: 'Test',
         isVerified: true,
+        deployerAddress: deployer,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
@@ -203,6 +204,7 @@ describe(AddressAnalyzer.name, () => {
       const implementation = ChainSpecificAddress.random()
       const admin = ChainSpecificAddress.random()
       const owner = ChainSpecificAddress.random()
+      const deployer = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -263,7 +265,7 @@ describe(AddressAnalyzer.name, () => {
             deployment: {
               timestamp: UnixTime(1234),
               blockNumber: 9876,
-              deployer: EthereumAddress.random(),
+              deployer,
               transactionHash: Hash256.random(),
             },
             addresses: [],
@@ -292,6 +294,7 @@ describe(AddressAnalyzer.name, () => {
         name: 'Test',
         address,
         isVerified: false,
+        deployerAddress: deployer,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
