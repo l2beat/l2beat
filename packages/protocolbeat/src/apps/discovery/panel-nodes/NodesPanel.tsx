@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type {
   Field as ApiField,
   ApiProjectResponse,
@@ -10,7 +9,7 @@ import type {
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { SHOW_PERFORMANCE } from '../../../config/perf'
-import { useGlobalSettingsStore } from '../store/global-settings-store'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
 import { PerfMeter } from './perf/PerfMeter'
@@ -25,15 +24,7 @@ export function NodesPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
-  const singleDiscoveryMode = useGlobalSettingsStore(
-    (s) => s.singleDiscoveryMode,
-  )
-  const response = useQuery({
-    queryKey: ['projects', project, maxReachableDepth, singleDiscoveryMode],
-    queryFn: () =>
-      getProject(project, maxReachableDepth ?? undefined, singleDiscoveryMode),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
 
   useLoadNodes(response.data, project)
   useSynchronizeSelection()

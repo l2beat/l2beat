@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query'
-import { getProject, getProjects, searchCode } from '../../../api/api'
+import { getProjects, searchCode } from '../../../api/api'
 import type { ApiAddressEntry, ApiCodeSearchResponse } from '../../../api/types'
+import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { getCodeSearchTerm, isCodeSearchTerm } from './CodeSearchResultEntry'
 import {
   getProjectSearchTerm,
@@ -22,10 +23,9 @@ async function searchContractQuery(
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
-  const projectObject = await queryClient.ensureQueryData({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const projectObject = await queryClient.ensureQueryData(
+    getProjectQueryOptions(project),
+  )
 
   const allEntries = projectObject.entries.flatMap((c) => {
     return [...c.initialContracts, ...c.discoveredContracts, ...c.eoas]

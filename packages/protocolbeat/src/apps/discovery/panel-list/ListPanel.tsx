@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
@@ -14,6 +13,7 @@ import { IconFolder } from '../../../icons/IconFolder'
 import { IconFolderOpened } from '../../../icons/IconFolderOpened'
 import { IconUnlinked } from '../../../icons/IconUnliked'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
@@ -23,15 +23,7 @@ export function ListPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
-  const singleDiscoveryMode = useGlobalSettingsStore(
-    (s) => s.singleDiscoveryMode,
-  )
-  const response = useQuery({
-    queryKey: ['projects', project, maxReachableDepth, singleDiscoveryMode],
-    queryFn: () =>
-      getProject(project, maxReachableDepth ?? undefined, singleDiscoveryMode),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
   if (response.isPending) {
     return <LoadingState />
   }
