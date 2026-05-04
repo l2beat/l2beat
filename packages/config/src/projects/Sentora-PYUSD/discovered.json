@@ -1,7 +1,7 @@
 {
   "name": "Sentora-PYUSD",
-  "timestamp": 1777710525,
-  "configHash": "0x78195ca14b667790df8308b862b685410031ae5eb40b84e5391ced5e7c4bb5b6",
+  "timestamp": 1777887219,
+  "configHash": "0x9856febce9a31e5e71864f7144887e9a04b7385f6fe863bceea0392f94200efd",
   "entries": [
     {
       "name": "MorphoChainlinkOracleV2",
@@ -20,7 +20,7 @@
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "784439268593549893818220212497539739241",
+        "price": "799697768219641279491678515568996226505",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -109,7 +109,7 @@
         "feedCap_0xfF30586cD0F29eD462364C7e81375FC0C71219b1": "0",
         "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
         "guardian": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
-        "lastTotalAssets": 247255600096741,
+        "lastTotalAssets": 243717736351831,
         "lostAssets": 0,
         "marketCap_oracle_0x0AeAa9320d78a5Edb9387A08682d1738BCc64b1f": "50000000000000",
         "marketCap_oracle_0x221898dA0890Fc5fb6c890Fcdc051FA97946eE11": "75000000000000",
@@ -234,8 +234,8 @@
         "supplyQueueLength": 1,
         "symbol": "senPYUSD",
         "timelock": 259200,
-        "totalAssets": 247257572889310,
-        "totalSupply": "122901985257618764555492582",
+        "totalAssets": 243718054350152,
+        "totalSupply": "121126784445080970216013492",
         "withdrawQueue": [
           "0xf8c13c80ab8666c21fc5afa13105745cae7c1da13df596eb5054319f36655cc9",
           "0xd8a8e6667f58aa9229e8979bd619742b1660ee856c200a93e407dbccb7222323",
@@ -282,7 +282,7 @@
         "BASE_FEED_2": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "2508766201902280691787945536",
+        "price": "2573188130031866827832891683",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -349,106 +349,9 @@
       }
     },
     {
-      "name": "PendleGovernanceProxy",
-      "address": "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x3a27db40b9c7fd966095e5014a51017de081eeb79364fd2c75b47770ff9f3481"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1724394947,
-      "sinceBlock": 20589552,
-      "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x53c26f7645500FeA9a856BfA09E820dAcf643aB9",
-        "$pastUpgrades": [
-          [
-            "2024-08-23T06:35:47.000Z",
-            "0x5e51036d17e065e3590af314ef6d75a4abfdc6303f609784a8028cda1852cfd0",
-            ["eth:0x36355e1cf76ce3A7a4Eb14e00BB86a7AbB68efBd"]
-          ],
-          [
-            "2025-01-15T10:47:59.000Z",
-            "0x8231d2e1ba23ee8d485b27e94472993c4be5d8f86245383129e0f3d3bfbf4097",
-            ["eth:0x41dd1bd32a1DB1460e7253969d591132F75f74d6"]
-          ],
-          [
-            "2025-09-18T14:34:59.000Z",
-            "0x049145d85f5725219d6d09a7fdfcc7efb7c214d030d87e90d8fc1bc779b41f2a",
-            ["eth:0x53c26f7645500FeA9a856BfA09E820dAcf643aB9"]
-          ]
-        ],
-        "$upgradeCount": 3,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "GUARDIAN": "0x8b5b16d04624687fcf0d0228f19993c9157c1ed07b41d8d430fd9100eb099fe8"
-      },
-      "errors": { "proxiableUUID": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e": "ERC1967Proxy",
-        "eth:0x53c26f7645500FeA9a856BfA09E820dAcf643aB9": "PendleGovernanceProxy"
-      }
-    },
-    {
-      "name": "PendleYieldToken",
-      "address": "eth:0x30775B422b9c7415349855346352FAA61fD97E41",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe2416a37bf556f44df23d3a54168019e6181ebdfeb125d81ab7da4c91033ab80"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1767862907,
-      "sinceBlock": 24188933,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "doCacheIndexSameBlock": true,
-        "expiry": 1778112000,
-        "factory": "eth:0x3E6EBa46AbC5ab18ED95F6667d8B2fd4020E4637",
-        "getRewardTokens": [],
-        "isExpired": false,
-        "name": "YT Ethena sUSDE 7MAY2026",
-        "postExpiry": { "firstPYIndex": 0, "totalSyInterestForTreasury": 0 },
-        "PT": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
-        "pyIndexLastUpdatedBlock": 25005940,
-        "pyIndexStored": "1229884243057337538",
-        "reentrancyGuardEntered": false,
-        "SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
-        "symbol": "YT-sUSDE-7MAY2026",
-        "syReserve": "145814211012573363973703756",
-        "totalSupply": "178923934680164488042464043",
-        "VERSION": 6
-      },
-      "errors": { "getPostExpiryData": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0x30775B422b9c7415349855346352FAA61fD97E41": "PendleYieldToken"
-      }
-    },
-    {
       "address": "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Vat",
-      "address": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9b8ce62567b688087bbdf9f3d73335cea74a370eed8f6bf13649dc0a5a66616d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1573672592,
-      "sinceBlock": 8928152,
-      "values": {
-        "$immutable": true,
-        "debt": "13161588525087318067109440615765378542154483681930563852",
-        "Line": "15727530903814245318887501003937996733563838382599431527",
-        "live": 1,
-        "vice": "563056810276861449630405874744366736042082502692237826"
-      },
-      "implementationNames": {
-        "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": "Vat"
-      }
     },
     {
       "name": "MorphoChainlinkOracleV2",
@@ -467,7 +370,7 @@
         "BASE_FEED_2": "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "998289835659839212002288",
+        "price": "998792899235062967036861",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -476,54 +379,6 @@
       },
       "implementationNames": {
         "eth:0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": "MorphoChainlinkOracleV2"
-      }
-    },
-    {
-      "name": "UsdsJoin",
-      "address": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x5464202f6381b6eccdd8e0ffad9378125bc8728c8e44ea912d897f64bc2c5df9"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1725290363,
-      "sinceBlock": 20663733,
-      "values": {
-        "$immutable": true,
-        "dai": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "usds": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B"
-      },
-      "implementationNames": {
-        "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB": "UsdsJoin"
-      }
-    },
-    {
-      "name": "PendlePrincipalToken",
-      "address": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf46f0f711f6a93e773fa023d0407c89d0a158ee45b5aa27d1aadf09a5c4ef823"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1767862907,
-      "sinceBlock": 24188933,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "expiry": 1778112000,
-        "factory": "eth:0x3E6EBa46AbC5ab18ED95F6667d8B2fd4020E4637",
-        "isExpired": false,
-        "name": "PT Ethena sUSDE 7MAY2026",
-        "reentrancyGuardEntered": false,
-        "SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
-        "symbol": "PT-sUSDE-7MAY2026",
-        "totalSupply": "178923934680164488042464043",
-        "VERSION": 6,
-        "YT": "eth:0x30775B422b9c7415349855346352FAA61fD97E41"
-      },
-      "implementationNames": {
-        "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": "PendlePrincipalToken"
       }
     },
     {
@@ -543,7 +398,7 @@
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "779310474149222359549668671553176552211",
+        "price": "794386765108634038089016311255922122328",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -552,40 +407,6 @@
       },
       "implementationNames": {
         "eth:0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": "MorphoChainlinkOracleV2"
-      }
-    },
-    {
-      "name": "USDe Token",
-      "address": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4cc9f8f240849f00aef1f736dac783e2323e347f50f857b112d3ae9c407bfa43"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1699979555,
-      "sinceBlock": 18571358,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x74fbd8ad78eb7732edc209f83d2dc23f7472a05cdbfd5dfc0f210dad2f967cb3",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "USDe",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "minter": "eth:0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3",
-        "name": "USDe",
-        "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "symbol": "USDe",
-        "totalSupply": "3903972292088883027523503861"
-      },
-      "implementationNames": {
-        "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": "USDe"
       }
     },
     {
@@ -604,11 +425,11 @@
         "decimals": 8,
         "description": "Custom price feed for wstETH / ETH",
         "latestRoundData": {
-          "roundId": "36893488147419103991",
-          "answer": 123175699,
-          "startedAt": 1777672422,
-          "updatedAt": 1777672439,
-          "answeredInRound": "36893488147419103991"
+          "roundId": "36893488147419103993",
+          "answer": 123087347,
+          "startedAt": 1777845259,
+          "updatedAt": 1777845275,
+          "answeredInRound": "36893488147419103993"
         },
         "stETHtoETHPriceFeed": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
         "stETHToETHPriceFeedDecimals": 18,
@@ -637,7 +458,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
         "BASE_VAULT_CONVERSION_SAMPLE": "1000000000000000000",
-        "price": "1094533559477509215314646",
+        "price": "1094783423305543438545294",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -724,7 +545,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "778149137333217817102178022543762395977",
+        "price": "803268134989189083744689140951573200310",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -753,151 +574,14 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1233343676187191483",
+        "stEthPerToken": "1233506579217288260",
         "symbol": "wstETH",
-        "tokensPerStEth": "810804011329137746",
-        "totalSupply": "3379170430360492439622585"
+        "tokensPerStEth": "810696932508087639",
+        "totalSupply": "3377621797650774095695083"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
       }
-    },
-    {
-      "name": "Pendle Token",
-      "address": "eth:0x808507121B80c02388fAd14726482e061B8da827",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xeab065cb3e797bf67ba8de2f7b74a8612e60638b4606f4128d7b059c7ce3594a"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1619495943,
-      "sinceBlock": 12320098,
-      "values": {
-        "$immutable": true,
-        "configChangesInitiated": 0,
-        "decimals": 18,
-        "DELEGATION_TYPEHASH": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
-        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "emissionRateMultiplierNumerator": 989000000000,
-        "governance": "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1",
-        "isBurningAllowed": false,
-        "isPendleToken": true,
-        "lastWeekEmissionSent": 204,
-        "lastWeeklyEmission": "167541018155868821982934",
-        "liquidityIncentivesRecipient": "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606",
-        "name": "Pendle",
-        "pendingEmissionRateMultiplierNumerator": 0,
-        "pendingGovernance": "eth:0x0000000000000000000000000000000000000000",
-        "pendingIsBurningAllowed": false,
-        "pendingLiquidityIncentivesRecipient": "eth:0x0000000000000000000000000000000000000000",
-        "pendingTerminalInflationRateNumerator": 0,
-        "startTime": 1619495943,
-        "symbol": "PENDLE",
-        "terminalInflationRateNumerator": 379848538,
-        "totalSupply": "281527448458531430459890761"
-      },
-      "implementationNames": {
-        "eth:0x808507121B80c02388fAd14726482e061B8da827": "PENDLE"
-      }
-    },
-    {
-      "name": "MaplePool",
-      "address": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9e2bd8ac54683791efc9531a6c032907a873eb0277762e02970226265890a7e9"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1716319667,
-      "sinceBlock": 19920366,
-      "values": {
-        "$immutable": true,
-        "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "BOOTSTRAP_MINT": 100000,
-        "convertToAssets": [0, 1, 2, 3, 4],
-        "convertToExitAssets": [0, 1, 2, 3, 4],
-        "convertToExitShares": [0, 1, 2, 3, 4],
-        "convertToShares": [0, 0, 1, 2, 3],
-        "decimals": 6,
-        "DOMAIN_SEPARATOR": "0x078bf5e46a200d6fe72b50e7ce5260c2dac57ada24fcb5d3cefb8729262bf07b",
-        "manager": "eth:0x7aD5fFa5fdF509E30186F4609c2f6269f4B6158F",
-        "name": "Syrup USDC",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "previewDeposit": [0, 0, 1, 2, 3],
-        "previewMint": [0, 2, 3, 4, 5],
-        "previewRedeem": [0, 0, 0, 0, 0],
-        "previewWithdraw": [0, 0, 0, 0, 0],
-        "symbol": "syrupUSDC",
-        "totalAssets": 1203988079144814,
-        "totalSupply": 1035890716060333,
-        "unrealizedLosses": 0
-      },
-      "errors": {
-        "convertToAssets": "Processing error occurred.",
-        "convertToExitAssets": "Processing error occurred.",
-        "convertToExitShares": "Processing error occurred.",
-        "convertToShares": "Processing error occurred.",
-        "previewDeposit": "Processing error occurred.",
-        "previewMint": "Processing error occurred.",
-        "previewRedeem": "Processing error occurred.",
-        "previewWithdraw": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": "MaplePool"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1619411021,
-      "sinceBlock": 12313756,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x231FC5b039d66BA234CB90357082Bf16Be79B17c",
-          "eth:0x7BD456937104Ca5eFfFBD895ccbba52421021C29",
-          "eth:0x9Ce6De7ec862e25a515AA0D8EcFbBBb2DaA8E0fb",
-          "eth:0x38ab4A7Dea2753757F29fe6d10280Df2C42abe27",
-          "eth:0xF517364727Fcc764D58DdF4e53280874A4d0c476"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x40e081a4a4eea5d8dfe752e486bccbd73e5d4dbb29d532757ee836b1f7ecaa6a",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 793,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1": "Proxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      },
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64",
-          "role": ".owner"
-        }
-      ]
     },
     {
       "address": "eth:0x84D3E4EE550DD5F99e76a548aC59a6BE1C8dCf79",
@@ -929,57 +613,6 @@
       },
       "implementationNames": {
         "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": "EACAggregatorProxy"
-      }
-    },
-    {
-      "name": "PendleMarketV6",
-      "address": "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x35d6efd9ef43eca01abea187b020b32ff4236ca2614196d5b9fd6ae6aee5cb06"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1767862907,
-      "sinceBlock": 24188933,
-      "values": {
-        "_storage": {
-          "totalPt": "1797010469656392490203462",
-          "totalSy": "9132272618700876003938805",
-          "lastLnImpliedRate": "50061356593420095",
-          "observationIndex": 61,
-          "observationCardinality": 100,
-          "observationCardinalityNext": 100
-        },
-        "$immutable": true,
-        "decimals": 18,
-        "expiry": 1778112000,
-        "factory": "eth:0x6d247b1c044fA1E22e6B04fA9F71Baf99EB29A9f",
-        "getNonOverrideLnFeeRateRoot": "9950330853168082",
-        "getRewardTokens": ["eth:0x808507121B80c02388fAd14726482e061B8da827"],
-        "isExpired": false,
-        "lastRewardBlock": 25000200,
-        "name": "PLP Ethena sUSDE 7MAY2026",
-        "observations": [
-          [1776969623, "374399179809811449215652", true],
-          [1776970979, "374472900972068516215332", true],
-          [1776975251, "374705143465166023585476", true],
-          [1776992399, "375639266373885714748176", true],
-          [1777010747, "376638780290482780193400", true]
-        ],
-        "readTokens": {
-          "_SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
-          "_PT": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
-          "_YT": "eth:0x30775B422b9c7415349855346352FAA61fD97E41"
-        },
-        "reentrancyGuardEntered": false,
-        "symbol": "PLP-sUSDE-7MAY2026",
-        "totalActiveSupply": "1761912660955093087314338",
-        "totalSupply": "4347853486273792895573805",
-        "VERSION": 6
-      },
-      "errors": { "observations": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883": "PendleMarketV6"
       }
     },
     {
@@ -1084,61 +717,6 @@
       }
     },
     {
-      "name": "Staked USDe Token",
-      "address": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb52df50a944d5d6461dcca6b03df564605ac43a03739099c9676bb5b7a383246"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1699979567,
-      "sinceBlock": 18571359,
-      "values": {
-        "$immutable": true,
-        "asset": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-        "convertToAssets": [0, 1, 2, 3, 4],
-        "convertToShares": [0, 0, 1, 2, 3],
-        "cooldownDuration": 86400,
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0x940284ae30a8660e5c2bae12953bc4bd5a028a0f55e1dd2c19a8c1473d3eb553",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "sUSDe",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "getUnvestedAmount": "56876762857142857142856",
-        "lastDistributionTimestamp": 1777709603,
-        "MAX_COOLDOWN_DURATION": 7776000,
-        "name": "Staked USDe",
-        "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
-        "previewDeposit": [0, 0, 1, 2, 3],
-        "previewMint": [0, 2, 3, 4, 5],
-        "previewRedeem": [0, 1, 2, 3, 4],
-        "previewWithdraw": [0, 1, 2, 3, 4],
-        "silo": "eth:0x7FC7c91D556B400AFa565013E3F32055a0713425",
-        "symbol": "sUSDe",
-        "totalAssets": "2046921389156948657563427181",
-        "totalSupply": "1664317498195758126921623881",
-        "vestingAmount": "58711497142857142857142"
-      },
-      "errors": {
-        "convertToAssets": "Processing error occurred.",
-        "convertToShares": "Processing error occurred.",
-        "previewDeposit": "Processing error occurred.",
-        "previewMint": "Processing error occurred.",
-        "previewRedeem": "Processing error occurred.",
-        "previewWithdraw": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": "StakedUSDeV2"
-      }
-    },
-    {
       "name": "Safe",
       "address": "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0",
       "type": "Contract",
@@ -1185,7 +763,7 @@
         "BASE_FEED_2": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
         "BASE_VAULT": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT_CONVERSION_SAMPLE": 1,
-        "price": "2831947133780460498723164035",
+        "price": "2902201270191855683234219561",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1214,74 +792,13 @@
       "implementationNames": {
         "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64": "ProxyAdmin"
       },
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
           "role": "admin"
         }
       ]
-    },
-    {
-      "name": "Savings USDS Token",
-      "address": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x00fd427da0c7c9f62e15790e221ba65308f4bb106e3d4b1ccee93ac6c598afac"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1725455483,
-      "sinceBlock": 20677434,
-      "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0",
-        "$pastUpgrades": [
-          [
-            "2024-09-04T13:11:23.000Z",
-            "0xe1be00c4ea3c21cf536b98ac082a5bba8485cf75d6b2b94f4d6e3edd06472c00",
-            ["eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chi": "1095136319891282529653540603",
-        "convertToAssets": [0, 1, 2, 3, 4],
-        "convertToShares": [0, 0, 1, 2, 3],
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x8b772c141b7d822c799262c0fa58f5b6b522910e811414d0cf217f27294bbbf8",
-        "getImplementation": "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0",
-        "name": "Savings USDS",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "previewDeposit": [0, 0, 1, 2, 3],
-        "previewMint": [0, 2, 3, 4, 5],
-        "previewRedeem": [0, 1, 2, 3, 4],
-        "previewWithdraw": [0, 1, 2, 3, 4],
-        "rho": 1777710335,
-        "ssr": "1000000001136785036595443334",
-        "symbol": "sUSDS",
-        "totalAssets": "5532371319285623697457033478",
-        "totalSupply": "5051764024467105163375189618",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "usds": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "usdsJoin": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
-        "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
-        "version": "1",
-        "vow": "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466"
-      },
-      "errors": {
-        "convertToAssets": "Processing error occurred.",
-        "convertToShares": "Processing error occurred.",
-        "previewDeposit": "Processing error occurred.",
-        "previewMint": "Processing error occurred.",
-        "previewRedeem": "Processing error occurred.",
-        "previewWithdraw": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": "ERC1967Proxy",
-        "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0": "SUsds"
-      }
     },
     {
       "name": "EACAggregatorProxy",
@@ -1308,36 +825,6 @@
       },
       "implementationNames": {
         "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": "EACAggregatorProxy"
-      }
-    },
-    {
-      "name": "Vow",
-      "address": "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9c453d97a758ee1fb69cca4b7fe103350fcfda4b77e04f7666bab68229f08de3"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1573672742,
-      "sinceBlock": 8928163,
-      "values": {
-        "$immutable": true,
-        "Ash": 0,
-        "bump": 0,
-        "dump": 0,
-        "flapper": "eth:0xBF7111F13386d23cb2Fba5A538107A73f6872bCF",
-        "flopper": "eth:0xA41B6EF151E06da0e34B009B86E828308986736D",
-        "hump": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "live": 1,
-        "sin": [0, 0, 0, 0, 0],
-        "Sin": "225946447625812056978565060223455109620101016383963714",
-        "sump": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
-        "wait": 561600
-      },
-      "errors": { "sin": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466": "Vow"
       }
     },
     {
@@ -1372,8 +859,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100381661,
-          "startedAt": 1777640147,
-          "updatedAt": 1777640147,
+          "startedAt": 1777812971,
+          "updatedAt": 1777812971,
           "answeredInRound": 1
         },
         "version": 1
@@ -1402,58 +889,6 @@
       },
       "implementationNames": {
         "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb": "Morpho"
-      }
-    },
-    {
-      "name": "PendleSUSDESY",
-      "address": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x64f03ed5277ab79873ac43be90b545b0209f49ba3fb08b17f02509770dd73e21"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1767862835,
-      "sinceBlock": 24188927,
-      "values": {
-        "$immutable": true,
-        "asset": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-        "assetInfo": {
-          "assetType": 0,
-          "assetAddress": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-          "assetDecimals": 18
-        },
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x02d65fe0e310aa346db4147153f753a7fe854fbe4d21852e4619be0c8e82a14c",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "SY Ethena sUSDE",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "exchangeRate": "1229886359649502650",
-        "getAbsoluteSupplyCap": "2500000000000000000000000000",
-        "getAbsoluteTotalSupply": "156450598773718098734722732",
-        "getRewardTokens": [],
-        "getTokensIn": [
-          "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-          "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
-        ],
-        "getTokensOut": ["eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"],
-        "name": "SY Ethena sUSDE",
-        "owner": "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "rewardIndexesStored": [],
-        "supplyCap": "2500000000000000000000000000",
-        "symbol": "SY-sUSDE",
-        "totalSupply": "156450598773718098734722732",
-        "yieldToken": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
-      },
-      "implementationNames": {
-        "eth:0xBF98480425A29197e5d99D003017f63a1e595D02": "PendleSUSDESY"
       }
     },
     {
@@ -1486,9 +921,9 @@
         "fromTokenScale": "1000000000000000000",
         "latestRoundData": {
           "roundId": 0,
-          "answer": "999362852592567376",
+          "answer": "999627219691657401",
           "startedAt": 0,
-          "updatedAt": 1777710503,
+          "updatedAt": 1777887203,
           "answeredInRound": 0
         },
         "market": "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883",
@@ -1517,7 +952,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
         "BASE_VAULT_CONVERSION_SAMPLE": 1000000,
-        "price": "1161903393792549013118607790116673226",
+        "price": "1162257836720704433661996372574622838",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1607,7 +1042,7 @@
         ],
         "$upgradeCount": 3,
         "getUniqueSignersThreshold": 3,
-        "priceOfETH": "2298386685600000000000"
+        "priceOfETH": "2358275669170000000000"
       },
       "errors": {
         "extractTimestampsAndAssertAllAreEqual": "Processing error occurred.",
@@ -1616,44 +1051,6 @@
       "implementationNames": {
         "eth:0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C": "TransparentUpgradeableProxy",
         "eth:0x0C6C73865429e1D87b7B817B95bB1f38F2136529": "EthereumMultiFeedAdapterWithoutRoundsV3"
-      }
-    },
-    {
-      "name": "USDS Stablecoin Token",
-      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x3511bc489974e8a833d7590187eaab4f8835886bdcb8fff1ea63b7b4caaab165"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1725290327,
-      "sinceBlock": 20663730,
-      "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
-        "$pastUpgrades": [
-          [
-            "2024-09-02T15:18:47.000Z",
-            "0xdf7d4ba4114f654a4ef64f74099be3fc91358610078febe5be68af6cf257b21c",
-            ["eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x2bc1b7e1bb385a0b6eeb599e6bf1dc875f0933b1a91bea26cf895ebdee2a5b56",
-        "getImplementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
-        "name": "USDS Stablecoin",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "USDS",
-        "totalSupply": "8068012648119188215341544303",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "version": "1"
-      },
-      "errors": { "proxiableUUID": "Processing error occurred." },
-      "implementationNames": {
-        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": "ERC1967Proxy",
-        "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": "Usds"
       }
     },
     {
@@ -1678,7 +1075,7 @@
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "BASE_VAULT": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
         "BASE_VAULT_CONVERSION_SAMPLE": "1000000000000000000",
-        "price": "1228565829387834675027965",
+        "price": "1229076605983697400563124",
         "QUOTE_FEED_1": "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "QUOTE_VAULT": "eth:0x0000000000000000000000000000000000000000",
@@ -1717,105 +1114,6 @@
       "implementationNames": {
         "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "PendleLiquidityIncentivesMultisig",
-      "address": "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x82aef08ce85ca2e761e0fef9c4d3b742634514c596e59b97f24549f2865f72fe"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1619407060,
-      "sinceBlock": 12313450,
-      "values": {
-        "$immutable": true,
-        "confirmationTimes": [
-          1619408228, 1619409775, 1623677994, 1623678514, 1623857918
-        ],
-        "getConfirmationCount": [2, 2, 2, 2, 2],
-        "getConfirmations": [
-          [
-            "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82",
-            "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-          ],
-          [
-            "eth:0x35cCD93dB6CA6d7a4dCBd72Ef389929B4179e4b7",
-            "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-          ],
-          [
-            "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82",
-            "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-          ],
-          [
-            "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82",
-            "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-          ],
-          [
-            "eth:0x956FE4948253D088f1b3776EbfB537Cb60FD0Df9",
-            "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82"
-          ]
-        ],
-        "getOwners": [
-          "eth:0x35cCD93dB6CA6d7a4dCBd72Ef389929B4179e4b7",
-          "eth:0x956FE4948253D088f1b3776EbfB537Cb60FD0Df9",
-          "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82",
-          "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-        ],
-        "isConfirmed": [true, true, true, true, true],
-        "MAX_OWNER_COUNT": 50,
-        "owners": [
-          "eth:0x35cCD93dB6CA6d7a4dCBd72Ef389929B4179e4b7",
-          "eth:0x956FE4948253D088f1b3776EbfB537Cb60FD0Df9",
-          "eth:0x0E7779b85A003FEd82FCdE0E16448b0DBb480b82",
-          "eth:0xC23E9Bb8808403b30f01CD922714329387e29994"
-        ],
-        "required": 2,
-        "secondsTimeLocked": 0,
-        "transactionCount": 21,
-        "transactions": [
-          [
-            "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-            0,
-            "0xa9059cbb0000000000000000000000000e7779b85a003fed82fcde0e16448b0dbb480b82000000000000000000000000000000000000000000000000016345785d8a0000",
-            false
-          ],
-          [
-            "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-            0,
-            "0xa9059cbb0000000000000000000000000e7779b85a003fed82fcde0e16448b0dbb480b82000000000000000000000000000000000000000000000000002386f26fc10000",
-            true
-          ],
-          [
-            "eth:0x808507121B80c02388fAd14726482e061B8da827",
-            0,
-            "0xa9059cbb000000000000000000000000747fc744837deda8d1c568d8e90839e5d4495255000000000000000000000000000000000000000000001969368974c05b000000",
-            false
-          ],
-          [
-            "eth:0x808507121B80c02388fAd14726482e061B8da827",
-            0,
-            "0xa9059cbb000000000000000000000000747fc744837deda8d1c568d8e90839e5d4495255000000000000000000000000000000000000000000001969368974c05b000000",
-            true
-          ],
-          [
-            "eth:0x808507121B80c02388fAd14726482e061B8da827",
-            0,
-            "0xa9059cbb0000000000000000000000008119ec16f0573b7dac7c0cb94eb504fb32456ee100000000000000000000000000000000000000000000cb49b44ba602d8000000",
-            true
-          ]
-        ]
-      },
-      "errors": {
-        "confirmationTimes": "Processing error occurred.",
-        "getConfirmationCount": "Processing error occurred.",
-        "getConfirmations": "Processing error occurred.",
-        "isConfirmed": "Processing error occurred.",
-        "transactions": "Processing error occurred."
-      },
-      "implementationNames": {
-        "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606": "PendleLiquidityIncentivesMultisig"
       }
     },
     {
@@ -1982,48 +1280,6 @@
       "function pricesOf(address[] assets) view returns (uint256[] values)",
       "function updateDataFeedsValuesPartial(bytes32[] dataFeedsIds)",
       "function validateTimestamp(uint256 receivedTimestampMilliseconds) view"
-    ],
-    "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Deny(address indexed usr)",
-      "event Initialized(uint64 version)",
-      "event Rely(address indexed usr)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Upgraded(address indexed implementation)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(address from, uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function deny(address usr)",
-      "function getImplementation() view returns (address)",
-      "function initialize()",
-      "function mint(address to, uint256 value)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function rely(address usr)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function version() view returns (string)",
-      "function wards(address) view returns (uint256)"
     ],
     "eth:0x19b3cD7032B8C062E8d44EaCad661a0970DD8c55": [
       "constructor(address owner, address morpho, uint256 initialTimelock, address _asset, string __name, string __symbol)",
@@ -2252,98 +1508,6 @@
       "function getOracleWithQuoteId(address market, uint32 twapDuration, uint8 baseOracleType, address quoteOracle) pure returns (bytes32)",
       "function pyLpOracle() view returns (address)"
     ],
-    "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "eth:0x30775B422b9c7415349855346352FAA61fD97E41": [
-      "constructor(address _SY, address _PT, string _name, string _symbol, uint8 __decimals, uint256 _expiry, bool _doCacheIndexSameBlock)",
-      "error ArrayEmpty()",
-      "error ArrayLengthMismatch()",
-      "error YCExpired()",
-      "error YCNoFloatingSy()",
-      "error YCNotExpired()",
-      "error YCNothingToRedeem()",
-      "error YCPostExpiryDataNotSet()",
-      "error YieldContractInsufficientSy(uint256 actualSy, uint256 requiredSy)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Burn(address indexed caller, address indexed receiver, uint256 amountPYToRedeem, uint256 amountSyOut)",
-      "event CollectInterestFee(uint256 amountInterestFee)",
-      "event CollectRewardFee(address indexed rewardToken, uint256 amountRewardFee)",
-      "event Mint(address indexed caller, address indexed receiverPT, address indexed receiverYT, uint256 amountSyToMint, uint256 amountPYOut)",
-      "event NewInterestIndex(uint256 indexed newIndex)",
-      "event RedeemInterest(address indexed user, uint256 interestOut)",
-      "event RedeemRewards(address indexed user, uint256[] amountRewardsOut)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function PT() view returns (address)",
-      "function SY() view returns (address)",
-      "function VERSION() view returns (uint256)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function doCacheIndexSameBlock() view returns (bool)",
-      "function expiry() view returns (uint256)",
-      "function factory() view returns (address)",
-      "function getPostExpiryData() view returns (uint256 firstPYIndex, uint256 totalSyInterestForTreasury, uint256[] firstRewardIndexes, uint256[] userRewardOwed)",
-      "function getRewardTokens() view returns (address[])",
-      "function isExpired() view returns (bool)",
-      "function mintPY(address receiverPT, address receiverYT) returns (uint256 amountPYOut)",
-      "function mintPYMulti(address[] receiverPTs, address[] receiverYTs, uint256[] amountSyToMints) returns (uint256[] amountPYOuts)",
-      "function name() view returns (string)",
-      "function postExpiry() view returns (uint128 firstPYIndex, uint128 totalSyInterestForTreasury)",
-      "function pyIndexCurrent() returns (uint256 currentIndex)",
-      "function pyIndexLastUpdatedBlock() view returns (uint128)",
-      "function pyIndexStored() view returns (uint256)",
-      "function redeemDueInterestAndRewards(address user, bool redeemInterest, bool redeemRewards) returns (uint256 interestOut, uint256[] rewardsOut)",
-      "function redeemInterestAndRewardsPostExpiryForTreasury() returns (uint256 interestOut, uint256[] rewardsOut)",
-      "function redeemPY(address receiver) returns (uint256 amountSyOut)",
-      "function redeemPYMulti(address[] receivers, uint256[] amountPYToRedeems) returns (uint256[] amountSyOuts)",
-      "function reentrancyGuardEntered() view returns (bool)",
-      "function rewardIndexesCurrent() returns (uint256[])",
-      "function setPostExpiryData()",
-      "function syReserve() view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function userInterest(address) view returns (uint128 index, uint128 accrued)",
-      "function userReward(address, address) view returns (uint128 index, uint128 accrued)"
-    ],
-    "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B": [
-      "constructor()",
-      "event LogNote(bytes4 indexed sig, bytes32 indexed arg1, bytes32 indexed arg2, bytes32 indexed arg3, bytes data) anonymous",
-      "function Line() view returns (uint256)",
-      "function cage()",
-      "function can(address, address) view returns (uint256)",
-      "function dai(address) view returns (uint256)",
-      "function debt() view returns (uint256)",
-      "function deny(address usr)",
-      "function file(bytes32 ilk, bytes32 what, uint256 data)",
-      "function file(bytes32 what, uint256 data)",
-      "function flux(bytes32 ilk, address src, address dst, uint256 wad)",
-      "function fold(bytes32 i, address u, int256 rate)",
-      "function fork(bytes32 ilk, address src, address dst, int256 dink, int256 dart)",
-      "function frob(bytes32 i, address u, address v, address w, int256 dink, int256 dart)",
-      "function gem(bytes32, address) view returns (uint256)",
-      "function grab(bytes32 i, address u, address v, address w, int256 dink, int256 dart)",
-      "function heal(uint256 rad)",
-      "function hope(address usr)",
-      "function ilks(bytes32) view returns (uint256 Art, uint256 rate, uint256 spot, uint256 line, uint256 dust)",
-      "function init(bytes32 ilk)",
-      "function live() view returns (uint256)",
-      "function move(address src, address dst, uint256 rad)",
-      "function nope(address usr)",
-      "function rely(address usr)",
-      "function sin(address) view returns (uint256)",
-      "function slip(bytes32 ilk, address usr, int256 wad)",
-      "function suck(address u, address v, uint256 rad)",
-      "function urns(bytes32, address) view returns (uint256 ink, uint256 art)",
-      "function vice() view returns (uint256)",
-      "function wards(address) view returns (uint256)"
-    ],
     "eth:0x3B1BFDB445Eb31bCFB7932A33309cBf1089681dA": [
       "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
       "error MathOverflowedMulDiv()",
@@ -2357,43 +1521,6 @@
       "function QUOTE_VAULT_CONVERSION_SAMPLE() view returns (uint256)",
       "function SCALE_FACTOR() view returns (uint256)",
       "function price() view returns (uint256)"
-    ],
-    "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB": [
-      "constructor(address vat_, address usds_)",
-      "event Exit(address indexed caller, address indexed usr, uint256 wad)",
-      "event Join(address indexed caller, address indexed usr, uint256 wad)",
-      "function dai() view returns (address)",
-      "function exit(address usr, uint256 wad)",
-      "function join(address usr, uint256 wad)",
-      "function usds() view returns (address)",
-      "function vat() view returns (address)"
-    ],
-    "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49": [
-      "constructor(address _SY, string _name, string _symbol, uint8 __decimals, uint256 _expiry)",
-      "error OnlyYCFactory()",
-      "error OnlyYT()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Initialized(uint8 version)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function SY() view returns (address)",
-      "function VERSION() view returns (uint256)",
-      "function YT() view returns (address)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burnByYT(address user, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function expiry() view returns (uint256)",
-      "function factory() view returns (address)",
-      "function initialize(address _YT)",
-      "function isExpired() view returns (bool)",
-      "function mintByYT(address user, uint256 amount)",
-      "function name() view returns (string)",
-      "function reentrancyGuardEntered() view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
     "eth:0x4124b5Cb815A21E26fF86c8A6A0A074c7fa2Dd1D": [
       "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
@@ -2457,117 +1584,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": [
-      "constructor(address admin)",
-      "error CantRenounceOwnership()",
-      "error InvalidShortString()",
-      "error OnlyMinter()",
-      "error StringTooLong(string str)",
-      "error ZeroAddressException()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event MinterUpdated(address indexed newMinter, address indexed oldMinter)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function acceptOwnership()",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function minter() view returns (address)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceOwnership() view",
-      "function setMinter(address newMinter)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "eth:0x4e7991e5C547ce825BdEb665EE14a3274f9F61e0": [
-      "constructor(address usdsJoin_, address vow_)",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Deny(address indexed usr)",
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Drip(uint256 chi, uint256 diff)",
-      "event File(bytes32 indexed what, uint256 data)",
-      "event Initialized(uint64 version)",
-      "event Referral(uint16 indexed referral, address indexed owner, uint256 assets, uint256 shares)",
-      "event Rely(address indexed usr)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Upgraded(address indexed implementation)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function asset() view returns (address)",
-      "function balanceOf(address) view returns (uint256)",
-      "function chi() view returns (uint192)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function deny(address usr)",
-      "function deposit(uint256 assets, address receiver) returns (uint256 shares)",
-      "function deposit(uint256 assets, address receiver, uint16 referral) returns (uint256 shares)",
-      "function drip() returns (uint256 nChi)",
-      "function file(bytes32 what, uint256 data)",
-      "function getImplementation() view returns (address)",
-      "function initialize()",
-      "function maxDeposit(address) pure returns (uint256)",
-      "function maxMint(address) pure returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function mint(uint256 shares, address receiver, uint16 referral) returns (uint256 assets)",
-      "function mint(uint256 shares, address receiver) returns (uint256 assets)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, bytes signature)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256 assets)",
-      "function rely(address usr)",
-      "function rho() view returns (uint64)",
-      "function ssr() view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function totalAssets() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function usds() view returns (address)",
-      "function usdsJoin() view returns (address)",
-      "function vat() view returns (address)",
-      "function version() view returns (string)",
-      "function vow() view returns (address)",
-      "function wards(address) view returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256 shares)"
-    ],
     "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79": [
       "constructor(address stETHtoETHPriceFeed_, address wstETH_, uint8 decimals_)",
       "error BadDecimals()",
@@ -2580,39 +1596,6 @@
       "function version() view returns (uint256)",
       "function wstETH() view returns (address)",
       "function wstETHScale() view returns (int256)"
-    ],
-    "eth:0x53c26f7645500FeA9a856BfA09E820dAcf643aB9": [
-      "constructor()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event ModifyScopedAccess(address indexed caller, bytes4 indexed selector, address indexed target, bool access)",
-      "event ModifySelectorAdmin(address indexed addr, bytes4 indexed selector, bool isAdmin)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SetAllowedSelectors(bytes4[] selectors, bytes32 indexed role)",
-      "event Upgraded(address indexed implementation)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GUARDIAN() view returns (bytes32)",
-      "function __deprecated_allowedSelectors(bytes4) view returns (bytes32)",
-      "function aggregate(tuple(address target, uint256 value, bytes callData)[] calls) payable returns (bytes[])",
-      "function aggregateWithScopedAccess(tuple(address target, uint256 value, bytes callData)[] calls) payable returns (bytes[])",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hasScopedAccess(address caller, bytes4 selector, address target) view returns (bool isAllowed)",
-      "function initialize(address governance)",
-      "function isSelectorAdminOf(address caller, bytes4 selector) view returns (bool isAdmin)",
-      "function modifyScopedAccess(address caller, address[] targets, bytes4 selector, bool[] accesses)",
-      "function modifySelectorAdmin(address addr, bytes4[] selectors, bool[] isAdmins)",
-      "function pause(address[] addrs)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0x59e347aEF154aDcAe639d0cE032Cb3f5dCB4a6E4": [
       "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
@@ -2771,121 +1754,6 @@
       "function unwrap(uint256 _wstETHAmount) returns (uint256)",
       "function wrap(uint256 _stETHAmount) returns (uint256)"
     ],
-    "eth:0x808507121B80c02388fAd14726482e061B8da827": [
-      "constructor(address _governance, address pendleTeamTokens, address pendleEcosystemFund, address salesMultisig, address _liquidityIncentivesRecipient)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event ConfigsChanged(uint256 emissionRateMultiplierNumerator, uint256 terminalInflationRateNumerator, address liquidityIncentivesRecipient, bool isBurningAllowed)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
-      "event EtherWithdraw(uint256 amount, address sendTo)",
-      "event GovernanceClaimed(address newGovernance, address previousGovernance)",
-      "event PendingConfigChanges(uint256 pendingEmissionRateMultiplierNumerator, uint256 pendingTerminalInflationRateNumerator, address pendingLiquidityIncentivesRecipient, bool pendingIsBurningAllowed)",
-      "event TokenWithdraw(address token, uint256 amount, address sendTo)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event TransferGovernancePending(address pendingGovernance)",
-      "function DELEGATION_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_TYPEHASH() view returns (bytes32)",
-      "function allowance(address account, address spender) view returns (uint256)",
-      "function applyConfigChanges()",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount) returns (bool)",
-      "function checkpoints(address, uint32) view returns (uint32 fromBlock, uint256 votes)",
-      "function claimGovernance()",
-      "function claimLiquidityEmissions() returns (uint256 totalEmissions)",
-      "function configChangesInitiated() view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegates(address) view returns (address)",
-      "function emissionRateMultiplierNumerator() view returns (uint256)",
-      "function getCurrentVotes(address account) view returns (uint256)",
-      "function getPriorVotes(address account, uint256 blockNumber) view returns (uint256)",
-      "function governance() view returns (address)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initiateConfigChanges(uint256 _emissionRateMultiplierNumerator, uint256 _terminalInflationRateNumerator, address _liquidityIncentivesRecipient, bool _isBurningAllowed)",
-      "function isBurningAllowed() view returns (bool)",
-      "function isPendleToken() view returns (bool)",
-      "function lastWeekEmissionSent() view returns (uint256)",
-      "function lastWeeklyEmission() view returns (uint256)",
-      "function liquidityIncentivesRecipient() view returns (address)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function numCheckpoints(address) view returns (uint32)",
-      "function pendingEmissionRateMultiplierNumerator() view returns (uint256)",
-      "function pendingGovernance() view returns (address)",
-      "function pendingIsBurningAllowed() view returns (bool)",
-      "function pendingLiquidityIncentivesRecipient() view returns (address)",
-      "function pendingTerminalInflationRateNumerator() view returns (uint256)",
-      "function startTime() view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function terminalInflationRateNumerator() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 amount) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 amount) returns (bool)",
-      "function transferGovernance(address _governance)",
-      "function withdrawEther(uint256 amount, address sendTo)",
-      "function withdrawToken(address token, uint256 amount, address sendTo)"
-    ],
-    "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b": [
-      "constructor(address manager_, address asset_, address destination_, uint256 bootstrapMint_, uint256 initialSupply_, string name_, string symbol_)",
-      "event Approval(address indexed owner_, address indexed spender_, uint256 amount_)",
-      "event BootstrapMintPerformed(address indexed caller_, address indexed receiver_, uint256 assets_, uint256 shares_, uint256 bootStrapMintAmount_)",
-      "event Deposit(address indexed caller_, address indexed owner_, uint256 assets_, uint256 shares_)",
-      "event OwnershipAccepted(address indexed previousOwner_, address indexed newOwner_)",
-      "event PendingOwnerSet(address indexed owner_, address indexed pendingOwner_)",
-      "event RedemptionRequested(address indexed owner_, uint256 shares_, uint256 escrowedShares_)",
-      "event SharesRemoved(address indexed owner_, uint256 shares_)",
-      "event Transfer(address indexed owner_, address indexed recipient_, uint256 amount_)",
-      "event Withdraw(address indexed caller_, address indexed receiver_, address indexed owner_, uint256 assets_, uint256 shares_)",
-      "event WithdrawRequested(address indexed owner_, uint256 assets_, uint256 escrowedShares_)",
-      "function BOOTSTRAP_MINT() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32 domainSeparator_)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address spender_, uint256 amount_) returns (bool success_)",
-      "function asset() view returns (address)",
-      "function balanceOf(address) view returns (uint256)",
-      "function balanceOfAssets(address account_) view returns (uint256 balanceOfAssets_)",
-      "function convertToAssets(uint256 shares_) view returns (uint256 assets_)",
-      "function convertToExitAssets(uint256 shares_) view returns (uint256 assets_)",
-      "function convertToExitShares(uint256 amount_) view returns (uint256 shares_)",
-      "function convertToShares(uint256 assets_) view returns (uint256 shares_)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender_, uint256 subtractedAmount_) returns (bool success_)",
-      "function deposit(uint256 assets_, address receiver_) returns (uint256 shares_)",
-      "function depositWithPermit(uint256 assets_, address receiver_, uint256 deadline_, uint8 v_, bytes32 r_, bytes32 s_) returns (uint256 shares_)",
-      "function increaseAllowance(address spender_, uint256 addedAmount_) returns (bool success_)",
-      "function manager() view returns (address)",
-      "function maxDeposit(address receiver_) view returns (uint256 maxAssets_)",
-      "function maxMint(address receiver_) view returns (uint256 maxShares_)",
-      "function maxRedeem(address owner_) view returns (uint256 maxShares_)",
-      "function maxWithdraw(address owner_) view returns (uint256 maxAssets_)",
-      "function mint(uint256 shares_, address receiver_) returns (uint256 assets_)",
-      "function mintWithPermit(uint256 shares_, address receiver_, uint256 maxAssets_, uint256 deadline_, uint8 v_, bytes32 r_, bytes32 s_) returns (uint256 assets_)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address owner_, address spender_, uint256 amount_, uint256 deadline_, uint8 v_, bytes32 r_, bytes32 s_)",
-      "function previewDeposit(uint256 assets_) view returns (uint256 shares_)",
-      "function previewMint(uint256 shares_) view returns (uint256 assets_)",
-      "function previewRedeem(uint256 shares_) view returns (uint256 assets_)",
-      "function previewWithdraw(uint256 assets_) view returns (uint256 shares_)",
-      "function redeem(uint256 shares_, address receiver_, address owner_) returns (uint256 assets_)",
-      "function removeShares(uint256 shares_, address owner_) returns (uint256 sharesReturned_)",
-      "function requestRedeem(uint256 shares_, address owner_) returns (uint256 escrowedShares_)",
-      "function requestWithdraw(uint256 assets_, address owner_) returns (uint256 escrowedShares_)",
-      "function symbol() view returns (string)",
-      "function totalAssets() view returns (uint256 totalAssets_)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient_, uint256 amount_) returns (bool success_)",
-      "function transferFrom(address owner_, address recipient_, uint256 amount_) returns (bool success_)",
-      "function unrealizedLosses() view returns (uint256 unrealizedLosses_)",
-      "function withdraw(uint256 assets_, address receiver_, address owner_) returns (uint256 shares_)"
-    ],
-    "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1": [
-      "constructor(address _masterCopy)"
-    ],
     "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": [
       "constructor(address _aggregator, address _accessController)",
       "event AnswerUpdated(int256 indexed current, uint256 indexed roundId, uint256 updatedAt)",
@@ -2915,65 +1783,6 @@
       "function setController(address _accessController)",
       "function transferOwnership(address _to)",
       "function version() view returns (uint256)"
-    ],
-    "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883": [
-      "constructor(address _PT, int256 _scalarRoot, int256 _initialAnchor, uint80 _lnFeeRateRoot, address _vePendle, address _gaugeController)",
-      "error MarketExchangeRateBelowOne(int256 exchangeRate)",
-      "error MarketExpired()",
-      "error MarketInsufficientPtForTrade(int256 currentAmount, int256 requiredAmount)",
-      "error MarketInsufficientPtReceived(uint256 actualBalance, uint256 requiredBalance)",
-      "error MarketInsufficientSyReceived(uint256 actualBalance, uint256 requiredBalance)",
-      "error MarketProportionMustNotEqualOne()",
-      "error MarketProportionTooHigh(int256 proportion, int256 maxProportion)",
-      "error MarketRateScalarBelowZero(int256 rateScalar)",
-      "error MarketScalarRootBelowZero(int256 scalarRoot)",
-      "error MarketZeroAmountsInput()",
-      "error MarketZeroAmountsOutput()",
-      "error MarketZeroLnImpliedRate()",
-      "error MarketZeroNetLPFee()",
-      "error MarketZeroTotalPtOrTotalAsset(int256 totalPt, int256 totalAsset)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Burn(address indexed receiverSy, address indexed receiverPt, uint256 netLpBurned, uint256 netSyOut, uint256 netPtOut)",
-      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
-      "event Mint(address indexed receiver, uint256 netLpMinted, uint256 netSyUsed, uint256 netPtUsed)",
-      "event RedeemRewards(address indexed user, uint256[] rewardsOut)",
-      "event Swap(address indexed caller, address indexed receiver, int256 netPtOut, int256 netSyOut, uint256 netSyFee, uint256 netSyToReserve)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event UpdateActiveBalance(address indexed user, uint256 newActiveBalance)",
-      "event UpdateImpliedRate(uint256 indexed timestamp, uint256 lnLastImpliedRate)",
-      "function VERSION() view returns (uint256)",
-      "function _storage() view returns (int128 totalPt, int128 totalSy, uint96 lastLnImpliedRate, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext)",
-      "function activeBalance(address) view returns (uint256)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address receiverSy, address receiverPt, uint256 netLpToBurn) returns (uint256 netSyOut, uint256 netPtOut)",
-      "function decimals() view returns (uint8)",
-      "function expiry() view returns (uint256)",
-      "function factory() view returns (address)",
-      "function getNonOverrideLnFeeRateRoot() view returns (uint80)",
-      "function getRewardTokens() view returns (address[])",
-      "function increaseObservationsCardinalityNext(uint16 cardinalityNext)",
-      "function isExpired() view returns (bool)",
-      "function lastRewardBlock() view returns (uint256)",
-      "function mint(address receiver, uint256 netSyDesired, uint256 netPtDesired) returns (uint256 netLpOut, uint256 netSyUsed, uint256 netPtUsed)",
-      "function name() view returns (string)",
-      "function observations(uint256) view returns (uint32 blockTimestamp, uint216 lnImpliedRateCumulative, bool initialized)",
-      "function observe(uint32[] secondsAgos) view returns (uint216[] lnImpliedRateCumulative)",
-      "function readState(address router) view returns (tuple(int256 totalPt, int256 totalSy, int256 totalLp, address treasury, int256 scalarRoot, uint256 expiry, uint256 lnFeeRateRoot, uint256 reserveFeePercent, uint256 lastLnImpliedRate) market)",
-      "function readTokens() view returns (address _SY, address _PT, address _YT)",
-      "function redeemRewards(address user) returns (uint256[])",
-      "function reentrancyGuardEntered() view returns (bool)",
-      "function rewardState(address) view returns (uint128 index, uint128 lastBalance)",
-      "function skim()",
-      "function swapExactPtForSy(address receiver, uint256 exactPtIn, bytes data) returns (uint256 netSyOut, uint256 netSyFee)",
-      "function swapSyForExactPt(address receiver, uint256 exactPtOut, bytes data) returns (uint256 netSyIn, uint256 netSyFee)",
-      "function symbol() view returns (string)",
-      "function totalActiveSupply() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function userReward(address, address) view returns (uint128 index, uint128 accrued)"
     ],
     "eth:0x8f1dF6D7F2db73eECE86a18b4381F4707b918FB1": [
       "constructor(address _aggregator, address _accessController)",
@@ -3041,93 +1850,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": [
-      "constructor(address _asset, address initialRewarder, address _owner)",
-      "error CantBlacklistOwner()",
-      "error ExcessiveRedeemAmount()",
-      "error ExcessiveWithdrawAmount()",
-      "error InvalidAdminChange()",
-      "error InvalidAmount()",
-      "error InvalidCooldown()",
-      "error InvalidShortString()",
-      "error InvalidToken()",
-      "error InvalidZeroAddress()",
-      "error MinSharesViolation()",
-      "error NotPendingAdmin()",
-      "error OperationNotAllowed()",
-      "error StillVesting()",
-      "error StringTooLong(string str)",
-      "event AdminTransferRequested(address indexed oldAdmin, address indexed newAdmin)",
-      "event AdminTransferred(address indexed oldAdmin, address indexed newAdmin)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event CooldownDurationUpdated(uint24 previousDuration, uint24 newDuration)",
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event EIP712DomainChanged()",
-      "event LockedAmountRedistributed(address indexed from, address indexed to, uint256 amount)",
-      "event RewardsReceived(uint256 amount)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function MAX_COOLDOWN_DURATION() view returns (uint24)",
-      "function acceptAdmin()",
-      "function addToBlacklist(address target, bool isFullBlacklisting)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function asset() view returns (address)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function cooldownAssets(uint256 assets) returns (uint256 shares)",
-      "function cooldownDuration() view returns (uint24)",
-      "function cooldownShares(uint256 shares) returns (uint256 assets)",
-      "function cooldowns(address) view returns (uint104 cooldownEnd, uint152 underlyingAmount)",
-      "function decimals() pure returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getUnvestedAmount() view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function lastDistributionTimestamp() view returns (uint256)",
-      "function maxDeposit(address) view returns (uint256)",
-      "function maxMint(address) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address _owner) returns (uint256)",
-      "function redistributeLockedAmount(address from, address to)",
-      "function removeFromBlacklist(address target, bool isFullBlacklisting)",
-      "function renounceRole(bytes32, address)",
-      "function rescueTokens(address token, uint256 amount, address to)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCooldownDuration(uint24 duration)",
-      "function silo() view returns (address)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalAssets() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferAdmin(address newAdmin)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferInRewards(uint256 amount)",
-      "function unstake(address receiver)",
-      "function vestingAmount() view returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address _owner) returns (uint256)"
-    ],
     "eth:0x9e396dE3312D373b87F9BD8763fb48184b42aac0": [
       "constructor(address _singleton)"
     ],
@@ -3155,14 +1877,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xa569d910839Ae8865Da8F8e70FfFb0cBA869F961": [
       "constructor(address _aggregator, address _accessController)",
@@ -3193,34 +1907,6 @@
       "function setController(address _accessController)",
       "function transferOwnership(address _to)",
       "function version() view returns (uint256)"
-    ],
-    "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466": [
-      "constructor(address vat_, address flapper_, address flopper_)",
-      "event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes32 indexed arg2, bytes data) anonymous",
-      "function Ash() view returns (uint256)",
-      "function Sin() view returns (uint256)",
-      "function bump() view returns (uint256)",
-      "function cage()",
-      "function deny(address usr)",
-      "function dump() view returns (uint256)",
-      "function fess(uint256 tab)",
-      "function file(bytes32 what, uint256 data)",
-      "function file(bytes32 what, address data)",
-      "function flap() returns (uint256 id)",
-      "function flapper() view returns (address)",
-      "function flog(uint256 era)",
-      "function flop() returns (uint256 id)",
-      "function flopper() view returns (address)",
-      "function heal(uint256 rad)",
-      "function hump() view returns (uint256)",
-      "function kiss(uint256 rad)",
-      "function live() view returns (uint256)",
-      "function rely(address usr)",
-      "function sin(uint256) view returns (uint256)",
-      "function sump() view returns (uint256)",
-      "function vat() view returns (address)",
-      "function wait() view returns (uint256)",
-      "function wards(address) view returns (uint256)"
     ],
     "eth:0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3275,70 +1961,6 @@
       "function supplyCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, bytes data)",
       "function withdraw(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, uint256 shares, address onBehalf, address receiver) returns (uint256, uint256)",
       "function withdrawCollateral(tuple(address loanToken, address collateralToken, address oracle, address irm, uint256 lltv) marketParams, uint256 assets, address onBehalf, address receiver)"
-    ],
-    "eth:0xBF98480425A29197e5d99D003017f63a1e595D02": [
-      "constructor(address _susde, uint256 _initialSupplyCap)",
-      "error InvalidShortString()",
-      "error SYInsufficientSharesOut(uint256 actualSharesOut, uint256 requiredSharesOut)",
-      "error SYInsufficientTokenOut(uint256 actualTokenOut, uint256 requiredTokenOut)",
-      "error SYInvalidTokenIn(address token)",
-      "error SYInvalidTokenOut(address token)",
-      "error SYZeroDeposit()",
-      "error SYZeroRedeem()",
-      "error StringTooLong(string str)",
-      "error SupplyCapExceeded(uint256 totalSupply, uint256 supplyCap)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event ClaimRewards(address indexed user, address[] rewardTokens, uint256[] rewardAmounts)",
-      "event Deposit(address indexed caller, address indexed receiver, address indexed tokenIn, uint256 amountDeposited, uint256 amountSyOut)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Redeem(address indexed caller, address indexed receiver, address indexed tokenOut, uint256 amountSyToRedeem, uint256 amountTokenOut)",
-      "event SupplyCapUpdated(uint256 newSupplyCap)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function accruedRewards(address) view returns (uint256[] rewardAmounts)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function asset() view returns (address)",
-      "function assetInfo() view returns (uint8 assetType, address assetAddress, uint8 assetDecimals)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function claimOwnership()",
-      "function claimRewards(address) returns (uint256[] rewardAmounts)",
-      "function decimals() view returns (uint8)",
-      "function deposit(address receiver, address tokenIn, uint256 amountTokenToDeposit, uint256 minSharesOut) payable returns (uint256 amountSharesOut)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function exchangeRate() view returns (uint256)",
-      "function getAbsoluteSupplyCap() view returns (uint256)",
-      "function getAbsoluteTotalSupply() view returns (uint256)",
-      "function getRewardTokens() view returns (address[] rewardTokens)",
-      "function getTokensIn() view returns (address[] res)",
-      "function getTokensOut() view returns (address[] res)",
-      "function isValidTokenIn(address token) view returns (bool)",
-      "function isValidTokenOut(address token) view returns (bool)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function previewDeposit(address tokenIn, uint256 amountTokenToDeposit) view returns (uint256 amountSharesOut)",
-      "function previewRedeem(address tokenOut, uint256 amountSharesToRedeem) view returns (uint256 amountTokenOut)",
-      "function redeem(address receiver, uint256 amountSharesToRedeem, address tokenOut, uint256 minTokenOut, bool burnFromInternalBalance) returns (uint256 amountTokenOut)",
-      "function rewardIndexesCurrent() returns (uint256[] indexes)",
-      "function rewardIndexesStored() view returns (uint256[] indexes)",
-      "function supplyCap() view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner, bool direct, bool renounce)",
-      "function unpause()",
-      "function updateSupplyCap(uint256 newSupplyCap)",
-      "function yieldToken() view returns (address)"
     ],
     "eth:0xC6Be540fF8A71B413b4E56C00B4B4Ea31cc396dd": [
       "constructor(address _market, uint32 _twapDuration, uint8 _baseOracleType)",
@@ -3427,14 +2049,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": [
-      "constructor(address implementation, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event Upgraded(address indexed implementation)"
-    ],
     "eth:0xE6212D05cB5aF3C821Fef1C1A233a678724F9E7E": [
       "constructor(address baseVault, uint256 baseVaultConversionSample, address baseFeed1, address baseFeed2, uint256 baseTokenDecimals, address quoteVault, uint256 quoteVaultConversionSample, address quoteFeed1, address quoteFeed2, uint256 quoteTokenDecimals)",
       "error MathOverflowedMulDiv()",
@@ -3451,44 +2065,6 @@
     ],
     "eth:0xe8C9C99EcaD0686A14A00d8521c572281E938008": [
       "constructor(address _singleton)"
-    ],
-    "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606": [
-      "function owners(uint256) view returns (address)",
-      "function removeOwner(address owner)",
-      "function revokeConfirmation(uint256 transactionId)",
-      "function isOwner(address) view returns (bool)",
-      "function confirmations(uint256, address) view returns (bool)",
-      "function secondsTimeLocked() view returns (uint256)",
-      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
-      "function addOwner(address owner)",
-      "function isConfirmed(uint256 transactionId) view returns (bool)",
-      "function changeTimeLock(uint256 _secondsTimeLocked)",
-      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
-      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
-      "function getOwners() view returns (address[])",
-      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
-      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
-      "function transactionCount() view returns (uint256)",
-      "function changeRequirement(uint256 _required)",
-      "function confirmTransaction(uint256 transactionId)",
-      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
-      "function confirmationTimes(uint256) view returns (uint256)",
-      "function MAX_OWNER_COUNT() view returns (uint256)",
-      "function required() view returns (uint256)",
-      "function replaceOwner(address owner, address newOwner)",
-      "function executeTransaction(uint256 transactionId)",
-      "constructor(address[] _owners, uint256 _required, uint256 _secondsTimeLocked)",
-      "event ConfirmationTimeSet(uint256 indexed transactionId, uint256 confirmationTime)",
-      "event TimeLockChange(uint256 secondsTimeLocked)",
-      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
-      "event Revocation(address indexed sender, uint256 indexed transactionId)",
-      "event Submission(uint256 indexed transactionId)",
-      "event Execution(uint256 indexed transactionId)",
-      "event ExecutionFailure(uint256 indexed transactionId)",
-      "event Deposit(address indexed sender, uint256 value)",
-      "event OwnerAddition(address indexed owner)",
-      "event OwnerRemoval(address indexed owner)",
-      "event RequirementChange(uint256 required)"
     ],
     "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c": [
       "constructor(address _aggregator, address _accessController)",
@@ -3620,6 +2196,6 @@
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 25006085 },
-  "permissionsConfigHash": "0x38fc79d5205856f14762e96c71e7c84a7886fffe421ec76e14024e764e206b80"
+  "usedBlockNumbers": { "ethereum": 25020763 },
+  "permissionsConfigHash": "0x34f9015a8479abf8b1ed4d82be8558b44b5d1691214c104a3285c300b326c150"
 }

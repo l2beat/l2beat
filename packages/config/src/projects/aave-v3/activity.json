@@ -1,0 +1,114 @@
+{
+  "version": "1.1",
+  "lastReconciledAt": 1777888193,
+  "lastConsumedUpdateNotifierId": 154,
+  "events": [
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 154,
+      "address": "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "154:eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "name",
+          "before": "GnosisSafeL2",
+          "after": "Safe"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+          "after": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+        },
+        {
+          "field": "sourceHashes.1",
+          "before": "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825",
+          "after": "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        },
+        {
+          "field": "implementationNames.eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+          "before": "GnosisSafeL2"
+        },
+        {
+          "field": "implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+          "after": "Safe"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 154,
+      "address": "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "154:eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.3",
+          "before": "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d",
+          "after": "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 154,
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "contractName": "Wrapped Ether Token",
+      "isDependency": true,
+      "entity": "Wrapped Ether",
+      "id": "154:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "1903600929436759874666042",
+          "after": "1866136792662239314334094"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 154,
+      "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+      "contractName": "Rocket Pool Protocol Token",
+      "isDependency": true,
+      "entity": "Rocket Pool",
+      "id": "154:eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.inflationCalculate",
+          "before": "71871366632812916126233",
+          "after": "74871013540306450933802"
+        },
+        {
+          "field": "values.getInflationIntervalsPassed",
+          "before": 24,
+          "after": 25
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 154,
+      "address": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52",
+      "contractName": "Curve DAO Token",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "154:eth:0xD533a949740bb3306d119CC777fa900bA034cd52:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.available_supply",
+          "before": "2387470861339197694407252780",
+          "after": "2387795602492592948782956300"
+        }
+      ]
+    }
+  ]
+}

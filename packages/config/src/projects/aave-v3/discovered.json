@@ -1,6 +1,6 @@
 {
   "name": "aave-v3",
-  "timestamp": 1777824193,
+  "timestamp": 1777887219,
   "configHash": "0x0ba2949663096ecc4baf924fe237de6cb7828621b483217779f2d71049d64c5d",
   "entries": [
     {
@@ -198,9 +198,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "176031808462626588868325545",
+        "scaledTotalSupply": "168541555716071141572250434",
         "symbol": "variableDebtEthUSDe",
-        "totalSupply": "198804182505500353513486387",
+        "totalSupply": "190373833386206640318636889",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
       },
       "fieldMeta": {
@@ -268,9 +268,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "112746009167786507069833721",
+        "scaledTotalSupply": "111021527832438115867161908",
         "symbol": "aEthDAI",
-        "totalSupply": "130768471206805472853085877",
+        "totalSupply": "128775195216746710872536203",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
@@ -366,7 +366,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "64788465639717012093761",
         "symbol": "variableDebtEthcrvUSD",
-        "totalSupply": "82465582875703480604119",
+        "totalSupply": "82469970037701977790569",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
       },
       "fieldMeta": {
@@ -405,11 +405,11 @@
         "description": "Capped eBTC / BTC / USD",
         "getMaxRatioGrowthPerSecond": 602486047,
         "getMaxYearlyGrowthRatePercent": 190,
-        "getRatio": "1003297350000000000",
+        "getRatio": "1003352940000000000",
         "getSnapshotRatio": "1000000000000000000",
         "getSnapshotTimestamp": 1752286019,
         "isCapped": false,
-        "latestAnswer": 7898409226304,
+        "latestAnswer": 7995634513594,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -450,7 +450,7 @@
         "description": "PT Capped eUSDe USDT/USD linear discount 14AUG2025",
         "discountRatePerYear": "90370000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1755129600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "297810000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x14Bdc3A3AE09f5518b923b69489CBcAfB238e617",
@@ -662,7 +662,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "306433750427430000",
         "symbol": "variableDebtEthETHx",
-        "totalSupply": "306894043013091673",
+        "totalSupply": "306894069138135879",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "fieldMeta": {
@@ -725,9 +725,9 @@
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "proxyAdmin": "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
-        "scaledTotalSupply": 10676924496649,
+        "scaledTotalSupply": 10676739591073,
         "symbol": "aHorRwaUSCC",
-        "totalSupply": 10676924496649,
+        "totalSupply": 10676739591073,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x14d60E7FDC0D71d8611742720E4C50E7a974020c"
       },
       "fieldMeta": {
@@ -865,7 +865,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "246089797249772352802349",
         "symbol": "aEthLidoUSDS",
-        "totalSupply": "260816997667120122970014",
+        "totalSupply": "260825327684001913569103",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
@@ -1227,8 +1227,8 @@
         "DECIMALS": 8,
         "description": "PT Capped USDe USDT/USD linear discount 07MAY2026",
         "discountRatePerYear": "39500000000000000",
-        "getCurrentDiscount": 360491359081684,
-        "latestAnswer": 99957780,
+        "getCurrentDiscount": 281566511288685,
+        "latestAnswer": 99959146,
         "MATURITY": 1778112000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "256900000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0",
@@ -1389,9 +1389,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "688306181461720202585919",
+        "scaledTotalSupply": "681254622691213598445666",
         "symbol": "aEthwstETH",
-        "totalSupply": "689317110780523015226813",
+        "totalSupply": "682255207911005422702715",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -1461,7 +1461,7 @@
         },
         "getReferenceAsset": "eth:0x4d5F47FA6A74757f35C14fD3a6Ef8E3C9BC514E8",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 247925504747,
+        "latestAnswer": 251200149123,
         "name": "Wrapped Aave Ethereum WETH",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -1473,8 +1473,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthWETH",
-        "totalAssets": "23163595150646838408702",
-        "totalSupply": "21754158981393923537478",
+        "totalAssets": "23333144865822609370378",
+        "totalSupply": "21911845819449831123051",
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -1545,9 +1545,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 24621657618656,
+        "scaledTotalSupply": 25056051206452,
         "symbol": "aEthPYUSD",
-        "totalSupply": 26449789907709,
+        "totalSupply": 26918585025862,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
@@ -1616,7 +1616,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "19632264374616613186",
         "symbol": "variableDebtEthcbETH",
-        "totalSupply": "20327530581705679613",
+        "totalSupply": "20327567143323849303",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "fieldMeta": {
@@ -1801,9 +1801,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1907242643793611822367",
+        "scaledTotalSupply": "1908019167166253323944",
         "symbol": "aEthtBTC",
-        "totalSupply": "1907521834670716263944",
+        "totalSupply": "1908298501919721755316",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
@@ -2424,6 +2424,15 @@
         "0x855bbd6c58ca4afabd099cd0fa12926ca20fd1820716d5f52dda1ae30a56ae45"
       ],
       "proxyType": "immutable",
+      "sinceTimestamp": 1694515259,
+      "sinceBlock": 18119717,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5"
+      },
+      "implementationNames": {
+        "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957": "Executor"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2456,16 +2465,7 @@
           "from": "eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517",
           "role": ".owner"
         }
-      ],
-      "sinceTimestamp": 1694515259,
-      "sinceBlock": 18119717,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5"
-      },
-      "implementationNames": {
-        "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957": "Executor"
-      }
+      ]
     },
     {
       "name": "tBTC v2 Token",
@@ -2495,7 +2495,7 @@
         "owner": "eth:0x9C070027cdC9dc8F82416B2e5314E11DFb4FE3CD",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "tBTC",
-        "totalSupply": "5280791184690000000000"
+        "totalSupply": "5283679002630000000000"
       },
       "implementationNames": {
         "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88": "TBTC"
@@ -2571,7 +2571,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "51709328030162410363005270",
         "symbol": "variableDebtEthLidoGHO",
-        "totalSupply": "55329531565754096232503838",
+        "totalSupply": "55332836866841894258985699",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "fieldMeta": {
@@ -2639,9 +2639,9 @@
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "73267092902877684235700699",
+        "scaledTotalSupply": "73256336863937246031852889",
         "symbol": "aEthLidoGHO",
-        "totalSupply": "75894998349771061081509313",
+        "totalSupply": "75886828297462064564333864",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
@@ -2793,7 +2793,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "EURC",
-        "totalSupply": 259504713490000,
+        "totalSupply": 257791921070000,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2886,7 +2886,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1072102501958095848800759",
         "symbol": "variableDebtEthCRV",
-        "totalSupply": "1408529813039387505411524",
+        "totalSupply": "1408709370557851970087225",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52"
       },
       "fieldMeta": {
@@ -2956,7 +2956,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "477799259137457883966",
         "symbol": "aEthSTG",
-        "totalSupply": "477902954384770870468",
+        "totalSupply": "477903007191555812133",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
       },
@@ -3042,7 +3042,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1119773247764281087352",
         "symbol": "aEthETHx",
-        "totalSupply": "1120525392652872998713",
+        "totalSupply": "1120525392675079265772",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
@@ -3065,13 +3065,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1746198419,
       "sinceBlock": 22396905,
@@ -3082,7 +3075,14 @@
       },
       "implementationNames": {
         "eth:0x1C7B0090bADF16EDCbd11cD1d20dDc403ed43D17": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF86F77F7531B3374274E3f725E0A81D60bC4bB67",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "Roles",
@@ -3093,13 +3093,6 @@
         "0x87182abba6ca24466860f04a02ed14a3d85dc9c2781d4dcc8fdcbec02308cdba"
       ],
       "proxyType": "EIP1167 proxy",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "sinceTimestamp": 1755183275,
       "sinceBlock": 23140007,
       "values": {
@@ -3111,7 +3104,14 @@
       "implementationNames": {
         "eth:0x1D5579B363806CCecc35115ab8F56EECf6610ea9": "Roles",
         "eth:0x9646fDAD06d3e24444381f44362a3B0eB343D337": "Roles"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x22740deBa78d5a0c24C58C740e3715ec29de1bFa",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
     },
     {
       "name": "RewardsController",
@@ -3583,7 +3583,7 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "WBTC",
-        "totalSupply": 11802223227482
+        "totalSupply": 11787523227482
       },
       "implementationNames": {
         "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": "WBTC"
@@ -3662,13 +3662,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6bf183243FdD1e306ad2C4450BC7dcf6f0bf8Aa6",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1749123599,
       "sinceBlock": 22638170,
@@ -3679,7 +3672,14 @@
       },
       "implementationNames": {
         "eth:0x22ce00cB4A9A391CFF05DFA645A02db82dD1c432": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6bf183243FdD1e306ad2C4450BC7dcf6f0bf8Aa6",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "ATokenInstance",
@@ -3736,9 +3736,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1679538555016642,
+        "scaledTotalSupply": 1683503714306420,
         "symbol": "aEthUSDT",
-        "totalSupply": 1953440765767494,
+        "totalSupply": 1958186996290506,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -3894,9 +3894,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "469090731676829637538495",
+        "scaledTotalSupply": "441541344194972674704053",
         "symbol": "aEthBAL",
-        "totalSupply": "495491469676227374498925",
+        "totalSupply": "466396166100278881707406",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xba100000625a3754423978a60c9317c58a424e3D"
       },
@@ -3965,7 +3965,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "9370191813089964266102",
         "symbol": "variableDebtEthKNC",
-        "totalSupply": "10712765770343703491308",
+        "totalSupply": "10713548548027722082982",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
       },
       "fieldMeta": {
@@ -4067,7 +4067,7 @@
         "description": "Capped USDT/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99993827
+        "latestAnswer": 99987300
       },
       "implementationNames": {
         "eth:0x260326c220E469358846b187eE53328303Efe19C": "PriceCapAdapterStable"
@@ -4249,9 +4249,9 @@
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 3173029855982,
+        "scaledTotalSupply": 3173285660796,
         "symbol": "aEthLidoUSDC",
-        "totalSupply": 3399873420106,
+        "totalSupply": 3400455862992,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -4359,11 +4359,11 @@
         "description": "Capped osETH / ETH / USD",
         "getMaxRatioGrowthPerSecond": 2814688431,
         "getMaxYearlyGrowthRatePercent": 875,
-        "getRatio": "1070433353939182763",
+        "getRatio": "1070472706782388301",
         "getSnapshotRatio": "1014445878439441413",
         "getSnapshotTimestamp": 1713934379,
         "isCapped": false,
-        "latestAnswer": 249239672136,
+        "latestAnswer": 252523138113,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -4685,7 +4685,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "525786035845618180113875",
         "symbol": "aEthrsETH",
-        "totalSupply": "525786112346337365286606",
+        "totalSupply": "525786112347226982709043",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
       },
@@ -4754,7 +4754,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "102287608437081336175619",
         "symbol": "variableDebtEthLidoUSDS",
-        "totalSupply": "112211984381146871107922",
+        "totalSupply": "112223120658972060753563",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "fieldMeta": {
@@ -4775,13 +4775,6 @@
         "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "sinceTimestamp": 1603267019,
       "sinceBlock": 11098283,
       "values": {
@@ -4792,7 +4785,14 @@
       },
       "implementationNames": {
         "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
     },
     {
       "address": "eth:0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b",
@@ -5121,7 +5121,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "20859425055827598591795970",
         "symbol": "aEthUSDS",
-        "totalSupply": "21665775280945214250523447",
+        "totalSupply": "21666207609189338759368224",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
@@ -5190,7 +5190,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "566407134823539700518652",
         "symbol": "variableDebtEthLUSD",
-        "totalSupply": "696799212957806350772985",
+        "totalSupply": "696829571769336590366320",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
       },
       "fieldMeta": {
@@ -5365,8 +5365,8 @@
         "previewRedeem": [0, 0, 0, 0, 0],
         "previewWithdraw": [0, 0, 0, 0, 0],
         "symbol": "syrupUSDT",
-        "totalAssets": 435653053102047,
-        "totalSupply": 386995983238927,
+        "totalAssets": 439078579651573,
+        "totalSupply": 390003805903170,
         "unrealizedLosses": 0
       },
       "errors": {
@@ -5402,7 +5402,7 @@
         "description": "Capped pyUSD/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 100010181
+        "latestAnswer": 100014187
       },
       "implementationNames": {
         "eth:0x36964C0579D02E0a5AaAb89E24Cf8d7CDF3549EE": "PriceCapAdapterStable"
@@ -5759,7 +5759,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "29344194861658790841354",
         "symbol": "variableDebtEthBAL",
-        "totalSupply": "39174028291499965675107",
+        "totalSupply": "39180032508563559473818",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xba100000625a3754423978a60c9317c58a424e3D"
       },
       "fieldMeta": {
@@ -5844,7 +5844,7 @@
         "reentrancyGuardEntered": false,
         "SY": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
         "symbol": "PT-sUSDE-7MAY2026",
-        "totalSupply": "179478387448318847698941384",
+        "totalSupply": "178938079872209040364935093",
         "VERSION": 6,
         "YT": "eth:0x30775B422b9c7415349855346352FAA61fD97E41"
       },
@@ -5917,7 +5917,7 @@
         "description": "Capped USDC / USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99991000
+        "latestAnswer": 99989318
       },
       "implementationNames": {
         "eth:0x3f73F03aa83B2A48ed27E964eD0fDb590332095B": "PriceCapAdapterStable"
@@ -5980,7 +5980,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1755946700062504443058358",
         "symbol": "aEthLUSD",
-        "totalSupply": "1997183980547638848937104",
+        "totalSupply": "1997208264117115582246983",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
       },
@@ -6047,9 +6047,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 97022297333,
+        "scaledTotalSupply": 97074442063,
         "symbol": "variableDebtEthWBTC",
-        "totalSupply": 99534659346,
+        "totalSupply": 99588861639,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
       "fieldMeta": {
@@ -6130,13 +6130,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5513224daaEABCa31af5280727878d52097afA05",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1755787667,
       "sinceBlock": 23190151,
@@ -6147,7 +6140,14 @@
       },
       "implementationNames": {
         "eth:0x40E4243C9471bb0a84Ba0968bccc9b8975E5Ee62": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5513224daaEABCa31af5280727878d52097afA05",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "VariableDebtTokenInstance",
@@ -6185,9 +6185,9 @@
         "name": "Aave Horizon RWA Variable Debt USDC",
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "proxyAdmin": "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517",
-        "scaledTotalSupply": 6634964596097,
+        "scaledTotalSupply": 6634964537059,
         "symbol": "variableDebtHorRwaUSDC",
-        "totalSupply": 6913787259942,
+        "totalSupply": 6914535170792,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -6253,9 +6253,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "568631775475991914014293",
+        "scaledTotalSupply": "568653204095293420989105",
         "symbol": "variableDebtEthLINK",
-        "totalSupply": "576517839403198782416009",
+        "totalSupply": "576550269600569232493948",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
       },
       "fieldMeta": {
@@ -6294,11 +6294,11 @@
         "description": "Capped sUSDe / USDT / USD",
         "getMaxRatioGrowthPerSecond": 18240835758,
         "getMaxYearlyGrowthRatePercent": 5000,
-        "getRatio": "1230025953085481425",
+        "getRatio": "1230103289048704374",
         "getSnapshotRatio": "1150485992969698694",
         "getSnapshotTimestamp": 1737789743,
         "isCapped": false,
-        "latestAnswer": 122995002,
+        "latestAnswer": 122994706,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -6383,8 +6383,8 @@
         "FEE_DENOMINATOR": 10000,
         "getChainlinkPrice": {
           "_isBadData": false,
-          "_updatedAt": 1777824191,
-          "_price": 11070685
+          "_updatedAt": 1777887203,
+          "_price": 11071450
         },
         "maximumOracleDelay": 3600,
         "MINIMUM_ACCEPTABLE_PRICE": 7000000,
@@ -6397,7 +6397,7 @@
         "superstateOracle": "eth:0xE4fA682f94610cCd170680cc3B045d77D9E528a8",
         "supportedChainIds": [true, false, false, false, false],
         "symbol": "USTB",
-        "totalSupply": 72699869397432,
+        "totalSupply": 73089705361494,
         "VERSION": "5"
       },
       "errors": { "supportedChainIds": "Processing error occurred." },
@@ -6494,7 +6494,7 @@
         "discount": "30000000000000000",
         "DISCOUNT_PROVIDER": "eth:0xA1Ea1bA18E88C381C724a75F23a130420C403f9a",
         "EXCHANGE_RATE": 24000,
-        "latestAnswer": 186092777280,
+        "latestAnswer": 189320782080,
         "REFERENCE_FEED": "eth:0xee10fE5E7aa92dd7b136597449c3d5813cFC5F18"
       },
       "implementationNames": {
@@ -6556,9 +6556,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "169774997989958776099891137",
+        "scaledTotalSupply": "181808917699699252080194649",
         "symbol": "aEthsUSDe",
-        "totalSupply": "169776775610467894274120731",
+        "totalSupply": "181810821320754589558729914",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
       },
@@ -7113,9 +7113,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "4568738176916614222695275",
+        "scaledTotalSupply": "4565014993072105362764170",
         "symbol": "variableDebtEthUSDS",
-        "totalSupply": "5073108797811353621395064",
+        "totalSupply": "5069550998428608353452671",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
       },
       "fieldMeta": {
@@ -7188,7 +7188,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 99713879,
         "symbol": "variableDebtEthFBTC",
-        "totalSupply": 99959472,
+        "totalSupply": 99960522,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364"
       },
       "fieldMeta": {
@@ -7337,9 +7337,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "45394119603576524499435",
+        "scaledTotalSupply": "45219470379551780662931",
         "symbol": "aEthsDAI",
-        "totalSupply": "45401965763714221291652",
+        "totalSupply": "45227286352392277078198",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA"
       },
@@ -7388,7 +7388,7 @@
         "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDe",
-        "totalSupply": "3912782301271518027523503861"
+        "totalSupply": "3912823814627238027523503861"
       },
       "implementationNames": {
         "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3": "USDe"
@@ -7449,9 +7449,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1953032754877687784824080",
+        "scaledTotalSupply": "1937504553601592280832192",
         "symbol": "aEthWETH",
-        "totalSupply": "2079568329377010233330692",
+        "totalSupply": "2063179651768470540298115",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -7576,7 +7576,7 @@
         "SLASH_ADMIN_ROLE": 0,
         "STAKED_TOKEN": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
         "symbol": "stkAAVE",
-        "totalSupply": "1948832180042106357650340",
+        "totalSupply": "1948918339399400022481741",
         "UNSTAKE_WINDOW": 172800
       },
       "errors": { "getAdmin": "Processing error occurred." },
@@ -7872,7 +7872,7 @@
         "description": "PT Capped sUSDe USDT/USD linear discount 05FEB2026",
         "discountRatePerYear": "61953000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1770249600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "271629000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0xE8483517077afa11A9B07f849cee2552f040d7b2",
@@ -7961,9 +7961,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "201930552257949810357363812",
+        "scaledTotalSupply": "204500178103216789158200413",
         "symbol": "aEthUSDe",
-        "totalSupply": "215316049112739641398967418",
+        "totalSupply": "218079403268734130247973273",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
       },
@@ -8032,7 +8032,7 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": "12618406121462490032788543",
+        "getMaxSlashableAssets": "12501206997804365877198278",
         "getUnstakeWindow": 172800,
         "latestAnswer": 100000000,
         "MIN_ASSETS_REMAINING": 1000000,
@@ -8045,8 +8045,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkGHO.v1",
-        "totalAssets": "12618406121462490033788543",
-        "totalSupply": "12618406121462490033788543",
+        "totalAssets": "12501206997804365878198278",
+        "totalSupply": "12501206997804365878198278",
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -8110,9 +8110,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 41308064749198,
+        "scaledTotalSupply": 41303192074558,
         "symbol": "variableDebtEthUSDG",
-        "totalSupply": 42374158205875,
+        "totalSupply": 42376943383945,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D"
       },
       "fieldMeta": {
@@ -8188,7 +8188,7 @@
         "name": "PT Ethereal eUSDE 29MAY2025",
         "SY": "eth:0x7ac8ca87959b1d5EDfe2df5325A37c304DCea4D0",
         "symbol": "PT-eUSDE-29MAY2025",
-        "totalSupply": "177228855884053847547435",
+        "totalSupply": "174825041250077637902201",
         "YT": "eth:0x708dD9B344dDc7842f44C7b90492CF0e1E3eb868"
       },
       "implementationNames": {
@@ -8246,7 +8246,7 @@
         "description": "PT Capped eUSDe/USDT/USD linear discount 29MAY2025",
         "discountRatePerYear": "78700000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1748476800,
         "MAX_DISCOUNT_RATE_PER_YEAR": "392200000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x50D2C7992b802Eef16c04FeADAB310f31866a545",
@@ -8303,6 +8303,15 @@
         "0x855bbd6c58ca4afabd099cd0fa12926ca20fd1820716d5f52dda1ae30a56ae45"
       ],
       "proxyType": "immutable",
+      "sinceTimestamp": 1694513963,
+      "sinceBlock": 18119610,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5"
+      },
+      "implementationNames": {
+        "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": "Executor"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -8505,16 +8514,7 @@
           "from": "eth:0xfD57dE1F38e3F730E0BEb7238dD50E396851dda0",
           "role": ".owner"
         }
-      ],
-      "sinceTimestamp": 1694513963,
-      "sinceBlock": 18119610,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5"
-      },
-      "implementationNames": {
-        "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A": "Executor"
-      }
+      ]
     },
     {
       "name": "AaveProtocolDataProvider",
@@ -8751,7 +8751,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "16781540104682896161776",
         "symbol": "aEthENS",
-        "totalSupply": "16875295160970948275822",
+        "totalSupply": "16875328007165895959665",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72"
       },
@@ -8988,9 +8988,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 20567541177331,
+        "scaledTotalSupply": 20561683105936,
         "symbol": "variableDebtEthPYUSD",
-        "totalSupply": 23637324644037,
+        "totalSupply": 23632938679026,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"
       },
       "fieldMeta": {
@@ -9165,7 +9165,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "55799802446951780481636",
         "symbol": "aEthKNC",
-        "totalSupply": "58045244516330272932375",
+        "totalSupply": "58045863902057105339047",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
       },
@@ -9261,9 +9261,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1244111491862,
+        "scaledTotalSupply": 1244271833995,
         "symbol": "aEthcbBTC",
-        "totalSupply": 1244358415713,
+        "totalSupply": 1244518845417,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
@@ -9296,7 +9296,7 @@
         "description": "Capped DAI/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 100010593
+        "latestAnswer": 99989999
       },
       "implementationNames": {
         "eth:0x5c66322CA59bB61e867B28195576DbD8dA4b08dE": "PriceCapAdapterStable"
@@ -9374,11 +9374,6 @@
       }
     },
     {
-      "address": "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x5Df7e094f52436040A5a37D5C9A9A80586D35823",
       "type": "EOA",
       "proxyType": "EOA"
@@ -9438,9 +9433,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "9638837658001022462980304",
+        "scaledTotalSupply": "9650585334311764583732216",
         "symbol": "aEthLINK",
-        "totalSupply": "9648066809033890972813714",
+        "totalSupply": "9659834304381145608709671",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
       },
@@ -9536,9 +9531,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 2933495394521,
+        "scaledTotalSupply": 2940231243126,
         "symbol": "aEthWBTC",
-        "totalSupply": 2943512137457,
+        "totalSupply": 2950271339866,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
       },
@@ -9699,9 +9694,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "257998058849632553330718",
+        "scaledTotalSupply": "257954813023849442600719",
         "symbol": "aEtheUSDe",
-        "totalSupply": "257998058849632553330718",
+        "totalSupply": "257954813023849442600719",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x90D2af7d622ca3141efA4d8f1F24d86E5974Cc8F"
       },
@@ -9956,7 +9951,7 @@
         "reentrancyGuardEntered": false,
         "SY": "eth:0xc9bfeBc79a722C05Dc34bd2A227eF2db19Fd1b8E",
         "symbol": "PT-srUSDe-25JUN2026",
-        "totalSupply": "34927070197043629955641037",
+        "totalSupply": "34688118503634049757770442",
         "VERSION": 6,
         "YT": "eth:0x1Ff9C3b5d9969ddeC8E3F801b638DA08D769FDE5"
       },
@@ -10155,7 +10150,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "10045036618465703272",
         "symbol": "variableDebtEthSTG",
-        "totalSupply": "10125866770976286250",
+        "totalSupply": "10125933119849240071",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
       },
       "fieldMeta": {
@@ -10193,7 +10188,7 @@
         "name": "ether.fi BTC",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "eBTC",
-        "totalSupply": 88947484883
+        "totalSupply": 88440080662
       },
       "implementationNames": {
         "eth:0x657e8C867D8B37dCC18fA4Caead9C45EB088C642": "BoringVault"
@@ -10254,9 +10249,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 228118008869,
+        "scaledTotalSupply": 228127469924,
         "symbol": "aEthLBTC",
-        "totalSupply": 228126984641,
+        "totalSupply": 228136446068,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8236a87084f8B84306f72007F36F2618A5634494"
       },
@@ -10319,9 +10314,9 @@
         "POOL": "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8",
         "proxyAdmin": "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
-        "scaledTotalSupply": 9613277098169,
+        "scaledTotalSupply": 9555638869766,
         "symbol": "aHorRwaUSDC",
-        "totalSupply": 9879014087579,
+        "totalSupply": 9820456195733,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -10502,7 +10497,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "5493981062589623651",
         "symbol": "variableDebtEthFXS",
-        "totalSupply": "5522568113382492696",
+        "totalSupply": "5522594198658500580",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
       },
       "fieldMeta": {
@@ -10630,7 +10625,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "14826975582602049862047",
         "symbol": "aEthEtherFiFRAX",
-        "totalSupply": "15085807422497635994148",
+        "totalSupply": "15085807849104882301629",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
@@ -10670,11 +10665,11 @@
         "description": "Capped rETH / ETH / USD",
         "getMaxRatioGrowthPerSecond": 3238852744,
         "getMaxYearlyGrowthRatePercent": 930,
-        "getRatio": "1162676824172039537",
+        "getRatio": "1162752700005008024",
         "getSnapshotRatio": "1098284517740008249",
         "getSnapshotTimestamp": 1708004591,
         "isCapped": false,
-        "latestAnswer": 270717639160,
+        "latestAnswer": 274291870119,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -10752,7 +10747,7 @@
         "description": "PT Capped USDe USDT/USD linear discount 27NOV2025",
         "discountRatePerYear": "75100000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1764201600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "289000000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x62C6E813b9589C3631Ba0Cdb013acdB8544038B7",
@@ -10787,7 +10782,7 @@
         "name": "Dai Stablecoin",
         "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "DAI",
-        "totalSupply": "4375238849236290437754433881",
+        "totalSupply": "4389348195523455571535502734",
         "version": "1"
       },
       "implementationNames": {
@@ -10823,7 +10818,7 @@
         "description": "PT Capped USDe USDT/USD linear discount 31JUL2025",
         "discountRatePerYear": "84700000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1753920000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "292100000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x917459337CaAC939D41d7493B3999f571D20D667",
@@ -10889,9 +10884,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": 63873715667243,
+        "getMaxSlashableAssets": 63702187647661,
         "getUnstakeWindow": 172800,
-        "latestAnswer": 117007821,
+        "latestAnswer": 117015898,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum USDC v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -10902,8 +10897,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthUSDC.v1",
-        "totalAssets": 63873716667243,
-        "totalSupply": 63873716667243,
+        "totalAssets": 63702188647661,
+        "totalSupply": 63702188647661,
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -11035,7 +11030,7 @@
         "supplyControl": "eth:0x31d9bDEa6F104606C954f8FE6ba614F1BD347Ec3",
         "supplyControllerDeprecated": "eth:0xE25a329d385f77df5D4eD56265babe2b99A5436e",
         "symbol": "PYUSD",
-        "totalSupply": 2437183420899154,
+        "totalSupply": 2425797711217863,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267"
       },
       "errors": {
@@ -11152,9 +11147,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 25864352056274,
+        "scaledTotalSupply": 25852497489168,
         "symbol": "variableDebtEthEURC",
-        "totalSupply": 26918959767086,
+        "totalSupply": 26908822589043,
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
       },
       "fieldMeta": {
@@ -11252,7 +11247,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "42075287156478369311",
         "symbol": "variableDebtEthrsETH",
-        "totalSupply": "42077098997501033082",
+        "totalSupply": "42077100044110137984",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7"
       },
       "fieldMeta": {
@@ -11318,9 +11313,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1468158813593709,
+        "scaledTotalSupply": 1471173942678054,
         "symbol": "variableDebtEthUSDT",
-        "totalSupply": 1801739832958270,
+        "totalSupply": 1805589813519651,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
       "fieldMeta": {
@@ -11430,7 +11425,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1306739022974197116",
         "symbol": "variableDebtEthMKR",
-        "totalSupply": "1328120913666549572",
+        "totalSupply": "1328125045405029241",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
       },
       "fieldMeta": {
@@ -11505,7 +11500,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "2973241454699682619018701",
         "symbol": "aEth1INCH",
-        "totalSupply": "2996829344841492312219255",
+        "totalSupply": "2996830164026753504722361",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x111111111117dC0aa78b770fA6A738034120C302"
       },
@@ -11528,13 +11523,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaAFD07D53A7365D3e9fb6F3a3B09EC19676B73Ce",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1749123599,
       "sinceBlock": 22638170,
@@ -11545,7 +11533,14 @@
       },
       "implementationNames": {
         "eth:0x71B40923a23557820773cc061888bCD704F19594": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaAFD07D53A7365D3e9fb6F3a3B09EC19676B73Ce",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "RsETHPriceCapAdapter",
@@ -11577,7 +11572,7 @@
         "getSnapshotRatio": "1026549069391100903",
         "getSnapshotTimestamp": 1728904283,
         "isCapped": false,
-        "latestAnswer": 249048046689,
+        "latestAnswer": 252319712058,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -11642,9 +11637,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1451806717706431,
+        "scaledTotalSupply": 1449110390549028,
         "symbol": "variableDebtEthUSDC",
-        "totalSupply": 1784502934348562,
+        "totalSupply": 1781371583574852,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -11772,7 +11767,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 8200681693,
         "symbol": "aEthEtherFiUSDC",
-        "totalSupply": 8686410263,
+        "totalSupply": 8686493199,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -11795,13 +11790,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA484Ab92fe32B143AEE7019fC1502b1dAA522D31",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1749123599,
       "sinceBlock": 22638170,
@@ -11812,7 +11800,14 @@
       },
       "implementationNames": {
         "eth:0x7385F804BCAa42D7019299Aa0857b37CdE458bc3": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA484Ab92fe32B143AEE7019fC1502b1dAA522D31",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "ATokenInstance",
@@ -11956,7 +11951,7 @@
         "description": "PT Capped sUSDe USDT/USD linear discount 25SEP2025",
         "discountRatePerYear": "96900000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1758758400,
         "MAX_DISCOUNT_RATE_PER_YEAR": "311100000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x9F56094C450763769BA0EA9Fe2876070c0fD5F77",
@@ -11996,7 +11991,7 @@
         "description": "PT Capped sUSDe USDT/USD linear discount 31JUL2025",
         "discountRatePerYear": "75124000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1753920000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "212200000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x3b3fB9C57858EF816833dC91565EFcd85D96f634",
@@ -12193,7 +12188,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "55097281269861916205",
         "symbol": "variableDebtEthweETH",
-        "totalSupply": "56677062929764150470",
+        "totalSupply": "56678196589828237916",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
       "fieldMeta": {
@@ -12269,9 +12264,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "105606744635279073698279574",
+        "scaledTotalSupply": "103043315385420211562848222",
         "symbol": "variableDebtEthGHO",
-        "totalSupply": "124996692941772027014312352",
+        "totalSupply": "121971134290524914611364131",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "fieldMeta": {
@@ -12395,9 +12390,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "8745478209261013240014549",
+        "scaledTotalSupply": "8745480876903709663423287",
         "symbol": "aEthCRV",
-        "totalSupply": "9261584451026985547881979",
+        "totalSupply": "9261703980135265367415896",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52"
       },
@@ -12467,7 +12462,7 @@
         },
         "getReferenceAsset": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 116301002,
+        "latestAnswer": 116301395,
         "name": "Wrapped Aave Ethereum USDT",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -12479,8 +12474,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthUSDT",
-        "totalAssets": 106869884139433,
-        "totalSupply": 91885095226739,
+        "totalAssets": 107102338548274,
+        "totalSupply": 92078634521876,
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -12590,9 +12585,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 50113387837679,
+        "scaledTotalSupply": 50938766611971,
         "symbol": "aEthUSDG",
-        "totalSupply": 50918428335422,
+        "totalSupply": 51763368881807,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D"
       },
@@ -12804,7 +12799,7 @@
         "stEthPerToken": "1233506579217288260",
         "symbol": "wstETH",
         "tokensPerStEth": "810696932508087639",
-        "totalSupply": "3378647665874210549908272"
+        "totalSupply": "3377621797650774095695083"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -13194,7 +13189,7 @@
         "ratio": "996197896618977227",
         "symbol": "LBTC",
         "toNativeCommission": 0,
-        "totalSupply": 950890599824
+        "totalSupply": 949993540185
       },
       "implementationNames": {
         "eth:0x8236a87084f8B84306f72007F36F2618A5634494": "TransparentUpgradeableProxy",
@@ -13323,7 +13318,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "465285461747075911422",
         "symbol": "aEthFXS",
-        "totalSupply": "466446585630421712017",
+        "totalSupply": "466446606463091033583",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
       },
@@ -13411,8 +13406,8 @@
         "previewRedeem": [0, 1, 2, 3, 4],
         "previewWithdraw": [0, 1, 2, 3, 4],
         "symbol": "sDAI",
-        "totalAssets": "189307210648508680089269717",
-        "totalSupply": "161091670641531217258924012",
+        "totalAssets": "189452137578281074589252077",
+        "totalSupply": "161210995215042569287678698",
         "vat": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
         "version": "1"
       },
@@ -13578,13 +13573,13 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "Safe",
       "address": "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": [
@@ -13598,24 +13593,24 @@
       "sinceBlock": 19488798,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xCAC616Fffb687cBDDD250b2aE6F672449462985C",
           "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
           "eth:0xb647055A9915bF9c8021a684E175A353525b9890",
-          "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d"
+          "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc"
         ],
         "$threshold": 3,
         "domainSeparator": "0x94c3a68d6795fd3a2913391c5d7147eaa10473faaace1455aff7bd702f166a92",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 161,
-        "VERSION": "1.3.0"
+        "nonce": 163,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "GnosisSafeProxy",
-        "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -13654,7 +13649,7 @@
         "DEFAULT_ADMIN_ADDRESS": "eth:0xa448833bEcE66fD8803ac0c390936C79b5FD6eDf",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "eth_usd_consumer_address": "eth:0xBa6C6EaC41a24F9D39032513f66D738B3559f15a",
-        "eth_usd_price": 2328510000,
+        "eth_usd_price": 2358173342,
         "frax_eth_oracle_address": "eth:0x2A6ddD9401B14d0443d0738B8a78fd5B99829A80",
         "frax_pools_array": [
           "eth:0x0000000000000000000000000000000000000000",
@@ -13718,11 +13713,11 @@
         "description": "Capped tETH / wstETH / ETH / USD",
         "getMaxRatioGrowthPerSecond": 1430226757,
         "getMaxYearlyGrowthRatePercent": 450,
-        "getRatio": "1005762761888941591",
+        "getRatio": "1005765377756384838",
         "getSnapshotRatio": "1002302911335141630",
         "getSnapshotTimestamp": 1748925539,
         "isCapped": false,
-        "latestAnswer": 288864758092,
+        "latestAnswer": 292660244169,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -13743,6 +13738,16 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
+      "sinceTimestamp": 1677239099,
+      "sinceBlock": 16697978,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957"
+      },
+      "implementationNames": {
+        "eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517": "ProxyAdmin"
+      },
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -13759,17 +13764,7 @@
           "from": "eth:0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7",
           "role": "admin"
         }
-      ],
-      "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
-      "sinceTimestamp": 1677239099,
-      "sinceBlock": 16697978,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957"
-      },
-      "implementationNames": {
-        "eth:0x86C3FfeE349A7cFf7cA88C449717B1b133bfb517": "ProxyAdmin"
-      }
+      ]
     },
     {
       "name": "WeETHPriceCapAdapter",
@@ -13797,11 +13792,11 @@
         "description": "Capped weETH / eETH(ETH) / USD",
         "getMaxRatioGrowthPerSecond": 2870766009,
         "getMaxYearlyGrowthRatePercent": 875,
-        "getRatio": "1093958054326825460",
+        "getRatio": "1094001076204250105",
         "getSnapshotRatio": "1034656878645040505",
         "getSnapshotTimestamp": 1711416299,
         "isCapped": false,
-        "latestAnswer": 254717162715,
+        "latestAnswer": 258073450273,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -14062,8 +14057,8 @@
         "latestRoundData": {
           "roundId": 0,
           "answer": 100000000,
-          "startedAt": 1777824191,
-          "updatedAt": 1777824191,
+          "startedAt": 1777887203,
+          "updatedAt": 1777887203,
           "answeredInRound": 0
         },
         "ONE_USD": 100000000
@@ -14127,7 +14122,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "119035182910542629",
         "symbol": "variableDebtEthosETH",
-        "totalSupply": "119386934360046509",
+        "totalSupply": "119386934403985130",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "fieldMeta": {
@@ -14170,7 +14165,7 @@
         "getSnapshotRatio": "1063814269953974334",
         "getSnapshotTimestamp": 1708004591,
         "isCapped": false,
-        "latestAnswer": 262946364551,
+        "latestAnswer": 266400607723,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -14237,7 +14232,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "45365854602013589484259",
         "symbol": "variableDebtEthFRAX",
-        "totalSupply": "58164419521898172771278",
+        "totalSupply": "58167248654899159910553",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
       "fieldMeta": {
@@ -14332,7 +14327,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "111285784206359383805366",
         "symbol": "variableDebtEthRPL",
-        "totalSupply": "128869850912457602873177",
+        "totalSupply": "128878129495380944118355",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
       },
       "fieldMeta": {
@@ -14390,9 +14385,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 15977828607,
+        "scaledTotalSupply": 15986768227,
         "symbol": "aEthXAUt",
-        "totalSupply": 15977828607,
+        "totalSupply": 15986768227,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38"
       },
@@ -14463,7 +14458,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "132383887724813888390",
         "symbol": "aEthMKR",
-        "totalSupply": "132686492802548647946",
+        "totalSupply": "132686496107788281595",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
       },
@@ -14486,13 +14481,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe10C78A3AC7f016eD2DE1A89c5479b1039EAB9eA",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1755102767,
       "sinceBlock": 23133345,
@@ -14503,7 +14491,14 @@
       },
       "implementationNames": {
         "eth:0x8aBd1892a1c31b8e52fC1210098fE4cAc4E52aCc": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe10C78A3AC7f016eD2DE1A89c5479b1039EAB9eA",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "FixedPriceAdapter",
@@ -14558,7 +14553,7 @@
         "description": "PT Capped USDe USDT/USD linear discount 25SEP2025",
         "discountRatePerYear": "116500000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1758758400,
         "MAX_DISCOUNT_RATE_PER_YEAR": "291000000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0xBC6736d346a5eBC0dEbc997397912CD9b8FAe10a",
@@ -14598,7 +14593,7 @@
         "description": "PT Capped sUSDe USDT/USD linear discount 27NOV2025",
         "discountRatePerYear": "85200000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1764201600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "279000000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0xe6A934089BBEe34F832060CE98848359883749B3",
@@ -14802,7 +14797,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "42804738570419883590903",
         "symbol": "variableDebtEthSNX",
-        "totalSupply": "54576786774698063367321",
+        "totalSupply": "54590441334521446243761",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
       },
       "fieldMeta": {
@@ -14989,8 +14984,8 @@
         "DECIMALS": 8,
         "description": "PT Capped USDG Fixed USD linear discount 28MAY2026",
         "discountRatePerYear": "51200000000000000",
-        "getCurrentDiscount": 3413023236935565,
-        "latestAnswer": 99658697,
+        "getCurrentDiscount": 3310720649416539,
+        "latestAnswer": 99668927,
         "MATURITY": 1779926400,
         "MAX_DISCOUNT_RATE_PER_YEAR": "188200000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548",
@@ -15086,8 +15081,8 @@
         "previewRedeem": [0, 1, 2, 3, 4],
         "previewWithdraw": [0, 1, 2, 3, 4],
         "symbol": "eUSDe",
-        "totalAssets": "3086064127656573919043202",
-        "totalSupply": "3086064127625822905593595",
+        "totalAssets": "3075624449853490225495117",
+        "totalSupply": "3075624449822843237969547",
         "withdrawalsEnabled": true
       },
       "errors": {
@@ -15193,9 +15188,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "20814977089558130482077",
+        "scaledTotalSupply": "20814834671792992875285",
         "symbol": "variableDebtEthLidoWETH",
-        "totalSupply": "21811822552509331350984",
+        "totalSupply": "21812602274686215298080",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -15263,9 +15258,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "100832958909762094813598",
+        "scaledTotalSupply": "100808728126040403528097",
         "symbol": "aEthosETH",
-        "totalSupply": "100847553890111858051341",
+        "totalSupply": "100823319599126149768026",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
@@ -15334,7 +15329,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 2349864525,
         "symbol": "variableDebtEthEtherFiUSDC",
-        "totalSupply": 2560148662,
+        "totalSupply": 2560240874,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -15403,7 +15398,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "scaledTotalSupply": "34292440287067836542247938",
         "symbol": "aHorRwaGHO",
-        "totalSupply": "34629443991134937910752767",
+        "totalSupply": "34630547334158940599070263",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "fieldMeta": {
@@ -15435,7 +15430,7 @@
         "description": "Capped USDS/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99958931
+        "latestAnswer": 99961858
       },
       "implementationNames": {
         "eth:0x94C7FD62fd0506e71d8142E9D36687fC72A86B02": "PriceCapAdapterStable"
@@ -15613,9 +15608,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "3498097547044835827283",
+        "scaledTotalSupply": "3500826216303524960967",
         "symbol": "aEthcbETH",
-        "totalSupply": "3512417466766881472121",
+        "totalSupply": "3515157337288697202583",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
@@ -15656,11 +15651,11 @@
         "getMaxRatioGrowthPerSecond": 2945383294,
         "getMaxRatioGrowthPerSecondScaled": 2945383294507281,
         "getMaxYearlyGrowthRatePercent": 845,
-        "getRatio": "1125730167677424362",
+        "getRatio": "1125831525245646619",
         "getSnapshotRatio": "1099237959474338773",
         "getSnapshotTimestamp": 1761301343,
         "isCapped": false,
-        "latestAnswer": 112566067,
+        "latestAnswer": 112568854,
         "MAXIMUM_SNAPSHOT_TERM": 15552000,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -15762,9 +15757,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 1629934655829964,
+        "scaledTotalSupply": 1649150553954674,
         "symbol": "aEthUSDC",
-        "totalSupply": 1907322687137663,
+        "totalSupply": 1929974502382577,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
@@ -15835,7 +15830,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "706631421816122910783980",
         "symbol": "aEthLDO",
-        "totalSupply": "710641714467874799647725",
+        "totalSupply": "710642581634946947752471",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
       },
@@ -15990,7 +15985,7 @@
         "reentrancyGuardEntered": false,
         "SY": "eth:0xc9bfeBc79a722C05Dc34bd2A227eF2db19Fd1b8E",
         "symbol": "PT-srUSDe-2APR2026",
-        "totalSupply": "5587247612134323735999779",
+        "totalSupply": "5587222837693072041229959",
         "VERSION": 6,
         "YT": "eth:0x31F9e6692e87D81ff8d64De1f475FCe6880a030f"
       },
@@ -16101,8 +16096,8 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getUnvestedAmount": "1345471809523809523809",
-        "lastDistributionTimestamp": 1777796051,
+        "getUnvestedAmount": "49195341980952380952380",
+        "lastDistributionTimestamp": 1777882535,
         "MAX_COOLDOWN_DURATION": 7776000,
         "name": "Staked USDe",
         "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
@@ -16112,8 +16107,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "silo": "eth:0x7FC7c91D556B400AFa565013E3F32055a0713425",
         "symbol": "sUSDe",
-        "totalAssets": "2033724987333325853174424162",
-        "totalSupply": "1653400062195265613978471581",
+        "totalAssets": "2044016741713212298654198207",
+        "totalSupply": "1661662691182579267791600622",
         "vestingAmount": "58711497142857142857142"
       },
       "errors": {
@@ -16186,7 +16181,7 @@
         "reentrancyGuardEntered": false,
         "SY": "eth:0xc1799CaB1F201946f7CFaFBaF1BCC089b2F08927",
         "symbol": "PT-USDG-28MAY2026",
-        "totalSupply": 106422425074288,
+        "totalSupply": 106638905078825,
         "VERSION": 6,
         "YT": "eth:0x4a1294749A70bc32A998B49dd11Bf26E9379e3C1"
       },
@@ -16213,7 +16208,7 @@
         "description": "Capped crvUSD/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99952244
+        "latestAnswer": 99939734
       },
       "implementationNames": {
         "eth:0x9Dc30dc58c72f5B669aEa01d02A2e4da194eE893": "PriceCapAdapterStable"
@@ -16274,8 +16269,8 @@
         "DECIMALS": 8,
         "description": "PT Capped srUSDe USDT/USD linear discount 25JUN2026",
         "discountRatePerYear": "46061000000000000",
-        "getCurrentDiscount": 6603900936992643,
-        "latestAnswer": 99333477,
+        "getCurrentDiscount": 6511866572076357,
+        "latestAnswer": 99336196,
         "MATURITY": 1782345600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "166634000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
@@ -16312,7 +16307,7 @@
         "name": "PT Ethena sUSDE 25SEP2025",
         "SY": "eth:0xC01cde799245a25e6EabC550b36A47F6F83cc0f1",
         "symbol": "PT-sUSDE-25SEP2025",
-        "totalSupply": "1274850858766222472095052",
+        "totalSupply": "1274073969604342038243159",
         "YT": "eth:0x029d6247ADb0A57138c62E3019C92d3dfC9c1840"
       },
       "implementationNames": {
@@ -16338,7 +16333,7 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "stopped": false,
         "symbol": "0x4d4b520000000000000000000000000000000000000000000000000000000000",
-        "totalSupply": "91074322162688550582059"
+        "totalSupply": "91073580770448174592323"
       },
       "implementationNames": {
         "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2": "DSToken"
@@ -16402,7 +16397,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54187263366599996",
+        "totalSupply": "54180041901103568",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -16448,8 +16443,8 @@
         "DECIMALS": 8,
         "description": "PT Capped sUSDe USDT/USD linear discount 07MAY2026",
         "discountRatePerYear": "40200000000000000",
-        "getCurrentDiscount": 366879813546423,
-        "latestAnswer": 99957141,
+        "getCurrentDiscount": 286556297564687,
+        "latestAnswer": 99958648,
         "MATURITY": 1778112000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "256700000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
@@ -16559,8 +16554,8 @@
         "currentPeriodMintedAmount": "23331066420172231023",
         "custodyAddress": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
         "decimals": 18,
-        "getCurrentPeriodStartTime": 1777766400,
-        "getNextDailyLimitResetTimestamp": 1777852800,
+        "getCurrentPeriodStartTime": 1777852800,
+        "getNextDailyLimitResetTimestamp": 1777939200,
         "lrtConfig": "eth:0x947Cb49334e6571ccBFEF1f1f1178d8469D65ec7",
         "maxMintAmountPerDay": "5000000000000000000000",
         "name": "rsETH",
@@ -16648,7 +16643,7 @@
         "paused": false,
         "staderConfig": "eth:0x4ABEF2263d5A5ED582FC9A9789a41D85b68d69DB",
         "symbol": "ETHx",
-        "totalSupply": "120349493193035771374656"
+        "totalSupply": "120347310521382998387810"
       },
       "implementationNames": {
         "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": "TransparentUpgradeableProxy",
@@ -16710,7 +16705,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "83973473350997520322011",
         "symbol": "variableDebtEth1INCH",
-        "totalSupply": "87649993044596922502714",
+        "totalSupply": "87651017266480170464440",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x111111111117dC0aa78b770fA6A738034120C302"
       },
       "fieldMeta": {
@@ -16778,9 +16773,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": 85037040593299,
+        "getMaxSlashableAssets": 84883638313202,
         "getUnstakeWindow": 172800,
-        "latestAnswer": 116301002,
+        "latestAnswer": 116301395,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum USDT v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -16791,8 +16786,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthUSDT.v1",
-        "totalAssets": 85037041593299,
-        "totalSupply": 85037041593299,
+        "totalAssets": 84883639313202,
+        "totalSupply": 84883639313202,
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -16906,7 +16901,7 @@
         "description": "Capped EURC/USD",
         "getPriceCapRatio": 104000000,
         "isCapped": false,
-        "latestAnswer": 117224800,
+        "latestAnswer": 117238048,
         "RATIO_DECIMALS": 8
       },
       "implementationNames": {
@@ -16979,9 +16974,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "582776256346085719414851",
+        "scaledTotalSupply": "579516940004149669731048",
         "symbol": "aEthAAVE",
-        "totalSupply": "582776256346085719414851",
+        "totalSupply": "579516940004149669731048",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
       },
@@ -17034,9 +17029,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "31868713159943767214861061",
+        "scaledTotalSupply": "31763713159943767214861061",
         "symbol": "aEthPT_srUSDe_25JUN2026",
-        "totalSupply": "31868713159943767214861061",
+        "totalSupply": "31763713159943767214861061",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
       },
@@ -17147,9 +17142,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 43342740349683,
+        "scaledTotalSupply": 41212597852025,
         "symbol": "aEthPT_USDG_28MAY2026",
-        "totalSupply": 43342740349683,
+        "totalSupply": 41212597852025,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
       },
@@ -17210,7 +17205,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 49282322196,
         "symbol": "aEthmUSD",
-        "totalSupply": 50421691493,
+        "totalSupply": 50423937075,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA"
       },
@@ -17294,9 +17289,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 38828194042526,
+        "scaledTotalSupply": 43849745448104,
         "symbol": "aEthEURC",
-        "totalSupply": 39863565558400,
+        "totalSupply": 45021239488611,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
       },
@@ -17365,9 +17360,9 @@
           "extensions": []
         },
         "getCooldown": 1728000,
-        "getMaxSlashableAssets": "20625830542862162188528",
+        "getMaxSlashableAssets": "20797196394007229535022",
         "getUnstakeWindow": 172800,
-        "latestAnswer": 247925504747,
+        "latestAnswer": 251200149123,
         "MIN_ASSETS_REMAINING": 1000000,
         "name": "Umbrella Stake Wrapped Aave Ethereum WETH v1",
         "owner": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
@@ -17378,8 +17373,8 @@
         "previewWithdraw": [0, 1, 2, 3, 4],
         "REWARDS_CONTROLLER": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
         "symbol": "stkwaEthWETH.v1",
-        "totalAssets": "20625830542862163188528",
-        "totalSupply": "20625830542862163188528",
+        "totalAssets": "20797196394007230535022",
+        "totalSupply": "20797196394007230535022",
         "whoCanRescue": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8"
       },
       "errors": {
@@ -17450,7 +17445,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "10813120251069914404",
         "symbol": "variableDebtEthtBTC",
-        "totalSupply": "10856386450617977323",
+        "totalSupply": "10856446852373563097",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x18084fbA666a33d37592fA2633fD49a74DD93a88"
       },
       "fieldMeta": {
@@ -17504,7 +17499,7 @@
         ],
         "$upgradeCount": 2,
         "CANCEL_AUTHORIZATION_TYPEHASH": "0x158b0a9edf7a828aad02f63cd515c68ef2f50ba807396f6d12842833a1597429",
-        "currentIndex": 1081302353691,
+        "currentIndex": 1081374302261,
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xa422a2a67d8cdd2175c7221bad890b12a5cdcbaf36778f974eb992baf59c0726",
@@ -17528,9 +17523,9 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "swapFacility": "eth:0xB6807116b3B1B321a390594e31ECD6e0076f6278",
         "symbol": "mUSD",
-        "totalSupply": 18316201648050,
+        "totalSupply": 18814413300862,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "yield": 229305226,
+        "yield": 1475013802,
         "YIELD_RECIPIENT_MANAGER_ROLE": "0x4a5e9eb1ba56d04185ff75ebf0f4f42a3d7c88c35b4a90fa278437e0c9bdceca",
         "yieldRecipient": "eth:0x4177a5287FAE4767311dAD02547B57D1b8Cf5fbf"
       },
@@ -17629,7 +17624,7 @@
         "proxyAdmin": "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517",
         "scaledTotalSupply": "121120710355500803848994065",
         "symbol": "variableDebtHorRwaRLUSD",
-        "totalSupply": "123333088193292776430502173",
+        "totalSupply": "123339403099521290453696800",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "fieldMeta": {
@@ -17738,14 +17733,14 @@
       "values": {
         "$immutable": true,
         "decimals": 18,
-        "getCollateralRate": 1660930448657787,
+        "getCollateralRate": 2057447018998357,
         "getEthValue": [0, 1, 2, 3, 4],
-        "getExchangeRate": "1162676824172039537",
+        "getExchangeRate": "1162752700005008024",
         "getRethValue": [0, 0, 1, 2, 3],
-        "getTotalCollateral": "642624456103824173908",
+        "getTotalCollateral": "796066640129479435728",
         "name": "Rocket Pool ETH",
         "symbol": "rETH",
-        "totalSupply": "332772007623643873021226",
+        "totalSupply": "332761756119133713641670",
         "version": 1
       },
       "errors": {
@@ -17811,7 +17806,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "39834109074275890910",
         "symbol": "variableDebtEthrETH",
-        "totalSupply": "40487857551585938507",
+        "totalSupply": "40487872781934268344",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "fieldMeta": {
@@ -17987,7 +17982,7 @@
         "ASSET_TO_PEG": "eth:0x4e844125952D32AcdF339BE976c98E22F6F318dB",
         "DECIMALS": 8,
         "DENOMINATOR": "100000000000000000000000000",
-        "latestAnswer": 37014991,
+        "latestAnswer": 37390432,
         "MAX_DECIMALS": 18,
         "name": "LDO/ETH/USD",
         "PEG_TO_BASE": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
@@ -18134,7 +18129,7 @@
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "symbol": "BTC.b",
         "toNativeCommission": 10000,
-        "totalSupply": 3433747546
+        "totalSupply": 3233692646
       },
       "implementationNames": {
         "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072": "TransparentUpgradeableProxy",
@@ -18271,7 +18266,7 @@
         "description": "PT Capped srUSDe USDT/USD linear discount 02APR2026",
         "discountRatePerYear": "57200000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1775088000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "240100000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
@@ -18335,7 +18330,7 @@
         "description": "Capped USDC/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99990806
+        "latestAnswer": 99982000
       },
       "implementationNames": {
         "eth:0xB6557F02F0a5dA7b9D3C2d979cc19e00e756F6dA": "PriceCapAdapterStable"
@@ -18401,9 +18396,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "402108663811063875218495",
+        "scaledTotalSupply": "402307136917759052063582",
         "symbol": "aEthRPL",
-        "totalSupply": "427787397877317291485186",
+        "totalSupply": "428005170044550802044128",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
       },
@@ -18581,7 +18576,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "178214106087969640771580",
         "symbol": "aEthcrvUSD",
-        "totalSupply": "212884845987427176180557",
+        "totalSupply": "212888354200292847413697",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
       },
@@ -18920,9 +18915,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1262022938455994107444992",
+        "scaledTotalSupply": "1261111150305076122052111",
         "symbol": "aEthweETH",
-        "totalSupply": "1263283005622131258780047",
+        "totalSupply": "1262370307719276337174140",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
       },
@@ -18989,9 +18984,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "12000738767369548057333056",
+        "scaledTotalSupply": "11994887092044339920938956",
         "symbol": "variableDebtEthRLUSD",
-        "totalSupply": "12473269980572397445624755",
+        "totalSupply": "12468258637294600260764716",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "fieldMeta": {
@@ -19240,7 +19235,7 @@
         "name": "Renzo Restaked ETH",
         "roleManager": "eth:0x4994EFc62101A9e3F885d872514c2dC7b3235849",
         "symbol": "ezETH",
-        "totalSupply": "161594690596726892847364"
+        "totalSupply": "155045621951904329844489"
       },
       "implementationNames": {
         "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",
@@ -19340,7 +19335,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1889005226569133170134278"
+        "totalSupply": "1866136792662239314334094"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -19401,9 +19396,9 @@
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "65268802897487919155687",
+        "scaledTotalSupply": "65250795270600109053884",
         "symbol": "aEthLidowstETH",
-        "totalSupply": "65514550945407145241730",
+        "totalSupply": "65496517496713912189430",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -19725,7 +19720,7 @@
         "decimals": 8,
         "description": "Capped USDT/USD",
         "isCapped": false,
-        "latestAnswer": 99993827
+        "latestAnswer": 99987300
       },
       "implementationNames": {
         "eth:0xC26D4a1c46d884cfF6dE9800B6aE7A8Cf48B4Ff8": "PriceCapAdapterStable"
@@ -19934,7 +19929,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "48043550550756615448116",
         "symbol": "variableDebtEthLDO",
-        "totalSupply": "49784056882800597372455",
+        "totalSupply": "49785140878169798678169",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
       },
       "fieldMeta": {
@@ -19991,7 +19986,7 @@
         "description": "PT Capped USDe USDT/USD linear discount 05FEB2026",
         "discountRatePerYear": "55266000000000000",
         "getCurrentDiscount": 0,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MATURITY": 1770249600,
         "MAX_DISCOUNT_RATE_PER_YEAR": "271629000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x1F84a51296691320478c98b8d77f2Bbd17D34350",
@@ -20085,7 +20080,7 @@
         "getSnapshotRatio": "1000000000000000000",
         "getSnapshotTimestamp": 1745242379,
         "isCapped": true,
-        "latestAnswer": 99993827,
+        "latestAnswer": 99987300,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 86400,
         "PERCENTAGE_FACTOR": 10000,
@@ -20154,7 +20149,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "270400596845761125785874",
         "symbol": "aEthSNX",
-        "totalSupply": "277888687009423078764195",
+        "totalSupply": "277889366833159142889844",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
       },
@@ -20275,9 +20270,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "22934213995466018699039",
+        "scaledTotalSupply": "22934120072700742940287",
         "symbol": "variableDebtEthwstETH",
-        "totalSupply": "23203560044131092119658",
+        "totalSupply": "23203484618204466367835",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "fieldMeta": {
@@ -20436,7 +20431,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "cbBTC",
-        "totalSupply": 3689393220424,
+        "totalSupply": 3692921267861,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -20524,9 +20519,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "33285085019860283810683",
+        "scaledTotalSupply": "33623977058570738308835",
         "symbol": "aEthrETH",
-        "totalSupply": "33336458076425892226817",
+        "totalSupply": "33675873182859922686487",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
@@ -20597,7 +20592,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 34468678840,
         "symbol": "aEthFBTC",
-        "totalSupply": 34468754093,
+        "totalSupply": 34468754618,
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC96dE26018A54D51c097160568752c4E3BD6C364"
       },
@@ -20662,14 +20657,14 @@
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getEETHByWeETH": [0, 1, 2, 3, 4],
         "getImplementation": "eth:0x2d10683E941275D502173053927AD6066e6aFd6B",
-        "getRate": "1093958054326825460",
+        "getRate": "1094001076204250105",
         "getWeETHByeETH": [0, 0, 1, 2, 3],
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "name": "Wrapped eETH",
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "weETH",
-        "totalSupply": "2036158671458686993628967",
+        "totalSupply": "2034917769566807632918464",
         "WEETH_OPERATING_ADMIN_ROLE": "0xfeab26ff201be143cb96161bb5c9224b5761f7085c44d6677299b1cfc2153cd7"
       },
       "errors": {
@@ -20815,9 +20810,9 @@
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "16496854952303814141531",
+        "scaledTotalSupply": "16489018714500565855662",
         "symbol": "aEthLidotETH",
-        "totalSupply": "16496854952303814141531",
+        "totalSupply": "16489018714500565855662",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8"
       },
@@ -20884,9 +20879,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "84237482335713375835086322",
+        "scaledTotalSupply": "84300860478678257946802324",
         "symbol": "variableDebtEthDAI",
-        "totalSupply": "104992810080401483758987482",
+        "totalSupply": "105081034996885389877245541",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
       },
       "fieldMeta": {
@@ -20935,13 +20930,6 @@
         "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "ignoreInWatchMode": [
         "ALLOWANCE_TRANSFER_TYPEHASH",
         "DOMAIN_SEPARATOR_TYPEHASH",
@@ -20960,7 +20948,14 @@
       },
       "implementationNames": {
         "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": "AllowanceModule"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xdeadD8aB03075b7FBA81864202a2f59EE25B312b",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
     },
     {
       "name": "GhoOracle",
@@ -21044,8 +21039,8 @@
         "previewRedeem": [0, 1, 2, 3, 4],
         "previewWithdraw": [0, 1, 2, 3, 4],
         "symbol": "tETH",
-        "totalAssets": "35902387534676950149538",
-        "totalSupply": "35696676090142782782370",
+        "totalAssets": "35828899142256035310227",
+        "totalSupply": "35623516114843300911835",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": 1
       },
@@ -21118,7 +21113,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "1264451139158338820399",
         "symbol": "variableDebtEthENS",
-        "totalSupply": "1316810857809129806477",
+        "totalSupply": "1316851918484563843659",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72"
       },
       "fieldMeta": {
@@ -21140,13 +21135,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95E3015c67EF62B866cC28ca5A9AB5017A55e336",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1764077939,
       "sinceBlock": 23876159,
@@ -21157,7 +21145,14 @@
       },
       "implementationNames": {
         "eth:0xD26dcF055E16ed3048a17b37006082779CF0297c": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95E3015c67EF62B866cC28ca5A9AB5017A55e336",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "VariableDebtTokenInstance",
@@ -21243,11 +21238,11 @@
         "decimals": 18,
         "getInflationCalcTime": 1775713314,
         "getInflationIntervalRate": "1000133680617113500",
-        "getInflationIntervalsPassed": 24,
+        "getInflationIntervalsPassed": 25,
         "getInflationIntervalStartTime": 1633066914,
         "getInflationIntervalTime": 86400,
         "getInflationRewardsContractAddress": "eth:0xCba5951fc706Fc783b7C142DaE8576Ebe29c41FD",
-        "inflationCalculate": "71871366632812916126233",
+        "inflationCalculate": "74871013540306450933802",
         "name": "Rocket Pool Protocol",
         "symbol": "RPL",
         "totalSupply": "22367035426763561716994616",
@@ -21267,6 +21262,16 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
+      "sinceTimestamp": 1676319587,
+      "sinceBlock": 16622177,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
+      },
+      "implementationNames": {
+        "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476": "ProxyAdmin"
+      },
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -21308,17 +21313,7 @@
           "from": "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1",
           "role": "admin"
         }
-      ],
-      "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
-      "sinceTimestamp": 1676319587,
-      "sinceBlock": 16622177,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
-      },
-      "implementationNames": {
-        "eth:0xD3cF979e676265e4f6379749DECe4708B9A22476": "ProxyAdmin"
-      }
+      ]
     },
     {
       "name": "Umbrella",
@@ -21447,7 +21442,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "122300129118772111556797",
         "symbol": "aEthFRAX",
-        "totalSupply": "145865703116635931033936",
+        "totalSupply": "145867963874963062976143",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
@@ -21517,7 +21512,7 @@
         },
         "getReferenceAsset": "eth:0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
         "INCENTIVES_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "latestAnswer": 117007821,
+        "latestAnswer": 117015898,
         "name": "Wrapped Aave Ethereum USDC",
         "paused": false,
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
@@ -21529,8 +21524,8 @@
         "RAY": "1000000000000000000000000000",
         "rewardTokens": [],
         "symbol": "waEthUSDC",
-        "totalAssets": 194523942560091,
-        "totalSupply": 166233704189398,
+        "totalAssets": 194318671066159,
+        "totalSupply": 166044029927276,
         "whoCanRescue": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
       },
       "errors": {
@@ -21560,7 +21555,7 @@
       "values": {
         "$immutable": true,
         "admin": "eth:0x40907540d8a6C65c637785e8f8B742ae6b0b9968",
-        "available_supply": "2387564731141864749388585980",
+        "available_supply": "2387795602492592948782956300",
         "decimals": 18,
         "mining_epoch": 5,
         "minter": "eth:0xd061D61a4d941c39E5453435B6345Dc261C2fcE0",
@@ -21568,7 +21563,7 @@
         "rate": "3663926723928765860",
         "start_epoch_time": 1755037048,
         "symbol": "CRV",
-        "totalSupply": "2377064839559676691358544929"
+        "totalSupply": "2377220929898605039128740580"
       },
       "implementationNames": {
         "eth:0xD533a949740bb3306d119CC777fa900bA034cd52": "Vyper_contract"
@@ -21624,7 +21619,7 @@
         "getSnapshotRatio": "1029650229444067238",
         "getSnapshotTimestamp": 1715877911,
         "isCapped": false,
-        "latestAnswer": 253397050191,
+        "latestAnswer": 256725847042,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -21750,7 +21745,7 @@
         "DECIMALS": 8,
         "DENOMINATOR": "10000000000000000",
         "description": "wBTC/BTC/USD",
-        "latestAnswer": 7851565072598,
+        "latestAnswer": 7946203810625,
         "MAX_DECIMALS": 18,
         "PEG_TO_BASE": "eth:0xb41E773f507F7a7EA890b1afB7d2b660c30C8B0A"
       },
@@ -21870,7 +21865,7 @@
         "name": "USDS Stablecoin",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "USDS",
-        "totalSupply": "8433890222959011776107081444",
+        "totalSupply": "8333937155609000542809931585",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
@@ -22050,13 +22045,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4f827A63755855cDf3e8f3bcD20265C833f15033",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1749123599,
       "sinceBlock": 22638170,
@@ -22067,7 +22055,14 @@
       },
       "implementationNames": {
         "eth:0xDE9F8379a5a972100d0373103a849E8ABdf56a9a": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4f827A63755855cDf3e8f3bcD20265C833f15033",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "Safe",
@@ -22150,7 +22145,7 @@
         "proxyAdmin": "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517",
         "scaledTotalSupply": "21790525594216325025923546",
         "symbol": "variableDebtHorRwaGHO",
-        "totalSupply": "22314526469154690695788229",
+        "totalSupply": "22315752634255711779824241",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f"
       },
       "fieldMeta": {
@@ -22192,7 +22187,7 @@
         "oldKNC": "eth:0xdd974D5C2e2928deA5F71b9825b8b646686BD200",
         "owner": "eth:0x3EB01B3391EA15CE752d01Cf3D3F09deC596F650",
         "symbol": "KNC",
-        "totalSupply": "240951749692958405530442863"
+        "totalSupply": "240951888406414541810751855"
       },
       "implementationNames": {
         "eth:0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202": "AdminUpgradeabilityProxy",
@@ -22477,7 +22472,7 @@
         "getSnapshotRatio": "1228282498700325540",
         "getSnapshotTimestamp": 1772535659,
         "isCapped": false,
-        "latestAnswer": 287209637340,
+        "latestAnswer": 290982619448,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -22592,7 +22587,7 @@
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "scaledTotalSupply": "265187208608718437951284568",
         "symbol": "aHorRwaRLUSD",
-        "totalSupply": "267389871522699602086800124",
+        "totalSupply": "267395554741895114293597805",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
       "fieldMeta": {
@@ -22693,7 +22688,7 @@
         "supplyControl": "eth:0x9a7164112029b81c07636AB7b59fA813E0883BBF",
         "supplyControllerDeprecated": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDG",
-        "totalSupply": 504033802428324
+        "totalSupply": 503093490202690
       },
       "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
@@ -22744,9 +22739,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 34376367999,
+        "scaledTotalSupply": 34229339614,
         "symbol": "variableDebtEthmUSD",
-        "totalSupply": 35634925122,
+        "totalSupply": 35485320665,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xacA92E438df0B2401fF60dA7E4337B687a2435DA"
       },
       "fieldMeta": {
@@ -22845,9 +22840,9 @@
         "POOL": "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1",
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "15291272851142550176981",
+        "scaledTotalSupply": "15284101201056788857232",
         "symbol": "variableDebtEthLidowstETH",
-        "totalSupply": "15398639978502676657124",
+        "totalSupply": "15391462150094430510014",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "fieldMeta": {
@@ -23295,9 +23290,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "1851531199739553993980229",
+        "scaledTotalSupply": "1849664710289980608817232",
         "symbol": "variableDebtEthWETH",
-        "totalSupply": "2033053358488993977525902",
+        "totalSupply": "2031175167898951611380349",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -23389,9 +23384,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "104551021325337826320094203",
+        "scaledTotalSupply": "104497958561657581783786307",
         "symbol": "variableDebtEthUSDtb",
-        "totalSupply": "108148369198491331451044546",
+        "totalSupply": "108100305631531782261181453",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C"
       },
       "fieldMeta": {
@@ -23521,9 +23516,9 @@
         "POOL": "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": 17337948328,
+        "scaledTotalSupply": 17417833712,
         "symbol": "variableDebtEthcbBTC",
-        "totalSupply": 17413206974,
+        "totalSupply": 17493550984,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
       },
       "fieldMeta": {
@@ -23573,13 +23568,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1745585303,
       "sinceBlock": 22346138,
@@ -23590,7 +23578,14 @@
       },
       "implementationNames": {
         "eth:0xEbAEacB6102B21D7996524D8ad47b33a3115ba69": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "PriceCapAdapterStable",
@@ -23677,9 +23672,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "168561010508063320271243930",
+        "scaledTotalSupply": "168590811399786399490093959",
         "symbol": "aEthUSDtb",
-        "totalSupply": "171108141397424469962497490",
+        "totalSupply": "171143855592159911177059604",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC139190F447e929f090Edeb554D95AbB8b18aC1C"
       },
@@ -23856,7 +23851,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": 2840644964775,
         "symbol": "variableDebtEthLidoUSDC",
-        "totalSupply": 3122891168422,
+        "totalSupply": 3123233800813,
         "UNDERLYING_ASSET_ADDRESS": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
       },
       "fieldMeta": {
@@ -23945,7 +23940,7 @@
         "description": "Capped FRAX/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99309918
+        "latestAnswer": 99296296
       },
       "implementationNames": {
         "eth:0xeF50f8DC65402c3019586bc8725fCD0b99B8AAd7": "PriceCapAdapterStable"
@@ -24172,7 +24167,7 @@
         "description": "Capped RLUSD / USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99999000
+        "latestAnswer": 99996048
       },
       "implementationNames": {
         "eth:0xf0eaC18E908B34770FDEe46d069c846bDa866759": "PriceCapAdapterStable"
@@ -24204,11 +24199,11 @@
         "description": "Capped weETH / eETH(ETH) / USD",
         "getMaxRatioGrowthPerSecond": 2870766009,
         "getMaxYearlyGrowthRatePercent": 875,
-        "getRatio": "1093958054326825460",
+        "getRatio": "1094001076204250105",
         "getSnapshotRatio": "1034656878645040505",
         "getSnapshotTimestamp": 1711416299,
         "isCapped": false,
-        "latestAnswer": 254729226908,
+        "latestAnswer": 257984417505,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -24254,7 +24249,7 @@
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "osETH",
-        "totalSupply": "135963607804558722521268"
+        "totalSupply": "135940747523250602899463"
       },
       "implementationNames": {
         "eth:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38": "OsToken"
@@ -24333,11 +24328,11 @@
         "description": "Capped ezETH / ezETH(ETH) / USD",
         "getMaxRatioGrowthPerSecond": 3521858694,
         "getMaxYearlyGrowthRatePercent": 1089,
-        "getRatio": "1077196635783581842",
+        "getRatio": "1077198745250139695",
         "getSnapshotRatio": "1019883708003361006",
         "getSnapshotTimestamp": 1727172839,
         "isCapped": false,
-        "latestAnswer": 250814434491,
+        "latestAnswer": 254109801958,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -24419,7 +24414,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "7598929003778195216791",
         "symbol": "variableDebtEthUNI",
-        "totalSupply": "7807460621031986943895",
+        "totalSupply": "7807486575103420544311",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
       },
       "fieldMeta": {
@@ -24489,7 +24484,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "727749752466429915688383",
         "symbol": "aEthUNI",
-        "totalSupply": "729987954494861078282813",
+        "totalSupply": "729987975257999003003061",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
       },
@@ -24557,11 +24552,11 @@
         "description": "Capped sDAI / DAI / USD",
         "getMaxRatioGrowthPerSecond": "3551208852405580081",
         "getMaxYearlyGrowthRatePercent": 969,
-        "getRatio": "1175151989372408883844868806",
+        "getRatio": "1175177070137057557566636407",
         "getSnapshotRatio": "1155737072956268043878995612",
         "getSnapshotTimestamp": 1745242379,
         "isCapped": false,
-        "latestAnswer": 117527647,
+        "latestAnswer": 117505954,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -24641,7 +24636,7 @@
         "getSnapshotRatio": "1000000000000000000",
         "getSnapshotTimestamp": 1750023287,
         "isCapped": false,
-        "latestAnswer": 7902497110984,
+        "latestAnswer": 7999329496725,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -24783,9 +24778,9 @@
         "proxyAdmin": "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "22965654512123954245736",
+        "scaledTotalSupply": "22965683204853007348675",
         "symbol": "aEthLidoWETH",
-        "totalSupply": "23803486385326419420512",
+        "totalSupply": "23804305748287459419379",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
@@ -24854,9 +24849,9 @@
         "proxyAdmin": "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27",
         "RESERVE_TREASURY_ADDRESS": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
-        "scaledTotalSupply": "21619307027980326755137592",
+        "scaledTotalSupply": "21252684296861979551310538",
         "symbol": "aEthRLUSD",
-        "totalSupply": "21821741407391612186112323",
+        "totalSupply": "21452533857768640358966479",
         "TREASURY": "eth:0x464C71f6c2F760DdA6093dCB91C24c39e5d6e18c",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD"
       },
@@ -24948,7 +24943,7 @@
         "REWARDS_CONTROLLER": "eth:0x8164Cc65827dcFe994AB23944CBC90e0aa80bFcb",
         "scaledTotalSupply": "247885117728942677047",
         "symbol": "variableDebtEthEtherFiFRAX",
-        "totalSupply": "256824265916156057593",
+        "totalSupply": "256824799485073603580",
         "UNDERLYING_ASSET_ADDRESS": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
       "fieldMeta": {
@@ -24970,13 +24965,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["UPGRADE_INTERFACE_VERSION"],
       "sinceTimestamp": 1747229939,
       "sinceBlock": 22481753,
@@ -24987,7 +24975,14 @@
       },
       "implementationNames": {
         "eth:0xfD57dE1F38e3F730E0BEb7238dD50E396851dda0": "ProxyAdmin"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
+          "role": "admin"
+        }
+      ]
     },
     {
       "address": "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
@@ -37423,56 +37418,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0xFc8a9000c161E3C6e073e967107Ce926A44A06E2": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -37720,6 +37665,6 @@
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 25015539 },
-  "permissionsConfigHash": "0x9b64d5417cf47512634c4b874f4e5b641b95d82de8dc61a3f3ff3a3a0b55bd9e"
+  "usedBlockNumbers": { "ethereum": 25020763 },
+  "permissionsConfigHash": "0x3ce7eb5ba5b90a6fdac241af12e952deaa827995a777433ee828456d0b93802a"
 }

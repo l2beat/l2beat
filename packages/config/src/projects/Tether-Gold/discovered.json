@@ -1,6 +1,6 @@
 {
   "name": "Tether-Gold",
-  "timestamp": 1777710525,
+  "timestamp": 1777887219,
   "configHash": "0x4a9766f4dcf2a952f54a5cfbd00c355b4e795688d29a75b50a5c8ec338a201de",
   "entries": [
     {
@@ -317,6 +317,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "MultiSigWallet": "0x14144aaeee81c9350f72a914c1b3534785e5c3ce4ee5aa6a2b2db44eca346f2c"
   },
-  "usedBlockNumbers": { "ethereum": 25006085 },
+  "usedBlockNumbers": { "ethereum": 25020763 },
   "permissionsConfigHash": "0xdcc00bd0cf1eba9dccedd8abf9a6dd2c0972af7d22869c4a36687aac73c42ffd"
 }

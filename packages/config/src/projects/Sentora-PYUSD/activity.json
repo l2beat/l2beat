@@ -1,6 +1,199 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777711636,
-  "lastConsumedUpdateNotifierId": 151,
-  "events": []
+  "lastReconciledAt": 1777888763,
+  "lastConsumedUpdateNotifierId": 155,
+  "events": [
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e",
+      "contractName": "PendleGovernanceProxy",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x2aD631F72fB16d91c4953A7f4260A97C2fE2f31e:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x30775B422b9c7415349855346352FAA61fD97E41",
+      "contractName": "PendleYieldToken",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x30775B422b9c7415349855346352FAA61fD97E41:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B",
+      "contractName": "Vat",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "155:eth:0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB",
+      "contractName": "UsdsJoin",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "155:eth:0x3C0f895007CA717Aa01c8693e59DF1e8C3777FEB:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
+      "contractName": "PendlePrincipalToken",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+      "contractName": "USDe Token",
+      "isDependency": true,
+      "entity": "Ethena",
+      "id": "155:eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x808507121B80c02388fAd14726482e061B8da827",
+      "contractName": "Pendle Token",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x808507121B80c02388fAd14726482e061B8da827:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
+      "contractName": "MaplePool",
+      "isDependency": true,
+      "entity": "Maple",
+      "id": "155:eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1",
+      "contractName": "GnosisSafe",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x8119EC16F0573B7dAc7C0CB94EB504FB32456ee1:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x8dAe8ECe668cf80d348873F23D456448E8694883",
+      "contractName": "PendleMarketV6",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0x8dAe8ECe668cf80d348873F23D456448E8694883:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+      "contractName": "Staked USDe Token",
+      "isDependency": true,
+      "entity": "Ethena",
+      "id": "155:eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64",
+      "contractName": "ProxyAdmin",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0xA28c08f165116587D4F3E708743B4dEe155c5E64:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "directlyReceivedPermissions",
+          "before": [
+            {
+              "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
+              "role": "admin",
+              "permission": "upgrade"
+            }
+          ]
+        },
+        {
+          "field": "receivedPermissions",
+          "after": [
+            {
+              "permission": "upgrade",
+              "from": "eth:0x9a9Fa8338dd5E5B2188006f1Cd2Ef26d921650C2",
+              "role": "admin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+      "contractName": "Savings USDS Token",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "155:eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466",
+      "contractName": "Vow",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "155:eth:0xA950524441892A31ebddF91d3cEEFa04Bf454466:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xBF98480425A29197e5d99D003017f63a1e595D02",
+      "contractName": "PendleSUSDESY",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0xBF98480425A29197e5d99D003017f63a1e595D02:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "contractName": "USDS Stablecoin Token",
+      "isDependency": true,
+      "entity": "MakerDAO",
+      "id": "155:eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-05-04T09:33:39.000Z",
+      "updateNotifierId": 155,
+      "address": "eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606",
+      "contractName": "PendleLiquidityIncentivesMultisig",
+      "isDependency": true,
+      "entity": "Pendle",
+      "id": "155:eth:0xe8D28E2CA24BB16Fc7e6549eF937e05981d02606:contract-removed",
+      "type": "contract-removed"
+    }
+  ]
 }
