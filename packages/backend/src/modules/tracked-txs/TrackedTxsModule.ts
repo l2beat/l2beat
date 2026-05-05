@@ -14,6 +14,7 @@ import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { DuneQueryService } from './services/DuneQueryService'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { createTrackedTxsTrpcRouter } from './trpc/router'
 
 export function createTrackedTxsModule(
   deps: ModuleDependencies,
@@ -38,6 +39,9 @@ export function createTrackedTxsModule(
   })
 
   const trackedTxsClient = new TrackedTxsClient(duneQueryService, logger)
+  const trpcRouter = createTrackedTxsTrpcRouter({
+    projects: config.trackedTxsConfig.projects,
+  })
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,
   )
@@ -177,6 +181,10 @@ export function createTrackedTxsModule(
   }
 
   return {
+    trpc: {
+      namespace: 'trackedTxs',
+      trpcRouter,
+    },
     start,
   }
 }
