@@ -41,6 +41,7 @@ export function FlowsGeneralStats() {
       ? topChain.totalVolume / data.stats.totalVolume
       : 0
   const topToken = data?.stats.topToken
+  const topProtocol = data?.stats.topProtocol
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
@@ -105,6 +106,24 @@ export function FlowsGeneralStats() {
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatPercent(topChainVolumeShare)} of volume (
                     {formatCurrency(topChain.totalVolume, 'usd')})
+                  </span>
+                </div>
+              ) : (
+                '-'
+              )
+            }
+          />
+          <HorizontalSeparator />
+          <Card
+            title="Top protocol"
+            isLoading={isLoading}
+            className="border-0 p-0!"
+            value={
+              topProtocol ? (
+                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                  <span className="text-brand">{topProtocol.name}</span>
+                  <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
+                    {formatCurrency(topProtocol.volume, 'usd')}
                   </span>
                 </div>
               ) : (
