@@ -1,7 +1,9 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { Badge } from '~/components/core/Badge'
 import type { TrackedTxsStatusRow } from '../types'
-import { formatAge, formatTimestamp, statusRank } from '../utils'
+import { formatAge } from '../utils/formatAge'
+import { formatTimestamp } from '../utils/formatTimestamp'
+import { statusRank } from '../utils/statusRank'
 
 const columnHelper = createColumnHelper<TrackedTxsStatusRow>()
 
