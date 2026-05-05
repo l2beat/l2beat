@@ -1,8 +1,7 @@
 {
   "TokenBridge": {
-    "hash": "0x06093cab28394b5790c0a8281474cd818235258958a294ecad796fb89e7d017c",
+    "hash": "0x694d7e12e343544cde20da708d139637b87150808347040bf2ca863629f1bb19",
     "address": "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
-    "chain": "ethereum",
     "blockNumber": 24971481
   }
 }

@@ -1,14 +1,12 @@
 {
   "MorphRollup.sol": {
-    "hash": "0xf8331668c19c4399a7caf054895f9dd43a0593e13f4fdb6b7ac6cc2b130da357",
+    "hash": "0x1a21e145fcc9c88392b161dac0831fb7035003451f989744dd66226acf29fe92",
     "address": "eth:0xDF0749e688AE74508D84699Ba2405ED610Aaf8c5",
-    "chain": "ethereum",
     "blockNumber": 24147273
   },
   "Rollup_brokenPermissionlessUpgrade.sol": {
-    "hash": "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206",
+    "hash": "0xf2245511816e41809c0797ca21d473651cf3422e231ec798eaa47fc9593f8cd7",
     "address": "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3",
-    "chain": "ethereum",
     "blockNumber": 24583163
   }
 }

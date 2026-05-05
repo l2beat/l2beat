@@ -1,39 +1,37 @@
 {
   "DisputeGameFactory_v1_0_0": {
-    "hash": "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14",
+    "hash": "0x1980306d226136cbad2449a2c202c25d6c85457e35b935b96acd59ad61c467ce",
     "address": "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1": {
-    "hash": "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285",
+    "hash": "0xfbbe43e439b6631cf110db5ab40bb632fbb1e89cc43125e59a52305d4307e429",
     "address": "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1_beta1": {
-    "hash": "0xf7cf2190d189b696e5692189e19febdf104cd3fd154808bff23d7849e5ed343d",
+    "hash": "0x71f885d54da5ae8946517f732e71a54a05ab52a31144d3f43ed472f9388388dd",
     "address": "eth:0x71442A5586bde0f5EfD6588D01c2B2820D9D236D",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_0_1_beta3": {
-    "hash": "0xe74de8a6ebfd4ec156cf8699ce372d14df81ea1ce6e0a4b4460f1b3575aa658a",
+    "hash": "0x326ff068b55540939e0fce81b1ff1c41e660cf5fff97085fe38ab63ff33bcf8b",
     "address": "eth:0xe8b013bEE7Bd603e2f0B4825638559d645A4C4CB",
     "blockNumber": 22188285
   },
   "DisputeGameFactory_v1_2_0": {
-    "hash": "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689",
+    "hash": "0xdfa3b1f4fa753fd7160333c8075b29324bfc8f7c0764ca98384afe6e33790856",
     "address": "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D",
     "blockNumber": 22995199
   },
   "DisputeGameFactory_v1_3_0.sol": {
-    "hash": "0x19f3f7c7ee3977705261bfb86f826d5f97b885796f2246be7cc3e815c3e95dca",
+    "hash": "0x7daf6049672fd2ab7dc8dd3b6287e1d0a40958346c5e2857c4616a73dcac4da6",
     "address": "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50",
-    "chain": "ethereum",
     "blockNumber": 23881654
   },
   "DisputeGameFactory_v1_4_0": {
-    "hash": "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5",
+    "hash": "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538",
     "address": "eth:0xc040F392E52Cb6970CA8E110c280fE24E07C5e2c",
-    "chain": "ethereum",
     "blockNumber": 24305724
   }
 }

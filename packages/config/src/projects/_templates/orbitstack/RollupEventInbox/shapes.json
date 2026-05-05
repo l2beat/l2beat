@@ -10,12 +10,12 @@
     "blockNumber": 22188285
   },
   "RollupEventInbox": {
-    "hash": "0xcb5aa9193bb40ce04bdf027377926cf735cd52ee9823923cb55fce302ad76513",
+    "hash": "0xac0214355b00c0925d0b13f0763bb2aaf0275deb95a7045fba3c23b8b9919774",
     "address": "eth:0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
     "blockNumber": 22188285
   },
   "RollupEventInbox_BoLD": {
-    "hash": "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8",
+    "hash": "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19",
     "address": "eth:0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5",
     "blockNumber": 22188285
   },
@@ -25,7 +25,7 @@
     "blockNumber": 22188285
   },
   "ERC20RollupEventInbox_BoLD": {
-    "hash": "0x089ac3cec821c0f014f284ec4ec1039ef6bc50b6ad3ee47c82e20af65cc30c33",
+    "hash": "0x30d86d66b2eba9a29c67fd3a446f636d4d7835b6d679dab61a2cfc6e10b97b23",
     "address": "eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe",
     "blockNumber": 24398013
   }

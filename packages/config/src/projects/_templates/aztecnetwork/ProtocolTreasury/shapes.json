@@ -1,8 +1,7 @@
 {
   "ProtocolTreasury.sol": {
-    "hash": "0x7b8550d2aa8397c59330dca1f180e102e8bbbab775c39cbcd9c48d35358530db",
+    "hash": "0x47a6b396b5e4531818f04a9d4657c9e92c2bc02e75647fe06a0221dd4dc5bfd8",
     "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-    "chain": "ethereum",
     "blockNumber": 23834069
   }
 }
