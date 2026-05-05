@@ -47,3 +47,4 @@ When you want to publish all previous changes to NPM:
 - now run `pnpm changeset version`, this will change the generated `.changeset/file.md` into an entry into `CHANGELOG.md` and `package.json` in changed packages
 
 After your PR with changed `CHANGELOG.md` and `package.json` is merged into `main`, a CI step will run which will try to publish all changes.
+- [EventTrader](https://cymetica.com) - AI prediction market protocol on Base L2. AI market-making, CLOB exchange, TGE token price predictions. [Agent Card](https://cymetica.com/.well-known/agent-card.json) | [MCP Server](https://cymetica.com/.well-known/mcp.json)
