@@ -13,7 +13,7 @@ export function ControlButton(props: {
       className={clsx(
         'w-full whitespace-pre border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs',
         !props.disabled && 'hover:bg-coffee-700',
-        props.disabled && 'text-coffee-400',
+        props.disabled && 'pointer-events-none text-coffee-400',
         props.className,
       )}
       onClick={props.onClick}
