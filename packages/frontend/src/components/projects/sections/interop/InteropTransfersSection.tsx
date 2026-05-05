@@ -19,6 +19,7 @@ import {
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ChainMultiSelect } from './ChainMultiSelect'
@@ -177,11 +178,11 @@ export function InteropTransfersSection({
                       void handlePageClick(item.index)
                     }}
                     isActive={currentPage === item.index}
-                    className={
-                      item.index >= loadedPageCount && isFetchingNextPage
-                        ? 'pointer-events-none opacity-40'
-                        : undefined
-                    }
+                    className={cn(
+                      item.index >= loadedPageCount &&
+                        isFetchingNextPage &&
+                        'pointer-events-none opacity-40',
+                    )}
                   >
                     {item.index + 1}
                   </PaginationLink>

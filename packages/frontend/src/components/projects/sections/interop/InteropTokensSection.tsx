@@ -46,7 +46,7 @@ export function InteropTokensSection({
         id: projectId,
       },
       {
-        enabled: data.entry !== undefined,
+        enabled: !!data.entry,
       },
     )
 

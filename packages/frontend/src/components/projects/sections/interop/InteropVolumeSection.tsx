@@ -73,7 +73,6 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
     (chain) => activeIds.has(chain.id),
   )
 
-  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
   const shouldShowInactiveChainsInfo =
     !!data && inactiveChains.length > 0 && !isLoading
 
@@ -105,18 +104,18 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
         baseDollarsPerParticle={25}
       />
-      {shouldRenderInactiveChainsInfo && (
+      {shouldShowInactiveChainsInfo && (
         <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
-          {shouldShowInactiveChainsInfo ? (
+          {isLoading ? (
+            <Skeleton className="h-4 w-40 md:h-5" />
+          ) : (
             <>
               <span className="font-normal text-secondary text-xs leading-none md:text-base">
                 No transfers detected for
               </span>
               <InactiveChainsDialog chains={inactiveChains} />
             </>
-          ) : isLoading ? (
-            <Skeleton className="h-4 w-40 md:h-5" />
-          ) : null}
+          )}
         </div>
       )}
       {!isLoading && data && (
