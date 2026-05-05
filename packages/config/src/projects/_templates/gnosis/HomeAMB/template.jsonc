@@ -2,7 +2,9 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "bridge-canonical",
   "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
-  "ignoreMethods": ["isAlreadyProcessed"],
+  "ignoreMethods": [
+    "isAlreadyProcessed"
+  ],
   "fields": {
     "owner": {
       "permissions": [
@@ -22,7 +24,12 @@
     },
     "validatorContract": {
       "description": "Validator contract that must sign AMB bridge messages before they can be executed on Gnosis.",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "act" // not very clean but resolves the GNO minting perm correctly
+        }
+      ]
     },
     "hashiManager": {
       "description": "Optional Hashi-based validation manager used as an additional verification layer for AMB messages from Ethereum.",

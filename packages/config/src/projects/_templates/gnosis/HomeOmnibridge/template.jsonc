@@ -6,9 +6,6 @@
     "owner": {
       "permissions": [
         {
-          "type": "act" // not very clean but resolves the GNO minting perm correctly
-        },
-        {
           "type": "interact",
           "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers."
         }
@@ -24,12 +21,20 @@
     },
     "bridgeContract": {
       "description": "AMB bridge endpoint used as the cross-chain messaging layer for the Gnosis-side Omnibridge mediator.",
-      "severity": "HIGH"
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "act" // not very clean but resolves the GNO minting perm correctly
+        }
+      ]
     },
     "mediatorContractOnOtherSide": {
       "description": "Counterpart Omnibridge mediator on Ethereum.",
       "severity": "HIGH",
-      "edit": ["format", "EthereumAddress"]
+      "edit": [
+        "format",
+        "EthereumAddress"
+      ]
     },
     "tokenFactory": {
       "description": "Factory used to deploy wrapped tokens for assets bridged from Ethereum to Gnosis.",

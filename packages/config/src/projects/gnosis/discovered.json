@@ -2137,6 +2137,13 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": ".bridgeContract"
+        }
+      ],
       "sinceTimestamp": 1579258310,
       "sinceBlock": 7904954,
       "values": {
@@ -2324,15 +2331,6 @@
         },
         {
           "permission": "interact",
-          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
-          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
-          "role": ".owner",
-          "via": [
-            { "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" }
-          ]
-        },
-        {
-          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
@@ -2401,13 +2399,6 @@
           "permission": "upgrade",
           "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
           "role": "admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2612,6 +2603,25 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
+          "role": ".owner",
+          "via": [
+            { "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" },
+            { "address": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "role": ".validatorContract"
+        }
+      ],
       "sinceTimestamp": 1579258260,
       "sinceBlock": 7904944,
       "values": {
@@ -4622,5 +4632,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25022121, "gnosis": 46002884 },
-  "permissionsConfigHash": "0xbf14be387f90a030ea50ea78d34e191fd0e42e376e70bb1315f72497fe60496a"
+  "permissionsConfigHash": "0xce758efe178571f8566b15cafa6580e011a01d620caaffed0999229652eeaa8e"
 }
