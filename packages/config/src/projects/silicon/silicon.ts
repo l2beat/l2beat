@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { agglayer } from '../../templates/agglayer'
@@ -13,6 +14,41 @@ export const silicon: ScalingProject = agglayer({
   additionalBadges: [BADGES.RaaS.Nodeinfra],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: false,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: false,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/0xPolygonHermez/cdk-erigon',
+    },
+  ),
   display: {
     name: 'Silicon',
     slug: 'silicon',

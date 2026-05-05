@@ -15,6 +15,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -95,9 +96,41 @@ export const myria: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: false,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: false,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',
+    },
+  ),
   chainConfig: {
     name: 'myria',
     chainId: undefined,
