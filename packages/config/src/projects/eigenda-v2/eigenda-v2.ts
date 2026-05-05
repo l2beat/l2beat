@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
@@ -9,6 +9,11 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
+
+const EIGENUpgradeDelay = discovery.getContractValue<number>(
+  'TimelockControllerOwning',
+  'getMinDelay',
+)
 
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'RegistryCoordinator',
@@ -136,4 +141,34 @@ This architecture provides improved throughput and eliminates single points of f
       relayerFailure: DaRelayerFailureRisk.SelfPropose,
     },
   },
+  contracts: {
+    addresses: discovery.getDiscoveredContracts(),
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDACertVerifier or EigenDACertVerifierRouter contracts receive a malicious code upgrade and accept invalid certificates. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDAServiceManager (BLS signature verifier) contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `the EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a sequencer posts an incorrect or malicious DA certificate that is accepted by the verifier contract.',
+      },
+    ],
+  },
+  permissions: discovery.getDiscoveredPermissions(),
 }
