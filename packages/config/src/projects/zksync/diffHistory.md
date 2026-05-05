@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x4f938442c91708e273ba389abd111c74abd39a80
+
+# Diff at Tue, 05 May 2026 09:49:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1774020135
+- current timestamp: 1777974504
+
+## Description
+
+Paused deposits to zksync. Upgraded zksync contract by adding token migration to claim distributor: https://disco.l2beat.com/diff/eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9/eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff. More precisely, added:
+
+- `l1ClaimDistributor` smart contract that will likely be this contract: https://etherscan.io/address/0xfb94f8a45e81fa9f6256ddb0eec0735b8520cdea#code. It's supposed to store Merkle root of all toknes `claimRoot` and let users permissionlessly claim their funds agains the root
+- `pauseDeposits` function that permanently halts deposits into zksync L2
+- `setClaimRoot` function that sets withdrawal smart contracts and activates exodus mode
+- `migrateToken` function that transfers given token to the registered claim distributor contract.
+
+Deposits to L2 were halted, no further actions (setting claim distributor, claim root) were taken yet. 
+
+## Watched changes
+
+```diff
+    contract Multisig 3 (eth:0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863"
++        "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      values.versionId:
+-        12
++        13
+    }
+```
+
+```diff
+    contract ZkSync (eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
++        "0x61d3f542bbc9d106202e9567a3c0c27937e00124d0184672b28771278a57fcb7"
+      values.$implementation.0:
+-        "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9"
++        "eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff"
+      values.$implementation.1:
+-        "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
++        "eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d"
+      values.pausedDeposits:
++        true
+      implementationNames.eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9:
+-        "ZkSync"
+      implementationNames.eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD:
+-        "AdditionalZkSync"
+      implementationNames.eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff:
++        "ZkSync"
+      implementationNames.eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d:
++        "AdditionalZkSync"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkSync/AdditionalZkSync.2.sol                  | 2281 ++----------------
+ .../ZkSync/ZkSync.1.sol                            | 2484 ++------------------
+ 2 files changed, 386 insertions(+), 4379 deletions(-)
+```
+
 Generated with discovered.json: 0x39a366b037118b460d5e8940aad1cc833b59306f
 
 # Diff at Fri, 20 Mar 2026 15:23:18 GMT:
