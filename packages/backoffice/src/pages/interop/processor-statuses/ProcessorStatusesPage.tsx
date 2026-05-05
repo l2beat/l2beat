@@ -18,7 +18,7 @@ import { formatProcessorTimestamp } from './utils'
 
 export function ProcessorStatusesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.status.processors.useQuery(undefined, {
+    api.interop.status.processors.useQuery(undefined, {
       refetchInterval: 2_500,
     })
 
@@ -30,7 +30,7 @@ export function ProcessorStatusesPage() {
   )
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

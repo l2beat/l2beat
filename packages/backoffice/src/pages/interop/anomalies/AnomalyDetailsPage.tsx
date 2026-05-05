@@ -28,7 +28,7 @@ export function AnomalyDetailsPage() {
     : { id: '' }
 
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.anomalies.aggregateDetails.useQuery(detailsInput, {
+    api.interop.anomalies.aggregateDetails.useQuery(detailsInput, {
       enabled: hasValidParams,
     })
 
@@ -36,7 +36,7 @@ export function AnomalyDetailsPage() {
   const latestPoint = rows.at(-1)
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

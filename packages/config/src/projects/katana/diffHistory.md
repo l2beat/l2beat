@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x803e30e063e2afd6d194e087d3d9e822847241e0
+
+# Diff at Wed, 29 Apr 2026 08:37:50 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1777024331
+- current timestamp: 1777451715
+
+## Description
+
+Two unrelated changes:
+
+1. **EOA `0x227D9Ea8...` set up an EIP-7702 delegation.** This EOA is a signer on two katana multisigs. It now delegates to `0x63c0c19a...` (MetaMask's `EIP7702StatelessDeleGator` v1.3.0) with `delegationManager = 0xdb9B1e94...` and `entryPoint = 0x00000000...da032` (ERC-4337 EntryPoint v0.7). No protocol change for katana — just the signer's own EOA upgrading to a smart-account setup that runs through ERC-4337.
+
+2. **Conduit Multisig 1 (`eth:0x4a496227...`)** — signer `0x381624F7` removed. Threshold unchanged at 4; total signers 13 → 12 (31% → 33%). Same shared multisig change observed on `forknet`.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x876a24e12d1595ba43f838917743b4ea108e3957c4df5ec812cf3348b156d941","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 13 (31%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x3c1d650d30e35bc107663c7573d3b22015fd3be6
 
 # Diff at Fri, 24 Apr 2026 10:10:16 GMT:

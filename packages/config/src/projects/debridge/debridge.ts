@@ -12,6 +12,7 @@ export const debridge: BaseProject = {
   addedAt: UnixTime(1673362295),
   // this is only the debridge messaging and token bridge
   interopConfig: {
+    description: 'Token bridge using the deBridge message bridge.',
     name: 'deBridge',
     plugins: [
       {

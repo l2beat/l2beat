@@ -31,6 +31,7 @@ import {
 } from '~/components/core/Table'
 import { cn } from '~/utils/cn'
 import { ExportTableCsvButton } from './ExportTableCsvButton'
+import { TableFilterBuilder } from './filter/TableFilterBuilder'
 import { SortableHeader } from './SortableHeader'
 import type { PageSizeOption } from './useTanStackTable'
 
@@ -142,7 +143,7 @@ export function TanStackTable<TData extends RowData>({
   return (
     <>
       <div className="flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           {onSearchValueChange ? (
             <div className="relative w-full sm:max-w-sm">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
@@ -161,9 +162,11 @@ export function TanStackTable<TData extends RowData>({
             </div>
           ) : null}
 
+          <TableFilterBuilder table={table} />
+
           {typeof totalRowsCount === 'number' ? (
             <span className="text-muted-foreground text-sm">
-              {searchValue?.trim()
+              {searchValue?.trim() || table.getState().columnFilters.length > 0
                 ? `${filteredRowsCount ?? totalRowsCount} matching rows`
                 : `${totalRowsCount} rows`}
             </span>

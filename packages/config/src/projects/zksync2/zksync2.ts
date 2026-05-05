@@ -17,6 +17,9 @@ const chainId = 324
 // https://etherscan.io/tx/0x2829993f6183647fc954ec75b67441ab0e597f445a3f5d6f976733775ca06f26#eventlog
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
+// timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
+const eraMultisigValidatorTs = UnixTime(1777393175)
+
 export const zksync2: ScalingProject = zkStackL2({
   chainId,
   addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
@@ -454,6 +457,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: l1migrationTs,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0xdC26B08F0335b68721F64001C38b05D0BC9B539d'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
     {
@@ -599,6 +620,24 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: l1migrationTs,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: EthereumAddress(
+          '0x32400084C286CF3E17e7B677ea9583e60a000324',
+        ),
+        address: EthereumAddress('0xdC26B08F0335b68721F64001C38b05D0BC9B539d'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
   ],

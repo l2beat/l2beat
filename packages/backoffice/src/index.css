@@ -9,6 +9,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --size-lh: 1lh;
+  --spacing-environment-banner: 20px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -40,6 +41,9 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-environment-local: var(--environment-local);
+  --color-environment-staging: var(--environment-staging);
+  --color-environment-production: var(--environment-production);
 }
 
 :root {
@@ -75,6 +79,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --environment-local: oklch(0.685 0.169 237.323);
+  --environment-staging: oklch(0.652 0.232 5.6deg);
+  --environment-production: oklch(0.515 0.23 315deg);
 }
 
 .dark {

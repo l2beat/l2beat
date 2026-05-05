@@ -29,6 +29,7 @@ export function createSuspiciousTransfersColumns(options: {
       header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('transferId', {
@@ -45,24 +46,28 @@ export function createSuspiciousTransfersColumns(options: {
       header: 'Type',
       meta: {
         csvHeader: 'Type',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('bridgeType', {
       header: 'Bridge type',
       meta: {
         csvHeader: 'Bridge type',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('srcChain', {
       header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('dstChain', {
       header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('srcTokenAddress', {

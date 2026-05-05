@@ -10,7 +10,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 
 export function BackofficeLandingPage() {
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader>

@@ -35,7 +35,7 @@ export function AggregatesPage() {
     isLoading: isAggregatesLoading,
     isFetching: isAggregatesFetching,
     refetch: refetchAggregates,
-  } = api.aggregates.latest.useQuery()
+  } = api.interop.aggregates.latest.useQuery()
 
   const {
     data: chainsData,
@@ -43,7 +43,7 @@ export function AggregatesPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const response: AggregatesResponse | undefined = aggregatesData
   const chains: ChainMetadata[] = chainsData ?? []
@@ -82,8 +82,8 @@ export function AggregatesPage() {
   }
 
   return (
-    <AppLayout className="min-h-screen">
-      <div className="flex flex-col gap-4 p-4">
+    <AppLayout>
+      <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x65db1babac4f24853defddba68d6544d2fdb06e6
+
+# Diff at Tue, 28 Apr 2026 15:45:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1776158984
+- current timestamp: 1777390966
+
+## Description
+
+Sequencer-side Safe (`eth:0x63eCafD2...`) gained one new signer (`0x12130aF2`). Threshold unchanged at 1; total signers 3 → 4 (1-of-3 → 1-of-4 — note this *weakens* the threshold ratio: any one of 4 can still execute).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 4 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xdba748d6aa232bf6d266e507b4626f7d513b835a
 
 # Diff at Tue, 14 Apr 2026 09:31:55 GMT:

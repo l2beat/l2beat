@@ -17,14 +17,14 @@ import type { EventStatsRow } from './types'
 
 export function EventsPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.events.stats.useQuery()
+    api.interop.events.stats.useQuery()
 
   const rows: EventStatsRow[] = data ?? []
   const totalEvents = rows.reduce((sum, row) => sum + row.count, 0)
   const unmatchedEvents = rows.reduce((sum, row) => sum + row.unmatched, 0)
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

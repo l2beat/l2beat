@@ -1,6 +1,6 @@
 {
   "name": "brine",
-  "timestamp": 1741185671,
+  "timestamp": 1777546397,
   "configHash": "0x90b8abb3b68415f26de946d10925631f7dde8f333a9327b7feb2edb07ef72a26",
   "entries": [
     {
@@ -69,8 +69,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 8575,
-        "getOrderRoot": "1031509786002287148702332147900216116001518272025102076641953394895937127283",
+        "getLastBatchId": 12869,
+        "getOrderRoot": "2544921970309519073835624828529503879140330454686680885027753039499476532129",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
@@ -80,10 +80,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 8419,
+        "getSequenceNumber": 12651,
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "936387733191507873094592096051483170647890439741044782239805417491661168442",
+        "getValidiumVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -230,7 +230,7 @@
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": true,
+        "hasRegisteredFact": false,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
@@ -688,6 +688,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 21981345 },
+  "usedBlockNumbers": { "ethereum": 24992451 },
   "permissionsConfigHash": "0x637fe6a8f9a000c2cd3d86693c53a6f39ee353b3cbffdf6ad16a68e4784bd0fe"
 }

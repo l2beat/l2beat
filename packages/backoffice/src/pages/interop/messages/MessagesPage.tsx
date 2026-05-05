@@ -18,7 +18,7 @@ import { formatKnownAppCoverage } from './utils'
 
 export function MessagesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.messages.stats.useQuery()
+    api.interop.messages.stats.useQuery()
 
   const rows: MessageStatsRow[] = data ?? []
   const totalMessages = rows.reduce((sum, row) => sum + row.count, 0)
@@ -33,7 +33,7 @@ export function MessagesPage() {
   )
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

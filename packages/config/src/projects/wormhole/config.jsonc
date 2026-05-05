@@ -16,88 +16,10 @@
   },
   "overrides": {
     "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": {
-      "category": "core",
-      "description": "Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge.",
-      "references": [
-        {
-          "text": "Wormhole contract addresses",
-          "href": "https://wormhole.com/docs/products/reference/contract-addresses/"
-        }
-      ],
-      "ignoreRelatives": ["$admin"],
-      "ignoreMethods": ["quorum"],
-      "fields": {
-        "guardianSet": {
-          "description": "The active Wormhole Guardian set. A quorum of these addresses signs VAAs accepted by this Core Bridge.",
-          "severity": "HIGH",
-          "type": "PERMISSION",
-          "handler": {
-            "type": "call",
-            "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
-            "args": ["{{ getCurrentGuardianSetIndex }}"]
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "sign VAAs that Wormhole Core accepts as cross-chain messages."
-            },
-            {
-              "type": "interact",
-              "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs."
-            },
-            {
-              "type": "interact",
-              "description": "authorize Token Bridge governance VAAs that can upgrade the bridge or register remote Token Bridge emitters."
-            },
-            {
-              "type": "interact",
-              "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on Ethereum."
-            }
-          ]
-        },
-        "quorum": {
-          "description": "Number of Guardian signatures required for each Guardian set size up to 30.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER",
-          "handler": { "type": "array", "method": "quorum", "length": 30 }
-        },
-        "getCurrentGuardianSetIndex": {
-          "description": "Index of the Guardian set currently used to validate VAAs.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "getGuardianSetExpiry": {
-          "description": "Expiry delay applied to old Guardian sets after a rotation.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceChainId": {
-          "description": "Wormhole chain id from which Core governance messages are accepted.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceContract": {
-          "description": "Emitter address authorized to send Core governance messages.",
-          "severity": "HIGH",
-          "type": "PERMISSION"
-        },
-        "messageFee": {
-          "description": "Fee required to publish a Wormhole message on Ethereum.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        }
-      }
+      "description": "Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge."
     },
     "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": {
-      "category": "bridge-external",
       "description": "Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.",
-      "references": [
-        {
-          "text": "Wormhole Token Bridge address",
-          "href": "https://wormhole.com/docs/products/reference/contract-addresses/#wrapped-token-transfers-wtt"
-        }
-      ],
-      "ignoreRelatives": ["$admin", "WETH"],
       "fields": {
         "solanaTokenBridge": {
           "description": "The Solana Token Bridge emitter address trusted for Token Bridge VAAs from Solana.",
@@ -139,43 +61,12 @@
             "method": "outstandingBridged",
             "args": ["0xd31a59c85ae9d8edefec411d448f90841571b89c"]
           }
-        },
-        "finality": {
-          "description": "Consistency level used when this Token Bridge publishes Wormhole messages from Ethereum.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceChainId": {
-          "description": "Wormhole chain id from which Token Bridge governance messages are accepted.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
-        "governanceContract": {
-          "description": "Emitter address authorized to send Token Bridge governance messages.",
-          "severity": "HIGH",
-          "type": "PERMISSION"
-        },
-        "implementation": {
-          "description": "Beacon implementation returned by the Token Bridge for wrapped token proxies. Changing it changes the code used by wrapped assets such as WSOL.",
-          "severity": "HIGH",
-          "type": "CODE_CHANGE"
-        },
-        "tokenImplementation": {
-          "description": "Implementation used by wrapped ERC20 assets created by this Token Bridge.",
-          "severity": "HIGH",
-          "type": "CODE_CHANGE"
-        },
-        "wormhole": {
-          "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by the Token Bridge.",
-          "severity": "HIGH",
-          "type": "PERMISSION"
         }
       }
     },
-    "eth:0xd31a59c85ae9d8edefec411d448f90841571b89c": {
+    "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c": {
       "category": "bridge-external",
       "description": "WSOL is the Wormhole-wrapped ERC20 representation of native SOL on Ethereum. The Token Bridge owns this token and mints or burns it after accepting valid Token Bridge VAAs for the Solana route. The native SOL backing is escrowed on Solana, not Ethereum.",
-      "ignoreRelatives": ["$admin", "eip712Domain", "owner"],
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "chainId": {
@@ -209,11 +100,6 @@
           "type": "RISK_PARAMETER"
         }
       }
-    },
-    "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": {
-      "category": "shared",
-      "description": "ERC20 implementation used by Wormhole wrapped tokens on Ethereum.",
-      "ignoreRelatives": ["eip712Domain", "owner"]
     }
   }
 }

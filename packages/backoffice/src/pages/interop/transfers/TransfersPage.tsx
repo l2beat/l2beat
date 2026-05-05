@@ -17,7 +17,7 @@ import { formatDollars } from './utils'
 
 export function TransfersPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.transfers.stats.useQuery()
+    api.interop.transfers.stats.useQuery()
 
   const rows: TransferStatsRow[] = data ?? []
   const totalTransfers = rows.reduce((sum, row) => sum + row.count, 0)
@@ -26,7 +26,7 @@ export function TransfersPage() {
   const totalPairs = rows.reduce((sum, row) => sum + row.chains.length, 0)
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

@@ -41,7 +41,7 @@ export function getInteropProtocolEntry(
       impactfulChange: false,
     }),
     header: {
-      description: project.display?.description,
+      description: project.interopConfig.description,
       warning: project.statuses?.yellowWarning,
       redWarning: project.statuses?.redWarning,
       emergencyWarning: project.statuses?.emergencyWarning,

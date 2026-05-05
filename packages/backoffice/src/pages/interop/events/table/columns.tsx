@@ -9,6 +9,9 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     header: 'Type',
     meta: {
       csvHeader: 'Type',
+      filter: {
+        kind: 'select',
+      },
     },
   }),
   columnHelper.accessor('direction', {
@@ -17,6 +20,9 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     meta: {
       csvHeader: 'Direction',
       getCsvValue: ({ row }) => row.original.direction ?? '-',
+      filter: {
+        kind: 'select',
+      },
     },
   }),
   columnHelper.accessor('count', {

@@ -88,6 +88,7 @@ export interface DeclarationFilePair {
 export class ParsedFilesManager {
   private files: ParsedFile[] = []
   private options: FlattenOptions = {}
+  private remappings: Remapping[] = []
 
   static parseFiles(
     files: FileContent[],
@@ -97,9 +98,9 @@ export class ParsedFilesManager {
     const result = new ParsedFilesManager()
     result.options = options ?? result.options
 
-    const remappings = decodeRemappings(remappingStrings)
+    result.remappings = decodeRemappings(remappingStrings)
     result.files = files.map(({ path, content }) => {
-      const remappedPath = resolveRemappings(path, remappings)
+      const remappedPath = result.resolveRemappings(path)
       return {
         path: remappedPath,
         normalizedPath: posix.normalize(remappedPath),
@@ -125,7 +126,7 @@ export class ParsedFilesManager {
 
       file.importDirectives = result.resolveFileImports(
         file,
-        remappings,
+        result.remappings,
         alreadyImportedObjects,
       )
     }
@@ -437,21 +438,6 @@ export class ParsedFilesManager {
     return matchingFile
   }
 
-  findRootDeclaration(declarationName: string): DeclarationFilePair {
-    const file = this.findFileRootDeclaring(declarationName)
-
-    const matchingDeclaration = findOne(
-      file.topLevelDeclarations,
-      (c) => c.name === declarationName,
-    )
-    assert(matchingDeclaration !== undefined, 'Declaration not found')
-
-    return {
-      declaration: matchingDeclaration,
-      file,
-    }
-  }
-
   findDeclaration(
     declarationName: string,
     file?: ParsedFile,
@@ -468,6 +454,33 @@ export class ParsedFilesManager {
       declaration: matchingDeclaration,
       file,
     }
+  }
+
+  findDeclarationAt(
+    declarationName: string,
+    path?: string,
+  ): DeclarationFilePair {
+    const file = path
+      ? this.findFile(path)
+      : this.findFileRootDeclaring(declarationName)
+
+    const matchingDeclaration = findOne(
+      file.topLevelDeclarations,
+      (c) => c.name === declarationName,
+    )
+    assert(matchingDeclaration !== undefined, 'Declaration not found')
+
+    return {
+      declaration: matchingDeclaration,
+      file,
+    }
+  }
+
+  private findFile(rawPath: string): ParsedFile {
+    const path = this.resolveRemappings(rawPath)
+    const matchingFile = findOne(this.files, (f) => f.path === path)
+    assert(matchingFile !== undefined, `Failed to find the root file ${path}`)
+    return matchingFile
   }
 
   private resolveImportPath(
@@ -499,6 +512,26 @@ export class ParsedFilesManager {
 
     return matchingFile
   }
+
+  private resolveRemappings(path: string): string {
+    const matchingRemappings = this.remappings
+      .filter((r) => path.startsWith(r.prefix))
+      .filter((r) => r.context.length === 0)
+
+    if (matchingRemappings.length > 0) {
+      const longest = matchingRemappings.reduce((a, b) =>
+        a.prefix.length > b.prefix.length ? a : b,
+      )
+
+      const result = posix.join(
+        longest.target,
+        path.slice(longest.prefix.length),
+      )
+      return result
+    }
+
+    return path
+  }
 }
 
 // Takes a user defined type name such as `MyLibrary.MyStructInLibrary` and
@@ -529,20 +562,6 @@ function decodeRemappings(remappingStrings: string[]): Remapping[] {
     assert(target !== undefined, 'Invalid remapping, missing target.')
     return { context, prefix, target }
   })
-}
-
-function resolveRemappings(path: string, remappings: Remapping[]): string {
-  const matchingRemappings = remappings.filter((r) => path.startsWith(r.prefix))
-  if (matchingRemappings.length > 0) {
-    const longest = matchingRemappings.reduce((a, b) =>
-      a.prefix.length > b.prefix.length ? a : b,
-    )
-
-    const result = posix.join(longest.target, path.slice(longest.prefix.length))
-    return result
-  }
-
-  return path
 }
 
 function solcAbsolutePath(path: string, context: string): string {

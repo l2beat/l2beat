@@ -14,12 +14,18 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
     header: 'Plugin',
     meta: {
       csvHeader: 'Plugin',
+      filter: {
+        kind: 'select',
+      },
     },
   }),
   columnHelper.accessor('type', {
     header: 'Type',
     meta: {
       csvHeader: 'Type',
+      filter: {
+        kind: 'select',
+      },
     },
   }),
   columnHelper.accessor('count', {

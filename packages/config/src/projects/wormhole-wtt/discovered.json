@@ -1,12 +1,38 @@
 {
   "name": "wormhole-wtt",
-  "timestamp": 1777295406,
-  "configHash": "0xe463a6311ff10dbff473c08e55d67e1efbfcda1f3e0989e3daab4b2d51f8fed2",
+  "timestamp": 1777463509,
+  "configHash": "0x7ae2634515218aa30d86643c3f5b9ffba538337d37f36d3cc64882f952edebd6",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "name": "TokenImplementation",
@@ -17,7 +43,7 @@
         "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
       ],
       "proxyType": "immutable",
-      "description": "Wormhole wrapped ERC20 token implementation used directly or behind Beacon proxies. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.",
+      "description": "Wormhole wrapped ERC20 token implementation. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.",
       "sinceTimestamp": 1663610147,
       "sinceBlock": 15569178,
       "values": {
@@ -47,27 +73,157 @@
     {
       "address": "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x11b39756C042441BE6D8650b69b54EbE715E2343",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "name": "WormholeRelayer",
@@ -188,20 +344,105 @@
         "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wormhole": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
       },
+      "fieldMeta": {
+        "finality": {
+          "severity": "HIGH",
+          "description": "Consistency level used when this Token Bridge publishes Wormhole messages from the local chain.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceChainId": {
+          "severity": "HIGH",
+          "description": "Wormhole chain id from which Token Bridge governance messages are accepted.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceContract": {
+          "severity": "HIGH",
+          "description": "Emitter address authorized to send Token Bridge governance messages.",
+          "type": "PERMISSION"
+        },
+        "implementation": {
+          "severity": "HIGH",
+          "description": "Beacon implementation returned by the Token Bridge for wrapped token proxies. Changing it changes the code used by wrapped assets minted by this bridge.",
+          "type": "CODE_CHANGE"
+        },
+        "tokenImplementation": {
+          "severity": "HIGH",
+          "description": "Implementation used by wrapped ERC20 assets created by this Token Bridge.",
+          "type": "CODE_CHANGE"
+        },
+        "wormhole": {
+          "severity": "HIGH",
+          "description": "The Wormhole Core Bridge used to verify Guardian-signed VAAs consumed by this Token Bridge.",
+          "type": "PERMISSION"
+        }
+      },
       "implementationNames": {
         "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": "TokenBridge",
         "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": "BridgeImplementation"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0x43ac8f567A31e7850Da532B361988Bfe0d3ae11b",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
@@ -219,12 +460,64 @@
     {
       "address": "eth:0x5E1487F35515d02A92753504a8D75471b9f49EdB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "name": "NFTBridge",
@@ -286,7 +579,33 @@
     {
       "address": "eth:0x74a3bf913953D695260D88BC1aA25A4eeE363ef0",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "name": "",
@@ -332,12 +651,64 @@
     {
       "address": "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0x938f104AEb5581293216ce97d771e0CB721221B1",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "name": "WormholeCore",
@@ -374,6 +745,7 @@
         ],
         "$upgradeCount": 3,
         "chainId": 2,
+        "currentQuorumHardcoded": 13,
         "evmChainId": 1,
         "getCurrentGuardianSetIndex": 5,
         "getGuardianSetExpiry": 0,
@@ -410,10 +782,54 @@
           15, 15, 16, 17, 17, 18, 19, 19, 20
         ]
       },
+      "fieldMeta": {
+        "guardianSet": {
+          "severity": "HIGH",
+          "description": "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed.",
+          "type": "PERMISSION"
+        },
+        "quorum": {
+          "severity": "HIGH",
+          "description": "Number of Guardian signatures required for each Guardian set size up to 30.",
+          "type": "RISK_PARAMETER"
+        },
+        "getCurrentGuardianSetIndex": {
+          "severity": "HIGH",
+          "description": "Index of the Guardian set currently used to validate VAAs.",
+          "type": "RISK_PARAMETER"
+        },
+        "getGuardianSetExpiry": {
+          "severity": "HIGH",
+          "description": "Expiry delay applied to old Guardian sets after a rotation.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceChainId": {
+          "severity": "HIGH",
+          "description": "Wormhole chain id from which Core governance messages are accepted.",
+          "type": "RISK_PARAMETER"
+        },
+        "governanceContract": {
+          "severity": "HIGH",
+          "description": "Emitter address authorized to send Core governance messages.",
+          "type": "PERMISSION"
+        },
+        "messageFee": {
+          "severity": "HIGH",
+          "description": "Fee required to publish a Wormhole message on the local chain.",
+          "type": "RISK_PARAMETER"
+        }
+      },
       "implementationNames": {
         "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": "Wormhole",
         "eth:0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0": "Implementation"
-      }
+      },
+      "references": [
+        {
+          "text": "Wormhole contract addresses",
+          "href": "https://wormhole.com/docs/products/reference/contract-addresses/"
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "CircleIntegration",
@@ -462,20 +878,129 @@
     {
       "address": "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0xD1F64e26238811de5553C40f64af41eE1B6057Cc",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -507,12 +1032,64 @@
     {
       "address": "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     },
     {
       "address": "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge governance VAAs that can upgrade the local bridge or register remote Token Bridge emitters.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Token Bridge transfer VAAs that mint wrapped assets or release escrowed assets on the local chain.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "authorize Wormhole Core upgrades, Guardian set rotations, message fee changes, and fee transfers through governance VAAs.",
+          "role": ".guardianSet"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+          "description": "sign VAAs that Wormhole Core accepts as cross-chain messages.",
+          "role": ".guardianSet"
+        }
+      ]
     }
   ],
   "abis": {
@@ -829,10 +1406,10 @@
     ]
   },
   "usedTemplates": {
-    "wormhole/BridgeToken": "0x7592d389e3f9abed7e9ab3a76f0afc91bfcda0372495c36c98295e11094cf354",
-    "wormhole/TokenBridge": "0x8163f10ff3a50f8996fcae18f7160579779678b5c7b65bbb1f20240a323df847",
-    "wormhole/WormholeCore": "0x583f840b9a2770e82da0e0b2196e675ab668adab613d0e0960654fd6af99be37"
+    "wormhole/BridgeToken": "0x094b8dc4d31b4ce31c889bef6d8375fa850c90ba52a4196ef22761d3acc48ef8",
+    "wormhole/TokenBridge": "0xd15c6606803bc4afae7e428a38a2b40690d1fb4e5fd3d29b47d3e66116582d15",
+    "wormhole/WormholeCore": "0x8d2d7315081026feab60e1c1d0c65c94288e55e984bad7f3d0e495d8ebb026e1"
   },
-  "usedBlockNumbers": { "ethereum": 24971587 },
-  "permissionsConfigHash": "0x4d9a3a2e40f1051cddfdc50a82116b40a0fb79662d84a0eacc4ec042a15f92b3"
+  "usedBlockNumbers": { "ethereum": 24985560 },
+  "permissionsConfigHash": "0x17d1fa5b205df413de521374326ef6d07eae6070f5bcf5cf4ee0fe94949bacd7"
 }

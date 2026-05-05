@@ -167,7 +167,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         const result = await rpc.call(
           {
             to: V2_MESSAGE_TRANSMITTER,
-            data: Bytes.fromHex(calldata),
+            input: Bytes.fromHex(calldata),
           },
           'latest',
         )

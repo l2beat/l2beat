@@ -1,6 +1,6 @@
 import { INTEROP_CHAINS } from '@l2beat/config'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 
 type Dependencies = {
   getExplorerUrl: (chain: string) => string | undefined

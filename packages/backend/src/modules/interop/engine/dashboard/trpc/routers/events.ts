@@ -1,10 +1,10 @@
 import { v } from '@l2beat/validate'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 import {
   getInteropEventDetails,
   type InteropEventKind,
 } from '../../impls/events'
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
 
 const InteropEventDetailsRequest = v.object({
   kind: v.enum(['all', 'matched', 'unmatched', 'old-unmatched', 'unsupported']),

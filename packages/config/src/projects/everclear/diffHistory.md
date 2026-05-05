@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x333828c67b3b43106da7c29a83363d9a0719b8cb
+
+# Diff at Tue, 28 Apr 2026 15:45:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1774433274
+- current timestamp: 1777390984
+
+## Description
+
+Gelato Multisig (`eth:0xBeA2Bc85...`) member rotation: 5 signers removed (`0x349f3839`, `0xB65540bB`, `0x58edE8C6`, `0x28bB9385`, `0x5bE3E96C`), 1 added (`0x6a0A93Cd`). Threshold dropped 4→3 and total signers 9→5 (44% → 60%). Shared multisig — same change observed on `ethernity`, `ink`, `lisk`, `reya`, and `educhain` (arb1).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.1:
+-        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.2:
+-        "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.3:
+-        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.5:
+-        "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd26515f1ce08b5f44e92f680789d05d1d7c18fa6
 
 # Diff at Wed, 25 Mar 2026 10:08:59 GMT:

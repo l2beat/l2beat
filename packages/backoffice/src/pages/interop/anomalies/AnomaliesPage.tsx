@@ -18,7 +18,7 @@ import type { AggregatedAnomalyRow, AnomaliesSummaryResponse } from './types'
 
 export function AnomaliesPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.anomalies.summary.useQuery()
+    api.interop.anomalies.summary.useQuery()
 
   const response: AnomaliesSummaryResponse | undefined = data
   const rows: AggregatedAnomalyRow[] = response?.aggregatedItems ?? []
@@ -32,7 +32,7 @@ export function AnomaliesPage() {
   ).length
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

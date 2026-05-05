@@ -8,6 +8,7 @@ export const mayan: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1771847938),
   interopConfig: {
+    description: 'Intent framework using the Wormhole message bridge.',
     plugins: [
       {
         plugin: 'mayan-swift',

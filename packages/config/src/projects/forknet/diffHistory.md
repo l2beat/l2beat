@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x102ee70e0d3d7bddae380394e4a0f3daefc35baa
+
+# Diff at Wed, 29 Apr 2026 08:37:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1769516650
+- current timestamp: 1777451710
+
+## Description
+
+Conduit Multisig 1 (`eth:0x4a496227...`) — signer `0x381624F7` removed. Threshold unchanged at 4; total signers 13 → 12 (31% → 33%). Same shared multisig change observed on `katana`.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 13 (31%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x167e6dd6a761bd36cb20f72ade963e4235917efe
 
 # Diff at Fri, 13 Feb 2026 11:33:10 GMT:

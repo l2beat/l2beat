@@ -24,6 +24,7 @@ export async function fetchAndFlatten(
 
   return flattenBytecodeEquivalentStartingFrom(
     source.name,
+    source.rootFile,
     input,
     source.remappings,
     { includeAll: includeAll },

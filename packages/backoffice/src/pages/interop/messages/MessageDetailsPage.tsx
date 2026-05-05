@@ -46,7 +46,7 @@ export function MessageDetailsPage() {
     isLoading: isMessagesLoading,
     isFetching: isMessagesFetching,
     refetch: refetchMessages,
-  } = api.messages.details.useQuery(detailsInput, {
+  } = api.interop.messages.details.useQuery(detailsInput, {
     enabled: hasValidParams,
   })
 
@@ -56,7 +56,7 @@ export function MessageDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.chains.metadata.useQuery()
+  } = api.interop.chains.metadata.useQuery()
 
   const rows: MessageDetailsRow[] = messagesData ?? []
   const chains: ChainMetadata[] = chainsData ?? []
@@ -72,7 +72,7 @@ export function MessageDetailsPage() {
   }
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

@@ -43,6 +43,7 @@ export class SourcifyClient implements IEtherscanClient {
     if (!response) {
       return {
         name: '',
+        rootFile: '',
         isVerified: false,
         abi: [],
         solidityVersion: '',
@@ -65,6 +66,7 @@ export class SourcifyClient implements IEtherscanClient {
 
     return {
       name: result.compilation.name,
+      rootFile: undefined,
       isVerified: true,
       abi,
       solidityVersion: result.compilation.compilerVersion,

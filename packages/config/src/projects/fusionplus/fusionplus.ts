@@ -8,6 +8,7 @@ export const fusionplus: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1770021647),
   interopConfig: {
+    description: 'Hash time lock (HTLC) based intent framework built by 1inch.',
     plugins: [
       {
         plugin: 'oneinch-fusion-plus',

@@ -13,7 +13,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 
 export function FinancialActionsPage() {
-  const refreshFinancials = api.financials.refresh.useMutation({
+  const refreshFinancials = api.interop.financials.refresh.useMutation({
     onSuccess: (data) => {
       toast.success('Financials refresh requested', {
         description: `${data.updatedTransfers} transfers marked as unprocessed.`,
@@ -27,7 +27,7 @@ export function FinancialActionsPage() {
   })
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

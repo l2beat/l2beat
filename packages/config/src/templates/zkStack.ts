@@ -358,7 +358,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
       mode: DA_MODES.STATE_DIFFS_COMPRESSED,
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: ZK stack uses canonical bridges to and from Ethereum, based on the security of validity proofs. Native interop within the stack is not enabled',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

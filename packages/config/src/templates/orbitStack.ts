@@ -837,7 +837,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: Each Arbitrum stack chain uses the state validation mechanism of the underlying chain for its canonical bridge.',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

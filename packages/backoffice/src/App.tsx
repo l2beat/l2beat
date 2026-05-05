@@ -2,6 +2,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { EnvironmentProvider } from './components/environment/EnvironmentContext'
 import { AggregatesPage } from './pages/interop/aggregates/AggregatesPage'
 import { AnomaliesPage } from './pages/interop/anomalies/AnomaliesPage'
 import { AnomalyDetailsPage } from './pages/interop/anomalies/AnomalyDetailsPage'
@@ -26,74 +27,76 @@ import { TRPCReactProvider } from './react-query/trpc'
 
 export function App() {
   return (
-    <TRPCReactProvider>
-      <SidebarProvider>
-        <BrowserRouter>
-          <ReactQueryDevtools initialIsOpen={false} />
+    <EnvironmentProvider>
+      <TRPCReactProvider>
+        <SidebarProvider>
+          <BrowserRouter>
+            <ReactQueryDevtools initialIsOpen={false} />
 
-          <Toaster />
-          <Routes>
-            <Route path="/" element={<BackofficeLandingPage />} />
+            <Toaster />
+            <Routes>
+              <Route path="/" element={<BackofficeLandingPage />} />
 
-            <Route path="/interop" element={<SummaryPage />} />
-            <Route path="/interop/aggregates" element={<AggregatesPage />} />
-            <Route path="/interop/events" element={<EventsPage />} />
-            <Route
-              path="/interop/events/:kind/:type"
-              element={<EventDetailsPage />}
-            />
+              <Route path="/interop" element={<SummaryPage />} />
+              <Route path="/interop/aggregates" element={<AggregatesPage />} />
+              <Route path="/interop/events" element={<EventsPage />} />
+              <Route
+                path="/interop/events/:kind/:type"
+                element={<EventDetailsPage />}
+              />
 
-            <Route
-              path="/interop/financials/actions"
-              element={<FinancialActionsPage />}
-            />
-            <Route path="/interop/messages" element={<MessagesPage />} />
-            <Route
-              path="/interop/messages/:type"
-              element={<MessageDetailsPage />}
-            />
-            <Route path="/interop/known-apps" element={<KnownAppsPage />} />
-            <Route
-              path="/interop/indexing/processor-statuses"
-              element={<ProcessorStatusesPage />}
-            />
+              <Route
+                path="/interop/financials/actions"
+                element={<FinancialActionsPage />}
+              />
+              <Route path="/interop/messages" element={<MessagesPage />} />
+              <Route
+                path="/interop/messages/:type"
+                element={<MessageDetailsPage />}
+              />
+              <Route path="/interop/known-apps" element={<KnownAppsPage />} />
+              <Route
+                path="/interop/indexing/processor-statuses"
+                element={<ProcessorStatusesPage />}
+              />
 
-            <Route path="/interop/transfers" element={<TransfersPage />} />
-            <Route
-              path="/interop/transfers/:type"
-              element={<TransferDetailsPage />}
-            />
-            <Route
-              path="/interop/missing-tokens"
-              element={<MissingTokensPage />}
-            />
-            <Route
-              path="/interop/indexing/plugin-statuses"
-              element={<StatusPage />}
-            />
+              <Route path="/interop/transfers" element={<TransfersPage />} />
+              <Route
+                path="/interop/transfers/:type"
+                element={<TransferDetailsPage />}
+              />
+              <Route
+                path="/interop/missing-tokens"
+                element={<MissingTokensPage />}
+              />
+              <Route
+                path="/interop/indexing/plugin-statuses"
+                element={<StatusPage />}
+              />
 
-            <Route
-              path="/interop/insights/anomalies"
-              element={<AnomaliesPage />}
-            />
-            <Route
-              path="/interop/insights/anomalies/aggregate/:id"
-              element={<AnomalyDetailsPage />}
-            />
-            <Route
-              path="/interop/insights/anomalies/suspicious-transfers"
-              element={<SuspiciousTransfersPage />}
-            />
-            <Route
-              path="/interop/insights/coverage-pies"
-              element={<CoveragePiesPage />}
-            />
-            <Route path="/interop/insights/memory" element={<MemoryPage />} />
-            <Route path="/not-found" element={<NotFoundPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </BrowserRouter>
-      </SidebarProvider>
-    </TRPCReactProvider>
+              <Route
+                path="/interop/insights/anomalies"
+                element={<AnomaliesPage />}
+              />
+              <Route
+                path="/interop/insights/anomalies/aggregate/:id"
+                element={<AnomalyDetailsPage />}
+              />
+              <Route
+                path="/interop/insights/anomalies/suspicious-transfers"
+                element={<SuspiciousTransfersPage />}
+              />
+              <Route
+                path="/interop/insights/coverage-pies"
+                element={<CoveragePiesPage />}
+              />
+              <Route path="/interop/insights/memory" element={<MemoryPage />} />
+              <Route path="/not-found" element={<NotFoundPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </BrowserRouter>
+        </SidebarProvider>
+      </TRPCReactProvider>
+    </EnvironmentProvider>
   )
 }

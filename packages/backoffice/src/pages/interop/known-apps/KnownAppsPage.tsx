@@ -30,7 +30,7 @@ function sortKnownAppsRows(rows: KnownAppsRow[]) {
 
 export function KnownAppsPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.knownApps.list.useQuery()
+    api.interop.knownApps.list.useQuery()
 
   const rows = sortKnownAppsRows(data ?? [])
   const totalApps = rows.reduce((sum, row) => sum + row.apps.length, 0)
@@ -43,7 +43,7 @@ export function KnownAppsPage() {
   )
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">

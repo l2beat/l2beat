@@ -50,6 +50,7 @@ export function createMessageDetailsColumns(options: {
       header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
+        filter: { kind: 'select' },
       },
     }),
     columnHelper.accessor('app', {
@@ -58,6 +59,11 @@ export function createMessageDetailsColumns(options: {
       meta: {
         csvHeader: 'App',
         getCsvValue: ({ row }) => formatMessageLabel(row.original.app),
+        filter: {
+          kind: 'select',
+          getOptionLabel: (value) =>
+            formatMessageLabel(value as string | undefined),
+        },
       },
     }),
     columnHelper.accessor('messageId', {
@@ -74,6 +80,10 @@ export function createMessageDetailsColumns(options: {
       meta: {
         csvHeader: 'Source chain',
         getCsvValue: ({ row }) => row.original.srcChain ?? '-',
+        filter: {
+          kind: 'select',
+          getOptionLabel: (value) => String(value ?? '-'),
+        },
       },
     }),
     columnHelper.accessor('srcTime', {
@@ -139,6 +149,10 @@ export function createMessageDetailsColumns(options: {
       meta: {
         csvHeader: 'Destination chain',
         getCsvValue: ({ row }) => row.original.dstChain ?? '-',
+        filter: {
+          kind: 'select',
+          getOptionLabel: (value) => String(value ?? '-'),
+        },
       },
     }),
     columnHelper.accessor('dstTime', {

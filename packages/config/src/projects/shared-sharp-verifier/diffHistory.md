@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x39bd6cf02f85348f8dd9eee253a25198a5f6775a
+
+# Diff at Thu, 30 Apr 2026 10:29:01 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@48c82436aca63abdd2a1dd0798daa7eaa9ef5e58 block: 1775810150
+- current timestamp: 1777544162
+
+## Description
+
+Deployed a new SHARP verifier with new bootloader programs. Sources are not yet published.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      values.$pastUpgrades.12:
++        ["2026-04-29T12:20:47.000Z","0xf088946bc461774cf86ce348fcee4d52bb27ebf049d99f3fab806226053b0d5b",["eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb"]]
+      values.$upgradeCount:
+-        12
++        13
+      values.callProxyImplementation:
+-        "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
++        "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7"
+      values.StarkWareProxy_callImplementation:
+-        "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
++        "eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+## Source code changes
+
+```diff
+.../shared-sharp-verifier/.flat/SHARPVerifier.sol  | 2411 ++++++++++++++++++++
+ 1 file changed, 2411 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775810150 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifier_2026_13 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      name:
+-        "SHARPVerifier"
++        "SHARPVerifier_2026_13"
+    }
+```
+
 Generated with discovered.json: 0x5c2dd7308bb56bb32fad11628212c7015accb333
 
 # Diff at Fri, 10 Apr 2026 08:37:14 GMT:

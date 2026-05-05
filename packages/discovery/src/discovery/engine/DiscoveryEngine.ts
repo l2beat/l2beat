@@ -20,6 +20,11 @@ import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
+export interface AddressStats {
+  discovered: number
+  skipped: number
+}
+
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -31,11 +36,12 @@ export class DiscoveryEngine {
     config: StructureConfig,
     timestamp: UnixTime,
     counter: DiscoveryCounter = new SimpleDiscoveryCounter(),
-  ): Promise<Analysis[]> {
+  ): Promise<{ analyses: Analysis[]; stats: AddressStats }> {
     const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
+    let skipped = 0
 
     config.initialAddresses.forEach((address) => {
       toAnalyze[address.toString()] = new Set()
@@ -121,6 +127,9 @@ export class DiscoveryEngine {
             counter.getCount(),
           )
           if (skipReason !== undefined) {
+            if (skipReason.startsWith('total ')) {
+              skipped++
+            }
             const info = `↓${depth} ${counter.increment()}/${total}`
             const entries = [
               chalk.gray(info),
@@ -165,10 +174,13 @@ export class DiscoveryEngine {
       depth++
     }
 
-    const result = Object.values(resolved)
-    this.checkErrors(result)
+    const analyses = Object.values(resolved)
+    this.checkErrors(analyses)
 
-    return result
+    return {
+      analyses,
+      stats: { discovered: analyses.length, skipped },
+    }
   }
 
   private logObject(
