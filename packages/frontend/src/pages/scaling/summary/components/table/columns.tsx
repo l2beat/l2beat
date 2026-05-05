@@ -238,7 +238,7 @@ export function getScalingSummaryOthersColumns(
         )
       },
     }),
-    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(5),
+    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(6),
   ]
 }
 
