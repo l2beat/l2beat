@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 import { getProjects, searchCode } from '../../../api/api'
 import type { ApiAddressEntry, ApiCodeSearchResponse } from '../../../api/types'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
@@ -7,8 +7,6 @@ import {
   getProjectSearchTerm,
   isProjectSearchTerm,
 } from './ProjectSearchResultEntry'
-
-const queryClient = new QueryClient()
 
 export type SearchResults =
   | { type: 'contract'; entryCount: number; entries: ApiAddressEntry[] }
@@ -20,6 +18,7 @@ export type SearchResults =
     }
 
 async function searchContractQuery(
+  queryClient: QueryClient,
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
@@ -75,7 +74,10 @@ async function searchCodeQuery(
   return { type: 'code', entryCount, entries: searchResult.matches }
 }
 
-async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
+async function searchProjectQuery(
+  queryClient: QueryClient,
+  searchTerm: string,
+): Promise<SearchResults> {
   const projects = await queryClient.ensureQueryData({
     queryKey: ['projects'],
     queryFn: () => getProjects(),
@@ -94,6 +96,7 @@ async function searchProjectQuery(searchTerm: string): Promise<SearchResults> {
 }
 
 export async function searchQuery(
+  queryClient: QueryClient,
   project: string,
   searchTerm: string,
   selectedAddress: string | undefined,
@@ -102,7 +105,7 @@ export async function searchQuery(
     return await searchCodeQuery(project, searchTerm, selectedAddress)
   }
   if (isProjectSearchTerm(searchTerm)) {
-    return await searchProjectQuery(searchTerm)
+    return await searchProjectQuery(queryClient, searchTerm)
   }
-  return await searchContractQuery(project, searchTerm)
+  return await searchContractQuery(queryClient, project, searchTerm)
 }
