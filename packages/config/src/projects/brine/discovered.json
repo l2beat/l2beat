@@ -1,6 +1,6 @@
 {
   "name": "brine",
-  "timestamp": 1777546397,
+  "timestamp": 1777891418,
   "configHash": "0x90b8abb3b68415f26de946d10925631f7dde8f333a9327b7feb2edb07ef72a26",
   "entries": [
     {
@@ -22,6 +22,7 @@
         "getVaultRoot",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453320,
       "sinceBlock": 15114701,
       "values": {
@@ -182,6 +183,7 @@
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657550175,
       "sinceBlock": 15121893,
       "values": {
@@ -225,12 +227,13 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": false,
+        "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
@@ -280,6 +283,7 @@
       ],
       "proxyType": "immutable",
       "description": "Helper contract for registering limit orders from L1.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
@@ -688,6 +692,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 24992451 },
+  "usedBlockNumbers": { "ethereum": 25021111 },
   "permissionsConfigHash": "0x637fe6a8f9a000c2cd3d86693c53a6f39ee353b3cbffdf6ad16a68e4784bd0fe"
 }

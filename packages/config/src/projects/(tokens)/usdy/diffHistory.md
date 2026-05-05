@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf0c3754dc0fce9b4fc429ade2fb591b184d2b3d2
+
+# Diff at Tue, 05 May 2026 10:24:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752830574
+- current timestamp: 1752830574
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830574 (main branch discovery), not current.
+
+```diff
+    contract Ondo U.S. Dollar Yield Token (arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e"
+    }
+```
+
 Generated with discovered.json: 0x28cd3f5b6ac64f2be42100ae15fb42bf54bee4ae
 
 # Diff at Tue, 07 Oct 2025 14:35:51 GMT:

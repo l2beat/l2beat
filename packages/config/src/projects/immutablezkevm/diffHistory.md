@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x6de4a720fb95d6c117798e14e7a3f533be6ef0fe
+
+# Diff at Tue, 05 May 2026 10:22:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772614819
+- current timestamp: 1772614819
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772614819 (main branch discovery), not current.
+
+```diff
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA57ADCE1d2fE72949E4308867D894CD7E7DE0ef2"
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract ChildERC20 (eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract Bridge (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract OwnerMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
 Generated with discovered.json: 0xa893b13f43a5921361d55533ef455acfed20fe61
 
 # Diff at Wed, 04 Mar 2026 09:01:27 GMT:

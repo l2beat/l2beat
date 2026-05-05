@@ -6,6 +6,7 @@ export const avalanche: BaseProject = {
   slug: 'avalanche',
   name: 'Avalanche',
   shortName: undefined,
+  aliases: ['AVAX'],
   addedAt: UnixTime(1662628329),
   statuses: {
     yellowWarning: undefined,

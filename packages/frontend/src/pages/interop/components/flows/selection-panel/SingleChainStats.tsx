@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { env } from '~/env'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import { api } from '~/trpc/React'
@@ -12,9 +13,11 @@ import { TopItemsList } from './TopItemsList'
 export function SingleChainStats({
   chainId,
   selectedChains,
+  linkTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  linkTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -47,6 +50,10 @@ export function SingleChainStats({
           items={chainData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
+            href:
+              linkTopProtocols && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES
+                ? `/interop/protocols/${p.slug}`
+                : undefined,
           }))}
         />
       )}

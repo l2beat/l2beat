@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "shared",
-  "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.",
+  "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
     "executionDelay_fmt": {
@@ -34,6 +34,27 @@
       },
       "severity": "HIGH"
     },
-    "threshold": { "severity": "HIGH" }
+    "$members": {
+      "copy": "multisigMembers"
+    },
+    "executor": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE"
+        },
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members."
+        }
+      ]
+    },
+    "threshold": { "severity": "HIGH" },
+    "$threshold": {
+      "copy": "threshold"
+    }
   }
 }

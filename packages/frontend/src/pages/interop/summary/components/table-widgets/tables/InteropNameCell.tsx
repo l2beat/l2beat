@@ -3,7 +3,6 @@ import { TableLink } from '~/components/table/TableLink'
 import { env } from '~/env'
 import { InteropProjectNameTooltip } from '~/pages/interop/components/table/InteropProjectNameTooltip'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 
 interface Props {
   shortName?: string
@@ -25,8 +24,6 @@ export function InteropNameCell({
   subgroup,
   isAggregate,
 }: Props) {
-  const { buildUrl } = useInteropSelectedChains()
-
   const nameCell = (
     <TwoRowCell>
       <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
@@ -40,9 +37,7 @@ export function InteropNameCell({
   )
 
   const content = env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-    <TableLink href={buildUrl(`/interop/protocols/${slug}`)}>
-      {nameCell}
-    </TableLink>
+    <TableLink href={`/interop/protocols/${slug}`}>{nameCell}</TableLink>
   ) : (
     nameCell
   )

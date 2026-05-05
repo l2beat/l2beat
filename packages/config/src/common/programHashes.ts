@@ -240,13 +240,17 @@ Verify:
     ...OP_SUCCINCT_FDP_AGG_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c': {
     ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
@@ -1164,7 +1168,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1208,7 +1212,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn2
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1252,7 +1256,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1296,7 +1300,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn2
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1581,7 +1585,7 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
     proverSystemProject: ProjectId('risc0'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1625,7 +1629,7 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
     proverSystemProject: ProjectId('risc0'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -2593,7 +2597,9 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-aggregator',
     description:
       'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
   '0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322': {
     title: 'Nitro TEE Verifer',
@@ -2602,6 +2608,8 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-verifier',
     description:
       'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
 }

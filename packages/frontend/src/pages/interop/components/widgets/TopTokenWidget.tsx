@@ -18,6 +18,7 @@ interface Props {
   topToken: InteropDashboardData['topToken'] | undefined
   isLoading: boolean
   hideProtocol?: boolean
+  hideChainsInfo?: boolean
   className?: string
 }
 
@@ -25,6 +26,7 @@ export function TopTokenWidget({
   topToken,
   isLoading,
   hideProtocol,
+  hideChainsInfo,
   className,
 }: Props) {
   return (
@@ -36,7 +38,7 @@ export function TopTokenWidget({
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between xl:flex-row xl:items-center xl:justify-start xl:gap-10">
-          <TopTokenHeading />
+          <TopTokenHeading hideChainsInfo={hideChainsInfo} />
           <TopTokenIdentity topToken={topToken} isLoading={isLoading} />
           <div
             className={cn(
@@ -77,16 +79,18 @@ export function TopTokenWidget({
   )
 }
 
-function TopTokenHeading() {
+function TopTokenHeading({ hideChainsInfo }: { hideChainsInfo?: boolean }) {
   return (
     <div className="min-w-0">
       <h2 className="font-bold text-heading-16 md:text-heading-20">
         Top token
       </h2>
-      <BetweenChainsInfo
-        className="mt-1"
-        additionalText="based on 24h volume"
-      />
+      {!hideChainsInfo && (
+        <BetweenChainsInfo
+          className="mt-1"
+          additionalText="based on 24h volume"
+        />
+      )}
     </div>
   )
 }

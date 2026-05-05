@@ -19,6 +19,7 @@
         "getNumAvailableForcedSlots",
         "getConstants"
       ],
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603950102,
       "sinceBlock": 11149814,
       "values": {
@@ -120,6 +121,7 @@
         "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1616396742,
       "sinceBlock": 12087157,
       "values": {
@@ -186,6 +188,7 @@
         "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603946693,
       "sinceBlock": 11149547,
       "values": {
@@ -360,6 +363,7 @@
         "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1583852946,
       "sinceBlock": 9644449,
       "values": {
@@ -396,6 +400,7 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users.",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1615357743,
       "sinceBlock": 12009173,
       "values": {
@@ -438,6 +443,7 @@
         "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603946469,
       "sinceBlock": 11149533,
       "values": {
@@ -457,6 +463,7 @@
         "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603949642,
       "sinceBlock": 11149779,
       "values": {
@@ -497,6 +504,7 @@
         "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5593b2B8Dc63d0ed68aa8f885707b2Dc5787E391",
       "sinceTimestamp": 1554948637,
       "sinceBlock": 7544036,
       "values": {
@@ -539,6 +547,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB89cdf808dA6Cfb39F3c2e167fFB5DDfc811C33E",
       "sinceTimestamp": 1606289169,
       "sinceBlock": 11326208,
       "values": {
@@ -570,6 +579,7 @@
         "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603955371,
       "sinceBlock": 11150215,
       "values": {
@@ -614,6 +624,7 @@
         "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1603946697,
       "sinceBlock": 11149548,
       "values": { "$immutable": true },
@@ -635,6 +646,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"],
+      "deployerAddress": "eth:0x4374D3d032B3c96785094ec9f384f07077792768",
       "sinceTimestamp": 1574241665,
       "sinceBlock": 8967548,
       "values": {

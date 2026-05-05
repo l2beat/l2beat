@@ -14,6 +14,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
       "sinceTimestamp": 1689539603,
       "sinceBlock": 17708254,
       "values": {
@@ -44,6 +45,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
       "sinceTimestamp": 1687284827,
       "sinceBlock": 17522617,
       "values": {
@@ -81,6 +83,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1705017083,
       "sinceBlock": 18987060,
       "values": {
@@ -115,6 +118,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x310d2b76F24215c1972771E445B74cE0B0703dB3",
       "sinceTimestamp": 1764693815,
       "sinceBlock": 23927045,
       "values": {
@@ -145,6 +149,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1688036519,
       "sinceBlock": 17584527,
       "values": {
@@ -174,6 +179,7 @@
         "0xc2565a490312be5d6a5b12bcb700c6fa795caab49384ab6d23343096134df95f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1705017431,
       "sinceBlock": 18987089,
       "values": { "$immutable": true },
@@ -202,6 +208,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1687278863,
       "sinceBlock": 17522125,
       "values": {
@@ -242,6 +249,7 @@
         "0x7c8adbb6efe5b3350d779e102d5ae78fd639c4f8ceefafea77344463d5d8cc94"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1704776987,
       "sinceBlock": 18967237,
       "values": { "$immutable": true },
@@ -260,6 +268,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x79b998ded1f4503CE3A0A76993c72a65449f4590",
       "sinceTimestamp": 1689524711,
       "sinceBlock": 17707022,
       "values": {
@@ -305,6 +314,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1687279487,
       "sinceBlock": 17522177,
       "values": {
@@ -339,6 +349,7 @@
         "0x82f68854d52503cd6c6f6ff3c97b47515d8e5b65abc2950508e18059dff0692f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1705017371,
       "sinceBlock": 18987084,
       "values": { "$immutable": true },
@@ -354,6 +365,7 @@
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1688036723,
       "sinceBlock": 17584544,
       "values": { "$immutable": true },
@@ -379,6 +391,7 @@
         "0xbd34cc0d432d6d6834f925e6553abb9510b448b0eb25d2e40263813ad71f6f86"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1704777119,
       "sinceBlock": 18967248,
       "values": { "$immutable": true },
@@ -397,6 +410,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
       "sinceTimestamp": 1687284071,
       "sinceBlock": 17522557,
       "values": {
@@ -427,6 +441,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
       "ignoreInWatchMode": ["latestRoot"],
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1688671151,
       "sinceBlock": 17636832,
       "values": {
@@ -483,6 +498,7 @@
         "0xca7e21152b6ce21c64fdb15e8d8e9ac03809d3f499f232454a62e8060acbc3b9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1704777071,
       "sinceBlock": 18967244,
       "values": { "$immutable": true },
@@ -506,6 +522,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689934515,
       "sinceBlock": 107167869,
       "values": {
@@ -536,6 +553,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689934259,
       "sinceBlock": 107167741,
       "values": {
@@ -573,6 +591,7 @@
         "0x84c58f013e225f23f2b87640ea9cda83b40b4ba02f9cc37633a373399e4ffc39"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1721036137,
       "sinceBlock": 122718680,
       "values": { "$immutable": true },
@@ -593,6 +612,7 @@
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
       "values": { "$immutable": true },
@@ -608,6 +628,7 @@
         "0x72bde70cebd2ab71bea5390a3c0bc9625c3785a0e8538082fa12bb3dc181f91c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
       "values": {
@@ -642,6 +663,7 @@
         "0xbedda975c09c8d028b34ff1f9240b13e31113a1f831d29e98d903e147c5fdf44"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1689068111,
       "sinceBlock": 106734667,
       "values": {
@@ -679,6 +701,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689792029,
       "sinceBlock": 107096626,
       "values": {
@@ -706,6 +729,7 @@
         "0xb9149eadedcff671edd3913162a49203e7f35036cb983413e363562d5974f4b3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
       "values": { "$immutable": true },
@@ -729,6 +753,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689791251,
       "sinceBlock": 107096237,
       "values": {
@@ -760,6 +785,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentId"],
+      "deployerAddress": "oeth:0x57c72EB3f74e3A1c95656253214A018818818ec3",
       "sinceTimestamp": 1722153659,
       "sinceBlock": 123277441,
       "values": { "$immutable": true, "calculateId": [], "getCurrentId": 76 },
@@ -790,6 +816,7 @@
         "0xccc2e81b4a40bed984ee0f48b74a4d292a5644906628aa7d04258a97b84d1c90"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x7d896339A80DD38bC3BbB04383894C62b2eF2585",
       "sinceTimestamp": 1698621911,
       "sinceBlock": 111511567,
       "values": {
@@ -817,6 +844,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09",
       "sinceTimestamp": 1689845985,
       "sinceBlock": 107123604,
       "values": {
@@ -850,6 +878,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["latestRoot"],
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1721036137,
       "sinceBlock": 122718680,
       "values": {
@@ -914,6 +943,7 @@
         "0xaf7a518594f31dbc23c534719916ed50d7548b82bd675415a1a697555b68f471"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1730982513,
       "sinceBlock": 127691868,
       "values": { "$immutable": true },
@@ -929,6 +959,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1721036135,
       "sinceBlock": 122718679,
       "values": {
@@ -950,6 +981,7 @@
       ],
       "proxyType": "immutable",
       "description": "A contract that manages the root history of the Semaphore identity merkle tree on Optimism.",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
       "values": {
@@ -975,6 +1007,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689934447,
       "sinceBlock": 107167835,
       "values": {
@@ -1020,6 +1053,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689791675,
       "sinceBlock": 107096449,
       "values": {
@@ -1055,6 +1089,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "oeth:0x36BDE71C97B33Cc4729cf772aE268934f7AB70B2",
       "sinceTimestamp": 1689774709,
       "sinceBlock": 107087966,
       "values": {
@@ -1086,6 +1121,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689934359,
       "sinceBlock": 107167791,
       "values": {
@@ -1116,6 +1152,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011",
       "sinceTimestamp": 1689934137,
       "sinceBlock": 107167680,
       "values": {
@@ -1148,6 +1185,7 @@
         "0x39eb56f7878719eefdfb5cc208bbd36b80989adf0ba642e7d2359973d08c8934"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "sinceTimestamp": 1721036135,
       "sinceBlock": 122718679,
       "values": {

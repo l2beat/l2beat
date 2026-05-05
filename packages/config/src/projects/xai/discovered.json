@@ -22,6 +22,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
       "sinceTimestamp": 1704399729,
       "sinceBlock": 167114912,
       "values": {
@@ -101,6 +102,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -163,6 +165,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -217,6 +220,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -263,6 +267,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704476020,
       "sinceBlock": 167416353,
       "values": {
@@ -328,6 +333,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148192,
       "sinceBlock": 244802957,
       "values": { "$immutable": true },
@@ -346,6 +352,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -378,6 +385,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -531,6 +539,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
       "sinceTimestamp": 1704757616,
       "sinceBlock": 168497380,
       "values": {
@@ -566,6 +575,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148167,
       "sinceBlock": 244802857,
       "values": { "$immutable": true },
@@ -583,6 +593,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages beacon addresses for the v2 staking pools.",
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1712865943,
       "sinceBlock": 200013514,
       "values": {
@@ -616,6 +627,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "arb1:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
       "values": { "$immutable": true },
@@ -696,6 +708,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
       "sinceTimestamp": 1736283576,
       "sinceBlock": 293049285,
       "values": {
@@ -738,6 +751,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -844,6 +858,7 @@
         "0x4fb5ce09fed416c49adb85057e748a97d8987e93d10a84ab6c10c85217a9d4ad"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1701801219,
       "sinceBlock": 157193649,
       "values": {
@@ -882,6 +897,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -970,6 +986,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -1012,6 +1029,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704476020,
       "sinceBlock": 167416353,
       "values": {
@@ -1054,6 +1072,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "This is the contract where Xai Sentry Keys for running a sentry node are minted.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1701801243,
       "sinceBlock": 157193743,
       "values": {
@@ -1189,6 +1208,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648",
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -1348,6 +1368,7 @@
         "0xc9c19fb4d016fe3bcc74ab045b2d6a2231e661f4d86cbb0cac0dc5d1301fb49a"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1730222058,
       "sinceBlock": 268948639,
       "values": {
@@ -1429,6 +1450,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1701801208,
       "sinceBlock": 157193603,
       "values": {
@@ -1449,6 +1471,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148200,
       "sinceBlock": 244802990,
       "values": {
@@ -1477,6 +1500,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148184,
       "sinceBlock": 244802923,
       "values": { "$immutable": true },
@@ -1494,6 +1518,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148175,
       "sinceBlock": 244802890,
       "values": { "$immutable": true },
@@ -1512,6 +1537,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.",
       "ignoreInWatchMode": ["getPoolsCount"],
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1712865940,
       "sinceBlock": 200013500,
       "values": {
@@ -1582,6 +1608,7 @@
       "proxyType": "gnosis safe",
       "description": "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
       "sinceTimestamp": 1701577782,
       "sinceBlock": 156368763,
       "values": {
@@ -1623,6 +1650,7 @@
         "getKycWalletCount",
         "calculateChallengeEmissionAndTier"
       ],
+      "deployerAddress": "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
       "sinceTimestamp": 1701801226,
       "sinceBlock": 157193676,
       "values": {

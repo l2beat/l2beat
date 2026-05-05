@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.",
+      "deployerAddress": "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907",
       "sinceTimestamp": 1768597007,
       "sinceBlock": 24249824,
       "values": {
@@ -43,6 +44,7 @@
       ],
       "proxyType": "immutable",
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
+      "deployerAddress": "eth:0x61c532Eca5Bc84691F09D466A04BC8F995C145Ce",
       "sinceTimestamp": 1723232219,
       "sinceBlock": 20493176,
       "values": {
@@ -65,6 +67,7 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
       "sinceTimestamp": 1772480855,
       "sinceBlock": 24571946,
       "values": {
@@ -88,6 +91,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -168,6 +172,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.",
+      "deployerAddress": "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
       "sinceTimestamp": 1758745751,
       "sinceBlock": 23435285,
       "values": {
@@ -215,6 +220,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["avs"],
+      "deployerAddress": "eth:0x52D93F56F963C322153a1F76E31EE12F09B8f7c6",
       "sinceTimestamp": 1711141931,
       "sinceBlock": 19492759,
       "values": {
@@ -349,6 +355,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -435,6 +442,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686349019,
       "sinceBlock": 17445570,
       "values": {
@@ -515,6 +523,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE5Ad7cB2692c3A03dd9279a733c4A20666f6909c",
       "sinceTimestamp": 1772471135,
       "sinceBlock": 24571139,
       "values": {
@@ -551,6 +560,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.",
+      "deployerAddress": "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4",
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -599,6 +609,7 @@
           "role": ".pausers"
         }
       ],
+      "deployerAddress": "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830",
       "sinceTimestamp": 1768595087,
       "sinceBlock": 24249665,
       "values": {
@@ -762,6 +773,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1704485723,
       "sinceBlock": 18943377,
       "values": {
@@ -880,6 +892,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
       "sinceTimestamp": 1686681203,
       "sinceBlock": 17472874,
       "values": {
@@ -913,6 +926,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.",
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -990,6 +1004,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.",
+      "deployerAddress": "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
       "sinceTimestamp": 1758745751,
       "sinceBlock": 23435285,
       "values": {
@@ -1039,6 +1054,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
       "values": {
@@ -1532,6 +1548,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732236023,
       "sinceBlock": 21239749,
       "values": {
@@ -1580,6 +1597,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005",
       "sinceTimestamp": 1686325811,
       "sinceBlock": 17443669,
       "values": {
@@ -1617,6 +1635,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getConsolidationRequestFee"],
+      "deployerAddress": "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907",
       "sinceTimestamp": 1768597007,
       "sinceBlock": 24249824,
       "values": {
@@ -1656,6 +1675,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686349019,
       "sinceBlock": 17445570,
       "values": {
@@ -1736,6 +1756,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.",
+      "deployerAddress": "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907",
       "sinceTimestamp": 1758745487,
       "sinceBlock": 23435263,
       "values": {
@@ -1782,6 +1803,7 @@
         "getLatestReferenceBlockNumber",
         "getLatestReferenceTimestamp"
       ],
+      "deployerAddress": "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
       "sinceTimestamp": 1758745751,
       "sinceBlock": 23435285,
       "values": {
@@ -1859,6 +1881,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -1938,6 +1961,7 @@
       ],
       "proxyType": "immutable",
       "description": "UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.",
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348959,
       "sinceBlock": 17445565,
       "values": {
@@ -1966,6 +1990,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract for permissionless strategy creation via beacon proxies.",
+      "deployerAddress": "eth:0x61c532Eca5Bc84691F09D466A04BC8F995C145Ce",
       "sinceTimestamp": 1723232243,
       "sinceBlock": 20493178,
       "values": {
@@ -2026,6 +2051,7 @@
         "lastTimeButtonPressable",
         "nextTimeButtonPressable"
       ],
+      "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
       "sinceTimestamp": 1772480807,
       "sinceBlock": 24571942,
       "values": {
@@ -2173,6 +2199,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
+      "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732299167,
       "sinceBlock": 21244979,
       "values": {
@@ -2238,6 +2265,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
+      "deployerAddress": "eth:0x99BBB041E6FDc9e5f21E73e74B641785A4a65ed2",
       "sinceTimestamp": 1721406755,
       "sinceBlock": 20341793,
       "values": {
@@ -2312,6 +2340,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -2392,6 +2421,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
       "sinceTimestamp": 1728099143,
       "sinceBlock": 20896663,
       "values": {
@@ -2423,6 +2453,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The token backing EIGEN and used for intersubjective staking.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
       "values": {
@@ -2482,6 +2513,7 @@
         "0x736195a6d0101e08cc21210f3e0cceae0ac4db2bfdb3e79e113fdae1fc8c418c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -2709,6 +2741,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -2731,6 +2764,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1704485723,
       "sinceBlock": 18943377,
       "values": {
@@ -2808,6 +2842,7 @@
         "0x6de8001496304446f5d9df42d9d1b7f8955ae44c92e6376e167f1fde5b550924"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
       "sinceTimestamp": 1772480831,
       "sinceBlock": 24571944,
       "values": {
@@ -2848,6 +2883,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["numPods"],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348947,
       "sinceBlock": 17445564,
       "values": {
@@ -2930,6 +2966,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.",
+      "deployerAddress": "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907",
       "sinceTimestamp": 1758745487,
       "sinceBlock": 23435263,
       "values": {
@@ -2991,6 +3028,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686349019,
       "sinceBlock": 17445570,
       "values": {
@@ -3078,6 +3116,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732299383,
       "sinceBlock": 21244997,
       "values": {
@@ -3111,6 +3150,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.",
+      "deployerAddress": "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4",
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -3187,6 +3227,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -3268,6 +3309,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1701791243,
       "sinceBlock": 18721131,
       "values": {
@@ -3359,6 +3401,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0xD5117ff053dfD06102118C6Da050F33e67E6331c",
       "sinceTimestamp": 1713414611,
       "sinceBlock": 19679966,
       "values": {
@@ -3439,6 +3482,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
       "ignoreInWatchMode": ["totalShares"],
+      "deployerAddress": "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA",
       "sinceTimestamp": 1704485723,
       "sinceBlock": 18943377,
       "values": {
@@ -3523,6 +3567,7 @@
       ],
       "proxyType": "immutable",
       "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts.",
+      "deployerAddress": "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4",
       "sinceTimestamp": 1744052255,
       "sinceBlock": 22218956,
       "values": {
@@ -4013,6 +4058,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005",
       "sinceTimestamp": 1686327791,
       "sinceBlock": 17443829,
       "values": {
@@ -4054,6 +4100,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
+      "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732234379,
       "sinceBlock": 21239612,
       "values": {
@@ -4112,6 +4159,7 @@
         "0xd8602dc01c11ebc220915530013a75b9d5b518af0c6de59d9183ea31f8fb3001"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E",
       "sinceTimestamp": 1772480843,
       "sinceBlock": 24571945,
       "values": {
@@ -4180,6 +4228,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.",
+      "deployerAddress": "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
       "sinceTimestamp": 1758745751,
       "sinceBlock": 23435285,
       "values": {
@@ -4234,6 +4283,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x43cCe9cC63BF73f80f94BBb553aE5b258FCA701C",
       "sinceTimestamp": 1729601531,
       "sinceBlock": 21021238,
       "values": {
@@ -4300,6 +4350,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x45f99976eE67ce0810d1aAE9A42D0cCA7f125B52",
       "sinceTimestamp": 1697499563,
       "sinceBlock": 18366276,
       "values": {
@@ -4381,6 +4432,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.",
+      "deployerAddress": "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907",
       "sinceTimestamp": 1758745487,
       "sinceBlock": 23435263,
       "values": {
@@ -4423,6 +4475,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2",
       "sinceTimestamp": 1747086011,
       "sinceBlock": 22469919,
       "values": {
@@ -4761,6 +4814,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
       "sinceTimestamp": 1686680867,
       "sinceBlock": 17472847,
       "values": {

@@ -8,6 +8,7 @@ export const namechain: ScalingProject = upcomingL2({
   addedAt: UnixTime(1750840537), // 2025-06-25T08:35:37+00:00
   display: {
     name: 'Namechain',
+    aliases: ['ENS'],
     slug: 'namechain',
     description:
       'Namechain is an upcoming Ethereum L2 chain built on the Linea tech stack. It’s designed to be the home of Ethereum Name Service (ENS) and accompanying identity applications.',

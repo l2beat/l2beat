@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Handles the intermediate stages of a dispute following the TopTournament targeting a more granular bisection game.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762445519,
       "sinceBlock": 23741349,
       "values": { "$immutable": true },
@@ -30,6 +31,7 @@
       ],
       "proxyType": "immutable",
       "description": "Serves as both the canonical log for arbitrary dApp inputs and a portal for depositing assets (one possible type of input). It ensures data availability and that all off-chain participants process the same inputs in the same order.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762263971,
       "sinceBlock": 23726342,
       "values": { "$immutable": true, "getDeploymentBlockNumber": 23726342 },
@@ -48,6 +50,7 @@
       ],
       "proxyType": "immutable",
       "description": "Onchain verifier that can execute a single, disputed instruction of the Cartesi machine. It is the ultimate arbiter that BottomTournament calls to determine which party's claimed state transition is correct.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762445555,
       "sinceBlock": 23741352,
       "values": { "$immutable": true },
@@ -65,6 +68,7 @@
       ],
       "proxyType": "immutable",
       "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762446467,
       "sinceBlock": 23741427,
       "values": { "$immutable": true },
@@ -82,6 +86,7 @@
         "0x29a5c1acbe48ac90aa8c32546a01e4b2a147c79d78ae5b8faf4c08f04481db3b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762445567,
       "sinceBlock": 23741353,
       "values": {
@@ -119,6 +124,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x77eBA70fe27aC8BA1f292bDa9108555e9a065e3b",
       "sinceTimestamp": 1634112168,
       "sinceBlock": 13408863,
       "values": {
@@ -154,6 +160,7 @@
         "0x891cb41f153a71a8aa561434276f941f427520fda41f0f7c44d12ba6837e6c13"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762445543,
       "sinceBlock": 23741351,
       "values": {
@@ -177,6 +184,7 @@
       ],
       "proxyType": "immutable",
       "description": "Responsible for creating and orchestrating the multi-stage dispute process. It instantiates the correct tournament contract (Top, Middle, or Bottom) depending on the current stage of the dispute game.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762446503,
       "sinceBlock": 23741430,
       "values": {
@@ -204,6 +212,7 @@
       ],
       "proxyType": "EIP1167 proxy",
       "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game. The required bond amount for joining the Tournament is calculated from worst case gas estimates and currently is 0.23219805 ETH.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762562699,
       "sinceBlock": 23751050,
       "values": {
@@ -261,6 +270,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762264055,
       "sinceBlock": 23726349,
       "values": {
@@ -286,6 +296,7 @@
       ],
       "proxyType": "immutable",
       "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762446491,
       "sinceBlock": 23741429,
       "values": {
@@ -328,6 +339,7 @@
       ],
       "proxyType": "immutable",
       "description": "Referees the dispute over a single contested Cartesi machine step as the final stage of arbitration in a dispute. It calls the CartesiStateTransition contract to get a definitive on-chain ruling and identify the winner.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762445471,
       "sinceBlock": 23741346,
       "values": { "$immutable": true },
@@ -346,6 +358,7 @@
       "proxyType": "immutable",
       "description": "Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.",
       "ignoreInWatchMode": ["canSettle", "getCurrentSealedEpoch"],
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762562699,
       "sinceBlock": 23751050,
       "values": {
@@ -386,6 +399,7 @@
       ],
       "proxyType": "immutable",
       "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609`.",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762562699,
       "sinceBlock": 23751050,
       "values": {
@@ -412,6 +426,7 @@
         "0x28d0c882215531e4b36ca8c7570bf961b1065c0e6e8fd2f7201de3ba5cbd245c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0",
       "sinceTimestamp": 1762446479,
       "sinceBlock": 23741428,
       "values": {

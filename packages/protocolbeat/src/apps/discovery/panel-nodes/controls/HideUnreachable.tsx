@@ -1,7 +1,10 @@
+import clsx from 'clsx'
+import { IconEyeClosed } from '../../../../icons/IconEyeClosed'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
+import { IconControlEye } from './icons/IconControlEye'
 
-export function HideUnreachableButton() {
+export function HideUnreachableButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const knownNodes = nodes.filter((node) => node.addressType !== 'Unknown')
   const hiddenNodes = useStore((state) => state.hidden)
@@ -15,14 +18,19 @@ export function HideUnreachableButton() {
     <ControlButton
       disabled={!anyUnreachableVisible}
       onClick={hideUnreachable}
-      className="p-1"
+      className={clsx('px-3 py-2', className)}
     >
-      Hide Unreachable
+      <span className="flex w-full items-center justify-center gap-2 text-center">
+        <span className="shrink-0 text-coffee-300">
+          <IconEyeClosed />
+        </span>
+        <span className="font-medium leading-none">Hide unreachable</span>
+      </span>
     </ControlButton>
   )
 }
 
-export function ShowUnreachableButton() {
+export function ShowUnreachableButton({ className }: { className?: string }) {
   const nodes = useStore((state) => state.nodes)
   const knownNodes = nodes.filter((node) => node.addressType !== 'Unknown')
   const hiddenNodes = useStore((state) => state.hidden)
@@ -36,9 +44,14 @@ export function ShowUnreachableButton() {
     <ControlButton
       disabled={!anyUnreachableHidden}
       onClick={showUnreachable}
-      className="p-1"
+      className={clsx('px-3 py-2', className)}
     >
-      Show Unreachable
+      <span className="flex w-full items-center justify-center gap-2 text-center">
+        <span className="shrink-0 text-coffee-300">
+          <IconControlEye />
+        </span>
+        <span className="font-medium leading-none">Show unreachable</span>
+      </span>
     </ControlButton>
   )
 }

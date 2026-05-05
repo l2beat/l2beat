@@ -38,6 +38,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1768924487,
       "sinceBlock": 24277018,
       "values": {
@@ -79,6 +80,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.",
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1750849619,
       "sinceBlock": 22781049,
       "values": {
@@ -128,6 +130,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -161,6 +164,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -191,6 +195,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the forknet Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "sinceTimestamp": 1756733255,
       "sinceBlock": 23268580,
       "values": {
@@ -408,6 +413,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44",
       "sinceTimestamp": 1680797639,
       "sinceBlock": 16990669,
       "values": {
@@ -463,6 +469,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -509,6 +516,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -620,6 +628,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
       "values": {
@@ -653,6 +662,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -706,6 +716,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "deployerAddress": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1768924487,
       "sinceBlock": 24277018,
       "values": {
@@ -836,6 +847,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -931,6 +943,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1750849619,
       "sinceBlock": 22781049,
       "values": {
@@ -955,6 +968,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -1027,6 +1041,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -1080,6 +1095,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
       "ignoreInWatchMode": ["params", "balance"],
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -1217,6 +1233,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x47A8008431c8fD9a5d58Be531dfBef517941762A",
       "sinceTimestamp": 1756893611,
       "sinceBlock": 23281847,
       "values": {
@@ -1259,6 +1276,7 @@
         "challengePeriodFromOracle",
         "wethFromGame"
       ],
+      "deployerAddress": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "sinceTimestamp": 1768924487,
       "sinceBlock": 24277018,
       "values": {

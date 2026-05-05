@@ -27,6 +27,7 @@ export const omgnetwork: ScalingProject = {
   archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'OMG Network',
+    aliases: ['OmiseGO'],
     slug: 'omgnetwork',
     description:
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',

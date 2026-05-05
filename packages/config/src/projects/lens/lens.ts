@@ -23,6 +23,7 @@ export const lens: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716536821), // 2024-05-24T07:47:01Z
   display: {
     name: 'Lens',
+    aliases: ['Avara'],
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",

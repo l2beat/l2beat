@@ -1,6 +1,6 @@
 import {
+  ArrowLeftRightIcon,
   ChevronRightIcon,
-  GlobeIcon,
   LayersIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
@@ -107,6 +107,19 @@ const interopItems = [
   },
 ]
 
+const websiteItems = [
+  {
+    title: 'Status',
+    icon: LayersIcon,
+    items: [
+      {
+        title: 'Tracked txs',
+        url: '/website/status/tracked-txs',
+      },
+    ],
+  },
+]
+
 export function AppSidebar() {
   const { pathname } = useLocation()
 
@@ -183,18 +196,46 @@ export function AppSidebar() {
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>Website</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Coming soon">
-                  <span className="cursor-not-allowed opacity-50">
-                    <GlobeIcon />
-                    <span>Coming soon</span>
-                  </span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <SidebarMenu>
+            {websiteItems.map((group) => {
+              const isActive = isNavGroupActive(
+                pathname,
+                group.items,
+                '/website',
+              )
+              return (
+                <Collapsible key={group.title} asChild defaultOpen={isActive}>
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild className="group">
+                      <div>
+                        <SidebarMenuButton tooltip={group.title}>
+                          <group.icon />
+                          {group.title}
+                        </SidebarMenuButton>
+                        <SidebarMenuAction className="group-data-[state=open]:rotate-90">
+                          <ChevronRightIcon />
+                        </SidebarMenuAction>
+                      </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {group.items.map((subItem) => (
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton asChild>
+                              <Link to={subItem.url}>
+                                <ArrowLeftRightIcon />
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              )
+            })}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

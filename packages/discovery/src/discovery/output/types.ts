@@ -86,6 +86,7 @@ export type StructureEntry = {
   template?: string
   sourceHashes?: (string | undefined)[]
   unverified?: true
+  deployerAddress?: ChainSpecificAddress
   sinceTimestamp?: number
   sinceBlock?: number
   proxyType?: string

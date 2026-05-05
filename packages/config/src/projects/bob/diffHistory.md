@@ -1,3 +1,245 @@
+Generated with discovered.json: 0xb5315e332bd94ac2d6892004d67874d6e88e31f3
+
+# Diff at Tue, 05 May 2026 10:22:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1773320760
+- current timestamp: 1773320760
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773320760 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      deployerAddress:
++        "eth:0xe4E5e395E9efb3C1bB37D9c53Ad2F115c6f91FfB"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x15F80920C8Fec136e2A804E04f26203FF8dAd19A) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x1A08BA77CB95184Ea0C31e56f199Db068eb6B35d) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF) {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      deployerAddress:
++        "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      deployerAddress:
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xE3d981643b806FB8030CDB677D6E60892E547EdA) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      deployerAddress:
++        "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2dc77c697e892542cC53336178a78Bb313DFDC7) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x43Ea7cC3Fc5C47de680Bd25d3716Ba08dcFEA0B2"
+    }
+```
+
 Generated with discovered.json: 0xb9def753e26c70b370ed847be530d0195bae29d4
 
 # Diff at Thu, 12 Mar 2026 13:08:25 GMT:

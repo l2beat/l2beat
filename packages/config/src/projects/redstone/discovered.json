@@ -19,6 +19,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184443,
       "sinceBlock": 19578320,
       "values": {
@@ -72,6 +73,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184623,
       "sinceBlock": 19578335,
       "values": {
@@ -111,6 +113,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184587,
       "sinceBlock": 19578332,
       "values": {
@@ -166,6 +169,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184599,
       "sinceBlock": 19578333,
       "values": {
@@ -295,6 +299,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184383,
       "sinceBlock": 19578315,
       "values": {
@@ -335,6 +340,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184563,
       "sinceBlock": 19578330,
       "values": {
@@ -415,6 +421,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184515,
       "sinceBlock": 19578326,
       "values": {
@@ -473,6 +480,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184647,
       "sinceBlock": 19578337,
       "values": {
@@ -579,6 +587,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184575,
       "sinceBlock": 19578331,
       "values": {
@@ -613,6 +622,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184551,
       "sinceBlock": 19578329,
       "values": {
@@ -711,6 +721,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184407,
       "sinceBlock": 19578317,
       "values": {
@@ -733,6 +744,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0xb356B146F1629c49C44344464F69BCDAfb4bb664",
       "sinceTimestamp": 1712184395,
       "sinceBlock": 19578316,
       "values": {

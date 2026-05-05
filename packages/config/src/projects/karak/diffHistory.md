@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xf1b6b8f433559b8ddb5aadaaafc19d33b5d305d8
+
+# Diff at Tue, 05 May 2026 10:22:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772526845
+- current timestamp: 1772526845
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772526845 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x282DB123D1cbf5437c295EA0df0137E5FaDbD117"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x952851CecB07705A5bb483C1CE080F97e1E7491E) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9"
+    }
+```
+
 Generated with discovered.json: 0x4f526592798c68272316c90f0005bb7ea717eb56
 
 # Diff at Fri, 12 Dec 2025 10:26:42 GMT:

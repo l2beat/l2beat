@@ -1,6 +1,6 @@
 {
   "name": "edgex",
-  "timestamp": 1777545991,
+  "timestamp": 1777891423,
   "configHash": "0x5cb999bde5dc790f9b1a3de7f6f00d91d9175043b78486af8c31f49184bc94c4",
   "entries": [
     {
@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "1inch DEX aggregator supporting RFQ fills, limit-order fills and direct DEX swaps.",
+      "deployerAddress": "eth:0xCCbdBd9B0309a77fC6a56e087Ff2765ff394012e",
       "sinceTimestamp": 1667541899,
       "sinceBlock": 15894742,
       "values": {
@@ -48,6 +49,7 @@
       ],
       "proxyType": "immutable",
       "description": "DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.",
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435883,
       "sinceBlock": 20261309,
       "values": {
@@ -120,12 +122,13 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435919,
       "sinceBlock": 20261312,
       "values": {
         "$immutable": true,
         "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-        "hasRegisteredFact": false,
+        "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
         "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860",
@@ -195,6 +198,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
       "sinceTimestamp": 1756178879,
       "sinceBlock": 23222600,
       "values": {
@@ -257,6 +261,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x58B5DAf5662425C1B8aB4Be8B3A53e8A2374Dbf1",
       "sinceTimestamp": 1608623778,
       "sinceBlock": 11502031,
       "values": {
@@ -273,7 +278,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 523,
+        "nonce": 525,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -332,6 +337,7 @@
       ],
       "proxyType": "immutable",
       "description": "Special verifier for the escape() function.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1660252035,
       "sinceBlock": 15322966,
       "values": {
@@ -363,6 +369,7 @@
       ],
       "proxyType": "immutable",
       "description": "A deposit wrapper that allows users to deposit arbitrary tokens to EdgeX. Tokens are swapped to USDT via 1inch and deposited to edgeX. This deposit wrapper also has fast withdrawal support using liquidity providers, but it seems deprecated in practice. Standard direct deposits and withdrawals of USDT at the StarkPerpetual contract are fully supported.",
+      "deployerAddress": "eth:0x7396C0c9209fcbC6948A472835cC08c75eDe7f93",
       "sinceTimestamp": 1721641931,
       "sinceBlock": 20361294,
       "values": {
@@ -431,6 +438,7 @@
         "getValidiumTreeHeight",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435859,
       "sinceBlock": 20261307,
       "values": {
@@ -464,7 +472,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 59632,
+        "getLastBatchId": 60035,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -475,7 +483,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 59554,
+        "getSequenceNumber": 59957,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1037,6 +1045,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 24992417 },
+  "usedBlockNumbers": { "ethereum": 25021111 },
   "permissionsConfigHash": "0x5aff13ce66c991dfd2a87926b939789e25cc0e298e7a045667283f9e5ece1089"
 }

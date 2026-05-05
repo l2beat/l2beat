@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x19d4e173ef451f3c1785be8bf87a5e7752b3c02f
+
+# Diff at Tue, 05 May 2026 10:22:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772118382
+- current timestamp: 1772118382
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772118382 (main branch discovery), not current.
+
+```diff
+    contract DSRYieldProvider (eth:0x0733F618118bF420b6b604c969498ecf143681a8) {
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract L1BlastBridge (eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract LidoYieldProvider (eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db) {
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract LaunchBridge (eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x52c31C77974667Bc17d3c4A336AC60A1584f18B7"
+    }
+```
+
+```diff
+    contract BlastMultisig 2 (eth:0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1f97306039530ADB4173C3786e86fab5e6b90F41"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x6B916DcCa661d23794e78509723A6f4348564847) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: Contract managing Yield Providers for ETH.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE064B565Cf2A312a3e66Fe4118890583727380C0) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825"
+    }
+```
+
 Generated with discovered.json: 0x6da793428421d0cb4cc21169b622955bc2920d5c
 
 # Diff at Thu, 26 Feb 2026 15:07:26 GMT:

@@ -8,6 +8,7 @@ export const zksyncprover: BaseProject = {
   slug: 'zksyncprover',
   name: 'ZKsync Lite',
   shortName: undefined,
+  aliases: ['Matter Labs'],
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
   statuses: {
     yellowWarning: undefined,

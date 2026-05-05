@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x998b971cb254a57252bab0d4dc9975f3a792a37f
+
+# Diff at Tue, 05 May 2026 10:22:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1750333028
+- current timestamp: 1750333028
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1750333028 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x0A9F7BD2182EAC312ec99AFcF684Ff40086331Ff) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x5e5aBaD78aa0a0773a43606A978ef53a95a2f391) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x742F0619adB993809B1B00E493b5bdb4085B735e) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x846387C3D6001F74170455B1074D01f05eB3067a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract CustomGateway (arb1:0xa8f6bB820eaD521cf834B7b371cFe025bdacEE99) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0xB155C77a440DA7c282993a89FeA609598293017A) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xce4b9839C83cB0650B34659B8Fa44609A45b1010) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0xd76eb58D7fA80AC6119942bA20D9bbbA94Ce66BC) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xe507b9EF563DB6CcFDcE270160C50b2005BeED20) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05"
+    }
+```
+
 Generated with discovered.json: 0x18fe5f0571b5f07d049cccfea6bc56391b256f28
 
 # Diff at Mon, 05 Jan 2026 17:44:12 GMT:

@@ -1,7 +1,9 @@
 import { getCoreRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { type BurnAndMintProtocolRow, burnAndMintColumns } from './columns'
+import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import { type BurnAndMintProtocolRow, getBurnAndMintColumns } from './columns'
 import type { BurnAndMintProtocolEntry } from './getBridgeTypeEntries'
 
 export function BurnAndMintTable({
@@ -9,9 +11,14 @@ export function BurnAndMintTable({
 }: {
   entries: BurnAndMintProtocolEntry[]
 }) {
+  const { selectionForApi } = useInteropSelectedChains()
+  const columns = useMemo(
+    () => getBurnAndMintColumns(selectionForApi),
+    [selectionForApi],
+  )
   const table = useTable<BurnAndMintProtocolRow>({
     data: entries,
-    columns: burnAndMintColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
     manualFiltering: true,

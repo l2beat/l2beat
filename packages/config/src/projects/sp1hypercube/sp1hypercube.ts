@@ -9,6 +9,7 @@ export const sp1hypercube: BaseProject = {
   slug: 'sp1hypercube',
   name: 'SP1 Hypercube',
   shortName: undefined,
+  aliases: ['Succinct'],
   addedAt: UnixTime.fromDate(new Date('2026-03-04')),
   statuses: {
     yellowWarning: undefined,

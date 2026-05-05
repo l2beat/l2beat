@@ -37,6 +37,7 @@
       ],
       "proxyType": "immutable",
       "description": "Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.",
+      "deployerAddress": "arb1:0x1D4c01E15A637cB3cbaF86fFbb02E5A260D01fbc",
       "sinceTimestamp": 1701389130,
       "sinceBlock": 155689071,
       "values": {

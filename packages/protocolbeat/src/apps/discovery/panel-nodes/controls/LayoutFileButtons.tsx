@@ -1,10 +1,10 @@
-import clsx from 'clsx'
 import { useRef, useState } from 'react'
 import { Button } from '../../../../components/Button'
 import { Checkbox } from '../../../../components/Checkbox'
 import { Dialog } from '../../../../components/Dialog'
 import { IconDownload } from '../../../../icons/IconDownload'
 import { IconFileUp } from '../../../../icons/IconFileUp'
+import { cn } from '../../../../utils/cn'
 import type { ApplyLayoutMode } from '../store/actions/applyStoredLayout'
 import { useStore } from '../store/store'
 import { buildStoredNodeLayout, StoredNodeLayout } from '../store/utils/storage'
@@ -20,10 +20,15 @@ interface LoadError {
   message: string
 }
 
-export function LayoutFileButtons() {
+export function LayoutFileButtons(props?: {
+  orientation?: 'column' | 'row'
+  className?: string
+  buttonClassName?: string
+}) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [pending, setPending] = useState<PendingLayout | null>(null)
   const [error, setError] = useState<LoadError | null>(null)
+  const orientation = props?.orientation ?? 'column'
   const clear = () => {
     setPending(null)
     setError(null)
@@ -78,11 +83,23 @@ export function LayoutFileButtons() {
 
   return (
     <>
-      <div className="flex flex-1 flex-col gap-1">
-        <ControlButton onClick={onLoadClick}>
+      <div
+        className={cn(
+          'flex gap-2 self-stretch',
+          orientation === 'row' ? 'flex-row' : 'flex-1 flex-col',
+          props?.className,
+        )}
+      >
+        <ControlButton
+          onClick={onLoadClick}
+          className={cn('h-full', props?.buttonClassName)}
+        >
           <IconFileUp />
         </ControlButton>
-        <ControlButton onClick={onSave}>
+        <ControlButton
+          onClick={onSave}
+          className={cn('h-full', props?.buttonClassName)}
+        >
           <IconDownload />
         </ControlButton>
         <input
@@ -220,7 +237,7 @@ function ModeOption({
 }) {
   return (
     <label
-      className={clsx(
+      className={cn(
         'flex cursor-pointer gap-2 border p-2',
         checked ? 'border-coffee-200 bg-coffee-700' : 'border-coffee-500',
       )}

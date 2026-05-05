@@ -24,6 +24,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296973,
       "sinceBlock": 186015816,
       "values": {
@@ -65,6 +66,7 @@
         "0x92d18063ee33accb564a80045a642ccab59919fc97ffb5f4a4849874239d7bc0"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280477,
       "sinceBlock": 185950532,
       "values": {
@@ -131,6 +133,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692604751,
       "sinceBlock": 123482330,
       "values": {
@@ -193,6 +196,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296973,
       "sinceBlock": 186015816,
       "values": {
@@ -238,6 +242,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280428,
       "sinceBlock": 185950340,
       "values": {
@@ -302,6 +307,7 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095783,
       "sinceBlock": 12153218,
       "values": {
@@ -366,6 +372,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711098033,
       "sinceBlock": 12154343,
       "values": {
@@ -414,6 +421,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711098033,
       "sinceBlock": 12154343,
       "values": {
@@ -463,6 +471,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095697,
       "sinceBlock": 12153175,
       "values": {
@@ -545,6 +554,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606269,
       "sinceBlock": 2908461,
       "values": {
@@ -611,6 +621,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710417729,
       "sinceBlock": 803957,
       "values": {
@@ -670,6 +681,7 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710418385,
       "sinceBlock": 804285,
       "values": {
@@ -738,6 +750,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1710486067,
       "sinceBlock": 838126,
       "values": {
@@ -785,6 +798,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710427013,
       "sinceBlock": 808599,
       "values": {
@@ -828,6 +842,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710427013,
       "sinceBlock": 808599,
       "values": {
@@ -873,6 +888,7 @@
         "0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709275199,
       "sinceBlock": 19338591,
       "values": {
@@ -920,6 +936,7 @@
         "0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281415,
       "sinceBlock": 19339109,
       "values": {
@@ -964,6 +981,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295323,
       "sinceBlock": 19340260,
       "values": {
@@ -1002,6 +1020,7 @@
         "0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1710418475,
       "sinceBlock": 19433179,
       "values": {
@@ -1045,6 +1064,7 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095887,
       "sinceBlock": 19488957,
       "values": {
@@ -1086,6 +1106,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709278799,
       "sinceBlock": 19338891,
       "values": {
@@ -1150,6 +1171,7 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281103,
       "sinceBlock": 19339083,
       "values": {
@@ -1188,6 +1210,7 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092707,
       "sinceBlock": 19488695,
       "values": {
@@ -1226,6 +1249,7 @@
         "0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281007,
       "sinceBlock": 19339075,
       "values": {
@@ -1264,6 +1288,7 @@
         "0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709278979,
       "sinceBlock": 19338906,
       "values": {
@@ -1307,6 +1332,7 @@
         "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004791,
       "sinceBlock": 20059964,
       "values": {
@@ -1339,6 +1365,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295323,
       "sinceBlock": 19340260,
       "values": {
@@ -1464,6 +1491,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692603863,
       "sinceBlock": 17961693,
       "values": {
@@ -1502,6 +1530,7 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281211,
       "sinceBlock": 19339092,
       "values": {
@@ -1540,6 +1569,7 @@
         "0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281355,
       "sinceBlock": 19339104,
       "values": {
@@ -1606,6 +1636,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606393,
       "sinceBlock": 244397,
       "values": {
@@ -1662,6 +1693,7 @@
         "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709977822,
       "sinceBlock": 2779975,
       "values": {
@@ -1706,6 +1738,7 @@
         "getTotalPriorityTxs",
         "getFirstUnprocessedPriorityTx"
       ],
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218085,
       "sinceBlock": 2590041,
       "values": {
@@ -1933,6 +1966,7 @@
         "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218113,
       "sinceBlock": 2590048,
       "values": {
@@ -1975,6 +2009,7 @@
         "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "linea:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279545,
       "sinceBlock": 2605406,
       "values": {
@@ -2011,6 +2046,7 @@
         "0x792d878e324f2a31f66005ea64ff88a3c43115da5bb27ed146b7be88e638dca7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709217961,
       "sinceBlock": 2590010,
       "values": {
@@ -2056,6 +2092,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218009,
       "sinceBlock": 2590022,
       "values": {
@@ -2090,6 +2127,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
@@ -2115,6 +2153,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
@@ -2185,6 +2224,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "sinceTimestamp": 1710253339,
       "sinceBlock": 1602938,
       "values": {
@@ -2261,6 +2301,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279099,
       "sinceBlock": 1505514,
       "values": {
@@ -2330,6 +2371,7 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279189,
       "sinceBlock": 1505523,
       "values": {
@@ -2411,6 +2453,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "mantle:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "sinceTimestamp": 1710253012,
       "sinceBlock": 60705516,
       "values": {
@@ -2468,6 +2511,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296907,
       "sinceBlock": 58697615,
       "values": {
@@ -2533,6 +2577,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279309,
       "sinceBlock": 58659816,
       "values": {
@@ -2606,6 +2651,7 @@
         "0xf74567f04dfc1337e1295ac8ee70891c3e1543ec852c2205630c0bcc4e0b6a19"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279398,
       "sinceBlock": 58659973,
       "values": {
@@ -2657,6 +2703,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296907,
       "sinceBlock": 58697615,
       "values": {
@@ -2711,6 +2758,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692605961,
       "sinceBlock": 108503592,
       "values": {
@@ -2769,6 +2817,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092485,
       "sinceBlock": 117746854,
       "values": {
@@ -2832,6 +2881,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095511,
       "sinceBlock": 117748367,
       "values": {
@@ -2890,6 +2940,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095511,
       "sinceBlock": 117748367,
       "values": {
@@ -2911,6 +2962,7 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092577,
       "sinceBlock": 117746900,
       "values": {
@@ -2982,6 +3034,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004361,
       "sinceBlock": 6433793,
       "values": {
@@ -3039,6 +3092,7 @@
         "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718026877,
       "sinceBlock": 6441298,
       "values": {
@@ -3097,6 +3151,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718026877,
       "sinceBlock": 6441298,
       "values": {
@@ -3128,6 +3183,7 @@
         "0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004634,
       "sinceBlock": 6433884,
       "values": {
@@ -3164,7 +3220,7 @@
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825",
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
@@ -3196,6 +3252,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "sinceTimestamp": 1718010265,
       "sinceBlock": 6435761,
       "values": {
@@ -3219,12 +3276,17 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeProxy",
+        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeL2",
         "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
       "address": "scr:0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "zksync:0x2140d3e4008592E1a6c106ACCfc24335A49AeC8C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3256,6 +3318,11 @@
           "permission": "upgrade",
           "from": "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+          "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
@@ -3266,6 +3333,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606473,
       "sinceBlock": 11790443,
       "values": {
@@ -3300,6 +3368,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "zksync:0x7187DB8AB8F65450a74dD40474bE778CF468C44a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "zksync:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
       "type": "EOA",
       "proxyType": "EOA"
@@ -3308,8 +3381,12 @@
       "name": "EraL1ERC20Bridge",
       "address": "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
+      ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709297079,
       "sinceBlock": 27865488,
       "values": {
@@ -3327,19 +3404,35 @@
             ["zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "l2Bridge": "zksync:0x7187DB8AB8F65450a74dD40474bE778CF468C44a",
+        "l2TokenBeacon": "zksync:0x2140d3e4008592E1a6c106ACCfc24335A49AeC8C",
+        "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
       "implementationNames": {
         "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": "TransparentUpgradeableProxy",
-        "zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40": ""
+        "zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40": "L1ERC20Bridge"
       }
     },
     {
       "name": "ErazkLink",
       "address": "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
       "type": "Contract",
-      "unverified": true,
+      "template": "zklinknova/secondaryZkLink",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"
+      ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getTotalBatchesExecuted",
+        "getTotalPriorityTxs",
+        "totalBatchesExecuted",
+        "totalPriorityTxs",
+        "totalSyncedPriorityTxs",
+        "totalValidatorForwardFee"
+      ],
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280624,
       "sinceBlock": 27849895,
       "values": {
@@ -3362,11 +3455,85 @@
             ["zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"]
           ]
         ],
-        "$upgradeCount": 3
+        "$upgradeCount": 3,
+        "feeParams": {
+          "pubdataPricingMode": 0,
+          "batchOverheadL1Gas": 1000000,
+          "maxPubdataPerBatch": 120000,
+          "maxL2GasPerBatch": 80000000,
+          "priorityTxMaxPubdata": 99000,
+          "minimalL2GasPrice": 250000000
+        },
+        "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
+        "forwardFeeAllocator": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "gateway": "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+        "getGateway": "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+        "getGovernor": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "getPriorityTxMaxGasLimit": 72000000,
+        "getTotalBatchesExecuted": 69385,
+        "getTotalPriorityTxs": 28218,
+        "IS_ETH_GAS_TOKEN": true,
+        "owner": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "paused": false,
+        "totalBatchesExecuted": 69385,
+        "totalPriorityTxs": 28218,
+        "totalSyncedPriorityTxs": 28218,
+        "totalValidatorForwardFee": "12807273744726639224",
+        "totalValidatorForwardFeeWithdrawn": "12755921426313125456",
+        "txGasPrice": 40000000000
       },
       "implementationNames": {
         "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A": "ERC1967Proxy",
-        "zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E": ""
+        "zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E": "ZkLink"
+      }
+    },
+    {
+      "name": "EraL2Gateway",
+      "address": "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+      "type": "Contract",
+      "template": "zklinknova/secondaryGateway",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xe0235f35c0fdaea3f676b1101581911d1a9b4bbc4bdbd2c76d9e93ab3da4762c"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "sinceTimestamp": 1709280885,
+      "sinceBlock": 27850141,
+      "values": {
+        "$admin": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "$implementation": "zksync:0x8463989308De8eA3D80DC26FA650600D391b899F",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T08:14:45.000Z",
+            "0x66b2a3409ce75965d2658134452a8b0da51c61906a9de0823ec38c4ac3042fdb",
+            ["zksync:0xb1D83727d65e9958272f7292019B43819F74fE88"]
+          ],
+          [
+            "2024-03-05T07:03:10.000Z",
+            "0x9ed633e57328f4415e00ec0a3aee9c4cb5fad1cbd0a1e3a483937ec7fc0c9d52",
+            ["zksync:0xcc9d88fA752f8DC0b46D2a2D880C5c66733546a6"]
+          ],
+          [
+            "2024-03-09T10:53:44.000Z",
+            "0x8203ae9454d1438aa09a311f40877e822c908f6a7647bf7e0c02e4b2c5e379af",
+            ["zksync:0x0406bbD77D490650Bb2cbE7761d17C42e54a6f9d"]
+          ],
+          [
+            "2024-04-22T02:28:56.000Z",
+            "0x35dad9f42bcd7e9c55385a3656325f94616498878f636e080dbd059f80618492",
+            ["zksync:0x8463989308De8eA3D80DC26FA650600D391b899F"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "getRemoteGateway": "zksync:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
+        "L2_ETH_ADDRESS": "zksync:0x000000000000000000000000000000000000800A",
+        "owner": "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "ZKLINK": "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      },
+      "implementationNames": {
+        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535": "ERC1967Proxy",
+        "zksync:0x8463989308De8eA3D80DC26FA650600D391b899F": "ZkSyncL2Gateway"
       }
     },
     {
@@ -3395,7 +3562,7 @@
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
@@ -3405,6 +3572,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709297074,
       "sinceBlock": 27865483,
       "values": {
@@ -5158,6 +5326,23 @@
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
       "function VERSION() view returns (string)",
       "function addOwnerWithThreshold(address owner, uint256 _threshold)",
       "function approveHash(bytes32 hashToApprove)",
@@ -5188,24 +5373,7 @@
       "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
-      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)"
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "oeth:0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [
       "constructor(address _zkSync)",
@@ -5622,7 +5790,54 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": [
-      "constructor(address _singleton)"
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
       "event AddedOwner(address owner)",
@@ -5677,6 +5892,29 @@
     "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca": [
       "constructor(address _singleton)"
     ],
+    "zksync:0x8463989308De8eA3D80DC26FA650600D391b899F": [
+      "constructor(address _zkLink)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event L2GatewayMessageSent(uint256 value, bytes callData)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function L2_ETH_ADDRESS() view returns (address)",
+      "function ZKLINK() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -5688,6 +5926,106 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E": [
+      "constructor(bool _isEthGasToken)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ContractAllowStatusUpdate(address indexed contractAddress, bool isPermit)",
+      "event EthWithdrawalFinalized(address indexed to, uint256 amount)",
+      "event ForwardFeeAllocatorUpdate(address oldAllocator, address newAllocator)",
+      "event InitGateway(address indexed gateway)",
+      "event Initialized(uint8 version)",
+      "event NewFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) oldFeeParams, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) newFeeParams)",
+      "event NewPriorityRequest(uint256 priorityOpId, tuple(address gateway, bool isContractCall, address sender, uint256 txId, address contractAddressL2, uint256 l2Value, bytes l2CallData, uint256 l2GasLimit, uint256 l2GasPricePerPubdata, bytes[] factoryDeps, address refundRecipient) l2Request)",
+      "event OpenRangeBatchRoot(uint256 fromBatchNumber, uint256 toBatchNumber)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event SyncBatchRoot(uint256 batchNumber, bytes32 l2LogsRootHash, uint256 forwardEthAmount)",
+      "event SyncL2Requests(uint256 totalSyncedPriorityTxs, bytes32 syncHash, uint256 forwardEthAmount)",
+      "event SyncL2TxHash(bytes32 l2TxHash, bytes32 primaryChainL2TxHash)",
+      "event SyncRangeBatchRoot(uint256 fromBatchNumber, uint256 toBatchNumber, bytes32 rangeBatchRootHash, uint256 forwardEthAmount)",
+      "event TxGasPriceUpdate(uint256 oldTxGasPrice, uint256 newTxGasPrice)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event ValidatorStatusUpdate(address indexed validatorAddress, bool isActive)",
+      "event WithdrawForwardFee(address indexed receiver, uint256 amount)",
+      "function FORWARD_REQUEST_TYPE_HASH() view returns (bytes32)",
+      "function IS_ETH_GAS_TOKEN() view returns (bool)",
+      "function allowLists(address contractAddress) view returns (bool isPermitToSendL2Request)",
+      "function changeFeeParams(tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function feeParams() view returns (uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice)",
+      "function finalizeEthWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function forwardFeeAllocator() view returns (address)",
+      "function gateway() view returns (address)",
+      "function getGateway() view returns (address)",
+      "function getGovernor() view returns (address)",
+      "function getPriorityTxMaxGasLimit() pure returns (uint256)",
+      "function getTotalBatchesExecuted() view returns (uint256)",
+      "function getTotalPriorityTxs() view returns (uint256)",
+      "function initialize()",
+      "function isEthWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function isValidator(address _address) view returns (bool)",
+      "function l2LogsRootHash(uint256 _batchNumber) view returns (bytes32 merkleRoot)",
+      "function l2LogsRootHashes(uint256 batchNumber) view returns (bytes32 l2LogsRootHash)",
+      "function l2TransactionBaseCost(uint256 _gasPrice, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit) view returns (uint256)",
+      "function l2TxHashMap(bytes32 l2TxHash) view returns (bytes32 primaryChainL2TxHash)",
+      "function openRangeBatchRootHash(uint256 _fromBatchNumber, uint256 _toBatchNumber, bytes32[] _l2LogsRootHashes)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function priorityOpSyncStatus(uint256 priorityOpId) view returns (bytes32 hash, uint256 amount)",
+      "function proveL1ToL2TransactionStatus(bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof, uint8 _status) view returns (bool)",
+      "function proveL2MessageInclusion(uint256 _batchNumber, uint256 _index, tuple(uint16 txNumberInBatch, address sender, bytes data) _message, bytes32[] _proof) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function rangeBatchRootHashes(bytes32 range) view returns (bytes32 rangeBatchRootHash)",
+      "function renounceOwnership()",
+      "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
+      "function setAllowList(address _contractAddress, bool _permitted)",
+      "function setForwardFeeAllocator(address _newForwardFeeAllocator)",
+      "function setGateway(address _gateway)",
+      "function setTxGasPrice(uint256 _newTxGasPrice)",
+      "function setValidator(address _validator, bool _active)",
+      "function syncBatchRoot(uint256 _batchNumber, bytes32 _l2LogsRootHash, uint256 _forwardEthAmount) payable",
+      "function syncL2Requests(uint256 _newTotalSyncedPriorityTxs) payable",
+      "function syncL2TxHash(bytes32 _l2TxHash, bytes32 _primaryChainL2TxHash)",
+      "function syncRangeBatchRoot(uint256 _fromBatchNumber, uint256 _toBatchNumber, bytes32 _rangeBatchRootHash, uint256 _forwardEthAmount) payable",
+      "function totalBatchesExecuted() view returns (uint256)",
+      "function totalPriorityTxs() view returns (uint256)",
+      "function totalSyncedPriorityTxs() view returns (uint256)",
+      "function totalValidatorForwardFee() view returns (uint256)",
+      "function totalValidatorForwardFeeWithdrawn() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function txGasPrice() view returns (uint256)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function validators(address validatorAddress) view returns (bool isValidator)",
+      "function withdrawForwardFee(address _receiver, uint256 _amount)"
+    ],
+    "zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40": [
+      "constructor(address _zkSync)",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event DepositToMergeInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount, bool toMerge)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function depositToMerge(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(bytes[] _factoryDeps, bytes32[] _factoryDepByteCodeHashes, address _l2TokenBeacon, address _governor, uint256 _deployBridgeImplementationFee, uint256 _deployBridgeProxyFee) payable",
+      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
     "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -5704,7 +6042,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryGateway": "0x7c6cdb315edbc57a3856f61b3448217c343a401013f0f46fcc72d9a900b7ec6b",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": {
@@ -5719,5 +6057,5 @@
     "scroll": 17695863,
     "zksync2": 63447251
   },
-  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
+  "permissionsConfigHash": "0x76b96f0b0064ee50211b2ce1d640449a579fecc94aae34c8fbcf27dd6e51b8b1"
 }

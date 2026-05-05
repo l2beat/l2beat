@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1777544162,
+  "timestamp": 1777891441,
   "configHash": "0x265fb8f2732803d362c9a17deb5b3cd671f7ab4368644157cc5a8db89ca42b70",
   "entries": [
     {
@@ -12,6 +12,7 @@
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -29,6 +30,7 @@
         "0x6156385d69e1bf7290adaaaa1e5d33748df1c8da588f686403aca38710f05693"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": {
@@ -68,6 +70,7 @@
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
@@ -90,6 +93,7 @@
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -107,6 +111,7 @@
         "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -124,6 +129,7 @@
         "0xa78b7bb374044ea6a603766c4b16c5d1ec5573ddc1dfb9b9413701020ebfe195"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": {
@@ -163,6 +169,7 @@
         "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
@@ -180,6 +187,7 @@
         "0xa78b7bb374044ea6a603766c4b16c5d1ec5573ddc1dfb9b9413701020ebfe195"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": {
@@ -220,6 +228,7 @@
       ],
       "proxyType": "immutable",
       "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
       "values": {
@@ -265,6 +274,7 @@
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -282,6 +292,7 @@
         "0x6156385d69e1bf7290adaaaa1e5d33748df1c8da588f686403aca38710f05693"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": {
@@ -322,6 +333,7 @@
       ],
       "proxyType": "immutable",
       "description": "Bootloader program for the SHARPVerifier.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907579,
       "sinceBlock": 23531470,
       "values": {
@@ -1507,6 +1519,7 @@
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -1524,6 +1537,7 @@
         "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -1541,6 +1555,7 @@
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -1580,6 +1595,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1678120703,
       "sinceBlock": 16770549,
       "values": {
@@ -1612,6 +1628,7 @@
         "0xf5024ac4eb50233c89b413be0a009ce68c921f1dad29809c3e5a3551b074ca6e"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1768486895,
       "sinceBlock": 24240673,
       "values": {
@@ -2798,6 +2815,7 @@
         "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": {
@@ -2837,6 +2855,7 @@
         "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": {
@@ -2874,6 +2893,7 @@
         "0xf51c19545fc3804626755b86bd142a8c98efcbfacbd2499b1ae9ecda7a163540"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706309663,
       "sinceBlock": 19093880,
       "values": {
@@ -2917,6 +2937,7 @@
         "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -2934,6 +2955,7 @@
         "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -2951,6 +2973,7 @@
         "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": {
@@ -2990,6 +3013,7 @@
         "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -3007,6 +3031,7 @@
         "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
@@ -3024,6 +3049,7 @@
         "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -3041,6 +3067,7 @@
         "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": {
@@ -3080,6 +3107,7 @@
         "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -3102,6 +3130,7 @@
         "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": {
@@ -3144,6 +3173,7 @@
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -3163,6 +3193,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1635077695,
       "sinceBlock": 13480127,
       "values": {
@@ -3323,6 +3354,7 @@
         "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829155,
       "sinceBlock": 20376820,
       "values": { "$immutable": true },
@@ -3340,6 +3372,7 @@
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -3357,6 +3390,7 @@
         "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -3374,6 +3408,7 @@
         "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -3391,6 +3426,7 @@
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -3408,6 +3444,7 @@
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -3425,6 +3462,7 @@
         "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
@@ -3448,6 +3486,7 @@
       ],
       "proxyType": "immutable",
       "description": "Bootloader program for the SHARPVerifier.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": {
@@ -4269,6 +4308,7 @@
       ],
       "proxyType": "immutable",
       "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1768486907,
       "sinceBlock": 24240674,
       "values": {
@@ -4314,6 +4354,7 @@
         "0x455c07ce6901510356c3380308551257434cb25c1460e324772f60468e46682a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706140859,
       "sinceBlock": 19079933,
       "values": {
@@ -4354,6 +4395,7 @@
         "0xb1d6c8068e8976bde7fbfd4294f8808b6d28efd5d87ca84820a7e3e890446761"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706141015,
       "sinceBlock": 19079946,
       "values": {
@@ -4394,6 +4436,7 @@
         "0x6c96d348b73a5436aaac0d8de8c5f06a7a625c1ff02b0c069fc677f0ac01c009"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": {
@@ -4433,6 +4476,7 @@
         "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
@@ -4450,6 +4494,7 @@
         "0x0a08e622000c261c38a85bb0054bb2b50ae684e6edf79f0986e931d10fc5c277"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706141519,
       "sinceBlock": 19079986,
       "values": {
@@ -4490,6 +4535,7 @@
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -4507,6 +4553,7 @@
         "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": {
@@ -4547,6 +4594,7 @@
       ],
       "proxyType": "immutable",
       "description": "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1674001487,
       "sinceBlock": 16430088,
       "values": {
@@ -4577,6 +4625,7 @@
         "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": {
@@ -4621,6 +4670,7 @@
         "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
       "values": { "$immutable": true },
@@ -4639,6 +4689,7 @@
       ],
       "proxyType": "immutable",
       "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1775394071,
       "sinceBlock": 24813623,
       "values": {
@@ -4659,7 +4710,7 @@
           "2358844945297786488640123814540854423585455959362109345448922524567546993330",
           "2344514586684536563385559840360704301482767436870016911498865422916991654732"
         ],
-        "hasRegisteredFact": false,
+        "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
         "PAGE_INFO_ADDRESS_OFFSET": 0,
@@ -4684,6 +4735,7 @@
         "0xdc9bb80d233601bb801b1e447c903b9c5a929f3630f4e158f75b9931e44beb9f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706141639,
       "sinceBlock": 19079994,
       "values": {
@@ -4722,6 +4774,7 @@
         "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
@@ -4749,6 +4802,7 @@
         "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -4776,6 +4830,7 @@
         "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -4793,6 +4848,7 @@
         "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -4810,6 +4866,7 @@
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
@@ -4827,6 +4884,7 @@
         "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -4845,6 +4903,7 @@
       ],
       "proxyType": "immutable",
       "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1722195851,
       "sinceBlock": 20407220,
       "values": {
@@ -4890,6 +4949,7 @@
         "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -4907,6 +4967,7 @@
         "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -4924,6 +4985,7 @@
         "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -4941,6 +5003,7 @@
         "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -4958,6 +5021,7 @@
         "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
@@ -4975,6 +5039,7 @@
         "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -4992,6 +5057,7 @@
         "0x130226ac91c1d6deb82b863eea95c84640b9c20c1e292b26cb88fc6db73c0b15"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706309663,
       "sinceBlock": 19093880,
       "values": {
@@ -5037,6 +5103,7 @@
         "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": {
@@ -5074,6 +5141,7 @@
         "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828735,
       "sinceBlock": 20376785,
       "values": { "$immutable": true },
@@ -5091,6 +5159,7 @@
         "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907603,
       "sinceBlock": 23531472,
       "values": { "$immutable": true },
@@ -5108,6 +5177,7 @@
         "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
@@ -5125,6 +5195,7 @@
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -5143,6 +5214,7 @@
       ],
       "proxyType": "immutable",
       "description": "Bootloader program for the SHARPVerifier.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706140835,
       "sinceBlock": 19079931,
       "values": {
@@ -5897,6 +5969,7 @@
         "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
@@ -5914,6 +5987,7 @@
         "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
       "values": {
@@ -5956,6 +6030,7 @@
         "0xb44fea2230221135a15c6fbca5ca2f96e5962e3c7e3ec951f0971b590d8962a5"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706141015,
       "sinceBlock": 19079946,
       "values": {
@@ -5996,6 +6071,7 @@
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -6013,6 +6089,7 @@
         "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
@@ -6030,6 +6107,7 @@
         "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -6047,6 +6125,7 @@
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
@@ -6064,6 +6143,7 @@
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -6081,6 +6161,7 @@
         "0x85234db76e94b2ff3ad7e2f2a1b16709e261ffc53900bb726e05cf1ee79811aa"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706309651,
       "sinceBlock": 19093879,
       "values": {
@@ -6122,6 +6203,7 @@
       ],
       "proxyType": "immutable",
       "description": "Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1706309663,
       "sinceBlock": 19093880,
       "values": {
@@ -6166,6 +6248,7 @@
         "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
@@ -6183,6 +6266,7 @@
         "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -6200,6 +6284,7 @@
         "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -6222,6 +6307,7 @@
         "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
@@ -6239,6 +6325,7 @@
         "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
       "values": { "$immutable": true },
@@ -6256,6 +6343,7 @@
         "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
@@ -6274,6 +6362,7 @@
       ],
       "proxyType": "immutable",
       "description": "Bootloader program for the SHARPVerifier.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1764258527,
       "sinceBlock": 23891041,
       "values": {
@@ -7460,6 +7549,7 @@
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -7477,6 +7567,7 @@
         "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721829167,
       "sinceBlock": 20376821,
       "values": {
@@ -7521,6 +7612,7 @@
         "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
@@ -7538,6 +7630,7 @@
         "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": { "$immutable": true },
@@ -7555,6 +7648,7 @@
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -7573,6 +7667,7 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
@@ -7589,6 +7684,7 @@
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
       "values": { "$immutable": true },
@@ -7611,6 +7707,7 @@
         "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
       "values": { "$immutable": true },
@@ -7628,6 +7725,7 @@
         "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -7645,6 +7743,7 @@
         "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
@@ -7668,6 +7767,7 @@
       ],
       "proxyType": "immutable",
       "description": "Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1764258527,
       "sinceBlock": 23891041,
       "values": {
@@ -7713,6 +7813,7 @@
         "0x6c96d348b73a5436aaac0d8de8c5f06a7a625c1ff02b0c069fc677f0ac01c009"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
       "values": {
@@ -8523,6 +8624,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x9f442d61eda2d5aabf1141b1f7769fd6c3100f2fae6777f87260eb27a9903db4",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 24992265 },
+  "usedBlockNumbers": { "ethereum": 25021112 },
   "permissionsConfigHash": "0x84fc3f8140b1aac4eff37ef3b01ace055229569c76d1c0244cac756aabdbdcd3"
 }

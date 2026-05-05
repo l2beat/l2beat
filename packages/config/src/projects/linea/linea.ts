@@ -118,6 +118,7 @@ export const linea: ScalingProject = {
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   display: {
     name: 'Linea',
+    aliases: ['ConsenSys'],
     slug: 'linea',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',

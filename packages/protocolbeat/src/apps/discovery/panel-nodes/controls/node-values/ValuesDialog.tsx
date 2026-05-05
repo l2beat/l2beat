@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from '../../../../../components/Button'
 import { Dialog } from '../../../../../components/Dialog'
@@ -21,14 +22,25 @@ function ValuesDialogRoot({ children }: { children: React.ReactNode }) {
 
 function ValuesDialogTrigger({
   disabled,
+  className,
+  title,
+  ariaLabel,
   children,
 }: {
   disabled: boolean
+  className?: string
+  title?: string
+  ariaLabel?: string
   children: React.ReactNode
 }) {
   return (
     <Dialog.Trigger asChild disabled={disabled}>
-      <ControlButton disabled={disabled} className="relative">
+      <ControlButton
+        disabled={disabled}
+        className={clsx('relative', className)}
+        title={title}
+        aria-label={ariaLabel}
+      >
         {children}
       </ControlButton>
     </Dialog.Trigger>

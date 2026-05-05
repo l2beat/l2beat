@@ -23,6 +23,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637595390,
       "sinceBlock": 13665321,
       "values": {
@@ -174,6 +175,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x9f856fC3e2ea6D2ef7b1f030D4A8BF34556eAc5d",
       "sinceTimestamp": 1637442903,
       "sinceBlock": 13654184,
       "values": {
@@ -216,6 +218,7 @@
         "0x90a8fe0eeb8f61a691fd579cb10499f4fd9167497e9aeab3b1ce4f6427fabc96"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637613802,
       "sinceBlock": 13666681,
       "values": {
@@ -265,6 +268,7 @@
         "0xd67e23441d8b22dcf363c048ad14a86a4de64b242cb242fd7ef0fa11da2cb6ff"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637625277,
       "sinceBlock": 13667557,
       "values": {
@@ -324,6 +328,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637621914,
       "sinceBlock": 13667289,
       "values": {
@@ -390,6 +395,7 @@
         "0x90a1adff0012e17a22d9eb35cecd932a71923919b443758b02b2c43ad666a352"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637651844,
       "sinceBlock": 13669463,
       "values": {
@@ -437,6 +443,7 @@
         "0x13def2c5fc95163873f1d15d260b9e03ac811bd830b6ed282e527268e3ca7759"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x51256C824B193909F1B1BCD9F4a5Fa200cBCee78",
       "sinceTimestamp": 1693372043,
       "sinceBlock": 18025232,
       "values": {
@@ -507,6 +514,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637594986,
       "sinceBlock": 13665292,
       "values": {

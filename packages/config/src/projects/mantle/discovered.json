@@ -23,6 +23,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -50,6 +51,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241639,
       "sinceBlock": 17519057,
       "values": {
@@ -95,6 +97,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE",
       "sinceTimestamp": 1686902471,
       "sinceBlock": 17491078,
       "values": {
@@ -145,6 +148,7 @@
         "latestOutputIndex",
         "lastProposalTimestamp"
       ],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439931,
       "sinceBlock": 19434935,
       "values": {
@@ -206,6 +210,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F",
       "sinceTimestamp": 1687241795,
       "sinceBlock": 17519070,
       "values": {
@@ -253,6 +258,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710440051,
       "sinceBlock": 19434945,
       "values": {
@@ -467,6 +473,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
       "sinceTimestamp": 1683509999,
       "sinceBlock": 17212573,
       "values": {
@@ -539,6 +546,7 @@
           "role": ".defaultAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "sinceTimestamp": 1739349323,
       "sinceBlock": 21829257,
       "values": {
@@ -606,6 +614,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687953527,
       "sinceBlock": 17577670,
       "values": {
@@ -664,6 +673,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687951883,
       "sinceBlock": 17577535,
       "values": {
@@ -691,6 +701,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1687954103,
       "sinceBlock": 17577718,
       "values": {
@@ -753,6 +764,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439967,
       "sinceBlock": 19434938,
       "values": {
@@ -833,6 +845,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333",
       "sinceTimestamp": 1710439895,
       "sinceBlock": 19434932,
       "values": {

@@ -1,3 +1,381 @@
+Generated with discovered.json: 0xe62529e2277cb51b8ae7cda716d8b1a053850e2e
+
+# Diff at Tue, 05 May 2026 10:22:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777390966
+- current timestamp: 1777390966
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390966 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
+    }
+```
+
+```diff
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract BunnyInbox (eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2) {
+    +++ description: Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.
+      deployerAddress:
++        "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x15fCB0120D414f246ead019cA4BdF97447cd8d90) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract MegaPreDepositVaultRefund (eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071) {
+    +++ description: Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.
+      deployerAddress:
++        "eth:0x7ffeef52BECC931A844B647baE73c3764F3A5bF0"
+    }
+```
+
+```diff
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3D8ee269F87A7f3F0590c5C0d825FFF06212A242) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract MegaUSDmPreDeposit (eth:0x46D6Eba3AECD215a3e703cdA963820d4520b45D6) {
+    +++ description: Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.
+      deployerAddress:
++        "eth:0xe46A884CfF5653f9EbFC58EEe431a036f95FAc0d"
+    }
+```
+
+```diff
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x6C7198250087B29A8040eC63903Bc130f4831Cc9) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      deployerAddress:
++        "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea"
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9) {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x86183e7b1D908D9A5C3Bc59cC2232F2ffE4E7145) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract Safe (eth:0x92e0E0B15e3e99b32c9ED9AD284F939553C7b7d6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract EigenDACertVerifier (eth:0xa4F38615e6a1846ccD7ff08E8179CBdAC8F5ff3B) {
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+      deployerAddress:
++        "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xab48b73a9e59aF01AfE91e18cA0774295581d07A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract Safe (eth:0xB2A9EB0c7b729c3EC704e843eF260084B3caE67F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      deployerAddress:
++        "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea"
+    }
+```
+
+```diff
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      deployerAddress:
++        "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088"
+    }
+```
+
+```diff
+    contract Megaeth Multisig (eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79"
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      deployerAddress:
++        "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea"
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      deployerAddress:
++        "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea"
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xE4e456c64B9b0de5FE8a90d809180cA71534D623) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+      deployerAddress:
++        "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97"
+    }
+```
+
+```diff
+    contract Safe (eth:0xe8344867AB6387e17b7cAE2dE52C63BCf501BD98) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xEEd67E139CC7721EC656B449F01B7b4D7dCFD671) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xF875030B9464001fC0f964E47546b0AFEEbD7C61) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64"
+    }
+```
+
 Generated with discovered.json: 0x65db1babac4f24853defddba68d6544d2fdb06e6
 
 # Diff at Tue, 28 Apr 2026 15:45:52 GMT:

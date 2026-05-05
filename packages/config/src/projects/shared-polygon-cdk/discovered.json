@@ -1,6 +1,6 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1773663853,
+  "timestamp": 1777963087,
   "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
   "entries": [
     {
@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -35,6 +36,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "deployerAddress": "eth:0xfcFC415D6D21660b90c0545CA0e91E68172B8650",
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
       "values": {
@@ -193,6 +195,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653103,
       "sinceBlock": 16896716,
       "values": {
@@ -386,6 +389,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "sinceTimestamp": 1678956815,
       "sinceBlock": 16839348,
       "values": {
@@ -407,7 +411,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 99,
+        "nonce": 100,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -427,6 +431,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
       "ignoreInWatchMode": ["getRoot"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
@@ -461,7 +466,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x35dfef9e49c8f6e3e8a7e58f5b2008e567437f544fc36639440f79916ce91de6",
+        "getRoot": "0xfb49d8196f4e50aa13eeaa1f9a503cfcb33d748c05cb3e37558e4f8b071bab80",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -504,6 +509,7 @@
       ],
       "proxyType": "immutable",
       "description": "Extension contract of the AgglayerBridge for asset metadata..",
+      "deployerAddress": "eth:0xaFec0EE6D714EBe2dDf732799EEbA9F553394bE8",
       "sinceTimestamp": 1759503191,
       "sinceBlock": 23497972,
       "values": { "$immutable": true },
@@ -530,6 +536,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x00Eb6d3334282401E59cC438bC9D7B9496c42f55",
       "sinceTimestamp": 1678429487,
       "sinceBlock": 16795950,
       "values": {
@@ -590,6 +597,7 @@
         "totalSequencedBatches",
         "totalVerifiedBatches"
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653163,
       "sinceBlock": 16896721,
       "values": {
@@ -720,13 +728,13 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x66de575e660c36a21b204312e1ace3f246eb060a66dd59bae86c3a067964aa49",
+        "getRollupExitRoot": "0x2bd01cc5aadf0896f77935ef8a579af2e21efdeaeab2f7fbe5aead343fd19331",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1773661067,
+        "lastAggregationTimestamp": 1777962659,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
-          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
+          14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1, 16
         ],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "v1.0.0",
@@ -870,10 +878,10 @@
           {
             "rollupContract": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
             "chainID": 3344,
-            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            "forkID": 12,
-            "rollupTypeID": 7,
-            "rollupVerifierType": 0,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
@@ -1091,8 +1099,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 864378,
-        "totalVerifiedBatches": 863902,
+        "totalSequencedBatches": 873539,
+        "totalVerifiedBatches": 873036,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1139,6 +1147,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
       "ignoreInWatchMode": ["getRoot", "depositCount"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
       "values": {
@@ -1173,9 +1182,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 95278,
+        "depositCount": 104701,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0xdf50c113a7d4f8f3246cb8c9d6c964ec11dedc1912343685ab73cf831b368d49",
+        "getRoot": "0xe2d85900bff79b4db6d9389b9a6c8f3603290a60efeed2f7b4394cd5736345aa",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1234,6 +1243,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "sinceTimestamp": 1722533147,
       "sinceBlock": 20435175,
       "values": {
@@ -1346,6 +1356,7 @@
           "condition": "(no delay if in emergency state)"
         }
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653187,
       "sinceBlock": 16896723,
       "values": {
@@ -2590,6 +2601,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24670039 },
+  "usedBlockNumbers": { "ethereum": 25027059 },
   "permissionsConfigHash": "0x9eb29e5f133bc51998ce999ef857b10bb5193d840210fa50d898a8da2ef355da"
 }

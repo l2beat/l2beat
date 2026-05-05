@@ -1,3 +1,453 @@
+Generated with discovered.json: 0x3e83fc58aa4d2ec6f87e8b016da0896bd8360c94
+
+# Diff at Tue, 05 May 2026 10:22:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776331867
+- current timestamp: 1776331867
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776331867 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract L1DAITokenBridge (eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) {
+    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x23B2C62946350F4246f9f9D027e071f0264FD113) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
+```
+
+```diff
+    contract ETHLockbox (eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43) {
+    +++ description: A simple escrow contract storing ETH for the canonical bridge.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract L1DAIEscrow (eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x53A6eecC2dD4795Fcc68940ddc6B4d53Bd88Bd9E"
+    }
+```
+
+```diff
+    contract SynthetixBridgeEscrow (eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) {
+    +++ description: Custom escrow for SNX bridged via canonical messaging.
+      deployerAddress:
++        "eth:0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      deployerAddress:
++        "eth:0x926E9595fb147A376800022a554C8c05444EB658"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6) {
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+      deployerAddress:
++        "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) {
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      deployerAddress:
++        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6B7C001F4af36A576babA2aF3b5251Fc326Ab09A"
+    }
+```
+
+```diff
+    contract FeesCollector (eth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      deployerAddress:
++        "eth:0x660E77a3AAA7a90f076Ed7f3e477acd0BF443b5D"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      deployerAddress:
++        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xD061AB95069987868768818cc1248705351e2D0e) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0xe03F4d1D0E6B8b18b97198598b3f792E57BA17d4) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0xf2FbAE9b080Ae2AC24a56CF456636804FA54DB29"
+    }
+```
+
+```diff
+    contract MintManagerOwner (oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0xab1ef74D2C461e95f4b658ca1f94aC519ad80BA2"
+    }
+```
+
+```diff
+    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x69323538b8C2b2B0E54fa5167Ebe6d19830C9641"
+    }
+```
+
+```diff
+    contract DeployerWhitelist (oeth:0x4200000000000000000000000000000000000002) {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (oeth:0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GasPriceOracle (oeth:0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2StandardBridge (oeth:0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (oeth:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (oeth:0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1BlockNumber (oeth:0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (oeth:0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
++        "oeth:0x53A6eecC2dD4795Fcc68940ddc6B4d53Bd88Bd9E"
+    }
+```
+
+```diff
+    contract L1Block (oeth:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (oeth:0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (oeth:0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract ProxyAdmin (oeth:0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract BaseFeeVault (oeth:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1FeeVault (oeth:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OperatorFeeVault (oeth:0x420000000000000000000000000000000000001b) {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract SchemaRegistry (oeth:0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract EAS (oeth:0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      deployerAddress:
++        "oeth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OPToken (oeth:0x4200000000000000000000000000000000000042) {
+    +++ description: The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
+      deployerAddress:
++        "oeth:0xcDE47C1a5e2d60b9ff262b0a3b6d486048575Ad9"
+    }
+```
+
+```diff
+    contract MintManager (oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      deployerAddress:
++        "oeth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15"
+    }
+```
+
+```diff
+    contract SaferSafes (oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
 Generated with discovered.json: 0x4b38a42511ff42f1863438ce08a22b59dc664065
 
 # Diff at Thu, 16 Apr 2026 09:33:25 GMT:

@@ -1,3 +1,645 @@
+Generated with discovered.json: 0xc39a9bebe84f73eda63634e3f3ca978a160b7a0d
+
+# Diff at Tue, 05 May 2026 10:23:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776866286
+- current timestamp: 1776866286
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776866286 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x8De14E014402C0677B075A69122F94C0425Cc179"
+    }
+```
+
+```diff
+    contract PermissionManager (arb1:0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375"
+    }
+```
+
+```diff
+    contract Spiko EU T-Bills Money Market Fund Token (arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375"
+    }
+```
+
+```diff
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0x196D99971BC280d5377d9081acB91b383eD0fE70"
+    }
+```
+
+```diff
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) {
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract MasterMinter (base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1) {
+    +++ description: Manager contract for minter management [sic].
+      deployerAddress:
++        "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B"
+    }
+```
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      deployerAddress:
++        "base:0x620d7E459cfFcdC56a874536dC19147De801a4A1"
+    }
+```
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      deployerAddress:
++        "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      deployerAddress:
++        "base:0xce96ae6De784181d8Eb2639F1E347fD40b4fD403"
+    }
+```
+
+```diff
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) {
+    +++ description: Part of CCTP
+      deployerAddress:
++        "base:0xe2982b6F5c4d4d93047d49075Cd21c583930135F"
+    }
+```
+
+```diff
+    contract Wrapped OETH Token (base:0xD8724322f44E5c58D7A815F542036fb17DbbF839) {
+    +++ description: None
+      deployerAddress:
++        "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245"
+    }
+```
+
+```diff
+    contract TokenMinter (base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      deployerAddress:
++        "base:0x925c0014EEfc2432eA7522EeF02C35A52229B754"
+    }
+```
+
+```diff
+    contract Timelock (base:0xf817cb3092179083c48c014688D98B72fB61464f) {
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+      deployerAddress:
++        "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245"
+    }
+```
+
+```diff
+    contract TokenMinterV2 (base:0xfd78EE919681417d192449715b2594ab58f5D002) {
+    +++ description: Part of CCTP: Used for automated access control for minting.
+      deployerAddress:
++        "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1"
+    }
+```
+
+```diff
+    contract DepositContract (eth:0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+    +++ description: Ethereum Beacon Chain deposit contract.
+      deployerAddress:
++        "eth:0xb20a608c624Ca5003905aA834De7156C68b2E1d0"
+    }
+```
+
+```diff
+    contract  (eth:0x00000961Ef480Eb55e80D19ad83579A64c007002) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8646861A7cF453dDD086874d622b0696dE5b9674"
+    }
+```
+
+```diff
+    contract  (eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0B799C86a49DEeb90402691F1041aa3AF2d3C875"
+    }
+```
+
+```diff
+    contract VaultFactory (eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract SimpleMultiSig (eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x06A56487494aa080deC7Bf69128EdA9225784553) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract CSExitPenalties (eth:0x06cd61045f958A209a0f8D746e103eCc625f4193) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract Accounting (eth:0x23ED611be0e1a820978875C0122F92260804cdDf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract Dashboard (eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe4C119804BE7532dE5C172db5973684e45C22293"
+    }
+```
+
+```diff
+    contract SimpleMultiSig (eth:0x38699d04656fF537ef8671b6b595402ebDBdf6f4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D"
+    }
+```
+
+```diff
+    contract LidoExecutionLayerRewardsVault (eth:0x388C818CA8B9251b393131C08a736A67ccB19297) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDB65702A9b26f8a643a31a4c84b9392589e03D7c"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD4eD284969E88eBDF8737271933836c2a0DdA50f"
+    }
+```
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x36C2E652A6c774f4c48F6d3aE747c17916Aeb537"
+    }
+```
+
+```diff
+    contract CSFeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract CSAccounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA9920F5d0b2671a3ad0bB456DFeDCB0648908DEB"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract Wrapped liquid staked Ether 2.0 Token (eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract EIP712StETH (eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract Safe (eth:0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x033b8521F357F813Cc87B08c0668f1b59FAE45e2"
+    }
+```
+
+```diff
+    contract ACL (eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract CSParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract CSStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract Safe (eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x052ab6bFa8aA30CC47ea02e648f90c3B24749B7b"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9B4064C9d9801f062f377512e61bD19484e7F365"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract Kernel (eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA"
+    }
+```
+
+```diff
+    contract WithdrawalVault (eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b"
+    }
+```
+
+```diff
+    contract Safe (eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB7182815B471Cb251632eF2d1E99Ff1559EEb8e8"
+    }
+```
+
+```diff
+    contract ValidatorExitDelayVerifier (eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d"
+    }
+```
+
+```diff
+    contract OracleDaemonConfig (eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2A78076BF797dAC2D25c9568F79b61aFE565B88C"
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract CSEjector (eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44"
+    }
+```
+
+```diff
+    contract StarkNet Token (eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF28f34B4E8983eE4422538bb0b4aA36D6e7d8130"
+    }
+```
+
+```diff
+    contract MintManager (eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdC863FDb545F4DB986DD76F78085AcaFf0271C00"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC0b1d6e785f547b605744BC287E01c070ED5fE48"
+    }
+```
+
+```diff
+    contract OpStackTokenRatePusher (eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBb01c09DE4Bf967AbaB418450c3e18Df46358322"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract CSFeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcD6Fb078F9e1D29e3C04902D3C82e4b24C078Ad9"
+    }
+```
+
+```diff
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract OracleReportSanityChecker (eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76"
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5"
+    }
+```
+
+```diff
+    contract DepositSecurityModule (eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1F27e93D9E178b2d8e808110a551A65b7fD9F182"
+    }
+```
+
 Generated with discovered.json: 0x6096f32d959ffe393c0f919bfd2ecc4f4a8a6249
 
 # Diff at Wed, 22 Apr 2026 14:13:32 GMT:

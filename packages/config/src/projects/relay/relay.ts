@@ -6,6 +6,7 @@ export const relay: BaseProject = {
   slug: 'relay',
   name: 'Relay',
   shortName: undefined,
+  aliases: ['Reservoir'],
   addedAt: UnixTime(1769070497),
   interopConfig: {
     description:

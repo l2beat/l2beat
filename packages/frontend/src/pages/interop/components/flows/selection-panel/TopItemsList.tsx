@@ -4,6 +4,7 @@ interface TopItem {
   title: string
   iconUrl: string
   volume: number
+  href?: string
 }
 
 export function TopItemsList({
@@ -24,20 +25,35 @@ export function TopItemsList({
       </div>
       <div className="space-y-1">
         {items.map((item) => (
-          <div
-            key={item.title}
-            className="flex items-center justify-between gap-2 text-[13px]"
-          >
-            <span className="flex items-center gap-1 font-medium text-secondary leading-none">
-              <img src={item.iconUrl} alt={item.title} className="size-4" />
-              <span>{item.title}</span>
-            </span>
-            <span className="font-semibold leading-[1.15]">
-              {formatCurrency(item.volume, 'usd')}
-            </span>
-          </div>
+          <TopItemRow key={item.title} item={item} />
         ))}
       </div>
     </div>
   )
+}
+
+function TopItemRow({ item }: { item: TopItem }) {
+  const content = (
+    <>
+      <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+        <img src={item.iconUrl} alt={item.title} className="size-4 shrink-0" />
+        <span className="truncate">{item.title}</span>
+      </span>
+      <span className="shrink-0 font-semibold leading-[1.15]">
+        {formatCurrency(item.volume, 'usd')}
+      </span>
+    </>
+  )
+
+  const className = 'flex items-center justify-between gap-2 text-[13px]'
+
+  if (item.href) {
+    return (
+      <a href={item.href} className={className}>
+        {content}
+      </a>
+    )
+  }
+
+  return <div className={className}>{content}</div>
 }

@@ -16,6 +16,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",
       "ignoreInWatchMode": ["latestBlock", "latestAuthoritySetId"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1720128227,
       "sinceBlock": 20235805,
       "values": {
@@ -87,6 +88,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.",
       "ignoreInWatchMode": ["messageId"],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1720568903,
       "sinceBlock": 20272316,
       "values": {
@@ -155,6 +157,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE458b870F2F59a49915591282f1Bb688901767AD",
       "sinceTimestamp": 1714942703,
       "sinceBlock": 19806426,
       "values": {
@@ -219,6 +222,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1720568903,
       "sinceBlock": 20272316,
       "values": {
@@ -266,6 +270,7 @@
           "role": ".defaultAdminAC"
         }
       ],
+      "deployerAddress": "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42",
       "sinceTimestamp": 1745960099,
       "sinceBlock": 22377231,
       "values": {
@@ -417,6 +422,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE458b870F2F59a49915591282f1Bb688901767AD",
       "sinceTimestamp": 1714943123,
       "sinceBlock": 19806461,
       "values": {

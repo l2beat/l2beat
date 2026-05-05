@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xe6d07ef9eaeb0a5f0ccc1c0d20a1676ba926b77a
+
+# Diff at Tue, 05 May 2026 10:22:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x1390f521A79BaBE99b69B37154D63D431da27A07) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract DACommittee (eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x806d435a82B0381bD884540c2235147c13B97fe6) {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+Generated with discovered.json: 0x71a2a83ea4dc893703cbd80434860d2c50af4d60
+
+# Diff at Mon, 04 May 2026 10:44:41 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777546397
+- current timestamp: 1777891418
+
+## Description
+
+Verifier upgrade finalized, it is now actively used.
+
+## Watched changes
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xda7aa6b6b512512eff6343c3be20ab039b47b63d
 
 # Diff at Thu, 30 Apr 2026 10:54:20 GMT:

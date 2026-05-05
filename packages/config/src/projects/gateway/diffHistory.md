@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xab4729f9a4eef4d19dc7498ed7dfa039d84ee283
+
+# Diff at Tue, 05 May 2026 10:22:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract GatewayTransactionFilterer (eth:0x5540DE94485dB078025318428F813C5d88215823) {
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      deployerAddress:
++        "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract Safe (eth:0xd972d03C8A45eF3c7937a279d998E4AeCCc2b63D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885"
+    }
+```
+
+```diff
+    contract ExecutionMultisigValidator (eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.
+      deployerAddress:
++        "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract L1Messenger (gateway:0x0000000000000000000000000000000000008008) {
+    +++ description: System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.
+      deployerAddress:
++        "gateway:0x0000000000000000000000000000000000008007"
+    }
+```
+
 Generated with discovered.json: 0x05df99532ce14893ff7a2b959e0fb1f02e584cb9
 
 # Diff at Mon, 09 Feb 2026 12:20:10 GMT:

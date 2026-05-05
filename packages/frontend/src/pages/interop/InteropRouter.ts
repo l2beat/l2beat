@@ -93,27 +93,9 @@ export function createInteropRouter(
       '/interop/protocols/:slug',
       validateRoute({
         params: v.object({ slug: v.string() }),
-        query: InteropQuery,
       }),
       async (req, res) => {
         const data = await getInteropProtocolPageData(req, manifest)
-        if (!data) {
-          res.status(404).send('Not found')
-          return
-        }
-        const html = await render(data, req.originalUrl)
-        res.status(200).send(html)
-      },
-    )
-
-    router.get(
-      '/interop/protocols/:slug/internal',
-      validateRoute({
-        params: v.object({ slug: v.string() }),
-        query: InteropQuery,
-      }),
-      async (req, res) => {
-        const data = await getInteropProtocolPageData(req, manifest, 'internal')
         if (!data) {
           res.status(404).send('Not found')
           return

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7d680bf378ad0411b349bbf56db35cbff22ac554
+
+# Diff at Tue, 05 May 2026 10:24:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752830555
+- current timestamp: 1752830555
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830555 (main branch discovery), not current.
+
+```diff
+    contract USDS Stablecoin Token (eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4Ec216c476175a236BD70026b984D4adECa0cfb8"
+    }
+```
+
 Generated with discovered.json: 0xb3caa7efcc53ef22f59fadb98c466c5b4fbd3cc3
 
 # Diff at Wed, 10 Sep 2025 16:42:56 GMT:
