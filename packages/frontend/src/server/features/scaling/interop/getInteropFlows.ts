@@ -18,6 +18,7 @@ export interface FlowToken {
 
 export interface FlowProtocol {
   id: string
+  slug: string
   name: string
   iconUrl: string
   volume: number
@@ -121,12 +122,16 @@ export async function getInteropFlows(
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
 
-  const protocolDetailsMap = new Map<string, { name: string; iconUrl: string }>(
+  const protocolDetailsMap = new Map<
+    string,
+    { slug: string; name: string; iconUrl: string }
+  >(
     interopProjects
       .filter((p) => !subgroupProjects.has(p.id))
       .map((p) => [
         p.id,
         {
+          slug: p.slug,
           name: p.interopConfig.name ?? p.name,
           iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
         },
@@ -148,6 +153,7 @@ export async function getInteropFlows(
     if (!details) return undefined
     return {
       id: entry.id,
+      slug: details.slug,
       name: details.name,
       iconUrl: details.iconUrl,
       volume: entry.volume,

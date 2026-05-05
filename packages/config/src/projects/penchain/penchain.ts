@@ -12,12 +12,15 @@ export const penchain: ScalingProject = agglayer({
   addedAt: UnixTime(1740706975),
   additionalPurposes: ['Gaming'],
   additionalBadges: [BADGES.RaaS.Zeeve],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+  ],
   display: {
     name: 'Pentagon Chain',
     slug: 'penchain',
     description:
-      'Pentagon Chain is a zkEVM blockchain powered by Agglayer and secured by Ethereum. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
+      'Pentagon Chain is a blockchain powered by Agglayer and validated by a multisig. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
     links: {
       websites: ['https://pentagon.games/pentagon-chain'],
       bridges: ['https://bridge.pentagon.games'],

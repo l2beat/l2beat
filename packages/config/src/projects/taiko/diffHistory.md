@@ -1,3 +1,314 @@
+Generated with discovered.json: 0xdbcb25bb5b0ccaf8bcf7fbfd5986f882c8de8f55
+
+# Diff at Tue, 05 May 2026 06:53:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26382144ce3c79862aee73e15f619d0a40458aae block: 1777025729
+- current timestamp: 1777963387
+
+## Description
+
+two proposals are executed: 
+- emergency, clean up before cleanup: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/29 
+- prop 28, clean up after shasta: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/28
+
+no significant changes.
+
+## Watched changes
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        28
++        29
+    }
+```
+
+```diff
+    contract Taiko Foundation Treasury Multisig (eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10"
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","description":"pause and unpause proofs and verification.","role":".owner"}
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        29
++        30
+      values.proposalIds.29:
++        "604873005729564317786488715670244117998223753245"
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","description":"pause and unpause proofs and verification.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      name:
+-        "SignalServiceForkRouter"
++        "SignalService"
+      template:
+-        "taiko/SignalServiceForkRouter"
++        "taiko/SignalService"
+      sourceHashes.1:
+-        "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
++        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
+      description:
+-        "Routes to the Shasta SignalService post shasta fork."
++        "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs."
+      values.$implementation:
+-        "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6"
++        "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752"
+      values.$pastUpgrades.9:
++        ["2026-04-30T15:14:11.000Z","0xfcd6ca82025b847a3508db2d3c82327a19e3c4afda867acae8c09da147667036",["eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.newFork:
+-        "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752"
+      values.oldFork:
+-        "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.shastaForkTimestamp:
+-        1775135700
+      values.impl:
++        "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752"
+      values.inNonReentrant:
++        false
+      values.paused:
++        false
+      values.resolver:
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6:
+-        "SignalServiceForkRouter"
+      implementationNames.eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752:
++        "SignalService"
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SignalService (eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752)
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      values.operatorMapping.1:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.2:
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+```diff
+    EOA  (taiko:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28","description":"pause and unpause proofs and verification.","role":".owner"}]
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      name:
+-        "SignalServiceForkRouter"
++        "SignalService"
+      template:
+-        "taiko/SignalServiceForkRouter"
++        "taiko/SignalService"
+      sourceHashes.1:
+-        "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
++        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
+      description:
+-        "Routes to the Shasta SignalService post shasta fork."
++        "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs."
+      values.$implementation:
+-        "taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb"
++        "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28"
+      values.$pastUpgrades.2:
++        ["2026-04-30T15:37:12.000Z","0xb09a7ea021566fa65e0891d3f45b369f61b639c6ef9b16b0d2a3bd52289bf3de",["taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.newFork:
+-        "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28"
+      values.oldFork:
+-        "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762"
+      values.shastaForkTimestamp:
+-        1775135700
+      values.impl:
++        "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28"
+      values.inNonReentrant:
++        false
+      values.paused:
++        false
+      values.resolver:
++        "taiko:0x0000000000000000000000000000000000000000"
+      implementationNames.taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb:
+-        "SignalServiceForkRouter"
+      implementationNames.taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28:
++        "SignalService"
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) {
+    +++ description: Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.
+      name:
+-        "AnchorForkRouter"
++        "Anchor"
+      template:
+-        "taiko/AnchorForkRouter"
++        "taiko/Anchor"
+      sourceHashes.1:
+-        "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
++        "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
+      description:
+-        "Routes to the Shasta Anchor contract post shasta fork."
++        "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations."
+      values.$implementation:
+-        "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585"
++        "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA"
+      values.$pastUpgrades.6:
++        ["2026-04-30T15:37:12.000Z","0xb09a7ea021566fa65e0891d3f45b369f61b639c6ef9b16b0d2a3bd52289bf3de",["taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.newFork:
+-        "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA"
+      values.oldFork:
+-        "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0"
+      values.ANCHOR_GAS_LIMIT:
++        1000000
+      values.checkpointStore:
++        "taiko:0x1670000000000000000000000000000000000005"
+      values.getBlockState:
++        {"anchorBlockNumber":25027058,"ancestorsHash":"0x49a7e51364da6ffb3d3bfd3469fa64d0adce9ee57c8bdb658ca014229605b199"}
+      values.GOLDEN_TOUCH_ADDRESS:
++        "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec"
+      values.impl:
++        "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA"
+      values.inNonReentrant:
++        false
+      values.l1ChainId:
++        1
+      values.paused:
++        false
+      values.resolver:
++        "taiko:0x0000000000000000000000000000000000000000"
+      implementationNames.taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585:
+-        "AnchorForkRouter"
+      implementationNames.taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA:
++        "Anchor"
+      category.name:
+-        "Spam"
++        "Local Infrastructure"
+      category.priority:
+-        -1
++        5
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SignalService (taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28)
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract Anchor (taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA)
+    +++ description: Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000005","description":"pause and unpause proofs and verification.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1777025729 => .flat/Anchor}/Anchor.sol  |    0
+ .../Anchor}/ERC1967Proxy.p.sol                     |    0
+ .../AnchorForkRouter.sol => /dev/null              | 1378 --------------------
+ .../src/projects/taiko/.flat/Safe/Safe.sol         | 1216 +++++++++++++++++
+ .../src/projects/taiko/.flat/Safe/SafeProxy.p.sol  |   42 +
+ .../ERC1967Proxy.p.sol                             |    0
+ .../SignalService.sol}                             |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../SignalService.sol}                             |    0
+ .../SignalServiceForkRouter.sol => /dev/null       | 1332 -------------------
+ .../SignalServiceForkRouter.sol => /dev/null       | 1332 -------------------
+ 11 files changed, 1258 insertions(+), 4042 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777025729 (main branch discovery), not current.
+
+```diff
+    contract SignalService (eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752) {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      values.proxiableUUID:
+-        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28) {
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
+      values.proxiableUUID:
+-        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA) {
+    +++ description: Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.
+      values.proxiableUUID:
+-        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+    }
+```
+
 Generated with discovered.json: 0xcfde04b529d19f4664f955a47af4d779d672812e
 
 # Diff at Wed, 22 Apr 2026 13:12:09 GMT:

@@ -1,4 +1,8 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorState } from '../../../components/ErrorState'
@@ -27,6 +31,7 @@ interface OpenSearchProps {
 
 export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { ensurePanel } = useMultiViewStore()
   const { setSourceIndex, showRange } = useCodeStore()
   const selectedAddress = usePanelStore((state) => state.selected)
@@ -66,7 +71,8 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
 
   const { isError, isPending, data } = useQuery({
     queryKey: ['search', project, selectedAddress, searchTermDebounced],
-    queryFn: () => searchQuery(project, searchTermDebounced, selectedAddress),
+    queryFn: () =>
+      searchQuery(queryClient, project, searchTermDebounced, selectedAddress),
     placeholderData: keepPreviousData,
   })
 

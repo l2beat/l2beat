@@ -26,15 +26,11 @@ const SCROLL_LOAD_THRESHOLD_PX = 120
 
 export function TransferCountCell({
   transferCount,
-  expectedTransferCount,
-  expectedVolume,
   snapshotTimestamp,
   type,
   protocol,
 }: {
   transferCount: number
-  expectedTransferCount: number
-  expectedVolume: number
   snapshotTimestamp: number | undefined
   type: KnownInteropBridgeType | undefined
   protocol: {
@@ -56,8 +52,6 @@ export function TransferCountCell({
       <TransferDetailsDialog
         protocol={protocol}
         type={type}
-        expectedTransferCount={expectedTransferCount}
-        expectedVolume={expectedVolume}
         snapshotTimestamp={snapshotTimestamp}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -69,8 +63,6 @@ export function TransferCountCell({
 function TransferDetailsDialog({
   protocol,
   type,
-  expectedTransferCount,
-  expectedVolume,
   snapshotTimestamp,
   isOpen,
   setIsOpen,
@@ -81,8 +73,6 @@ function TransferDetailsDialog({
     iconUrl: string
   }
   type: KnownInteropBridgeType | undefined
-  expectedTransferCount: number
-  expectedVolume: number
   snapshotTimestamp: number | undefined
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
@@ -97,8 +87,6 @@ function TransferDetailsDialog({
         ...selectionForApi,
         id: protocol.id,
         type,
-        expectedTransferCount,
-        expectedVolume,
         snapshotTimestamp: snapshotTimestamp ?? 0,
       },
       {
@@ -111,13 +99,8 @@ function TransferDetailsDialog({
     () => data?.pages.flatMap((page) => page.items) ?? [],
     [data],
   )
-  const hasIntegrityMismatch = !!data?.pages[0]?.hasIntegrityMismatch
   const canLoadMore =
-    isOpen &&
-    !!hasNextPage &&
-    !hasIntegrityMismatch &&
-    !isLoading &&
-    !isFetchingNextPage
+    isOpen && !!hasNextPage && !isLoading && !isFetchingNextPage
 
   function handleScroll(scrollContainer: HTMLDivElement) {
     if (!canLoadMore) {
@@ -167,29 +150,23 @@ function TransferDetailsDialog({
             </DrawerTitle>
             <BetweenChainsInfo />
           </DrawerHeader>
-          {hasIntegrityMismatch ? (
-            <div className="px-4 pb-4 font-medium text-label-value-14 text-secondary">
-              Data is currently resyncing and will be available soon
-            </div>
-          ) : (
-            <div
-              ref={scrollContainerRef}
-              onScroll={(e) => handleScroll(e.currentTarget)}
-              className="max-h-[60vh] overflow-x-auto overflow-y-auto"
-            >
-              <BasicTable
-                table={table}
-                isLoading={isLoading}
-                skeletonCount={8}
-                tableWrapperClassName="pb-0"
-              />
-              {isFetchingNextPage && (
-                <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
-                  Loading more transfers...
-                </div>
-              )}
-            </div>
-          )}
+          <div
+            ref={scrollContainerRef}
+            onScroll={(e) => handleScroll(e.currentTarget)}
+            className="max-h-[60vh] overflow-x-auto overflow-y-auto"
+          >
+            <BasicTable
+              table={table}
+              isLoading={isLoading}
+              skeletonCount={8}
+              tableWrapperClassName="pb-0"
+            />
+            {isFetchingNextPage && (
+              <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
+                Loading more transfers...
+              </div>
+            )}
+          </div>
         </DrawerContent>
       </Drawer>
     )
@@ -211,31 +188,25 @@ function TransferDetailsDialog({
           </DialogTitle>
           <BetweenChainsInfo className="mt-1" />
         </DialogHeader>
-        {hasIntegrityMismatch ? (
-          <div className="mx-6 py-4 font-medium text-label-value-14 text-secondary">
-            Data is currently resyncing and will be available soon
+        <div
+          ref={scrollContainerRef}
+          onScroll={(e) => handleScroll(e.currentTarget)}
+          className="max-h-[460px] overflow-x-auto overflow-y-auto"
+        >
+          <div className="mx-6">
+            <BasicTable
+              table={table}
+              isLoading={isLoading}
+              skeletonCount={8}
+              tableWrapperClassName="pb-0"
+            />
+            {isFetchingNextPage && (
+              <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
+                Loading more transfers...
+              </div>
+            )}
           </div>
-        ) : (
-          <div
-            ref={scrollContainerRef}
-            onScroll={(e) => handleScroll(e.currentTarget)}
-            className="max-h-[460px] overflow-x-auto overflow-y-auto"
-          >
-            <div className="mx-6">
-              <BasicTable
-                table={table}
-                isLoading={isLoading}
-                skeletonCount={8}
-                tableWrapperClassName="pb-0"
-              />
-              {isFetchingNextPage && (
-                <div className="py-2 text-center font-medium text-label-value-14 text-secondary">
-                  Loading more transfers...
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        </div>
       </DialogContent>
     </Dialog>
   )

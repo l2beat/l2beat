@@ -1,8 +1,8 @@
+import type { ReactNode } from 'react'
 import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
 import { HideButton } from './HideButton'
-import { HideUnknownsButton } from './HideUnknowns'
-import { HideUnreachableButton, ShowUnreachableButton } from './HideUnreachable'
+import { HideNodesButton } from './HideNodesButton'
 import { LayoutFileButtons } from './LayoutFileButtons'
 import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
@@ -13,40 +13,34 @@ import { ValuesButton } from './ValuesButton'
 
 export function Controls() {
   return (
-    <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <div className="flex flex-col gap-1">
-        <UndoButton />
-        <RedoButton />
-      </div>
-      <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-1 self-stretch">
-        <ClusterLayoutButton className="flex flex-1 items-center justify-center" />
-        <StackLayoutButton className="flex flex-1 items-center justify-center" />
-      </div>
-      <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-1">
-        <div className="flex gap-1">
+    <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
+      <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
+        <ControlGroup>
+          <UndoButton />
+          <RedoButton />
+          <ClusterLayoutButton />
+          <StackLayoutButton />
+        </ControlGroup>
+        <ControlGroup>
           <ShowButton />
-        </div>
+          <HideNodesButton />
+        </ControlGroup>
+        <ControlGroup>
+          <HideButton />
+          <ColorButton />
+          <ValuesButton />
+          <Settings className="px-2.5" />
+          <LayoutFileButtons orientation="row" buttonClassName="px-2.5" />
+        </ControlGroup>
+      </div>
+    </div>
+  )
+}
 
-        <HideUnknownsButton />
-        <div className="flex gap-1">
-          <HideUnreachableButton />
-          <ShowUnreachableButton />
-        </div>
-      </div>
-      <span className="text-coffee-600">|</span>
-
-      <div className="flex flex-col gap-1">
-        <HideButton />
-        <ColorButton />
-        <ValuesButton />
-      </div>
-      <span className="text-coffee-600">|</span>
-      <div className="flex flex-col gap-1">
-        <Settings />
-        <LayoutFileButtons />
-      </div>
+function ControlGroup(props: { children: ReactNode }) {
+  return (
+    <div className="flex select-none items-stretch gap-2 rounded-2xl bg-coffee-900/95 px-3 py-2 shadow-[0_24px_56px_-28px_#000000ee] backdrop-blur-sm max-md:text-xs">
+      {props.children}
     </div>
   )
 }

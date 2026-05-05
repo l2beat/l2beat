@@ -1,8 +1,20 @@
 {
   "name": "taiko",
-  "timestamp": 1777025729,
+  "timestamp": 1777963387,
   "configHash": "0xf35702c4c81529b7cb06b5ec621647cdb45fb0f8158a9a57e83bdbf848e54019",
   "entries": [
+    {
+      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".operatorMapping"
+        }
+      ]
+    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
@@ -371,7 +383,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1777025723,
+        "clock": 1777963379,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -528,7 +540,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 28,
+        "proposalCount": 29,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -606,7 +618,7 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
-          "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
+          "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10",
           "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
         ],
         "$threshold": 2,
@@ -614,7 +626,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 172,
+        "nonce": 173,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -777,6 +789,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0x4757D97449acA795510b9f3152C6a9019A3545c3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SigVerifyLib",
       "address": "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
       "type": "Contract",
@@ -838,6 +855,18 @@
       "address": "eth:0x5811Ab14833720D743ec57BC49c9342DF66069d0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".operatorMapping"
+        }
+      ]
     },
     {
       "name": "Gattaca",
@@ -923,12 +952,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 4924,
-          "lastProposalBlockId": 24949154,
-          "lastFinalizedProposalId": 4920,
-          "lastFinalizedTimestamp": 1777024895,
-          "lastCheckpointTimestamp": 1777024895,
-          "lastFinalizedBlockHash": "0x8ac175b99eebb6aca39b8a00e2eb3e0469de95aec1a799d8cf1705cc0193552b"
+          "nextProposalId": 7366,
+          "lastProposalBlockId": 25027064,
+          "lastFinalizedProposalId": 7361,
+          "lastFinalizedTimestamp": 1777962011,
+          "lastCheckpointTimestamp": 1777962011,
+          "lastFinalizedBlockHash": "0x2ab65761d1fa5e522388a72a90bbbcf31e9918174a802b7d4205e443814bc4ab"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
@@ -948,6 +977,11 @@
         "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42": "MainnetInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
@@ -1005,6 +1039,12 @@
           "permission": "interact",
           "from": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
           "description": "manage trusted program hashes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "description": "pause and unpause proofs and verification.",
           "role": ".owner"
         },
         {
@@ -1419,7 +1459,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 29,
+        "proposalCount": 30,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1449,7 +1489,8 @@
           "602381146540321106777275740158610369409831665689",
           "603470345479562597234986338918793351448504565786",
           "604072306347775205060623596830012262580693762075",
-          "604252334775688929080375373293834029676709806108"
+          "604252334775688929080375373293834029676709806108",
+          "604873005729564317786488715670244117998223753245"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1691,6 +1732,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "description": "pause and unpause proofs and verification.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner",
@@ -1868,21 +1918,21 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "SignalServiceForkRouter",
+      "name": "SignalService",
       "address": "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
       "type": "Contract",
-      "template": "taiko/SignalServiceForkRouter",
+      "template": "taiko/SignalService",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
+        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Routes to the Shasta SignalService post shasta fork.",
+      "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
         "$admin": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
-        "$implementation": "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6",
+        "$implementation": "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752",
         "$pastUpgrades": [
           [
             "2024-05-01T08:03:23.000Z",
@@ -1928,20 +1978,25 @@
             "2026-03-31T13:44:47.000Z",
             "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
             ["eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6"]
+          ],
+          [
+            "2026-04-30T15:14:11.000Z",
+            "0xfcd6ca82025b847a3508db2d3c82327a19e3c4afda867acae8c09da147667036",
+            ["eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752"]
           ]
         ],
-        "$upgradeCount": 9,
-        "newFork": "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752",
-        "oldFork": "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
+        "$upgradeCount": 10,
+        "impl": "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752",
+        "inNonReentrant": false,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+        "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "shastaForkTimestamp": 1775135700
+        "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "ERC1967Proxy",
-        "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6": "SignalServiceForkRouter"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+        "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752": "SignalService"
+      }
     },
     {
       "name": "RiscZeroVerifierEmergencyStop",
@@ -2132,32 +2187,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SignalService",
-      "address": "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752",
-      "type": "Contract",
-      "template": "taiko/SignalService",
-      "sourceHashes": [
-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
-      ],
-      "proxyType": "immutable",
-      "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
-      "sinceTimestamp": 1772642219,
-      "sinceBlock": 24585333,
-      "values": {
-        "$immutable": true,
-        "impl": "eth:0x0000000000000000000000000000000000000000",
-        "inNonReentrant": false,
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "resolver": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752": "SignalService"
-      }
-    },
-    {
       "address": "eth:0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2344,7 +2373,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 39094,
+        "nextMessageId": 39149,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2621,6 +2650,39 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "Safe",
+      "address": "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1777253879,
+      "sinceBlock": 24968135,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x4757D97449acA795510b9f3152C6a9019A3545c3",
+          "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x4c82f73c33fa21e15c8ca1a193a093e7c4a9955a56c610cc81de54318a0e8511",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 7,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "address": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
       "type": "EOA",
       "proxyType": "EOA",
@@ -2771,14 +2833,18 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1776907991,
+        "latestActivationEpoch": 1777307351,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 1,
-        "operatorMapping": ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"],
+        "operatorCount": 3,
+        "operatorMapping": [
+          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+        ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2794,15 +2860,7 @@
     {
       "address": "taiko:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28",
-          "description": "pause and unpause proofs and verification.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
@@ -2886,21 +2944,21 @@
       }
     },
     {
-      "name": "SignalServiceForkRouter",
+      "name": "SignalService",
       "address": "taiko:0x1670000000000000000000000000000000000005",
       "type": "Contract",
-      "template": "taiko/SignalServiceForkRouter",
+      "template": "taiko/SignalService",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
+        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Routes to the Shasta SignalService post shasta fork.",
+      "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
         "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
-        "$implementation": "taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb",
+        "$implementation": "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28",
         "$pastUpgrades": [
           [
             "2025-05-19T03:19:47.000Z",
@@ -2911,20 +2969,25 @@
             "2026-04-02T14:02:23.000Z",
             "0xd8f236e03789398270e7144a8b4456279ae6c82a44334fec3fb9d97bcc7c12d1",
             ["taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb"]
+          ],
+          [
+            "2026-04-30T15:37:12.000Z",
+            "0xb09a7ea021566fa65e0891d3f45b369f61b639c6ef9b16b0d2a3bd52289bf3de",
+            ["taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28"]
           ]
         ],
-        "$upgradeCount": 2,
-        "newFork": "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28",
-        "oldFork": "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762",
+        "$upgradeCount": 3,
+        "impl": "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28",
+        "inNonReentrant": false,
         "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
+        "paused": false,
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
-        "shastaForkTimestamp": 1775135700
+        "resolver": "taiko:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000000005": "ERC1967Proxy",
-        "taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb": "SignalServiceForkRouter"
-      },
-      "category": { "name": "Spam", "priority": -1 }
+        "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28": "SignalService"
+      }
     },
     {
       "name": "L2AddressManager",
@@ -3013,21 +3076,21 @@
       ]
     },
     {
-      "name": "AnchorForkRouter",
+      "name": "Anchor",
       "address": "taiko:0x1670000000000000000000000000000000010001",
       "type": "Contract",
-      "template": "taiko/AnchorForkRouter",
+      "template": "taiko/Anchor",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
+        "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Routes to the Shasta Anchor contract post shasta fork.",
+      "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
         "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
-        "$implementation": "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585",
+        "$implementation": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
         "$pastUpgrades": [
           [
             "2024-11-01T09:22:59.000Z",
@@ -3058,85 +3121,39 @@
             "2026-04-02T14:02:23.000Z",
             "0xd8f236e03789398270e7144a8b4456279ae6c82a44334fec3fb9d97bcc7c12d1",
             ["taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585"]
+          ],
+          [
+            "2026-04-30T15:37:12.000Z",
+            "0xb09a7ea021566fa65e0891d3f45b369f61b639c6ef9b16b0d2a3bd52289bf3de",
+            ["taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA"]
           ]
         ],
-        "$upgradeCount": 6,
-        "newFork": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
-        "oldFork": "taiko:0xE6d1efcC6AC8969474308C99a3805c332D33a1E0",
-        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
-        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
-        "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585": "AnchorForkRouter"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "SignalService",
-      "address": "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28",
-      "type": "Contract",
-      "template": "taiko/SignalService",
-      "sourceHashes": [
-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
-      ],
-      "proxyType": "immutable",
-      "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
-      "sinceTimestamp": 1772641261,
-      "sinceBlock": 4642135,
-      "values": {
-        "$immutable": true,
-        "impl": "taiko:0x0000000000000000000000000000000000000000",
+        "$upgradeCount": 7,
+        "ANCHOR_GAS_LIMIT": 1000000,
+        "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
+        "getBlockState": {
+          "anchorBlockNumber": 25027058,
+          "ancestorsHash": "0x49a7e51364da6ffb3d3bfd3469fa64d0adce9ee57c8bdb658ca014229605b199"
+        },
+        "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
+        "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
         "inNonReentrant": false,
-        "owner": "taiko:0x0000000000000000000000000000000000000000",
+        "l1ChainId": 1,
+        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
         "resolver": "taiko:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "taiko:0x18B27428cce679DFf84D09D6b07DF1E9EBb6fE28": "SignalService"
-      }
+        "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
+        "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA": "Anchor"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "taiko:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Anchor",
-      "address": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
-      "type": "Contract",
-      "template": "taiko/Anchor",
-      "sourceHashes": [
-        "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
-      ],
-      "proxyType": "immutable",
-      "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
-      "sinceTimestamp": 1772641261,
-      "sinceBlock": 4642135,
-      "values": {
-        "$immutable": true,
-        "ANCHOR_GAS_LIMIT": 1000000,
-        "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
-        "getBlockState": {
-          "anchorBlockNumber": 0,
-          "ancestorsHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },
-        "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
-        "impl": "taiko:0x0000000000000000000000000000000000000000",
-        "inNonReentrant": false,
-        "l1ChainId": 1,
-        "owner": "taiko:0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "resolver": "taiko:0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA": "Anchor"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DelegateController",
@@ -3153,6 +3170,12 @@
         {
           "permission": "act",
           "from": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "taiko:0x1670000000000000000000000000000000000005",
+          "description": "pause and unpause proofs and verification.",
           "role": ".owner"
         },
         {
@@ -4071,29 +4094,6 @@
     "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": [
       "constructor(address _singleton)"
     ],
-    "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6": [
-      "constructor(address _oldFork, address _newFork, uint64 _shastaForkTimestamp)",
-      "error InvalidParams()",
-      "error ZeroForkAddress()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function newFork() view returns (address)",
-      "function oldFork() view returns (address)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function shastaForkTimestamp() view returns (uint64)",
-      "function shouldRouteToOldFork(bytes4) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4755,6 +4755,9 @@
     "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": [
       "constructor(address _singleton)"
     ],
+    "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4889,51 +4892,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifySignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) view"
-    ],
-    "taiko:0x2987F6Bef39b03F8522EC38B36aF0f7422938EAb": [
-      "constructor(address _oldFork, address _newFork, uint64 _shastaForkTimestamp)",
-      "error InvalidParams()",
-      "error ZeroForkAddress()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function newFork() view returns (address)",
-      "function oldFork() view returns (address)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function shastaForkTimestamp() view returns (uint64)",
-      "function shouldRouteToOldFork(bytes4) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585": [
-      "constructor(address _oldFork, address _newFork)",
-      "error InvalidParams()",
-      "error ZeroForkAddress()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)",
-      "function acceptOwnership()",
-      "function newFork() view returns (address)",
-      "function oldFork() view returns (address)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function shouldRouteToOldFork(bytes4 _selector) pure returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "taiko:0x6900f893Fb1dcf2868c7799Ac9a2dAf1c046c6bF": [
       "constructor(uint64 _l1ChainId, address _l2Bridge, address _daoController)",
@@ -5118,8 +5076,7 @@
     "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
-    "taiko/Anchor": "0xef9fa58f79fdf4747e5257a8e16ac32b4ea1ecc8142c47d27719d495a3c2d040",
-    "taiko/AnchorForkRouter": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/Anchor": "0xf1efff1d5a1df2fdb3f66f3f64ffef721d2f1a18591c741cb90eb697667e074a",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
@@ -5139,8 +5096,7 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SgxVerifier": "0xd42ec836c8b504381d98c03e28d09de32afa1e9589d105971b14fc840af60f77",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/SignalService": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "taiko/SignalServiceForkRouter": "0x568c79493fab52ca11cee253ad22ef20e8dd32afcde694ec673eed09a5da2016",
+    "taiko/SignalService": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
@@ -5148,6 +5104,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 24949163, "taiko": 5930374 },
-  "permissionsConfigHash": "0x4872857493ab42ed238a13f901100067ccbb93ec4c5114fc6790aa32fb9c3d32"
+  "usedBlockNumbers": { "ethereum": 25027084, "taiko": 6361308 },
+  "permissionsConfigHash": "0x59f193a0a750e326d953842789bd483bb2b9bf867e916461d0add08687289380"
 }
