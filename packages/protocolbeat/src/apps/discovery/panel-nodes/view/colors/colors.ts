@@ -17,7 +17,7 @@ export const SELECTABLE_COLORS: { color: OklchColor; isDark: boolean }[] = [
   { color: colors.black, isDark: true },
 ]
 
-export function getColor({
+export function getColorValue({
   id,
   color,
   hueShift,
@@ -27,7 +27,7 @@ export function getColor({
   color: number
   hueShift: number
   addressType: ApiAddressType
-}): { color: string; isDark: boolean } {
+}): { color: OklchColor; isDark: boolean } {
   const result =
     color === 0
       ? addressType === 'Unknown'
@@ -40,7 +40,25 @@ export function getColor({
     h: (result.color.h + hueShift) % 360,
   }
   return {
-    color: oklchColorToCSS(colorCopy),
+    color: colorCopy,
+    isDark: result.isDark,
+  }
+}
+
+export function getColor({
+  id,
+  color,
+  hueShift,
+  addressType,
+}: {
+  id: string
+  color: number
+  hueShift: number
+  addressType: ApiAddressType
+}): { color: string; isDark: boolean } {
+  const result = getColorValue({ id, color, hueShift, addressType })
+  return {
+    color: oklchColorToCSS(result.color),
     isDark: result.isDark,
   }
 }

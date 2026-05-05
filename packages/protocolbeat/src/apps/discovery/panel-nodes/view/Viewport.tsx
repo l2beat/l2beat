@@ -6,8 +6,10 @@ import { useStore } from '../store/store'
 import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
+import { NodeCanvas } from './NodeCanvas'
 import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
+import { USE_CANVAS_RENDERER } from './useRenderer'
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -93,8 +95,9 @@ export function Viewport() {
       )}
     >
       <ScalableView ref={viewRef}>
-        <NodesAndConnections />
+        {USE_CANVAS_RENDERER ? null : <NodesAndConnections />}
       </ScalableView>
+      {USE_CANVAS_RENDERER && <NodeCanvas containerRef={containerRef} />}
       <MouseSelection />
     </div>
   )

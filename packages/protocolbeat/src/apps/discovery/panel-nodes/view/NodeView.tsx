@@ -9,7 +9,7 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
-import { getColor } from './colors/colors'
+import { getNodeTitlePaint, isFullHeightNode } from './nodeStyles'
 
 export interface NodeViewProps {
   node: Node
@@ -24,14 +24,13 @@ export interface NodeViewProps {
 }
 
 function NodeViewImpl(props: NodeViewProps) {
-  const { isDark } = getColor(props.node)
+  const titlePaint = getNodeTitlePaint(props.node)
   const hiddenFields =
     props.node.hiddenFields.length > 0
       ? new Set(props.node.hiddenFields)
       : undefined
 
-  const fullHeight =
-    props.node.addressType === 'EOA' && props.node.fields.length === 0
+  const fullHeight = isFullHeightNode(props.node)
 
   return (
     <div
@@ -54,11 +53,11 @@ function NodeViewImpl(props: NodeViewProps) {
         className={clsx(
           'mb-1 flex w-full items-center justify-between gap-1 px-2 font-medium text-sm',
           fullHeight ? 'rounded-2xl' : 'rounded-t',
-          isDark ? 'text-coffee-200' : 'text-black',
+          titlePaint.isDark ? 'text-coffee-200' : 'text-black',
         )}
         style={{
           height: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
-          background: getTitleBackground(props.node),
+          background: titlePaint.background,
         }}
       >
         <AddressIcon type={props.node.addressType} />
@@ -105,25 +104,6 @@ export const NodeView = memo(NodeViewImpl, (prev, next) => {
     prev.fieldTargetHiddenMask === next.fieldTargetHiddenMask
   )
 })
-
-function getTitleBackground(node: Node): string {
-  const { color, isDark } = getColor(node)
-  if (!node.isInitial) {
-    return color
-  }
-
-  const baseColor = color
-
-  const contrastColorCSS = isDark
-    ? `color-mix(in oklch, ${baseColor}, black 15%)`
-    : `color-mix(in oklch, ${baseColor}, white 15%)`
-
-  return `repeating-radial-gradient(
-    circle,
-    ${contrastColorCSS} 0px,
-    ${baseColor} 15px
-  )`
-}
 
 interface NodeFieldProps {
   field: Field
