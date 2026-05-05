@@ -1,165 +1,210 @@
 import type * as AST from '@mradomski/fast-solidity-parser'
 
-export function getASTIdentifiers(baseNode: AST.BaseASTNode | null): string[] {
+type VisitFn = (node: AST.BaseASTNode, identifiers: string[]) => void
+
+export function getASTIdentifiers(
+  baseNode: AST.BaseASTNode | null,
+  visit?: VisitFn,
+): string[] {
   if (baseNode === null) {
     return []
   }
   const node = baseNode as AST.ASTNode
 
+  let result: string[]
   switch (node.type) {
+    case 'SourceUnit': {
+      result = node.children.flatMap((n) => getASTIdentifiers(n, visit))
+      break
+    }
     case 'Identifier': {
-      return [node.name]
+      result = [node.name]
+      break
     }
     case 'VariableDeclaration': {
       const ident = node.identifier !== null ? [node.identifier.name] : []
-      const expr = parseExpression(node.expression)
-      const typeName = parseTypeName(node.typeName)
-      return expr.concat(ident).concat(typeName)
+      const expr = parseExpression(node.expression, visit)
+      const typeName = parseTypeName(node.typeName, visit)
+      result = expr.concat(ident).concat(typeName)
+      break
     }
     case 'Block': {
-      return node.statements.flatMap((statement) =>
-        getASTIdentifiers(statement),
+      result = node.statements.flatMap((statement) =>
+        getASTIdentifiers(statement, visit),
       )
+      break
     }
     case 'BreakStatement':
     case 'ContinueStatement':
     case 'InlineAssemblyStatement': {
-      return []
+      result = []
+      break
     }
     case 'RevertStatement': {
-      return parseExpression(node.revertCall)
+      result = parseExpression(node.revertCall, visit)
+      break
     }
     case 'IfStatement': {
-      const condition = parseExpression(node.condition)
-      const trueBody = getASTIdentifiers(node.trueBody)
-      const falseBody = getASTIdentifiers(node.falseBody)
-
-      return condition.concat(trueBody).concat(falseBody)
+      const condition = parseExpression(node.condition, visit)
+      const trueBody = getASTIdentifiers(node.trueBody, visit)
+      const falseBody = getASTIdentifiers(node.falseBody, visit)
+      result = condition.concat(trueBody).concat(falseBody)
+      break
     }
     case 'ExpressionStatement': {
-      return parseExpression(node.expression)
+      result = parseExpression(node.expression, visit)
+      break
     }
     case 'VariableDeclarationStatement': {
-      const variables = node.variables.flatMap((v) => getASTIdentifiers(v))
-      const initialValue = parseExpression(node.initialValue)
-
-      return variables.concat(initialValue)
+      const variables = node.variables.flatMap((v) =>
+        getASTIdentifiers(v, visit),
+      )
+      const initialValue = parseExpression(node.initialValue, visit)
+      result = variables.concat(initialValue)
+      break
     }
     case 'ReturnStatement': {
-      return parseExpression(node.expression)
+      result = parseExpression(node.expression, visit)
+      break
     }
     case 'EmitStatement': {
-      return parseExpression(node.eventCall)
+      result = parseExpression(node.eventCall, visit)
+      break
     }
     case 'ForStatement': {
-      const init = getASTIdentifiers(node.initExpression)
-      const condition = parseExpression(node.conditionExpression ?? null)
-      const loopExpression = getASTIdentifiers(node.loopExpression)
-      const body = getASTIdentifiers(node.body)
-      return init.concat(condition).concat(loopExpression).concat(body)
+      const init = getASTIdentifiers(node.initExpression, visit)
+      const condition = parseExpression(node.conditionExpression ?? null, visit)
+      const loopExpression = getASTIdentifiers(node.loopExpression, visit)
+      const body = getASTIdentifiers(node.body, visit)
+      result = init.concat(condition).concat(loopExpression).concat(body)
+      break
     }
     case 'WhileStatement': {
-      const condition = parseExpression(node.condition)
-      const body = getASTIdentifiers(node.body)
-      return condition.concat(body)
+      const condition = parseExpression(node.condition, visit)
+      const body = getASTIdentifiers(node.body, visit)
+      result = condition.concat(body)
+      break
     }
     case 'DoWhileStatement': {
-      const condition = parseExpression(node.condition)
-      const body = getASTIdentifiers(node.body)
-      return condition.concat(body)
+      const condition = parseExpression(node.condition, visit)
+      const body = getASTIdentifiers(node.body, visit)
+      result = condition.concat(body)
+      break
     }
     case 'TryStatement': {
-      const expression = parseExpression(node.expression)
+      const expression = parseExpression(node.expression, visit)
       const returnParameters = (node.returnParameters ?? []).flatMap((p) =>
-        getASTIdentifiers(p),
+        getASTIdentifiers(p, visit),
       )
-      const body = getASTIdentifiers(node.body)
+      const body = getASTIdentifiers(node.body, visit)
       const catchClauses = node.catchClauses.flatMap((c) =>
-        getASTIdentifiers(c),
+        getASTIdentifiers(c, visit),
       )
-      return expression
+      result = expression
         .concat(returnParameters)
         .concat(body)
         .concat(catchClauses)
+      break
     }
     case 'CatchClause': {
       const parameters = (node.parameters ?? []).flatMap((p) =>
-        getASTIdentifiers(p),
+        getASTIdentifiers(p, visit),
       )
-      const body = getASTIdentifiers(node.body)
-      return parameters.concat(body)
+      const body = getASTIdentifiers(node.body, visit)
+      result = parameters.concat(body)
+      break
     }
     case 'UncheckedStatement': {
-      return getASTIdentifiers(node.block)
+      result = getASTIdentifiers(node.block, visit)
+      break
     }
     case 'CustomErrorDefinition': {
-      return node.parameters.flatMap((p) => getASTIdentifiers(p))
+      result = node.parameters.flatMap((p) => getASTIdentifiers(p, visit))
+      break
     }
     case 'EventDefinition': {
-      return node.parameters.flatMap((p) => getASTIdentifiers(p))
+      result = node.parameters.flatMap((p) => getASTIdentifiers(p, visit))
+      break
     }
     case 'FunctionDefinition': {
-      const params = node.parameters.flatMap((p) => getASTIdentifiers(p))
+      const params = node.parameters.flatMap((p) => getASTIdentifiers(p, visit))
       const returnParams = (node.returnParameters ?? []).flatMap((p) =>
-        getASTIdentifiers(p),
+        getASTIdentifiers(p, visit),
       )
-      const body = getASTIdentifiers(node.body)
-
-      return params.concat(returnParams).concat(body)
+      const body = getASTIdentifiers(node.body, visit)
+      const modifiers = (node.modifiers ?? [])
+        .flatMap((m) => m.arguments ?? [])
+        .flatMap((a) => parseExpression(a, visit))
+      result = params.concat(returnParams).concat(body).concat(modifiers)
+      break
     }
     case 'ModifierDefinition': {
       const params = node.parameters ?? []
-
-      const paramTypes = params.flatMap((p) => getASTIdentifiers(p))
-      const librariesFromBlock = getASTIdentifiers(node.body)
-
-      return paramTypes.concat(librariesFromBlock)
+      const paramTypes = params.flatMap((p) => getASTIdentifiers(p, visit))
+      const librariesFromBlock = getASTIdentifiers(node.body, visit)
+      result = paramTypes.concat(librariesFromBlock)
+      break
     }
     case 'StateVariableDeclaration': {
-      const varTypes = node.variables.flatMap((v) => getASTIdentifiers(v))
-      const expr = parseExpression(node.initialValue)
-
-      return expr.concat(varTypes)
+      const varTypes = node.variables.flatMap((v) =>
+        getASTIdentifiers(v, visit),
+      )
+      const expr = parseExpression(node.initialValue, visit)
+      result = expr.concat(varTypes)
+      break
     }
     case 'StructDefinition': {
-      return node.members.flatMap((m) => getASTIdentifiers(m))
+      result = node.members.flatMap((m) => getASTIdentifiers(m, visit))
+      break
     }
     case 'TypeDefinition': {
-      return parseTypeName(node.definition)
+      result = parseTypeName(node.definition, visit)
+      break
+    }
+    case 'FileLevelConstant': {
+      const typeName = parseTypeName(node.typeName, visit)
+      const initialValue = parseExpression(node.initialValue, visit)
+      result = [node.name].concat(typeName).concat(initialValue)
+      break
     }
     case 'UsingForDeclaration': {
-      const typeName = parseTypeName(node.typeName)
+      const typeName = parseTypeName(node.typeName, visit)
       const libraryName = node.libraryName ?? []
-
-      return typeName.concat(libraryName)
+      result = typeName.concat(libraryName)
+      break
     }
     case 'InheritanceSpecifier': {
-      const baseName = parseTypeName(node.baseName)
-      const args = node.arguments.flatMap((a) => parseExpression(a))
-
-      return args.concat(baseName)
+      const baseName = parseTypeName(node.baseName, visit)
+      const args = node.arguments.flatMap((a) => parseExpression(a, visit))
+      result = args.concat(baseName)
+      break
     }
     case 'ContractDefinition': {
       const name = node.name
       const baseContracts = node.baseContracts.flatMap((c) =>
-        getASTIdentifiers(c),
+        getASTIdentifiers(c, visit),
       )
-      const subNodes = node.subNodes.flatMap((n) => getASTIdentifiers(n))
-
-      return [name].concat(baseContracts).concat(subNodes)
+      const subNodes = node.subNodes.flatMap((n) => getASTIdentifiers(n, visit))
+      result = [name].concat(baseContracts).concat(subNodes)
+      break
     }
     case 'NameValueList': {
-      const identifiers = node.identifiers.flatMap((i) => getASTIdentifiers(i))
-      const args = node.arguments.flatMap((a) => parseExpression(a))
-      return identifiers.concat(args)
+      const identifiers = node.identifiers.flatMap((i) =>
+        getASTIdentifiers(i, visit),
+      )
+      const args = node.arguments.flatMap((a) => parseExpression(a, visit))
+      result = identifiers.concat(args)
+      break
     }
     case 'EnumValue': {
-      return [node.name]
+      result = [node.name]
+      break
     }
     case 'PragmaDirective':
     case 'ImportDirective':
     case 'EnumDefinition': {
-      return []
+      result = []
+      break
     }
     case 'BinaryOperation':
     case 'IndexAccess':
@@ -175,80 +220,105 @@ export function getASTIdentifiers(baseNode: AST.BaseASTNode | null): string[] {
     case 'NumberLiteral':
     case 'StringLiteral':
     case 'NameValueExpression': {
-      return parseExpression(node)
+      result = parseExpression(node, visit)
+      break
     }
     case 'ElementaryTypeName':
     case 'UserDefinedTypeName':
     case 'Mapping':
     case 'ArrayTypeName':
     case 'FunctionTypeName': {
-      return parseTypeName(node)
+      result = parseTypeName(node, visit)
+      break
     }
     default: {
       throw new Error(`TopLevelFunc: Unknown node type: [${node.type}]`)
     }
   }
+
+  visit?.(node, result)
+  return result
 }
 
-function parseExpression(expr: AST.Expression | null): string[] {
+function parseExpression(
+  expr: AST.Expression | null,
+  visit?: VisitFn,
+): string[] {
   if (!expr?.type) {
     return []
   }
 
+  let result: string[]
   switch (expr.type) {
     case 'BinaryOperation': {
-      return parseExpression(expr.left).concat(parseExpression(expr.right))
+      result = parseExpression(expr.left, visit).concat(
+        parseExpression(expr.right, visit),
+      )
+      break
     }
     case 'FunctionCall': {
-      return parseExpression(expr.expression)
-        .concat(expr.arguments.flatMap((k) => parseExpression(k)))
+      result = parseExpression(expr.expression, visit)
+        .concat(expr.arguments.flatMap((k) => parseExpression(k, visit)))
         .concat(expr.identifiers.map((i) => i.name))
+      break
     }
     case 'IndexAccess': {
-      return parseExpression(expr.base).concat(parseExpression(expr.index))
+      result = parseExpression(expr.base, visit).concat(
+        parseExpression(expr.index, visit),
+      )
+      break
     }
     case 'TupleExpression': {
-      return expr.components.flatMap((component) =>
-        getASTIdentifiers(component),
+      result = expr.components.flatMap((component) =>
+        getASTIdentifiers(component, visit),
       )
+      break
     }
     case 'MemberAccess': {
-      return parseExpression(expr.expression)
+      result = parseExpression(expr.expression, visit)
+      break
     }
     case 'Conditional': {
-      return parseExpression(expr.condition)
-        .concat(parseExpression(expr.trueExpression))
-        .concat(parseExpression(expr.falseExpression))
+      result = parseExpression(expr.condition, visit)
+        .concat(parseExpression(expr.trueExpression, visit))
+        .concat(parseExpression(expr.falseExpression, visit))
+      break
     }
     case 'Identifier': {
-      return [expr.name]
+      result = [expr.name]
+      break
     }
     case 'NewExpression': {
-      return parseTypeName(expr.typeName)
+      result = parseTypeName(expr.typeName, visit)
+      break
     }
     case 'UnaryOperation': {
-      return parseExpression(expr.subExpression)
+      result = parseExpression(expr.subExpression, visit)
+      break
     }
     case 'IndexRangeAccess': {
-      const base = parseExpression(expr.base)
-      const indexStart = parseExpression(expr.indexStart ?? null)
-      const indexEnd = parseExpression(expr.indexEnd ?? null)
-
-      return base.concat(indexStart).concat(indexEnd)
+      const base = parseExpression(expr.base, visit)
+      const indexStart = parseExpression(expr.indexStart ?? null, visit)
+      const indexEnd = parseExpression(expr.indexEnd ?? null, visit)
+      result = base.concat(indexStart).concat(indexEnd)
+      break
     }
     case 'ElementaryTypeName': {
-      return parseTypeName(expr)
+      result = parseTypeName(expr, visit)
+      break
     }
     case 'NameValueExpression': {
-      return parseExpression(expr.expression).concat(
-        getASTIdentifiers(expr.arguments),
+      result = parseExpression(expr.expression, visit).concat(
+        getASTIdentifiers(expr.arguments, visit),
       )
+      break
     }
     case 'NumberLiteral':
     case 'BooleanLiteral':
     case 'HexLiteral':
     case 'StringLiteral': {
-      return []
+      result = []
+      break
     }
     default: {
       throw new Error(
@@ -256,28 +326,45 @@ function parseExpression(expr: AST.Expression | null): string[] {
       )
     }
   }
+
+  visit?.(expr, result)
+  return result
 }
 
-function parseTypeName(type: AST.TypeName | null): string[] {
+function parseTypeName(type: AST.TypeName | null, visit?: VisitFn): string[] {
   if (!type?.type) {
     return []
   }
 
+  let result: string[]
   switch (type.type) {
     case 'ElementaryTypeName': {
-      return [type.name]
+      result = []
+      break
     }
     case 'UserDefinedTypeName': {
-      return [type.namePath]
+      result = [type.namePath]
+      break
     }
     case 'Mapping': {
-      return parseTypeName(type.keyType).concat(parseTypeName(type.valueType))
+      result = parseTypeName(type.keyType, visit).concat(
+        parseTypeName(type.valueType, visit),
+      )
+      break
     }
     case 'ArrayTypeName': {
-      return parseTypeName(type.baseTypeName)
+      const { baseTypeName, length } = type
+      result = parseTypeName(baseTypeName, visit).concat(
+        parseExpression(length, visit),
+      )
+      break
     }
     case 'FunctionTypeName': {
-      return []
+      result = []
+      break
     }
   }
+
+  visit?.(type, result)
+  return result
 }

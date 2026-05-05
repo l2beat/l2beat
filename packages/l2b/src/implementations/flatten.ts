@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  flattenBytecodeEquivalentStartingFrom,
+  flattenStartingFrom,
   type IEtherscanClient,
 } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
@@ -22,7 +22,7 @@ export async function fetchAndFlatten(
     }))
     .filter((e) => e.path.endsWith('.sol'))
 
-  return flattenBytecodeEquivalentStartingFrom(
+  return flattenStartingFrom(
     source.name,
     source.rootFile,
     input,
