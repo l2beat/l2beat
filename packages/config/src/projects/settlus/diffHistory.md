@@ -8,10 +8,19 @@ Generated with discovered.json: 0x4a8f24c3a0564dde3cc4f03eafc72c63ab16ef7a
 
 ## Description
 
-**OP Stack contracts upgrade (Isthmus-era)**:
-- **SystemConfig** `v3.7.0 → v3.11.0` — adds `daFootprintGasScalar` and `minBaseFee` fields.
+**OP Stack contracts upgrade — full op-contracts v5.x batch on settlus.**
+
+Implementation rotations / version bumps:
+- **SystemConfig** `v3.7.0 → v3.11.0` — adds `daFootprintGasScalar` and `minBaseFee`.
+- **OptimismPortal2** → `v5.1.1`.
+- **DisputeGameFactory** → `v1.3.0`; PermissionedDisputeGame rotated to new address.
+- **AnchorStateRegistry** rotated (v3.5.0 at new address).
+- **DelayedWETH** rotated (v1.5.0 at new address).
+- **MIPS** rotated: old `0x07BABE08...` deleted, new `0x6463dEE3...` (v1.9.0) created.
+- **PreimageOracle** rotated.
 - **OptimismMintableERC20Factory** `v1.10.1 → v1.10.2`.
-- **MIPS contract deleted** from discovery (Cannon component removed/migrated).
+
+Plus newly-tracked Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, OpFoundationOperationsSafe, DeputyGuardianModule, etc.) that appear in discovery now because the new SystemConfig wiring references them through the Superchain SuperchainConfig.
 
 ## Watched changes
 

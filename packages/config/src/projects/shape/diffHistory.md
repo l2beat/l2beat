@@ -8,13 +8,22 @@ Generated with discovered.json: 0x49a929089d17e8c8348c89d9309938de41bce6d2
 
 ## Description
 
-**OP Stack contracts upgrade (broad batch)**:
+**OP Stack contracts upgrade — full op-contracts v5.x batch on shape.**
+
+Implementation rotations / version bumps:
+- **SystemConfig** `v3.7.0 → v3.11.0` — adds `daFootprintGasScalar` and `minBaseFee`.
+- **OptimismPortal2** → `v5.1.1`.
 - **L1CrossDomainMessenger** `v2.10.0 → v2.11.0`.
-- **DisputeGameFactory** `v1.2.0 → v1.3.0`; `gameImpls.1` (PermissionedDisputeGame) rotated to a new impl; `permissionedGameArgs` field changed from `EXPECT_REVERT` to `0x`.
+- **DisputeGameFactory** `v1.2.0 → v1.3.0`; PermissionedDisputeGame rotated; `permissionedGameArgs` `EXPECT_REVERT` → `0x`.
 - **L1StandardBridge** `v2.7.0 → v2.8.0`.
 - **L1ERC721Bridge** upgraded.
 - **OptimismMintableERC20Factory** `v1.10.1 → v1.10.2`.
-- **MIPS** + old **PermissionedDisputeGame** deleted from discovery (replaced by new gameImpls.1 entry).
+- **AnchorStateRegistry** rotated (v3.5.0 at new address).
+- **DelayedWETH** rotated (v1.5.0 at new address).
+- **MIPS** rotated: old `0x07BABE08...` deleted, new `0x6463dEE3...` (v1.9.0) created.
+- **PreimageOracle** rotated.
+
+Plus newly-tracked Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, LivenessModule, OpFoundationOperationsSafe, DeputyGuardianModule, Guardian Multisig, etc.) appearing in discovery because the new SystemConfig wiring references them through the Superchain SuperchainConfig.
 
 ## Watched changes
 

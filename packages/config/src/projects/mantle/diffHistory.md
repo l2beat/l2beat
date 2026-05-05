@@ -8,8 +8,8 @@ Generated with discovered.json: 0x4154084cb81734e256f304afcf2132990a5de404
 
 ## Description
 
-**Mantle SP1 prover upgrade — moved from a single SP1Verifier to a gateway-based verification system**:
-- **OPSuccinctL2OutputOracle** vkey rotation: `aggregationVkey 0x002237...→ 0x0006e0a9...` and `rangeVkeyCommitment 0x08666b... → 0x1d1e0ac7...`. New entries added to `programHashes.ts` as `notVerified` (sp1hypercube prover system, exact mantle-xyz/op-succinct tag not yet identified).
+**Mantle SP1 prover upgrade — moved from a single SP1Verifier to a gateway-based verification system.**
+- **OPSuccinctL2OutputOracle** vkey rotation: `aggregationVkey 0x002237... → 0x0006e0a9...` and `rangeVkeyCommitment 0x08666b... → 0x1d1e0ac7...`. New entries added to `programHashes.ts` as `notVerified` (sp1hypercube prover system, exact mantle-xyz/op-succinct tag not yet identified).
 - New **SP1VerifierGateway** (`0x3B604117...`) replaces the previous direct SP1Verifier reference. The gateway routes proofs to underlying verifier contracts by program identifier.
 - New **SP1Verifier (v6.0.0)** at `0x8a0fd5e8...` and a second SP1Verifier at `0xc3c6dDDA...` registered via the gateway.
 - New **SP1VerifierGatewayMultisig** (`0xCafEf00d...`) — Gnosis Safe controlling the gateway's verifier route registry.

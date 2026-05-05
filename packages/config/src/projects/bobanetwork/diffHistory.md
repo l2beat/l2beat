@@ -8,13 +8,15 @@ Generated with discovered.json: 0x7e990a358405ee53288f9b59277f973905af6dae
 
 ## Description
 
-**Major OP Stack upgrade — bobanetwork modernized to op-contracts v3.x**:
+**Major OP Stack upgrade — bobanetwork modernized to op-contracts v3.x / v5.x batch.**
 
-- **SystemConfig** `v2.5.0 → v3.7.0`: max gas limit 200M → 500M; adds `paused`, `l2ChainId`, `guardian`, `proxyAdmin`/`proxyAdminOwner`, `superchainConfig`, `initVersion` storage; drops `DISPUTE_GAME_FACTORY_SLOT` getter and `disputeGameFactory` reference (the chain no longer references a DisputeGameFactory through the SystemConfig).
-- **SuperchainConfig** (boba's local fork at `0x996ffD62...`) — implementation upgraded to a pause-expiry variant. Template now matches `opstack/SuperchainConfigFake_expiry` (added the new shape hash). [diff](https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0xCe28685EB204186b557133766eCA00334EB441E4)
-- **DelayedWETH deleted** — the contract that held bonded ETH for dispute games is gone, consistent with the SystemConfig dropping the dispute-game reference.
-- **L1CrossDomainMessenger** `v2.6.0 → ?`, plus other OP Stack contracts upgraded as part of the same batch.
-- **Boba Multisig** permissions reshuffled: lost `guard` from old SuperchainConfig and `interact` from the (now-deleted) DelayedWETH; gained `upgrade` over a new contract (`0x38073f4D...`).
+Core contract upgrades:
+- **SystemConfig** `v2.5.0 → v3.7.0`: max gas 200M → 500M; new fields `paused`, `l2ChainId`, `guardian`, `proxyAdmin`/`proxyAdminOwner`, `superchainConfig`, `initVersion`; `getAddresses` no longer exposes `disputeGameFactory` (the DisputeGameFactory contract itself still exists at `0xF45a5f1e...`, just no longer reached through SystemConfig).
+- **OptimismPortal2** `v3.10.0 → v5.0.0` (via 3.13/3.14 hops). Gains `anchorStateRegistry` pointing to a newly-tracked AnchorStateRegistry at `0x38073f4D...`.
+- **L1CrossDomainMessenger** `v2.6.0 → v2.10.0`.
+- **DelayedWETH rotated**: old `0x4e27966e...` deleted, new `0x7e021d19...` (v1.5.0) created.
+- **SuperchainConfig** (boba's local fork at `0x996ffD62...`) implementation upgraded to a pause-expiry variant. Added new shape hash to `opstack/SuperchainConfigFake_expiry/shapes.json` to restore the template.
+- **Boba Multisig** permissions reshuffled — lost old `interact` on the deleted DelayedWETH; gained `upgrade` over the new AnchorStateRegistry and new DelayedWETH (both via the same ProxyAdmin).
 
 ## Watched changes
 
