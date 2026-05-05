@@ -7,6 +7,7 @@ import type {
   Badge,
   ProjectContracts,
   ProjectPermissions,
+  ReasonForBeingInOther,
   ReferenceLink,
 } from '../types'
 
@@ -34,6 +35,13 @@ export function mergeBadges(inherentBadges: Badge[], definedBadges: Badge[]) {
   return unionBy(toBeUniqueBadges, (badge) => badge.type).concat(
     dedupedDuplicates,
   )
+}
+
+export function mergeReasonsForBeingOther(
+  inherentReasons: ReasonForBeingInOther[],
+  definedReasons: ReasonForBeingInOther[],
+) {
+  return unionBy(definedReasons, inherentReasons, 'label')
 }
 
 export function mergePermissions(

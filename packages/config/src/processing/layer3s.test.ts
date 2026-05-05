@@ -145,6 +145,15 @@ describe('layer3s', () => {
   })
 
   describe('others', () => {
+    it('projects do not have duplicated reasons for being other', () => {
+      for (const layer3 of layer3s) {
+        const labels = layer3.reasonsForBeingOther?.map(
+          (reason) => reason.label,
+        )
+        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
+      }
+    })
+
     describe('live projects without proof system have reasons for being other', () => {
       const liveProjectsWithoutProofSystem = layer3s.filter(
         (layer3) =>

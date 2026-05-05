@@ -67,6 +67,7 @@ import {
   explorerReferences,
   mergeBadges,
   mergePermissions,
+  mergeReasonsForBeingOther,
   safeGetImplementation,
 } from './utils'
 
@@ -637,11 +638,10 @@ function buildPessimisticSections(
     contractsRisks,
     customDa: config.customDa,
     badges,
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      ...(config.reasonsForBeingOther ?? []),
-    ],
+    reasonsForBeingOther: mergeReasonsForBeingOther(
+      [REASON_FOR_BEING_OTHER.NO_DA_ORACLE, REASON_FOR_BEING_OTHER.NO_PROOFS],
+      config.reasonsForBeingOther ?? [],
+    ),
     programHashes: zkProgramHashes,
     architectureImage: config.architectureImage ?? 'agglayer-pessimistic',
   }
@@ -719,10 +719,10 @@ function buildOpstackClosedSections(
     contractsRisks,
     customDa: config.customDa,
     badges,
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      ...(config.reasonsForBeingOther ?? []),
-    ],
+    reasonsForBeingOther: mergeReasonsForBeingOther(
+      [REASON_FOR_BEING_OTHER.NO_PROOFS],
+      config.reasonsForBeingOther ?? [],
+    ),
     programHashes: zkProgramHashes,
     architectureImage: config.architectureImage ?? 'agglayer-opstack_closed',
   }
