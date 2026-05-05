@@ -39,7 +39,7 @@ export function getInteropProtocolSections({
       props: {
         id: 'interop-volume',
         title: 'Volume and flows',
-        data,
+        entry: data.entry,
         interopChains: sortedChains,
         defaultSelectedChains,
       },

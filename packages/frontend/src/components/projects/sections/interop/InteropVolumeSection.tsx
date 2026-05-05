@@ -16,27 +16,24 @@ import {
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
-import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
+import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 export interface InteropVolumeSectionProps extends ProjectSectionProps {
-  data: InteropProtocolDashboardData
+  entry: ProtocolEntry
   interopChains: InteropChainWithIcon[]
   defaultSelectedChains: string[]
 }
 
 export function InteropVolumeSection({
-  data,
+  entry,
   interopChains,
   defaultSelectedChains,
   ...sectionProps
 }: InteropVolumeSectionProps) {
-  const entry = data.entry
-  if (!entry) return null
-
   return (
     <ProjectSection {...sectionProps}>
       <InteropFlowsProvider
