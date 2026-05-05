@@ -58,10 +58,6 @@ export const gnosis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('gnosis'),
   capability: 'universal',
-  slug: 'gnosis',
-  name: 'Gnosis Chain',
-  shortName: undefined,
-  aliases: ['xDai'],
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
@@ -73,6 +69,7 @@ export const gnosis: ScalingProject = {
   ],
   display: {
     name: 'Gnosis Chain',
+    shortName: undefined,
     aliases: ['xDai'],
     slug: 'gnosis',
     purposes: ['Universal'],
