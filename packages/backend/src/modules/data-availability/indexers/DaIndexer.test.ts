@@ -1,12 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
-import {
-  type Configuration,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
@@ -16,6 +11,7 @@ import type {
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { Configuration } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'
@@ -174,7 +170,7 @@ describe(DaIndexer.name, () => {
     })
   })
 
-  describe(DaIndexer.prototype.removeData.name, () => {
+  describe(DaIndexer.prototype.wipeData.name, () => {
     it('wipes all data saved by configuration', async () => {
       const configurations = [config('project-a'), config('project-b')]
 
@@ -182,20 +178,15 @@ describe(DaIndexer.name, () => {
         configurations,
       })
 
-      await indexer.removeData([
-        { id: createId('project-a'), from: -1, to: -1 }, // from & to are ignored
-        { id: createId('project-b'), from: -1, to: -1 }, // from & to are ignored
+      await indexer.wipeData([
+        { type: 'wipe', id: createId('project-a') },
+        { type: 'wipe', id: createId('project-b') },
       ])
 
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        1,
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
         createId('project-a'),
-      )
-
-      expect(repository.deleteByConfigurationId).toHaveBeenNthCalledWith(
-        2,
         createId('project-b'),
-      )
+      ])
     })
   })
 
@@ -225,6 +216,7 @@ function mockIndexer($: {
   useBlobService?: boolean
 }) {
   const repository = mockObject<Database['dataAvailability']>({
+    deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo({}),
     upsertMany: mockFn().resolvesTo(undefined),
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),

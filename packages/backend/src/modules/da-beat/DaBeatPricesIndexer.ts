@@ -1,14 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { PriceProvider } from '@l2beat/shared'
-import {
-  assert,
-  type CoingeckoId,
-  type Configuration,
-  type RemovalConfiguration,
-} from '@l2beat/shared-pure'
+import { assert, type CoingeckoId } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  WipeRemovalConfiguration,
+} from '../../tools/uif/multi/types'
 
 interface DaBeatPricesConfig {
   coingeckoIds: string[]
@@ -74,7 +73,7 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
     assert(configurations.length === 1)
 
     const coingeckoIds = this.$.configurations[0].properties.coingeckoIds

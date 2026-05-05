@@ -1,17 +1,17 @@
 import { assert } from '@l2beat/shared-pure'
 import type {
   Configuration,
-  RemovalConfiguration,
   SavedConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from './types'
 
 export interface ConfigurationsDiff<T> {
   toAdd: Configuration<T>[]
   toUpdate: SavedConfiguration<T>[]
-  toTrimDataAfterUpdate: RemovalConfiguration[]
-  toWipeDataAfterUpdate: RemovalConfiguration[]
   toDelete: string[]
-  toWipeDataAfterDelete: RemovalConfiguration[]
+  toTrimData: TrimRemovalConfiguration[]
+  toWipeData: WipeRemovalConfiguration[]
 }
 
 export interface MergeResult<T> {
@@ -30,10 +30,9 @@ export function mergeConfigurations<T>(
 
   const toAdd: Configuration<T>[] = []
   const toUpdate: SavedConfiguration<T>[] = []
-  const toTrimDataAfterUpdate: RemovalConfiguration[] = []
-  const toWipeDataAfterUpdate: RemovalConfiguration[] = []
+  const toTrimData: TrimRemovalConfiguration[] = []
+  const toWipeData: WipeRemovalConfiguration[] = []
   const toDelete: string[] = []
-  const toWipeDataAfterDelete: RemovalConfiguration[] = []
   const configurations: SavedConfiguration<T>[] = []
 
   for (const c of actual) {
@@ -50,10 +49,8 @@ export function mergeConfigurations<T>(
       // We remove everything because we cannot have gaps in downloaded data
       // We will re-download everything from the beginning
       if (stored.currentHeight !== null) {
-        toWipeDataAfterUpdate.push({
+        toWipeData.push({
           id: stored.id,
-          from: stored.minHeight,
-          to: stored.currentHeight,
         })
       }
       currentHeight = null
@@ -61,18 +58,15 @@ export function mergeConfigurations<T>(
       // If trimming disabled we wipe everything
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
-          toWipeDataAfterUpdate.push({
+          toWipeData.push({
             id: stored.id,
-            from: stored.minHeight,
-            to: stored.currentHeight,
           })
           currentHeight = null
         }
       } else {
-        toTrimDataAfterUpdate.push({
+        toTrimData.push({
           id: stored.id,
-          from: stored.minHeight,
-          to: c.minHeight - 1,
+          range: [stored.minHeight, c.minHeight - 1],
         })
         if (currentHeight !== null && currentHeight < c.minHeight) {
           currentHeight = null
@@ -83,10 +77,8 @@ export function mergeConfigurations<T>(
     if (c.maxHeight !== stored.maxHeight) {
       if (configurationsTrimmingDisabled) {
         if (stored.currentHeight) {
-          toWipeDataAfterUpdate.push({
+          toWipeData.push({
             id: stored.id,
-            from: stored.minHeight,
-            to: stored.currentHeight,
           })
           currentHeight = null
         }
@@ -96,10 +88,9 @@ export function mergeConfigurations<T>(
           currentHeight !== null &&
           c.maxHeight < currentHeight
         ) {
-          toTrimDataAfterUpdate.push({
+          toTrimData.push({
             id: stored.id,
-            from: c.maxHeight + 1,
-            to: currentHeight,
+            range: [c.maxHeight + 1, currentHeight],
           })
           currentHeight = c.maxHeight
         }
@@ -123,10 +114,8 @@ export function mergeConfigurations<T>(
       toDelete.push(c.id)
 
       if (c.currentHeight !== null) {
-        toWipeDataAfterDelete.push({
+        toWipeData.push({
           id: c.id,
-          from: c.minHeight,
-          to: c.currentHeight,
         })
       }
     }
@@ -136,10 +125,9 @@ export function mergeConfigurations<T>(
     diff: {
       toAdd,
       toUpdate,
-      toTrimDataAfterUpdate,
-      toWipeDataAfterDelete,
+      toTrimData,
       toDelete,
-      toWipeDataAfterUpdate,
+      toWipeData,
     },
     configurations: configurations,
     safeHeight: getSafeHeight(configurations),
