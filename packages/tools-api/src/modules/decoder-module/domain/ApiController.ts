@@ -1,7 +1,9 @@
 import { inflateRawSync } from 'zlib'
 import type { Chain } from '../../../config/types'
 import type { AlchemyClient } from '../../../third-party/AlchemyClient'
+import type { IAddressService } from './AddressService'
 import type { Decoder, Transaction } from './Decoder'
+import type { ISignatureService } from './SignatureService'
 
 export interface ApiQuery {
   hash?: `0x${string}`
@@ -10,12 +12,81 @@ export interface ApiQuery {
   chainId?: number
 }
 
+export type LookupQuery =
+  | { type: 'address'; chainId: number; address: `0x${string}` }
+  | { type: 'selector'; selector: `0x${string}` }
+
+export interface LookupResult {
+  signature: string
+  selector: `0x${string}`
+  chainId?: number
+  address?: `0x${string}`
+}
+
+export interface TransactionQuery {
+  chainId?: number
+  hash: `0x${string}`
+}
+
 export class ApiController {
   constructor(
     private decoder: Decoder,
+    private signatureService: ISignatureService,
+    private addressService: IAddressService,
     private alchemyClient: AlchemyClient,
     private chains: Chain[],
   ) {}
+
+  async lookup(queries: LookupQuery[]): Promise<LookupResult[]> {
+    const results = await Promise.all(
+      queries.map(async (q) => {
+        if (q.type === 'selector') {
+          const entries = await this.signatureService.lookup(q.selector)
+          return entries.map(
+            (signature): LookupResult => ({
+              signature: signature,
+              selector: q.selector,
+            }),
+          )
+        }
+        if (q.type === 'address') {
+          const chain = this.chains.find((x) => x.chainId === q.chainId)
+          if (!chain) return []
+          const result = await this.addressService
+            .lookup(`${chain.shortName}:${q.address}`)
+            .catch(() => undefined)
+          if (!result) return []
+          return result.abi.map(
+            (v): LookupResult => ({
+              signature: v.signature,
+              selector: v.selector,
+              address: q.address,
+              chainId: q.chainId,
+            }),
+          )
+        }
+        return []
+      }),
+    )
+    return results.flat()
+  }
+
+  async getTx(query: TransactionQuery) {
+    try {
+      const tx = await this.toTx(query)
+      return {
+        hash: query.hash,
+        chainId: tx.chain.chainId,
+        to: tx.to ? (tx.to.split(':')[1] as `0x${string}`) : undefined,
+        data: tx.data,
+      }
+    } catch (e) {
+      if (e instanceof Error && e.message.includes('Transaction not found!')) {
+        return undefined
+      }
+      throw e
+    }
+  }
 
   async handle(query: ApiQuery) {
     const tx = await this.toTx(query)

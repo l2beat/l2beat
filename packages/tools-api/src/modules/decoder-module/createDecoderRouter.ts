@@ -21,8 +21,43 @@ export function createDecoderRouter(controller: ApiController): express.Router {
     },
   )
 
+  router.post('/api/lookup', express.json(), async (req, res) => {
+    const queries = LookupRequest.parse(req.body)
+    const result = await controller.lookup(queries)
+    res.json(result)
+  })
+
+  router.post('/api/tx', express.json(), async (req, res) => {
+    const query = TransactionRequest.parse(req.body)
+    const result = await controller.getTx(query)
+    res.json(result)
+  })
+
   return router
 }
+
+const TransactionRequest = z.object({
+  chainId: z.number().optional(),
+  hash: z.string().check((v): v is `0x${string}` => /^0x[a-f\d]{64}$/.test(v)),
+})
+
+const LookupRequest = z.array(
+  z.union([
+    z.object({
+      type: z.literal('address'),
+      chainId: z.number(),
+      address: z
+        .string()
+        .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
+    }),
+    z.object({
+      type: z.literal('selector'),
+      selector: z
+        .string()
+        .check((v): v is `0x${string}` => /^0x[a-f\d]{8}$/.test(v)),
+    }),
+  ]),
+)
 
 const DecodeQuery = z.object({
   hash: z
