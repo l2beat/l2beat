@@ -40,12 +40,15 @@ export function TopTokensCell({
           })),
           remainingCount: topItems.remainingCount,
         }}
-        onMouseEnter={() =>
-          utils.interop.tokens.prefetch({
-            ...apiSelection,
-            id: protocol.id,
-            type,
-          })
+        onMouseEnter={
+          hideDialog
+            ? undefined
+            : () =>
+                utils.interop.tokens.prefetch({
+                  ...apiSelection,
+                  id: protocol.id,
+                  type,
+                })
         }
         type="cell"
         setIsOpen={setIsOpen}

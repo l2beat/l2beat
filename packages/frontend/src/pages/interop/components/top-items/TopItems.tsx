@@ -66,13 +66,8 @@ export function InteropTopItems({
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
   VariantProps<typeof buttonVariants>) {
-  return (
-    <button
-      type="button"
-      className={buttonVariants({ type, className })}
-      onClick={() => setIsOpen(true)}
-      {...rest}
-    >
+  const content = (
+    <>
       <div className="flex items-center">
         {topItems.items.map((item, i) => (
           <ItemIconWithTooltip
@@ -91,6 +86,21 @@ export function InteropTopItems({
           hideDialog={hideDialog}
         />
       )}
+    </>
+  )
+
+  if (hideDialog) {
+    return <div className={buttonVariants({ type, className })}>{content}</div>
+  }
+
+  return (
+    <button
+      type="button"
+      className={buttonVariants({ type, className })}
+      onClick={() => setIsOpen(true)}
+      {...rest}
+    >
+      {content}
     </button>
   )
 }
