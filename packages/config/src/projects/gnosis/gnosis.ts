@@ -60,7 +60,13 @@ export const gnosis: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [
+    {
+      ...REASON_FOR_BEING_OTHER.NO_PROOFS,
+      explanation:
+        'Gnosis Chain has an external validator set that validates its state transitions. This is an additional trust assumption since Ethereum does not, the external validators do not commit or stake anything on Ethereum.',
+    },
+  ],
   display: {
     name: 'Gnosis Chain',
     aliases: ['xDai'],
@@ -161,7 +167,7 @@ export const gnosis: ScalingProject = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
-      sentiment: 'warning',
+      sentiment: 'good',
       description:
         'Users can permissionlessly become a sequencer (validator) by staking a minimum of 1 GNO to join the queue and wait to obtain block production rights. There is no specific censorship resistance mechanism against selective censorship by parts of the active validator set nor a way to force transactions from Ethereum L1.', // TODO: rm hardcode
     },
