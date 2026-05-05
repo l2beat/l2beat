@@ -1,11 +1,14 @@
 import { clsx } from 'clsx'
 import { useReducer } from 'react'
-import { useNavigate } from 'react-router'
-import { getQueryParams } from './api'
-import { INITIAL_STATE, reducer, SUPPORTED_CHAINS } from './state'
+import { INITIAL_STATE, reducer, State, SUPPORTED_CHAINS } from './state'
 
-export function Form() {
-  const navigate = useNavigate()
+export type FormValues = State['values']
+
+export interface FormProps {
+  onSubmit(data: FormValues): void
+}
+
+export function Form(props: FormProps) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
   const hasErrors =
     !!state.errors.hash || !!state.errors.data || !!state.errors.address
@@ -14,18 +17,7 @@ export function Form() {
 
   async function onSubmit() {
     dispatch({ type: 'submit' })
-    let data = await encodeCalldata(state.values.data)
-    if (data !== undefined && data.length > 1024) {
-      localStorage.setItem('data', data)
-      data = '0xLOCALSTORAGE'
-    }
-    const query = {
-      hash: (state.values.hash as `0x${string}`) || undefined,
-      data,
-      to: (state.values.address as `0x${string}`) || undefined,
-      chainId: state.values.chainId || undefined,
-    }
-    navigate(`/decoder-new/?${getQueryParams(query)}`)
+    props.onSubmit(state.values)
   }
 
   return (
@@ -144,49 +136,4 @@ export function Form() {
       </form>
     </main>
   )
-}
-
-function hexToBytes(hex: string): Uint8Array {
-  const cleanHex = hex.startsWith('0x') ? hex.slice(2) : hex
-
-  const bytes = new Uint8Array(cleanHex.length / 2)
-  for (let i = 0; i < cleanHex.length; i += 2) {
-    bytes[i / 2] = Number.parseInt(cleanHex.substring(i, i + 2), 16)
-  }
-  return bytes
-}
-
-function urlSafeBase64Encode(bytes: Uint8Array): string {
-  return btoa(String.fromCharCode(...bytes))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '')
-}
-
-async function encodeCalldata(calldata: string): Promise<string> {
-  if (typeof CompressionStream === 'undefined') {
-    throw new Error('CompressionStream is not supported in this environment')
-  }
-
-  try {
-    const bytes = hexToBytes(calldata)
-
-    const stream = new ReadableStream({
-      start(controller) {
-        controller.enqueue(bytes)
-        controller.close()
-      },
-    })
-
-    const compressedStream = stream.pipeThrough(
-      new CompressionStream('deflate-raw'),
-    )
-    const response = new Response(compressedStream)
-    const compressedBytes = new Uint8Array(await response.arrayBuffer())
-    return urlSafeBase64Encode(compressedBytes)
-  } catch (error) {
-    throw new Error(
-      `Compression failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    )
-  }
 }

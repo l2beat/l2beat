@@ -28,6 +28,13 @@ export interface TransactionQuery {
   hash: `0x${string}`
 }
 
+export interface TransactionResult {
+  hash: `0x${string}`
+  chainId: number
+  to: `0x${string}` | undefined
+  data: `0x${string}`
+}
+
 export class ApiController {
   constructor(
     private decoder: Decoder,
@@ -71,7 +78,7 @@ export class ApiController {
     return results.flat()
   }
 
-  async getTx(query: TransactionQuery) {
+  async getTx(query: TransactionQuery): Promise<TransactionResult | null> {
     try {
       const tx = await this.toTx(query)
       return {
@@ -82,7 +89,7 @@ export class ApiController {
       }
     } catch (e) {
       if (e instanceof Error && e.message.includes('Transaction not found!')) {
-        return undefined
+        return null
       }
       throw e
     }

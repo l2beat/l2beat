@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router'
 import { DecoderApp as OldDecoderApp } from './decoder/DecoderApp'
 import { DecoderApp as NewDecoderApp } from './decoder-new/DecoderApp'
+import { DecoderApp as DecoderApp3 } from './decoder-3/DecoderApp'
 import { DiscoLupe } from './discolupe/DiscoLupe'
 import { Layout } from './Layout'
 import { LogoGenerator } from './logo-generator/LogoGenerator'
@@ -22,6 +23,7 @@ ReactDOM.createRoot(root).render(
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<AutoRedirect />} />
+            <Route path="/decoder-3" element={<DecoderApp3 />} />
             <Route path="/decoder" element={<OldDecoderApp />} />
             <Route path="/decoder-new" element={<NewDecoderApp />} />
             <Route path="/simulator" element={<SimulatorApp />} />
@@ -38,7 +40,7 @@ ReactDOM.createRoot(root).render(
 function AutoRedirect() {
   const navigate = useNavigate()
   useEffect(() => {
-    navigate('/decoder')
+    navigate('/decoder-3')
   }, [])
   return null
 }

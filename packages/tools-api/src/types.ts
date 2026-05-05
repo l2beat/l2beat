@@ -1,2 +1,8 @@
-export type { ApiQuery } from './modules/decoder-module/domain/ApiController'
+export type {
+  ApiQuery,
+  LookupQuery,
+  LookupResult,
+  TransactionQuery,
+  TransactionResult,
+} from './modules/decoder-module/domain/ApiController'
 export type * from './modules/decoder-module/domain/DecodedResult'

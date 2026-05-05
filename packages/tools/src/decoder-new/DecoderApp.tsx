@@ -1,18 +1,35 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { useSearchParams } from 'react-router'
-import { callDecode, getFullQueryUrl } from './form/api'
-import { Form } from './form/Form'
+import { useNavigate, useSearchParams } from 'react-router'
+import { callDecode, encodeCalldata, getFullQueryUrl, getQueryParams } from './api'
+import { Form, FormValues } from './form/Form'
 import { CondensedView } from './view/CondensedView'
 import { ExpandedView } from './view/ExpandedView'
 
 export function DecoderApp() {
   const [search] = useSearchParams()
+  const navigate = useNavigate()
+
+  async function onSubmit(values: FormValues) {
+    let data = await encodeCalldata(values.data)
+    if (data !== undefined && data.length > 1024) {
+      localStorage.setItem('data', data)
+      data = '0xLOCALSTORAGE'
+    }
+    const query = {
+      hash: (values.hash as `0x${string}`) || undefined,
+      data,
+      to: (values.address as `0x${string}`) || undefined,
+      chainId: values.chainId || undefined,
+    }
+    navigate(`/decoder-new/?${getQueryParams(query)}`)
+  }
+
   if (search.size !== 0) {
     return <DecodedWrapper search={search} />
   }
-  return <Form />
+  return <Form onSubmit={onSubmit} />
 }
 
 function DecodedWrapper({ search }: { search: URLSearchParams }) {
