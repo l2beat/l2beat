@@ -9,6 +9,7 @@ export const boojum: BaseProject = {
   slug: 'boojum',
   name: 'Boojum',
   shortName: undefined,
+  aliases: ['Matter Labs', 'ZKsync'],
   addedAt: UnixTime.fromDate(new Date('2025-07-11')),
   display: {
     description:

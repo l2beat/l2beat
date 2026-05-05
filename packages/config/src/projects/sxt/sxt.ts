@@ -20,6 +20,7 @@ export const sxt: ScalingProject = zkStackL2({
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.AvailVector],
   display: {
     name: 'Space and Time',
+    aliases: ['SXT'],
     slug: 'sxt',
     description:
       "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT chain will serve as a settlement layer and payment hub for data queries.",

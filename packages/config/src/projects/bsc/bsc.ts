@@ -8,6 +8,7 @@ export const bsc: BaseProject = {
   slug: 'bsc',
   name: 'Binance Smart Chain',
   shortName: 'BSC',
+  aliases: ['BNB Smart Chain'],
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
   statuses: {
     yellowWarning: undefined,

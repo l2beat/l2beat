@@ -23,6 +23,7 @@ export const unichain: ScalingProject = opStackL2({
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',
+    aliases: ['Uniswap'],
     slug: 'unichain',
     stateValidationImage: 'opfp',
     description:

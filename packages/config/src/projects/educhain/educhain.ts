@@ -20,6 +20,7 @@ export const educhain: ScalingProject = orbitStackL3({
   ],
   display: {
     name: 'EDU Chain',
+    aliases: ['Open Campus'],
     slug: 'edu-chain',
     description:
       'EDU Chain is a Layer 3 on Arbitrum, built on the Orbit stack. It is designed to onboard real-world educational economies to the blockchain and establish an innovative "Learn Own Earn" model for education.',

@@ -7,6 +7,7 @@ export const agglayer: BaseProject = {
   slug: 'agglayer',
   name: 'Agglayer',
   shortName: undefined,
+  aliases: ['Polygon'],
   addedAt: 1743677000,
   display: {
     description:

@@ -6,6 +6,7 @@ export const cctpv2: BaseProject = {
   slug: 'cctpv2',
   name: 'CCTP v2',
   shortName: undefined,
+  aliases: ['Circle', 'Cross-Chain Transfer Protocol'],
   addedAt: UnixTime(1769070497),
   interopConfig: {
     description:

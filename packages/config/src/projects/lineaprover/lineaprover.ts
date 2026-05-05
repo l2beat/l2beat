@@ -8,6 +8,7 @@ export const lineaprover: BaseProject = {
   slug: 'lineaprover',
   name: 'Linea',
   shortName: undefined,
+  aliases: ['ConsenSys'],
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
     yellowWarning: undefined,
