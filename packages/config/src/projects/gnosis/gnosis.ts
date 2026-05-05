@@ -253,6 +253,10 @@ export const gnosis: ScalingProject = {
             title: 'Shutterized Gnosis Chain Beta Release',
             url: 'https://blog.shutter.network/shutterized-gnosis-chain-is-now-live/',
           },
+          {
+            title: 'Gnosis Docs: Shutterized Gnosis Chain',
+            url: 'https://docs.gnosischain.com/shutterized-gc/',
+          },
         ],
         risks: [],
       },
