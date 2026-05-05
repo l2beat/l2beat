@@ -114,6 +114,10 @@
     },
     "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
       "proxyType": "Eternal Storage proxy"
+    },
+    "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb": {
+      "displayName": "GNO token",
+      "description": "Immutable GNO token smart contract contract, administered from the Ethereum side by the Gnosis Bridge contract."
     }
   }
 }

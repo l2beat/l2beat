@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf41ba4fabc985c436ab8fcc0f7d73a31b34365dd
+Generated with discovered.json: 0x96194b15bd42e39f8cf53c0839be94611a7a10da
 
-# Diff at Mon, 04 May 2026 14:08:46 GMT:
+# Diff at Tue, 05 May 2026 11:02:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1777903608
@@ -51,12 +51,6 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 +   Status: CREATED
     contract LayerZeroAdapter (eth:0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
     +++ description: Hashi adapter that receives message-hash batches over LayerZero and stores them under the configured source chain for later Hashi aggregation.
-```
-
-```diff
-+   Status: CREATED
-    contract PermittableToken (eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3)
-    +++ description: None
 ```
 
 ```diff
@@ -128,19 +122,13 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 ```diff
 +   Status: CREATED
     contract SBCDepositContract (gno:0x0B98057eA310F4d31F2a452B414647007d1645d9)
-    +++ description: None
+    +++ description: Gnosis Beacon Chain deposit contract escrowing all validator-staked GNO. Differs from the similar contract on Ethereum by being upgradable, allowing critical permissioned function access and using the non-gastoken GNO as its staking token.
 ```
 
 ```diff
 +   Status: CREATED
     contract Yaru (gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5)
     +++ description: Inbound executor in Hashi. It reconstructs message IDs, asks Hashi whether enough adapters agreed on the hash, and then calls the target bridge receiver.
-```
-
-```diff
-+   Status: CREATED
-    contract PermittableToken (gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4)
-    +++ description: None
 ```
 
 ```diff
@@ -211,8 +199,8 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 
 ```diff
 +   Status: CREATED
-    contract PermittableToken (gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb)
-    +++ description: None
+    contract GNO token (gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb)
+    +++ description: Immutable GNO token smart contract contract, administered from the Ethereum side by the Gnosis Bridge contract.
 ```
 
 ```diff

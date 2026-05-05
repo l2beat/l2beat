@@ -6,6 +6,9 @@
     "owner": {
       "permissions": [
         {
+          "type": "act" // not very clean but resolves the GNO minting perm correctly
+        },
+        {
           "type": "interact",
           "description": "change the counterpart mediator, the AMB bridge endpoint, token factory, fee, gas-limit, and forwarding-rules managers, token pairs, and per-token bridge limits for Omnibridge transfers."
         }

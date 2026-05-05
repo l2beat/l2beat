@@ -15,5 +15,6 @@
       "description": "Template implementation cloned for newly deployed Omnibridge wrapped tokens.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreRelatives": ["tokenImage"]
 }

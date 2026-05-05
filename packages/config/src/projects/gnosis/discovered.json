@@ -1,7 +1,7 @@
 {
   "name": "gnosis",
   "timestamp": 1777903608,
-  "configHash": "0x1179ab98c0f416073bbe10557869c27ce1acba26ece6e674be1cbdd6554b5093",
+  "configHash": "0x2de269fb027ca9b8396368bfd94193499e147d91efab2c0e63e7c1795cd9031d",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -685,36 +685,6 @@
       }
     },
     {
-      "name": "PermittableToken",
-      "address": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3",
-      "type": "Contract",
-      "template": "gnosis/PermittableToken",
-      "sourceHashes": [
-        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1634280299,
-      "sinceBlock": 13421099,
-      "values": {
-        "$immutable": true,
-        "bridgeContract": "eth:0x0000000000000000000000000000000000000000",
-        "decimals": 0,
-        "DOMAIN_SEPARATOR": "0xcaa93cb1b6b7dc5661966ae0c34c78b2bb3aea8cc828a3690fdf9dec64932930",
-        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
-        "mintingFinished": false,
-        "name": "",
-        "owner": "eth:0xBF3d6f830CE263CAE987193982192Cd990442B53",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "",
-        "totalSupply": 0,
-        "version": "1"
-      },
-      "implementationNames": {
-        "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3": "PermittableToken"
-      }
-    },
-    {
       "address": "eth:0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1187,11 +1157,6 @@
       ]
     },
     {
-      "address": "eth:0xBF3d6f830CE263CAE987193982192Cd990442B53",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Giveth EOA 1",
       "address": "eth:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
       "type": "EOA",
@@ -1400,17 +1365,27 @@
     {
       "address": "gno:0x0000000000000000000000000000000000000000",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "SBCDepositContract",
       "address": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
       "type": "Contract",
+      "template": "gnosis/SBCDepositContract",
       "sourceHashes": [
         "0x91ee7f17620851e78dd7d4756c1092392843316b21dfe9b939bf840efe30d291",
         "0x8ed126164e79f30a4d20b9c831af078f671bfcdd195e47adecadd2164648f504"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Gnosis Beacon Chain deposit contract escrowing all validator-staked GNO. Differs from the similar contract on Ethereum by being upgradable, allowing critical permissioned function access and using the non-gastoken GNO as its staking token.",
+      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "sinceTimestamp": 1638944505,
       "sinceBlock": 19469077,
       "values": {
@@ -1444,7 +1419,8 @@
       "implementationNames": {
         "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9": "SBCDepositContractProxy",
         "gno:0x49dE1aced385334F1a66d86Db363264eB5b6A708": "SBCDepositContract"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "gno:0x0DA0C3e52C977Ed3cBc641fF02DD271c3ED55aFe",
@@ -1518,36 +1494,6 @@
       },
       "implementationNames": {
         "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": "Yaru"
-      }
-    },
-    {
-      "name": "PermittableToken",
-      "address": "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4",
-      "type": "Contract",
-      "template": "gnosis/PermittableToken",
-      "sourceHashes": [
-        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1634244030,
-      "sinceBlock": 18573208,
-      "values": {
-        "$immutable": true,
-        "bridgeContract": "gno:0x0000000000000000000000000000000000000000",
-        "decimals": 0,
-        "DOMAIN_SEPARATOR": "0x75d2243c5f16e74af316608b1c54f2c34da1e0ff0e551af68c80e7c57328d85e",
-        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
-        "mintingFinished": false,
-        "name": "''",
-        "owner": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "''",
-        "totalSupply": 0,
-        "version": "1"
-      },
-      "implementationNames": {
-        "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": "PermittableToken"
       }
     },
     {
@@ -2330,6 +2276,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
+          "description": "pause or unpause beacon chain deposits, execute system withdrawals manually if required, and recover accidentally sent non-stake tokens.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
           "from": "gno:0x481c034c6d9441db23Ea48De68BCAe812C5d39bA",
           "description": "allow which legacy bridge contracts may queue xDAI minting through this contract and change the token minter used by the deprecated AuRa reward path.",
           "role": ".admin"
@@ -2372,6 +2324,15 @@
         },
         {
           "permission": "interact",
+          "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
+          "role": ".owner",
+          "via": [
+            { "address": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
@@ -2409,7 +2370,7 @@
         {
           "permission": "upgrade",
           "from": "gno:0x0B98057eA310F4d31F2a452B414647007d1645d9",
-          "role": "admin"
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
@@ -2440,6 +2401,13 @@
           "permission": "upgrade",
           "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
           "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2539,7 +2507,7 @@
       ]
     },
     {
-      "name": "PermittableToken",
+      "name": "GNO token",
       "address": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
       "type": "Contract",
       "template": "gnosis/PermittableToken",
@@ -2548,10 +2516,11 @@
         "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Immutable GNO token smart contract contract, administered from the Ethereum side by the Gnosis Bridge contract.",
       "sinceTimestamp": 1598213055,
       "sinceBlock": 11629829,
       "values": {
-        "$admin": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "$admin": "gno:0x0000000000000000000000000000000000000000",
         "$implementation": "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
@@ -2568,6 +2537,16 @@
         "symbol": "GNO",
         "totalSupply": "1401669778697498783998615",
         "version": "1"
+      },
+      "fieldMeta": {
+        "$implementation": {
+          "description": "Address of the underlying token logic. The TokenProxy constructor permanently sets this slot, meaning this proxy is explicitly non-upgradeable."
+        },
+        "owner": { "severity": "HIGH" },
+        "bridgeContract": {
+          "severity": "HIGH",
+          "description": "Recognized bridge contract. Token transfers to this address automatically trigger a call to `onTokenTransfer()`, which is by default the cross-chain bridging operation."
+        }
       },
       "implementationNames": {
         "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb": "TokenProxy",
@@ -2888,11 +2867,6 @@
       ]
     },
     {
-      "address": "gno:0xBF3d6f830CE263CAE987193982192Cd990442B53",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Giveth EOA 1",
       "address": "gno:0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506",
       "type": "EOA",
@@ -3084,11 +3058,12 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
-          "permission": "upgrade",
+          "permission": "interact",
           "from": "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
-          "role": "admin"
+          "description": "mint the token, update the designated bridge contract, recover unsupported tokens accidentally sent to the contract and set the `mintingFinished` state, which disallows further minting.",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1596501010,
@@ -3559,54 +3534,6 @@
       "function setReporterByChain(uint256 chainId, uint32 endpointId, address reporter)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3": [
-      "function mintingFinished() view returns (bool)",
-      "function name() view returns (string)",
-      "function approve(address _to, uint256 _value) returns (bool result)",
-      "function setBridgeContract(address _bridgeContract)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function decimals() view returns (uint8)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
-      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
-      "function mint(address _to, uint256 _amount) returns (bool)",
-      "function burn(uint256 _value)",
-      "function version() view returns (string)",
-      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
-      "function claimTokens(address _token, address _to)",
-      "function balanceOf(address _owner) view returns (uint256)",
-      "function renounceOwnership()",
-      "function isBridge(address _address) view returns (bool)",
-      "function finishMinting() returns (bool)",
-      "function nonces(address) view returns (uint256)",
-      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
-      "function owner() view returns (address)",
-      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function symbol() view returns (string)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function transfer(address _to, uint256 _value) returns (bool)",
-      "function push(address _to, uint256 _amount)",
-      "function move(address _from, address _to, uint256 _amount)",
-      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
-      "function bridgeContract() view returns (address)",
-      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
-      "function allowance(address _owner, address _spender) view returns (uint256)",
-      "function pull(address _from, uint256 _amount)",
-      "function transferOwnership(address _newOwner)",
-      "function expirations(address, address) view returns (uint256)",
-      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
-      "event Mint(address indexed to, uint256 amount)",
-      "event MintFinished()",
-      "event OwnershipRenounced(address indexed previousOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Burn(address indexed burner, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)"
-    ],
     "eth:0x88ad09518695c6c3712AC10a214bE5109a655671": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
@@ -3885,54 +3812,6 @@
       "function calculateMessageId(uint256 sourceChainId, address dispatcherAddress, bytes32 messageHash) pure returns (uint256)",
       "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
       "function executed(uint256) view returns (bool)"
-    ],
-    "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": [
-      "function mintingFinished() view returns (bool)",
-      "function name() view returns (string)",
-      "function approve(address _to, uint256 _value) returns (bool result)",
-      "function setBridgeContract(address _bridgeContract)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _sender, address _recipient, uint256 _amount) returns (bool)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function decimals() view returns (uint8)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function increaseAllowance(address _to, uint256 _addedValue) returns (bool result)",
-      "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool)",
-      "function mint(address _to, uint256 _amount) returns (bool)",
-      "function burn(uint256 _value)",
-      "function version() view returns (string)",
-      "function decreaseApproval(address _spender, uint256 _subtractedValue) returns (bool)",
-      "function claimTokens(address _token, address _to)",
-      "function balanceOf(address _owner) view returns (uint256)",
-      "function renounceOwnership()",
-      "function isBridge(address _address) view returns (bool)",
-      "function finishMinting() returns (bool)",
-      "function nonces(address) view returns (uint256)",
-      "function getTokenInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
-      "function owner() view returns (address)",
-      "function permit(address _holder, address _spender, uint256 _nonce, uint256 _expiry, bool _allowed, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function symbol() view returns (string)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function transfer(address _to, uint256 _value) returns (bool)",
-      "function push(address _to, uint256 _amount)",
-      "function move(address _from, address _to, uint256 _amount)",
-      "function PERMIT_TYPEHASH_LEGACY() view returns (bytes32)",
-      "function bridgeContract() view returns (address)",
-      "function permit(address _holder, address _spender, uint256 _value, uint256 _deadline, uint8 _v, bytes32 _r, bytes32 _s)",
-      "function increaseApproval(address _spender, uint256 _addedValue) returns (bool)",
-      "function allowance(address _owner, address _spender) view returns (uint256)",
-      "function pull(address _from, uint256 _amount)",
-      "function transferOwnership(address _newOwner)",
-      "function expirations(address, address) view returns (uint256)",
-      "constructor(string _name, string _symbol, uint8 _decimals, uint256 _chainId)",
-      "event Mint(address indexed to, uint256 amount)",
-      "event MintFinished()",
-      "event OwnershipRenounced(address indexed previousOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Burn(address indexed burner, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)"
     ],
     "gno:0x26FC9FC1C98607E1634f87B47E6798D436823299": [
       "function validatorCount() view returns (uint256)",
@@ -4728,11 +4607,12 @@
     "gnosis/LayerZeroReporter": "0x47f9ad80e38c54efba68c5ee1e5d4a77867f50c987d84fb19308a1a0a034a5fe",
     "gnosis/MultiTokenForwardingRulesManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "gnosis/OmnibridgeFeeManager": "0xa13c6d2ef4d3c64fbe9591a57652efec1256c9d4c6700b6783bb6cd57c34f728",
-    "gnosis/PermittableToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "gnosis/PermittableToken": "0x4e54c4044f07d23e7c4aa020675e5dffa84655840b6fd68276f23b867cef0d65",
+    "gnosis/SBCDepositContract": "0x1901f85fedab984563a84f3319e3ac23c455457ff380391e43f4456992825839",
     "gnosis/SelectorTokenGasLimitManager": "0x71f7df8b7b26c5ade2d9e300655c136dff1241342458ed8f5171207f18de44fd",
     "gnosis/SP1Helios": "0x4c7d7f4fc083d46d80c4261c13db9b134917fcfd509c6481f6730a9b6b3aa790",
     "gnosis/SP1HeliosAdapter": "0x1240d0d0d8113eaf85e0ca529fc58ca4280e40ff4375fe26ddcafb6012dd9943",
-    "gnosis/TokenFactory": "0x9c8dcde701b5b6be9f8f6e370b5ad7c46eb8e02ad75b71ca02cf83fad123c0b9",
+    "gnosis/TokenFactory": "0x4a33f5b2dc53c47af9794be16addd3e3aa7665a65d657952c4c56f5f90a4f12d",
     "gnosis/USDSDepositContract": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosis/WETHOmnibridgeRouter": "0x4f94ed25c734e47e0c0868cd8f2fc7e566cd1a01f082b30993251062f3695e41",
     "gnosis/XDaiForeignBridge": "0x80281d259df89f537b9ffc8f274fa006d47ff30c1095b2b7441e0195713ee1d7",
@@ -4742,5 +4622,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25022121, "gnosis": 46002884 },
-  "permissionsConfigHash": "0xd15dc73cb3d8280684e087163eb4e302804cb4eed30a0ce2e050e1f3d6a7edb8"
+  "permissionsConfigHash": "0xbf14be387f90a030ea50ea78d34e191fd0e42e376e70bb1315f72497fe60496a"
 }
