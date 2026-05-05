@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7e990a358405ee53288f9b59277f973905af6dae
 
 ## Description
 
-**Major OP Stack upgrade — bobanetwork modernized to op-contracts v3.x / v5.x batch.**
+**Major OP Stack contracts upgrade on bobanetwork.**
 
 Core contract upgrades:
 - **SystemConfig** `v2.5.0 → v3.7.0`: max gas 200M → 500M; new fields `paused`, `l2ChainId`, `guardian`, `proxyAdmin`/`proxyAdminOwner`, `superchainConfig`, `initVersion`; `getAddresses` no longer exposes `disputeGameFactory` (the DisputeGameFactory contract itself still exists at `0xF45a5f1e...`, just no longer reached through SystemConfig).

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x4a8f24c3a0564dde3cc4f03eafc72c63ab16ef7a
 
 ## Description
 
-**OP Stack contracts upgrade — full op-contracts v5.x batch on settlus.**
+**OP Stack contracts upgrade on settlus.**
 
 Implementation rotations / version bumps:
 - **SystemConfig** `v3.7.0 → v3.11.0` — adds `daFootprintGasScalar` and `minBaseFee`.
@@ -20,7 +20,7 @@ Implementation rotations / version bumps:
 - **PreimageOracle** rotated.
 - **OptimismMintableERC20Factory** `v1.10.1 → v1.10.2`.
 
-Plus newly-tracked Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, OpFoundationOperationsSafe, DeputyGuardianModule, etc.) that appear in discovery now because the new SystemConfig wiring references them through the Superchain SuperchainConfig.
+Discovery also picked up several Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, OpFoundationOperationsSafe, DeputyGuardianModule, etc.) reachable from the new SystemConfig wiring.
 
 ## Watched changes
 

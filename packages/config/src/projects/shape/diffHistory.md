@@ -8,7 +8,7 @@ Generated with discovered.json: 0x49a929089d17e8c8348c89d9309938de41bce6d2
 
 ## Description
 
-**OP Stack contracts upgrade — full op-contracts v5.x batch on shape.**
+**OP Stack contracts upgrade on shape.**
 
 Implementation rotations / version bumps:
 - **SystemConfig** `v3.7.0 → v3.11.0` — adds `daFootprintGasScalar` and `minBaseFee`.
@@ -23,7 +23,7 @@ Implementation rotations / version bumps:
 - **MIPS** rotated: old `0x07BABE08...` deleted, new `0x6463dEE3...` (v1.9.0) created.
 - **PreimageOracle** rotated.
 
-Plus newly-tracked Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, LivenessModule, OpFoundationOperationsSafe, DeputyGuardianModule, Guardian Multisig, etc.) appearing in discovery because the new SystemConfig wiring references them through the Superchain SuperchainConfig.
+Discovery also picked up several Optimism Foundation governance contracts (SaferSafes, DeputyPauseModule, LivenessModule, OpFoundationOperationsSafe, DeputyGuardianModule, Guardian Multisig, etc.) reachable from the new SystemConfig wiring.
 
 ## Watched changes
 
