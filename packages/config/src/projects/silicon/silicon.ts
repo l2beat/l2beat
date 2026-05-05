@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,7 +12,6 @@ export const silicon: ScalingProject = agglayer({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [BADGES.RaaS.Nodeinfra],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   stage: getAltDaStage(
     {
       stage0: {

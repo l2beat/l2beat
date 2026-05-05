@@ -7,7 +7,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -81,7 +80,6 @@ export const edgex: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     name: 'EdgeX',
     slug: 'edgex',

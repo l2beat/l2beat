@@ -7,7 +7,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -65,7 +64,6 @@ export const brine: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     redWarning: {
       text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
