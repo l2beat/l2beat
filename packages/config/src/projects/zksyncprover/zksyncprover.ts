@@ -10,6 +10,7 @@ export const zksyncprover: BaseProject = {
   shortName: undefined,
   aliases: ['Matter Labs'],
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
+  archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
