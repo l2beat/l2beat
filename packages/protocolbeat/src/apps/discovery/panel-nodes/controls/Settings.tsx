@@ -5,7 +5,7 @@ import { IconGear } from '../../../../icons/IconGear'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
 
-export function Settings() {
+export function Settings({ className }: { className?: string }) {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
@@ -29,8 +29,8 @@ export function Settings() {
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild className="max-w-fit">
-        <ControlButton>
+      <Dialog.Trigger asChild>
+        <ControlButton className={className}>
           <IconGear />
         </ControlButton>
       </Dialog.Trigger>
