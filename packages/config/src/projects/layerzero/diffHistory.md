@@ -1,3 +1,133 @@
+Generated with discovered.json: 0xda3ab97bf056cfe55e85d7721b344b77a1e81ba6
+
+# Diff at Tue, 05 May 2026 10:22:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: Simple LayerZero library that blocks all messages if configured.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract Horizen DVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      deployerAddress:
++        "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+    }
+```
+
+```diff
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: LayerZero library used to read state from remote blockchains.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
+      deployerAddress:
++        "eth:0x1f7A03b70C5448DFd0a2C5a7865169253c2C769b"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract Canary DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      deployerAddress:
++        "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+    }
+```
+
+```diff
+    contract Netherming DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      deployerAddress:
++        "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+    }
+```
+
+```diff
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      deployerAddress:
++        "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      deployerAddress:
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47"
+    }
+```
+
 Generated with discovered.json: 0x6f32a3a63a8285870da7dcd6e25b905ddb90b393
 
 # Diff at Tue, 28 Apr 2026 10:00:05 GMT:

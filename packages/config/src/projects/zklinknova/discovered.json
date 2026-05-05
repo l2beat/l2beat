@@ -24,6 +24,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296973,
       "sinceBlock": 186015816,
       "values": {
@@ -65,6 +66,7 @@
         "0x92d18063ee33accb564a80045a642ccab59919fc97ffb5f4a4849874239d7bc0"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280477,
       "sinceBlock": 185950532,
       "values": {
@@ -131,6 +133,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692604751,
       "sinceBlock": 123482330,
       "values": {
@@ -193,6 +196,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296973,
       "sinceBlock": 186015816,
       "values": {
@@ -238,6 +242,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280428,
       "sinceBlock": 185950340,
       "values": {
@@ -302,6 +307,7 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095783,
       "sinceBlock": 12153218,
       "values": {
@@ -366,6 +372,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711098033,
       "sinceBlock": 12154343,
       "values": {
@@ -414,6 +421,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711098033,
       "sinceBlock": 12154343,
       "values": {
@@ -463,6 +471,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095697,
       "sinceBlock": 12153175,
       "values": {
@@ -545,6 +554,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606269,
       "sinceBlock": 2908461,
       "values": {
@@ -611,6 +621,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710417729,
       "sinceBlock": 803957,
       "values": {
@@ -670,6 +681,7 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710418385,
       "sinceBlock": 804285,
       "values": {
@@ -738,6 +750,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1710486067,
       "sinceBlock": 838126,
       "values": {
@@ -785,6 +798,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710427013,
       "sinceBlock": 808599,
       "values": {
@@ -828,6 +842,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050",
       "sinceTimestamp": 1710427013,
       "sinceBlock": 808599,
       "values": {
@@ -873,6 +888,7 @@
         "0xff7b9bda4ccb0ae0e1775f82206c54ef89c794f6b4ffa42edbb65996bf7d0e8c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709275199,
       "sinceBlock": 19338591,
       "values": {
@@ -920,6 +936,7 @@
         "0x9158bf76b126cdaa6a8fe310085a77d400ab2458c21f79e637846d8bc3cc2a13"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281415,
       "sinceBlock": 19339109,
       "values": {
@@ -964,6 +981,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295323,
       "sinceBlock": 19340260,
       "values": {
@@ -1002,6 +1020,7 @@
         "0xc39118a9cebca411d42cb5759e7387270a0a8472860288b0e01aa3235777afe5"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1710418475,
       "sinceBlock": 19433179,
       "values": {
@@ -1045,6 +1064,7 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095887,
       "sinceBlock": 19488957,
       "values": {
@@ -1086,6 +1106,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709278799,
       "sinceBlock": 19338891,
       "values": {
@@ -1150,6 +1171,7 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281103,
       "sinceBlock": 19339083,
       "values": {
@@ -1188,6 +1210,7 @@
         "0x9487f6c6e032e98bef376a27f09d5a3e8c83a059eaf6d8b092c80138cb37459f"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092707,
       "sinceBlock": 19488695,
       "values": {
@@ -1226,6 +1249,7 @@
         "0x7f9e12d70f78945c6ea417774b5faf2e0a78ed4fbbdcaec591bf123428f28197"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281007,
       "sinceBlock": 19339075,
       "values": {
@@ -1264,6 +1288,7 @@
         "0x6f5cdba451da8c1759148644f4daf8344ed2853d765413e18cd2fcf662f4694a"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709278979,
       "sinceBlock": 19338906,
       "values": {
@@ -1307,6 +1332,7 @@
         "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004791,
       "sinceBlock": 20059964,
       "values": {
@@ -1339,6 +1365,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295323,
       "sinceBlock": 19340260,
       "values": {
@@ -1464,6 +1491,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692603863,
       "sinceBlock": 17961693,
       "values": {
@@ -1502,6 +1530,7 @@
         "0xb3ae8d5bec68fa0994192ecdc4f2ad4126bb1ef22051378f5b605d59193955e4"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281211,
       "sinceBlock": 19339092,
       "values": {
@@ -1540,6 +1569,7 @@
         "0x070067bfd007d5f15c96e1e404a8b9b5eab4a2616d8ea8ebeab0a22f58262461"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709281355,
       "sinceBlock": 19339104,
       "values": {
@@ -1606,6 +1636,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606393,
       "sinceBlock": 244397,
       "values": {
@@ -1662,6 +1693,7 @@
         "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709977822,
       "sinceBlock": 2779975,
       "values": {
@@ -1706,6 +1738,7 @@
         "getTotalPriorityTxs",
         "getFirstUnprocessedPriorityTx"
       ],
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218085,
       "sinceBlock": 2590041,
       "values": {
@@ -1933,6 +1966,7 @@
         "0xa03991e1bce15902cbac3b622d56b1d1a7ffac18bd69a20e1b22a38a350b1246"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218113,
       "sinceBlock": 2590048,
       "values": {
@@ -1975,6 +2009,7 @@
         "0x9cdec4676ceb81fecae56fb51bb2b303a5e0c13d98bb75c91e343bbe6b6d3d59"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "linea:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279545,
       "sinceBlock": 2605406,
       "values": {
@@ -2011,6 +2046,7 @@
         "0x792d878e324f2a31f66005ea64ff88a3c43115da5bb27ed146b7be88e638dca7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709217961,
       "sinceBlock": 2590010,
       "values": {
@@ -2056,6 +2092,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "sinceTimestamp": 1709218009,
       "sinceBlock": 2590022,
       "values": {
@@ -2090,6 +2127,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
@@ -2115,6 +2153,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
@@ -2185,6 +2224,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "sinceTimestamp": 1710253339,
       "sinceBlock": 1602938,
       "values": {
@@ -2261,6 +2301,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279099,
       "sinceBlock": 1505514,
       "values": {
@@ -2330,6 +2371,7 @@
         "0x54984eed0ba905283811bcd69e63428602cc4c290c8eed30fc28011383549ff2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279189,
       "sinceBlock": 1505523,
       "values": {
@@ -2411,6 +2453,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "mantle:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "sinceTimestamp": 1710253012,
       "sinceBlock": 60705516,
       "values": {
@@ -2468,6 +2511,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296907,
       "sinceBlock": 58697615,
       "values": {
@@ -2533,6 +2577,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279309,
       "sinceBlock": 58659816,
       "values": {
@@ -2606,6 +2651,7 @@
         "0xf74567f04dfc1337e1295ac8ee70891c3e1543ec852c2205630c0bcc4e0b6a19"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709279398,
       "sinceBlock": 58659973,
       "values": {
@@ -2657,6 +2703,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709296907,
       "sinceBlock": 58697615,
       "values": {
@@ -2711,6 +2758,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692605961,
       "sinceBlock": 108503592,
       "values": {
@@ -2769,6 +2817,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092485,
       "sinceBlock": 117746854,
       "values": {
@@ -2832,6 +2881,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095511,
       "sinceBlock": 117748367,
       "values": {
@@ -2890,6 +2940,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711095511,
       "sinceBlock": 117748367,
       "values": {
@@ -2911,6 +2962,7 @@
         "0x650e6121058aa74419a8d997f6cf169c5bb82b7e6302193672de5f10c1c1e561"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1711092577,
       "sinceBlock": 117746900,
       "values": {
@@ -2982,6 +3034,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004361,
       "sinceBlock": 6433793,
       "values": {
@@ -3039,6 +3092,7 @@
         "0xd57c5157a667afc64df8bc542f1eb01744f7d6b961e031361d442aac61b7d5a0"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718026877,
       "sinceBlock": 6441298,
       "values": {
@@ -3097,6 +3151,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718026877,
       "sinceBlock": 6441298,
       "values": {
@@ -3128,6 +3183,7 @@
         "0x3712da36508b3467318e72889e31c55c8421214be5ff058dba1d8a7cd33b4f9b"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1718004634,
       "sinceBlock": 6433884,
       "values": {
@@ -3196,6 +3252,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "sinceTimestamp": 1718010265,
       "sinceBlock": 6435761,
       "values": {
@@ -3276,6 +3333,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "sinceTimestamp": 1692606473,
       "sinceBlock": 11790443,
       "values": {
@@ -3328,6 +3386,7 @@
         "0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709297079,
       "sinceBlock": 27865488,
       "values": {
@@ -3373,6 +3432,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280624,
       "sinceBlock": 27849895,
       "values": {
@@ -3437,6 +3497,7 @@
         "0xe0235f35c0fdaea3f676b1101581911d1a9b4bbc4bdbd2c76d9e93ab3da4762c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709280885,
       "sinceBlock": 27850141,
       "values": {
@@ -3511,6 +3572,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1709297074,
       "sinceBlock": 27865483,
       "values": {

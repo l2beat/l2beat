@@ -13,6 +13,7 @@
         "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598437004,
       "sinceBlock": 10735475,
       "values": {
@@ -80,6 +81,7 @@
         "0xd873771bacc2ec458452d650f61ff1f7907e3a4fe09888ae8b93cd61125511fa"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
       "sinceTimestamp": 1617750281,
       "sinceBlock": 12189058,
       "values": {
@@ -115,6 +117,7 @@
         "0x66815b2f8b05e9960d6f4c23ca95251145298d7577c32c5e029b90f9a4e38bbb"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8",
       "sinceTimestamp": 1627373890,
       "sinceBlock": 12907032,
       "values": {
@@ -137,6 +140,7 @@
       "proxyType": "immutable",
       "description": "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.",
       "ignoreInWatchMode": ["counter"],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590850580,
       "sinceBlock": 10167763,
       "values": {
@@ -173,6 +177,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590850831,
       "sinceBlock": 10167782,
       "values": {
@@ -202,6 +207,7 @@
         "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
       "sinceTimestamp": 1613107769,
       "sinceBlock": 11839898,
       "values": {
@@ -270,6 +276,7 @@
       "proxyType": "immutable",
       "description": "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.",
       "ignoreInWatchMode": ["tokensMapped"],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590849877,
       "sinceBlock": 10167715,
       "values": {
@@ -314,6 +321,7 @@
         "0xf09e81f94877953f148b12864ec341367f4708956fbcd7803208c364bce87f8d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A",
       "sinceTimestamp": 1724593763,
       "sinceBlock": 20606009,
       "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" },
@@ -337,6 +345,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590850640,
       "sinceBlock": 10167767,
       "values": {
@@ -369,6 +378,7 @@
         "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436664,
       "sinceBlock": 10735445,
       "values": {
@@ -438,6 +448,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfd550689c459422ee351b5fa1f1360F1e34588AB",
       "sinceTimestamp": 1619443127,
       "sinceBlock": 12316179,
       "values": {
@@ -481,6 +492,7 @@
         "0x802005602f9307c4394cd8cee610c3c1373e6876b348605733983a5d3d5b9248"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8",
       "sinceTimestamp": 1657162305,
       "sinceBlock": 15092842,
       "values": {
@@ -502,6 +514,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1593189650,
       "sinceBlock": 10342574,
       "values": {
@@ -540,6 +553,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747746383,
       "sinceBlock": 22524319,
       "values": {
@@ -573,6 +587,7 @@
         "0x64ce795eece141785456d3e10df0bf177f0b6485ced89f7cce54661ef1c811ec"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A",
       "sinceTimestamp": 1776938855,
       "sinceBlock": 24941945,
       "values": { "$immutable": true, "CHAINID": 137, "networkId": "0x89" },
@@ -598,6 +613,7 @@
         "0xd8261395dc342e63946716f52052725e094de2da9b6dca487e1f7cf3cecd797f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590849948,
       "sinceBlock": 10167721,
       "values": {
@@ -636,6 +652,7 @@
         "totalHeimdallFee",
         "NFTCounter"
       ],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1593189690,
       "sinceBlock": 10342580,
       "values": {
@@ -780,6 +797,7 @@
         "0x6739012cebcf9f8a3b471a230adc99bb3840a605867d4f20a9c11bf6e7a05d96"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
       "sinceTimestamp": 1616774452,
       "sinceBlock": 12115587,
       "values": {
@@ -819,6 +837,7 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590849863,
       "sinceBlock": 10167713,
       "values": {
@@ -850,6 +869,7 @@
         "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598437971,
       "sinceBlock": 10735538,
       "values": {
@@ -924,6 +944,7 @@
         "getLastChildBlock",
         "currentHeaderBlock"
       ],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
@@ -972,6 +993,7 @@
         "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436896,
       "sinceBlock": 10735465,
       "values": {
@@ -1057,6 +1079,7 @@
         "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
       "sinceTimestamp": 1613100777,
       "sinceBlock": 11839404,
       "values": {
@@ -1109,6 +1132,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747897679,
       "sinceBlock": 22536821,
       "values": {
@@ -1171,6 +1195,7 @@
         }
       ],
       "ignoreInWatchMode": ["tokensMapped"],
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436547,
       "sinceBlock": 10735437,
       "values": {
@@ -3946,6 +3971,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590840981,
       "sinceBlock": 10167098,
       "values": {
@@ -3970,6 +3996,7 @@
       "proxyType": "immutable",
       "description": "Contains logging and getter functions about staking.",
       "ignoreInWatchMode": ["getAccountStateRoot"],
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1593189612,
       "sinceBlock": 10342572,
       "values": {
@@ -3999,6 +4026,7 @@
         "0x4ed456a42fb2d64a519655fec3e48ae6f791f0dbd06960ead61664e86828a82b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436340,
       "sinceBlock": 10735421,
       "values": { "$immutable": true },
@@ -4029,6 +4057,7 @@
         "0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1593189596,
       "sinceBlock": 10342570,
       "values": { "$immutable": true },
@@ -4115,6 +4144,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
       "sinceTimestamp": 1630059303,
       "sinceBlock": 13106903,
       "values": {
@@ -4158,6 +4188,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590839660,
       "sinceBlock": 10166989,
       "values": { "$immutable": true },
@@ -4179,6 +4210,7 @@
         "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
       "sinceTimestamp": 1630304491,
       "sinceBlock": 13125225,
       "values": {
@@ -4220,6 +4252,7 @@
       ],
       "proxyType": "immutable",
       "description": "NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).",
+      "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
       "sinceTimestamp": 1590850785,
       "sinceBlock": 10167778,
       "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
@@ -4241,6 +4274,7 @@
         "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
       ],
       "proxyType": "Polygon proxy",
+      "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436766,
       "sinceBlock": 10735454,
       "values": {
@@ -4331,6 +4365,7 @@
         "0x0efa258772085a1651cde756807a2fa451169f701ccba9eae9d4e25cb85fa558"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
       "sinceTimestamp": 1616774545,
       "sinceBlock": 12115595,
       "values": {
@@ -4435,6 +4470,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x78655080b65f42E2ceE5FA5673689CC44D4E1cFC",
       "sinceTimestamp": 1593593561,
       "sinceBlock": 10372536,
       "values": {

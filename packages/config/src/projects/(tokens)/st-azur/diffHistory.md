@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6ac8f67cd28bccdbaaade834fbacf02380b47313
+
+# Diff at Tue, 05 May 2026 10:24:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1753693931
+- current timestamp: 1753693931
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753693931 (main branch discovery), not current.
+
+```diff
+    contract Staked $AZUR Token (eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4CDbDf63ae2215eDD6B673F9DABFf789A13D4270"
+    }
+```
+
 Generated with discovered.json: 0x3603e964f634dc28aa0e28553929d14744a19cb5
 
 # Diff at Wed, 10 Sep 2025 16:42:56 GMT:

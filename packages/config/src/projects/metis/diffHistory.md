@@ -1,3 +1,317 @@
+Generated with discovered.json: 0x8da46002a7c4d84de9a028969efd6085fdbe2d91
+
+# Diff at Tue, 05 May 2026 10:22:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract LockingInfo (eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-SCC-batches (eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: Storage container for SCC batches.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract MetisConfig (eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff) {
+    +++ description: Contract used to manage configuration of global Metis values.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: Storage container for CTC batches.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0x388DEfE576077257074F77c727aA5F2e3B815E21) {
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract Metis Multisig (eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      deployerAddress:
++        "eth:0xB961047013F974C5b6B6F8dA4402379525316550"
+    }
+```
+
+```diff
+    contract MVM_ProposerRegistry (eth:0x5669d0C8C28B7E2c3d10eD246bEb042bDdd12E18) {
+    +++ description: The Proposer Registry contains the addresses of the current active proposers for the chain.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract BondManager (eth:0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (eth:0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: Escrows staking rewards for Sequencers.
+      deployerAddress:
++        "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x789a64284e29d2225430606D3D89a9336870BBbC) {
+    +++ description: Oracle for providing preimages.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (eth:0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract MVM_InboxSenderManager (eth:0x8b0d1D3557aF524351FCd09eE8E7a48adcB712e0) {
+    +++ description: Container contract for designated sequencer addresses.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (eth:0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract Metis Token (eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: Metis token contract.
+      deployerAddress:
++        "eth:0x7532C59C69828D4e756832BaE27b79FB28145C44"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: Storage container for CTC queue.
+      deployerAddress:
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    contract Metis Security Council Minority (eth:0xAd07701EE9348d2B9e7De061883C10574c543279) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc27896E7b4172D6B1C21177D91fd64A935EEc4EA"
+    }
+```
+
+```diff
+    contract MIPS (eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract Metis Security Council (eth:0xbf1752DE62d825aF0634F514226F881a449874b6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc27896E7b4172D6B1C21177D91fd64A935EEc4EA"
+    }
+```
+
+```diff
+    contract LockingPool (eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+      deployerAddress:
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    contract DelayedWMetis (eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      deployerAddress:
++        "eth:0x5345fCDCF5449a40df030798C195603d27691502"
+    }
+```
+
+```diff
+    contract OVM_L2ToL1MessagePasser (metis-andromeda:0x4200000000000000000000000000000000000000) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OVM_DeployerWhitelist (metis-andromeda:0x4200000000000000000000000000000000000002) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract MVM_ChainConfig (metis-andromeda:0x4200000000000000000000000000000000000005) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Ether Token (metis-andromeda:0x420000000000000000000000000000000000000A) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OVM_GasPriceOracle (metis-andromeda:0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2StandardBridge (metis-andromeda:0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OVM_SequencerFeeVault (metis-andromeda:0x4200000000000000000000000000000000000011) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2StandardTokenFactory (metis-andromeda:0x4200000000000000000000000000000000000012) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract MVM_Coinbase (metis-andromeda:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000) {
+    +++ description: None
+      deployerAddress:
++        "metis-andromeda:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x2b9a70122f56c68ede7ae17282779707269a48b1
 
 # Diff at Wed, 07 Jan 2026 14:38:57 GMT:

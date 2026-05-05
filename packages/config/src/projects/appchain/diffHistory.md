@@ -1,3 +1,206 @@
+Generated with discovered.json: 0xfc23b1e375442e1c0f24092558e5cb719638939a
+
+# Diff at Tue, 05 May 2026 10:21:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776422736
+- current timestamp: 1776422736
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776422736 (main branch discovery), not current.
+
+```diff
+    contract Inbox (eth:0x010aDE5d8F9DC340531140802438798C189c36E0) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract NitroEnclaveVerifier (eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35) {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      deployerAddress:
++        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x19df42E085e2c3fC4497172E412057F54D9f013E) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x294a1Ee119C4B2510530572481A6a50892A9ae9f) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
+    }
+```
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x7c4e8195FB560D1557C52f051dCdA4724a2894b3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract QuoteVerifier (eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      deployerAddress:
++        "eth:0xDf841B239bE7a6b37366005107069b7410da4Ff9"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      deployerAddress:
++        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      deployerAddress:
++        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xB9B007aE55B81dd1498Bc500a54ad9Ae53234c9C) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      deployerAddress:
++        "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xd79fd59b73c814D9607aB93C4A1aDCea06F91692) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF025D25aE360D0D33a275dF74863CCc6600E6f8E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xFe53F58bAd7B83B01C47CC86471507911263ac91) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
 Generated with discovered.json: 0x8385e42c21620aa4cc88c2ac061b0494ae03a45a
 
 # Diff at Fri, 17 Apr 2026 10:47:08 GMT:

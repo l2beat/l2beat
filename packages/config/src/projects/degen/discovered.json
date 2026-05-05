@@ -23,6 +23,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148739,
       "sinceBlock": 18679696,
       "values": {
@@ -46,6 +47,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148715,
       "sinceBlock": 18679684,
       "values": { "$immutable": true },
@@ -64,6 +66,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -105,6 +108,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1709320645,
       "sinceBlock": 11265649,
       "values": { "$immutable": true },
@@ -122,6 +126,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148731,
       "sinceBlock": 18679692,
       "values": { "$immutable": true },
@@ -174,6 +179,7 @@
       ],
       "proxyType": "immutable",
       "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
+      "deployerAddress": "base:0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
       "sinceTimestamp": 1709053969,
       "sinceBlock": 11132311,
       "values": {
@@ -207,6 +213,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -288,6 +295,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -347,6 +355,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -468,6 +477,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8",
       "sinceTimestamp": 1730411695,
       "sinceBlock": 21811174,
       "values": {
@@ -506,6 +516,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148707,
       "sinceBlock": 18679680,
       "values": { "$immutable": true },
@@ -560,6 +571,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -628,6 +640,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xD6e5317512350b5b6CCE7A0D1d139844adB55919",
       "sinceTimestamp": 1737507257,
       "sinceBlock": 25358955,
       "values": {
@@ -682,6 +695,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -820,6 +834,7 @@
       ],
       "proxyType": "immutable",
       "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
+      "deployerAddress": "base:0x92265977012991DD1527DfE79CcA6Da46a0E5831",
       "sinceTimestamp": 1729063511,
       "sinceBlock": 21137082,
       "values": {
@@ -853,6 +868,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148725,
       "sinceBlock": 18679689,
       "values": { "$immutable": true },
@@ -871,6 +887,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -922,6 +939,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {
@@ -1047,6 +1065,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
       "sinceTimestamp": 1710087441,
       "sinceBlock": 11649047,
       "values": {

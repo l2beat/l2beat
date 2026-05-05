@@ -17,6 +17,7 @@
       ],
       "proxyType": "immutable",
       "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813619,
       "sinceBlock": 19300419,
       "values": {
@@ -62,6 +63,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812875,
       "sinceBlock": 19300357,
       "values": {
@@ -180,6 +182,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812851,
       "sinceBlock": 19300355,
       "values": {
@@ -202,6 +205,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812923,
       "sinceBlock": 19300361,
       "values": {
@@ -251,6 +255,7 @@
       ],
       "proxyType": "immutable",
       "description": "Yield Provider for ETH investing ETH into stETH.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813595,
       "sinceBlock": 19300417,
       "values": {
@@ -419,6 +424,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813211,
       "sinceBlock": 19300385,
       "values": {
@@ -456,6 +462,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812899,
       "sinceBlock": 19300359,
       "values": {
@@ -536,6 +543,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812983,
       "sinceBlock": 19300366,
       "values": {
@@ -597,6 +605,7 @@
         "totalUSDBalanceNoUpdate",
         "totalUSDShares"
       ],
+      "deployerAddress": "eth:0x52c31C77974667Bc17d3c4A336AC60A1584f18B7",
       "sinceTimestamp": 1700359187,
       "sinceBlock": 18602739,
       "values": {
@@ -666,6 +675,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1f97306039530ADB4173C3786e86fab5e6b90F41",
       "sinceTimestamp": 1700012495,
       "sinceBlock": 18574084,
       "values": {
@@ -702,6 +712,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812911,
       "sinceBlock": 19300360,
       "values": {
@@ -738,6 +749,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813007,
       "sinceBlock": 19300368,
       "values": {
@@ -782,6 +794,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812887,
       "sinceBlock": 19300358,
       "values": {
@@ -849,6 +862,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing Yield Providers for ETH.",
       "ignoreInWatchMode": ["getLockedBalance"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812935,
       "sinceBlock": 19300362,
       "values": {
@@ -898,6 +912,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "ignoreInWatchMode": ["getLockedBalance"],
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812947,
       "sinceBlock": 19300363,
       "values": {
@@ -942,6 +957,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708813019,
       "sinceBlock": 19300369,
       "values": {
@@ -987,6 +1003,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x263EFB012774435efFB168f9Ebd94f7b03BDb825",
       "sinceTimestamp": 1708812839,
       "sinceBlock": 19300354,
       "values": {

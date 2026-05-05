@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xfeb95a23d53cc831c07d8943f13a9467c63cc93a
+
+# Diff at Tue, 05 May 2026 10:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      deployerAddress:
++        "eth:0x6976bD97EE6dc7517c5C288251d9305A77Db2e26"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97"
+    }
+```
+
+```diff
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001) {
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (ethscr:0x4200000000000000000000000000000000000016) {
+    +++ description: L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Proxy (ethscr:0x4200000000000000000000000000000000000018) {
+    +++ description: ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x4f394ef95bd6a8faed461ed4253206245cd70025
 
 # Diff at Wed, 28 Jan 2026 11:58:54 GMT:

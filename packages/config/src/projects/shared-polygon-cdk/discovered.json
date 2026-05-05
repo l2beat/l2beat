@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -35,6 +36,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "deployerAddress": "eth:0xfcFC415D6D21660b90c0545CA0e91E68172B8650",
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
       "values": {
@@ -193,6 +195,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653103,
       "sinceBlock": 16896716,
       "values": {
@@ -386,6 +389,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "sinceTimestamp": 1678956815,
       "sinceBlock": 16839348,
       "values": {
@@ -427,6 +431,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
       "ignoreInWatchMode": ["getRoot"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
@@ -504,6 +509,7 @@
       ],
       "proxyType": "immutable",
       "description": "Extension contract of the AgglayerBridge for asset metadata..",
+      "deployerAddress": "eth:0xaFec0EE6D714EBe2dDf732799EEbA9F553394bE8",
       "sinceTimestamp": 1759503191,
       "sinceBlock": 23497972,
       "values": { "$immutable": true },
@@ -530,6 +536,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x00Eb6d3334282401E59cC438bC9D7B9496c42f55",
       "sinceTimestamp": 1678429487,
       "sinceBlock": 16795950,
       "values": {
@@ -590,6 +597,7 @@
         "totalSequencedBatches",
         "totalVerifiedBatches"
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653163,
       "sinceBlock": 16896721,
       "values": {
@@ -1139,6 +1147,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
       "ignoreInWatchMode": ["getRoot", "depositCount"],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
       "values": {
@@ -1234,6 +1243,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "sinceTimestamp": 1722533147,
       "sinceBlock": 20435175,
       "values": {
@@ -1346,6 +1356,7 @@
           "condition": "(no delay if in emergency state)"
         }
       ],
+      "deployerAddress": "eth:0x7c280C055CBf830F77D6DA3a6363e961E0B91C7d",
       "sinceTimestamp": 1679653187,
       "sinceBlock": 16896723,
       "values": {

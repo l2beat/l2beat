@@ -14,6 +14,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xbEA07b01E8Fe3936A3D206158521A87addB65cfE",
       "sinceTimestamp": 1612680486,
       "sinceBlock": 11807778,
       "values": {
@@ -75,6 +76,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1D08182eF64C4be7398d71bA62c409D37a677344",
       "sinceTimestamp": 1621970023,
       "sinceBlock": 12505303,
       "values": {
@@ -123,6 +125,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x083fc10cE7e97CaFBaE0fE332a9c4384c5f54E45",
       "sinceTimestamp": 1587354416,
       "sinceBlock": 9907020,
       "values": {
@@ -167,6 +170,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalTokens"],
+      "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -193,6 +197,7 @@
         "0xbc5215ffaf06b3d4f7facebe48a2d345c8b0cf97c800aa3f8e644d843a86ae03"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xA91c2d27AF465D09C8FE01255197d1d81148c136",
       "sinceTimestamp": 1645178700,
       "sinceBlock": 14229421,
       "values": {
@@ -233,6 +238,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -297,6 +303,7 @@
         "0xd2a07a5a9b9bf3e2f936b5530eabc67694e9fa89a92407b692f35c2a46175f39"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -334,6 +341,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x58BD2E164D119E48a9b07ceECA1c3D1A83e55d9b",
       "sinceTimestamp": 1626171128,
       "sinceBlock": 12818185,
       "values": {
@@ -376,6 +384,7 @@
         "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
       ],
       "proxyType": "zkSync Lite proxy",
+      "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
       "values": {
@@ -437,6 +446,7 @@
         "0x379cacebf61f1aa488b2a43b02fff3f8d7835d9dca8f342a13570553219e6e8c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x07F455F30e862E13E3E3D960762cB11c4F744d52",
       "sinceTimestamp": 1557156465,
       "sinceBlock": 7708066,
       "values": { "$immutable": true },
@@ -485,6 +495,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x78199272621046Ef1569fc6AF229c18413ccE00f",
       "sinceTimestamp": 1585581484,
       "sinceBlock": 9773819,
       "values": {

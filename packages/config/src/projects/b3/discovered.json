@@ -66,6 +66,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -177,6 +178,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xd5F1e5a466C154f46670EedffbC671CFD01c7f76",
       "sinceTimestamp": 1723143069,
       "sinceBlock": 18176861,
       "values": {
@@ -237,6 +239,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -289,6 +292,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -332,6 +336,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -376,6 +381,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -448,6 +454,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -505,6 +512,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
       "sinceTimestamp": 1716583269,
       "sinceBlock": 14896961,
       "values": {
@@ -542,6 +550,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -598,6 +607,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -702,6 +712,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {
@@ -724,6 +735,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "deployerAddress": "base:0xf511a0f2Ac31b041Ae853CEAddA81012A3366ccb",
       "sinceTimestamp": 1722376845,
       "sinceBlock": 17793749,
       "values": {

@@ -18,6 +18,7 @@
         "totalSupply",
         "getWalletAt"
       ],
+      "deployerAddress": "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {

@@ -31,6 +31,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
       "ignoreInWatchMode": ["exitNum"],
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2107,
       "values": {
@@ -92,6 +93,7 @@
       ],
       "proxyType": "immutable",
       "description": "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.",
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -113,6 +115,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678989500,
       "sinceBlock": 70483363,
       "values": {
@@ -162,6 +165,7 @@
           "delay": 549816
         }
       ],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -237,6 +241,7 @@
         "0xf98882c836bb8026b07fe0c6af0e5fc52578e78078c523fcd7974fb69b833732"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "arb1:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1634920833,
       "sinceBlock": 2454760,
       "values": {
@@ -262,6 +267,7 @@
         "0x4522be863ce454f4a528c27299d26dc69d407f11e5807129aaff93f36b44dd53"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784070,
       "sinceBlock": 2103,
       "values": {
@@ -438,6 +444,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138844,
       "sinceBlock": 121762709,
       "values": {
@@ -482,6 +489,7 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.",
+      "deployerAddress": "arb1:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133487,
       "sinceBlock": 1336834,
       "values": {
@@ -517,6 +525,7 @@
           "role": ".cohortReplacerAC"
         }
       ],
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -567,6 +576,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Router managing token <–> gateway mapping on L2.",
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2108,
       "values": {
@@ -616,6 +626,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1624913237,
       "sinceBlock": 38495,
       "values": {
@@ -670,6 +681,7 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.",
+      "deployerAddress": "arb1:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5",
       "sinceTimestamp": 1644595982,
       "sinceBlock": 5864786,
       "values": {
@@ -706,6 +718,7 @@
           "role": ".memberRemoverAC"
         }
       ],
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -753,6 +766,7 @@
         "0x4ed0927cf3d1bda79c1506ba72809f27e5eca436a34b45c47d5e1fa221a685b3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -779,6 +793,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract used for creating non-constitutional AIPs (treasury proposals), e.g., transferring funds out of the DAO Treasury. Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).",
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -857,6 +872,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token governance contract for the Security Council nominee elections.",
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -921,6 +937,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.",
       "ignoreInWatchMode": ["getTotalDelegation"],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -980,6 +997,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.",
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138730,
       "sinceBlock": 121762383,
       "values": {
@@ -1443,6 +1461,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138742,
       "sinceBlock": 121762420,
       "values": {
@@ -1498,6 +1517,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.",
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678989486,
       "sinceBlock": 70483310,
       "values": {
@@ -1534,6 +1554,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.",
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -1604,6 +1625,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x1E37aCE759DF68E5AD2FD258BD030fcDBA9F7838",
       "sinceTimestamp": 1692125924,
       "sinceBlock": 121718845,
       "values": {
@@ -1641,6 +1663,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
       "ignoreInWatchMode": ["exitNum"],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968435,
       "sinceBlock": 70397931,
       "values": {
@@ -1700,6 +1723,7 @@
           "role": ".defaultAdminAC"
         }
       ],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -1779,6 +1803,7 @@
           "role": ".Proposer"
         }
       ],
+      "deployerAddress": "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138965,
       "sinceBlock": 121763102,
       "values": {
@@ -1905,6 +1930,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784105,
       "sinceBlock": 2106,
       "values": {
@@ -1992,6 +2018,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968400,
       "sinceBlock": 70397784,
       "values": {
@@ -2026,6 +2053,7 @@
         "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4",
       "sinceTimestamp": 1623784070,
       "sinceBlock": 2102,
       "values": {
@@ -2466,6 +2494,7 @@
           "role": ".Proposer"
         }
       ],
+      "deployerAddress": "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C",
       "sinceTimestamp": 1678968508,
       "sinceBlock": 70398215,
       "values": {
@@ -2733,6 +2762,7 @@
           "role": ".mainOutboxAddress"
         }
       ],
+      "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -2795,6 +2825,7 @@
         "0xbd9ad3a060bba138bf31ab27d9c9a59159aeddab49620a728f0485165d7cb05d"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
       "sinceTimestamp": 1659608791,
       "sinceBlock": 15275328,
       "values": {
@@ -2867,6 +2898,7 @@
         "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
       "values": {
@@ -2896,6 +2928,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -3011,6 +3044,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397379,
       "sinceBlock": 21418842,
       "values": { "$immutable": true },
@@ -3079,6 +3113,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968515,
       "sinceBlock": 16840309,
       "values": {
@@ -3138,6 +3173,7 @@
       ],
       "proxyType": "immutable",
       "description": "Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury.",
+      "deployerAddress": "eth:0x45816240B90254EFF0e35141069d777f7FC699f5",
       "sinceTimestamp": 1721150855,
       "sinceBlock": 20320563,
       "values": {
@@ -3163,6 +3199,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397931,
       "sinceBlock": 21418888,
       "values": {
@@ -3198,6 +3235,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
       "values": {
@@ -3295,6 +3333,7 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1739368811,
       "sinceBlock": 21830860,
       "values": {
@@ -3457,6 +3496,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -3489,6 +3529,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968395,
       "sinceBlock": 16840300,
       "values": {
@@ -3511,6 +3552,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -3551,6 +3593,7 @@
         "0x20497774f6f2ef1febbb63646e0eb3b2ed5190f6a53f178032f86d972f0ca99d"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1622243344,
       "sinceBlock": 12525700,
       "values": {
@@ -3594,6 +3637,7 @@
         "0x4f07cd3e0e2a2e8245a865324089db39bdb6d4831707d7dcee18af0545c716c3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5",
       "sinceTimestamp": 1644777090,
       "sinceBlock": 14199409,
       "values": {
@@ -3616,6 +3660,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784095,
       "sinceBlock": 12640865,
       "values": {
@@ -3686,6 +3731,7 @@
         "0x00ef6edf5319c5f35e60c03df0fb64df6d630fb23373f9a084d86a868812b4ed"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E",
       "sinceTimestamp": 1630296149,
       "sinceBlock": 13124585,
       "values": {
@@ -3757,6 +3803,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46",
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -3875,6 +3922,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784062,
       "sinceBlock": 12640863,
       "values": {
@@ -3896,6 +3944,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397775,
       "sinceBlock": 21418875,
       "values": { "$immutable": true },
@@ -3913,6 +3962,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
+      "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133470,
       "sinceBlock": 13262081,
       "values": {
@@ -3938,6 +3988,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623784100,
       "sinceBlock": 12640867,
       "values": {
@@ -4004,6 +4055,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1739368811,
       "sinceBlock": 21830860,
       "values": {
@@ -4049,6 +4101,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397631,
       "sinceBlock": 21418863,
       "values": { "$immutable": true },
@@ -4088,6 +4141,7 @@
         "0xf27ca2839702248340daceb1e5c995144cb5ad3f636f7bc4057e20e142aeb2fe"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1",
       "sinceTimestamp": 1630185130,
       "sinceBlock": 13116271,
       "values": {
@@ -4112,6 +4166,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
+      "deployerAddress": "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2",
       "sinceTimestamp": 1623867835,
       "sinceBlock": 12647126,
       "values": {
@@ -4190,6 +4245,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x64379Dee676ab442B48925Ed603771f386510Ee7",
       "sinceTimestamp": 1707458255,
       "sinceBlock": 19188638,
       "values": {
@@ -4226,6 +4282,7 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.",
+      "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133584,
       "sinceBlock": 13262087,
       "values": {
@@ -4260,6 +4317,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397511,
       "sinceBlock": 21418853,
       "values": { "$immutable": true },
@@ -4291,6 +4349,7 @@
           "role": ".executors"
         }
       ],
+      "deployerAddress": "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F",
       "sinceTimestamp": 1678968515,
       "sinceBlock": 16840309,
       "values": {
@@ -7076,6 +7135,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC",
       "sinceTimestamp": 1692138791,
       "sinceBlock": 17923244,
       "values": {

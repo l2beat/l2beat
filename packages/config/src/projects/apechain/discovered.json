@@ -24,6 +24,7 @@
       "proxyType": "immutable",
       "description": "Verifies attestations of an Intel SGX TEE.",
       "ignoreInWatchMode": ["registeredSigners", "validEnclaveHashes"],
+      "deployerAddress": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
       "sinceTimestamp": 1758034973,
       "sinceBlock": 379787394,
       "values": {
@@ -73,6 +74,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -150,6 +152,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -171,6 +174,7 @@
       "proxyType": "immutable",
       "description": "The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).",
       "ignoreInWatchMode": [""],
+      "deployerAddress": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
       "sinceTimestamp": 1757537025,
       "sinceBlock": 377796004,
       "values": {
@@ -290,6 +294,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3",
       "sinceTimestamp": 1727880613,
       "sinceBlock": 259640900,
       "values": {
@@ -337,6 +342,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -499,6 +505,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189341,
       "sinceBlock": 240992264,
       "values": { "$immutable": true },
@@ -517,6 +524,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -557,6 +565,7 @@
       ],
       "proxyType": "immutable",
       "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.",
+      "deployerAddress": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
       "sinceTimestamp": 1758035108,
       "sinceBlock": 379787932,
       "values": {
@@ -590,6 +599,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189176,
       "sinceBlock": 240991609,
       "values": { "$immutable": true },
@@ -637,6 +647,7 @@
       ],
       "proxyType": "immutable",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
+      "deployerAddress": "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9",
       "sinceTimestamp": 1742380160,
       "sinceBlock": 317291908,
       "values": {
@@ -665,6 +676,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -755,6 +767,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28",
       "sinceTimestamp": 1764785015,
       "sinceBlock": 406817741,
       "values": {
@@ -804,6 +817,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189261,
       "sinceBlock": 240991948,
       "values": { "$immutable": true },
@@ -831,6 +845,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189094,
       "sinceBlock": 240991280,
       "values": { "$immutable": true },
@@ -848,6 +863,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189428,
       "sinceBlock": 240992619,
       "values": {
@@ -872,6 +888,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -907,6 +924,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1723189798,
       "sinceBlock": 240994094,
       "values": { "$immutable": true },
@@ -952,6 +970,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
+      "deployerAddress": "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E",
       "sinceTimestamp": 1758034887,
       "sinceBlock": 379787052,
       "values": {
@@ -1053,6 +1072,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -1107,6 +1127,7 @@
         "totalDelayedMessagesRead",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {
@@ -1193,6 +1214,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "sinceTimestamp": 1724863522,
       "sinceBlock": 247653199,
       "values": {

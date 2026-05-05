@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x37f66e2e2d823940356bd82cfa5d2f2b9aaad582
+
+# Diff at Tue, 05 May 2026 10:22:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771280072
+- current timestamp: 1771280072
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771280072 (main branch discovery), not current.
+
+```diff
+    contract PredicatePermitter (eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E) {
+    +++ description: Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS.
+      deployerAddress:
++        "eth:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract Exit (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B) {
+    +++ description: Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.
+      deployerAddress:
++        "eth:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract Contribution (eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2) {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      deployerAddress:
++        "eth:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract  (eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 1 (eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 3 (eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+    }
+```
+
+```diff
+    contract LiquidityV2 (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      deployerAddress:
++        "eth:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371"
+    }
+```
+
+```diff
+    contract Rollup (scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e) {
+    +++ description: Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.
+      deployerAddress:
++        "scr:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract PlonkVerifier (scr:0x1d38545a33740Ab3480d9035bB3126914404423d) {
+    +++ description: A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program.
+      deployerAddress:
++        "scr:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract Claim (scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract Contribution (scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af) {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      deployerAddress:
++        "scr:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract Withdrawal (scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449) {
+    +++ description: Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.
+      deployerAddress:
++        "scr:0x673A3705008407f05E6d89528F5661350ABA4744"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 2 (scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7"
+    }
+```
+
 Generated with discovered.json: 0xe1373c348da460848db0f38ff63cc94a3f2464a9
 
 # Diff at Tue, 05 May 2026 09:26:08 GMT:

@@ -1,3 +1,765 @@
+Generated with discovered.json: 0x2af99f503ee792ffdb0a8630ad898cc421159631
+
+# Diff at Tue, 05 May 2026 10:22:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1774953745
+- current timestamp: 1774953745
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774953745 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierPostEuclid (eth:0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierV1-1 (eth:0x03a72B00D036C479105fF98A1953b15d9c510110) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+```diff
+    contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d"
+    }
+```
+
+```diff
+    contract Scroll Security Council (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
+```diff
+    contract PlonkVerifierV1 (eth:0x2293cd12e8564e8219d314b075867c2f66ac6941) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2 (eth:0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierPostEuclid-2 (eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierV0 (eth:0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV0 (eth:0x585DfaD7bF4099E011D185E266907A8ab60DAD2D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1-1 (eth:0x63FB51C55d9605a75F8872C80De260a00fACfaA2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract wstETHescrowLido (eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract DaiEscrow (eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract Safe (eth:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc8B6bF89877337188Ea84eA93547687225389553"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierGalileo (eth:0x749fC77A1a131632a8b88e8703E489557660C75e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+```diff
+    contract ScrollOwner (eth:0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1WETHGateway (eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+    +++ description: Contract used to bridge WETH from L1 to L2.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierV2 (eth:0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract PlonkVerifierV2-1 (eth:0x8c1b52757b5c571ADcB5572E992679d4D48e30f7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract Safe (eth:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8211c6196B80c640c4E6A6DF0328473bfF12Ac57"
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
+```diff
+    contract Safe (eth:0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424"
+    }
+```
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      deployerAddress:
++        "eth:0xFDD744Be62CFf3a95D7C638aAf88551bd792eb4d"
+    }
+```
+
+```diff
+    contract ScrollChain (eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PauseController (eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierPostEuclid-2 (eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774"
+    }
+```
+
+```diff
+    contract Safe (eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV2-1 (eth:0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract PlonkVerifierPostEuclid (eth:0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      deployerAddress:
++        "eth:0x0A47CeC6657570831AE93db36367656e5597C310"
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) {
+    +++ description: Contract of the USDC token on Scroll.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d"
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract Scroll Security Council (scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d"
+    }
+```
+
+```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x1Da431d2D5ECA4Df735F69fB5ea10c8E630b8f50"
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      deployerAddress:
++        "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB"
+    }
+```
+
+```diff
+    contract L2USDCGateway (scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) {
+    +++ description: Counterpart to the L1GatewayRouter contract.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract L2MessageQueue (scr:0x5300000000000000000000000000000000000000) {
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+      deployerAddress:
++        "scr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ERC1155Gateway (scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) {
+    +++ description: Counterpart to the L1ERC1155Gateway contract.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract L2CustomERC20Gateway (scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988) {
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract ScrollStandardERC20Factory (scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484) {
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xc8B6bF89877337188Ea84eA93547687225389553"
+    }
+```
+
+```diff
+    contract L2ETHGateway (scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) {
+    +++ description: Contract of the L2ScrollMessenger contract.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract L2WETHGateway (scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) {
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB"
+    }
+```
+
+```diff
+    contract L2ERC721Gateway (scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582) {
+    +++ description: Counterpart to the L1ERC721Gateway contract.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB"
+    }
+```
+
+```diff
+    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x8211c6196B80c640c4E6A6DF0328473bfF12Ac57"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract L2PauseController (scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract MasterMinter (scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE) {
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3"
+    }
+```
+
+```diff
+    contract ScrollStandardERC20 (scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) {
+    +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract SCRToken (scr:0xd29687c813D741E2F938F4aC377128810E217b1b) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) {
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253"
+    }
+```
+
+```diff
+    contract ProposalTypesConfigurator (scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB"
+    }
+```
+
 Generated with discovered.json: 0xa21fbe1d2451b516734539d293c42fc5153a6838
 
 # Diff at Tue, 05 May 2026 09:26:38 GMT:

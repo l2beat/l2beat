@@ -19,6 +19,7 @@
       "proxyType": "immutable",
       "description": "Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.",
       "ignoreInWatchMode": ["txFeeBalance"],
+      "deployerAddress": "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
       "sinceTimestamp": 1619631231,
       "sinceBlock": 12330310,
       "values": {
@@ -52,6 +53,7 @@
       ],
       "proxyType": "immutable",
       "description": "Turbo Plonk ZK verifier.",
+      "deployerAddress": "eth:0x36bB84D28Bb2d9772158cc9A09feaa5472Ebfd32",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
       "values": { "$immutable": true },
@@ -84,6 +86,7 @@
         "totalPendingDeposit",
         "totalWithdrawn"
       ],
+      "deployerAddress": "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
       "sinceTimestamp": 1614799636,
       "sinceBlock": 11967192,
       "values": {
@@ -182,6 +185,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD4CD0b1EF54E8E4D73f68b01b5ccc125b13E3d1e",
       "sinceTimestamp": 1610552620,
       "sinceBlock": 11647532,
       "values": {

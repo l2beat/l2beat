@@ -1,3 +1,205 @@
+Generated with discovered.json: 0xd17e4c2e0633614f494d112ad78c7b07f5a93d6c
+
+# Diff at Tue, 05 May 2026 10:22:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771857556
+- current timestamp: 1771857556
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857556 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x003e70B041abb993006C03E56c8515622a02928C) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x1e5fCE58D1358aCbc3d32ac106a20B7F19C434eC) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x2948690217F3C2fDD6166343da8A7Ac2B7f5c134) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x2BA5cB2D332E266c43D0Ef18F879650d00630B61) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x37e60F80d921dc5E7f501a7130F31f6548dBa564) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x3A765e7a1709C19F065F098AAF2940AAA7ac0AE3) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract QuoteVerifier (arb1:0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      deployerAddress:
++        "arb1:0x7E212E611826122dC69098FBe0F4057B823751F1"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x60BA5fd28Ba522665e282299f12b8e31D7Fe172a) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x1E85A7F629B4E52BA34C19BEA149c804b00722eF"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract CustomGateway (arb1:0x8bE956aB42274056ef4471BEb211b33e258b7324) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0xb47a57a218911653d964fE8aAa1cED55A71D8043) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb) {
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
+      deployerAddress:
++        "arb1:0x93616128705070474e0D8EdD11349c45668ac9DC"
+    }
+```
+
 Generated with discovered.json: 0xc66e803381fa4b925af0d0eacbbd60e6b3a516bc
 
 # Diff at Mon, 23 Feb 2026 14:40:26 GMT:

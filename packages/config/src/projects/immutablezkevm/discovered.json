@@ -41,6 +41,7 @@
         "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xA57ADCE1d2fE72949E4308867D894CD7E7DE0ef2",
       "sinceTimestamp": 1640210870,
       "sinceBlock": 13857570,
       "values": { "$immutable": true },
@@ -57,6 +58,7 @@
         "0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "sinceTimestamp": 1702962623,
       "sinceBlock": 18817837,
       "values": {
@@ -117,6 +119,7 @@
         "0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "sinceTimestamp": 1702962467,
       "sinceBlock": 18817824,
       "values": {
@@ -157,6 +160,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["withdrawalQueueActivated"],
+      "deployerAddress": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "sinceTimestamp": 1702962563,
       "sinceBlock": 18817832,
       "values": {
@@ -246,6 +250,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5",
       "sinceTimestamp": 1702945151,
       "sinceBlock": 18816399,
       "values": {
@@ -303,6 +308,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "sinceTimestamp": 1702962527,
       "sinceBlock": 18817829,
       "values": {

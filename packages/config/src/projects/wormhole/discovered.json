@@ -44,6 +44,7 @@
       ],
       "proxyType": "immutable",
       "description": "Wormhole wrapped ERC20 token implementation. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.",
+      "deployerAddress": "eth:0xE2e2d9E31d7e1CC1178Fe0d1c5950f6C809816a3",
       "sinceTimestamp": 1663610147,
       "sinceBlock": 15569178,
       "values": {
@@ -219,6 +220,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x96D13cbEFFE7BAE169B9032Fe69Ed56eB07b300F",
       "sinceTimestamp": 1631535967,
       "sinceBlock": 13217349,
       "values": {
@@ -577,6 +579,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge.",
       "ignoreInWatchMode": ["guardianSet", "getCurrentGuardianSetIndex"],
+      "deployerAddress": "eth:0x5B3899809Ae2c87FdA11280b7c61C06A5F4db1de",
       "sinceTimestamp": 1628093444,
       "sinceBlock": 12959638,
       "values": {
@@ -821,6 +824,7 @@
       "proxyType": "Beacon proxy",
       "description": "WSOL is the Wormhole-wrapped ERC20 representation of native SOL on Ethereum. The Token Bridge owns this token and mints or burns it after accepting valid Token Bridge VAAs for the Solana route. The native SOL backing is escrowed on Solana, not Ethereum.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x4687f8d4a661545DF7E368972a50c4bcF0D11Ae1",
       "sinceTimestamp": 1632316757,
       "sinceBlock": 13275804,
       "values": {

@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -46,6 +47,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936491,
       "sinceBlock": 20219921,
       "values": {
@@ -126,6 +128,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936563,
       "sinceBlock": 20219927,
       "values": {
@@ -199,6 +202,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719933695,
       "sinceBlock": 20219691,
       "values": {
@@ -236,6 +240,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936527,
       "sinceBlock": 20219924,
       "values": {
@@ -339,6 +344,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.",
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936539,
       "sinceBlock": 20219925,
       "values": {
@@ -417,6 +423,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550083,
       "sinceBlock": 22590749,
       "values": {
@@ -485,6 +492,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936419,
       "sinceBlock": 20219915,
       "values": {
@@ -533,6 +541,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.",
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1753355723,
       "sinceBlock": 22988652,
       "values": {
@@ -565,6 +574,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.",
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936443,
       "sinceBlock": 20219917,
       "values": {
@@ -626,6 +636,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
+      "deployerAddress": "eth:0xbeb4E7EE8961E54bfeA26114599674C30F6885Db",
       "sinceTimestamp": 1726591415,
       "sinceBlock": 20771597,
       "values": {
@@ -679,6 +690,7 @@
         "latestOutputProposedV2",
         "latestOutputProposedV3"
       ],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936515,
       "sinceBlock": 20219923,
       "values": {
@@ -795,6 +807,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936587,
       "sinceBlock": 20219929,
       "values": {
@@ -862,6 +875,7 @@
         "0x6468d264f5226536d6876122920a8d3475edee370a5b860ed193b9798ac111e1"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a",
       "sinceTimestamp": 1770134483,
       "sinceBlock": 24377389,
       "values": {
@@ -982,6 +996,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719933659,
       "sinceBlock": 20219688,
       "values": {
@@ -1019,6 +1034,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989",
       "sinceTimestamp": 1719936575,
       "sinceBlock": 20219928,
       "values": {
@@ -1051,6 +1067,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a",
       "sinceTimestamp": 1755850955,
       "sinceBlock": 23195391,
       "values": {

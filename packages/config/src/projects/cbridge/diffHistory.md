@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x52cd21ffc9d885b71c288551b088cea5cadeb5db
+
+# Diff at Tue, 05 May 2026 10:22:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1736926655
+- current timestamp: 1736926655
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1736926655 (main branch discovery), not current.
+
+```diff
+    contract PeggedTokenBridge (eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract MessageBus (eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract PeggedTokenBridgeV2 (eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract Liquidity Network (eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract MessageBusOwner (eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract OriginalTokenVaultV2 (eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract TransferAgent (eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4"
+    }
+```
+
+```diff
+    contract OriginalTokenVault (eth:0xB37D31b2A74029B5951a2778F959282E2D518595) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    contract Sentinel (eth:0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      deployerAddress:
++        "eth:0x1c69b0347E63094669aa4f4D9061B748871CEC79"
+    }
+```
+
+```diff
+    contract SimpleGovernance (eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x108e64Be829981dF9B4a5e526041385F4662Ead2"
+    }
+```
+
 Generated with discovered.json: 0xf479edda09356ffd1897d687b0c506324106945f
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

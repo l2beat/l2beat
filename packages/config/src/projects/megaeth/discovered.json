@@ -129,6 +129,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "sinceTimestamp": 1744215143,
       "sinceBlock": 22232462,
       "values": {
@@ -164,6 +165,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the total stake of each operator.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -233,6 +235,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -270,6 +273,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.",
+      "deployerAddress": "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a",
       "sinceTimestamp": 1770465023,
       "sinceBlock": 24404755,
       "values": {
@@ -330,6 +334,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "ignoreInWatchMode": ["registeredOperators"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -533,6 +538,7 @@
           "role": ".pauserRegistry"
         }
       ],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -560,6 +566,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -608,6 +615,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1715347895,
       "sinceBlock": 19839949,
       "values": {
@@ -731,6 +739,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -762,6 +771,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "sinceTimestamp": 1721762183,
       "sinceBlock": 20371264,
       "values": {
@@ -803,6 +813,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -902,6 +913,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -936,6 +948,7 @@
         "lastProcessedAmount",
         "getBalance"
       ],
+      "deployerAddress": "eth:0x7ffeef52BECC931A844B647baE73c3764F3A5bF0",
       "sinceTimestamp": 1764664223,
       "sinceBlock": 23924599,
       "values": {
@@ -1022,6 +1035,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "sinceTimestamp": 1732035611,
       "sinceBlock": 21223132,
       "values": {
@@ -1080,6 +1094,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1122,6 +1137,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954207,
       "sinceBlock": 23865991,
       "values": {
@@ -1165,6 +1181,7 @@
       "proxyType": "immutable",
       "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.",
       "ignoreInWatchMode": ["getTimeUntilEnd"],
+      "deployerAddress": "eth:0xe46A884CfF5653f9EbFC58EEe431a036f95FAc0d",
       "sinceTimestamp": 1764062435,
       "sinceBlock": 23874891,
       "values": {
@@ -1228,6 +1245,7 @@
         "0x20ad72ba1402c7715031bdbe60a9bf87718c4a9444c65a68650a7a2c662f43e2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1733339723,
       "sinceBlock": 21331160,
       "values": {
@@ -1273,6 +1291,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796855,
       "sinceBlock": 23770445,
       "values": {
@@ -1321,6 +1340,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8",
       "sinceTimestamp": 1768825163,
       "sinceBlock": 24268775,
       "values": {
@@ -1367,6 +1387,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1420,6 +1441,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -1455,6 +1477,7 @@
       ],
       "proxyType": "immutable",
       "description": "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954447,
       "sinceBlock": 23866011,
       "values": {
@@ -1520,6 +1543,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
       "ignoreInWatchMode": ["params", "balance"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1645,6 +1669,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1667,6 +1692,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1732,6 +1758,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1784,6 +1811,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "ignoreInWatchMode": ["batchId", "taskNumber"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1933,6 +1961,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954183,
       "sinceBlock": 23865989,
       "values": {
@@ -2077,6 +2106,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1765176719,
       "sinceBlock": 23966421,
       "values": {
@@ -2122,6 +2152,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2168,6 +2199,7 @@
       ],
       "proxyType": "immutable",
       "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "deployerAddress": "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a",
       "sinceTimestamp": 1770460847,
       "sinceBlock": 24404410,
       "values": {
@@ -2208,6 +2240,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796855,
       "sinceBlock": 23770445,
       "values": {
@@ -2238,6 +2271,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1765178051,
       "sinceBlock": 23966531,
       "values": {
@@ -2267,6 +2301,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2367,6 +2402,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint for making reservations and on demand payments for EigenDA.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -2418,6 +2454,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A registry contract that keeps track of an ordered list of operators for each quorum.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -2476,6 +2513,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
       "sinceTimestamp": 1761268271,
       "sinceBlock": 23643971,
       "values": {
@@ -2513,6 +2551,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA relay keys, maps key to address.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750223,
       "sinceBlock": 22276879,
       "values": {
@@ -2568,6 +2607,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750211,
       "sinceBlock": 22276878,
       "values": {
@@ -2631,6 +2671,7 @@
       "proxyType": "immutable",
       "description": "Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
       "ignoreInWatchMode": ["lastResolved"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954387,
       "sinceBlock": 23866006,
       "values": {
@@ -2715,6 +2756,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
       "sinceTimestamp": 1764596615,
       "sinceBlock": 23919004,
       "values": {
@@ -2770,6 +2812,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2809,6 +2852,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1741217219,
       "sinceBlock": 21983963,
       "values": {
@@ -2843,6 +2887,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
