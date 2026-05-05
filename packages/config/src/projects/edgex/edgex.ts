@@ -7,6 +7,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -14,7 +15,6 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
@@ -103,41 +103,10 @@ export const edgex: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: 'UnderReview',
-        usersHave7DaysToExit: 'UnderReview',
-        securityCouncilProperlySetUp: false,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: 'UnderReview',
-        daCommitteeDecentralized: false,
-        noRedTrustedSetups: 'UnderReview',
-        proverSourcePublished: 'UnderReview',
-        verifierContractsReproducible: 'UnderReview',
-        programHashesReproducible: 'UnderReview',
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: 'UnderReview',
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',
-    },
-  ),
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
+  stage: {
+    stage: 'NotApplicable',
+  },
   chainConfig: {
     name: 'edgex',
     chainId: undefined,
