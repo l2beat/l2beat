@@ -48,5 +48,15 @@
     "hash": "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e",
     "address": "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB",
     "blockNumber": 23881654
+  },
+  "OptimismMintableERC20Factory_Celo.sol": {
+    "hash": "0xa89e0f90e0c290b71f9211dae49c0d75e48970756e68e4a17c4d8228c05b02c1",
+    "address": "eth:0x149BD036f5F57D0FF4b5F102C9d46E3c0EB2C016",
+    "blockNumber": 24950202
+  },
+  "OptimismMintableERC20Factory_Fraxtal.sol": {
+    "hash": "0x0aa60010b4e757abc3d2a8c5092ae466f97d6297d82a54e7911c8a1ace4be76a",
+    "address": "eth:0x72D205182538207478dA7baFf0181884993D279A",
+    "blockNumber": 23431685
   }
 }

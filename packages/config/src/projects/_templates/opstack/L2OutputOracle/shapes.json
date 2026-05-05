@@ -53,5 +53,10 @@
     "hash": "0xdd6f0ffd7f9350b0645ec66d1174cdd6434d367842932e6a9763741aaf943542",
     "address": "eth:0xDe94ECc695F2Df967b49ED11829eC9f7c1831a61",
     "blockNumber": 22188285
+  },
+  "L2OutputOracle_karak.sol": {
+    "hash": "0xb98a912ef3dacfba71ec38e29d64fe80ab46fde5a4c148a569e500522bccbce0",
+    "address": "eth:0x394317B191f5c7A371e74594776B1EfDc33d10D6",
+    "blockNumber": 24575765
   }
 }
