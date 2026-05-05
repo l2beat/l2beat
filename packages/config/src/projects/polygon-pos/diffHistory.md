@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x201421096dc104c95bb1e112b55f0a3c842e4179
+
+# Diff at Tue, 05 May 2026 06:55:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26382144ce3c79862aee73e15f619d0a40458aae block: 1776866125
+- current timestamp: 1777964012
+
+## Description
+
+formatting and minimal refactor for the ERC20PredicateBurnOnly: https://disco.l2beat.com/diff/eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966/eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0 .
+
+## Watched changes
+
+```diff
+    contract Registry (eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      values.erc20Predicate:
+-        "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
++        "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ERC20PredicateBurnOnly.sol                     | 469 ++++++++-------------
+ 1 file changed, 185 insertions(+), 284 deletions(-)
+```
+
 Generated with discovered.json: 0x88c90056b38c5c63760674a52efc79cb4e5c8c96
 
 # Diff at Wed, 22 Apr 2026 13:57:02 GMT:
