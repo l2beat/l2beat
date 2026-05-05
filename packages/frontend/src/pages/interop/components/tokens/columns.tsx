@@ -89,6 +89,7 @@ function getCommonColumns<T extends CommonRow>(
       },
     }),
     columnHelper.accessor((row) => row.transferCount, {
+      id: 'transferCount',
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
@@ -113,6 +114,7 @@ function getCommonColumns<T extends CommonRow>(
                   .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
               ),
       {
+        id: 'avgDuration',
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
           if (ctx.row.original.avgDuration === null)
@@ -129,6 +131,7 @@ function getCommonColumns<T extends CommonRow>(
       },
     ),
     columnHelper.accessor((row) => row.avgValue, {
+      id: 'avgValue',
       header: 'Last 24h avg.\ntransfer value',
       cell: (ctx) => {
         if (ctx.row.original.avgValue === null) return EM_DASH

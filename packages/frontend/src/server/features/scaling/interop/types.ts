@@ -96,6 +96,22 @@ export const InteropProtocolTokensParams = v.object({
 })
 
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
+export const InteropTopItemsSort = v.object({
+  id: v.enum([
+    'symbol',
+    'pair',
+    'topProtocol',
+    'volume',
+    'transferCount',
+    'avgDuration',
+    'avgValue',
+    'flows',
+    'netMintedValue',
+  ]),
+  desc: v.boolean(),
+})
+export type InteropTopItemsSort = v.infer<typeof InteropTopItemsSort>
+
 const InteropTopItemsParamsShape = {
   id: v.union([
     v.string().transform((value) => ProjectId(value)),
@@ -113,6 +129,7 @@ export type InteropTopItemsInfiniteParams = v.infer<
 export const InteropTopItemsInfiniteParams = v.object({
   ...InteropTopItemsParamsShape,
   cursor: v.number().optional(),
+  sort: InteropTopItemsSort.optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<

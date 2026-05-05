@@ -1,8 +1,13 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import {
+  functionalUpdate,
+  getCoreRowModel,
+  type SortingState,
+} from '@tanstack/react-table'
+import { useMemo, useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
+import type { InteropTopItemsSort } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { getTopTokensColumns, type TokenRow } from './columns'
 import {
@@ -30,8 +35,20 @@ export function TokensTable({
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
 }) {
+  const [sort, setSort] = useState<InteropTopItemsSort>({
+    id: 'volume',
+    desc: true,
+  })
+  const sorting = useMemo<SortingState>(() => [sort], [sort])
+  const queryInputWithSort = useMemo(
+    () => ({
+      ...queryInput,
+      sort,
+    }),
+    [queryInput, sort],
+  )
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.tokensInfinite.useInfiniteQuery(queryInput, {
+    api.interop.tokensInfinite.useInfiniteQuery(queryInputWithSort, {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
   const rows = useMemo(
@@ -58,11 +75,24 @@ export function TokensTable({
     data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
+    manualSorting: true,
+    state: {
+      sorting,
+    },
+    onSortingChange: (updater) => {
+      const nextSorting = functionalUpdate(updater, sorting)
+      const nextSort = nextSorting[0]
+
+      if (nextSort) {
+        setSort({
+          id: nextSort.id as InteropTopItemsSort['id'],
+          desc: nextSort.desc,
+        })
+      }
+    },
     initialState: {
       columnPinning: { left: ['icon'] },
-      sorting: [{ id: 'volume', desc: true }],
     },
   })
 

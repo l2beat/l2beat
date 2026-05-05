@@ -25,6 +25,7 @@ import {
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
+import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
@@ -42,9 +43,13 @@ export async function getInteropTokensPairs(
 
 export async function getInteropTokensPairsInfinite({
   cursor,
+  sort,
   ...params
 }: InteropTopItemsInfiniteParams): Promise<InteropTokensPairsResponse> {
-  const pairs = await getCachedInteropTokensPairs(params)
+  const pairs = sortInteropTopItems(
+    await getCachedInteropTokensPairs(params),
+    sort,
+  )
   const startIndex = cursor ?? 0
   const items = pairs.slice(startIndex, startIndex + PAGE_SIZE)
   const nextCursor =

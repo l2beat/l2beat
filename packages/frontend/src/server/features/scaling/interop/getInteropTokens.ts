@@ -13,6 +13,7 @@ import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
+import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 const logger = getLogger().for('getInteropTokens')
 const PAGE_SIZE = 100
@@ -26,9 +27,10 @@ export async function getInteropTokens(
 
 export async function getInteropTokensInfinite({
   cursor,
+  sort,
   ...params
 }: InteropTopItemsInfiniteParams): Promise<InteropTokensResponse> {
-  const tokens = await getCachedInteropTokens(params)
+  const tokens = sortInteropTopItems(await getCachedInteropTokens(params), sort)
   const startIndex = cursor ?? 0
   const items = tokens.slice(startIndex, startIndex + PAGE_SIZE)
   const nextCursor =
