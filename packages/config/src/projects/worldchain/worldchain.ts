@@ -20,6 +20,7 @@ export const worldchain = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'World Chain',
+    aliases: ['Worldcoin'],
     slug: 'world',
     description:
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',

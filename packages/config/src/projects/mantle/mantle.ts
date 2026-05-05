@@ -17,6 +17,7 @@ export const mantle: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1688314886),
   display: {
     name: 'Mantle',
+    aliases: ['BitDAO'],
     slug: 'mantle',
     description:
       'Mantle is a modular general-purpose Ethereum rollup. Transaction data is posted to Ethereum blobs and state transitions are validated onchain via OP Succinct ZK validity proofs (SP1). Its design philosophy aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',

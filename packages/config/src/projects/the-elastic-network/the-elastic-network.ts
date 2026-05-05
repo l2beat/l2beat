@@ -7,6 +7,7 @@ export const theElasticNetwork: BaseProject = {
   slug: 'the-elastic-network',
   name: 'The Elastic Network',
   shortName: undefined,
+  aliases: ['ZKsync'],
   addedAt: 1743677000,
   display: {
     description:

@@ -24,6 +24,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Cronos zkEVM',
+    aliases: ['Crypto.com'],
     slug: 'cronoszkevm',
     description:
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
