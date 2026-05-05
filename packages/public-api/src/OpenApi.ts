@@ -9,11 +9,11 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   summary?: string
   description?: string
   tags?: Tags[]
-  params?: Validator<P> & { meta?: ImpMeta }
-  query?: Validator<Q> & { meta?: ImpMeta }
-  result: Validator<O> & { meta?: ImpMeta }
+  params?: Validator<P> & { definition?: ImpMeta }
+  query?: Validator<Q> & { definition?: ImpMeta }
+  result: Validator<O> & { definition?: ImpMeta }
   // Add possibility to have different type per error code
-  errors?: Record<number, Validator<E> & { meta?: ImpMeta }>
+  errors?: Record<number, Validator<E> & { definition?: ImpMeta }>
 }
 
 type OpenApiPath = {
@@ -153,12 +153,12 @@ export class OpenApi {
     for (const route of this.routes) {
       const { result, params, query, errors } = route.options
       if (
-        result.meta?.type === 'array' &&
-        result.meta.element.description &&
-        !schemas[result.meta.element.description]
+        result.definition?.type === 'array' &&
+        result.definition.element.description &&
+        !schemas[result.definition.element.description]
       ) {
-        schemas[result.meta.element.description] = this.toJsonSchema(
-          result.meta.element,
+        schemas[result.definition.element.description] = this.toJsonSchema(
+          result.definition.element,
         )
       }
       if (result.description && !schemas[result.description]) {
@@ -269,19 +269,19 @@ export class OpenApi {
 
   private schemaToParameters<T>(
     type: 'params' | 'query',
-    schema: Validator<T> & { meta?: ImpMeta },
+    schema: Validator<T> & { definition?: ImpMeta },
   ): OpenApiParameter[] {
-    if (!schema.meta) {
+    if (!schema.definition) {
       throw new Error('Schema meta is required')
     }
-    if (schema.meta.type !== 'object') {
+    if (schema.definition.type !== 'object') {
       throw new Error('Schema must be an object')
     }
 
-    return Object.entries(schema.meta.schema).map(([key, value]) => ({
+    return Object.entries(schema.definition.schema).map(([key, value]) => ({
       name: key,
       in: type === 'query' ? 'query' : 'path',
-      required: value.meta.type !== 'optional',
+      required: value.definition.type !== 'optional',
       schema: this.toJsonSchemaWithRefs(value),
     }))
   }
@@ -291,16 +291,16 @@ export class OpenApi {
   }
 
   private toJsonSchemaWithRefs<T>(
-    validator: Validator<T> & { meta?: ImpMeta },
+    validator: Validator<T> & { definition?: ImpMeta },
   ) {
     if (
-      validator.meta?.type === 'array' &&
-      validator.meta.element.description
+      validator.definition?.type === 'array' &&
+      validator.definition.element.description
     ) {
       return {
         type: 'array',
         items: {
-          $ref: `#/components/schemas/${validator.meta.element.description}`,
+          $ref: `#/components/schemas/${validator.definition.element.description}`,
         },
       }
     }

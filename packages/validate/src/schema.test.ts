@@ -146,12 +146,15 @@ describe('toJsonSchema', () => {
     })
   })
 
-  it('documented union', () => {
-    const input = v.union([v.string(), v.null()]).document('Optional ID')
+  it('union with metadata', () => {
+    const input = v
+      .union([v.string(), v.null()])
+      .meta({ description: 'Optional ID', dupa: '123123' })
     expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       anyOf: [{ type: 'string' }, { type: 'null' }],
       description: 'Optional ID',
+      dupa: '123123',
     })
   })
 
@@ -175,9 +178,9 @@ describe('toJsonSchema', () => {
     })
   })
 
-  it('object with documented property', () => {
+  it('object with property metadata', () => {
     const input = v.object({
-      id: v.string().document('Project ID'),
+      id: v.string().meta({ description: 'Project ID' }),
     })
     expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,

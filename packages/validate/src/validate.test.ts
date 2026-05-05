@@ -394,12 +394,33 @@ describe('validate', () => {
     })
   })
 
-  describe('document', () => {
-    it('should add schema description', () => {
+  describe('meta', () => {
+    it('should add metadata', () => {
       const Foo = v.object({ x: v.number() })
-      expect(Foo.jsonSchema).toEqual(undefined)
-      Foo.document('Bar')
-      expect(Foo.jsonSchema).toEqual({ description: 'Bar' })
+      expect(Foo.metadata).toEqual(undefined)
+      Foo.meta({ description: 'Bar' })
+      expect(Foo.metadata).toEqual({ description: 'Bar' })
+    })
+
+    it('should merge metadata', () => {
+      const Foo = v.object({ x: v.number() })
+      Foo.meta({ description: 'Bar' })
+      Foo.meta({ owner: 'Baz' })
+      expect(Foo.metadata).toEqual({ description: 'Bar', owner: 'Baz' })
+    })
+
+    it('should reject reserved schema keys', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(() => Foo.meta({ anyOf: [] })).toThrow(
+        'Metadata key "anyOf" is reserved.',
+      )
+    })
+
+    it('should reject non-string descriptions', () => {
+      const Foo = v.object({ x: v.number() })
+      expect(() => Foo.meta({ description: 123 })).toThrow(
+        'Metadata description must be a string.',
+      )
     })
   })
 })

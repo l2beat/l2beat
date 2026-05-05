@@ -4,10 +4,10 @@ import type { ImpMeta } from 'node_modules/@l2beat/validate/dist/esm/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
 
 export function validateResolver<Input extends FieldValues, Context, Output>(
-  schema: Validator<Input> & { meta?: ImpMeta },
+  schema: Validator<Input> & { definition?: ImpMeta },
 ): Resolver<Input, Context, Output | Input> {
   return (input) => {
-    assert(schema.meta, 'Meta is required')
+    assert(schema.definition, 'Meta is required')
 
     const errors = getErrors(schema, input)
     if (errors.length > 0) {
@@ -27,25 +27,25 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
 }
 
 function getErrors(
-  schema: Validator<unknown> & { meta?: ImpMeta },
+  schema: Validator<unknown> & { definition?: ImpMeta },
   input: FieldValues | FieldValues[],
   keyPrefix?: string,
 ): { key: string; message: string }[] {
-  assert(schema.meta, 'Meta is required')
+  assert(schema.definition, 'Meta is required')
   const result = schema.safeValidate(input)
   if (result.success) {
     return []
   }
 
   const innerSchema = unwrapSchema(schema)
-  assert(innerSchema.meta, 'Meta is required')
+  assert(innerSchema.definition, 'Meta is required')
 
-  if (innerSchema.meta.type === 'object' && isObject(input) && result.path) {
+  if (innerSchema.definition.type === 'object' && isObject(input) && result.path) {
     const errors: { key: string; message: string }[] = []
     const objectInput = input as FieldValues
 
-    for (const key in innerSchema.meta.schema) {
-      const keySchema = innerSchema.meta.schema[key]
+    for (const key in innerSchema.definition.schema) {
+      const keySchema = innerSchema.definition.schema[key]
       assert(keySchema, 'Key schema is required')
       const err = getErrors(
         keySchema,
@@ -60,11 +60,11 @@ function getErrors(
     }
   }
 
-  if (innerSchema.meta.type === 'array' && isArray(input) && result.path) {
+  if (innerSchema.definition.type === 'array' && isArray(input) && result.path) {
     const errors: { key: string; message: string }[] = []
 
     for (const [index, item] of Object.entries(input)) {
-      const itemSchema = innerSchema.meta.element
+      const itemSchema = innerSchema.definition.element
       const err = getErrors(
         itemSchema,
         item,
@@ -90,19 +90,19 @@ function isObject(input: unknown): input is FieldValues {
 }
 
 function unwrapSchema(
-  schema: Validator<unknown> & { meta?: ImpMeta },
-): Validator<unknown> & { meta?: ImpMeta } {
-  assert(schema.meta, 'Meta is required')
+  schema: Validator<unknown> & { definition?: ImpMeta },
+): Validator<unknown> & { definition?: ImpMeta } {
+  assert(schema.definition, 'Meta is required')
 
-  switch (schema.meta.type) {
+  switch (schema.definition.type) {
     case 'optional':
     case 'default':
     case 'catch':
     case 'check':
     case 'transform':
-      return unwrapSchema(schema.meta.parent)
+      return unwrapSchema(schema.definition.parent)
     case 'lazy':
-      return unwrapSchema(schema.meta.get())
+      return unwrapSchema(schema.definition.get())
     default:
       return schema
   }

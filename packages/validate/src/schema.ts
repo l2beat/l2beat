@@ -21,7 +21,7 @@ export function toJsonSchema(
   while (state.remaining.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: It's there
     const [key, imp] = state.remaining.shift()!
-    const unpacked = imp.meta.type === 'lazy' ? imp.meta.get() : imp
+    const unpacked = imp.definition.type === 'lazy' ? imp.definition.get() : imp
     state.skipRefs = true
     definitions[key] = decompose(unpacked, state)
   }
@@ -39,94 +39,101 @@ interface State {
   skipRefs: boolean
 }
 
-function decompose(imp: Imp<unknown>, state: State): object {
+function decompose(imp: Imp<unknown>, state: State): Record<string, unknown> {
   const $ref = state.refs.get(imp)
   if ($ref && !state.skipRefs) {
-    return schema(imp, { $ref })
+    return applyMetadata(imp, { $ref })
   }
   state.skipRefs = false
 
-  switch (imp.meta.type) {
+  return applyMetadata(imp, decomposeCore(imp, state))
+}
+
+function decomposeCore(
+  imp: Imp<unknown>,
+  state: State,
+): Record<string, unknown> {
+  switch (imp.definition.type) {
     case 'unknown':
       // Anything is accepted
-      return schema(imp, {})
+      return {}
     case 'boolean':
-      return schema(imp, { type: 'boolean' })
+      return { type: 'boolean' }
     case 'number':
-      return schema(imp, { type: 'number' })
+      return { type: 'number' }
     case 'string':
-      return schema(imp, { type: 'string' })
+      return { type: 'string' }
     case 'null':
-      return schema(imp, { type: 'null' })
+      return { type: 'null' }
     case 'bigint':
     case 'undefined':
       // Those are not supported so we cannot say anything about them
-      return schema(imp, {})
+      return {}
     case 'literal':
-      if (typeof imp.meta.value === 'bigint') {
-        return schema(imp, {})
+      if (typeof imp.definition.value === 'bigint') {
+        return {}
       }
-      return schema(imp, { const: imp.meta.value })
+      return { const: imp.definition.value }
     case 'enum':
-      return schema(imp, { enum: imp.meta.values })
+      return { enum: imp.definition.values }
     case 'check':
     case 'transform':
     case 'catch':
     case 'default': // NOTE: Json schema does support this, but not sure if needed
     case 'optional':
-      return schema(imp, decompose(imp.meta.parent, state))
+      return decompose(imp.definition.parent, state)
     case 'array':
-      return schema(imp, {
+      return {
         type: 'array',
-        items: decompose(imp.meta.element, state),
-      })
+        items: decompose(imp.definition.element, state),
+      }
     case 'tuple':
-      return schema(imp, {
+      return {
         type: 'array',
-        items: imp.meta.values.map((x) => decompose(x, state)),
+        items: imp.definition.values.map((x) => decompose(x, state)),
         additionalItems: false,
-      })
+      }
     case 'union':
-      return schema(imp, {
-        anyOf: imp.meta.values.map((x) => decompose(x, state)),
-      })
+      return {
+        anyOf: imp.definition.values.map((x) => decompose(x, state)),
+      }
     case 'object': {
       const result: Record<string, unknown> = {
         type: 'object',
         properties: Object.fromEntries(
-          Object.entries(imp.meta.schema).map(([k, v]) => [
+          Object.entries(imp.definition.schema).map(([k, v]) => [
             k,
             decompose(v, state),
           ]),
         ),
         // true by default according to spec
-        ...(imp.meta.strict ? { additionalProperties: false } : {}),
+        ...(imp.definition.strict ? { additionalProperties: false } : {}),
       }
-      const required = Object.entries(imp.meta.schema)
+      const required = Object.entries(imp.definition.schema)
         .filter(
           ([_, v]) =>
-            v.meta.type !== 'optional' &&
-            v.meta.type !== 'default' &&
-            v.meta.type !== 'catch',
+            v.definition.type !== 'optional' &&
+            v.definition.type !== 'default' &&
+            v.definition.type !== 'catch',
         )
         .map(([k]) => k)
       if (required.length > 0) {
         result.required = required
       }
-      return schema(imp, result)
+      return result
     }
     case 'record': {
       const result: Record<string, unknown> = {
         type: 'object',
-        propertyNames: recordKey(imp.meta.key),
-        additionalProperties: decompose(imp.meta.value, state),
+        propertyNames: recordKey(imp.definition.key),
+        additionalProperties: decompose(imp.definition.value, state),
       }
-      if (imp.meta.key.meta.type === 'enum') {
-        result.required = imp.meta.key.meta.values.map((x) =>
+      if (imp.definition.key.definition.type === 'enum') {
+        result.required = imp.definition.key.definition.values.map((x) =>
           (x as string | number).toString(),
         )
       }
-      return schema(imp, result)
+      return result
     }
     case 'lazy': {
       state.lazyCounter++
@@ -134,23 +141,23 @@ function decompose(imp: Imp<unknown>, state: State): object {
       const $ref = `#/definitions/${key}`
       state.refs.set(imp, $ref)
       state.remaining.push([key, imp])
-      return schema(imp, { $ref })
+      return { $ref }
     }
   }
 }
 
-function schema(imp: Imp<unknown>, core: object): object {
-  if (!imp.jsonSchema) {
-    return core
-  }
+function applyMetadata(
+  imp: Imp<unknown>,
+  core: Record<string, unknown>,
+): Record<string, unknown> {
   return {
     ...core,
-    ...imp.jsonSchema,
+    ...imp.metadata,
   }
 }
 
 function recordKey(imp: Imp<unknown>): object {
-  switch (imp.meta.type) {
+  switch (imp.definition.type) {
     case 'unknown':
     case 'string':
     case 'null':
@@ -167,26 +174,28 @@ function recordKey(imp: Imp<unknown>): object {
     case 'number':
       return { type: 'string', pattern: '\\d+(\\.\\d*)?' }
     case 'literal':
-      if (typeof imp.meta.value === 'string') {
-        return { const: imp.meta.value }
+      if (typeof imp.definition.value === 'string') {
+        return { const: imp.definition.value }
       }
-      if (typeof imp.meta.value === 'number') {
-        return { const: imp.meta.value.toString() }
+      if (typeof imp.definition.value === 'number') {
+        return { const: imp.definition.value.toString() }
       }
       return { type: 'string' }
     case 'enum':
       return {
-        enum: imp.meta.values.map((x) => (x as string | number).toString()),
+        enum: imp.definition.values.map((x) =>
+          (x as string | number).toString(),
+        ),
       }
     case 'check':
     case 'transform':
     case 'catch':
     case 'default': // NOTE: Json schema does support this, but not sure if needed
     case 'optional':
-      return recordKey(imp.meta.parent)
+      return recordKey(imp.definition.parent)
     case 'union':
       return {
-        anyOf: imp.meta.values.map(recordKey),
+        anyOf: imp.definition.values.map(recordKey),
       }
   }
 }
