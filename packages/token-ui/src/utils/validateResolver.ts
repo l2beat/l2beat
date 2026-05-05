@@ -40,7 +40,11 @@ function getErrors(
   const innerSchema = unwrapSchema(schema)
   assert(innerSchema.definition, 'Meta is required')
 
-  if (innerSchema.definition.type === 'object' && isObject(input) && result.path) {
+  if (
+    innerSchema.definition.type === 'object' &&
+    isObject(input) &&
+    result.path
+  ) {
     const errors: { key: string; message: string }[] = []
     const objectInput = input as FieldValues
 
@@ -60,7 +64,11 @@ function getErrors(
     }
   }
 
-  if (innerSchema.definition.type === 'array' && isArray(input) && result.path) {
+  if (
+    innerSchema.definition.type === 'array' &&
+    isArray(input) &&
+    result.path
+  ) {
     const errors: { key: string; message: string }[] = []
 
     for (const [index, item] of Object.entries(input)) {
