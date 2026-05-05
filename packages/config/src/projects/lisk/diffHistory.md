@@ -1,3 +1,272 @@
+Generated with discovered.json: 0xd18fb20669fe1a2b87e854aeb2f7936d443af1fd
+
+# Diff at Tue, 05 May 2026 15:19:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c30884758a8f4ef4178d2eb572fb25911670bcff block: 1777391131
+- current timestamp: 1777994276
+
+## Description
+
+Optimism Security Council (`eth:0xc2819DC7...`) — member 12 swap: `0x92827223` → `0xcbC7dCeb`. Shared multisig (referenced by multiple Superchain projects).
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.12:
+-        "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
++        "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777391131 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      deployerAddress:
+-        "eth:0x21d6658C6430021a6B5C2bDb245910FD633E6d08"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
+-        "eth:0x21d6658C6430021a6B5C2bDb245910FD633E6d08"
+    }
+```
+
+```diff
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x26dB93F8b8b4f7016240af62F7730979d353f9A7) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x31B72D76FB666844C41EdF08dF0254875Dbb7edB) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x31eFC2c8012c56E007E5Bdb8E5B7955D197C168e) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      deployerAddress:
+-        "eth:0x21d6658C6430021a6B5C2bDb245910FD633E6d08"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x3A44A3b263FB631cdbf25f339e2D29497511A81f) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      deployerAddress:
+-        "eth:0x4cDdf5108EE9392743b45307757a807D397c1EfF"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) {
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+      deployerAddress:
+-        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x7ad0d165B9607960AD850090DDd7B9eB381D9c1e) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      deployerAddress:
+-        "eth:0x21d6658C6430021a6B5C2bDb245910FD633E6d08"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      deployerAddress:
+-        "eth:0xbfc03d7c2527dD6F45F63f0D71aDB36b8549FB58"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      deployerAddress:
+-        "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      deployerAddress:
+-        "eth:0x6f19ac9A502263D0e6b3f8B5d5C328d4FE4e35c6"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      deployerAddress:
+-        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xc1dA06CC5DD5cE23bABa924463de7F762039252d) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
+-        "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5"
+    }
+```
+
+```diff
+    contract L1OpUSDCBridgeAdapter (eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      deployerAddress:
+-        "eth:0xF3fD8C5854e5bf362dd0f693D748406dF85B7710"
+    }
+```
+
+```diff
+    contract L1OpEURCBridgeAdapter (eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677) {
+    +++ description: Escrow for EURC that uses the canonical bridge for messaging but is governed externally.
+      deployerAddress:
+-        "eth:0xbfc03d7c2527dD6F45F63f0D71aDB36b8549FB58"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+```diff
+    contract Lisk Multisig (eth:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
 Generated with discovered.json: 0xa76e03b69b97a4efc5509f046a107b3d7f927cfd
 
 # Diff at Tue, 05 May 2026 10:22:23 GMT:
