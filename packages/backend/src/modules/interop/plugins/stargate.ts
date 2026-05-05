@@ -346,7 +346,30 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       '0x45f1A95A4D3f3836523F5c83673c797f4d4d263B',
     ),
   },
-  // tempo, monad unsupported
+  {
+    chain: 'tempo',
+    eid: 30410,
+    usdcPool: {
+      address: EthereumAddress('0x8c76e2F6C5ceDA9AA7772e7efF30280226c44392'),
+      tokenAddress: Address32.from(
+        '0x20c000000000000000000000b9537d11c60e8b50',
+      ),
+      token: 'USDC.e',
+      hydra: true,
+    },
+    eurcPool: {
+      address: EthereumAddress('0x7753Dc8d4bd48Db599Da21E08b1Ab1D6FDFfdC71'),
+      tokenAddress: Address32.from(
+        '0x20c0000000000000000000001621e21f71cf12fb',
+      ),
+      token: 'EURC.e',
+      hydra: true,
+    },
+    tokenMessaging: EthereumAddress(
+      '0x19Ff94Fe4C93D546e4DB3E1FB124D45366B0b9F5',
+    ),
+  },
+  // monad unsupported
 ])
 
 const StargateV2CreditsSent = createInteropEventType<{
