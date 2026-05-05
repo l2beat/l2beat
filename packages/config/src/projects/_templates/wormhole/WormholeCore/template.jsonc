@@ -11,8 +11,7 @@
   "ignoreMethods": ["quorum"],
   "fields": {
     "guardianSet": {
-      "description": "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed.",
-      "severity": "HIGH",
+      "description": "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed. Changes of the stored guardian sets are invisible until the set is selected.", // could be brute forced over all indexes (uint32) or watched upstream
       "type": "PERMISSION",
       "handler": {
         "type": "call",
@@ -42,7 +41,11 @@
       "description": "Number of Guardian signatures required for each Guardian set size up to 30.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER",
-      "handler": { "type": "array", "method": "quorum", "length": 30 }
+      "handler": {
+        "type": "array",
+        "method": "quorum",
+        "length": 30
+      }
     },
     "currentQuorumHardcoded": {
       "handler": {
@@ -53,7 +56,6 @@
     },
     "getCurrentGuardianSetIndex": {
       "description": "Index of the Guardian set currently used to validate VAAs.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "getGuardianSetExpiry": {
@@ -77,5 +79,6 @@
       "type": "RISK_PARAMETER"
     }
   },
-  "category": "core"
+  "category": "core",
+  "ignoreInWatchMode": ["guardianSet", "getCurrentGuardianSetIndex"]
 }
