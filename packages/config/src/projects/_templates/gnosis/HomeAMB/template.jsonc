@@ -2,9 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "bridge-canonical",
   "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
-  "ignoreMethods": [
-    "isAlreadyProcessed"
-  ],
+  "ignoreMethods": ["isAlreadyProcessed"],
   "fields": {
     "owner": {
       "permissions": [

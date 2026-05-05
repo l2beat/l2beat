@@ -40,7 +40,7 @@ const ambBridgeRequiredSignatures = discovery.getContractValue<number>(
 )
 
 const ambBridgeValidatorCount = discovery.getContractValue<number>(
-  'AMB Bridge Validators',
+  'AMB Validators',
   'validatorCount',
 )
 

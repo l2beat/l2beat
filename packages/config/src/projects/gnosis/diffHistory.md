@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd3ddab45320db3e536567283700d721086403bee
+Generated with discovered.json: 0x4b808b4a57715ef317f5a68707cc34acefc77210
 
-# Diff at Tue, 05 May 2026 11:11:55 GMT:
+# Diff at Tue, 05 May 2026 13:27:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1777903608
@@ -115,7 +115,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 
 ```diff
 +   Status: CREATED
-    contract AMB Bridge Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064)
+    contract AMB Validators (eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064)
     +++ description: Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.
 ```
 
@@ -187,7 +187,7 @@ re-add entire gnosis disco incl bridge, consensus and Hashi.
 
 ```diff
 +   Status: CREATED
-    contract Gnosis Bridge Multisig (Gnosis) (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd)
+    contract Gnosis Multisig (Gnosis) (gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd)
     +++ description: None
 ```
 

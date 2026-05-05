@@ -46,5 +46,6 @@
       "description": "Inbound Hashi executor used to consume validated message hashes on this chain.",
       "severity": "HIGH"
     }
-  }
+  },
+  "category": "bridge-external"
 }

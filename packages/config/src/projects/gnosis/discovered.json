@@ -1,7 +1,7 @@
 {
   "name": "gnosis",
   "timestamp": 1777903608,
-  "configHash": "0x2de269fb027ca9b8396368bfd94193499e147d91efab2c0e63e7c1795cd9031d",
+  "configHash": "0x87f756310eea083eeadab5f213d3a7bba344ac01bd1f61ecdcb483208ed7aadf",
   "entries": [
     {
       "name": "Giveth EOA 2",
@@ -890,7 +890,10 @@
         "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": "EternalStorageProxy",
         "eth:0x159B36Ed5BA327fd269Fb93c75918257DCfe686d": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Gnosis DAO EOA 1",
@@ -1049,7 +1052,10 @@
         "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": "EternalStorageProxy",
         "eth:0x716623daF27f2aFA8D6051A4Eda08E12107a2c83": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }]
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "gno" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0xA07888742c18d7e658132AE0148fF205fFF46481",
@@ -1300,7 +1306,7 @@
       }
     },
     {
-      "name": "AMB Bridge Validators",
+      "name": "AMB Validators",
       "address": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
@@ -1841,7 +1847,10 @@
         "gno:0x60Aa15198a3AdfC86FF15B941549A6447B2dDB49": "EternalStorageProxy",
         "gno:0x5483eBC7522C5e2669a887a7a1eDF256b3E4440D": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "gno:0x6236925FF8Aa09f29f1609a9BcD54Af20e4be6B4",
@@ -2124,7 +2133,10 @@
         "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": "EternalStorageProxy",
         "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": "HashiManager"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "HomeAMB",
@@ -2271,7 +2283,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Gnosis Bridge Multisig (Gnosis)",
+      "name": "Gnosis Multisig (Gnosis)",
       "address": "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2435,7 +2447,8 @@
       "implementationNames": {
         "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": "GnosisSafeProxy",
         "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SP1Helios",
@@ -2542,7 +2555,8 @@
       "implementationNames": {
         "gno:0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb": "TokenProxy",
         "gno:0xf8D1677c8a0c961938bf2f9aDc3F3CFDA759A9d9": "PermittableToken"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SP1HeliosAdapter",
@@ -2677,7 +2691,8 @@
       "implementationNames": {
         "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": "EternalStorageProxy",
         "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": "BridgeValidators"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "LayerZeroReporter",
@@ -2828,7 +2843,8 @@
       "implementationNames": {
         "gno:0xB289f0e6fBDFf8EEE340498a56e1787B303F1B6D": "EternalStorageProxy",
         "gno:0x26FC9FC1C98607E1634f87B47E6798D436823299": "BridgeValidators"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "gno:0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -4632,5 +4648,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25022121, "gnosis": 46002884 },
-  "permissionsConfigHash": "0xce758efe178571f8566b15cafa6580e011a01d620caaffed0999229652eeaa8e"
+  "permissionsConfigHash": "0xc9c6eec52f1f13e085abe9c298f155a7fd9afdedcb5ef04496dd23f734a448e3"
 }
