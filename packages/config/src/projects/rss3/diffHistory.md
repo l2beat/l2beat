@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xfc69e0ba5452a45f87b497bbdd541c4d6525920d
+
+# Diff at Tue, 05 May 2026 10:22:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777300652
+- current timestamp: 1777300652
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777300652 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1075B29e5F7a911128C77F3989702E150C988904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1D89222C28C3ba471be822203998f27Df4727C0b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x6A12432491bbbE8d3babf75F759766774C778Db4) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x80e73D6BfC73c567032304C3891a06c2d9954d09) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract RSS3Multisig (eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
+```diff
+    contract WithdrawalOverwriterMultisig (eth:0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF209b7Bbadf8d9518a822aEaa7119B38b17377A7"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541"
+    }
+```
+
 Generated with discovered.json: 0xe49019bc82d031bfda4fa1cd1c40077d0e0d7810
 
 # Diff at Mon, 27 Apr 2026 14:38:42 GMT:

@@ -26,6 +26,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1704291371,
       "sinceBlock": 18927365,
       "values": {
@@ -70,6 +71,7 @@
           "role": ".manager"
         }
       ],
+      "deployerAddress": "eth:0x40060493a280915e2df7b46f8A9f251156080C39",
       "sinceTimestamp": 1771090835,
       "sinceBlock": 24456587,
       "values": {
@@ -261,6 +263,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
+      "deployerAddress": "eth:0x40060493a280915e2df7b46f8A9f251156080C39",
       "sinceTimestamp": 1771090931,
       "sinceBlock": 24456595,
       "values": {
@@ -331,6 +334,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
       "values": {
@@ -498,6 +502,7 @@
         "stateBlockHash",
         "stateRoot"
       ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1689850631,
       "sinceBlock": 17733931,
       "values": {
@@ -680,6 +685,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
       "sinceTimestamp": 1743136259,
       "sinceBlock": 22143036,
       "values": {

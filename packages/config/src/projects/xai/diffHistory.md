@@ -1,3 +1,245 @@
+Generated with discovered.json: 0xdf82169aea5fe1b98018bb2c03594000159e9044
+
+# Diff at Tue, 05 May 2026 10:23:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1759482109
+- current timestamp: 1759482109
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1759482109 (main branch discovery), not current.
+
+```diff
+    contract XaiMultisig2 (arb1:0x000d8C5A70B8805DF02f409F2715d05B9A63E871) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x041F85dD87c46B941dc9b15c6628B19ee5358485) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x1E400568AD4840dbE50FB32f306B842e9ddeF726) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x3a3f62034a42a35eA1686B199bB73006aa525eE4) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract XaiMultisig (arb1:0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x54E0923782b701044444De5d8c3A45aC890b0881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract PoolProxyDeployer (arb1:0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD) {
+    +++ description: Manages beacon addresses for the v2 staking pools.
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x754286508D57Fae1256bC288461E075552175CBa) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract GasSubsidy (arb1:0x94F4aBC83eae00b693286B6eDCa09e1D76183C97) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract NodeLicenseRegistry (arb1:0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0x680D6A9Bd8013f74e7315323611a5b2ad8e08648"
+    }
+```
+
+```diff
+    contract RefereeCalculations (arb1:0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xD89d54007079071cBA859127318b9F34eeB78049) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract PoolFactory (arb1:0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      deployerAddress:
++        "arb1:0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
+    }
+```
+
+```diff
+    contract SentryReferee (arb1:0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      deployerAddress:
++        "arb1:0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    }
+```
+
 Generated with discovered.json: 0xefc5b2b353219b67d1ac3247c919efb814322634
 
 # Diff at Mon, 05 Jan 2026 17:45:48 GMT:

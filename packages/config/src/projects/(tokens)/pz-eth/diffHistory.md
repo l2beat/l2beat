@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xdc140147663a8475fd8303d476184b1317abd8f1
+
+# Diff at Tue, 05 May 2026 10:24:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1765784407
+- current timestamp: 1765784407
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765784407 (main branch discovery), not current.
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x188858AC61a74350116d1CB6958fBc509FD6afA1"
+    }
+```
+
 Generated with discovered.json: 0x793c45adeabd6e9266c0d6d7466678d064da7747
 
 # Diff at Mon, 15 Dec 2025 07:41:13 GMT:

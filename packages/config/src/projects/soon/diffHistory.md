@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xce4192f88d7dd2d42f6599960c42d3a510af4359
+
+# Diff at Tue, 05 May 2026 10:23:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1769535666
+- current timestamp: 1769535666
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769535666 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract RiscZeroVerifier (eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x703Dc8DbE17C5011b89533be5610abC118dA0dA1"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32) {
+    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
+      deployerAddress:
++        "eth:0x703Dc8DbE17C5011b89533be5610abC118dA0dA1"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
+```diff
+    contract KailuaTreasury (eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.01 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+      deployerAddress:
++        "eth:0x703Dc8DbE17C5011b89533be5610abC118dA0dA1"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      deployerAddress:
++        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+    }
+```
+
 Generated with discovered.json: 0x1dd3aa7492fc0b605a2816244da33e5bc3062522
 
 # Diff at Fri, 13 Feb 2026 11:33:23 GMT:

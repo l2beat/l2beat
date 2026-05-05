@@ -41,6 +41,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreInWatchMode": ["totalBridgedDAI"],
+      "deployerAddress": "eth:0x17ae0a6BE2e97b384165626dB2569729d5006640",
       "sinceTimestamp": 1695199499,
       "sinceBlock": 18175991,
       "values": {
@@ -108,6 +109,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4",
       "sinceTimestamp": 1706364971,
       "sinceBlock": 19098451,
       "values": {
@@ -231,6 +233,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
+      "deployerAddress": "eth:0x528Ce6792fC825115e6537C2e3b3af53f385d927",
       "sinceTimestamp": 1700125979,
       "sinceBlock": 18583475,
       "values": {
@@ -314,6 +317,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
+      "deployerAddress": "eth:0x17C8acE2dBa0d3060a7400B5AF79094a714d1537",
       "sinceTimestamp": 1703945135,
       "sinceBlock": 18898811,
       "values": {
@@ -389,6 +393,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3",
       "sinceTimestamp": 1694792111,
       "sinceBlock": 18142537,
       "values": {

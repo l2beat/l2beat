@@ -14,6 +14,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd",
       "sinceTimestamp": 1725516815,
       "sinceBlock": 20682521,
       "values": {
@@ -66,6 +67,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF",
       "sinceTimestamp": 1727798099,
       "sinceBlock": 20871672,
       "values": {
@@ -147,6 +149,7 @@
         "0x35fac1a306db1eec90fef4226afce6dcef2eee934335f4d2f51625a68f10f273"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e",
       "sinceTimestamp": 1725464663,
       "sinceBlock": 20678194,
       "values": {
@@ -223,6 +226,7 @@
         "currentPeriodEnd",
         "currentPeriodAmount"
       ],
+      "deployerAddress": "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e",
       "sinceTimestamp": 1724767871,
       "sinceBlock": 20620434,
       "values": {
@@ -336,6 +340,7 @@
         "0x3a22f204d585524196a1af919fb1dac397751b0b7872aff03ae207eb4d57ae7e"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e",
       "sinceTimestamp": 1724767847,
       "sinceBlock": 20620432,
       "values": {

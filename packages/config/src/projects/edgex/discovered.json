@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "1inch DEX aggregator supporting RFQ fills, limit-order fills and direct DEX swaps.",
+      "deployerAddress": "eth:0xCCbdBd9B0309a77fC6a56e087Ff2765ff394012e",
       "sinceTimestamp": 1667541899,
       "sinceBlock": 15894742,
       "values": {
@@ -48,6 +49,7 @@
       ],
       "proxyType": "immutable",
       "description": "DAC with admin funtions to manage members. Admins are not discoverable and thus not shown here.",
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435883,
       "sinceBlock": 20261309,
       "values": {
@@ -120,6 +122,7 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435919,
       "sinceBlock": 20261312,
       "values": {
@@ -195,6 +198,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
       "sinceTimestamp": 1756178879,
       "sinceBlock": 23222600,
       "values": {
@@ -257,6 +261,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x58B5DAf5662425C1B8aB4Be8B3A53e8A2374Dbf1",
       "sinceTimestamp": 1608623778,
       "sinceBlock": 11502031,
       "values": {
@@ -332,6 +337,7 @@
       ],
       "proxyType": "immutable",
       "description": "Special verifier for the escape() function.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1660252035,
       "sinceBlock": 15322966,
       "values": {
@@ -363,6 +369,7 @@
       ],
       "proxyType": "immutable",
       "description": "A deposit wrapper that allows users to deposit arbitrary tokens to EdgeX. Tokens are swapped to USDT via 1inch and deposited to edgeX. This deposit wrapper also has fast withdrawal support using liquidity providers, but it seems deprecated in practice. Standard direct deposits and withdrawals of USDT at the StarkPerpetual contract are fully supported.",
+      "deployerAddress": "eth:0x7396C0c9209fcbC6948A472835cC08c75eDe7f93",
       "sinceTimestamp": 1721641931,
       "sinceBlock": 20361294,
       "values": {
@@ -431,6 +438,7 @@
         "getValidiumTreeHeight",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "sinceTimestamp": 1720435859,
       "sinceBlock": 20261307,
       "values": {

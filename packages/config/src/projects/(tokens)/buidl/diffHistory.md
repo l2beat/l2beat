@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6d1ee9ff8dfb9584e38536383ee3c492d8ad0d12
+
+# Diff at Tue, 05 May 2026 10:24:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772790410
+- current timestamp: 1772790410
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772790410 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78"
+    }
+```
+
 Generated with discovered.json: 0x957e41dff52803113e586d7170bd21b734f09a74
 
 # Diff at Fri, 06 Mar 2026 09:47:54 GMT:

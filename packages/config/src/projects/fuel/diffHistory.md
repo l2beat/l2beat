@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x1f49ddac1e8755b37ece8612240dbcb609ab7489
+
+# Diff at Tue, 05 May 2026 10:22:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1773319393
+- current timestamp: 1773319393
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773319393 (main branch discovery), not current.
+
+```diff
+    contract Fuel Security Council (eth:0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+    }
+```
+
+```diff
+    contract Safe (eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
+    }
+```
+
+```diff
+    contract FuelERC20Gateway (eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
+```diff
+    contract FuelMessagePortal (eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
+```diff
+    contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
 Generated with discovered.json: 0x66b83643b4b88d0f58a18269cb5ff30b844e1fcc
 
 # Diff at Thu, 12 Mar 2026 12:44:23 GMT:

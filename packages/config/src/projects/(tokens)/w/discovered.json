@@ -13,6 +13,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "arb1:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95",
       "sinceTimestamp": 1713221460,
       "sinceBlock": 201421053,
       "values": {
@@ -91,6 +92,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "base:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95",
       "sinceTimestamp": 1713221517,
       "sinceBlock": 13216085,
       "values": {

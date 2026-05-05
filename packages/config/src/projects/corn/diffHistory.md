@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xb050338efd4cc9a377a44fafcbf2e616cf64c09c
+
+# Diff at Tue, 05 May 2026 10:22:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771857552
+- current timestamp: 1771857552
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857552 (main branch discovery), not current.
+
+```diff
+    contract wBTC Escrow (eth:0x00943b11764176C3a8323aEFCBd6fE70CFb6272d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x770a2350A9DC3daa77cdab2Dd7f15Aae2A44E8C1"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
++        "eth:0x5D2af120aED72585fd24E4176dbB4B484B84e0bE"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x37693F11f3D724E55D0B03D5F328D8202C913243) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract Governor (eth:0x515C7d8Fcb950f8b030ac08C994b37b4b8F3F7B5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x770a2350A9DC3daa77cdab2Dd7f15Aae2A44E8C1"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x6282197777e7c318C7209bd7059110886aa429C6) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x7368F782E109518fD3914e8b315eE45E51C15835) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0x90f6C3e6C11959A01eDc6ea392e6f659605b4237) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
++        "eth:0x5D2af120aED72585fd24E4176dbB4B484B84e0bE"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x91cB57F200Bd5F897E41C164425Ab4DB0991A64f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract cbBTC Escrow (eth:0x957C9DC25DE6B8E46a7Fa0D081bA749DD005B54f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x770a2350A9DC3daa77cdab2Dd7f15Aae2A44E8C1"
+    }
+```
+
+```diff
+    contract CornMultisig (eth:0xCff1ad9f09b32252171207e8525c90B18D4E2C7D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x770a2350A9DC3daa77cdab2Dd7f15Aae2A44E8C1"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xD1D75248ed95450B793d80F9fb418C2eD4c5F5e4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xDdaD5E59D056078A4E67a9d42e21Ce8057F22D60) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x23ddFc9AA09612eE0417d0655ED1076F153f915E"
+    }
+```
+
 Generated with discovered.json: 0x5cb3f98dfdf8fb6cee3f1e5193602e4d8641ee7b
 
 # Diff at Mon, 23 Feb 2026 14:40:22 GMT:

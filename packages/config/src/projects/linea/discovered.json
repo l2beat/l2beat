@@ -14,6 +14,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067875,
       "sinceBlock": 17834649,
       "values": {
@@ -222,6 +223,7 @@
         "0x9b55def99da5eeaf99eb27a930f5bf9d2b6ed2a2922160dc86392354d74186a6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
       "sinceTimestamp": 1774982003,
       "sinceBlock": 24779405,
       "values": {
@@ -250,6 +252,7 @@
         "0x7ab788a440162efc35a7039c3e15ea987e376bbf99d4f58bba72caf376914e99"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
       "sinceTimestamp": 1776685703,
       "sinceBlock": 24920910,
       "values": {
@@ -297,6 +300,7 @@
           "role": ".livenessRecoveryOperator"
         }
       ],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1733219987,
       "sinceBlock": 21321239,
       "values": {
@@ -317,6 +321,7 @@
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067827,
       "sinceBlock": 17834645,
       "values": {
@@ -363,6 +368,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691086259,
       "sinceBlock": 17836169,
       "values": {
@@ -394,6 +400,7 @@
         "0x7ee148e011c8bede6032fd936b398fc91310895ff79d18c8da7c538e1dd75140"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1770742547,
       "sinceBlock": 24427705,
       "values": {
@@ -423,6 +430,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L1 side of the old and now unused USDC bridge.",
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691086271,
       "sinceBlock": 17836170,
       "values": {
@@ -501,6 +509,7 @@
         }
       ],
       "ignoreInWatchMode": ["txNonce", "queueNonce"],
+      "deployerAddress": "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "sinceTimestamp": 1753454807,
       "sinceBlock": 22996844,
       "values": {
@@ -803,6 +812,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689149759,
       "sinceBlock": 17676233,
       "values": {
@@ -847,6 +857,7 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067839,
       "sinceBlock": 17834646,
       "values": {
@@ -921,6 +932,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
       "sinceTimestamp": 1748512535,
       "sinceBlock": 22587649,
       "values": {
@@ -995,6 +1007,7 @@
         "currentFinalizedShnarf",
         "currentFinalizedState"
       ],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689159923,
       "sinceBlock": 17677070,
       "values": {
@@ -1315,6 +1328,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x73d8e9e5D4EF80153d6e7662572479567a89C0Da",
       "sinceTimestamp": 1774950431,
       "sinceBlock": 24776789,
       "values": {
@@ -1362,6 +1376,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689150959,
       "sinceBlock": 17676332,
       "values": {
@@ -1427,6 +1442,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
       "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1770742511,
       "sinceBlock": 24427702,
       "values": {
@@ -1641,6 +1657,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689158711,
       "sinceBlock": 17676969,
       "values": {
@@ -1692,6 +1709,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1688650653,
       "sinceBlock": 3,
       "values": {
@@ -1744,6 +1762,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068282,
       "sinceBlock": 116555,
       "values": {
@@ -1956,6 +1975,7 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "linea:0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
       "sinceTimestamp": 1700507247,
       "sinceBlock": 918978,
       "values": {
@@ -2095,6 +2115,7 @@
         "lastAnchoredL1MessageNumber",
         "nextMessageNumber"
       ],
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1688650665,
       "sinceBlock": 4,
       "values": {
@@ -2312,6 +2333,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 side of the old and now unused USDC bridge.",
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691086556,
       "sinceBlock": 118064,
       "values": {
@@ -2395,6 +2417,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "sinceTimestamp": 1738349746,
       "sinceBlock": 15270058,
       "values": {
@@ -2448,6 +2471,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "linea:0xF06B7BD371e46e96DF807d45ED1298BeeE8894BA",
       "sinceTimestamp": 1689151821,
       "sinceBlock": 21,
       "values": {
@@ -2512,6 +2536,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691086544,
       "sinceBlock": 118063,
       "values": {
@@ -2542,6 +2567,7 @@
       ],
       "proxyType": "immutable",
       "description": "Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem.",
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1699958814,
       "sinceBlock": 854427,
       "values": {
@@ -2567,6 +2593,7 @@
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068234,
       "sinceBlock": 116551,
       "values": {
@@ -2602,6 +2629,7 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068246,
       "sinceBlock": 116552,
       "values": {
@@ -2763,6 +2791,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "linea:0xF06B7BD371e46e96DF807d45ED1298BeeE8894BA",
       "sinceTimestamp": 1689150124,
       "sinceBlock": 20,
       "values": {

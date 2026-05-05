@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xf5361750543263058a40c79a2d03961475615be0
+
+# Diff at Tue, 05 May 2026 10:22:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1765380759
+- current timestamp: 1765380759
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765380759 (main branch discovery), not current.
+
+```diff
+    contract MiddleTournament (eth:0x0a88360f41D0f643ea63ade00c0A1a795395d2D9) {
+    +++ description: Handles the intermediate stages of a dispute following the TopTournament targeting a more granular bisection game.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract InputBox (eth:0x1b51e2992A2755Ba4D6F7094032DF91991a0Cfac) {
+    +++ description: Serves as both the canonical log for arbitrary dApp inputs and a portal for depositing assets (one possible type of input). It ensures data availability and that all off-chain participants process the same inputs in the same order.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract CartesiStateTransition (eth:0x31EEaeC2A8d855B13B376b72C172F0c20A2910F6) {
+    +++ description: Onchain verifier that can execute a single, disputed instruction of the Cartesi machine. It is the ultimate arbiter that BottomTournament calls to determine which party's claimed state transition is correct.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract TopTournament (eth:0x367Ff3c21E189645aaf17bDD41D4C186686CfE53) {
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract MiddleTournamentFactory (eth:0x47c7f40841F842f7691cB9Fd6Cd63673B79dCe79) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract Cartesi Multisig (eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x77eBA70fe27aC8BA1f292bDa9108555e9a065e3b"
+    }
+```
+
+```diff
+    contract BottomTournamentFactory (eth:0x6ccb8955afFA2aE4A88a4fC30916b41074d1F2B6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract MultiLevelTournamentFactory (eth:0xa02997f69Dc5F1A727abE12ee36f87E28BBdEa6b) {
+    +++ description: Responsible for creating and orchestrating the multi-stage dispute process. It instantiates the correct tournament contract (Top, Middle, or Bottom) depending on the current stage of the dispute game.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract TopTournament_example (eth:0xA2835312696Afa86c969e40831857dbB1412627f) {
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game. The required bond amount for joining the Tournament is calculated from worst case gas estimates and currently is 0.23219805 ETH.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract ERC20Portal (eth:0xACA6586A0Cf05bD831f2501E7B4aea550dA6562D) {
+    +++ description: Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract CanonicalTournamentParametersProvider (eth:0xc8d8639C3ec8925A00d4F262299807DC632c3113) {
+    +++ description: Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract BottomTournament (eth:0xe6B4444d324E0B403c9C43C5d7c8B2C3d5d02962) {
+    +++ description: Referees the dispute over a single contested Cartesi machine step as the final stage of arbitration in a dispute. It calls the CartesiStateTransition contract to get a definitive on-chain ruling and identify the winner.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract DaveConsensus (eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259) {
+    +++ description: Contract managing PRT fraud-proof tournaments, application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract Application (eth:0xfDDF68726a28e418fA0c2a52c3134904a8c3e998) {
+    +++ description: Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the eth:0xF0D8374F8446E87e013Ec1435C7245E05f439259 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x144d45af1181b35f2b11c4b1150d6cb16934c28093707fb97c911ff16b3fe609`.
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
+```diff
+    contract TopTournamentFactory (eth:0xfdF16a7D9143f5E3B7B056b761a7eF8Ce18dc6eF) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x0e28A8f88C6266dF0FE274c15c1d4b27f8B373C0"
+    }
+```
+
 Generated with discovered.json: 0x1e9138497f63332bb00d490ec8cfaa9a8b8d38a8
 
 # Diff at Wed, 10 Dec 2025 15:33:43 GMT:

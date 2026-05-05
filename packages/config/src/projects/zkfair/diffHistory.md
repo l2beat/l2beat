@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xe19d3c10dacf6b255048c374e903d1c09f531c6e
+
+# Diff at Tue, 05 May 2026 10:24:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1745306051
+- current timestamp: 1745306051
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745306051 (main branch discovery), not current.
+
+```diff
+    contract ZKFairAdmin (eth:0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x39FcAEb9870cB015f2165e93c51f4663AE970953"
+    }
+```
+
+```diff
+    contract ZKFairValidium (eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract Timelock (eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract GlobalExitRoot (eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract FflonkVerifier (eth:0x769E285d2120472c3400A09684B82A842012F46d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract ZKFairOwner (eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (eth:0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract OldBridge (eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract Bridge (eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xFA12a0567fa25fB45405Efd3786b565941E3E84b"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
 Generated with discovered.json: 0xc7de4fa7fa6af5b14887dbb478b1af40c621313d
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -1,3 +1,188 @@
+Generated with discovered.json: 0x572e14611c461a1bc743e0b20b71a25485e25983
+
+# Diff at Tue, 05 May 2026 10:22:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1765379686
+- current timestamp: 1765379686
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765379686 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      implementationNames.arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0:
+-        ""
++        "RollupProxy"
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91","role":".owner"}
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    EOA  (arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin","via":[{"address":"arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"},{"address":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      controlsMajorityOfUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb-nova:0x19bD7120cD19D6BE6D21f987544e404e47608c16) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin"}]
+      values.owner:
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      implementationNames.arb-nova:0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","role":"admin"},{"permission":"upgrade","from":"arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","role":"admin"},{"permission":"upgrade","from":"arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","role":"admin"}]
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb-nova:0x2964CBfC551A76527D42F57131E7f77f9Dce8921) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb-nova:0x6c21303F5986180B1394d2C89f3e883890E2867b) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb-nova:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb-nova:0x77E1b4F2e1bf192975c59bdF44EcB5a2D42AF017) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb-nova:0x944dB3fA4828B5F41ca0E77b97867529F1A899cB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Outbox (arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract Bridge (arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb-nova:0xfaD0d420ffF503a40E9CDcb90ff0328E46f06c08) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Inbox (arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
+    }
+```
+
 Generated with discovered.json: 0xdba1df039a07ad0ee4c1c6a20cd757175e319c7c
 
 # Diff at Mon, 05 Jan 2026 17:44:54 GMT:

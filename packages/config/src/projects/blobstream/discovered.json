@@ -68,6 +68,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C",
       "sinceTimestamp": 1710506484,
       "sinceBlock": 190629615,
       "values": {
@@ -129,6 +130,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1710651080,
       "sinceBlock": 191198934,
       "values": {
@@ -262,6 +264,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C",
       "sinceTimestamp": 1710507013,
       "sinceBlock": 11858833,
       "values": {
@@ -323,6 +326,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1710651207,
       "sinceBlock": 11930930,
       "values": {
@@ -449,6 +453,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1717615307,
       "sinceBlock": 20027685,
       "values": {
@@ -537,6 +542,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x32d45a5105FE6B497936018542cD5af6960d42a0",
       "sinceTimestamp": 1717613015,
       "sinceBlock": 20027494,
       "values": {
