@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777888193,
-  "lastConsumedUpdateNotifierId": 154,
+  "lastReconciledAt": 1777973842,
+  "lastConsumedUpdateNotifierId": 157,
   "events": [
     {
       "timestamp": "2026-05-04T09:33:39.000Z",
@@ -107,6 +107,113 @@
           "field": "values.available_supply",
           "before": "2387470861339197694407252780",
           "after": "2387795602492592948782956300"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "157:eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.1",
+          "before": "eth:0xbA037E4746ff58c55dc8F27a328C428F258DDACb",
+          "after": "eth:0xb291232F480F41c75802C4a60F1D2AC03404Afef"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+      "contractName": "Lombard Staked Bitcoin Token",
+      "isDependency": true,
+      "entity": "Lombard",
+      "id": "157:eth:0x8236a87084f8B84306f72007F36F2618A5634494:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.ratio",
+          "before": "996197896618977227",
+          "after": "996150452424123451"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+      "contractName": "NativeLBTC",
+      "isDependency": true,
+      "entity": "Lombard",
+      "id": "157:eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getMintFee",
+          "before": 84,
+          "after": 512
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "contractName": "Wrapped Ether Token",
+      "isDependency": true,
+      "entity": "Wrapped Ether",
+      "id": "157:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": "1866136792662239314334094",
+          "after": "1894635654227268804718832"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+      "contractName": "Rocket Pool Protocol Token",
+      "isDependency": true,
+      "entity": "Rocket Pool",
+      "id": "157:eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.inflationCalculate",
+          "before": "74871013540306450933802",
+          "after": "77871061442449702078951"
+        },
+        {
+          "field": "values.getInflationIntervalsPassed",
+          "before": 25,
+          "after": 26
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 157,
+      "address": "eth:0xD533a949740bb3306d119CC777fa900bA034cd52",
+      "contractName": "Curve DAO Token",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "157:eth:0xD533a949740bb3306d119CC777fa900bA034cd52:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.available_supply",
+          "before": "2387795602492592948782956300",
+          "after": "2388108604424764735392844380"
         }
       ]
     }

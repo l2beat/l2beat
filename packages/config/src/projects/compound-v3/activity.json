@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777541216,
-  "lastConsumedUpdateNotifierId": 143,
+  "lastReconciledAt": 1777972761,
+  "lastConsumedUpdateNotifierId": 156,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2543,6 +2543,23 @@
       "entity": null,
       "id": "143:eth:0x030A60EB6A12C4B31fB2F0d7108Bfbf8425b5d92:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-05T09:17:30.000Z",
+      "updateNotifierId": 156,
+      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "contractName": "cUSDTv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "156:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.isWithdrawPaused",
+          "before": true,
+          "after": false
+        }
+      ]
     }
   ]
 }

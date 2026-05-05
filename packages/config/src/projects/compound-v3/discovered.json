@@ -1,6 +1,6 @@
 {
   "name": "compound-v3",
-  "timestamp": 1777887219,
+  "timestamp": 1777972650,
   "configHash": "0x7adb18c8899a16d2bca5647a972f2b6b17b002c1d72a57394e049470212434bb",
   "entries": [
     {
@@ -556,7 +556,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "54180041901103568",
+        "totalSupply": "54355831217047695",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -890,15 +890,15 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "959464456385670596249",
+        "getReserves": "959543354235694566574",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "929327384383009558",
+        "getUtilization": "552886120735607697",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
         "isSupplyPaused": false,
         "isTransferPaused": true,
-        "isWithdrawPaused": true,
+        "isWithdrawPaused": false,
         "numAssets": 17,
         "pauseGuardian": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
         "storeFrontPriceFactor": "700000000000000000",
@@ -907,8 +907,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 8561643835,
         "supplyPerSecondInterestRateSlopeLow": 634195839,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "52777045873911025140645",
-        "totalSupply": "56790560294324676059875",
+        "totalBorrow": "30140658825816144589454",
+        "totalSupply": "54515122335935306327087",
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -1010,7 +1010,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
         "NAME": "Gnosis Safe",
-        "nonce": 91,
+        "nonce": 92,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1058,7 +1058,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1866136792662239314334094"
+        "totalSupply": "1894635654227268804718832"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1415,9 +1415,9 @@
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 13956173608789,
+        "getReserves": 13956467677020,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "766690947964083814",
+        "getUtilization": "773220186017885769",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1432,8 +1432,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 268032734079824,
-        "totalSupply": 349596774748632,
+        "totalBorrow": 269239277372052,
+        "totalSupply": 348204912899725,
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -1475,8 +1475,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1777887203,
-          "updatedAt": 1777887203,
+          "startedAt": 1777972631,
+          "updatedAt": 1777972631,
           "answeredInRound": 1
         },
         "version": 1
@@ -2423,6 +2423,6 @@
     "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb"
   },
-  "usedBlockNumbers": { "ethereum": 25020763 },
+  "usedBlockNumbers": { "ethereum": 25027851 },
   "permissionsConfigHash": "0xcf70bbbefa7e8cd597869782415ab1ec4f9d554f16e4733d56d76e51312ab393"
 }
