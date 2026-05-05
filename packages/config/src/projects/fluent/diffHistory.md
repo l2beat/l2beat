@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x9a8b42f3b40b7647a3db7cd43cdb0fde3ee68f09
+Generated with discovered.json: 0xbe0a77cf9fb4ad99342c27607c97a3be1d10ce9f
 
-# Diff at Tue, 28 Apr 2026 13:55:45 GMT:
+# Diff at Tue, 05 May 2026 15:26:16 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current timestamp: 1777384482
 
 ## Description
@@ -37,7 +37,7 @@ initial discovery
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
     +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 

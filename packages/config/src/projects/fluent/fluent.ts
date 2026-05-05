@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('fluent')
 
@@ -261,6 +262,8 @@ export const fluent: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    // programHashes: todo after all nitro verifiers are configured
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   chainConfig: {

@@ -210,7 +210,7 @@
       }
     },
     {
-      "name": "SP1Verifier",
+      "name": "SP1VerifierGateway",
       "address": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
@@ -1719,5 +1719,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 24978991 },
-  "permissionsConfigHash": "0x737ca979a71cab314610bd59a411174443b62b2b26b8340e968a4bb91a90bbf2"
+  "permissionsConfigHash": "0x00bbc22c2018f4b9a75463a60c367caa84652913706b7e9f4baafe6bde0e8044"
 }
