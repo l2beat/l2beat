@@ -62,6 +62,7 @@ interface FlowsStats {
   topRoute: { srcChain: string; dstChain: string } | undefined
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
+  topProtocol: FlowProtocol | undefined
 }
 
 export type InteropFlowsData = {
@@ -98,6 +99,7 @@ export async function getInteropFlows(
         topRoute: undefined,
         topChain: undefined,
         topToken: undefined,
+        topProtocol: undefined,
       },
     }
   }
@@ -117,6 +119,7 @@ export async function getInteropFlows(
     chainTopProtocols,
     chainPairTopProtocols,
     topToken: topTokenEntry,
+    topProtocol: topProtocolEntry,
     tokenIds,
   } = getInteropFlowAggregates(records, subgroupProjects)
 
@@ -193,6 +196,9 @@ export async function getInteropFlows(
   }
 
   const topToken = topTokenEntry ? resolveToken(topTokenEntry) : undefined
+  const topProtocol = topProtocolEntry
+    ? resolveProtocol(topProtocolEntry)
+    : undefined
   const chainData = computeChainsData(
     flows,
     params.chains,
@@ -222,6 +228,7 @@ export async function getInteropFlows(
           }
         : undefined,
       topToken,
+      topProtocol,
     },
   }
 }
@@ -333,6 +340,13 @@ function getMockInteropFlows(): InteropFlowsData {
       topToken: {
         symbol: 'ETH',
         iconUrl: '/icons/tokens/ether.png',
+        volume: 1_000_000,
+      },
+      topProtocol: {
+        id: 'layerzero',
+        slug: 'layerzero',
+        name: 'LayerZero',
+        iconUrl: '/icons/layerzero.png',
         volume: 1_000_000,
       },
     },
