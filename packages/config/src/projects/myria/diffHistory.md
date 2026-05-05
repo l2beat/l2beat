@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xc7e1a48a78e81c140600f0bd67786515097fe72a
+
+# Diff at Mon, 04 May 2026 10:44:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777546417
+- current timestamp: 1777891434
+
+## Description
+
+Verifier upgrade finalized, it is now actively used.
+
+## Watched changes
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x9d9ff50ee70f44b07890de5d41ed6f4ea8ea6224
 
 # Diff at Thu, 30 Apr 2026 10:54:40 GMT:

@@ -25,8 +25,16 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   return data as ApiProjectsResponse
 }
 
-export async function getProject(project: string): Promise<ApiProjectResponse> {
-  const res = await fetch(`/api/projects/${project}`)
+export async function getProject(
+  project: string,
+  maxDepth?: number,
+): Promise<ApiProjectResponse> {
+  const params = new URLSearchParams()
+  if (maxDepth !== undefined) {
+    params.set('maxDepth', String(maxDepth))
+  }
+  const qs = params.toString()
+  const res = await fetch(`/api/projects/${project}${qs ? `?${qs}` : ''}`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }

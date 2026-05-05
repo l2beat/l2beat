@@ -1,6 +1,6 @@
 {
   "name": "zksync2",
-  "timestamp": 1777296071,
+  "timestamp": 1777883283,
   "configHash": "0x6c761518d4b64f6d282ec7ccf5cd6106e82c31469e3bfad3ae68dd90e726b7c6",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -90,43 +90,23 @@
         "validatorVTL": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-              "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-              "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
-            ]
+            "members": ["eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-              "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-              "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
-            ]
+            "members": ["eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-              "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-              "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
-            ]
+            "members": ["eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-              "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-              "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
-            ]
+            "members": ["eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
-              "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
-              "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
-            ]
+            "members": ["eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"]
           }
         }
       },
@@ -570,7 +550,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3307062,
+        "getFirstUnprocessedPriorityTx": 3307353,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -578,8 +558,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 6,
-        "getPriorityTreeRoot": "0xbb40dc14aa6fc86bf30b835fea4cfc0484707d9a52b77849059b67dd66abaf95",
+        "getPriorityQueueSize": 11,
+        "getPriorityTreeRoot": "0xca17943202df712550a3b2a49c07cf7f1c3155a9dc67196ae0cae599243f863a",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -587,13 +567,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 510109,
-        "getTotalBatchesExecuted": 510102,
-        "getTotalBatchesVerified": 510107,
-        "getTotalBlocksCommitted": 510109,
-        "getTotalBlocksExecuted": 510102,
-        "getTotalBlocksVerified": 510107,
-        "getTotalPriorityTxs": 3307068,
+        "getTotalBatchesCommitted": 510434,
+        "getTotalBatchesExecuted": 510427,
+        "getTotalBatchesVerified": 510432,
+        "getTotalBlocksCommitted": 510434,
+        "getTotalBlocksExecuted": 510427,
+        "getTotalBlocksVerified": 510432,
+        "getTotalPriorityTxs": 3307364,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -862,9 +842,10 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorVTL"
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
         }
       ]
     },
@@ -931,9 +912,10 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorVTL"
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
+          "role": ".executor"
         }
       ]
     },
@@ -996,7 +978,7 @@
         "0x315e1d3b3696636efa0d248c975aa4b01c6122915580099acaf0da0bffa4f224"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.",
+      "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
@@ -1009,6 +991,16 @@
       "values": {
         "$admin": "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB",
         "$implementation": "eth:0xc954B4D51031870624f3e779Ead14C57249C111D",
+        "$members": [
+          "eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7",
+          "eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693",
+          "eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F",
+          "eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b",
+          "eth:0x6D290f04A5908F0390647d9903230de3844e5cA0",
+          "eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b",
+          "eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726",
+          "eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"
+        ],
         "$pastUpgrades": [
           [
             "2026-04-08T16:41:35.000Z",
@@ -1016,6 +1008,7 @@
             ["eth:0xc954B4D51031870624f3e779Ead14C57249C111D"]
           ]
         ],
+        "$threshold": 3,
         "$upgradeCount": 1,
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
@@ -1031,6 +1024,12 @@
         },
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
+        "executor": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd",
+            "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+          ]
+        },
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getName": "ValidatorTimelock",
         "multisigMembers": [
@@ -1055,13 +1054,13 @@
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
-        "threshold": 0,
+        "threshold": 3,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
       },
       "fieldMeta": {
-        "threshold": { "severity": "HIGH" },
-        "multisigMembers": { "severity": "HIGH" }
+        "multisigMembers": { "severity": "HIGH" },
+        "threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d": "TransparentUpgradeableProxy",
@@ -1648,11 +1647,11 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xa6ebcb5e864b4bf305c01ab9f721b5ceff5b3ba41f9bd9f98bc6db590b197023",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x55d204472e25f4714e0b26d4449b39099a93ef829660099d6504ef808f61138e",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24971643 },
-  "permissionsConfigHash": "0x6b023aaa57c0f34bbef818fad7bad5f003dbb4b14ef44297df476dc36931c13f"
+  "usedBlockNumbers": { "ethereum": 25020439 },
+  "permissionsConfigHash": "0xd4f5b4fc3f3d925dce692a79570ca40a5b8444cb8c18901952363a55bf71b8e2"
 }

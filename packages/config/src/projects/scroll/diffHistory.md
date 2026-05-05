@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xa21fbe1d2451b516734539d293c42fc5153a6838
+
+# Diff at Tue, 05 May 2026 09:26:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@33baeefbd652187149f13ba1f2d74d0c748bdb2d block: 1774953745
+- current timestamp: 1774953745
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774953745 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
++        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
++        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+    }
+```
+
+```diff
+    contract ProxyAdmin (scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
++        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
+    }
+```
+
+```diff
+    contract L2PauseController (scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1"
+    }
+```
+
 Generated with discovered.json: 0xcdd03d7afe7404d2c7393488325d9d1c192626ac
 
 # Diff at Tue, 31 Mar 2026 10:43:47 GMT:

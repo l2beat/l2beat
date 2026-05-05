@@ -22,6 +22,7 @@ import {
 } from '~/components/core/Tabs'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { TokensPairsTable } from './TokenPairsTable'
 import { type TokensQueryInput, TokensTable } from './TokensTable'
@@ -146,12 +147,14 @@ export function SelectedChainsTokensDialog({
   type,
   isOpen,
   setIsOpen,
+  apiSelection,
   title,
   showNetMintedValueColumn,
   showFlowsColumn,
 }: Omit<TokensDialogProps, 'queryInput' | 'subtitle'> & {
   id: ProjectId | undefined
   type?: KnownInteropBridgeType
+  apiSelection?: InteropSelection
 }) {
   const { selectionForApi } = useInteropSelectedChains()
 
@@ -159,7 +162,7 @@ export function SelectedChainsTokensDialog({
     <TokensDialog
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      queryInput={{ ...selectionForApi, id, type }}
+      queryInput={{ ...(apiSelection ?? selectionForApi), id, type }}
       title={title}
       subtitle={<BetweenChainsInfo className="mt-1" />}
       showNetMintedValueColumn={showNetMintedValueColumn}

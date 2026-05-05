@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x3ff268f3009e5b9803d5674fcd8170ffd26c788c
+
+# Diff at Tue, 05 May 2026 09:27:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@33baeefbd652187149f13ba1f2d74d0c748bdb2d block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeProxy"
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535","role":"admin"}
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      unverified:
+-        true
+      values.l2Bridge:
++        "zksync:0x7187DB8AB8F65450a74dD40474bE778CF468C44a"
+      values.l2TokenBeacon:
++        "zksync:0x2140d3e4008592E1a6c106ACCfc24335A49AeC8C"
+      values.l2TokenProxyBytecodeHash:
++        "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
+      implementationNames.zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40:
+-        ""
++        "L1ERC20Bridge"
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      unverified:
+-        true
+      values.feeParams:
++        {"pubdataPricingMode":0,"batchOverheadL1Gas":1000000,"maxPubdataPerBatch":120000,"maxL2GasPerBatch":80000000,"priorityTxMaxPubdata":99000,"minimalL2GasPrice":250000000}
+      values.FORWARD_REQUEST_TYPE_HASH:
++        "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c"
+      values.forwardFeeAllocator:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.gateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGovernor:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.getPriorityTxMaxGasLimit:
++        72000000
+      values.IS_ETH_GAS_TOKEN:
++        true
+      values.owner:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.paused:
++        false
+      values.txGasPrice:
++        40000000000
+      implementationNames.zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E:
+-        ""
++        "ZkLink"
+      template:
++        "zklinknova/secondaryZkLink"
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x94e0207fd47e2edc81a09d7ec295676165c1c03b
 
 # Diff at Tue, 04 Nov 2025 11:35:01 GMT:

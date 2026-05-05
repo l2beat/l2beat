@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
-import { getCode, getProject } from '../../../api/api'
+import { getCode } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconChatbot } from '../../../icons/IconChatbot'
@@ -8,6 +8,7 @@ import { IconClose } from '../../../icons/IconClose'
 import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
 import { findSelected } from '../../../utils/findSelected'
+import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
 
@@ -174,7 +175,7 @@ const toClipboard = async (
       break
     }
     case 'values': {
-      const projectData = await getProject(project)
+      const projectData = await getProjectQueryOptions(project).queryFn()
       const contract = findSelected(projectData.entries, selectedAddress)
       if (!contract) break
       const fields = formatContractValues(contract, contract.blockNumber)
@@ -183,7 +184,7 @@ const toClipboard = async (
       break
     }
     case 'list': {
-      const projectData = await getProject(project)
+      const projectData = await getProjectQueryOptions(project).queryFn()
       for (const chain of projectData.entries) {
         const contracts = [
           ...chain.initialContracts,
@@ -206,7 +207,7 @@ const toClipboard = async (
       break
     }
     case 'nodes': {
-      const projectData = await getProject(project)
+      const projectData = await getProjectQueryOptions(project).queryFn()
       for (const chain of projectData.entries) {
         const contracts = [
           ...chain.initialContracts,

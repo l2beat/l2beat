@@ -1,6 +1,6 @@
 {
   "name": "polygon-pos",
-  "timestamp": 1776866125,
+  "timestamp": 1777964012,
   "configHash": "0x6e415e01070626095a4349f2876188545236a3cfb8ecf78a8c17f1e8d4a41f84",
   "entries": [
     {
@@ -141,7 +141,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3161488,
+        "counter": 3164504,
         "isOwner": false,
         "owner": "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -274,7 +274,7 @@
       "sinceBlock": 10167715,
       "values": {
         "$immutable": true,
-        "erc20Predicate": "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966",
+        "erc20Predicate": "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0",
         "erc721Predicate": "eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b",
         "getChildChainAndStateSender": [
           "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861",
@@ -460,7 +460,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 803,
+        "nonce": 805,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -523,7 +523,7 @@
         ],
         "symbol": "MV",
         "tokenURI": ["", "", "", ""],
-        "totalSupply": 136
+        "totalSupply": 135
       },
       "implementationNames": {
         "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": "StakingNFT"
@@ -563,6 +563,21 @@
       "implementationNames": {
         "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": "GnosisSafeProxy",
         "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "ERC20PredicateBurnOnly",
+      "address": "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x64ce795eece141785456d3e10df0bf177f0b6485ced89f7cce54661ef1c811ec"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1776938855,
+      "sinceBlock": 24941945,
+      "values": { "$immutable": true, "CHAINID": 137, "networkId": "0x89" },
+      "implementationNames": {
+        "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0": "ERC20PredicateBurnOnly"
       }
     },
     {
@@ -678,13 +693,13 @@
         "CHECKPOINT_REWARD": "34695980000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 101831,
-        "currentValidatorSetSize": 104,
-        "currentValidatorSetTotalStake": "3633203116282008575325769956",
+        "currentEpoch": 102539,
+        "currentValidatorSetSize": 103,
+        "currentValidatorSetTotalStake": "3595919195118573241254191920",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 101831,
+        "epoch": 102539,
         "eventsHub": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -698,7 +713,7 @@
         "minDeposit": "100000000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 201,
+        "NFTCounter": 202,
         "owner": "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -712,20 +727,20 @@
         "registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3447441228983286777287159",
+        "rewardPerStake": "3456689285617126277263851",
         "rootChain": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "12280939209428901681108",
+        "totalHeimdallFee": "12307939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "158815666265248595332067417",
-        "totalStaked": "11547839814590343633316836",
+        "totalRewardsLiquidated": "159644295707488746942490569",
+        "totalStaked": "11620703737334340300083706",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3633203116282008575325769956",
-          "stakerCount": 104
+          "amount": "3595919195118573241254191920",
+          "stakerCount": 103
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -734,21 +749,6 @@
       "implementationNames": {
         "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManagerProxy",
         "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c": "StakeManager"
-      }
-    },
-    {
-      "name": "ERC20PredicateBurnOnly",
-      "address": "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x092f79b45e87c85adda18907fcbba7aed8e404cfabc82f58091060b80b179a2c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1724593763,
-      "sinceBlock": 20606009,
-      "values": { "$immutable": true, "CHAINID": 15001, "networkId": "0x3a99" },
-      "implementationNames": {
-        "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966": "ERC20PredicateBurnOnly"
       }
     },
     {
@@ -927,7 +927,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 1018310000,
+        "_nextHeaderBlock": 1025390000,
         "$immutable": false,
         "$implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -936,8 +936,8 @@
           "_registry": "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 1018300000,
-        "getLastChildBlock": 85871781,
+        "currentHeaderBlock": 1025380000,
+        "getLastChildBlock": 86420645,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1126,7 +1126,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4456,7 +4456,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 235,
+        "nonce": 236,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4963,6 +4963,15 @@
     "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a": [
       "constructor(address _singleton)"
     ],
+    "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0": [
+      "constructor(address _withdrawManager, address _depositManager)",
+      "function CHAINID() view returns (uint256)",
+      "function interpretStateUpdate(bytes state) view returns (bytes)",
+      "function networkId() view returns (bytes)",
+      "function onFinalizeExit(bytes data)",
+      "function startExitWithBurntTokens(bytes data)",
+      "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
+    ],
     "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03": [
       "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -5018,15 +5027,6 @@
       "function transferOwnership(address newOwner)",
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
-    ],
-    "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966": [
-      "constructor(address _withdrawManager, address _depositManager)",
-      "function CHAINID() view returns (uint256)",
-      "function interpretStateUpdate(bytes state) view returns (bytes)",
-      "function networkId() view returns (bytes)",
-      "function onFinalizeExit(bytes data)",
-      "function startExitWithBurntTokens(bytes data)",
-      "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
     ],
     "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b": [
       "constructor(address _proxyTo)",
@@ -5679,6 +5679,6 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24935904 },
-  "permissionsConfigHash": "0xd36b8f5f21863c89d24b84ee4960b6bc90c523f0059c93c48560d7dbcc043d1a"
+  "usedBlockNumbers": { "ethereum": 25027135 },
+  "permissionsConfigHash": "0x3603c17442e5557127cece3c23beaed5b4b8e7abde617507c1de8a9f14ad01ba"
 }

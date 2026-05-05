@@ -10,5 +10,6 @@
         }
       ]
     }
-  }
+  },
+  "ignoreMethods": ["proxiableUUID"]
 }

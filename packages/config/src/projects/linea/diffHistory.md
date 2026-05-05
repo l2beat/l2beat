@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x5117362d8a1234754fcb2fb0073af49d675ba664
+
+# Diff at Mon, 04 May 2026 10:46:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1776857404
+- current timestamp: 1777891456
+
+## Description
+
+Upgraded Linea SC to Safe v1.4.1: https://github.com/safe-fndn/safe-smart-account/blob/release/v1.4.1/contracts/Safe.sol, upgraded Linea Multisig 3 to SafeL2 v1.4.1: https://github.com/safe-fndn/safe-smart-account/blob/release/v1.4.1/contracts/SafeL2.sol.
+
+Adjusted `targetWithdrawalReservePercentageBps` yield parameter, reduced the total amount of ether that can leave L2MessageService on Linea L2 per day.
+
+## Watched changes
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.1:
+-        "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
++        "eth:0xD6481cC92eD746EbC679788654723Ce49D45EbeA"
+      values.$members.7:
+-        "eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087"
++        "eth:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: Value relative to TVS, part of the computation of target rollup ETH reserve.
+      values.targetWithdrawalReservePercentageBps:
+-        9980
++        9888
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
++++ description: The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds.
+      values.limitInWei:
+-        "24000000000000000000000"
++        "8000000000000000000000"
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+      values.$implementation:
+-        "linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762"
+      values.$members.2:
+-        "linea:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
++        "linea:0xD6481cC92eD746EbC679788654723Ce49D45EbeA"
+      values.$members.8:
+-        "linea:0x99234cd9B532F30538ac797D33c212e3B69Fd087"
++        "linea:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762:
++        "SafeL2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xD6481cC92eD746EbC679788654723Ce49D45EbeA)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Linea Multisig 3/SafeL2.sol}                   |  878 ++++++++------
+ .../Linea Security Council/Safe.sol}               |  848 ++++++++------
+ .../src/projects/linea/.flat/Safe/Safe.sol         | 1216 ++++++++++++++++++++
+ .../src/projects/linea/.flat/Safe/SafeProxy.p.sol  |   42 +
+ 4 files changed, 2305 insertions(+), 679 deletions(-)
+```
+
 Generated with discovered.json: 0x343660c1cc7a486664c9920e1cb08bee3338a34b
 
 # Diff at Wed, 22 Apr 2026 11:31:09 GMT:

@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { env } from '~/env'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -12,10 +13,12 @@ export function MultipleChainsStats({
   chainIdA,
   chainIdB,
   selectedChains,
+  linkTopProtocols,
 }: {
   chainIdA: string
   chainIdB: string
   selectedChains: string[]
+  linkTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -62,6 +65,10 @@ export function MultipleChainsStats({
           items={pairData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
+            href:
+              linkTopProtocols && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES
+                ? `/interop/protocols/${p.slug}`
+                : undefined,
           }))}
         />
       )}

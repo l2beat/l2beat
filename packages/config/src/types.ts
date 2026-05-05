@@ -1247,6 +1247,8 @@ export interface InteropConfig {
   name?: string
   shortName?: string
   description?: string
+  /** Longer markdown description visible on interop detailed pages. */
+  detailedDescription?: string
   type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'

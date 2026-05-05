@@ -39,6 +39,14 @@ export const projectParamsSchema = z.object({
   project: safeStringSchema,
 })
 
+const projectQuerySchema = z.object({
+  maxDepth: z
+    .string()
+    .check((v) => /^\d+$/.test(v), 'maxDepth must be a non-negative integer')
+    .transform((v) => Number(v))
+    .optional(),
+})
+
 const projectAddressParamsSchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
@@ -96,9 +104,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       res.status(400).json({ errors: paramsValidation.message })
       return
     }
+    const queryValidation = projectQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
     const { project } = paramsValidation.data
+    const { maxDepth } = queryValidation.data
 
-    const response = getProject(configReader, templateService, project)
+    const response = getProject(
+      configReader,
+      templateService,
+      project,
+      maxDepth,
+    )
     res.json(response)
   })
 

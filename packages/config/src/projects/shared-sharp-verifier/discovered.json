@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1777544162,
+  "timestamp": 1777891441,
   "configHash": "0x265fb8f2732803d362c9a17deb5b3cd671f7ab4368644157cc5a8db89ca42b70",
   "entries": [
     {
@@ -4659,7 +4659,7 @@
           "2358844945297786488640123814540854423585455959362109345448922524567546993330",
           "2344514586684536563385559840360704301482767436870016911498865422916991654732"
         ],
-        "hasRegisteredFact": false,
+        "hasRegisteredFact": true,
         "identify": "StarkWare_GpsStatementVerifier_2026_13",
         "memoryPageFactRegistry": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
         "PAGE_INFO_ADDRESS_OFFSET": 0,
@@ -8523,6 +8523,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x9f442d61eda2d5aabf1141b1f7769fd6c3100f2fae6777f87260eb27a9903db4",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 24992265 },
+  "usedBlockNumbers": { "ethereum": 25021112 },
   "permissionsConfigHash": "0x84fc3f8140b1aac4eff37ef3b01ace055229569c76d1c0244cac756aabdbdcd3"
 }

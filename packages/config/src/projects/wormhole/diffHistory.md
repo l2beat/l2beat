@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x2da78b1c0ab9c97b9e9acab9264221de4a4fd47a
+
+# Diff at Tue, 05 May 2026 07:13:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@26382144ce3c79862aee73e15f619d0a40458aae block: 1777463355
+- current timestamp: 1777964358
+
+## Description
+
+guardian set rotation.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777463355 (main branch discovery), not current.
+
+```diff
+    contract WormholeCore (eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge.
+      fieldMeta.guardianSet.severity:
+-        "HIGH"
+      fieldMeta.guardianSet.description:
+-        "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed."
++        "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed. Changes of the stored guardian sets are invisible until the set is selected."
+      fieldMeta.getCurrentGuardianSetIndex.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x867c58a3b0f796e972b3e1b5f639f27fe1b6b8fd
 
 # Diff at Wed, 29 Apr 2026 11:50:20 GMT:

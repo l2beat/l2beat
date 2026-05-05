@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xe1373c348da460848db0f38ff63cc94a3f2464a9
+
+# Diff at Tue, 05 May 2026 09:26:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@33baeefbd652187149f13ba1f2d74d0c748bdb2d block: 1771280072
+- current timestamp: 1771280072
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771280072 (main branch discovery), not current.
+
+```diff
+    contract INTMAX Multisig 2 (scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      implementationNames.scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD:
+-        "GnosisSafeProxy"
++        "GnosisSafeL2"
+    }
+```
+
 Generated with discovered.json: 0x7d911154dc2400adf1b818af5e0bceb9d34a635b
 
 # Diff at Mon, 23 Feb 2026 13:58:21 GMT:
