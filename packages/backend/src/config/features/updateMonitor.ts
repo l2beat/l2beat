@@ -134,26 +134,32 @@ function getChainDiscoveryConfig(
     multicall: multicallConfig,
     explorer:
       explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'
-        ? {
-            type: explorerApi.type,
-            url: explorerApi.url,
-            unsupported: {
-              getContractCreation: explorerApi.contractCreationUnsupported,
+        ? [
+            {
+              type: explorerApi.type,
+              url: explorerApi.url,
+              unsupported: {
+                getContractCreation: explorerApi.contractCreationUnsupported,
+              },
             },
-          }
+          ]
         : explorerApi.type === 'sourcify'
-          ? {
-              type: explorerApi.type,
-              chainId: explorerApi.chainId,
-            }
-          : {
-              type: explorerApi.type,
-              url: explorerApi.customUrl ?? env.string('ETHERSCAN_API_URL'),
-              apiKey: explorerApi.customUrl
-                ? ''
-                : env.string('ETHERSCAN_API_KEY'),
-              // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
-              chainId: chainConfig.chainId!,
-            },
+          ? [
+              {
+                type: explorerApi.type,
+                chainId: explorerApi.chainId,
+              },
+            ]
+          : [
+              {
+                type: explorerApi.type,
+                url: explorerApi.customUrl ?? env.string('ETHERSCAN_API_URL'),
+                apiKey: explorerApi.customUrl
+                  ? ''
+                  : env.string('ETHERSCAN_API_KEY'),
+                // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
+                chainId: chainConfig.chainId!,
+              },
+            ],
   }
 }

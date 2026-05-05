@@ -35,6 +35,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1729268843,
       "sinceBlock": 20993638,
       "values": {
@@ -396,6 +397,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -535,6 +537,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
       "values": {
@@ -566,6 +569,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "deployerAddress": "eth:0x8fc4cB81975cFE4652630b77E86EF0e4193Aa17e",
       "sinceTimestamp": 1743696419,
       "sinceBlock": 22189472,
       "values": {
@@ -596,6 +600,7 @@
           "role": ".getTransactionFilterer"
         }
       ],
+      "deployerAddress": "eth:0x4cB9ac68A2151f14E8242a984b1F1faDb36EBF60",
       "sinceTimestamp": 1746728915,
       "sinceBlock": 22440582,
       "values": {
@@ -657,6 +662,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
       "values": {
@@ -709,6 +715,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
       "values": {
@@ -762,6 +769,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1729079339,
       "sinceBlock": 20977925,
       "values": {
@@ -832,6 +840,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
       "sinceTimestamp": 1729249919,
       "sinceBlock": 20992068,
       "values": {
@@ -881,6 +890,7 @@
         "0xab9a40a5f27251ca4b4884dedef5a2b49a8928796a1fd0c6655f1623be961602"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x299174d47c243B5381c6062aBEFbfF915B601D85",
       "sinceTimestamp": 1734114251,
       "sinceBlock": 21395362,
       "values": {

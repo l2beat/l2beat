@@ -1,3 +1,221 @@
+Generated with discovered.json: 0xf0386a8138c9a30e037eac88f17ac7824ae0dce4
+
+# Diff at Tue, 05 May 2026 10:21:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1775809516
+- current timestamp: 1775809516
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775809516 (main branch discovery), not current.
+
+```diff
+    contract L1GenesisUpgrade (eth:0x03174e2BE35A2Dd4380c93385181B1299949eE28) {
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      deployerAddress:
++        "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
+    }
+```
+
+```diff
+    contract ZKsyncOSVerifierPlonk (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ZKsyncOSChainTypeManager (eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA) {
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8) {
+    +++ description: A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.
+      deployerAddress:
++        "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7) {
+    +++ description: A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract RollupDAManager (eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA) {
+    +++ description: Simple registry for allowed DA validators for different data availability modes. Scheme 3 is used by default RollupL1DAValidator, the commitment includes EIP-4844 blobs data. Scheme 4 is used only for ZKsyncOS, it is keccak of blob versioned hashes filled with pubdata.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ZKsyncOSDualVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE) {
+    +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1MessageRoot (eth:0x783e8Cb57366888F84d815fd53c3aeE99b2d6d37) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract BridgeHub (eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb) {
+    +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1ChainAssetHandler (eth:0x924E0145347243a94C5C69e372Ca52c77f8e6CF1) {
+    +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract CTMDeploymentTracker (eth:0xaCD4a320f8a45abE71756B85DF519201d041EA5f) {
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ADI Multisig 2 (eth:0xB272B188855128c10a933Edb62CC64c22B1f3754) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2e48bd8536b3756D95B44312dBD5BE0e56c29Dc9"
+    }
+```
+
+```diff
+    contract ServerNotifier (eth:0xd477bd7f14F9A26ebd51827EFB1d40a41f71b70C) {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract ADI Multisig 1 (eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2e48bd8536b3756D95B44312dBD5BE0e56c29Dc9"
+    }
+```
+
+```diff
+    contract ZKsyncOSVerifierFflonk (eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0xfA8B5EA9b8d36a72Eb0ba66Cc7aBc83d9deeC3B8) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ADI Chain.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
+```diff
+    contract BlobsL1DAValidatorZKsyncOS (eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211) {
+    +++ description: DA verifier specifically for zksync OS chains. It keeps track of blob versioned hashes and checks if blob with particular hash was published.
+      deployerAddress:
++        "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985"
+    }
+```
+
 Generated with discovered.json: 0xe2160e92e1c3342c09b63c7e8a1a757ce706fea4
 
 # Diff at Fri, 10 Apr 2026 08:26:22 GMT:

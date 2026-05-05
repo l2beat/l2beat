@@ -230,6 +230,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1692867743,
       "sinceBlock": 17983541,
       "values": {
@@ -264,6 +265,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
+      "deployerAddress": "eth:0xe50EdeAf57E63dD4a93d1B075bd64395011Be96C",
       "sinceTimestamp": 1687524587,
       "sinceBlock": 17542373,
       "values": {
@@ -353,6 +355,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
+      "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1652101038,
       "sinceBlock": 14742550,
       "values": {
@@ -396,6 +399,7 @@
           "role": ".manager"
         }
       ],
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707308579,
       "sinceBlock": 19176289,
       "values": {
@@ -501,6 +505,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322595,
       "sinceBlock": 19177447,
       "values": {
@@ -593,6 +598,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599599,
       "sinceBlock": 21767132,
       "values": {
@@ -647,6 +653,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137600,
       "sinceBlock": 15090980,
       "values": {
@@ -981,6 +988,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689267,
       "sinceBlock": 17968760,
       "values": {
@@ -1169,6 +1177,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x030ceEE5D4CBc304287234720B11E00f47695755",
       "sinceTimestamp": 1727171111,
       "sinceBlock": 20819642,
       "values": {
@@ -1272,6 +1281,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672587635,
       "sinceBlock": 16312873,
       "values": {
@@ -1314,6 +1324,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1757941367,
       "sinceBlock": 23368649,
       "values": {
@@ -1422,6 +1433,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
+      "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1666446647,
       "sinceBlock": 15804056,
       "values": {
@@ -1455,6 +1467,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1750859519,
       "sinceBlock": 22781865,
       "values": {
@@ -1599,6 +1612,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1647857148,
       "sinceBlock": 14429055,
       "values": {
@@ -1769,6 +1783,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137615,
       "sinceBlock": 15090981,
       "values": {
@@ -1930,6 +1945,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259",
       "sinceTimestamp": 1685452751,
       "sinceBlock": 17371995,
       "values": {
@@ -2080,6 +2096,7 @@
         "stateBlockHash",
         "stateRoot"
       ],
+      "deployerAddress": "eth:0x194E22F49BC3f58903866d55488E1e9e8d69b517",
       "sinceTimestamp": 1636978914,
       "sinceBlock": 13620297,
       "values": {
@@ -2276,6 +2293,7 @@
           "role": ".$admin"
         }
       ],
+      "deployerAddress": "eth:0x555134E9d31ECe4CEa6F83674A887cDb150dA47A",
       "sinceTimestamp": 1739989031,
       "sinceBlock": 21882151,
       "values": {
@@ -2301,6 +2319,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xa126705c0d6B5dd65279253Ea2C8B19A04b96e60",
       "sinceTimestamp": 1704905879,
       "sinceBlock": 18977888,
       "values": {
@@ -2481,6 +2500,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1685880791,
       "sinceBlock": 17407168,
       "values": {
@@ -2625,6 +2645,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x32369C32113D6A85d4B71faA40DDd048187DCe79",
       "sinceTimestamp": 1767857003,
       "sinceBlock": 24188443,
       "values": {
@@ -2661,6 +2682,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689279,
       "sinceBlock": 17968761,
       "values": {
@@ -2796,6 +2818,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1692689255,
       "sinceBlock": 17968759,
       "values": {
@@ -2931,6 +2954,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1688046071,
       "sinceBlock": 17585317,
       "values": {
@@ -3065,6 +3089,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.",
+      "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1707322643,
       "sinceBlock": 19177451,
       "values": {
@@ -3213,6 +3238,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
       "values": {
@@ -3422,6 +3448,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1738599755,
       "sinceBlock": 21767145,
       "values": {
@@ -3465,6 +3492,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
+      "deployerAddress": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "sinceTimestamp": 1698061847,
       "sinceBlock": 18412782,
       "values": {

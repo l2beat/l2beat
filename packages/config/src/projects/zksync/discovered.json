@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1777974504,
+  "timestamp": 1777991279,
   "configHash": "0x624070f84d32564193d229c0cb17f1701a2a589695e7dcfc040d889a516fb0bd",
   "entries": [
     {
@@ -911,6 +911,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25028007 },
+  "usedBlockNumbers": { "ethereum": 25029400 },
   "permissionsConfigHash": "0xd57dd6cfb29228716bde6ff74e8040cf4537e104e4c0be76afa3c5662d77c337"
 }

@@ -8,6 +8,7 @@ export const gnosis: BaseProject = {
   slug: 'gnosis',
   name: 'Gnosis Chain',
   shortName: undefined,
+  aliases: ['xDai'],
   addedAt: UnixTime.fromDate(new Date('2023-01-01')),
   statuses: {
     yellowWarning: undefined,

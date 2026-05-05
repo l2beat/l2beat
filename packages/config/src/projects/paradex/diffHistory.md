@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x3b524a87ea23f4c17f953b2df725f53ea0143130
+
+# Diff at Tue, 05 May 2026 10:22:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771848139
+- current timestamp: 1771848139
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771848139 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+    }
+```
+
 Generated with discovered.json: 0x6732546087fd05bff935a6f034735319c1c5d639
 
 # Diff at Mon, 23 Feb 2026 12:19:28 GMT:

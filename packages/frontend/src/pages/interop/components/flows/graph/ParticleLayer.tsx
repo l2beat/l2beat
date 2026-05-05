@@ -22,6 +22,7 @@ interface Props {
   centerX: number
   centerY: number
   isSmallScreen: boolean
+  baseDollarsPerParticle?: number
 }
 
 /**
@@ -47,6 +48,7 @@ export function ParticleLayer({
   centerX,
   centerY,
   isSmallScreen,
+  baseDollarsPerParticle,
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
@@ -55,6 +57,7 @@ export function ParticleLayer({
     visibleChainIds,
     chainData,
     flows,
+    baseDollarsPerParticle,
   )
 
   return (

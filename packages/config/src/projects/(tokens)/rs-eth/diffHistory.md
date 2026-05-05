@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x09afcfca64c9ae5dd7814d79804d805defd84dd0
+
+# Diff at Tue, 05 May 2026 10:24:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752830527
+- current timestamp: 1752830527
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830527 (main branch discovery), not current.
+
+```diff
+    contract KelpDao Restaked ETH Token (base:0x1Bc71130A0e39942a7658878169764Bbd8A45993) {
+    +++ description: None
+      deployerAddress:
++        "base:0x5DB1955f51f892ce1bbEf3EcEC8a46b85fe75F27"
+    }
+```
+
 Generated with discovered.json: 0x0e61e0b6ab767b998547b805daa4c7fd714d30fb
 
 # Diff at Wed, 10 Sep 2025 16:42:56 GMT:

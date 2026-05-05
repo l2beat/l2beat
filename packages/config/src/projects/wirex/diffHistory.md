@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xc99f73a2c6050dc10fab1b25152d2c98ceb880bc
+
+# Diff at Tue, 05 May 2026 10:23:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1768370794
+- current timestamp: 1768370794
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768370794 (main branch discovery), not current.
+
+```diff
+    contract Verifier (eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      deployerAddress:
++        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+    }
+```
+
 Generated with discovered.json: 0x2e11c1665fdeae2873b843a6590d8b55b692e155
 
 # Diff at Wed, 14 Jan 2026 06:07:40 GMT:

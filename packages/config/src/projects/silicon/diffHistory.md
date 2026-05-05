@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x240c4e3ea8df9473e03380feaea97a924c8dcc59
+
+# Diff at Tue, 05 May 2026 10:23:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1762264428
+- current timestamp: 1762264428
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264428 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    contract Validium (eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      deployerAddress:
++        "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6"
+    }
+```
+
 Generated with discovered.json: 0xce1cc2c179ccd2f3fb08afacac2908b89561b324
 
 # Diff at Tue, 04 Nov 2025 11:34:25 GMT:

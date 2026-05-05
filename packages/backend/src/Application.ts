@@ -49,11 +49,12 @@ export class Application {
 
     // Modules with TRPC
     const interopModule = createInteropModule(deps)
+    const trackedTxsModule = createTrackedTxsModule(deps)
 
-    const modulesWithTrpc = [interopModule]
+    const modulesWithTrpc = [interopModule, trackedTxsModule]
 
     const trpcContributions = modulesWithTrpc.flatMap((module) =>
-      module ? module.trpc : [],
+      module?.trpc ? [module.trpc] : [],
     )
     const backofficeModule = createBackofficeModule({
       ...deps,
@@ -66,7 +67,7 @@ export class Application {
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
-      createTrackedTxsModule(deps),
+      trackedTxsModule,
       initTvsModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),

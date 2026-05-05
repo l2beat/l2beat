@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x587cad2c9cb8f612a96fab88224b7ad04e5f39a6
+
+# Diff at Tue, 05 May 2026 10:23:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1774433075
+- current timestamp: 1774433075
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774433075 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract ResolverRegistry (eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E) {
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1ERC20TokenBridge (eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      deployerAddress:
++        "eth:0xbeb4E7EE8961E54bfeA26114599674C30F6885Db"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1MockVerifierWithHash (eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0xc66b1986274a1BE7162BE045A0546A57414b6989"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x83701e3cbbDc9BfBd7A4fcf4Fd1c82935E31bB5a"
+    }
+```
+
 Generated with discovered.json: 0x6fad9fb6fea75857be741e6a6b8934580161aab8
 
 # Diff at Wed, 25 Mar 2026 10:06:05 GMT:

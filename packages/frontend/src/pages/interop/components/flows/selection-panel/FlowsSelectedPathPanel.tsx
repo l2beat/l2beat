@@ -43,6 +43,7 @@ export function FlowsSelectedPathPanel({
           <SingleChainStats
             chainId={chainA.id}
             selectedChains={selectedChains}
+            linkTopProtocols
           />
         )}
         {visibleHighlightedChains.length === 2 && chainB && (
@@ -50,6 +51,7 @@ export function FlowsSelectedPathPanel({
             chainIdA={chainA.id}
             chainIdB={chainB.id}
             selectedChains={selectedChains}
+            linkTopProtocols
           />
         )}
       </div>

@@ -11,6 +11,7 @@
         "0x3434f13a03ea3f4494cedceb0a2fe1054473c529ae3c067ba96d7102c3225852"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1639581534,
       "sinceBlock": 13810512,
       "values": {
@@ -50,6 +51,7 @@
         "0x985f30f6f1cec4239d77034618e116e07dae859f0ded01ba80f897dadb7101f3"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1649432556,
       "sinceBlock": 14546010,
       "values": {
@@ -104,6 +106,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1649432377,
       "sinceBlock": 14545993,
       "values": {
@@ -122,6 +125,7 @@
         "0xa8ad65c174f2e76f58ba6abc073545979d712d31810b818fa4ff50bfa9cffc09"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1650529338,
       "sinceBlock": 14627208,
       "values": {
@@ -145,6 +149,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1638346811,
       "sinceBlock": 13719989,
       "values": {
@@ -186,6 +191,7 @@
         "0x208be8f798080de1d60fcd5cba233b86c43f382ace673f95ad32b633d98be2dd"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1676671175,
       "sinceBlock": 16651238,
       "values": {
@@ -216,6 +222,7 @@
         "0x66b162a0fe8e04147d94a9ec40e3cf9a69114ed6e3fca427cc303eeb2d223fb9"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1651661389,
       "sinceBlock": 14710499,
       "values": {
@@ -257,6 +264,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1690520231,
       "sinceBlock": 17789313,
       "values": {
@@ -280,6 +288,7 @@
         "0xa8c0aeb1e8c7671f05a401b4d5b518a38e96dc6378d59e3f2b13ea55ea9f7f9f"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1a0aEc0fC48F1B5cc538BE74A90E340b278189e4",
       "sinceTimestamp": 1666193927,
       "sinceBlock": 15783099,
       "values": {
@@ -303,6 +312,7 @@
         "0xf4773d39e3c19f28a41b1b526474a51db5a28bb3fa5ea530f6af164e5263f209"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1639553135,
       "sinceBlock": 13808358,
       "values": {
@@ -355,6 +365,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
+      "deployerAddress": "eth:0x1c69b0347E63094669aa4f4D9061B748871CEC79",
       "sinceTimestamp": 1691384579,
       "sinceBlock": 17860848,
       "values": {
@@ -439,6 +450,7 @@
         }
       ],
       "ignoreInWatchMode": ["nextProposalId"],
+      "deployerAddress": "eth:0x108e64Be829981dF9B4a5e526041385F4662Ead2",
       "sinceTimestamp": 1656926298,
       "sinceBlock": 15075143,
       "values": {

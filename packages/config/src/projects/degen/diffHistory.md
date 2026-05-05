@@ -1,3 +1,173 @@
+Generated with discovered.json: 0x4d308ad8abd7b5987b25aeb13562f5e04b156033
+
+# Diff at Tue, 05 May 2026 10:22:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772656918
+- current timestamp: 1772656918
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772656918 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (base:0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (base:0x173FCB92df1854c3B78dC8696C23B1c88437b892) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Inbox (base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract ValidatorUtils (base:0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (base:0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract UTBDecent (base:0x43019F8BE1F192587883b67dEA2994999f5a2de2) {
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+      deployerAddress:
++        "base:0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c"
+    }
+```
+
+```diff
+    contract SequencerInbox (base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract ChallengeManager (base:0x67812161Bbb6aCF891aA6028BC614a660961ceD8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract RollupEventInbox (base:0x766DD3A13d17C6D175975C89225bde89F052dBc4) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract AlchemyMultisig2 (base:0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      deployerAddress:
++        "base:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8"
+    }
+```
+
+```diff
+    contract OneStepProver0 (base:0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (base:0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract DegenFastConfirmerMultisig (base:0xc207cbC35DD3CD172059730380A45aE14eb0e403) {
+    +++ description: None
+      deployerAddress:
++        "base:0xD6e5317512350b5b6CCE7A0D1d139844adB55919"
+    }
+```
+
+```diff
+    contract RollupProxy (base:0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      deployerAddress:
++        "base:0x92265977012991DD1527DfE79CcA6Da46a0E5831"
+    }
+```
+
+```diff
+    contract OneStepProverMath (base:0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Outbox (base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract Bridge (base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0xFB48D385Fa3da33762B350e1d705b9E46054E677) {
+    +++ description: None
+      deployerAddress:
++        "base:0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    }
+```
+
 Generated with discovered.json: 0x0cee00f12387e940a707ae7746095dbf69378e69
 
 # Diff at Wed, 04 Mar 2026 20:43:28 GMT:

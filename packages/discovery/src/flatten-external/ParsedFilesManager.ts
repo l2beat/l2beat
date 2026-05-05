@@ -123,6 +123,7 @@ export class ParsedFilesManager {
         importDirectives: [],
       }
     })
+    result.files = deduplicateFiles(result.files)
 
     // Pass 1: Find all contract declarations
     for (const file of result.files) {
@@ -607,6 +608,19 @@ function resolveImportRemappings(
 
   const result = posix.join(longest.target, path.slice(longest.prefix.length))
   return result
+}
+
+function deduplicateFiles(files: ParsedFile[]): ParsedFile[] {
+  const byPath = new Map<string, ParsedFile>()
+  for (const file of files) {
+    const existing = byPath.get(file.normalizedPath)
+    assert(
+      existing === undefined || existing.content === file.content,
+      `Conflicting content for file ${file.normalizedPath}`,
+    )
+    byPath.set(file.normalizedPath, file)
+  }
+  return [...byPath.values()]
 }
 
 function findOne<T>(

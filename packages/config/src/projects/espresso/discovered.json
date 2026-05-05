@@ -11,6 +11,7 @@
         "0xc852aaf012ec426ab5adb8c1e35617f1181de9fc529b6a1dfec99620c24d0dc4"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB22167f12C232e825D26ffbb3780E024c506664E",
       "sinceTimestamp": 1772484815,
       "sinceBlock": 24572275,
       "values": {
@@ -63,6 +64,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
       "sinceTimestamp": 1727935367,
       "sinceBlock": 20883069,
       "values": {
@@ -191,6 +193,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608",
       "sinceTimestamp": 1769188523,
       "sinceBlock": 24298911,
       "values": {
@@ -245,6 +248,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x4905147341FB390F0A3F4F01178a040Bc27d8A04",
       "sinceTimestamp": 1769784107,
       "sinceBlock": 24348349,
       "values": {
@@ -334,6 +338,7 @@
         "currentEpoch",
         "votingStakeTableState"
       ],
+      "deployerAddress": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "sinceTimestamp": 1730830835,
       "sinceBlock": 21123201,
       "values": {
@@ -415,6 +420,7 @@
         "0xe27cd7251355953a27d4b5d1ac9b631394c1c3590034e725819f23037642d915"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xce2B7bbFE257D910711EEA510176e0fb21cf1761",
       "sinceTimestamp": 1713568631,
       "sinceBlock": 19692700,
       "values": {

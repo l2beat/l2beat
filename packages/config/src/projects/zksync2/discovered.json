@@ -20,6 +20,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1775666447,
       "sinceBlock": 24836247,
       "values": {
@@ -56,6 +57,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -149,6 +151,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0x29DF43F75149D0552475A6f9B2aC96E28796ed0b",
       "sinceTimestamp": 1676315375,
       "sinceBlock": 16621828,
       "values": {
@@ -647,6 +650,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
+      "deployerAddress": "eth:0x61ce1F6514C651C39964961DB1948C6f70a4747a",
       "sinceTimestamp": 1698065351,
       "sinceBlock": 18413072,
       "values": {
@@ -709,6 +713,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
+      "deployerAddress": "eth:0x29DF43F75149D0552475A6f9B2aC96E28796ed0b",
       "sinceTimestamp": 1676370683,
       "sinceBlock": 16626406,
       "values": {
@@ -813,6 +818,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
       "values": {
@@ -864,6 +870,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
       "values": {
@@ -934,6 +941,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
       "values": {
@@ -986,6 +994,7 @@
           "role": ".validatorVTL"
         }
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1775666495,
       "sinceBlock": 24836251,
       "values": {

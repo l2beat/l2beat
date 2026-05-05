@@ -224,6 +224,7 @@ export const starknet: ScalingProject = {
   ],
   display: {
     name: 'Starknet',
+    aliases: ['StarkWare'],
     slug: 'starknet',
     stacks: ['SN Stack'],
     description:

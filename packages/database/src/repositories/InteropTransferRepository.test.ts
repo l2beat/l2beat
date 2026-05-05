@@ -1031,6 +1031,213 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   })
 
   describe(
+    InteropTransferRepository.prototype.getProjectTransfersPage.name,
+    () => {
+      const snapshotTimestamp = UnixTime(2_000_000)
+
+      it('returns a limited page ordered by timestamp desc then transferId desc', async () => {
+        await repository.insertMany([
+          transfer(
+            'plugin1',
+            'msg1',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg2',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg3',
+            'deposit',
+            snapshotTimestamp - 9,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin2',
+            'msg4',
+            'deposit',
+            snapshotTimestamp - 8,
+            'optimism',
+            'base',
+            10,
+          ),
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum', 'optimism'],
+          destinationChains: ['arbitrum', 'base'],
+          plugins: ['plugin1', 'plugin2'],
+          limit: 2,
+        })
+
+        expect(result.map((x) => x.transferId)).toEqual(['msg4', 'msg3'])
+      })
+
+      it('returns records after the timestamp and transferId cursor', async () => {
+        await repository.insertMany([
+          transfer(
+            'plugin1',
+            'msg1',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg2',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg3',
+            'deposit',
+            snapshotTimestamp - 9,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin2',
+            'msg4',
+            'deposit',
+            snapshotTimestamp - 8,
+            'optimism',
+            'base',
+            10,
+          ),
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum', 'optimism'],
+          destinationChains: ['arbitrum', 'base'],
+          plugins: ['plugin1', 'plugin2'],
+          cursor: {
+            timestamp: snapshotTimestamp - 9,
+            transferId: 'msg3',
+          },
+          limit: 10,
+        })
+
+        expect(result.map((x) => x.transferId)).toEqual(['msg2', 'msg1'])
+      })
+
+      it('returns records after the transferId cursor when timestamps match', async () => {
+        await repository.insertMany([
+          transfer(
+            'plugin1',
+            'msg1',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg2',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+        ])
+
+        const result = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          plugins: ['plugin1'],
+          cursor: {
+            timestamp: snapshotTimestamp - 10,
+            transferId: 'msg2',
+          },
+          limit: 10,
+        })
+
+        expect(result.map((x) => x.transferId)).toEqual(['msg1'])
+      })
+
+      it('excludes same-chain transfers and returns empty when plugins or chains are empty', async () => {
+        await repository.insertMany([
+          transfer(
+            'plugin1',
+            'msg1',
+            'deposit',
+            snapshotTimestamp - 10,
+            'ethereum',
+            'ethereum',
+            10,
+          ),
+          transfer(
+            'plugin1',
+            'msg2',
+            'deposit',
+            snapshotTimestamp - 9,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+        ])
+
+        const valid = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum', 'ethereum'],
+          plugins: ['plugin1'],
+          limit: 10,
+        })
+        const emptyPlugins = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          plugins: [],
+          limit: 10,
+        })
+        const emptyChains = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: [],
+          destinationChains: ['arbitrum'],
+          plugins: ['plugin1'],
+          limit: 10,
+        })
+        const emptyLimit = await repository.getProjectTransfersPage({
+          snapshotTimestamp,
+          sourceChains: ['ethereum'],
+          destinationChains: ['arbitrum'],
+          plugins: ['plugin1'],
+          limit: 0,
+        })
+
+        expect(valid.map((x) => x.transferId)).toEqual(['msg2'])
+        expect(emptyPlugins).toEqual([])
+        expect(emptyChains).toEqual([])
+        expect(emptyLimit).toEqual([])
+      })
+    },
+  )
+
+  describe(
     InteropTransferRepository.prototype.getWithPartialAbstractTokenIds.name,
     () => {
       it('returns transfers where abstract token ID exists on only one side', async () => {

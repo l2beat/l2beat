@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xf3f69f817289709e81ec7e4bc3dd22f78e070b7f
+
+# Diff at Tue, 05 May 2026 10:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1769601687
+- current timestamp: 1769601687
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601687 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      deployerAddress:
++        "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract FacetSafeModule (eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) {
+    +++ description: L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97"
+    }
+```
+
+```diff
+    contract FacetSafeProxy (eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25) {
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) {
+    +++ description: L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      deployerAddress:
++        "facet:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      deployerAddress:
++        "facet:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x2e49a358ceac669737803c14c9c48c60a0ca71bc
 
 # Diff at Wed, 28 Jan 2026 12:02:52 GMT:

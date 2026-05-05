@@ -1,3 +1,626 @@
+Generated with discovered.json: 0x572af8ba4b7263fe279de41b8e1b0d2e45494921
+
+# Diff at Tue, 05 May 2026 10:24:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumOwner (arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract ArbitrumL1ERC20Bridge (arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumzkLink (arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL1ERC20Bridge (base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BasezkLink (base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      deployerAddress:
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseOwner (base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      deployerAddress:
++        "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract BlastzkLink (blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastOwner (blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract BlastL1ERC20Bridge (blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      deployerAddress:
++        "blastmainnet:0xc0dB5ca96C7549464D79EFE38Ac19e5A22d5B050"
+    }
+```
+
+```diff
+    contract Arbitrator (eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumzkLink (eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumL1ERC20Bridge (eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EthereumOwner (eth:0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract LineaOwner (linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      deployerAddress:
++        "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (linea:0x509ff56c152315EdeE91A2e0f059195519507e01) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineazkLink (linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineaL1ERC20Bridge (linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract Verifier (linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract Governance (linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      deployerAddress:
++        "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9"
+    }
+```
+
+```diff
+    contract MantaProxyAdmin (manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL1ERC20Bridge (manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaOwner (manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      deployerAddress:
++        "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract MantazkLink (manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      deployerAddress:
++        "manta:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleOwner (mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract MantleL1ERC20Bridge (mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantlezkLink (mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      deployerAddress:
++        "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismOwner (oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract OptimismzkLink (oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismL1ERC20Bridge (oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      deployerAddress:
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollzkLink (scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollL1ERC20Bridge (scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      deployerAddress:
++        "scr:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      deployerAddress:
++        "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      deployerAddress:
++        "zksync:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+Generated with discovered.json: 0x3ff268f3009e5b9803d5674fcd8170ffd26c788c
+
+# Diff at Tue, 05 May 2026 09:27:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@33baeefbd652187149f13ba1f2d74d0c748bdb2d block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      implementationNames.scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77:
+-        "GnosisSafeProxy"
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract EraOwner (zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535","role":"admin"}
+    }
+```
+
+```diff
+    contract EraL1ERC20Bridge (zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      unverified:
+-        true
+      values.l2Bridge:
++        "zksync:0x7187DB8AB8F65450a74dD40474bE778CF468C44a"
+      values.l2TokenBeacon:
++        "zksync:0x2140d3e4008592E1a6c106ACCfc24335A49AeC8C"
+      values.l2TokenProxyBytecodeHash:
++        "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
+      implementationNames.zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40:
+-        ""
++        "L1ERC20Bridge"
+      sourceHashes:
++        ["0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad","0xcabc91ee17e9a771bb999a95f4705966cf206325fc82ac15d440c8b6086f9679"]
+    }
+```
+
+```diff
+    contract ErazkLink (zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      unverified:
+-        true
+      values.feeParams:
++        {"pubdataPricingMode":0,"batchOverheadL1Gas":1000000,"maxPubdataPerBatch":120000,"maxL2GasPerBatch":80000000,"priorityTxMaxPubdata":99000,"minimalL2GasPrice":250000000}
+      values.FORWARD_REQUEST_TYPE_HASH:
++        "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c"
+      values.forwardFeeAllocator:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.gateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGateway:
++        "zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.getGovernor:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.getPriorityTxMaxGasLimit:
++        72000000
+      values.IS_ETH_GAS_TOKEN:
++        true
+      values.owner:
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.paused:
++        false
+      values.txGasPrice:
++        40000000000
+      implementationNames.zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E:
+-        ""
++        "ZkLink"
+      template:
++        "zklinknova/secondaryZkLink"
+      sourceHashes:
++        ["0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b","0x9d3b6cf7c8756dc6cce424dc754ed146f84d3201e5223d47b0a4fcd994a76a7f"]
+    }
+```
+
+```diff
+    contract EraProxyAdmin (zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
++        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EraL2Gateway (zksync:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x94e0207fd47e2edc81a09d7ec295676165c1c03b
 
 # Diff at Tue, 04 Nov 2025 11:35:01 GMT:

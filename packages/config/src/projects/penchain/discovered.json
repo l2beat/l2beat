@@ -74,6 +74,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
+      "deployerAddress": "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6",
       "sinceTimestamp": 1729157663,
       "sinceBlock": 20984421,
       "values": { "$immutable": true },
@@ -94,6 +95,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the Pentagon Games Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
       "sinceTimestamp": 1740743363,
       "sinceBlock": 21944648,
       "values": {

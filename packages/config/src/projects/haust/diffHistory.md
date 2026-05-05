@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x30d2d5fafb8416defe81429076ba8d4c32f92bc1
+
+# Diff at Tue, 05 May 2026 10:22:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1762959021
+- current timestamp: 1762959021
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762959021 (main branch discovery), not current.
+
+```diff
+    contract AggchainECDSAMultisig (eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8) {
+    +++ description: System contract defining the Haust Network Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      deployerAddress:
++        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
+    }
+```
+
 Generated with discovered.json: 0xee136043c0ad93467ed831b24c9b3f2ce40d2a31
 
 # Diff at Tue, 09 Dec 2025 11:33:09 GMT:

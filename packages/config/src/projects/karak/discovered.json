@@ -25,6 +25,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -124,6 +125,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -253,6 +255,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x282DB123D1cbf5437c295EA0df0137E5FaDbD117",
       "sinceTimestamp": 1702960199,
       "sinceBlock": 18817640,
       "values": {
@@ -312,6 +315,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -408,6 +412,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -450,6 +455,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -507,6 +513,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -544,6 +551,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -589,6 +597,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {
@@ -621,6 +630,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x169438698266B07Fc76300aC6F09e0dc32181FD9",
       "sinceTimestamp": 1703048687,
       "sinceBlock": 18824926,
       "values": {

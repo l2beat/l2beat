@@ -36,6 +36,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -167,6 +168,7 @@
           "role": ".getTransactionFilterer"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748609843,
       "sinceBlock": 22595693,
       "values": {
@@ -251,6 +253,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1748530883,
       "sinceBlock": 22589160,
       "values": {
@@ -287,6 +290,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1747086455,
       "sinceBlock": 22469956,
       "values": {
@@ -620,6 +624,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
       "values": {
@@ -653,6 +658,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
       "values": {
@@ -699,6 +705,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
       "values": {
@@ -727,6 +734,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769802035,
       "sinceBlock": 24349836,
       "values": {
@@ -772,6 +780,7 @@
           "role": ".validatorVTL"
         }
       ],
+      "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1769799107,
       "sinceBlock": 24349594,
       "values": {
@@ -880,6 +889,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1745941307,
       "sinceBlock": 22375679,
       "values": {
@@ -914,6 +924,7 @@
       ],
       "proxyType": "immutable",
       "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.",
+      "deployerAddress": "gateway:0x0000000000000000000000000000000000008007",
       "sinceTimestamp": 1761040360,
       "sinceBlock": 74512,
       "values": { "$immutable": true },

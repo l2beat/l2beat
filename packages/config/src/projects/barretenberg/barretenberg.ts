@@ -9,6 +9,7 @@ export const barretenberg: BaseProject = {
   slug: 'barretenberg',
   name: 'Barretenberg',
   shortName: undefined,
+  aliases: ['Aztec'],
   addedAt: UnixTime.fromDate(new Date('2026-03-17')),
   statuses: {
     yellowWarning: undefined,
