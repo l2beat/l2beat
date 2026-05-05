@@ -138,7 +138,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
-      await indexer.wipeData([{ type: 'wipe', id: 'config1' }])
+      await indexer.wipeData([{ id: 'config1' }])
 
       expect(
         currentPriceRepository.deleteByCoingeckoIds,
@@ -153,10 +153,7 @@ describe(DaBeatPricesIndexer.name, () => {
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await expect(
-        indexer.wipeData([
-          { type: 'wipe', id: 'config1' },
-          { type: 'wipe', id: 'config2' },
-        ]),
+        indexer.wipeData([{ id: 'config1' }, { id: 'config2' }]),
       ).toBeRejectedWith('Assertion Error')
     })
   })

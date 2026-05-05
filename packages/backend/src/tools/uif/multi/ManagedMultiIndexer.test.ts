@@ -9,8 +9,6 @@ import type {
   Configuration,
   ManagedMultiIndexerOptions,
   SavedConfiguration,
-  TrimRemovalConfiguration,
-  WipeRemovalConfiguration,
 } from './types'
 
 const INDEXER_ID = 'indexer'
@@ -118,11 +116,11 @@ describe(ManagedMultiIndexer.name, () => {
           saved('c', 100, 1000, 1000, 'props'),
         ],
         toTrimData: [
-          trimRemovalWithId('b', 50, 99),
-          trimRemovalWithId('b', 1001, 1500),
+          { id: 'b'.repeat(12), range: [50, 99] },
+          { id: 'b'.repeat(12), range: [1001, 1500] },
         ],
         toDelete: ['d'],
-        toWipeData: [wipeRemovalWithId('c'), wipeRemovalWithId('d')],
+        toWipeData: [{ id: 'c'.repeat(12) }, { id: 'd'.repeat(12) }],
       })
 
       expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
@@ -143,12 +141,12 @@ describe(ManagedMultiIndexer.name, () => {
         ['d'],
       )
       expect(indexer.trimData).toHaveBeenOnlyCalledWith([
-        trimRemovalWithId('b', 50, 99),
-        trimRemovalWithId('b', 1001, 1500),
+        { id: 'b'.repeat(12), range: [50, 99] },
+        { id: 'b'.repeat(12), range: [1001, 1500] },
       ])
       expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
-        wipeRemovalWithId('c'),
-        wipeRemovalWithId('d'),
+        { id: 'c'.repeat(12) },
+        { id: 'd'.repeat(12) },
       ])
 
       expect(db.transaction).toHaveBeenCalledTimes(1)
@@ -452,7 +450,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
 
       expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
-        wipeRemovalWithId('d'),
+        { id: 'd'.repeat(12) },
       ])
     })
 
@@ -479,7 +477,7 @@ describe(ManagedMultiIndexer.name, () => {
 
       // remove all data
       expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
-        wipeRemovalWithId('d'),
+        { id: 'd'.repeat(12) },
       ])
     })
 
@@ -506,7 +504,7 @@ describe(ManagedMultiIndexer.name, () => {
 
       // remove part of data
       expect(indexer.trimData).toHaveBeenOnlyCalledWith([
-        trimRemovalWithId('d', 100, 149),
+        { id: 'd'.repeat(12), range: [100, 149] },
       ])
     })
 
@@ -532,7 +530,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
 
       expect(indexer.trimData).toHaveBeenOnlyCalledWith([
-        trimRemovalWithId('d', 100, 999),
+        { id: 'd'.repeat(12), range: [100, 999] },
       ])
     })
 
@@ -583,7 +581,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
 
       expect(indexer.trimData).toHaveBeenOnlyCalledWith([
-        trimRemovalWithId('d', 201, 550),
+        { id: 'd'.repeat(12), range: [201, 550] },
       ])
     })
 
@@ -663,18 +661,6 @@ function saved(
     maxHeight,
     currentHeight,
   }
-}
-
-function trimRemovalWithId(
-  id: string,
-  from: number,
-  to: number,
-): TrimRemovalConfiguration {
-  return { type: 'trim', id: id.repeat(12), range: [from, to] }
-}
-
-function wipeRemovalWithId(id: string): WipeRemovalConfiguration {
-  return { type: 'wipe', id: id.repeat(12) }
 }
 
 async function getSavedConfigurations(indexerService: IndexerService) {

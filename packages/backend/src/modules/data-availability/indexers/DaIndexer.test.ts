@@ -179,8 +179,8 @@ describe(DaIndexer.name, () => {
       })
 
       await indexer.wipeData([
-        { type: 'wipe', id: createId('project-a') },
-        { type: 'wipe', id: createId('project-b') },
+        { id: createId('project-a') },
+        { id: createId('project-b') },
       ])
 
       expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
