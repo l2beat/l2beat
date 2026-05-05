@@ -1,3 +1,180 @@
+Generated with discovered.json: 0xab0fdf1eab0b9541103fa1c2669715b8c1a089b0
+
+# Diff at Tue, 05 May 2026 15:19:57 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c30884758a8f4ef4178d2eb572fb25911670bcff block: 1774433287
+- current timestamp: 1777994313
+
+## Description
+
+Operational role rotation across muster's Arbitrum-Orbit infra:
+- **UpgradeExecutor** (`arb1:0x10083F68...`) — EXECUTOR_ROLE member 0: `0xc47a4C5F` → `0x52D5E794`.
+- **RollupProxy** (`arb1:0xE383D432...`) — validator 0: `0x26C9cC56` → `0xD8099Ee0`.
+- **SequencerInbox** (`arb1:0xfb27e42E...`) — batchPosterManager + batchPoster 0: `0x922bc2d9` → `0xBF199CEf`. DAC keyset BLS signature 0 also rotated (single signer key change).
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"
++        "arb1:0x52D5E794B5a4C77Af1197EEB21ea67BEa51a238E"
+      values.executors.0:
+-        "arb1:0xc47a4C5F37eD1b78128A913f68f1711ea097aE24"
++        "arb1:0x52D5E794B5a4C77Af1197EEB21ea67BEa51a238E"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      values.getValidators.0:
+-        "arb1:0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298"
++        "arb1:0xD8099Ee073d6C023DB71efBdEB4da495f0F86844"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xfb27e42E964F3364630F76D62EB295ae792BD4FA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosterManager:
+-        "arb1:0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
++        "arb1:0xBF199CEfC1B193E4D2ec0A4d7Fb545B3a62E642A"
+      values.batchPosters.0:
+-        "arb1:0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
++        "arb1:0xBF199CEfC1B193E4D2ec0A4d7Fb545B3a62E642A"
+      values.dacKeyset.blsSignatures.0:
+-        "YAvPkaef4hf3zNeyzlRuxt0SkWz8qbJuOHEi9I8eMxUrQ7mhMmz7wi7BgpHpsPB9tBEOz/mKpGHi1aQeHcxG0QWODhT8oWHlcUvMvgpO2dhXSK6cRjDlOZy4mBXrjMJVBBOgjAkpi4UetNc2w6tyNcOa9lRekf8obnO+HHUjxiczyon2S5KCxkvtDbsEZZHeiweLET02229SZ0KZ2WksOgXQX48WeA3C4lU93vqCQQKtK9G+PEqi8ZzYfdeIi7LRUQFwcK5OoazKObLJprc1b5WkE8q9k/hiAXvhNTXJB92LSevLu/QXGYwarYzjlWkKiQBsjoKmITWIclydZCQl7dP9ooCHB3pafue9Ude9ZoXsolpU8J8Hs+aUSwqJ7uhPYg=="
++        "YBYaUY7AvF5PtkUaFCaeQM9zo/r6sZe1gP+22XnliFgSZLiBS6GCXtaAnZz50bCZgQyCkrmg7MCk67L7f968JMwB3OFrJsBBt/mo3puJB6eao3uLyuneuMNF1TF9qFJhbwG1FbrM2gNxf+KkxAnasWdhjAc2rtPNP2sEVjeHw2+ceWop+h0eEB6AkbQLKOCFuQ2zLkjsMunrqzBkdXCGkubQhqOMNll62dshemSYNaSrz70YpS81f8tzQc3W8GxbChgj44gcHk0xHp7QLxAXhQuGTAPkA/2ph3IbnUc6sElLbG5nFRPXEi9ctZ3kwzjt3wW6L/oH2rkxMLOkRg2aZAsyondNLlzOSB3nzL0MdCQRsIbIEtd7YOZohg8aX0EK7A=="
+      values.keySetUpdates:
+-        2
++        3
+      values.setIsBatchPosterCount:
+-        3
++        5
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774433287 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (arb1:0x10083F68A4aEC72c567661616bd6036D3a6d1B36) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x18Cc27B3a95a6FdEf9EAA391eff28F48F42fFe3F) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (arb1:0x37D07D97673c79afe3b92548175Af47488E28694) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x583F8BA007580c83EFB4B02C66694096cD5c56d1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x61006c8566fac9a3315F646dA4624C00BbCF15E4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x78B101eC9736c4Ab06b0833f01Fd4c011f7CA612) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x8987777757a91Ed09912D7A5B8430bbAC2cf153C) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xB08Ca18499389ABfDF7b14b09BD2Bd4d56D7fbbb) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xD17550876106645988051ffDd31dFc3cDaA29F9c) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xfb27e42E964F3364630F76D62EB295ae792BD4FA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
+-        "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
+    }
+```
+
 Generated with discovered.json: 0xa8d900051df3d36f83fd31a1dd7ffe5bcb073bc0
 
 # Diff at Tue, 05 May 2026 10:22:29 GMT:

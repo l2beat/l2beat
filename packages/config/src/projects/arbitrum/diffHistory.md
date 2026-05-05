@@ -1,3 +1,544 @@
+Generated with discovered.json: 0xc95986b969c4f635e96e7106f6ab591acc59dee0
+
+# Diff at Tue, 05 May 2026 15:18:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c30884758a8f4ef4178d2eb572fb25911670bcff block: 1776843192
+- current timestamp: 1777994260
+
+## Description
+
+Arbitrum SecurityCouncilManager — 3 members rotated in the second cohort (`getSecondCohort` indices 0/4/5; reflected in `getBothCohorts` indices 6/10/11). Out: `0x9316ca66`, `0x0275b3D5`, `0xD8D4cEC1`. In: `0x913Af9a6`, `0x09BDaf6B`, `0x0275b3D5`. `updateNonce` 15 → 16. Regular SecurityCouncil election cycle being applied.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.6:
++        "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.6:
+-        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.10:
++        "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.10:
+-        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.11:
+-        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.getSecondCohort.0:
++        "arb1:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce"
+      values.getSecondCohort.0:
+-        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.4:
++        "arb1:0x09BDaf6Be43CD6ff378E9CC785CD7A667B64668D"
+      values.getSecondCohort.4:
+-        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.5:
+-        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.updateNonce:
+-        15
++        16
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776843192 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract ConstitutionHash (arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2SurplusFee (arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract StandardArbERC20 (arb1:0x3f770Ac673856F105b586bb393d122721265aD46) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2DAIGateway (arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      deployerAddress:
+-        "arb1:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) {
+    +++ description: Token governance contract for the Security Council member elections.
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2LPTGateway (arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      deployerAddress:
+-        "arb1:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) {
+    +++ description: Token governance contract for the Security Council member removals.
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Token governance contract used for creating non-constitutional AIPs (treasury proposals), e.g., transferring funds out of the DAO Treasury. Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2BaseFee (arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract TreasuryTimelock (arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x1E37aCE759DF68E5AD2FD258BD030fcDBA9F7838"
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      deployerAddress:
+-        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      deployerAddress:
+-        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      deployerAddress:
+-        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
+-        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
+-        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract ParentToChildRewardRouter (eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999) {
+    +++ description: Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury.
+      deployerAddress:
+-        "eth:0x45816240B90254EFF0e35141069d777f7FC699f5"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
+-        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
+-        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract OutboxV0 (eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract LPTL1Escrow (eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5"
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
+-        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract OutboxV1 (eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
+-        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract L1Escrow (eth:0xA10c7CE4b876998858b1a9E12b10092229539400) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
+-        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
+-        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract OutboxEntry (eth:0xc4940069140142236D4065b866018f7b2BeC77fD) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      deployerAddress:
+-        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract Arbitrum Multisig 1 (eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x64379Dee676ab442B48925Ed603771f386510Ee7"
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0xD3B5b60020504bc3489D6949d545893982BA3011) {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      deployerAddress:
+-        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
+-        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
 Generated with discovered.json: 0xa482cc5a32de68ff40d1339117c225034a44ac76
 
 # Diff at Tue, 05 May 2026 10:21:56 GMT:
