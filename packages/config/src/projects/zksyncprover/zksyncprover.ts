@@ -9,6 +9,7 @@ export const zksyncprover: BaseProject = {
   name: 'ZKsync Lite',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
+  archivedAt: UnixTime.fromDate(new Date('2026-05-05')),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
