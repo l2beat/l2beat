@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { env } from '~/env'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -121,7 +122,16 @@ export function FlowsGeneralStats() {
             value={
               topProtocol ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
-                  <span className="text-brand">{topProtocol.name}</span>
+                  {env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+                    <a
+                      href={`/interop/protocols/${topProtocol.slug}`}
+                      className="text-brand"
+                    >
+                      {topProtocol.name}
+                    </a>
+                  ) : (
+                    <span className="text-brand">{topProtocol.name}</span>
+                  )}
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatCurrency(topProtocol.volume, 'usd')}
                   </span>
