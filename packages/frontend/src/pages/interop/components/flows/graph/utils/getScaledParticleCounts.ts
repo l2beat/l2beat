@@ -11,7 +11,7 @@ interface ScaledParticleResult {
 }
 
 /**
- * Given base particle counts (computed at DOLLARS_PER_PARTICLE), finds the
+ * Given base particle counts (computed at baseDollarsPerParticle), finds the
  * lowest dollars-per-particle value (in DOLLARS_PER_PARTICLE_STEP increments)
  * where both constraints are satisfied:
  *   - no single flow exceeds MAX_PARTICLES_PER_FLOW
@@ -19,14 +19,15 @@ interface ScaledParticleResult {
  */
 export function getScaledParticleCounts(
   baseExactCounts: number[],
+  baseDollarsPerParticle: number = DOLLARS_PER_PARTICLE,
 ): ScaledParticleResult {
   if (baseExactCounts.length === 0)
-    return { counts: [], dollarsPerParticle: DOLLARS_PER_PARTICLE }
+    return { counts: [], dollarsPerParticle: baseDollarsPerParticle }
 
-  let dollarsPerParticle = DOLLARS_PER_PARTICLE
+  let dollarsPerParticle = baseDollarsPerParticle
 
   while (true) {
-    const scale = DOLLARS_PER_PARTICLE / dollarsPerParticle
+    const scale = baseDollarsPerParticle / dollarsPerParticle
     const counts = baseExactCounts.map((c) => c * scale)
 
     const maxCount = Math.max(...counts)

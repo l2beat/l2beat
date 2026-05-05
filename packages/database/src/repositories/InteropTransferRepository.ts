@@ -205,6 +205,11 @@ export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
 
+export interface InteropTransferCursor {
+  timestamp: UnixTime
+  transferId: string
+}
+
 export class InteropTransferRepository extends BaseRepository {
   async insertMany(records: InteropTransferRecord[]): Promise<number> {
     if (records.length === 0) return 0
@@ -343,6 +348,57 @@ export class InteropTransferRepository extends BaseRepository {
       .whereRef('srcChain', '!=', 'dstChain')
       .orderBy('timestamp', 'desc')
       .orderBy('transferId', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getProjectTransfersPage(options: {
+    plugins: string[]
+    snapshotTimestamp: UnixTime
+    sourceChains: string[]
+    destinationChains: string[]
+    cursor?: InteropTransferCursor
+    limit: number
+  }): Promise<InteropTransferRecord[]> {
+    if (
+      options.plugins.length === 0 ||
+      options.sourceChains.length === 0 ||
+      options.destinationChains.length === 0 ||
+      options.limit <= 0
+    ) {
+      return []
+    }
+
+    const from = options.snapshotTimestamp - UnixTime.DAY
+    let query = this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where('timestamp', '>', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(options.snapshotTimestamp))
+      .where('plugin', 'in', options.plugins)
+      .where('srcChain', 'in', options.sourceChains)
+      .where('dstChain', 'in', options.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+
+    const cursor = options.cursor
+    if (cursor) {
+      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      query = query.where((eb) =>
+        eb.or([
+          eb('timestamp', '<', cursorDate),
+          eb.and([
+            eb('timestamp', '=', cursorDate),
+            eb('transferId', '<', cursor.transferId),
+          ]),
+        ]),
+      )
+    }
+
+    const rows = await query
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .limit(options.limit)
       .execute()
 
     return rows.map(toRecord)
