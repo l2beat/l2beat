@@ -68,5 +68,11 @@
     "hash": "0x91cc3c90f1b2c05558c8c2f9575ffcc8f7cb39a023073a028d6b6abb3986d601",
     "address": "eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB",
     "blockNumber": 22022360
+  },
+  "EraL2Gateway.sol": {
+    "hash": "0xe0235f35c0fdaea3f676b1101581911d1a9b4bbc4bdbd2c76d9e93ab3da4762c",
+    "address": "zksync:0x8463989308De8eA3D80DC26FA650600D391b899F",
+    "chain": "zksync2",
+    "blockNumber": 63447251
   }
 }

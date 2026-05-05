@@ -6,6 +6,7 @@
     "ARB_SYS",
     "getRemoteGateway",
     "ethToken",
-    "INBOX"
+    "INBOX",
+    "L2_ETH_ADDRESS"
   ]
 }

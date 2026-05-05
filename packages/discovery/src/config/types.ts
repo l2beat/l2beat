@@ -27,5 +27,5 @@ export interface DiscoveryChainConfig {
   coingeckoApiKey?: string
   celestiaApiUrl?: string
   multicall: MulticallConfig | undefined
-  explorer: ExplorerConfig
+  explorer: ExplorerConfig[]
 }
