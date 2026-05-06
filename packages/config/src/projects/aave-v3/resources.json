@@ -38,6 +38,12 @@
       "type": "frontend",
       "label": "IPFS deployments",
       "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://app.defisaver.com/aave",
+      "type": "frontend",
+      "label": "DeFiSaver",
+      "frontendSubtype": "third-party"
     }
   ],
   "audits": [
@@ -350,5 +356,5 @@
     }
   ],
   "linesOfCode": 38915,
-  "lastModified": "2026-05-06T05:53:09.306Z"
+  "lastModified": "2026-05-06T07:45:29.255Z"
 }
