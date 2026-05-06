@@ -20,6 +20,13 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'registeredOperators',
 ).length
 
+const eigenDaAddresses = new Set(
+  discovery.configReader
+    .readDiscovery('eigenda')
+    .entries.filter((e) => e.type !== 'Reference')
+    .map((e) => e.address.toString()),
+)
+
 export const eigendaV2: BaseProject = {
   id: ProjectId('eigenda-v2'),
   slug: 'eigenda-v2',
@@ -142,7 +149,7 @@ This architecture provides improved throughput and eliminates single points of f
     },
   },
   contracts: {
-    addresses: filterEigenLayerStrategies(discovery.getDiscoveredContracts()),
+    addresses: filterToEigenDaOnly(discovery.getDiscoveredContracts()),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -170,16 +177,44 @@ This architecture provides improved throughput and eliminates single points of f
       },
     ],
   },
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: filterPermissionsToEigenDaOnly(
+    discovery.getDiscoveredPermissions(),
+  ),
 }
 
-function filterEigenLayerStrategies<T extends { name?: string }>(
+function filterToEigenDaOnly<T extends { address: { toString(): string } }>(
   contracts: Record<string, T[]>,
 ): Record<string, T[]> {
   return Object.fromEntries(
     Object.entries(contracts).map(([chain, list]) => [
       chain,
-      list.filter((c) => !(c.name?.endsWith('-Strategy') ?? false)),
+      list.filter((c) => eigenDaAddresses.has(c.address.toString())),
+    ]),
+  )
+}
+
+function filterPermissionsToEigenDaOnly(
+  permissions: Record<
+    string,
+    { roles: { accounts: { address: { toString(): string } }[] }[]; actors: { accounts: { address: { toString(): string } }[] }[] }
+  >,
+): typeof permissions {
+  return Object.fromEntries(
+    Object.entries(permissions).map(([chain, p]) => [
+      chain,
+      {
+        roles: p.roles.map((role) => ({
+          ...role,
+          accounts: role.accounts.filter((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        })),
+        actors: p.actors.filter((actor) =>
+          actor.accounts.some((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        ),
+      },
     ]),
   )
 }
