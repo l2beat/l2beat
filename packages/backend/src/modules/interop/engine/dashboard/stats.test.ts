@@ -1,13 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  detect,
-  explore,
-  funcs,
-  interpret,
-  interpretZRobust,
-  Z_CLASSIC_THRESHOLD,
-} from './stats'
+import { detect, explore, funcs, interpret, Z_CLASSIC_THRESHOLD } from './stats'
 
 describe('InteropStats', () => {
   describe('log1Plus', () => {
@@ -49,23 +42,6 @@ describe('InteropStats', () => {
   describe('ZClassic', () => {
     it('returns the correct value', () => {
       expect(funcs.zClassic([1, 2, 3, 4, 5])).toEqual(2.23606797749979)
-    })
-  })
-  describe('interpretZRobust', () => {
-    it('returns no label inside warn band', () => {
-      expect(interpretZRobust(-4)).toEqual(undefined)
-      expect(interpretZRobust(0)).toEqual(undefined)
-      expect(interpretZRobust(4)).toEqual(undefined)
-    })
-
-    it('returns moderate labels outside warn band', () => {
-      expect(interpretZRobust(-4.1)).toEqual('Z-robust - moderate drop')
-      expect(interpretZRobust(4.1)).toEqual('Z-robust - moderate spike')
-    })
-
-    it('returns big labels outside spike/drop band', () => {
-      expect(interpretZRobust(-6.1)).toEqual('Z-robust - big drop')
-      expect(interpretZRobust(6.1)).toEqual('Z-robust - big spike')
     })
   })
   describe('avgVolumePerTransfer', () => {
@@ -240,7 +216,7 @@ describe('InteropStats', () => {
       ])
 
       expect(results).toHaveLength(1)
-      expect(results[0]?.srcDstDiff.isHigh).toEqual(true)
+      expect(results[0]?.srcDstDiff.isSideMismatch).toEqual(true)
       expect(results[0]?.srcVolume.isRatioSpike).toEqual(true)
       expect(results[0]?.dstVolume.isRatioSpike).toEqual(true)
       expect(results[0]?.srcVolume.z.robust).toEqual(null)
@@ -251,6 +227,26 @@ describe('InteropStats', () => {
         100_000_000,
       )
       expect(results[0]?.dstVolume.avgValuePerTransfer.last).toEqual(100_000)
+    })
+
+    it('flags a side mismatch at the strict threshold', () => {
+      const [result] = explore([row(0, 1, 'id-1', 1_000_000, 700_000)])
+
+      assert(result)
+
+      expect(result.srcDstDiff.lastPercent).toEqual(30)
+      expect(result.srcDstDiff.isSideMismatch).toEqual(true)
+      expect(interpret(result)).toEqual(
+        'Source/destination volume mismatch (30%)',
+      )
+    })
+
+    it('does not flag one-sided or low-volume rows as side mismatch', () => {
+      const [oneSided] = explore([row(0, 1, 'one-sided', 2_000_000, 0)])
+      const [lowVolume] = explore([row(0, 1, 'low-volume', 900_000, 500_000)])
+
+      expect(oneSided?.srcDstDiff.isSideMismatch).toEqual(false)
+      expect(lowVolume?.srcDstDiff.isSideMismatch).toEqual(false)
     })
 
     it('keeps count normal on calm 2w count with trillion volume spike', () => {
@@ -300,10 +296,8 @@ describe('InteropStats', () => {
       expect(labels.includes('Z-classic: spike/drop')).toEqual(false)
       expect(labels.includes('Z-robust - big spike')).toEqual(false)
       expect(labels.includes('Z-robust - big drop')).toEqual(false)
-      expect(labels.includes('Src volume ratio spike')).toEqual(true)
-      expect(labels.includes('Dst volume ratio spike')).toEqual(true)
-      expect(labels.includes('Src volume Z-classic: spike/drop')).toEqual(true)
-      expect(labels.includes('Dst volume Z-classic: spike/drop')).toEqual(true)
+      expect(labels.includes('Source volume spiked')).toEqual(true)
+      expect(labels.includes('Destination volume spiked')).toEqual(true)
     })
 
     it('does not flag spikes for sparse mostly-zero history', () => {
