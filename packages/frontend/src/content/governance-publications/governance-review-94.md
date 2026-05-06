@@ -35,7 +35,7 @@ authorId: manuel-gonzalez
 **Uniswap: 1 Vote**
 
 
-* [Return 12.5M Delegated Tokens to the Governance Timelock](https://snapshot.box/#/s:uniswapgovernance.eth/proposal/0xd41b2db93c0348e9061bf786dfcb610d8f35e8447f2e90b37b8f30a9b1a3091e)** **- ends on May 8 at 12:57 UTC.
+* [Return 12.5M Delegated Tokens to the Governance Timelock](https://snapshot.box/#/s:uniswapgovernance.eth/proposal/0xd41b2db93c0348e9061bf786dfcb610d8f35e8447f2e90b37b8f30a9b1a3091e) - ends on May 8 at 12:57 UTC.
 
 
 ---
