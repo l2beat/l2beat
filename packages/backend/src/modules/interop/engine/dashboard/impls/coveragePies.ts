@@ -135,38 +135,39 @@ function addColors(
 
 function buildChartData(
   input: InteropCoveragePieChartInput,
+  collapseThresholdPct: number,
 ): InteropCoveragePieChart {
   const grouped = new Map<
     string,
     {
+      label: string
+      isSupported: boolean
       count: number
-      unsupportedCount: number
       rawChains: Set<string>
     }
   >()
 
   for (const row of input.rows) {
     const label = resolveChainAlias(row.chain)
-    const current = grouped.get(label) ?? {
+    const key = `${label}|${row.isSupported ? 's' : 'u'}`
+    const current = grouped.get(key) ?? {
+      label,
+      isSupported: row.isSupported,
       count: 0,
-      unsupportedCount: 0,
       rawChains: new Set<string>(),
     }
 
     current.count += row.count
-    if (!row.isSupported) {
-      current.unsupportedCount += row.count
-    }
     current.rawChains.add(row.chain)
-    grouped.set(label, current)
+    grouped.set(key, current)
   }
 
-  const merged = Array.from(grouped.entries())
-    .map(([label, value]) => ({
-      label,
+  const merged = Array.from(grouped.values())
+    .map((value) => ({
+      label: value.isSupported ? value.label : `${value.label} (unsupported)`,
       rawChains: Array.from(value.rawChains).sort(),
       count: value.count,
-      isSupported: value.unsupportedCount === 0,
+      isSupported: value.isSupported,
     }))
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
 
@@ -178,10 +179,10 @@ function buildChartData(
   }))
 
   const large = withPct.filter(
-    (row) => row.pctOfTotal >= COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
+    (row) => row.pctOfTotal >= collapseThresholdPct,
   )
   const small = withPct.filter(
-    (row) => row.pctOfTotal < COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
+    (row) => row.pctOfTotal < collapseThresholdPct,
   )
 
   const smallSupported = small.filter((row) => row.isSupported)
@@ -192,7 +193,7 @@ function buildChartData(
   if (smallSupported.length > 0) {
     const count = smallSupported.reduce((acc, row) => acc + row.count, 0)
     collapsed.push({
-      label: `Other supported (<${COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT}%, ${smallSupported.length} chains)`,
+      label: `Other supported (<${collapseThresholdPct}%, ${smallSupported.length} chains)`,
       rawChains: smallSupported.flatMap((row) => row.rawChains),
       isSupported: true,
       count,
@@ -203,7 +204,7 @@ function buildChartData(
   if (smallUnsupported.length > 0) {
     const count = smallUnsupported.reduce((acc, row) => acc + row.count, 0)
     collapsed.push({
-      label: `Other unsupported (<${COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT}%, ${smallUnsupported.length} chains)`,
+      label: `Other unsupported (<${collapseThresholdPct}%, ${smallUnsupported.length} chains)`,
       rawChains: smallUnsupported.flatMap((row) => row.rawChains),
       isSupported: false,
       count,
@@ -238,12 +239,14 @@ function buildChartData(
 
 export function buildInteropCoveragePieCharts(
   inputs: InteropCoveragePieChartInput[],
+  collapseThresholdPct: number = COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
 ): InteropCoveragePieChart[] {
-  return inputs.map(buildChartData)
+  return inputs.map((input) => buildChartData(input, collapseThresholdPct))
 }
 
 export async function getInteropCoveragePiesData(
   db: Database,
+  collapseThresholdPct: number = COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
 ): Promise<InteropCoveragePiesData> {
   const rows = await Promise.all(
     CHART_CONFIGS.map((chart) =>
@@ -253,7 +256,7 @@ export async function getInteropCoveragePiesData(
 
   return {
     generatedAt: new Date().toISOString(),
-    collapseThresholdPct: COVERAGE_PIE_COLLAPSE_THRESHOLD_PCT,
+    collapseThresholdPct,
     charts: buildInteropCoveragePieCharts(
       CHART_CONFIGS.map((chart, i) => ({
         id: chart.id,
@@ -261,6 +264,7 @@ export async function getInteropCoveragePiesData(
         centerLabel: chart.centerLabel,
         rows: rows[i] ?? [],
       })),
+      collapseThresholdPct,
     ),
   }
 }
