@@ -11,7 +11,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -38,43 +37,13 @@ export const sophon: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1734480000), // 2024-12-18T00:00:00Z
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: false,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: false,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: true,
-        daCommitteeDecentralized: true,
-        noRedTrustedSetups: true,
-        proverSourcePublished: true,
-        verifierContractsReproducible: null,
-        programHashesReproducible: true,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: true,
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
-      daVerifierLink:
-        'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
-    },
-  ),
+  daAttestedByIndependentParty: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: true,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Sophon',
     slug: 'sophon',

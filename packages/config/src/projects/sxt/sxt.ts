@@ -6,7 +6,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -19,43 +18,14 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const sxt: ScalingProject = zkStackL2({
   addedAt: UnixTime(1716819511), // 2024-05-27T14:18:31Z
   additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.AvailVector],
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: true,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: false,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: true,
-        daCommitteeDecentralized: true,
-        noRedTrustedSetups: true,
-        proverSourcePublished: true,
-        verifierContractsReproducible: null,
-        programHashesReproducible: true,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: true,
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/matter-labs/zksync-era',
-      daVerifierLink:
-        'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
-    },
-  ),
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: true,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: true,
+  daMechanismEconomicSecurity: false,
+  daVerifierLink:
+    'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Space and Time',
     slug: 'sxt',
