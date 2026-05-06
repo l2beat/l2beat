@@ -172,8 +172,8 @@ export const fluent: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       description:
-        "Fluent ships an optimistic-with-SP1 design: batches are preconfirmed by an AWS Nitro Enclave (whose signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 — a fingerprint of the enclave image — matches the expected audited value), and SP1 ZK proofs are accepted as responses to disputes raised by holders of the `CHALLENGER_ROLE`. " +
-        `In practice the role currently has no holders: \`challengeBatchRoot\` and \`challengeBlock\` are gated by \`onlyRole(CHALLENGER_ROLE)\`, and the only path that flips a block to "proven" is \`resolveBlockChallenge\` (which itself requires an active challenge). With no challenger, no SP1 proof can be submitted onchain and \`finalizeWithProofs\` reverts, so every batch finalizes purely on the time-based path after ${formatSeconds(finalizationDelay)}. Effective security reduces to "trust the TEE and wait the delay" until the admin grants the role.`,
+        "Fluent ships an optimistic-with-SP1 design: batches are preconfirmed by an AWS Nitro Enclave (whose signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 — a fingerprint of the enclave image — matches the expected audited value), and SP1 ZK proofs are accepted as responses to disputes raised by holders of the CHALLENGER_ROLE. " +
+        `In practice the role currently has no holders: challengeBatchRoot and challengeBlock are gated by onlyRole(CHALLENGER_ROLE), and the only path that flips a block to proven is resolveBlockChallenge (which itself requires an active challenge). With no challenger, no SP1 proof can be submitted onchain and finalizeWithProofs reverts, so every batch finalizes purely on the time-based path after ${formatSeconds(finalizationDelay)}. Effective security reduces to trust the TEE and wait the delay until the admin grants the role.`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
