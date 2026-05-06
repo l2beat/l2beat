@@ -18,7 +18,8 @@
     "spark",
     "Tether-Gold",
     "Gauntlet-USDC-Prime",
-    "Sentora-PYUSD"
+    "Sentora-PYUSD",
+    "wbeth"
   ],
-  "lastUpdated": "2026-04-25"
+  "lastUpdated": "2026-05-06"
 }

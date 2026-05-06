@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-05-06T13:00:00.214Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "isExternal": false,
+      "fetchBalances": true,
+      "isToken": true,
+      "timestamp": "2026-05-06T13:00:00.205Z"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-05-06T13:00:00.214Z"
+    }
+  ]
+}
