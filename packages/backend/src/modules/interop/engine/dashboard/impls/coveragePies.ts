@@ -178,12 +178,8 @@ function buildChartData(
     pctOfTotal: totalCount === 0 ? 0 : (100 * row.count) / totalCount,
   }))
 
-  const large = withPct.filter(
-    (row) => row.pctOfTotal >= collapseThresholdPct,
-  )
-  const small = withPct.filter(
-    (row) => row.pctOfTotal < collapseThresholdPct,
-  )
+  const large = withPct.filter((row) => row.pctOfTotal >= collapseThresholdPct)
+  const small = withPct.filter((row) => row.pctOfTotal < collapseThresholdPct)
 
   const smallSupported = small.filter((row) => row.isSupported)
   const smallUnsupported = small.filter((row) => !row.isSupported)
