@@ -724,12 +724,11 @@ export function EXIT_WINDOW_NITRO(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
   const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
+    value: description,
+    sentiment: 'warning',
   }
   return {
-    ...EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
-    description: description,
+    ...EXIT_WINDOW(0, selfSequencingDelay),
     warning: warning,
   }
 }
@@ -768,14 +767,12 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
 
 export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {
   const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
-  const value = formatSeconds(upgradeDelay - scReactionTime)
+  const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${formatSeconds(upgradeDelay - scReactionTime)} to exit.`
   return {
-    value,
-    sentiment: 'warning',
-    description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
+    ...EXIT_WINDOW(0, scReactionTime),
     warning: {
-      value: 'The Security Council can upgrade with no delay.',
-      sentiment: 'bad',
+      value: description,
+      sentiment: 'warning',
     },
   }
 }
