@@ -310,7 +310,7 @@ export const DATA_POS: TableReadyValue = {
 export const DATA_POS_NOBRIDGE: TableReadyValue = {
   value: 'PoS network',
   description:
-    'Data is guaranteed to be available by an external proof of stake network of validators. There is no DA bridge to Ethereum so this external PoS network is an additional trust assumption.',
+    'Data is made available by an external proof of stake network of validators. Since there is no DA bridge, Ethereum cannot verify whether any data was made available on Gnosis Chain or whether incoming messages originate from state that was attested to by the PoS network.',
   sentiment: 'bad',
 }
 
