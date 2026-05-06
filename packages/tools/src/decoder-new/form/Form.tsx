@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import { useReducer } from 'react'
-import { INITIAL_STATE, reducer, State, SUPPORTED_CHAINS } from './state'
+import { INITIAL_STATE, reducer, type State, SUPPORTED_CHAINS } from './state'
 
 export type FormValues = State['values']
 
@@ -15,7 +15,7 @@ export function Form(props: FormProps) {
   const hasInput = !!state.values.hash || !!state.values.data
   const disabled = hasErrors || !hasInput || state.submitting
 
-  async function onSubmit() {
+  function onSubmit() {
     dispatch({ type: 'submit' })
     props.onSubmit(state.values)
   }
@@ -134,6 +134,30 @@ export function Form(props: FormProps) {
           )}
         />
       </form>
+      <FormExamples
+        setHash={(hash) => dispatch({ type: 'set hash', value: hash })}
+      />
     </main>
+  )
+}
+
+function FormExamples(props: { setHash: (hash: string) => void }) {
+  if (process.env.NODE_ENV === 'production') return null
+  return (
+    <>
+      <h2>Examples:</h2>
+      <ul>
+        <li
+          className="cursor-pointer text-blue-400"
+          onClick={() =>
+            props.setHash(
+              '0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770',
+            )
+          }
+        >
+          <span>Arbitrum KelpDAO rescue</span>
+        </li>
+      </ul>
+    </>
   )
 }

@@ -2,8 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
-import { callDecode, encodeCalldata, getFullQueryUrl, getQueryParams } from './api'
-import { Form, FormValues } from './form/Form'
+import {
+  callDecode,
+  encodeCalldata,
+  getFullQueryUrl,
+  getQueryParams,
+} from './api'
+import { Form, type FormValues } from './form/Form'
 import { CondensedView } from './view/CondensedView'
 import { ExpandedView } from './view/ExpandedView'
 

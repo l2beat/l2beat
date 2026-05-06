@@ -42,7 +42,6 @@ export function getFullQueryUrl(queryParams: string): URLSearchParams {
   return new URLSearchParams(queryParams)
 }
 
-
 function hexToBytes(hex: string): Uint8Array {
   const cleanHex = hex.startsWith('0x') ? hex.slice(2) : hex
 
