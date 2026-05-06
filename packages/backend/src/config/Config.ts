@@ -39,6 +39,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
+  readonly tokenPrice: TokenPriceConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -99,10 +100,13 @@ export interface ClockConfig {
 export interface TvsConfig {
   readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
   readonly amounts: AmountConfig[]
-  readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
   readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export interface TokenPriceConfig {
+  readonly prices: PriceConfig[]
 }
 
 export type TvsCleanerConfig = {

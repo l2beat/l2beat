@@ -11,6 +11,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { initTokenPriceModule } from './modules/token-price/TokenPriceModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -61,6 +62,9 @@ export class Application {
       trpcContributions,
     })
 
+    // Token price module must be initialized before TVS module
+    const tokenPriceModule = initTokenPriceModule(deps)
+
     // All-modules entrypoint
     const modules: (ApplicationModule | undefined)[] = [
       initActivityModule(deps),
@@ -68,7 +72,11 @@ export class Application {
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
       trackedTxsModule,
-      initTvsModule(deps),
+      tokenPriceModule,
+      initTvsModule({
+        ...deps,
+        tokenPriceIndexer: tokenPriceModule?.tokenPriceIndexer,
+      }),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),

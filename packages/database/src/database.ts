@@ -37,7 +37,7 @@ import { TokenMetadataRepository } from './repositories/TokenMetadataRepository'
 import { TokenValueRepository } from './repositories/TokenValueRepository'
 import { TvsAmountRepository } from './repositories/TvsAmountRepository'
 import { TvsBlockTimestampRepository } from './repositories/TvsBlockTimestampRepository'
-import { TvsPriceRepository } from './repositories/TvsPriceRepository'
+import { TokenPriceRepository } from './repositories/TokenPriceRepository'
 import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
@@ -116,7 +116,7 @@ export function createDatabase(
     // #endregion
 
     // #region Tvs
-    tvsPrice: new TvsPriceRepository(db),
+    tokenPrice: new TokenPriceRepository(db),
     tvsAmount: new TvsAmountRepository(db),
     tvsBlockTimestamp: new TvsBlockTimestampRepository(db),
     tvsTokenValue: new TokenValueRepository(db),

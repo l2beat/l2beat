@@ -231,7 +231,7 @@ model TvsBlockTimestamp {
   @@index([chain])
 }
 
-model TvsPrice {
+model TokenPrice {
   timestamp       DateTime @db.Timestamp(6)
   configurationId String   @db.Char(12)
   priceId         String   @db.VarChar(255)

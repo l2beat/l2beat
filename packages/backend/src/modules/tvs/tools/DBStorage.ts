@@ -23,7 +23,7 @@ export class DBStorage implements DataStorage {
 
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
-    const records = await this.db.tvsPrice.getPricesInRange(
+    const records = await this.db.tokenPrice.getPricesInRange(
       configurationIds,
       from,
       to,
@@ -65,7 +65,7 @@ export class DBStorage implements DataStorage {
     }
 
     // if not preloaded, we need to fetch from DB
-    const priceRecord = await this.db.tvsPrice.getPrice(
+    const priceRecord = await this.db.tokenPrice.getPrice(
       configurationId,
       timestamp,
     )
@@ -77,7 +77,7 @@ export class DBStorage implements DataStorage {
     // Fallback is needed due to the way PriceIndexer works.
     // If CoingeckoClient returns empty response we will not save anything to DB
     // and skip this timestamp altogether, effectively creating a gap in data.
-    const fallback = await this.db.tvsPrice.getLatestPriceBefore(
+    const fallback = await this.db.tokenPrice.getLatestPriceBefore(
       configurationId,
       timestamp,
     )

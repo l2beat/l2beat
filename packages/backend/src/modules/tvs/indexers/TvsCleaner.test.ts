@@ -31,7 +31,7 @@ describe(TvsCleaner.name, () => {
         deleteHourlyUntil: mockFn().resolvesTo(7),
         deleteSixHourlyUntil: mockFn().resolvesTo(3),
       })
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         deleteHourlyUntil: mockFn().resolvesTo(8),
         deleteSixHourlyUntil: mockFn().resolvesTo(4),
       })
@@ -41,7 +41,7 @@ describe(TvsCleaner.name, () => {
           tvsTokenValue: tvsTokenValueRepository,
           tvsBlockTimestamp: tvsBlockTimestampRepository,
           tvsAmount: tvsAmountRepository,
-          tvsPrice: tvsPriceRepository,
+          tokenPrice: tokenPriceRepository,
         }),
       })
 
@@ -66,7 +66,7 @@ describe(TvsCleaner.name, () => {
         sixHourlyRange,
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
-      expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
+      expectDeleteCalls(tokenPriceRepository, hourlyRange, sixHourlyRange)
       expect(result).toEqual(to)
     })
 
@@ -85,7 +85,7 @@ describe(TvsCleaner.name, () => {
         deleteHourlyUntil: mockFn().resolvesTo(6),
         deleteSixHourlyUntil: mockFn().resolvesTo(4),
       })
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         deleteHourlyUntil: mockFn().resolvesTo(5),
         deleteSixHourlyUntil: mockFn().resolvesTo(3),
       })
@@ -95,7 +95,7 @@ describe(TvsCleaner.name, () => {
           tvsTokenValue: tvsTokenValueRepository,
           tvsBlockTimestamp: tvsBlockTimestampRepository,
           tvsAmount: tvsAmountRepository,
-          tvsPrice: tvsPriceRepository,
+          tokenPrice: tokenPriceRepository,
         }),
       })
 
@@ -121,7 +121,7 @@ describe(TvsCleaner.name, () => {
         sixHourlyRange,
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
-      expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
+      expectDeleteCalls(tokenPriceRepository, hourlyRange, sixHourlyRange)
       expect(result).toEqual(to)
     })
   })
@@ -143,7 +143,7 @@ function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
       tvsTokenValue: mockObject(),
       tvsBlockTimestamp: mockObject(),
       tvsAmount: mockObject(),
-      tvsPrice: mockObject(),
+      tokenPrice: mockObject(),
     }),
     syncOptimizer: testSyncOptimizer(),
     parents: [],
@@ -159,7 +159,7 @@ function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
       'tvsTokenValue',
       'tvsBlockTimestamp',
       'tvsAmount',
-      'tvsPrice',
+      'tokenPrice',
     ]),
   }
 

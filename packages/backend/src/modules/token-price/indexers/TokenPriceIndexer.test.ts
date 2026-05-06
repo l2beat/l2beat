@@ -1,16 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, TvsPriceRecord } from '@l2beat/database'
+import type { Database, TokenPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { SyncOptimizer } from '../tools/SyncOptimizer'
-import { TvsPriceIndexer } from './TvsPriceIndexer'
+import type { SyncOptimizer } from '../../tvs/tools/SyncOptimizer'
+import { TokenPriceIndexer } from './TokenPriceIndexer'
 
-describe(TvsPriceIndexer.name, () => {
-  describe(TvsPriceIndexer.prototype.multiUpdate.name, () => {
+describe(TokenPriceIndexer.name, () => {
+  describe(TokenPriceIndexer.prototype.multiUpdate.name, () => {
     it('fetches prices and saves them to DB', async () => {
       const from = 100
       const to = 300
@@ -36,15 +36,15 @@ describe(TvsPriceIndexer.name, () => {
         shouldTimestampBeSynced: mockFn().returns(true),
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: configs,
           priceProvider,
-          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          db: mockDatabase({ tokenPrice: tokenPriceRepository }),
           syncOptimizer,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -69,12 +69,12 @@ describe(TvsPriceIndexer.name, () => {
         adjustedTo,
       )
 
-      const expectedRecords: TvsPriceRecord[] = [
+      const expectedRecords: TokenPriceRecord[] = [
         record('config-1', 'ethereum', 150),
         record('config-2', 'bitcoin', 200),
       ]
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tokenPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -100,15 +100,15 @@ describe(TvsPriceIndexer.name, () => {
           .returnsOnce(false), // For timestamp 200
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          db: mockDatabase({ tokenPrice: tokenPriceRepository }),
           syncOptimizer,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -121,11 +121,11 @@ describe(TvsPriceIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      const expectedRecords: TvsPriceRecord[] = [
+      const expectedRecords: TokenPriceRecord[] = [
         record('config-1', 'ethereum', 150),
       ]
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      expect(tokenPriceRepository.upsertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -144,11 +144,11 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([]),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: mockObject() }),
+          db: mockDatabase({ tokenPrice: mockObject() }),
           syncOptimizer,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -186,15 +186,15 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         upsertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          db: mockDatabase({ tokenPrice: tokenPriceRepository }),
           syncOptimizer,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -213,7 +213,7 @@ describe(TvsPriceIndexer.name, () => {
         adjustedTo,
       )
 
-      expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([])
+      expect(tokenPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([])
       expect(safeHeight).toEqual(adjustedTo)
     })
 
@@ -233,11 +233,11 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: mockObject() }),
+          db: mockDatabase({ tokenPrice: mockObject() }),
           syncOptimizer,
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -251,17 +251,17 @@ describe(TvsPriceIndexer.name, () => {
     })
   })
 
-  describe(TvsPriceIndexer.prototype.removeData.name, () => {
+  describe(TokenPriceIndexer.prototype.removeData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tokenPriceRepository = mockObject<Database['tokenPrice']>({
         deleteByConfigs: mockFn().returns(5),
       })
 
-      const indexer = new TvsPriceIndexer(
+      const indexer = new TokenPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider: mockObject<PriceProvider>({}),
-          db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+          db: mockDatabase({ tokenPrice: tokenPriceRepository }),
           syncOptimizer: mockObject<SyncOptimizer>({}),
           parents: [],
           indexerService: mockObject<IndexerService>({}),
@@ -276,7 +276,7 @@ describe(TvsPriceIndexer.name, () => {
 
       await indexer.removeData(removalConfigs)
 
-      expect(tvsPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
+      expect(tokenPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {
           configurationId: 'config-1',
           fromInclusive: UnixTime(100),

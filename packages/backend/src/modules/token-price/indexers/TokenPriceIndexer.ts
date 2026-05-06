@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { TvsPriceRecord } from '@l2beat/database'
+import type { TokenPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
@@ -13,24 +13,24 @@ import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../tools/SyncOptimizer'
-import type { PriceConfig } from '../types'
+import type { SyncOptimizer } from '../../tvs/tools/SyncOptimizer'
+import type { PriceConfig } from '../../tvs/types'
 
-export interface TvsPriceIndexerDeps
+export interface TokenPriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
   priceProvider: PriceProvider
 }
 
-export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
+export class TokenPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   constructor(
-    private readonly $: TvsPriceIndexerDeps,
+    private readonly $: TokenPriceIndexerDeps,
     logger: Logger,
   ) {
     super(
       {
         ...$,
-        name: INDEXER_NAMES.TVS_PRICE,
+        name: INDEXER_NAMES.TOKEN_PRICE,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
@@ -68,12 +68,14 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
               UnixTime(from),
               adjustedTo,
             )
-            const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
-              configurationId: configuration.id,
-              timestamp: p.timestamp,
-              priceUsd: p.value,
-              priceId: configuration.properties.priceId,
-            }))
+            const configurationRecords: TokenPriceRecord[] = prices.map(
+              (p) => ({
+                configurationId: configuration.id,
+                timestamp: p.timestamp,
+                priceUsd: p.value,
+                priceId: configuration.properties.priceId,
+              }),
+            )
 
             const optimizedRecords = configurationRecords.filter((p) =>
               this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
@@ -109,7 +111,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     })
 
     return async () => {
-      await this.$.db.tvsPrice.upsertMany(records)
+      await this.$.db.tokenPrice.upsertMany(records)
 
       this.logger.info('Saved prices into DB', {
         from,
@@ -136,7 +138,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       toInclusive: UnixTime(c.to),
     }))
 
-    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
+    const deletedRecords = await this.$.db.tokenPrice.deleteByConfigs(configs)
 
     if (deletedRecords > 0) {
       this.logger.info('Deleted records for configurations', {

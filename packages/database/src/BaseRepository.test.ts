@@ -17,20 +17,20 @@ class TestRepository extends BaseRepository {
   async insert(value: number) {
     await this.db
       // We use prices because it is one of the simpler tables
-      .insertInto('TvsPrice')
+      .insertInto('TokenPrice')
       .values(toRow(value))
       .execute()
   }
 
   async batchInsert(values: number[]) {
     await this.batch(values, 2, async (values) => {
-      await this.db.insertInto('TvsPrice').values(values.map(toRow)).execute()
+      await this.db.insertInto('TokenPrice').values(values.map(toRow)).execute()
     })
   }
 
   async getAll() {
     const results = await this.db
-      .selectFrom('TvsPrice')
+      .selectFrom('TokenPrice')
       .select(['priceUsd'])
       .orderBy('priceUsd', 'asc')
       .execute()
@@ -38,7 +38,7 @@ class TestRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    await this.db.deleteFrom('TvsPrice').execute()
+    await this.db.deleteFrom('TokenPrice').execute()
   }
 }
 

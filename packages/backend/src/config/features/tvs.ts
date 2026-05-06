@@ -55,7 +55,7 @@ export async function getTvsConfig(
   // It is very important to pass ALL PROJECTS tokens here
   // this allows us to deduplicate amounts and extractPricesAndAmounts
   // and set since and untilTimestamp properly
-  const { amounts, prices } = extractPricesAndAmounts(
+  const { amounts } = extractPricesAndAmounts(
     projects.flatMap((p) => p.tokens),
     chainRanges,
   )
@@ -111,13 +111,12 @@ export async function getTvsConfig(
       'tvsTokenValue',
       'tvsBlockTimestamp',
       'tvsAmount',
-      'tvsPrice',
+      'tokenPrice',
     ])
 
   return {
     projects: projectsWithSources,
     amounts,
-    prices,
     chains,
     blockTimestamps,
     cleaner,

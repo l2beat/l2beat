@@ -39,13 +39,13 @@ describe(DBStorage.name, () => {
         },
       ]
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tokenPrice = mockObject<Database['tokenPrice']>({
         getPricesInRange: mockFn().resolvesTo(mockPrices),
       })
 
       const storage = new DBStorage(
         mockObject<Database>({
-          tvsPrice,
+          tokenPrice,
         }),
         Logger.SILENT,
       )
@@ -55,7 +55,7 @@ describe(DBStorage.name, () => {
         [timestamp1, timestamp2],
       )
 
-      expect(tvsPrice.getPricesInRange).toHaveBeenCalledWith(
+      expect(tokenPrice.getPricesInRange).toHaveBeenCalledWith(
         [configId1, configId2],
         timestamp1,
         timestamp2,
@@ -73,13 +73,13 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tokenPrice = mockObject<Database['tokenPrice']>({
         getPricesInRange: mockFn().resolvesTo([]),
       })
 
       const storage = new DBStorage(
         mockObject<Database>({
-          tvsPrice,
+          tokenPrice,
         }),
         Logger.SILENT,
       )
@@ -206,13 +206,13 @@ describe(DBStorage.name, () => {
         priceUsd: 900,
       }
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tokenPrice = mockObject<Database['tokenPrice']>({
         getPrice: mockFn().resolvesTo(dbPrice),
       })
 
       const storage = new DBStorage(
         mockObject<Database>({
-          tvsPrice,
+          tokenPrice,
         }),
         Logger.SILENT,
       )
@@ -221,20 +221,20 @@ describe(DBStorage.name, () => {
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(900)
-      expect(tvsPrice.getPrice).toHaveBeenCalledWith(configId, timestamp)
+      expect(tokenPrice.getPrice).toHaveBeenCalledWith(configId, timestamp)
     })
 
     it('returns undefined when not in memory and preloadOnly is set', async () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tokenPrice = mockObject<Database['tokenPrice']>({
         getPrice: mockFn().resolvesTo(undefined),
       })
 
       const storage = new DBStorage(
         mockObject<Database>({
-          tvsPrice,
+          tokenPrice,
         }),
         Logger.SILENT,
         true,
@@ -244,7 +244,7 @@ describe(DBStorage.name, () => {
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(undefined)
-      expect(tvsPrice.getPrice).not.toHaveBeenCalled()
+      expect(tokenPrice.getPrice).not.toHaveBeenCalled()
     })
 
     it('falls back to latest price when not in memory and not in DB', async () => {
@@ -259,14 +259,14 @@ describe(DBStorage.name, () => {
         priceUsd: 900,
       }
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tokenPrice = mockObject<Database['tokenPrice']>({
         getPrice: mockFn().resolvesTo(undefined),
         getLatestPriceBefore: mockFn().resolvesTo(fallbackPrice),
       })
 
       const storage = new DBStorage(
         mockObject<Database>({
-          tvsPrice,
+          tokenPrice,
         }),
         Logger.SILENT,
       )
@@ -275,7 +275,7 @@ describe(DBStorage.name, () => {
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(900)
-      expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
+      expect(tokenPrice.getLatestPriceBefore).toHaveBeenCalledWith(
         configId,
         timestamp,
       )

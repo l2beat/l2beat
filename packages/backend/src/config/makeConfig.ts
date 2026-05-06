@@ -10,6 +10,7 @@ import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
+import { getTokenPriceConfig } from './features/tokenPrice'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -109,6 +110,13 @@ export async function makeConfig(
         ps,
         flags,
         env.optionalInteger('TVS_SINCE_TIMESTAMP'),
+      )),
+    tokenPrice:
+      flags.isEnabled('token-price') &&
+      (await getTokenPriceConfig(
+        ps,
+        flags,
+        env.optionalInteger('TOKEN_PRICE_SINCE_TIMESTAMP'),
       )),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&

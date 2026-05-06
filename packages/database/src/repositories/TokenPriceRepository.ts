@@ -1,42 +1,42 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { TvsPrice } from '../kysely/generated/types'
+import type { TokenPrice } from '../kysely/generated/types'
 import {
   type CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
 
-export interface TvsPriceRecord {
+export interface TokenPriceRecord {
   timestamp: UnixTime
   configurationId: string
   priceId: string
   priceUsd: number
 }
 
-export function toRecord(row: Selectable<TvsPrice>): TvsPriceRecord {
+export function toRecord(row: Selectable<TokenPrice>): TokenPriceRecord {
   return {
     ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
 
-export function toRow(record: TvsPriceRecord): Insertable<TvsPrice> {
+export function toRow(record: TokenPriceRecord): Insertable<TokenPrice> {
   return {
     ...record,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
 
-export class TvsPriceRepository extends BaseRepository {
-  async upsertMany(records: TvsPriceRecord[]): Promise<number> {
+export class TokenPriceRepository extends BaseRepository {
+  async upsertMany(records: TokenPriceRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
-        .insertInto('TvsPrice')
+        .insertInto('TokenPrice')
         .values(batch)
         .onConflict((oc) =>
           oc.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
@@ -51,9 +51,9 @@ export class TvsPriceRepository extends BaseRepository {
   async getPrice(
     configurationId: string,
     timestamp: UnixTime,
-  ): Promise<TvsPriceRecord | undefined> {
+  ): Promise<TokenPriceRecord | undefined> {
     const row = await this.db
-      .selectFrom('TvsPrice')
+      .selectFrom('TokenPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('configurationId', '=', configurationId)
       .where('timestamp', '=', UnixTime.toDate(timestamp))
@@ -66,10 +66,10 @@ export class TvsPriceRepository extends BaseRepository {
     configurationIds: string[],
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ): Promise<TvsPriceRecord[]> {
+  ): Promise<TokenPriceRecord[]> {
     if (configurationIds.length === 0) return []
     const rows = await this.db
-      .selectFrom('TvsPrice')
+      .selectFrom('TokenPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
@@ -83,9 +83,9 @@ export class TvsPriceRepository extends BaseRepository {
     priceId: string,
     fromInclusive: UnixTime | null,
     toInclusive: UnixTime,
-  ): Promise<TvsPriceRecord[]> {
+  ): Promise<TokenPriceRecord[]> {
     let query = this.db
-      .selectFrom('TvsPrice')
+      .selectFrom('TokenPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('priceId', '=', priceId)
 
@@ -104,9 +104,9 @@ export class TvsPriceRepository extends BaseRepository {
   async getLatestPriceBefore(
     configurationId: string,
     timestamp: UnixTime,
-  ): Promise<TvsPriceRecord | undefined> {
+  ): Promise<TokenPriceRecord | undefined> {
     const row = await this.db
-      .selectFrom('TvsPrice')
+      .selectFrom('TokenPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('configurationId', '=', configurationId)
       .where('timestamp', '<', UnixTime.toDate(timestamp))
@@ -129,7 +129,7 @@ export class TvsPriceRepository extends BaseRepository {
     let totalDeleted = 0
     await this.batch(configs, 100, async (batch) => {
       const result = await this.db
-        .deleteFrom('TvsPrice')
+        .deleteFrom('TokenPrice')
         .where((eb) =>
           eb.or(
             batch.map((c) =>
@@ -148,20 +148,20 @@ export class TvsPriceRepository extends BaseRepository {
   }
 
   async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return await deleteHourlyUntil(this.db, 'TvsPrice', dateRange)
+    return await deleteHourlyUntil(this.db, 'TokenPrice', dateRange)
   }
 
   async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
-    return await deleteSixHourlyUntil(this.db, 'TvsPrice', dateRange)
+    return await deleteSixHourlyUntil(this.db, 'TokenPrice', dateRange)
   }
 
-  async getAll(): Promise<TvsPriceRecord[]> {
-    const rows = await this.db.selectFrom('TvsPrice').selectAll().execute()
+  async getAll(): Promise<TokenPriceRecord[]> {
+    const rows = await this.db.selectFrom('TokenPrice').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('TvsPrice').executeTakeFirst()
+    const result = await this.db.deleteFrom('TokenPrice').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

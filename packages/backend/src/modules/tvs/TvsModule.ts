@@ -11,30 +11,36 @@ import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmou
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsCleaner } from './indexers/TvsCleaner'
-import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
 import { SyncOptimizer } from './tools/SyncOptimizer'
 import { isOnchainAmountConfig, type ProjectTvsConfig } from './types'
+
+export interface TvsModuleDependencies extends ModuleDependencies {
+  tokenPriceIndexer: Indexer | undefined
+}
+
 export function initTvsModule({
   config,
   logger,
   db,
   providers,
   clock,
-}: ModuleDependencies): ApplicationModule | undefined {
+  tokenPriceIndexer,
+}: TvsModuleDependencies): ApplicationModule | undefined {
   if (!config.tvs) {
     logger.info('TvsModule disabled')
     return
   }
 
+  assert(tokenPriceIndexer, 'tokenPriceIndexer is required when TVS is enabled')
+
   logger = logger.tag({ feature: 'tvs', module: 'tvs' })
 
   logger.info('TVS config loaded', {
     projects: config.tvs.projects.length,
-    prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
     chains: config.tvs.chains.length,
     tvsCleaner: config.tvs.cleaner,
@@ -70,24 +76,6 @@ export function initTvsModule({
       )
     },
   })
-
-  const priceIndexer = new TvsPriceIndexer(
-    {
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: config.tvs.prices.map((price) => ({
-        // configurationId has to be 12 characters long so we cannot use the priceId directly
-        id: price.id,
-        minHeight: price.sinceTimestamp,
-        maxHeight: price.untilTimestamp ?? null,
-        properties: price,
-      })),
-      priceProvider: providers.price,
-      syncOptimizer,
-      db: db,
-    },
-    logger,
-  )
 
   const amountIndexers = new Map<string, Indexer>()
 
@@ -194,7 +182,7 @@ export function initTvsModule({
         dbStorage,
         project: project.projectId,
         maxTimestampsToProcessAtOnce: 500,
-        parents: [priceIndexer, ...amountSources],
+        parents: [tokenPriceIndexer, ...amountSources],
         indexerService,
         configurations: tokensWithRanges.map((t) => {
           return {
@@ -230,7 +218,6 @@ export function initTvsModule({
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
     await hourlyIndexer.start()
-    await priceIndexer.start()
 
     for (const indexer of Array.from(blockTimestampIndexers.values())) {
       await indexer.start()

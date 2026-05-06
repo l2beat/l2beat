@@ -2,20 +2,20 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
-import { TvsPriceRepository } from './TvsPriceRepository'
+import { TokenPriceRepository } from './TokenPriceRepository'
 
-describeDatabase(TvsPriceRepository.name, (db) => {
-  const repository = db.tvsPrice
+describeDatabase(TokenPriceRepository.name, (db) => {
+  const repository = db.tokenPrice
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(TvsPriceRepository.prototype.upsertMany.name, () => {
+  describe(TokenPriceRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(200), 20000.75),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('b', 'btc', UnixTime(200), 20000.75),
       ]
 
       const inserted = await repository.upsertMany(records)
@@ -33,7 +33,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     it('performs batch insert when more than 1000 records', async () => {
       const records = []
       for (let i = 0; i < 1500; i++) {
-        records.push(tvsPrice('a', 'eth', UnixTime(i), 1000 + i))
+        records.push(tokenPrice('a', 'eth', UnixTime(i), 1000 + i))
       }
 
       const inserted = await repository.upsertMany(records)
@@ -42,15 +42,15 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
     it('updates existing records on conflict', async () => {
       const initialRecords = [
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(200), 20000.75),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('b', 'btc', UnixTime(200), 20000.75),
       ]
 
       await repository.upsertMany(initialRecords)
 
       const updatedRecords = [
-        tvsPrice('a', 'eth', UnixTime(100), 1500.25),
-        tvsPrice('b', 'btc', UnixTime(200), 25000.5),
+        tokenPrice('a', 'eth', UnixTime(100), 1500.25),
+        tokenPrice('b', 'btc', UnixTime(200), 25000.5),
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
@@ -61,33 +61,33 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.getPrice.name, () => {
+  describe(TokenPriceRepository.prototype.getPrice.name, () => {
     it('returns price for a configuration', async () => {
       await repository.upsertMany([
-        tvsPrice('a', 'eth', UnixTime(100), 1000),
-        tvsPrice('a', 'eth', UnixTime(200), 1100),
-        tvsPrice('a', 'eth', UnixTime(300), 1200),
-        tvsPrice('b', 'btc', UnixTime(100), 20000),
-        tvsPrice('b', 'btc', UnixTime(200), 21000),
+        tokenPrice('a', 'eth', UnixTime(100), 1000),
+        tokenPrice('a', 'eth', UnixTime(200), 1100),
+        tokenPrice('a', 'eth', UnixTime(300), 1200),
+        tokenPrice('b', 'btc', UnixTime(100), 20000),
+        tokenPrice('b', 'btc', UnixTime(200), 21000),
       ])
 
       const result = await repository.getPrice('a'.repeat(12), UnixTime(200))
 
-      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
+      expect(result).toEqual(tokenPrice('a', 'eth', UnixTime(200), 1100))
     })
   })
 
-  describe(TvsPriceRepository.prototype.getPricesInRange.name, () => {
+  describe(TokenPriceRepository.prototype.getPricesInRange.name, () => {
     it('gets prices for given configIds in time range', async () => {
       await repository.upsertMany([
-        tvsPrice('a', 'eth', UnixTime(50), 900.5),
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
-        tvsPrice('c', 'usdc', UnixTime(100), 1.0),
-        tvsPrice('c', 'usdc', UnixTime(200), 1.0),
-        tvsPrice('a', 'eth', UnixTime(300), 1200.0),
+        tokenPrice('a', 'eth', UnixTime(50), 900.5),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('b', 'btc', UnixTime(100), 20000.75),
+        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
+        tokenPrice('b', 'btc', UnixTime(200), 21000.5),
+        tokenPrice('c', 'usdc', UnixTime(100), 1.0),
+        tokenPrice('c', 'usdc', UnixTime(200), 1.0),
+        tokenPrice('a', 'eth', UnixTime(300), 1200.0),
       ])
 
       const configIds = ['a'.repeat(12), 'b'.repeat(12)]
@@ -99,17 +99,17 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('b', 'btc', UnixTime(100), 20000.75),
+        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
+        tokenPrice('b', 'btc', UnixTime(200), 21000.5),
       ])
     })
 
     it('returns empty array when no data in range', async () => {
       await repository.upsertMany([
-        tvsPrice('a', 'eth', UnixTime(50), 900.5),
-        tvsPrice('a', 'eth', UnixTime(300), 1200.0),
+        tokenPrice('a', 'eth', UnixTime(50), 900.5),
+        tokenPrice('a', 'eth', UnixTime(300), 1200.0),
       ])
 
       const configIds = ['a'.repeat(12)]
@@ -124,7 +124,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns empty array when no matching configIds', async () => {
-      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+      await repository.upsertMany([tokenPrice('a', 'eth', UnixTime(100), 1000.5)])
 
       const configIds = ['b'.repeat(12)]
 
@@ -138,7 +138,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
 
     it('returns empty array when configurationIds is empty', async () => {
-      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+      await repository.upsertMany([tokenPrice('a', 'eth', UnixTime(100), 1000.5)])
 
       const result = await repository.getPricesInRange(
         [],
@@ -150,18 +150,18 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {
+  describe(TokenPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {
     beforeEach(async () => {
       await repository.upsertMany([
-        tvsPrice('a', 'eth', UnixTime(50), 900.5),
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('c', 'eth', UnixTime(150), 1050.25),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
-        tvsPrice('d', 'usdc', UnixTime(100), 1.0),
-        tvsPrice('d', 'usdc', UnixTime(200), 1.0),
-        tvsPrice('a', 'eth', UnixTime(300), 1200.0),
+        tokenPrice('a', 'eth', UnixTime(50), 900.5),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('b', 'btc', UnixTime(100), 20000.75),
+        tokenPrice('c', 'eth', UnixTime(150), 1050.25),
+        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
+        tokenPrice('b', 'btc', UnixTime(200), 21000.5),
+        tokenPrice('d', 'usdc', UnixTime(100), 1.0),
+        tokenPrice('d', 'usdc', UnixTime(200), 1.0),
+        tokenPrice('a', 'eth', UnixTime(300), 1200.0),
       ])
     })
 
@@ -173,9 +173,9 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       )
 
       expect(result).toEqualUnsorted([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('c', 'eth', UnixTime(150), 1050.25),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+        tokenPrice('c', 'eth', UnixTime(150), 1050.25),
+        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
       ])
     })
 
@@ -190,14 +190,14 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.getLatestPriceBefore.name, () => {
+  describe(TokenPriceRepository.prototype.getLatestPriceBefore.name, () => {
     it('returns the latest price for a configuration', async () => {
       await repository.upsertMany([
-        tvsPrice('a', 'eth', UnixTime(100), 1000),
-        tvsPrice('a', 'eth', UnixTime(200), 1100),
-        tvsPrice('a', 'eth', UnixTime(300), 1200),
-        tvsPrice('b', 'btc', UnixTime(100), 20000),
-        tvsPrice('b', 'btc', UnixTime(200), 21000),
+        tokenPrice('a', 'eth', UnixTime(100), 1000),
+        tokenPrice('a', 'eth', UnixTime(200), 1100),
+        tokenPrice('a', 'eth', UnixTime(300), 1200),
+        tokenPrice('b', 'btc', UnixTime(100), 20000),
+        tokenPrice('b', 'btc', UnixTime(200), 21000),
       ])
 
       const result = await repository.getLatestPriceBefore(
@@ -205,11 +205,11 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(250),
       )
 
-      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
+      expect(result).toEqual(tokenPrice('a', 'eth', UnixTime(200), 1100))
     })
 
     it('returns undefined when no prices exist for the configuration', async () => {
-      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(200), 1000)])
+      await repository.upsertMany([tokenPrice('a', 'eth', UnixTime(200), 1000)])
 
       const result = await repository.getLatestPriceBefore(
         'b'.repeat(12),
@@ -220,13 +220,13 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.deleteByConfigs.name, () => {
+  describe(TokenPriceRepository.prototype.deleteByConfigs.name, () => {
     it('deletes data in range for matching configs', async () => {
       await repository.upsertMany([
-        tvsPrice('b', 'eth', UnixTime(1), 1000),
-        tvsPrice('b', 'eth', UnixTime(2), 1100),
-        tvsPrice('b', 'eth', UnixTime(3), 1200),
-        tvsPrice('c', 'btc', UnixTime(2), 20000),
+        tokenPrice('b', 'eth', UnixTime(1), 1000),
+        tokenPrice('b', 'eth', UnixTime(2), 1100),
+        tokenPrice('b', 'eth', UnixTime(3), 1200),
+        tokenPrice('c', 'btc', UnixTime(2), 20000),
       ])
 
       const deleted = await repository.deleteByConfigs([
@@ -241,13 +241,13 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        tvsPrice('b', 'eth', UnixTime(3), 1200),
-        tvsPrice('c', 'btc', UnixTime(2), 20000),
+        tokenPrice('b', 'eth', UnixTime(3), 1200),
+        tokenPrice('c', 'btc', UnixTime(2), 20000),
       ])
     })
 
     it('returns 0 if no matching config found', async () => {
-      await repository.upsertMany([tvsPrice('b', 'eth', UnixTime(1), 1000)])
+      await repository.upsertMany([tokenPrice('b', 'eth', UnixTime(1), 1000)])
 
       const deleted = await repository.deleteByConfigs([
         {
@@ -260,7 +260,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsPrice('b', 'eth', UnixTime(1), 1000)])
+      expect(results).toEqualUnsorted([tokenPrice('b', 'eth', UnixTime(1), 1000)])
     })
 
     it('returns 0 for empty configs', async () => {
@@ -279,7 +279,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         insertMany: (records) => repository.upsertMany(records),
         getAll: () => repository.getAll(),
       },
-      (timestamp) => tvsPrice('a', 'eth', timestamp, 1),
+      (timestamp) => tokenPrice('a', 'eth', timestamp, 1),
     )
   })
 
@@ -288,7 +288,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
   })
 })
 
-function tvsPrice(
+function tokenPrice(
   configId: string,
   priceId: string,
   timestamp: UnixTime,

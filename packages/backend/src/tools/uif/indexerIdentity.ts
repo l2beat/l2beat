@@ -8,10 +8,11 @@ export const INDEXER_NAMES = {
   BLOB: 'blob_indexer',
   ECOSYSTEM_TOKEN: 'ecosystem_token_indexer',
   INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',
+  // TOKEN PRICE
+  TOKEN_PRICE: 'token_price_indexer',
   // TVS
   TVS_BLOCK_TIMESTAMP: 'tvs_block_timestamp_indexer',
   TVS_CHAIN_AMOUNT: 'tvs_chain_amount_indexer',
-  TVS_PRICE: 'tvs_price_indexer',
   TVS_CIRCULATING_SUPPLY: 'tvs_circulating_supply_indexer',
   TVS_TOKEN_VALUE: 'tvs_token_value',
   TVS_CLEANER: 'tvs_cleaner',
