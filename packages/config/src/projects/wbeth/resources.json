@@ -1,0 +1,59 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://www.binance.com/en/wbeth"
+    },
+    {
+      "type": "frontend",
+      "url": "https://www.binance.com/en/eth-staking",
+      "frontendSubtype": "official",
+      "label": "Binance ETH Staking"
+    },
+    {
+      "type": "docs",
+      "url": "https://www.binance.com/en/support/faq/what-is-wbeth-e252366155174ba6887f6b32e3798273",
+      "label": "What Is WBETH (Binance FAQ)"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/binance"
+    },
+    {
+      "type": "source-code",
+      "url": "https://etherscan.io/address/0xa2E3356610840701BDf5611a53974510Ae27E2e1#code",
+      "label": "Etherscan (verified)"
+    },
+    {
+      "type": "defiscan-v1",
+      "url": "https://www.defiscan.info/protocols/binance-staked-eth/ethereum"
+    },
+    {
+      "type": "other",
+      "url": "https://www.binance.com/en/research/projects/wrapped-beacon-eth-wbeth",
+      "label": "Binance Research"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETH-v1.0.pdf",
+      "author": "PeckShield",
+      "date": "2023-04",
+      "scope": "wBETH v1"
+    },
+    {
+      "url": "https://github.com/slowmist/Knowledge-Base/blob/master/open-report-V2/smart-contract/SlowMist%20Audit%20Report%20-%20wBETH_en-us.pdf",
+      "author": "SlowMist",
+      "date": "2023-09",
+      "scope": "wBETH"
+    },
+    {
+      "url": "https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETHV2-v1.0.pdf",
+      "author": "PeckShield",
+      "date": "2023-09",
+      "scope": "wBETH v2 upgrade"
+    }
+  ],
+  "linesOfCode": 3146,
+  "lastModified": "2026-05-06T20:35:02.224Z"
+}

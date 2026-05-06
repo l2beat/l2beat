@@ -1,0 +1,2117 @@
+{
+  "version": "1.0",
+  "publishedAt": "2026-05-06T20:45:00Z",
+  "lastModified": "2026-05-06T20:45:00Z",
+  "compiledAt": "2026-05-06T16:35:00.000Z",
+  "project": "wbeth",
+  "metadata": {
+    "protocolName": "Binance Staked ETH",
+    "protocolSlug": "wbeth",
+    "chain": "Ethereum",
+    "projectType": "liquid-staking",
+    "tokenName": "wBETH",
+    "description": "Binance Staked ETH (wBETH) is a value-accruing liquid staking receipt token issued by Binance, currently sized at $8.18B circulating. Users supply ETH to the wBETH contract and receive wBETH 1:1; the redemption rate then drifts upward as Binance applies an off-chain `updateExchangeRate` from a single dedicated EOA. The protocol has no on-chain governance: every admin role (proxy admin, owner/pauser/blacklister/masterMinter, operator, rescuer, recharge address) is held by a Binance-controlled EOA, and the actual mint authority sits in a separate Binance-deployed `OperatorWallet` proxy that is itself controlled by another set of Binance EOAs. wBETH has no external dependencies (no oracle, no other protocol) — the exchange rate is set by Binance internally and pushed on-chain."
+  },
+  "totals": {
+    "contractCount": 4,
+    "permissionedFunctionCount": 62,
+    "scoredFunctionCount": 0,
+    "adminCount": 9,
+    "dependencyCount": 0,
+    "totalCapitalAtRisk": 2197566.9502766267,
+    "totalTokenValueAtRisk": 8177911278.208683,
+    "totalTokenValue": 8177911278.208683,
+    "linesOfCode": 3146,
+    "verifiedContractCount": 4,
+    "coverage": 100
+  },
+  "admins": [
+    {
+      "address": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
+      "name": "wBETH/Unwrap Proxy Admin (EOA)",
+      "description": "Single Binance EOA that is the proxy admin (`$admin`) of both the wBETH wrap proxy and the Unwrap proxy. Can call `upgradeTo`, `upgradeToAndCall`, and `changeAdmin` on either proxy at will, replacing the implementation logic of the protocol's two user-facing contracts without delay or governance review.",
+      "adminType": "EOAPermissioned",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "changeAdmin",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "upgradeTo",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract",
+                "requestWithdraw"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "upgradeToAndCall",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract",
+                "requestWithdraw"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "changeAdmin",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "upgradeTo",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "upgradeToAndCall",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 2197566.9502766267,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
+      "name": "wBETH Protocol Owner (EOA)",
+      "description": "Single Binance EOA that simultaneously holds `owner`, `pauser`, `blacklister`, and `masterMinter` on WrapTokenV3ETH and `owner`/`pauser`/`blacklister` on UnwrapTokenV1ETH, plus `owner` on ExchangeRateUpdater. This one key can pause and unpause, blacklist or unblacklist any user, configure or remove minters, configure or remove rate-update callers, and rotate every other admin role on every contract.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "pause",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "unpause",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updatePauser",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "blacklist",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "unBlacklist",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateBlacklister",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateMasterMinter",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "transferOwnership",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateRescuer",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "configureMinter",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "removeMinter",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateOracle",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateEthReceiver",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateOperator",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "pause",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "unpause",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "updatePauser",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "blacklist",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "unBlacklist",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "updateBlacklister",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "transferOwnership",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "setNewOperator",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "setRechargeAddress",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "setEthBackAddress",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "initialize",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "configureCaller",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "removeCaller",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "transferOwnership",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "renounceOwnership",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 2197566.9502766267,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "name": "OperatorWallet (Minter)",
+      "description": "Binance-deployed upgradeable contract that is the sole entry in wBETH's `minters` set, authorised to call `mint(uint256)` and `burn(uint256)` on wBETH. Its own admin and owner are a separate pair of Binance EOAs (see below); the result is a two-hop minting trust chain that ultimately resolves to single-key control.",
+      "adminType": "Upgradeable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "burn",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 2171568.591111594,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000000",
+      "name": "Zero Address (Renounced)",
+      "description": "The `rescuer` role on wBETH, which would otherwise let its holder sweep stuck ERC-20s out of the contract via `rescueERC20`, is set to the zero address. This permission is effectively renounced — no party can invoke `rescueERC20` until the owner reassigns the role.",
+      "adminType": "Revoked",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "rescueERC20",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 2171568.591111594,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "name": "ExchangeRateUpdater",
+      "description": "Internal protocol contract registered as the `oracle` on wBETH; its only privilege is calling `updateExchangeRate` on wBETH. The contract itself is owner-gated via the wBETH Protocol Owner EOA above and rate-limited per authorised caller. Listed as an admin only because it sits between the operator EOA and the wBETH state, not because it is a human controller.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "updateExchangeRate",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 2171568.591111594,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
+      "name": "Protocol Operator (EOA)",
+      "description": "Single Binance EOA registered as `operator` on both wBETH and the Unwrap contract, and as the only authorised entry in ExchangeRateUpdater's `callers` set. Controls all daily fund movements (`supplyEth`, `moveToStakingAddress`, `moveToUnwrapAddress`, `moveToBackAddress`, `allocate`), the `lockTime`/`ethStaked` operational parameters on Unwrap, and the rate-limited `updateExchangeRate` call that adjusts wBETH's redemption ratio against ETH.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "supplyEth",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "moveToStakingAddress",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+          "contractName": "WrapTokenV3ETH",
+          "functionName": "moveToUnwrapAddress",
+          "impact": "critical",
+          "directFundsUsd": 2171568.591111594,
+          "directTokenValueUsd": 8177911278.208683,
+          "reachableContracts": [
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "allocate",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "setLockTime",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "setNewEthStaked",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "moveToBackAddress",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+          "contractName": "ExchangeRateUpdater",
+          "functionName": "updateExchangeRate",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateExchangeRate"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 2197566.9502766267,
+      "totalDirectTokenValue": 8177911278.208683,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
+      "name": "Unwrap Recharge Address (EOA)",
+      "description": "Single Binance EOA registered as `rechargeAddress` on UnwrapTokenV1ETH. Its only on-chain authority is calling `rechargeFromRechargeAddress` to top up the contract's ETH float so it can satisfy queued unwrap claims.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "rechargeFromRechargeAddress",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 25998.35916503307,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 25998.35916503307,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "name": "WrapTokenV3ETH (Self)",
+      "description": "The wBETH contract itself is the only authorised caller of `moveFromWrapContract` on UnwrapTokenV1ETH. This is a contract-to-contract call gate (the `onlyWrapTokenAddress` modifier), not a human admin — it cannot be invoked from outside the wBETH wrap flow.",
+      "adminType": "Token",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+          "contractName": "UnwrapTokenV1ETH",
+          "functionName": "moveFromWrapContract",
+          "impact": "critical",
+          "directFundsUsd": 25998.35916503307,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 25998.35916503307,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 25998.35916503307,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x7CfE99c15537753682def016D17d4b29A7caB4EE",
+      "name": "OperatorWallet Proxy Admin (EOA)",
+      "description": "Single Binance EOA that is the `$admin` of the OperatorWallet proxy. Can replace the OperatorWallet implementation at any time via `upgradeTo`/`upgradeToAndCall`. A successful upgrade gives the new implementation full control of the wBETH minter (since OperatorWallet is the sole entry in `minters`).",
+      "adminType": "EOAPermissioned",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "changeAdmin",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "upgradeTo",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn",
+                "balanceOf"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "upgradeToAndCall",
+          "impact": "critical",
+          "isUpgrade": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn",
+                "balanceOf"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0xB2F56fc21EFe0f3921FC28adeCacC36A4bFdcAC1",
+      "name": "OperatorWallet Owner (EOA)",
+      "description": "Single Binance EOA that owns the OperatorWallet contract. Can call `mint` and `transfer` (the wBETH-minting and ERC-20-transfer entry points on OperatorWallet), `addHotWallet`/`removeHotWallet`, `changeOperator`, `pause`/`unpause`, `withdraw`, and the unrestricted `execTransaction(target, value, data)` — an arbitrary-call escape hatch with no scope or amount limit.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "pause",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "unpause",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "transferOwnership",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "addHotWallet",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "removeHotWallet",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "changeOperator",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "transfer",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "execTransaction",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "withdraw",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    },
+    {
+      "address": "eth:0xa42436335a41fA6C82CDe224Ae2B82C025027e5b",
+      "name": "OperatorWallet Operator (EOA)",
+      "description": "Single Binance EOA registered as `operator` on the OperatorWallet contract. Authorised to call `mint(token, recipient, amount)` and `transfer(token, recipient, amount)` on OperatorWallet — i.e. can independently mint wBETH (within the `notHotWallet` recipient guard) without the OperatorWallet Owner's signature.",
+      "adminType": "EOA",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+          "contractName": "OperatorWallet",
+          "functionName": "transfer",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+              "name": "WrapTokenV3ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burn"
+              ],
+              "fundsUsd": 2171568.591111594,
+              "tokenValueUsd": 8177911278.208683,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+              "name": "UnwrapTokenV1ETH",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "moveFromWrapContract"
+              ],
+              "fundsUsd": 25998.35916503307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 2197566.9502766267,
+      "totalReachableTokenValue": 8177911278.208683
+    }
+  ],
+  "adminTotals": {
+    "totalFundsAtRisk": 2197566.9502766267,
+    "totalTokenValueAtRisk": 8177911278.208683
+  },
+  "dependencies": [],
+  "dependencyEntityGroups": [],
+  "dependencyTotals": {
+    "totalFundsAtRisk": 0,
+    "totalTokenValueAtRisk": 0
+  },
+  "funds": [
+    {
+      "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "name": "WrapTokenV3ETH (wBETH)",
+      "description": "The wBETH token contract itself. Circulating supply is $8.18B, representing every staked ETH and accrued staking rewards held by Binance on users' behalf since the 2023-04-27 launch. The contract also keeps a small operational ETH buffer of $2.17M on-chain (used to satisfy instant unwraps before they hit the queued Unwrap flow); the rest of the staked ETH sits in Binance's off-chain validator infrastructure.",
+      "balances": {
+        "totalUsdValue": 2171568.591111594
+      },
+      "positions": null,
+      "tokenInfo": {
+        "symbol": "wBETH",
+        "price": 2575.8869291101137,
+        "totalSupply": "3174794353661280245921922",
+        "tokenValue": 8177911278.208683
+      },
+      "aggregate": null
+    }
+  ],
+  "functions": [
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "pause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "unpause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updatePauser",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "blacklist",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "unBlacklist",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateBlacklister",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateMasterMinter",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "transferOwnership",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateRescuer",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "configureMinter",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "removeMinter",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateOracle",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateEthReceiver",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "updateOperator",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "pause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "unpause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "updatePauser",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "blacklist",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "unBlacklist",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "updateBlacklister",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "transferOwnership",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "setNewOperator",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "setRechargeAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "setEthBackAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "initialize",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "configureCaller",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "removeCaller",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "transferOwnership",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "renounceOwnership",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "mint",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "burn",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "supplyEth",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "moveToStakingAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "functionName": "moveToUnwrapAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "allocate",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "setLockTime",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "setNewEthStaked",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "moveToBackAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "contractName": "ExchangeRateUpdater",
+      "functionName": "updateExchangeRate",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "contractName": "UnwrapTokenV1ETH",
+      "functionName": "rechargeFromRechargeAddress",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "pause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "unpause",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "transferOwnership",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "addHotWallet",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "removeHotWallet",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "changeOperator",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "mint",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "transfer",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "execTransaction",
+      "impact": "critical"
+    },
+    {
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "functionName": "withdraw",
+      "impact": "critical"
+    }
+  ],
+  "contracts": [
+    {
+      "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "name": "WrapTokenV3ETH (wBETH)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "ZeppelinOS proxy"
+    },
+    {
+      "address": "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06",
+      "name": "ExchangeRateUpdater",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "name": "OperatorWallet (Minter)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EIP1967 proxy"
+    },
+    {
+      "address": "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196",
+      "name": "UnwrapTokenV1ETH",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "ZeppelinOS proxy"
+    },
+    {
+      "address": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
+      "name": "wBETH Protocol Owner (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
+      "name": "Protocol Operator (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
+      "name": "Unwrap Recharge Address (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x7CfE99c15537753682def016D17d4b29A7caB4EE",
+      "name": "OperatorWallet Proxy Admin (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
+      "name": "wBETH/Unwrap Proxy Admin (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xa42436335a41fA6C82CDe224Ae2B82C025027e5b",
+      "name": "OperatorWallet Operator (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xB2F56fc21EFe0f3921FC28adeCacC36A4bFdcAC1",
+      "name": "OperatorWallet Owner (EOA)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "EOA"
+    }
+  ],
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://www.binance.com/en/wbeth"
+    },
+    {
+      "type": "frontend",
+      "url": "https://www.binance.com/en/eth-staking",
+      "frontendSubtype": "official",
+      "label": "Binance ETH Staking"
+    },
+    {
+      "type": "docs",
+      "url": "https://www.binance.com/en/support/faq/what-is-wbeth-e252366155174ba6887f6b32e3798273",
+      "label": "What Is WBETH (Binance FAQ)"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/binance"
+    },
+    {
+      "type": "source-code",
+      "url": "https://etherscan.io/address/0xa2E3356610840701BDf5611a53974510Ae27E2e1#code",
+      "label": "Etherscan (verified)"
+    },
+    {
+      "type": "defiscan-v1",
+      "url": "https://www.defiscan.info/protocols/binance-staked-eth/ethereum"
+    },
+    {
+      "type": "other",
+      "url": "https://www.binance.com/en/research/projects/wrapped-beacon-eth-wbeth",
+      "label": "Binance Research"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETH-v1.0.pdf",
+      "author": "PeckShield",
+      "date": "2023-04",
+      "scope": "wBETH v1"
+    },
+    {
+      "url": "https://github.com/slowmist/Knowledge-Base/blob/master/open-report-V2/smart-contract/SlowMist%20Audit%20Report%20-%20wBETH_en-us.pdf",
+      "author": "SlowMist",
+      "date": "2023-09",
+      "scope": "wBETH"
+    },
+    {
+      "url": "https://github.com/peckshield/publications/blob/master/audit_reports/PeckShield-Audit-Report-wBETHV2-v1.0.pdf",
+      "author": "PeckShield",
+      "date": "2023-09",
+      "scope": "wBETH v2 upgrade"
+    }
+  ],
+  "activity": [
+    {
+      "type": "upgrade",
+      "timestamp": "2024-11-22T08:46:11.000Z",
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "txHash": "0x998e10d608ab532ac7c5fef0263a32bf09a2c35188e7ebafd08c0c766a8d1431",
+      "implementations": [
+        "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB"
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2023-09-12T08:04:47.000Z",
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "txHash": "0x065674d9a54ad1e26823ef1c7381621195bd6c9b39e3d5b01d9dde846884f047",
+      "implementations": [
+        "eth:0xfe928A7D8Be9c8cEce7e97F0Ed5704f4fA2cb42A"
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2023-04-19T08:45:23.000Z",
+      "contractAddress": "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6",
+      "contractName": "OperatorWallet",
+      "txHash": "0xef001a4cacec4958a37a2cb4a40750d12c366a907d5c7ff0fe1f005232ab1aa0",
+      "implementations": [
+        "eth:0x18cB25F214B95bFac05d594d14eF68bB94D55813"
+      ],
+      "isDependency": false,
+      "entity": null
+    }
+  ],
+  "governance": {
+    "framework": "Centralized (Binance)",
+    "voteExecution": "offchain",
+    "votingUnit": "None — single-key Binance control",
+    "proposalRequirements": "No on-chain proposal mechanism. All admin actions are Binance corporate decisions, signed by Binance-held EOAs that hold owner, pauser, blacklister, masterMinter, operator, rescuer, and proxy-admin roles on the wBETH/Unwrap/ExchangeRateUpdater/OperatorWallet contracts.",
+    "votingProcess": "No on-chain voting. Binance executes via single-key EOAs holding owner, pauser, masterMinter, operator, and proxy admin roles.",
+    "proposalPeriod": {
+      "kind": "none"
+    },
+    "executionDelay": {
+      "kind": "none"
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
