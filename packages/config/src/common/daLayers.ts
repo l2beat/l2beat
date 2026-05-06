@@ -103,6 +103,13 @@ const POLYGON_POS_DA: DaProjectTableValue = {
     'The data is guaranteed to be available by Polygon proof of stake validators. On Ethereum, the data is indirectly referenced in the signed block header.',
 }
 
+const GNOSIS_DA: DaProjectTableValue = {
+  value: 'Gnosis DA',
+  sentiment: 'warning',
+  description:
+    'The data is guaranteed to be available by Gnosis proof-of-stake validators. On Ethereum, the data is not published or referenced directly.',
+}
+
 const HYPERLIQUID_DA: DaProjectTableValue = {
   value: 'Hyperliquid DA',
   sentiment: 'bad',
@@ -139,6 +146,7 @@ export const DA_LAYERS = {
   EIGEN_DA,
   NEAR_DA,
   POLYGON_POS_DA,
+  GNOSIS_DA,
   HYPERLIQUID_DA,
   SELF_CUSTODIED_INTMAX,
   ESPRESSO,
