@@ -161,7 +161,7 @@ This architecture provides improved throughput and eliminates single points of f
       },
       {
         category: 'Funds can be lost if',
-        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenDA middleware contracts (StakeRegistry, BLSApkRegistry, RegistryCoordinator) receive a malicious code upgrade and report incorrect stake or keys to the cert verifier. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
