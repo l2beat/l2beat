@@ -6,7 +6,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPermissions } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -194,22 +194,19 @@ function filterToEigenDaOnly<T extends { address: { toString(): string } }>(
 }
 
 function filterPermissionsToEigenDaOnly(
-  permissions: Record<
-    string,
-    { roles: { accounts: { address: { toString(): string } }[] }[]; actors: { accounts: { address: { toString(): string } }[] }[] }
-  >,
-): typeof permissions {
+  permissions: Record<string, ProjectPermissions>,
+): Record<string, ProjectPermissions> {
   return Object.fromEntries(
     Object.entries(permissions).map(([chain, p]) => [
       chain,
       {
-        roles: p.roles.map((role) => ({
+        roles: p.roles?.map((role) => ({
           ...role,
           accounts: role.accounts.filter((a) =>
             eigenDaAddresses.has(a.address.toString()),
           ),
         })),
-        actors: p.actors.filter((actor) =>
+        actors: p.actors?.filter((actor) =>
           actor.accounts.some((a) =>
             eigenDaAddresses.has(a.address.toString()),
           ),
