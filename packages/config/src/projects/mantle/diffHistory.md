@@ -13,6 +13,7 @@ Generated with discovered.json: 0x4154084cb81734e256f304afcf2132990a5de404
 - New **SP1VerifierGateway** (`0x3B604117...`) replaces the previous direct SP1Verifier reference. The gateway routes proofs to underlying verifier contracts by program identifier.
 - New **SP1Verifier (v6.0.0)** at `0x8a0fd5e8...` and a second SP1Verifier at `0xc3c6dDDA...` registered via the gateway.
 - New **SP1VerifierGatewayMultisig** (`0xCafEf00d...`) — Gnosis Safe controlling the gateway's verifier route registry.
+- `zkCatalogId` flipped from `sp1turbo` to `sp1hypercube` to reflect the new SP1Verifier v6.0.0 routes wired into the gateway. The legacy sp1turbo verifier (`0x0459d576...`, selector `0xd4e8ecd2`) is still registered in the gateway's `activeVerifiers`, so mantle remains listed in `sp1turbo.tvsProjects` (no `untilTimestamp` set).
 
 ## Watched changes
 

@@ -67,7 +67,7 @@ export const mantle: ScalingProject = opStackL2({
   },
   nonTemplateProofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1turbo'),
+    zkCatalogId: ProjectId('sp1hypercube'),
   },
 
   nonTemplateTrackedTxs: [
