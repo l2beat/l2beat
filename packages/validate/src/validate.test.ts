@@ -411,15 +411,8 @@ describe('validate', () => {
 
     it('should reject reserved schema keys', () => {
       const Foo = v.object({ x: v.number() })
-      expect(() => Foo.meta({ anyOf: [] })).toThrow(
+      expect(() => Foo.meta({ anyOf: 'true' })).toThrow(
         'Metadata key "anyOf" is reserved.',
-      )
-    })
-
-    it('should reject non-string descriptions', () => {
-      const Foo = v.object({ x: v.number() })
-      expect(() => Foo.meta({ description: 123 })).toThrow(
-        'Metadata description must be a string.',
       )
     })
   })

@@ -22,7 +22,7 @@ export interface Parser<T> {
 
 export interface Validator<T> {
   description?: string
-  metadata?: Record<string, unknown>
+  metadata?: Record<string, string>
   validate: (value: unknown) => T
   safeValidate: (value: unknown) => Result<T>
   isValid: (value: unknown) => value is T
@@ -43,7 +43,7 @@ export interface Validator<T> {
   catch(value: T): Parser<T>
   optional(): Validator<T | undefined>
   describe: (description: string) => Validator<T>
-  meta: (metadata: Record<string, unknown>) => Validator<T>
+  meta: (metadata: Record<string, string>) => Validator<T>
 }
 
 const CANNOT_VALIDATE = () => {
@@ -90,7 +90,7 @@ export type ImpDefinition =
 export class Imp<T> implements Validator<T>, Parser<T> {
   definition: ImpDefinition
   description?: string
-  metadata?: Record<string, unknown>
+  metadata?: Record<string, string>
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
 
@@ -121,7 +121,7 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     return this
   }
 
-  meta(metadata: Record<string, unknown>) {
+  meta(metadata: Record<string, string>) {
     assertValidMetadata(metadata)
     this.metadata = { ...this.metadata, ...metadata }
     return this
@@ -196,17 +196,11 @@ const RESERVED_METADATA_KEYS = new Set([
   'type',
 ])
 
-function assertValidMetadata(metadata: Record<string, unknown>) {
+function assertValidMetadata(metadata: Record<string, string>) {
   for (const key of Object.keys(metadata)) {
     if (RESERVED_METADATA_KEYS.has(key)) {
       throw new Error(`Metadata key "${key}" is reserved.`)
     }
-  }
-  if (
-    metadata.description !== undefined &&
-    typeof metadata.description !== 'string'
-  ) {
-    throw new Error('Metadata description must be a string.')
   }
 }
 
