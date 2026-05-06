@@ -11,8 +11,8 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { extractPrivacyFlow } from '../services/PrivacyFlowExtractor'
 import type { PrivacyFlowIndexerConfig } from '../types'
+import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
 
 interface PrivacyFlowIndexerDeps
   extends Omit<

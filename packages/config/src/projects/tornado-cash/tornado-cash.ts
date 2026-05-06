@@ -31,6 +31,15 @@ interface TornadoBucket {
   withdrawalEvent: string
 }
 
+const PRICE_IDS: Record<string, string> = {
+  ETH: 'ethereum',
+  DAI: 'dai',
+  USDC: 'usd-coin',
+  USDT: 'tether',
+  WBTC: 'wrapped-bitcoin',
+  cDAI: 'compound-dai',
+}
+
 const BUCKETS = getTornadoBuckets()
 
 export const tornadoCash: BaseProject = {
@@ -95,11 +104,20 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
         token: {
           symbol: bucket.symbol,
           decimals: bucket.decimals,
+          priceId: PRICE_IDS[bucket.symbol],
+          sinceTimestamp: bucket.sinceTimestamp,
         },
         buckets: [],
       }
       grouped.set(bucket.symbol, asset)
     }
+
+    asset.token.sinceTimestamp = UnixTime(
+      Math.min(
+        asset.token.sinceTimestamp ?? Number.MAX_SAFE_INTEGER,
+        bucket.sinceTimestamp,
+      ),
+    )
 
     asset.buckets.push({
       id: bucket.id,

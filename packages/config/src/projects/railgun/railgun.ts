@@ -24,36 +24,43 @@ const TRACKED_TOKENS = [
     address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     symbol: 'WETH',
     decimals: 18,
+    priceId: 'ethereum',
   },
   {
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     symbol: 'USDT',
     decimals: 6,
+    priceId: 'tether',
   },
   {
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     symbol: 'USDC',
     decimals: 6,
+    priceId: 'usd-coin',
   },
   {
     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
     symbol: 'DAI',
     decimals: 18,
+    priceId: 'dai',
   },
   {
     address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     symbol: 'WBTC',
     decimals: 8,
+    priceId: 'wrapped-bitcoin',
   },
   {
     address: '0x85F17Cf997934a597031b2E18a9aB6ebD4B9f6a4',
     symbol: 'NEAR',
     decimals: 24,
+    priceId: 'near',
   },
   {
     address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb',
     symbol: 'FLUID',
     decimals: 18,
+    priceId: 'fluid',
   },
 ]
 
@@ -161,6 +168,8 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       address: EthereumAddress(token.address),
       symbol: token.symbol,
       decimals: token.decimals,
+      priceId: token.priceId,
+      sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
     },
     buckets: [
       {

@@ -1,15 +1,19 @@
 import { Env, getEnv } from '@l2beat/backend-tools'
 import type { Indexer } from '@l2beat/uif'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { BlockNumberIndexer } from '../block-sync/BlockNumberIndexer'
+import { SyncOptimizer } from '../tvs/tools/SyncOptimizer'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
+import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 
 export function createPrivacyModule({
   config,
   logger,
   db,
   providers,
+  clock,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.privacy) {
     logger.info('PrivacyModule disabled')
@@ -19,6 +23,7 @@ export function createPrivacyModule({
   logger = logger.tag({ feature: 'privacy', module: 'privacy' })
   const env = getEnv()
   const indexerService = new IndexerService(db)
+  const syncOptimizer = new SyncOptimizer(clock)
   const indexers: Indexer[] = []
 
   const flowConfigsByChain = new Map<
@@ -64,9 +69,34 @@ export function createPrivacyModule({
     indexers.push(blockNumberIndexer, flowIndexer)
   }
 
+  if (config.privacy.priceConfigs.length > 0) {
+    const hourlyIndexer = new HourlyIndexer(logger, clock)
+    indexers.push(hourlyIndexer)
+
+    const priceIndexer = new PrivacyPriceIndexer(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        configurations: config.privacy.priceConfigs.map((priceConfig) => ({
+          id: PrivacyPriceIndexer.idToConfigurationId(priceConfig),
+          minHeight: priceConfig.sinceTimestamp,
+          maxHeight: null,
+          properties: priceConfig,
+        })),
+        priceProvider: providers.price,
+        syncOptimizer,
+        db,
+      },
+      logger,
+    )
+
+    indexers.push(priceIndexer)
+  }
+
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
+    priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })
 

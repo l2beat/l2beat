@@ -858,6 +858,7 @@ export interface ProjectPrivacyToken {
     symbol: string
     decimals: number
     priceId?: string
+    sinceTimestamp?: UnixTime
   }
   buckets: ProjectPrivacyBucket[]
 }

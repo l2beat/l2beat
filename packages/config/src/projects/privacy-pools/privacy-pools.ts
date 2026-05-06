@@ -24,6 +24,22 @@ interface PrivacyPoolBucket {
   withdrawalEvent: string
 }
 
+const PRICE_IDS: Record<string, string> = {
+  ETH: 'ethereum',
+  DAI: 'dai',
+  USDC: 'usd-coin',
+  USDT: 'tether',
+  WBTC: 'wrapped-bitcoin',
+  USDS: 'usds',
+  wstETH: 'wrapped-steth',
+  USDe: 'ethena-usde',
+  fxUSD: 'f-x-protocol-fxusd',
+  BOLD: 'liquity-bold',
+  USD1: 'world-liberty-financial-usd',
+  frxUSD: 'frax-usd',
+  wOETH: 'wrapped-oeth',
+}
+
 const BUCKETS = getPrivacyPoolBuckets()
 
 export const privacyPools: BaseProject = {
@@ -93,11 +109,20 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
         token: {
           symbol: bucket.symbol,
           decimals: bucket.decimals,
+          priceId: PRICE_IDS[bucket.symbol],
+          sinceTimestamp: bucket.sinceTimestamp,
         },
         buckets: [],
       }
       grouped.set(bucket.symbol, token)
     }
+
+    token.token.sinceTimestamp = UnixTime(
+      Math.min(
+        token.token.sinceTimestamp ?? Number.MAX_SAFE_INTEGER,
+        bucket.sinceTimestamp,
+      ),
+    )
 
     token.buckets.push({
       id: bucket.id,

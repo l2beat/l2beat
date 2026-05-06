@@ -1,9 +1,14 @@
 import type { PrivacyFlowSource, ProjectService } from '@l2beat/config'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
+  PrivacyPriceIndexerConfig,
 } from '../../modules/privacy/types'
 import type { FeatureFlags } from '../FeatureFlags'
 
@@ -28,16 +33,16 @@ export async function getPrivacyConfig(
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   for (const project of projects) {
-    for (const asset of project.privacyInfo.assets) {
-      const assetKey = getAssetKey(asset.asset.address, asset.asset.symbol)
-      for (const bucket of asset.buckets) {
+    for (const token of project.privacyInfo.tokens) {
+      const tokenKey = getTokenKey(token.token.address, token.token.symbol)
+      for (const bucket of token.buckets) {
         if (!bucket.flows) continue
 
         if (bucket.flows.deposit) {
           flowConfigs.push(
             toFlowConfig(
               project.projectId,
-              assetKey,
+              tokenKey,
               bucket.id,
               'deposit',
               bucket.flows.sinceBlock,
@@ -50,7 +55,7 @@ export async function getPrivacyConfig(
           flowConfigs.push(
             toFlowConfig(
               project.projectId,
-              assetKey,
+              tokenKey,
               bucket.id,
               'withdrawal',
               bucket.flows.sinceBlock,
@@ -61,6 +66,30 @@ export async function getPrivacyConfig(
       }
     }
   }
+
+  const priceIdMap = new Map<string, UnixTime>()
+  for (const project of projects) {
+    for (const token of project.privacyInfo.tokens) {
+      const priceId = token.token.priceId
+      const sinceTimestamp = token.token.sinceTimestamp
+      if (!priceId || !sinceTimestamp) continue
+
+      const current = priceIdMap.get(priceId)
+      priceIdMap.set(
+        priceId,
+        current === undefined
+          ? sinceTimestamp
+          : UnixTime(Math.min(current, sinceTimestamp)),
+      )
+    }
+  }
+
+  const priceConfigs: PrivacyPriceIndexerConfig[] = Array.from(
+    priceIdMap.entries(),
+  ).map(([priceId, sinceTimestamp]) => ({
+    priceId,
+    sinceTimestamp,
+  }))
 
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
 
@@ -78,6 +107,7 @@ export async function getPrivacyConfig(
   return {
     projects,
     flowConfigs,
+    priceConfigs,
     chains,
     minBlockByChain,
   }
@@ -111,8 +141,8 @@ function toFlowConfig(
   } as PrivacyFlowIndexerConfig
 }
 
-function getAssetKey(
-  address: import('@l2beat/shared-pure').EthereumAddress | undefined,
+function getTokenKey(
+  address: EthereumAddress | undefined,
   symbol: string,
 ): string {
   return (address ?? symbol).toString().toLowerCase()

@@ -2,7 +2,7 @@ import type {
   PrivacyFlowExtractorConfig,
   ProjectPrivacyInfo,
 } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export interface PrivacyProjectConfig {
   projectId: string
@@ -12,6 +12,7 @@ export interface PrivacyProjectConfig {
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
+  priceConfigs: PrivacyPriceIndexerConfig[]
   chains: string[]
   minBlockByChain: Map<string, number>
 }
@@ -26,6 +27,11 @@ export type PrivacyFlowIndexerConfig = {
   event: string
   sinceBlock: number
 } & PrivacyFlowExtractorConfig
+
+export interface PrivacyPriceIndexerConfig {
+  priceId: string
+  sinceTimestamp: UnixTime
+}
 
 export interface PrivacyRpcLog {
   address: string

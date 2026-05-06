@@ -30,6 +30,7 @@ import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { PrivacyFlowEventRepository } from './repositories/PrivacyFlowEventRepository'
+import { PrivacyPriceRepository } from './repositories/PrivacyPriceRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
@@ -114,6 +115,7 @@ export function createDatabase(
 
     // #region Privacy
     privacyFlowEvent: new PrivacyFlowEventRepository(db),
+    privacyPrice: new PrivacyPriceRepository(db),
     // #endregion
 
     // #region Token Knowledge

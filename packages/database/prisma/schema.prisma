@@ -270,6 +270,16 @@ model TokenMetadata {
   @@index([projectId])
 }
 
+model PrivacyPrice {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  priceId         String   @db.VarChar(255)
+  priceUsd        Float    @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([priceId])
+}
+
 model PrivacyFlowEvent {
   configurationId String   @db.Char(12)
   projectId       String   @db.VarChar(255)
