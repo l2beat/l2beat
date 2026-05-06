@@ -1,7 +1,7 @@
 import colors from '../../../../oklchColors.json'
 import type { Node } from '../store/State'
 import { getColorValue } from './colors/colors'
-import { oklchColorToCSS, type OklchColor } from './colors/oklch'
+import { type OklchColor, oklchColorToCSS } from './colors/oklch'
 
 export const NODE_RADIUS = 4
 export const NODE_FULL_RADIUS = 16

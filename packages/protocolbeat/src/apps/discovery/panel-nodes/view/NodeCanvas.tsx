@@ -8,8 +8,12 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
 import { getColor } from './colors/colors'
-import { getNodeRadius, getNodeTitlePaint, isFullHeightNode } from './nodeStyles'
 import { oklchColorToCSS } from './colors/oklch'
+import {
+  getNodeRadius,
+  getNodeTitlePaint,
+  isFullHeightNode,
+} from './nodeStyles'
 
 const COFFEE_400 = oklchColorToCSS(colors.coffee['400'])
 const COFFEE_200 = oklchColorToCSS(colors.coffee['200'])
