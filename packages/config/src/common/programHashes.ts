@@ -2594,4 +2594,22 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
     verificationStatus: 'notVerified',
   },
+  '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
+    title: 'Fluent Nitro TEE verifier',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'notVerified',
+  },
+  '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
+    title: 'Fluent STF guest program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
+    description:
+      'Guest program implementing state transition function of the Fluent rollup',
+    verificationStatus: 'notVerified',
+  },
 }

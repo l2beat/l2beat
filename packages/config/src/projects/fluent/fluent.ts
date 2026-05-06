@@ -18,6 +18,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -261,7 +262,7 @@ export const fluent: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    // programHashes: todo after all nitro verifiers are configured
+    programHashes: getFluentVKeys().map((el) => PROGRAM_HASHES(el)),
     zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
@@ -283,4 +284,28 @@ export const fluent: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getFluentVKeys(): string[] {
+  const vKeys = new Set<string>()
+  const zeroVKey =
+    '0x0000000000000000000000000000000000000000000000000000000000000000'
+
+  vKeys.add(discovery.getContractValue<string>('FluentRollup', 'programVKey'))
+
+  const nitroVerifiers = discovery.getContractValue<string[]>(
+    'FluentRollup',
+    'nitroVerifiers',
+  )
+  for (const nitroVerifier of nitroVerifiers) {
+    const nitroProgramVKey = discovery.getContractValue<string>(
+      nitroVerifier,
+      'getProgramVKey',
+    )
+    if (nitroProgramVKey !== zeroVKey) {
+      vKeys.add(nitroProgramVKey)
+    }
+  }
+
+  return Array.from(vKeys)
 }
