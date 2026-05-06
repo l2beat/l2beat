@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import type { Validator } from '@l2beat/validate'
-import type { ImpMeta } from 'node_modules/@l2beat/validate/dist/esm/validate'
+import type { ImpDefinition } from 'node_modules/@l2beat/validate/dist/esm/validate'
 import type { FieldErrors, FieldValues, Resolver } from 'react-hook-form'
 
 export function validateResolver<Input extends FieldValues, Context, Output>(
-  schema: Validator<Input> & { definition?: ImpMeta },
+  schema: Validator<Input> & { definition?: ImpDefinition },
 ): Resolver<Input, Context, Output | Input> {
   return (input) => {
-    assert(schema.definition, 'Meta is required')
+    assert(schema.definition, 'Definition is required')
 
     const errors = getErrors(schema, input)
     if (errors.length > 0) {
@@ -27,18 +27,18 @@ export function validateResolver<Input extends FieldValues, Context, Output>(
 }
 
 function getErrors(
-  schema: Validator<unknown> & { definition?: ImpMeta },
+  schema: Validator<unknown> & { definition?: ImpDefinition },
   input: FieldValues | FieldValues[],
   keyPrefix?: string,
 ): { key: string; message: string }[] {
-  assert(schema.definition, 'Meta is required')
+  assert(schema.definition, 'Definition is required')
   const result = schema.safeValidate(input)
   if (result.success) {
     return []
   }
 
   const innerSchema = unwrapSchema(schema)
-  assert(innerSchema.definition, 'Meta is required')
+  assert(innerSchema.definition, 'Definition is required')
 
   if (
     innerSchema.definition.type === 'object' &&
@@ -98,9 +98,9 @@ function isObject(input: unknown): input is FieldValues {
 }
 
 function unwrapSchema(
-  schema: Validator<unknown> & { definition?: ImpMeta },
-): Validator<unknown> & { definition?: ImpMeta } {
-  assert(schema.definition, 'Meta is required')
+  schema: Validator<unknown> & { definition?: ImpDefinition },
+): Validator<unknown> & { definition?: ImpDefinition } {
+  assert(schema.definition, 'Definition is required')
 
   switch (schema.definition.type) {
     case 'optional':

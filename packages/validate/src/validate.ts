@@ -50,7 +50,7 @@ const CANNOT_VALIDATE = () => {
   throw new Error('Cannot call validate on a parser object.')
 }
 
-export type ImpMeta =
+export type ImpDefinition =
   | { type: 'unknown' }
   | { type: 'string' }
   | { type: 'number' }
@@ -88,14 +88,14 @@ export type ImpMeta =
   | { type: 'tuple'; values: Imp<unknown>[] }
 
 export class Imp<T> implements Validator<T>, Parser<T> {
-  definition: ImpMeta
+  definition: ImpDefinition
   description?: string
   metadata?: Record<string, unknown>
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
 
   constructor(
-    definition: ImpMeta,
+    definition: ImpDefinition,
     safeValidate: (value: unknown) => Result<T>,
     safeParse: (value: unknown) => Result<T>,
   ) {

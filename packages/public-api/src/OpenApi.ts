@@ -1,5 +1,8 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
-import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
+import type {
+  ImpDefinition,
+  Validator,
+} from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
 import { GenericErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'
@@ -9,11 +12,11 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   summary?: string
   description?: string
   tags?: Tags[]
-  params?: Validator<P> & { definition?: ImpMeta }
-  query?: Validator<Q> & { definition?: ImpMeta }
-  result: Validator<O> & { definition?: ImpMeta }
+  params?: Validator<P> & { definition?: ImpDefinition }
+  query?: Validator<Q> & { definition?: ImpDefinition }
+  result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
-  errors?: Record<number, Validator<E> & { definition?: ImpMeta }>
+  errors?: Record<number, Validator<E> & { definition?: ImpDefinition }>
 }
 
 type OpenApiPath = {
@@ -269,10 +272,10 @@ export class OpenApi {
 
   private schemaToParameters<T>(
     type: 'params' | 'query',
-    schema: Validator<T> & { definition?: ImpMeta },
+    schema: Validator<T> & { definition?: ImpDefinition },
   ): OpenApiParameter[] {
     if (!schema.definition) {
-      throw new Error('Schema meta is required')
+      throw new Error('Schema definition is required')
     }
     if (schema.definition.type !== 'object') {
       throw new Error('Schema must be an object')
@@ -291,7 +294,7 @@ export class OpenApi {
   }
 
   private toJsonSchemaWithRefs<T>(
-    validator: Validator<T> & { definition?: ImpMeta },
+    validator: Validator<T> & { definition?: ImpDefinition },
   ) {
     if (
       validator.definition?.type === 'array' &&
