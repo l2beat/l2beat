@@ -1,6 +1,5 @@
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
-import { env } from '~/env'
 import { InteropProjectNameTooltip } from '~/pages/interop/components/table/InteropProjectNameTooltip'
 import { SubgroupTooltip } from '~/pages/interop/components/table/SubgroupTooltip'
 
@@ -24,30 +23,22 @@ export function InteropNameCell({
   subgroup,
   isAggregate,
 }: Props) {
-  const nameCell = (
-    <TwoRowCell>
-      <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-        <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-          {shortName ?? name}
-        </div>
-        {subgroup && <SubgroupTooltip subgroup={subgroup} />}
-      </TwoRowCell.First>
-      <TwoRowCell.Second>{isAggregate && 'Aggregate'}</TwoRowCell.Second>
-    </TwoRowCell>
-  )
-
-  const content = env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-    <TableLink href={`/interop/protocols/${slug}`}>{nameCell}</TableLink>
-  ) : (
-    nameCell
-  )
-
   return (
     <InteropProjectNameTooltip
       projectName={shortName ?? name}
       description={description}
     >
-      {content}
+      <TableLink href={`/interop/protocols/${slug}`}>
+        <TwoRowCell>
+          <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+            <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+              {shortName ?? name}
+            </div>
+            {subgroup && <SubgroupTooltip subgroup={subgroup} />}
+          </TwoRowCell.First>
+          <TwoRowCell.Second>{isAggregate && 'Aggregate'}</TwoRowCell.Second>
+        </TwoRowCell>
+      </TableLink>
     </InteropProjectNameTooltip>
   )
 }
