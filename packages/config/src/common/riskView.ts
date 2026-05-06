@@ -741,12 +741,11 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
 ): TableReadyValue {
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
   const warning: WarningWithSentiment = {
-    value: 'The Security Council can upgrade with no delay.',
-    sentiment: 'bad',
+    value: description,
+    sentiment: 'warning',
   }
   return {
-    ...EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
-    description: description,
+    ...EXIT_WINDOW(0, selfSequencingDelay),
     warning: warning,
   }
 }
