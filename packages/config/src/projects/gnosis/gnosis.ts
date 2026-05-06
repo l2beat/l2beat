@@ -66,6 +66,7 @@ export const gnosis: ScalingProject = {
       explanation:
         'Gnosis Chain has an external validator set that validates its state transitions. This is an additional trust assumption since Ethereum does not, the external validators do not commit or stake anything on Ethereum.',
     },
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Gnosis Chain',
