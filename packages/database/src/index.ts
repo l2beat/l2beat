@@ -86,6 +86,7 @@ export type {
 } from './repositories/TokenConnectionRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type { TokenPriceRecord } from './repositories/TokenPriceRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,
@@ -93,7 +94,6 @@ export type {
 } from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
-export type { TokenPriceRecord } from './repositories/TokenPriceRepository'
 export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'

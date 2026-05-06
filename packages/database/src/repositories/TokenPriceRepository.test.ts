@@ -124,7 +124,9 @@ describeDatabase(TokenPriceRepository.name, (db) => {
     })
 
     it('returns empty array when no matching configIds', async () => {
-      await repository.upsertMany([tokenPrice('a', 'eth', UnixTime(100), 1000.5)])
+      await repository.upsertMany([
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+      ])
 
       const configIds = ['b'.repeat(12)]
 
@@ -138,7 +140,9 @@ describeDatabase(TokenPriceRepository.name, (db) => {
     })
 
     it('returns empty array when configurationIds is empty', async () => {
-      await repository.upsertMany([tokenPrice('a', 'eth', UnixTime(100), 1000.5)])
+      await repository.upsertMany([
+        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+      ])
 
       const result = await repository.getPricesInRange(
         [],
@@ -150,45 +154,48 @@ describeDatabase(TokenPriceRepository.name, (db) => {
     })
   })
 
-  describe(TokenPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {
-    beforeEach(async () => {
-      await repository.upsertMany([
-        tokenPrice('a', 'eth', UnixTime(50), 900.5),
-        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
-        tokenPrice('b', 'btc', UnixTime(100), 20000.75),
-        tokenPrice('c', 'eth', UnixTime(150), 1050.25),
-        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
-        tokenPrice('b', 'btc', UnixTime(200), 21000.5),
-        tokenPrice('d', 'usdc', UnixTime(100), 1.0),
-        tokenPrice('d', 'usdc', UnixTime(200), 1.0),
-        tokenPrice('a', 'eth', UnixTime(300), 1200.0),
-      ])
-    })
+  describe(
+    TokenPriceRepository.prototype.getPricesInRangeByPriceId.name,
+    () => {
+      beforeEach(async () => {
+        await repository.upsertMany([
+          tokenPrice('a', 'eth', UnixTime(50), 900.5),
+          tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+          tokenPrice('b', 'btc', UnixTime(100), 20000.75),
+          tokenPrice('c', 'eth', UnixTime(150), 1050.25),
+          tokenPrice('a', 'eth', UnixTime(200), 1100.25),
+          tokenPrice('b', 'btc', UnixTime(200), 21000.5),
+          tokenPrice('d', 'usdc', UnixTime(100), 1.0),
+          tokenPrice('d', 'usdc', UnixTime(200), 1.0),
+          tokenPrice('a', 'eth', UnixTime(300), 1200.0),
+        ])
+      })
 
-    it('returns only records for the specified priceId', async () => {
-      const result = await repository.getPricesInRangeByPriceId(
-        'eth',
-        UnixTime(100),
-        UnixTime(200),
-      )
+      it('returns only records for the specified priceId', async () => {
+        const result = await repository.getPricesInRangeByPriceId(
+          'eth',
+          UnixTime(100),
+          UnixTime(200),
+        )
 
-      expect(result).toEqualUnsorted([
-        tokenPrice('a', 'eth', UnixTime(100), 1000.5),
-        tokenPrice('c', 'eth', UnixTime(150), 1050.25),
-        tokenPrice('a', 'eth', UnixTime(200), 1100.25),
-      ])
-    })
+        expect(result).toEqualUnsorted([
+          tokenPrice('a', 'eth', UnixTime(100), 1000.5),
+          tokenPrice('c', 'eth', UnixTime(150), 1050.25),
+          tokenPrice('a', 'eth', UnixTime(200), 1100.25),
+        ])
+      })
 
-    it('returns empty array when no data', async () => {
-      const result = await repository.getPricesInRangeByPriceId(
-        'eth',
-        UnixTime(225),
-        UnixTime(275),
-      )
+      it('returns empty array when no data', async () => {
+        const result = await repository.getPricesInRangeByPriceId(
+          'eth',
+          UnixTime(225),
+          UnixTime(275),
+        )
 
-      expect(result).toEqual([])
-    })
-  })
+        expect(result).toEqual([])
+      })
+    },
+  )
 
   describe(TokenPriceRepository.prototype.getLatestPriceBefore.name, () => {
     it('returns the latest price for a configuration', async () => {
@@ -260,7 +267,9 @@ describeDatabase(TokenPriceRepository.name, (db) => {
       expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tokenPrice('b', 'eth', UnixTime(1), 1000)])
+      expect(results).toEqualUnsorted([
+        tokenPrice('b', 'eth', UnixTime(1), 1000),
+      ])
     })
 
     it('returns 0 for empty configs', async () => {
