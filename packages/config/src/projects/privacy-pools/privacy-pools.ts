@@ -1,8 +1,15 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 
 const discovery = new ProjectDiscovery('privacy-pools')
@@ -16,28 +23,12 @@ const MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS = 20
 interface PrivacyPoolBucket {
   id: string
   address: ChainSpecificAddress
-  symbol: string
-  decimals: number
+  tokenAddress: EthereumAddress
+  tokenInfo: { symbol: string; decimals: number; priceId: string }
   sinceBlock: number
   sinceTimestamp: UnixTime
   depositEvent: string
   withdrawalEvent: string
-}
-
-const PRICE_IDS: Record<string, string> = {
-  ETH: 'ethereum',
-  DAI: 'dai',
-  USDC: 'usd-coin',
-  USDT: 'tether',
-  WBTC: 'wrapped-bitcoin',
-  USDS: 'usds',
-  wstETH: 'wrapped-steth',
-  USDe: 'ethena-usde',
-  fxUSD: 'f-x-protocol-fxusd',
-  BOLD: 'liquity-bold',
-  USD1: 'world-liberty-financial-usd',
-  frxUSD: 'frax-usd',
-  wOETH: 'wrapped-oeth',
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
@@ -68,7 +59,7 @@ export const privacyPools: BaseProject = {
     address: ChainSpecificAddress.address(bucket.address),
     chain: 'ethereum',
     sinceTimestamp: bucket.sinceTimestamp,
-    tokens: [bucket.symbol],
+    tokens: [bucket.tokenInfo.symbol],
   })),
   tvsInfo: {
     associatedTokens: [],
@@ -103,18 +94,19 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
   const grouped = new Map<string, ProjectPrivacyToken>()
 
   for (const bucket of BUCKETS) {
-    let token = grouped.get(bucket.symbol)
+    let token = grouped.get(bucket.tokenInfo.symbol)
     if (!token) {
       token = {
         token: {
-          symbol: bucket.symbol,
-          decimals: bucket.decimals,
-          priceId: PRICE_IDS[bucket.symbol],
+          address: bucket.tokenAddress,
+          symbol: bucket.tokenInfo.symbol,
+          decimals: bucket.tokenInfo.decimals,
+          priceId: bucket.tokenInfo.priceId,
           sinceTimestamp: bucket.sinceTimestamp,
         },
         buckets: [],
       }
-      grouped.set(bucket.symbol, token)
+      grouped.set(bucket.tokenInfo.symbol, token)
     }
 
     token.token.sinceTimestamp = UnixTime(
@@ -127,7 +119,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     token.buckets.push({
       id: bucket.id,
       type: 'pool',
-      label: `${bucket.symbol} pool`,
+      label: `${bucket.tokenInfo.symbol} pool`,
       address: bucket.address,
       flows: {
         sinceBlock: bucket.sinceBlock,
@@ -150,7 +142,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
   }
 
   return Array.from(grouped.values()).sort((a, b) =>
-    (a.token.symbol ?? '').localeCompare(b.token.symbol ?? '', undefined, {
+    a.token.symbol.localeCompare(b.token.symbol, undefined, {
       numeric: true,
     }),
   )
@@ -170,60 +162,28 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
     const asset = pool.values?.ASSET?.toString()
     const isNativeEth =
       asset === 'eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-    const symbol = isNativeEth ? 'ETH' : getSymbolFromAsset(asset)
-    const decimals = isNativeEth ? 18 : getDecimalsFromAsset(asset)
-    if (!symbol || !decimals) {
-      throw new Error(`Unknown asset ${asset}`)
-    }
+
+    const tokenAddress = isNativeEth
+      ? EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+      : EthereumAddress(
+          ChainSpecificAddress.address(asset as ChainSpecificAddress),
+        )
+    const resolved = getTokenByAddress(tokenAddress.toString())
+    assert(resolved, `Unknown asset ${asset}`)
+
     return {
-      id: `privacy-pools-${symbol}-${pool.address}`,
+      id: `privacy-pools-${resolved.symbol}-${pool.address}`,
       address: pool.address,
-      symbol,
-      decimals,
+      tokenAddress,
+      tokenInfo: {
+        symbol: resolved.symbol,
+        decimals: resolved.decimals,
+        priceId: resolved.coingeckoId,
+      },
       sinceBlock: pool.sinceBlock ?? 0,
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,
     }
   })
-}
-
-function getSymbolFromAsset(asset: string | undefined): string | undefined {
-  if (!asset) return undefined
-  const address = ChainSpecificAddress.address(asset as ChainSpecificAddress)
-  const symbolMap: Record<string, string> = {
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F': 'DAI',
-    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 'USDC',
-    '0xdAC17F958D2ee523a2206206994597C13D831ec7': 'USDT',
-    '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': 'WBTC',
-    '0xdC035D45d973E3EC169d2276DDab16f1e407384F': 'USDS',
-    '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0': 'wstETH',
-    '0x4c9EDD5852cd905f086C759E8383e09bff1E68B3': 'USDe',
-    '0x085780639CC2cACd35E474e71f4d000e2405d8f6': 'fxUSD',
-    '0x6440f144b7e50D6a8439336510312d2F54beB01D': 'BOLD',
-    '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d': 'USD1',
-    '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29': 'frxUSD',
-    '0xDcEe70654261AF21C44c093C300eD3Bb97b78192': 'wOETH',
-  }
-  return symbolMap[address]
-}
-
-function getDecimalsFromAsset(asset: string | undefined): number | undefined {
-  if (!asset) return undefined
-  const address = ChainSpecificAddress.address(asset as ChainSpecificAddress)
-  const decimalsMap: Record<string, number> = {
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F': 18,
-    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 6,
-    '0xdAC17F958D2ee523a2206206994597C13D831ec7': 6,
-    '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': 8,
-    '0xdC035D45d973E3EC169d2276DDab16f1e407384F': 18,
-    '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0': 18,
-    '0x4c9EDD5852cd905f086C759E8383e09bff1E68B3': 18,
-    '0x085780639CC2cACd35E474e71f4d000e2405d8f6': 18,
-    '0x6440f144b7e50D6a8439336510312d2F54beB01D': 18,
-    '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d': 18,
-    '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29': 18,
-    '0xDcEe70654261AF21C44c093C300eD3Bb97b78192': 18,
-  }
-  return decimalsMap[address]
 }

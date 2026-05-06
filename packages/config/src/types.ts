@@ -854,10 +854,10 @@ export interface ProjectPrivacyInfo {
 
 export interface ProjectPrivacyToken {
   token: {
-    address?: EthereumAddress
+    address: EthereumAddress
     symbol: string
     decimals: number
-    priceId?: string
+    priceId: string
     sinceTimestamp?: UnixTime
   }
   buckets: ProjectPrivacyBucket[]

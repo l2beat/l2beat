@@ -1,9 +1,16 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 
 const discovery = new ProjectDiscovery('tornado-cash')
@@ -21,23 +28,14 @@ function formatDenomination(amount: bigint, decimals: number): string {
 interface TornadoBucket {
   id: string
   address: ChainSpecificAddress
-  symbol: string
+  tokenAddress: EthereumAddress
+  tokenInfo: { symbol: string; decimals: number; priceId: string }
   denomination: string
   denominationAmount: string
-  decimals: number
   sinceBlock: number
   sinceTimestamp: UnixTime
   depositEvent: string
   withdrawalEvent: string
-}
-
-const PRICE_IDS: Record<string, string> = {
-  ETH: 'ethereum',
-  DAI: 'dai',
-  USDC: 'usd-coin',
-  USDT: 'tether',
-  WBTC: 'wrapped-bitcoin',
-  cDAI: 'compound-dai',
 }
 
 const BUCKETS = getTornadoBuckets()
@@ -68,7 +66,7 @@ export const tornadoCash: BaseProject = {
     address: ChainSpecificAddress.address(bucket.address),
     chain: 'ethereum',
     sinceTimestamp: bucket.sinceTimestamp,
-    tokens: [bucket.symbol],
+    tokens: [bucket.tokenInfo.symbol],
   })),
   tvsInfo: {
     associatedTokens: [],
@@ -98,18 +96,19 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
   const grouped = new Map<string, ProjectPrivacyToken>()
 
   for (const bucket of BUCKETS) {
-    let asset = grouped.get(bucket.symbol)
+    let asset = grouped.get(bucket.tokenInfo.symbol)
     if (!asset) {
       asset = {
         token: {
-          symbol: bucket.symbol,
-          decimals: bucket.decimals,
-          priceId: PRICE_IDS[bucket.symbol],
+          address: bucket.tokenAddress,
+          symbol: bucket.tokenInfo.symbol,
+          decimals: bucket.tokenInfo.decimals,
+          priceId: bucket.tokenInfo.priceId,
           sinceTimestamp: bucket.sinceTimestamp,
         },
         buckets: [],
       }
-      grouped.set(bucket.symbol, asset)
+      grouped.set(bucket.tokenInfo.symbol, asset)
     }
 
     asset.token.sinceTimestamp = UnixTime(
@@ -122,7 +121,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
     asset.buckets.push({
       id: bucket.id,
       type: 'denomination',
-      label: `${bucket.symbol} ${bucket.denomination}`,
+      label: `${bucket.tokenInfo.symbol} ${bucket.denomination}`,
       address: bucket.address,
       denomination: bucket.denomination,
       flows: {
@@ -150,7 +149,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
   }
 
   return Array.from(grouped.values()).sort((a, b) =>
-    (a.token.symbol ?? '').localeCompare(b.token.symbol ?? '', undefined, {
+    a.token.symbol.localeCompare(b.token.symbol, undefined, {
       numeric: true,
     }),
   )
@@ -172,55 +171,37 @@ function getTornadoBuckets(): TornadoBucket[] {
   return pools.map((pool) => {
     const token = pool.values?.token?.toString()
     const isNativeEth = token === undefined
-
-    const symbol = isNativeEth ? 'ETH' : getSymbolFromToken(token)
-    const decimals = isNativeEth ? 18 : getDecimalsFromToken(token)
-    if (!symbol || !decimals) {
-      throw new Error(`Unknown token ${token}`)
-    }
+    const tokenAddress = isNativeEth
+      ? EthereumAddress('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')
+      : EthereumAddress(
+          ChainSpecificAddress.address(token as ChainSpecificAddress),
+        )
+    const resolved = getTokenByAddress(tokenAddress.toString())
+    assert(resolved, `Unknown token ${token}`)
 
     const denominationAmount = BigInt(
       pool.values?.denomination?.toString() ?? 0,
     )
-    const denomination = formatDenomination(denominationAmount, decimals)
+    const denomination = formatDenomination(
+      denominationAmount,
+      resolved.decimals,
+    )
 
     return {
-      id: `tornado-${symbol}-${denomination}`,
+      id: `tornado-${resolved.symbol}-${denomination}`,
       address: pool.address,
-      symbol,
+      tokenAddress,
+      tokenInfo: {
+        symbol: resolved.symbol,
+        decimals: resolved.decimals,
+        priceId: resolved.coingeckoId,
+      },
       denomination,
       denominationAmount: denominationAmount.toString(),
-      decimals,
       sinceBlock: pool.sinceBlock ?? 0,
       sinceTimestamp: pool.sinceTimestamp ?? 0,
       depositEvent: TORNADO_DEPOSIT_EVENT,
       withdrawalEvent: TORNADO_WITHDRAWAL_EVENT,
     }
   })
-}
-
-function getSymbolFromToken(token: string): string | undefined {
-  const address = ChainSpecificAddress.address(token as ChainSpecificAddress)
-  const symbolMap: Record<string, string> = {
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F': 'DAI',
-    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 'USDC',
-    '0xdAC17F958D2ee523a2206206994597C13D831ec7': 'USDT',
-    '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': 'WBTC',
-    '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643': 'cDAI',
-  }
-
-  return symbolMap[address]
-}
-
-function getDecimalsFromToken(token: string): number | undefined {
-  const address = ChainSpecificAddress.address(token as ChainSpecificAddress)
-  const decimalsMap: Record<string, number> = {
-    '0x6B175474E89094C44Da98b954EedeAC495271d0F': 18,
-    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 6,
-    '0xdAC17F958D2ee523a2206206994597C13D831ec7': 6,
-    '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599': 8,
-    '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643': 8,
-  }
-
-  return decimalsMap[address]
 }
