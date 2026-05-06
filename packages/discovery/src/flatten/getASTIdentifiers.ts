@@ -22,10 +22,14 @@ export function getASTIdentifiers(
       break
     }
     case 'VariableDeclaration': {
+      // node.expression is intentionally NOT walked here. For
+      // StateVariableDeclaration the parser aliases initialValue onto each
+      // variable's .expression, which would cause a double-visit. The parent
+      // (StateVariableDeclaration / VariableDeclarationStatement) owns the
+      // initializer walk.
       const ident = node.identifier !== null ? [node.identifier.name] : []
-      const expr = parseExpression(node.expression, visit)
       const typeName = parseTypeName(node.typeName, visit)
-      result = expr.concat(ident).concat(typeName)
+      result = ident.concat(typeName)
       break
     }
     case 'Block': {
