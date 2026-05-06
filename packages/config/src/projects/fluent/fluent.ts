@@ -55,7 +55,7 @@ export const fluent: ScalingProject = {
   id: ProjectId('fluent'),
   capability: 'universal',
   addedAt: UnixTime(1721218971), // 2024-07-17, original entry as upcoming
-  badges: [BADGES.VM.EVM, BADGES.VM.WasmVM],
+  badges: [BADGES.VM.EVM, BADGES.VM.WasmVM, BADGES.VM.SolanaVM],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Fluent',
@@ -67,7 +67,7 @@ export const fluent: ScalingProject = {
       websites: ['https://fluent.xyz/'],
       documentation: ['https://docs.fluent.xyz/'],
       explorers: ['https://fluentscan.xyz/'],
-      bridges: ['https://portal.fluent.xyz/'],
+      bridges: ['https://portal.fluent.xyz/user/bridge'],
       repositories: ['https://github.com/fluentlabs-xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',
@@ -173,7 +173,7 @@ export const fluent: ScalingProject = {
         RISK_VIEW.STATE_ZKP_SN.description +
         ' Fluent uses SP1 (Succinct) STARK proofs wrapped to PLONK for onchain verification. ' +
         'Before proofs are posted, batches can be preconfirmed by an AWS Nitro Enclave whose attestation is verified against expected PCR0 measurements via SP1. ' +
-        `Each batch is preconfirmed by the TEE, then finalizes after ${formatSeconds(finalizationDelay)} on L1 (no proof required in the happy path). Permissioned challengers have ${formatSeconds(challengeWindow)} from acceptance to dispute, and a challenge must be resolved with an SP1 proof before that same window closes. ` +
+        `Each batch is preconfirmed by the TEE, then finalizes after ${formatSeconds(finalizationDelay)} on L1 (no proof required in the happy path). Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from acceptance to dispute, and a challenge must be resolved with an SP1 proof before that same window closes. ` +
         'Proof submission is permissioned; see the Permissions section for current role holders.',
       sentiment: 'warning',
     },

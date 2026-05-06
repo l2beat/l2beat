@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FluentRollup",
+  "description": "Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.",
+  "ignoreMethods": [
+    "batchBlobHashes",
+    "batchChallengedBlocks",
+    "batchProvenBlocks",
+    "blockChallengeQueueAt",
+    "getBatch",
+    "getBatchRootChallenge",
+    "isBatchFinalized",
+    "isBatchPreconfirmed",
+    "proxiableUUID"
+  ],
+  "fields": {
+    "nitroVerifiers": {
+      "description": "Set of AWS Nitro Enclave verifier contracts allowed to preconfirm batches. Tracked via NitroVerifierEnabled / NitroVerifierDisabled events on the Rollup.",
+      "handler": {
+        "type": "event",
+        "select": "verifier",
+        "add": { "event": "NitroVerifierEnabled" },
+        "remove": { "event": "NitroVerifierDisabled" }
+      }
+    },
+    "accessControl": { "handler": { "type": "accessControl" } }
+  }
+}

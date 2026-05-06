@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbe0a77cf9fb4ad99342c27607c97a3be1d10ce9f
+Generated with discovered.json: 0x1b0e4c3b4210db4f115d2687ee17d70b236bc558
 
-# Diff at Tue, 05 May 2026 15:26:16 GMT:
+# Diff at Wed, 06 May 2026 10:57:42 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1777384482
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- current timestamp: 1778064999
 
 ## Description
 
@@ -26,7 +26,13 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract FluentRollup (eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f)
-    +++ description: None
+    +++ description: Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.
+```
+
+```diff
++   Status: CREATED
+    contract NitroVerifier (eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B)
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
 ```
 
 ```diff
@@ -44,7 +50,7 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract FastWithdrawalList (eth:0x3eFc3c84ecf259Da36E33692f2a107A0AB88D30E)
-    +++ description: None
+    +++ description: Per-token rate-limit registry for the optimistic (preconfirmed) fast-withdrawal path. Enforces hourly and daily caps using rolling windows keyed by block timestamp; related tokens (e.g. ETH and WETH) can be aliased to a shared bucket to prevent cap evasion.
 ```
 
 ```diff
@@ -56,13 +62,13 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract FluentTimeLock (eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4)
-    +++ description: None
+    +++ description: OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them.
 ```
 
 ```diff
 +   Status: CREATED
     contract NativeGateway (eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd)
-    +++ description: None
+    +++ description: L1 entry point for ETH deposits into Fluent. Forwards ETH to L1FluentBridge for actual escrow custody and emits the corresponding bridge message. UUPS-upgradeable; upgrades are gated by the contract owner.
 ```
 
 ```diff
@@ -74,7 +80,7 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract L1FluentBridge (eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc)
-    +++ description: None
+    +++ description: Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.
 ```
 
 ```diff
@@ -104,11 +110,11 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract ERC20Gateway (eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61)
-    +++ description: None
+    +++ description: L1 entry point for ERC-20 deposits into Fluent. Custodies ERC-20 tokens directly on L1 and emits the corresponding bridge message; on the L2 side the canonical pegged token is minted via the ERC20TokenFactory. UUPS-upgradeable; upgrades are gated by the contract owner.
 ```
 
 ```diff
 +   Status: CREATED
     contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F)
-    +++ description: None
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
 ```

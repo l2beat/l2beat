@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FluentTimeLock",
+  "category": "gov",
+  "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them.",
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } }
+  }
+}

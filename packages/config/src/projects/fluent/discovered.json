@@ -1,7 +1,7 @@
 {
   "name": "fluent",
-  "timestamp": 1777384482,
-  "configHash": "0xb8d758a0e66edcdc987c7026983268c9593b57ae3309eee5aa89e2b4487d96c6",
+  "timestamp": 1778064999,
+  "configHash": "0xcec30f0204f4bb3ae4c0732803f42417848d48d0b65a0d67552a591f9116b42a",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000520008",
@@ -49,7 +49,7 @@
       "sinceTimestamp": 1776720923,
       "sinceBlock": 24923839,
       "values": {
-        "$admin": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
+        "$admin": "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11",
         "$implementation": "eth:0xB9E397C9506F71590be1f24da3f219bedE38b845",
         "$pastUpgrades": [
           [
@@ -59,7 +59,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "owner": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
+        "owner": "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -77,11 +77,13 @@
       "name": "FluentRollup",
       "address": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
       "type": "Contract",
+      "template": "fluent/FluentRollup",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0xb3f86a4222a8071a49ac30b3f8d68e9d0542029a668fa3127a1a0e479417f464"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.",
       "sinceTimestamp": 1776356639,
       "sinceBlock": 24893562,
       "values": {
@@ -125,6 +127,32 @@
           ]
         ],
         "$upgradeCount": 7,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"]
+          },
+          "EMERGENCY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"]
+          },
+          "CHALLENGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "PROVER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C"]
+          },
+          "SEQUENCER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26"]
+          },
+          "PRECONFIRMATION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012"]
+          }
+        },
         "blockChallengeQueue": [],
         "blockChallengeQueueLength": 0,
         "bridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
@@ -137,14 +165,18 @@
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 760,
+        "lastFinalizedBatchIndex": 1527,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
         "MIN_CHALLENGE_RESOLUTION_WINDOW": 3600,
         "MIN_CHALLENGE_WINDOW": 3600,
         "MIN_PRECONFIRMATION_WINDOW": 3600,
-        "nextBatchIndex": 972,
+        "nextBatchIndex": 1698,
+        "nitroVerifiers": [
+          "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
+          "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F"
+        ],
         "paused": false,
         "PRECONFIRMATION_ROLE": "0xd32226d4e70dd467f2f1d9e5d56e486fb16b80a391e29feec1dcaedb262a0a49",
         "preconfirmWindow": 7200,
@@ -156,9 +188,41 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "ZERO_BYTES_HASH": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
       },
+      "fieldMeta": {
+        "nitroVerifiers": {
+          "description": "Set of AWS Nitro Enclave verifier contracts allowed to preconfirm batches. Tracked via NitroVerifierEnabled / NitroVerifierDisabled events on the Rollup."
+        }
+      },
       "implementationNames": {
         "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f": "ERC1967Proxy",
         "eth:0xF6ad498c8B9bfbD2F26EcD9665aC71d9032245c1": "Rollup"
+      }
+    },
+    {
+      "name": "NitroVerifier",
+      "address": "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
+      "type": "Contract",
+      "template": "fluent/NitroVerifier",
+      "sourceHashes": [
+        "0x26f37fd978a3156ce091bb4a7007821396e449417b01ab9cac834c3244cd310d"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.",
+      "sinceTimestamp": 1776356615,
+      "sinceBlock": 24893560,
+      "values": {
+        "_attestationVerifier": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+        "$immutable": true,
+        "ATTESTATION_MAX_AGE": 3600,
+        "ATTESTATION_MAX_SKEW": 300,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getProgramVKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "pendingVKey": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "pendingVKeyValidAt": 0,
+        "VKEY_UPDATE_DELAY": 86400
+      },
+      "implementationNames": {
+        "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B": "NitroVerifier"
       }
     },
     {
@@ -174,7 +238,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "from": "eth:0x05C5d46a5e6f92fB9CdA9A8b03E4440A175D1484",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225",
           "role": "admin"
         },
         {
@@ -201,7 +275,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -277,11 +351,13 @@
       "name": "FastWithdrawalList",
       "address": "eth:0x3eFc3c84ecf259Da36E33692f2a107A0AB88D30E",
       "type": "Contract",
+      "template": "fluent/FastWithdrawalList",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x0d648e14b0261d1affaa43c434b8c552769b24ff9ae61d55651963766a41bc91"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Per-token rate-limit registry for the optimistic (preconfirmed) fast-withdrawal path. Enforces hourly and daily caps using rolling windows keyed by block timestamp; related tokens (e.g. ETH and WETH) can be aliased to a shared bucket to prevent cap evasion.",
       "sinceTimestamp": 1776720647,
       "sinceBlock": 24923816,
       "values": {
@@ -302,7 +378,13 @@
       "implementationNames": {
         "eth:0x3eFc3c84ecf259Da36E33692f2a107A0AB88D30E": "ERC1967Proxy",
         "eth:0x94F068ee9A23F3F883bdE060502a46E9C4EeAb25": "FastWithdrawalList"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "SP1Verifier",
@@ -344,14 +426,34 @@
       "name": "FluentTimeLock",
       "address": "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4",
       "type": "Contract",
+      "template": "fluent/FluentTimeLock",
       "sourceHashes": [
         "0x3fef1c4a983f63a29992b7e676b0d55ce04c37a3707ccfef382158d2c5ab086b"
       ],
       "proxyType": "immutable",
+      "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them.",
       "sinceTimestamp": 1776356651,
       "sinceBlock": 24893563,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
@@ -360,17 +462,20 @@
       },
       "implementationNames": {
         "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4": "FluentTimeLock"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "NativeGateway",
       "address": "eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd",
       "type": "Contract",
+      "template": "fluent/NativeGateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x802ef7965e777c3cf4389c3eb0f20795195f40ebef5e949db8ab946041fa5f31"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "L1 entry point for ETH deposits into Fluent. Forwards ETH to L1FluentBridge for actual escrow custody and emits the corresponding bridge message. UUPS-upgradeable; upgrades are gated by the contract owner.",
       "sinceTimestamp": 1775739563,
       "sinceBlock": 24842312,
       "values": {
@@ -408,7 +513,8 @@
       "implementationNames": {
         "eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd": "ERC1967Proxy",
         "eth:0x025f11FedA181E2Ba63bb86536DD987E0769f586": "NativeGateway"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
@@ -439,11 +545,13 @@
       "name": "L1FluentBridge",
       "address": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
       "type": "Contract",
+      "template": "fluent/L1FluentBridge",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0xec81f591c04dd9827c66265a102a26673c6e1ae81b2e4067338363477edab936"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
       "sinceTimestamp": 1775739227,
       "sinceBlock": 24842284,
       "values": {
@@ -482,18 +590,32 @@
           ]
         ],
         "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"]
+          },
+          "PAUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"]
+          },
+          "RELAYER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEFAULT_EXECUTE_GAS_LIMIT": 100000,
         "getDepositProcessingWindow": 14400,
         "getExecuteGasLimit": 5000,
         "getFeeTreasury": "eth:0x0000000000000000000000000000000000000000",
         "getNativeSender": "eth:0x0000000000000000000000000000000000000000",
-        "getNonce": 686,
+        "getNonce": 968,
         "getOtherBridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-        "getReceivedNonce": 243,
+        "getReceivedNonce": 461,
         "getReceiveMessageDeadline": 7200,
         "getRollup": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
-        "getSentMessageCursor": 686,
+        "getSentMessageCursor": 968,
         "getSentMessageFee": 0,
         "getSentMessageQueueSize": 0,
         "isCurrentBatchPreconfirmed": false,
@@ -508,7 +630,8 @@
       "implementationNames": {
         "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc": "ERC1967Proxy",
         "eth:0x047AaDf25df7D17bB5B6b1FF31cecD1E4973C227": "L1FluentBridge"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x9CDFcAB50663169Dcd99597815472E2494f09Fa0",
@@ -519,20 +642,7 @@
       "name": "FluentAdminEOA",
       "address": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x05C5d46a5e6f92fB9CdA9A8b03E4440A175D1484",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SP1Verifier",
@@ -553,6 +663,12 @@
       "implementationNames": {
         "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2": "SP1Verifier"
       }
+    },
+    {
+      "name": "FluentProverEOA",
+      "address": "eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
@@ -621,6 +737,12 @@
       }
     },
     {
+      "name": "FluentEnclaveAttesterEOA",
+      "address": "eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ERC20TokenFactory",
       "address": "eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225",
       "type": "Contract",
@@ -632,7 +754,7 @@
       "sinceTimestamp": 1775739251,
       "sinceBlock": 24842286,
       "values": {
-        "$admin": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
+        "$admin": "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11",
         "$implementation": "eth:0xeDB323c7406d534B301355913717EC0B2F7b350d",
         "$pastUpgrades": [
           [
@@ -649,7 +771,7 @@
         "$upgradeCount": 2,
         "beacon": "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B",
         "implementation": "eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090",
-        "owner": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
+        "owner": "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11",
         "paymentGateway": "eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -663,11 +785,13 @@
       "name": "ERC20Gateway",
       "address": "eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61",
       "type": "Contract",
+      "template": "fluent/ERC20Gateway",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x119832e21a9e5258b103fff2f6c57ee642225ea66e2664aa2b0db162d381e92d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "L1 entry point for ERC-20 deposits into Fluent. Custodies ERC-20 tokens directly on L1 and emits the corresponding bridge message; on the L2 side the canonical pegged token is minted via the ERC20TokenFactory. UUPS-upgradeable; upgrades are gated by the contract owner.",
       "sinceTimestamp": 1775739563,
       "sinceBlock": 24842312,
       "values": {
@@ -713,16 +837,25 @@
       "implementationNames": {
         "eth:0xFD4C62647A34FF6d6802092F5fbe176099223B61": "ERC1967Proxy",
         "eth:0x81e1158368bD28Cc6E8380852087a9512A9670fB": "ERC20Gateway"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "FluentSequencerEOA",
+      "address": "eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "NitroVerifier",
       "address": "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F",
       "type": "Contract",
+      "template": "fluent/NitroVerifier",
       "sourceHashes": [
         "0x45105074c2c908ae7bcbeff007893e4cb25b6b6986ebf920e622604e4f4802fb"
       ],
       "proxyType": "immutable",
+      "description": "Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.",
       "sinceTimestamp": 1776596135,
       "sinceBlock": 24913471,
       "values": {
@@ -986,6 +1119,55 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B": [
+      "constructor(address attestationVerifier, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AttestationExpired(uint64 attestationTime, uint256 blockTime)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error InvalidSignatureLength()",
+      "error NoPendingUpdate()",
+      "error PubkeyAlreadyVerified()",
+      "error PubkeyNotVerified()",
+      "error RoleGrantFailed()",
+      "error SignerNotAttested()",
+      "error TimelockNotExpired()",
+      "error VKeyUnchanged()",
+      "error ZeroAddress()",
+      "error ZeroVKey()",
+      "event AttestationRevoked(address indexed pubkey)",
+      "event AttestationVerified(bytes32 indexed programVKey, address indexed pubkey)",
+      "event ProgramVKeyUpdated(bytes32 indexed oldVKey, bytes32 indexed newVKey)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event VKeyUpdateCancelled(bytes32 indexed cancelledVKey)",
+      "event VKeyUpdateProposed(bytes32 indexed proposedVKey, uint256 validAt)",
+      "function ATTESTATION_MAX_AGE() view returns (uint256)",
+      "function ATTESTATION_MAX_SKEW() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function VKEY_UPDATE_DELAY() view returns (uint256)",
+      "function _attestationVerifier() view returns (address)",
+      "function cancelVKeyUpdate()",
+      "function executeVKeyUpdate()",
+      "function getProgramVKey() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function pendingVKey() view returns (bytes32)",
+      "function pendingVKeyValidAt() view returns (uint256)",
+      "function proposeVKeyUpdate(bytes32 newProgramVKey)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeAttestation(address pubkey)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function verifiedPubkeys(address) view returns (bool)",
+      "function verifyAttestation(address expectedPubkey, uint64 attestationTime, bytes proofBytes)",
+      "function verifyBatch(bytes32 batchRoot, bytes32[] blobHashes, bytes signature) view returns (address)",
+      "function verifyBlock(bytes32 parentHash, bytes32 blockHash, bytes32 withdrawalHash, bytes32 depositHash, bytes signature, bytes32[] blobHashes) view returns (address)"
     ],
     "eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11": [
       "constructor(address _singleton)"
@@ -1714,10 +1896,17 @@
     ]
   },
   "usedTemplates": {
+    "fluent/ERC20Gateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "fluent/FastWithdrawalList": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "fluent/FluentRollup": "0x00d924a2f65b22fef6d4826749642ca690344d2b578aaae0774c0575c36a443a",
+    "fluent/FluentTimeLock": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
+    "fluent/L1FluentBridge": "0x65093edbe060b6f284150dd744c5fed80ef72aebdf6b4b03e6cac6e6d75c3983",
+    "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24978991 },
-  "permissionsConfigHash": "0x00bbc22c2018f4b9a75463a60c367caa84652913706b7e9f4baafe6bde0e8044"
+  "usedBlockNumbers": { "ethereum": 25035530 },
+  "permissionsConfigHash": "0x98df9258abe646e627b8a1b618819ba266df5b2ba48256f86b49abad46266088"
 }
