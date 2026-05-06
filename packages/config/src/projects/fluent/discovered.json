@@ -1,7 +1,7 @@
 {
   "name": "fluent",
-  "timestamp": 1778064999,
-  "configHash": "0x246ec42237c390d9e498ca94e11d79bde502c343b82b13324808346af86ec677",
+  "timestamp": 1778070316,
+  "configHash": "0xcec30f0204f4bb3ae4c0732803f42417848d48d0b65a0d67552a591f9116b42a",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000520008",
@@ -158,31 +158,37 @@
         "bridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
         "challengeDepositAmount": "10000000000000000",
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
+        "challengerAC": [],
         "challengeWindow": 10800,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEFAULT_GAS_LEFT": 1000000,
+        "defaultAdminAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "EMERGENCY_ROLE": "0xbf233dd2aafeb4d50879c4aa5c81e96d92f6e6945c906a58f9f2d1c1631b4b26",
+        "emergencyAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 1527,
+        "lastFinalizedBatchIndex": 1532,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
         "MIN_CHALLENGE_RESOLUTION_WINDOW": 3600,
         "MIN_CHALLENGE_WINDOW": 3600,
         "MIN_PRECONFIRMATION_WINDOW": 3600,
-        "nextBatchIndex": 1698,
+        "nextBatchIndex": 1703,
         "nitroVerifiers": [
           "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
           "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F"
         ],
         "paused": false,
         "PRECONFIRMATION_ROLE": "0xd32226d4e70dd467f2f1d9e5d56e486fb16b80a391e29feec1dcaedb262a0a49",
+        "preconfirmationAC": ["eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012"],
         "preconfirmWindow": 7200,
         "programVKey": "0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334",
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
+        "proverAC": ["eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C"],
         "SEQUENCER_ROLE": "0xac4f1890dc96c9a02330d1fa696648a38f3b282d2449c2d8e6f10507488c84c8",
+        "sequencerAC": ["eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26"],
         "sp1Verifier": "eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
         "submitBlobsWindow": 3600,
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -237,14 +243,54 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "description": "grant / revoke all access control roles on the Rollup contract and configure its core parameters.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "description": "revert non-finalized (committed or preconfirmed) batches via revertBatches; cannot revert finalized batches.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4",
+          "description": "execute scheduled timelock operations once the min-delay has elapsed.",
+          "role": ".executorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
+          "description": "configure the rollup binding, oracles, gas parameters and gateway whitelist on the L1 bridge core, and grant / revoke its other roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
+          "description": "pause / unpause the L1 bridge core and skip expired deposits.",
+          "role": ".pauserAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x05C5d46a5e6f92fB9CdA9A8b03E4440A175D1484",
           "role": "admin"
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x8976Ca4E0c8467097Da675399fB7DB454a1b56dd",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
+          "role": ".defaultAdminAC"
         },
         {
           "permission": "upgrade",
@@ -384,7 +430,15 @@
     {
       "address": "eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relay",
+          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
+          "description": "execute L2->L1 messages on the L1 bridge core (receiveMessageWithProof / receiveFailedMessage).",
+          "role": ".relayerAC"
+        }
+      ]
     },
     {
       "name": "SP1Verifier",
@@ -431,7 +485,7 @@
         "0x3fef1c4a983f63a29992b7e676b0d55ce04c37a3707ccfef382158d2c5ab086b"
       ],
       "proxyType": "immutable",
-      "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them.",
+      "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them; CANCELLER_ROLE can drop scheduled calls.",
       "sinceTimestamp": 1776356651,
       "sinceBlock": 24893563,
       "values": {
@@ -455,10 +509,13 @@
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellerAC": ["eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "getMinDelay": 60,
-        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposerAC": ["eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D"]
       },
       "implementationNames": {
         "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4": "FluentTimeLock"
@@ -606,6 +663,7 @@
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEFAULT_EXECUTE_GAS_LIMIT": 100000,
+        "defaultAdminAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "getDepositProcessingWindow": 14400,
         "getExecuteGasLimit": 5000,
         "getFeeTreasury": "eth:0x0000000000000000000000000000000000000000",
@@ -624,7 +682,9 @@
         "MIN_SKIP_GAS": 50000,
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "pauserAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "RELAYER_ROLE": "0xe2b7fb3b832174769106daebcfd6d1970523240dda11281102db9363b83b0dc4",
+        "relayerAC": ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
@@ -642,7 +702,21 @@
       "name": "FluentAdminEOA",
       "address": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4",
+          "description": "cancel scheduled timelock operations before they are executed.",
+          "role": ".cancellerAC"
+        },
+        {
+          "permission": "propose",
+          "from": "eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4",
+          "description": "schedule operations on the timelock; the configured min-delay must elapse before they can be executed.",
+          "role": ".proposerAC"
+        }
+      ]
     },
     {
       "name": "SP1Verifier",
@@ -668,7 +742,15 @@
       "name": "FluentProverEOA",
       "address": "eth:0xB9E6f78a0F35F96b806D0359AbB251117aCe255C",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "description": "submit SP1 ZK proofs that resolve challenged batches and accelerate finalization via finalizeWithProofs.",
+          "role": ".proverAC"
+        }
+      ]
     },
     {
       "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
@@ -740,7 +822,15 @@
       "name": "FluentEnclaveAttesterEOA",
       "address": "eth:0xef9Dc1F87BAA090a35B985DAad9c8096440F2012",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "description": "AWS Nitro Enclave attestation key admitted to preconfirm batches; binds the optimistic fast-withdrawal path.",
+          "role": ".preconfirmationAC"
+        }
+      ]
     },
     {
       "name": "ERC20TokenFactory",
@@ -844,7 +934,15 @@
       "name": "FluentSequencerEOA",
       "address": "eth:0xFd58Bc438d910088C413b889Eaa0aded5C0d1c26",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
+          "description": "commit batches and submit EIP-4844 blob hashes to the Rollup.",
+          "role": ".sequencerAC"
+        }
+      ]
     },
     {
       "name": "NitroVerifier",
@@ -1898,15 +1996,15 @@
   "usedTemplates": {
     "fluent/ERC20Gateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/FastWithdrawalList": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "fluent/FluentRollup": "0x00d924a2f65b22fef6d4826749642ca690344d2b578aaae0774c0575c36a443a",
-    "fluent/FluentTimeLock": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "fluent/L1FluentBridge": "0x65093edbe060b6f284150dd744c5fed80ef72aebdf6b4b03e6cac6e6d75c3983",
+    "fluent/FluentRollup": "0x52d5d32e870df6647508e176c97eb7e8d2339807c25f724f2ff898a05d65a11b",
+    "fluent/FluentTimeLock": "0x3c9bd3af13f27ac321421f8cac4f7406ae3981fe1432a2e37f15a93a254c4219",
+    "fluent/L1FluentBridge": "0x84128eba3b5f7451246de0588a82ae1580a41ce1d27fb6bf9bae4fafecef3566",
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25035530 },
-  "permissionsConfigHash": "0x98df9258abe646e627b8a1b618819ba266df5b2ba48256f86b49abad46266088"
+  "usedBlockNumbers": { "ethereum": 25035972 },
+  "permissionsConfigHash": "0x1976af88b21832b60ffbadd5cd59798b71dbe1c26b8cdeaa375a8eab496ac834"
 }

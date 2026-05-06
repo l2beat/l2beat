@@ -23,6 +23,79 @@
         "remove": { "event": "NitroVerifierDisabled" }
       }
     },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant / revoke all access control roles on the Rollup contract and configure its core parameters."
+        },
+        { "type": "upgrade" }
+      ]
+    },
+    "emergencyAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EMERGENCY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revert non-finalized (committed or preconfirmed) batches via revertBatches; cannot revert finalized batches."
+        }
+      ]
+    },
+    "sequencerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SEQUENCER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "sequence",
+          "description": "commit batches and submit EIP-4844 blob hashes to the Rollup."
+        }
+      ]
+    },
+    "proverAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PROVER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "validate",
+          "description": "submit SP1 ZK proofs that resolve challenged batches and accelerate finalization via finalizeWithProofs."
+        }
+      ]
+    },
+    "challengerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CHALLENGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "challenge",
+          "description": "dispute preconfirmed batches via challengeBatchRoot or challengeBlock during the challenge window."
+        }
+      ]
+    },
+    "preconfirmationAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PRECONFIRMATION_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "fastconfirm",
+          "description": "AWS Nitro Enclave attestation key admitted to preconfirm batches; binds the optimistic fast-withdrawal path."
+        }
+      ]
+    },
     "accessControl": { "handler": { "type": "accessControl" } }
   }
 }

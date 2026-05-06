@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbe2ce0581fa49800ca4f3dff5b3fecdc148bc0cc
+Generated with discovered.json: 0x1b5b3c18340351eb7e15eeec2ebf5e1de7e7bdc1
 
-# Diff at Wed, 06 May 2026 12:14:20 GMT:
+# Diff at Wed, 06 May 2026 12:26:20 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1778064999
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- current timestamp: 1778070316
 
 ## Description
 
@@ -62,7 +62,7 @@ initial discovery
 ```diff
 +   Status: CREATED
     contract FluentTimeLock (eth:0x7846C001835d889A29ba659f67A5B7ac98E73bF4)
-    +++ description: OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them.
+    +++ description: OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them; CANCELLER_ROLE can drop scheduled calls.
 ```
 
 ```diff
