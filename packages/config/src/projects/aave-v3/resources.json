@@ -32,6 +32,12 @@
       "type": "other",
       "url": "https://governance.aave.com",
       "label": "Governance Forum"
+    },
+    {
+      "url": "https://github.com/aave/interface/releases",
+      "type": "frontend",
+      "label": "IPFS deployments",
+      "frontendSubtype": "third-party"
     }
   ],
   "audits": [
@@ -344,5 +350,5 @@
     }
   ],
   "linesOfCode": 38915,
-  "lastModified": "2026-04-27T21:30:32.660Z"
+  "lastModified": "2026-05-06T05:53:09.306Z"
 }
