@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2c8c4409c39c5afef4141e345aa1dac4ae87e7ae
+Generated with discovered.json: 0xf01affb154d85c92469bc247cbe4c8319fc9d92c
 
-# Diff at Sun, 03 May 2026 09:56:38 GMT:
+# Diff at Mon, 04 May 2026 11:58:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1777643766
@@ -10,6 +10,102 @@ Generated with discovered.json: 0x2c8c4409c39c5afef4141e345aa1dac4ae87e7ae
 Discovery rerun on the same block number with only config-related changes.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (base:0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff)
+    +++ description: LayerZero library used to read state from remote blockchains.
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (base:0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here.
+```
+
+```diff
++   Status: CREATED
+    contract rsETH_OFT_Base (base:0x1Bc71130A0e39942a7658878169764Bbd8A45993)
+    +++ description: rsETH on Base: a LayerZero V2 OFT (mint/burn) for rsETH. Cross-chain messages between this contract and its Ethereum-side peer are secured by the DVN set surfaced on the Send/Receive ULN302 entries below. The owner controls the OFT mint/burn surface and is the LZ delegate (can change DVN config on the Endpoint).
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib_Base (base:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Executor (base:0x2CCA08ae69E0C44b18a57Ab2A87644234dAebaE4)
+    +++ description: Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.
+```
+
+```diff
++   Status: CREATED
+    contract DVN (base:0x554833698Ae0FB22ECC90B01222903fD62CA4B47)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (base:0x7Da95539762Dd11005889F6B72a6674A4888B56d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA  (base:0x86CbBAEB08861D005fD2147A5123E43e558db167)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (base:0x9e059a54699a285714207b43B055483E78FAac25)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract OneSig (base:0xa0392d116D71ED3b75086194aBa6De3CD1e39B7E)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (base:0xa5f9c298fed8F45da8024B85Fd7435A1A767fF07)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (base:0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (base:0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2)
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (base:0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf)
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero_Treasury_Base (base:0xCcD558d6839e128320bBC932CBBa2c890a5518E8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (base:0xcd37CA043f8479064e10635020c65FfC005d36f6)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
 
 ```diff
 +   Status: CREATED
@@ -45,6 +141,30 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
     +++ description: AVSDirectory: legacy EigenLayer (operator, AVS) registration registry. The override below adds a kelp-scoped derived field that walks every AVS Kelp's two operators (ELOperator_A, ELOperator_B) are currently registered with on this directory, so the BFS pulls their internals (ServiceManager, registries, slasher chain) into this discovery automatically. List refreshes on every discovery run; the only deployment-stable inputs hardcoded in the where clauses are the two operator addresses (which are also named in this project and would surface as a separate diff if MANAGER ever undelegates and re-delegates).
+```
+
+```diff
++   Status: CREATED
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.
+```
+
+```diff
++   Status: CREATED
+    contract AutomationServiceManager (eth:0x18343Aa10e3D2F3A861e5649627324aEAD987Adf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: Part of the LayerZero messaging protocol. OApp owners can configure custom verification (MessageLib) and execution settings here.
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: Simple LayerZero library that blocks all messages if configured.
 ```
 
 ```diff
@@ -91,6 +211,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract StakeRegistry (eth:0x363b3604fE8c2323a98c00906115c8b87a512a12)
+    +++ description: Keeps track of the total stake of each operator.
+```
+
+```diff
++   Status: CREATED
     contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
     +++ description: None
 ```
@@ -99,6 +225,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract PubkeyRegistry (eth:0x37043DC4Ef0B3e84aC9a84959D54cdC77f2109Bd)
     +++ description: Stores the BLS pubkeys used by NodeDelegators when registering validators with EigenLayer's EigenPodManager.
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
 ```
 
 ```diff
@@ -169,6 +301,18 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x5989934D31f7f397511f105B7E4175a06B7A517F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract LRTConverter (eth:0x598dbcb99711E5577fF76ef4577417197B939Dfa)
     +++ description: Converts Kelp's holdings of LSTs (e.g. stETH, swETH) and routes withdrawals through their respective protocols. Acts as the bridge between Kelp's accounting and the underlying LST/withdrawal contracts.
 ```
@@ -187,6 +331,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract Treasury (eth:0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract EmissionsController (eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84)
     +++ description: EigenLayer emissions distributor. Streams EIGEN rewards to KelpDAO based on configured distributions.
 ```
@@ -195,6 +345,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract LRTWithdrawalManager (eth:0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16)
     +++ description: Manages user withdrawal requests for rsETH redemption. Holds an Aave WETH position to back instant withdrawal liquidity.
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: LayerZero library used to read state from remote blockchains.
 ```
 
 ```diff
@@ -235,6 +391,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract rsETH_OFTAdapter_Eth (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3)
+    +++ description: rsETH OFTAdapter on Ethereum: locks rsETH for outgoing bridge messages and unlocks it on incoming. Owner doubles as the LZ delegate (can change Endpoint DVN config).
+```
+
+```diff
++   Status: CREATED
     contract PoolInstance (eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2)
     +++ description: Aave V3 main lending pool. KelpDAO deposits WETH here to earn yield used for instant withdrawal liquidity.
 ```
@@ -253,6 +415,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RegistryCoordinator (eth:0x8DE3Ee0dE880161Aa0CD8Bf9F8F6a7AfEeB9A44B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract StrategyBase (eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce)
     +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
 ```
@@ -267,6 +435,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract StrategyBaseTVLLimits (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D)
     +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract AutomationTaskManager (eth:0x940f62F75cbBBd723D37C9171Dc681DfBa653b49)
+    +++ description: None
 ```
 
 ```diff
@@ -297,6 +471,24 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract ETHx Token (eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b)
     +++ description: Stader ETHx — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Stader's StaderConfig chain is not walked.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
++   Status: CREATED
+    contract DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
 ```
 
 ```diff
@@ -343,6 +535,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract BLSApkRegistry (eth:0xB58687fF303C8e92C28a484342755d3228081d45)
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+```
+
+```diff
++   Status: CREATED
     contract ProxyAdmin (eth:0xb61e0E39b6d4030C36A176f576aaBE44BF59Dc78)
     +++ description: None
 ```
@@ -367,8 +565,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
     contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
 ```
 
 ```diff
@@ -387,6 +603,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract LRTUnstakingVault (eth:0xc66830E2667bc740c0BED9A71F18B14B8c8184bA)
     +++ description: Forwarder vault sitting between NodeDelegators (post-EigenLayer-unstake) and the withdrawal manager. Holds whatever LST and ETH balances arrive from NodeDelegators (after their completeUnstaking forwards balance deltas) and from LRT_DEPOSIT_POOL (via ASSET_TRANSFER_ROLE transfers); pushes them out only through redeem(), which is callable solely by the LRT_WITHDRAW_MANAGER-registered address. Inherits PausableUpgradeable but exposes no pause() / unpause() and no function uses whenNotPaused, so the inherited paused field is permanently false. Function gates: onlyLRTWithdrawalManager (msg.sender == lrtConfig.withdrawManager()): redeem (sends asset/ETH to msg.sender; the only outflow path on this contract). onlyLRTNodeDelegator (msg.sender registered in ILRTDepositPool.isNodeDelegator): increaseUncompletedWithdrawalCount, decreaseUncompletedWithdrawalCount. ASSET_TRANSFER_ROLE: transferAssetToNodeDelegator, transferETHToNodeDelegator (ndcIndex resolves through LRTDepositPool.getNodeDelegatorQueue). MANAGER: setMaxUncompletedWithdrawalCount (hard-capped at 80 by the setter), setUncompletedWithdrawalCount (recomputes the counter by iterating LRTDepositPool.getNodeDelegatorQueue and summing EIGEN_DELEGATION_MANAGER.getQueuedWithdrawals lengths). OPERATOR_ROLE: setQueuedWithdrawalsBuffer (per-asset reservation subtracted from balanceOf inside getAssetsAvailableForInstantWithdrawal). Permissionless: receive() (logs only), receiveFromLRTDepositPool and receiveFromNodeDelegator (no-op payable hooks).
+```
+
+```diff
++   Status: CREATED
+    contract IndexRegistry (eth:0xc6A464e39d4fA5013D61295501c7cCd050d76612)
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
 ```
 
 ```diff

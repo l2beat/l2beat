@@ -1,14 +1,34 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "kelpdao",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "maxAddresses": 1500,
   "initialAddresses": [
     "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
     // AVSDirectory: pulled into the discovery explicitly so the kelpOperatorAvsRegistrations
     // override below fires. Otherwise it would only be reachable via ProtocolRegistry.getAllDeployments,
     // which we cut to keep EigenLayer's full deployment registry out of this project's surface.
-    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+    // AutomationServiceManager: one of the AVSes Kelp's operators are registered with on
+    // AVSDirectory. Pulled in explicitly to surface its proxy-admin chain so a reviewer
+    // can see the upgrade authority (currently a single EOA). The AVS-internal registries
+    // are cut by the AutomationServiceManager template's ignoreRelatives — only the admin
+    // chain is walked. Sample case for the broader question "who could enable slashing on
+    // a Kelp-relevant AVS"; the same pattern applies to the other 11 single-EOA-controlled
+    // AVSes Kelp operators are registered with.
+    "eth:0x18343Aa10e3D2F3A861e5649627324aEAD987Adf",
+    // rsETH on Base: a LayerZero V2 OFT (mint/burn) representing rsETH bridged from
+    // Ethereum. Pulled in to surface the bridge's LayerZero stack — Endpoint, Send/Receive
+    // ULN302 libraries, and the DVNs that secure cross-chain messages. The DVN set is the
+    // primary trust assumption for anyone holding rsETH on Base.
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+    // rsETH OFTAdapter on Ethereum: the eth-side counterpart that locks rsETH when bridging
+    // to Base and unlocks it when receiving from Base. Owned by KelpManagerMultisig; this
+    // is the contract a malicious DVN-validated message would target to release rsETH on
+    // Ethereum.
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3"
   ],
   "names": {
     "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": "KelpAdminMultisig",
@@ -28,23 +48,19 @@
     "eth:0x23Bd955B62027AA2b1060c6f79B4a8281c049667": "KelpInstantWithdrawalFeeRecipient",
     "eth:0xb6AbB489aCA4583833230F10B3A7670114D09559": "KelpPauserMultisig",
     "eth:0xb9577E83a6d9A6DE35047aa066E3758221FE0DA2": "KelpLegacyProtocolTreasury",
-    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": "KelpOperatorEOA"
+    "eth:0xF2099c4783921f44Ac988B67e743DAeFd4A00efd": "KelpOperatorEOA",
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": "rsETH_OFT_Base",
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3": "rsETH_OFTAdapter_Eth",
+    "base:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": "BlockedMessageLib_Base",
+    "base:0xCcD558d6839e128320bBC932CBBa2c890a5518E8": "LayerZero_Treasury_Base"
   },
   "overrides": {
-    // Source code on this contract triggers a flattener crash ("Failed to find file declaring ProxyAdmin").
-    // Skipping discovery on this single address; the contract is downstream of one of the AVSes Kelp's
-    // operators are registered with.
     "eth:0x42A72499eDDB0374ebFba44Fc880F82CCe736614": {
       "ignoreDiscovery": true
     },
-    // Triggers a blip runtime error in a templated edit path; ignoring for now
-    // to unblock the AVS discovery, downstream of one of the AVSes.
     "eth:0x75351d49229aa42Df7fEBfbEa0c7cECC881ad7E7": {
       "ignoreDiscovery": true
     },
-    // Unverified-source AVS internals; Etherscan returns no contract name so no template can be derived.
-    // Each lives downstream of one of the AVSes Kelp's operators are registered with; ignoring discovery
-    // keeps them as opaque addresses in the values without breaking the BFS.
     "eth:0x10aD871Ad645A63113E1dAE7a71Cbd0E2F7443eE": {
       "ignoreDiscovery": true
     },
@@ -72,15 +88,11 @@
     "eth:0xF7fcff55d5FDAf2C3Bbeb140Be5e62a2c7D26Db3": {
       "ignoreDiscovery": true
     },
-    // EigenLayer's central deployments registry. getAllDeployments returns 36 EigenLayer infrastructure
-    // addresses that are the trust surface of EigenLayer-the-system, not Kelp; they are covered by the
-    // shared-eigenlayer project. Cut here so kelpdao stays focused on Kelp + its operators' AVS exposure.
     "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
-      "ignoreRelatives": ["getAllDeployments"]
+      "ignoreRelatives": [
+        "getAllDeployments"
+      ]
     },
-    // EigenDA's ServiceManager. Treated as a leaf for trust analysis: keep visible because Kelp's
-    // operators are registered with it, but cut its middleware (registries, payment vault, etc.) since
-    // the eigenda project is the proper home for those internals.
     "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": {
       "ignoreRelatives": [
         "blsApkRegistry",
@@ -101,7 +113,7 @@
         "kelpOperatorAvsRegistrations": {
           "severity": "HIGH",
           "type": "EXTERNAL",
-          "description": "Per-operator set of AVS addresses each Kelp NodeDelegator-delegated EigenLayer operator is currently REGISTERED with on this AVSDirectory. Reconstructed live from OperatorAVSRegistrationStatusUpdated events restricted to Kelp's two operators; entries appear when the operator's status flips to REGISTERED (1) and disappear when it flips to DEREGISTERED (0). The address values are walked by the BFS so each AVS's middleware stack is pulled into this discovery; the (operator) keys are not walked.",
+          "description": "Per-operator set of AVS addresses each Kelp NodeDelegator-delegated EigenLayer operator is currently REGISTERED with on this AVSDirectory. Reconstructed live from OperatorAVSRegistrationStatusUpdated events restricted to Kelp's two operators; entries appear when the operator's status flips to REGISTERED (1) and disappear when it flips to DEREGISTERED (0).",
           "edit": [
             "pick",
             "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF",
@@ -122,7 +134,11 @@
                     "#operator",
                     "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
                   ],
-                  ["=", "#status", 1]
+                  [
+                    "=",
+                    "#status",
+                    1
+                  ]
                 ]
               },
               {
@@ -134,7 +150,11 @@
                     "#operator",
                     "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
                   ],
-                  ["=", "#status", 1]
+                  [
+                    "=",
+                    "#status",
+                    1
+                  ]
                 ]
               }
             ],
@@ -148,7 +168,11 @@
                     "#operator",
                     "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
                   ],
-                  ["=", "#status", 0]
+                  [
+                    "=",
+                    "#status",
+                    0
+                  ]
                 ]
               },
               {
@@ -160,9 +184,232 @@
                     "#operator",
                     "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
                   ],
-                  ["=", "#status", 0]
+                  [
+                    "=",
+                    "#status",
+                    0
+                  ]
                 ]
               }
+            ]
+          }
+        }
+      }
+    },
+    "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": {
+      "fields": {
+        "slashingCapableOperatorSets": {
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "description": "Every operator set created on AllocationManager. Each entry is an {avs, id} pair identifying an AVS that has opted into the post-2025 EigenLayer slashing model and the index of one of its operator sets.",
+          "handler": {
+            "type": "event",
+            "select": "operatorSet",
+            "ignoreRelative": true,
+            "add": {
+              "event": "OperatorSetCreated"
+            }
+          }
+        },
+        "kelpOperatorAllocationManagerRegistrations": {
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "description": "Per-operator set of operator sets each Kelp operator (ELOperator_A, ELOperator_B) is currently registered with on AllocationManager. A non-empty entry means the operator has opted into a slashable allocation under the new slashing model.",
+          "edit": [
+            "pick",
+            "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF",
+            "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+          ],
+          "handler": {
+            "type": "event",
+            "select": "operatorSet",
+            "groupBy": "operator",
+            "ignoreRelative": true,
+            "add": [
+              {
+                "event": "OperatorAddedToOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                ]
+              },
+              {
+                "event": "OperatorAddedToOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                ]
+              }
+            ],
+            "remove": [
+              {
+                "event": "OperatorRemovedFromOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xBE7d5f26F5D5F567D35a86Dd4d7D02AceD2d5BFF"
+                ]
+              },
+              {
+                "event": "OperatorRemovedFromOperatorSet",
+                "where": [
+                  "=",
+                  "#operator",
+                  "eth:0xDbEd88D83176316fc46797B43aDeE927Dc2ff2F5"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "base:0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2": {
+      "fields": {
+        "rsETHSendUlnConfig": {
+          "description": "ULN security config governing rsETH OFT messages sent FROM Base TO Ethereum (eid 30101). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        },
+        "rsETHSendExecutorConfig": {
+          "description": "Executor config governing rsETH OFT messages sent FROM Base TO Ethereum (eid 30101). Returns: [maxMessageSize, executor].",
+          "handler": {
+            "type": "call",
+            "method": "getExecutorConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        }
+      }
+    },
+    "base:0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf": {
+      "fields": {
+        "rsETHReceiveUlnConfig": {
+          "description": "ULN security config governing rsETH OFT messages received ON Base FROM Ethereum (eid 30101). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+              30101
+            ]
+          }
+        }
+      }
+    },
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": {
+      "description": "rsETH on Base: a LayerZero V2 OFT (mint/burn) for rsETH. Cross-chain messages between this contract and its Ethereum-side peer are secured by the DVN set surfaced on the Send/Receive ULN302 entries below. The owner controls the OFT mint/burn surface and is the LZ delegate (can change DVN config on the Endpoint).",
+      "types": {
+        "EthBytes32Peer": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 12, "prefix": "eth" }
+        }
+      },
+      "fields": {
+        "peerOnEthereum": {
+          "description": "Authorized rsETH OFT peer on Ethereum (eid 30101). Cross-chain messages signed by this peer are accepted by this OFT. Returned by peers(uint32).",
+          "handler": {
+            "type": "call",
+            "method": "peers",
+            "args": [30101]
+          },
+          "edit": ["format", "EthBytes32Peer"]
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the LayerZero peer for any chain (rebinding the bridge), pause sends/receives, and reconfigure DVNs/libraries on the Endpoint via the LZ delegate slot."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3": {
+      "description": "rsETH OFTAdapter on Ethereum: locks rsETH for outgoing bridge messages and unlocks it on incoming. Owner doubles as the LZ delegate (can change Endpoint DVN config).",
+      "types": {
+        "BaseBytes32Peer": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 12, "prefix": "base" }
+        }
+      },
+      "fields": {
+        "peerOnBase": {
+          "description": "Authorized rsETH OFT peer on Base (eid 30184). Cross-chain messages signed by this peer are accepted by this adapter and trigger token unlocks here. Returned by peers(uint32).",
+          "handler": {
+            "type": "call",
+            "method": "peers",
+            "args": [30184]
+          },
+          "edit": ["format", "BaseBytes32Peer"]
+        },
+        "allPeers": {
+          "description": "Per-eid map of authorized cross-chain peers (LayerZero OFT/OApp address) currently set on this adapter. Reconstructed from PeerSet(eid, peer) events. Values are bytes32 (LayerZero's wire format: 20-byte address left-padded with 12 zero bytes). Addresses here are NOT BFS-walked (ignoreRelative): each peer lives on a different chain and would be the entry point of a separate per-chain discovery.",
+          "handler": {
+            "type": "event",
+            "select": "peer",
+            "groupBy": "eid",
+            "ignoreRelative": true,
+            "set": {
+              "event": "PeerSet"
+            }
+          }
+        },
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "rebind the LayerZero peer for any chain (which would let an attacker-chosen OFT mint phantom rsETH to drain this adapter), and reconfigure DVNs/libraries on the Endpoint via the LZ delegate slot."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
+      "fields": {
+        "rsETHSendUlnConfig": {
+          "description": "ULN security config governing rsETH OFTAdapter messages sent FROM Ethereum TO Base (eid 30184). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
+            ]
+          }
+        },
+        "rsETHSendExecutorConfig": {
+          "description": "Executor config governing rsETH OFTAdapter messages sent FROM Ethereum TO Base (eid 30184). Returns: [maxMessageSize, executor].",
+          "handler": {
+            "type": "call",
+            "method": "getExecutorConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
+            ]
+          }
+        }
+      }
+    },
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
+      "fields": {
+        "rsETHReceiveUlnConfig": {
+          "description": "ULN security config governing rsETH OFTAdapter messages received ON Ethereum FROM Base (eid 30184). Returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs].",
+          "handler": {
+            "type": "call",
+            "method": "getUlnConfig",
+            "args": [
+              "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+              30184
             ]
           }
         }
@@ -183,7 +430,10 @@
     "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b": {
       "category": "shared",
       "description": "Stader ETHx — accepted as a deposit asset by KelpDAO. Shown as a leaf: ERC20 metadata is captured but Stader's StaderConfig chain is not walked.",
-      "ignoreRelatives": ["$admin", "staderConfig"]
+      "ignoreRelatives": [
+        "$admin",
+        "staderConfig"
+      ]
     },
     "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE": {
       "category": "shared",
