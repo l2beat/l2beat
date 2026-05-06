@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9fa401f0283757b7927731af14e4ff8345270cae
+Generated with discovered.json: 0x70860e1a5ef98e769e503e1a6cd6651aa8604907
 
-# Diff at Thu, 30 Apr 2026 12:51:18 GMT:
+# Diff at Wed, 06 May 2026 10:38:21 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current timestamp: 1777550988
@@ -98,7 +98,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40)
-    +++ description: Upgradeable treasury that escrows Railgun-controlled assets and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.
+    +++ description: Upgradeable treasury that collects Railgun fees, and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.
 ```
 
 ```diff

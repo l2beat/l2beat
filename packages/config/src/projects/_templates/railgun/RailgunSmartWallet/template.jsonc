@@ -9,7 +9,8 @@
     "merkleRoot",
     "nextLeafIndex",
     "snarkSafetyVector",
-    "treeNumber"
+    "treeNumber",
+    "zeros"
   ],
   "fields": {
     "$admin": {
@@ -86,12 +87,7 @@
       "description": "Base zero value used to seed the commitment-tree zero hash chain."
     },
     "zeros": {
-      "description": "Precomputed zero hashes for the 16-level commitment tree.",
-      "handler": {
-        "type": "array",
-        "method": "zeros",
-        "length": 16
-      }
+      "description": "Precomputed zero hashes for the 16-level commitment tree."
     }
   }
 }

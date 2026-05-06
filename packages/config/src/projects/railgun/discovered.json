@@ -1316,7 +1316,7 @@
         "0x1e581c91de9e0c3cd50906d9d30663d1b8fe037db6a5a80caf0c20e961d7eb41"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable treasury that escrows Railgun-controlled assets and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.",
+      "description": "Upgradeable treasury that collects Railgun fees, and can release ETH or ERC20s only to current TRANSFER_ROLE members. If you trust this contract, you trust its role admins to decide who can move treasury assets and its proxy admin to change the treasury logic.",
       "sinceTimestamp": 1657776059,
       "sinceBlock": 15138802,
       "values": {
@@ -1561,25 +1561,7 @@
         "tokenBlocklist": [],
         "treasury": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
         "unshieldFee": 25,
-        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc",
-        "zeros": [
-          "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc",
-          "0x01c405064436affeae1fc8e30b2e417b4243bbb819adca3b55bb32efc3e43a4f",
-          "0x0888d37652d10d1781db54b70af87b42a2916e87118f507218f9a42a58e85ed2",
-          "0x183f531ead7217ebc316b4c02a2aad5ad87a1d56d4fb9ed81bf84f644549eaf5",
-          "0x093c48f1ecedf2baec231f0af848a57a76c6cf05b290a396707972e1defd17df",
-          "0x1437bb465994e0453357c17a676b9fdba554e215795ebc17ea5012770dfb77c7",
-          "0x12359ef9572912b49f44556b8bbbfa69318955352f54cfa35cb0f41309ed445a",
-          "0x2dc656dadc82cf7a4707786f4d682b0f130b6515f7927bde48214d37ec25a46c",
-          "0x2500bdfc1592791583acefd050bc439a87f1d8e8697eb773e8e69b44973e6fdc",
-          "0x244ae3b19397e842778b254cd15c037ed49190141b288ff10eb1390b34dc2c31",
-          "0x0ca2b107491c8ca6e5f7e22403ea8529c1e349a1057b8713e09ca9f5b9294d46",
-          "0x18593c75a9e42af27b5e5b56b99c4c6a5d7e7d6e362f00c8e3f69aeebce52313",
-          "0x17aca915b237b04f873518947a1f440f0c1477a6ac79299b3be46858137d4bfb",
-          "0x2726c22ad3d9e23414887e8233ee83cc51603f58c48a9c9e33cb1f306d4365c0",
-          "0x08c5bd0f85cef2f8c3c1412a2b69ee943c6925ecf79798bb2b84e1b76d26871f",
-          "0x27f7c465045e0a4d8bec7c13e41d793734c50006ca08920732ce8c3096261435"
-        ]
+        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
       },
       "fieldMeta": {
         "$admin": {
@@ -2055,7 +2037,7 @@
     "railgun/GovernorRewards": "0x57affc64455412dccc40619b5fe609e68f9e5cc7e9e974ee0eb337aceb11a2a5",
     "railgun/IntervalPayouts": "0x4bc1c299f6166d7e240f6bdc3f9c96a51cfb3d663ba5a115c0819ab9df020c05",
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "railgun/RailgunSmartWallet": "0xe18959aa7fab4ddcd72b71c30b305d21bfc33a809b38487deba8344c9b1fd0af",
+    "railgun/RailgunSmartWallet": "0x73f14bd8461facf56cca712201c02818c69035359f3c6d9f62ead7358c1abd92",
     "railgun/RailToken": "0x1accecbf363e089fe076d95372f29d46ba515d0a47882681e318a1dba85d0fd4",
     "railgun/Staking": "0x7ae078e86e08252ca74cbf4a5615976c862e3b6be0ffaa85da6452a1c93a2a31",
     "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",

@@ -3,7 +3,13 @@
   "displayName": "PrivacyPoolComplex",
   "category": "core",
   "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
-  "ignoreInWatchMode": ["currentRoot", "currentRootIndex", "currentTreeDepth", "currentTreeSize", "nonce"],
+  "ignoreInWatchMode": [
+    "currentRoot",
+    "currentRootIndex",
+    "currentTreeDepth",
+    "currentTreeSize",
+    "nonce"
+  ],
   "ignoreMethods": ["depositors", "nullifierHashes", "roots"],
   "ignoreRelatives": ["ASSET", "assetConfigFromEntrypoint"],
   "fields": {

@@ -43,6 +43,17 @@
     "feeManager": {
       "description": "Fee manager used to determine how much relayer stake is burned per withdrawal."
     },
+    "registeredRelayers": {
+      "description": "Current set of registered relayer addresses, derived from relayer registration and unregistration events.",
+      "handler": {
+        "type": "event",
+        "select": "relayer",
+        "add": {
+          "event": "event RelayerRegistered(bytes32 relayerId, string ensName, address relayer, uint256 stakedAmount)"
+        },
+        "remove": { "event": "event RelayerUnregistered(address relayer)" }
+      }
+    },
     "minStakeAmount": {
       "description": "Minimum TORN stake required for relayer registration.",
       "severity": "LOW"
@@ -50,12 +61,12 @@
     "staking": {
       "description": "Staking contract that escrows relayer stake and receives burned-stake rewards."
     },
-    "torn": {
-      "description": "TORN token used as relayer stake collateral."
-    },
+    "torn": { "description": "TORN token used as relayer stake collateral." },
     "tornadoRouter": {
       "description": "Only this router is allowed to burn relayer stake during withdrawals.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": ["registeredRelayers"],
+  "ignoreRelatives": ["registeredRelayers"]
 }

@@ -41,6 +41,9 @@ export const onChainProjects: string[] = [
   'layerzero',
   'ccip',
   'wormhole',
+  'privacy-pools',
+  'railgun',
+  'tornado-cash',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
