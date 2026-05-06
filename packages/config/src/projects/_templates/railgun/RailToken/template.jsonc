@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RailToken",
+  "description": "RAIL governance token contract with a capped mint schedule and an early anti-bot transfer override. If you trust this contract, you trust its owner to mint additional RAIL up to the hard cap.",
+  "category": "gov",
+  "fields": {
+    "owner": {
+      "description": "Current governance-controlled minter of the RAIL token.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint additional RAIL up to the hard cap and transfer token ownership."
+        }
+      ]
+    },
+    "cap": {
+      "description": "Hard cap on total RAIL supply.",
+      "type": "RISK_PARAMETER"
+    },
+    "totalSupply": {
+      "description": "Current minted RAIL supply."
+    }
+  }
+}

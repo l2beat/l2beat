@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyAdmin",
+  "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
+  "category": "gov",
+  "fields": {
+    "owner": {
+      "description": "Controller that can operate any Railgun proxy administered by this ProxyAdmin.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}
