@@ -6,7 +6,7 @@ FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-agg
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
     "IndexerState IndexerConfiguration Liveness AggregatedLiveness"
-    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue SyncMetadata"
+    "IndexerState IndexerConfiguration TvsBlockTimestamp TvsAmount TokenValue TokenPrice SyncMetadata"
     "IndexerState IndexerConfiguration Activity SyncMetadata"
     "IndexerState IndexerConfiguration AnomalyStats RealTimeLiveness RealTimeAnomaly"
     "IndexerState IndexerConfiguration InteropEvent InteropMessage InteropTransfer InteropConfig InteropRecentPrices InteropPluginSyncState InteropPluginSyncedRange"
