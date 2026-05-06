@@ -1,10 +1,10 @@
 import { expect } from 'earl'
 
-import { getStage } from './getStage'
+import { getRollupStage } from './getRollupStage'
 
-describe(getStage.name, () => {
+describe(getRollupStage.name, () => {
   it('should return stage object', () => {
-    const result = getStage(
+    const result = getRollupStage(
       {
         stage0: {
           callsItselfRollup: true,
@@ -165,7 +165,7 @@ describe(getStage.name, () => {
 
   it('should throw error if no rollup node link is present and rollupNodeSourceAvailable is satisfied', () => {
     expect(() =>
-      getStage({
+      getRollupStage({
         stage0: {
           callsItselfRollup: true,
           stateRootsPostedToL1: true,

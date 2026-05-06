@@ -18,7 +18,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getAgglayerVerifiers } from '../../templates/agglayer'
@@ -191,7 +191,7 @@ export const katana: ScalingProject = {
     // },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
+  stage: getRollupStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,

@@ -6,7 +6,7 @@ import {
   type UpcomingStageRequirements,
 } from './stage'
 
-interface GetStageOptions {
+interface GetRollupStageOptions {
   rollupNodeLink?: string
   securityCouncilReference?: string
   stage1PrincipleDescription?: string
@@ -31,9 +31,9 @@ const UPCOMING_STAGE_REQUIREMENTS: UpcomingStageRequirements = {
   },
 }
 
-export const getStage = (
+export const getRollupStage = (
   blueprintChecklist: BlueprintChecklist,
-  opts?: GetStageOptions,
+  opts?: GetRollupStageOptions,
 ) => {
   const rollupNode = isSatisfied(
     blueprintChecklist.stage0.rollupNodeSourceAvailable,
@@ -54,7 +54,7 @@ export const getStage = (
   }
 }
 
-const getBlueprint = (opts?: GetStageOptions) =>
+const getBlueprint = (opts?: GetRollupStageOptions) =>
   ({
     stage0: {
       name: 'Stage 0',
