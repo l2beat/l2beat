@@ -44,16 +44,6 @@ const ambBridgeValidatorCount = discovery.getContractValue<number>(
   'validatorCount',
 )
 
-const xDaiBridgeHashiMandatory = discovery.getContractValue<boolean>(
-  'XDaiForeignBridge',
-  'HASHI_IS_MANDATORY',
-)
-
-const ambHashiMandatory = discovery.getContractValue<boolean>(
-  'ForeignAMB',
-  'HASHI_IS_MANDATORY',
-)
-
 export const gnosis: ScalingProject = {
   type: 'layer2',
   id: ProjectId('gnosis'),
@@ -230,22 +220,6 @@ export const gnosis: ScalingProject = {
       ],
     },
     otherConsiderations: [
-      {
-        name: 'Hashi validation is not mandatory',
-        description: `Hashi managers are configured for the xDAI bridge and AMB bridge, but Hashi validation is not mandatory for either path. The current mandatory flags are ${xDaiBridgeHashiMandatory ? 'enabled' : 'disabled'} for the xDAI bridge and ${ambHashiMandatory ? 'enabled' : 'disabled'} for AMB, so the bridge can rely on validator multisigs without requiring Hashi agreement.`,
-        references: [
-          {
-            title: 'Bridge management documentation',
-            url: 'https://docs.gnosischain.com/bridges/management/',
-          },
-        ],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'bridge validators sign a fraudulent message and optional Hashi validation does not prevent execution.',
-          },
-        ],
-      },
       {
         name: 'Encrypted mempool (Shutter Network Beta)',
         description:

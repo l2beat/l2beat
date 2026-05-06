@@ -43,5 +43,6 @@
     "totalSpentPerDay",
     "withinExecutionLimit",
     "withinLimit"
-  ]
+  ],
+  "ignoreRelatives": ["hashiManager"]
 }

@@ -31,5 +31,6 @@
       "description": "Optional Hashi-based validation manager used as an additional verification layer for AMB messages from Gnosis.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreRelatives": ["hashiManager"]
 }

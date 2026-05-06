@@ -37,5 +37,6 @@
       "description": "If true, validator-approved AMB messages also require Hashi validation before execution.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreRelatives": ["hashiManager"]
 }
