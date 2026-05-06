@@ -142,7 +142,7 @@ This architecture provides improved throughput and eliminates single points of f
     },
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: filterEigenLayerStrategies(discovery.getDiscoveredContracts()),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -171,4 +171,15 @@ This architecture provides improved throughput and eliminates single points of f
     ],
   },
   permissions: discovery.getDiscoveredPermissions(),
+}
+
+function filterEigenLayerStrategies<T extends { name?: string }>(
+  contracts: Record<string, T[]>,
+): Record<string, T[]> {
+  return Object.fromEntries(
+    Object.entries(contracts).map(([chain, list]) => [
+      chain,
+      list.filter((c) => !(c.name?.endsWith('-Strategy') ?? false)),
+    ]),
+  )
 }
