@@ -1,6 +1,6 @@
 import type { CompiledReview, CompiledDependency } from '../../../../types'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
-import { deduplicateMitigations } from '../explorer/shared'
+import { aggregateMitigationsByImpact } from '../explorer/shared'
 import {
   ImpactBarRow,
   ImpactStatsSidebar,
@@ -147,8 +147,8 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
             const groupLabel =
               entity ?? (namedEntities.length > 0 ? 'Other' : 'Unknown')
             const barWidth = maxGroupFunds > 0 ? (groupFunds / maxGroupFunds) * 100 : 0
-            const mitigations = deduplicateMitigations(
-              deps.flatMap((d) => d.functions?.flatMap((f) => f.mitigations ?? []) ?? []),
+            const mitigations = aggregateMitigationsByImpact(
+              deps.flatMap((d) => d.functions ?? []),
             )
 
             return (

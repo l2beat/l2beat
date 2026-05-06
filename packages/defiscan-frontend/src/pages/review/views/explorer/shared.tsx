@@ -12,6 +12,7 @@ import {
   displayMitigationValue,
   type CompiledAdmin,
   type CompiledAdminFunction,
+  type CompiledReachableContract,
   type Mitigation,
 } from '../../../../types'
 
@@ -63,17 +64,31 @@ export function SortHeader<T extends string>({
 // deduplicateMitigations
 // ---------------------------------------------------------------------------
 
+function mitigationDedupKey(m: Mitigation): string {
+  // Mirror MitigationBadge's visible identity: two mitigations that render as
+  // the same badge collapse to one. Descriptions / scope only show up in the
+  // tooltip, so they don't differentiate badges and shouldn't differentiate
+  // dedup keys either.
+  if (m.label) return `label:${m.label}`
+  switch (m.type) {
+    case 'delay':
+      return `delay:${m.delaySeconds ?? ''}`
+    case 'valueRange':
+      return `valueRange:${displayMitigationValue(m.valueRange?.min)}:${displayMitigationValue(m.valueRange?.max)}:${m.valueRange?.unit ?? ''}`
+    case 'relativeValue':
+      return `relativeValue:${displayMitigationValue(m.relativeValue?.maxChangePercent)}`
+    case 'other':
+      return `other:${m.description}`
+  }
+}
+
 export function deduplicateMitigations(
   mitigations: Mitigation[],
 ): Mitigation[] {
   const seen = new Set<string>()
   const result: Mitigation[] = []
   for (const m of mitigations) {
-    // 'other' mitigations with a label collapse by label only (ignoring scope and description variants)
-    const key =
-      m.type === 'other' && m.label
-        ? `other-label:${m.label}`
-        : `${m.type}:${m.delaySeconds ?? ''}:${displayMitigationValue(m.valueRange?.min)}:${displayMitigationValue(m.valueRange?.max)}:${displayMitigationValue(m.relativeValue?.maxChangePercent)}:${m.description}:${m.scopedTo?.address ?? ''}:${m.scopedTo?.type ?? ''}`
+    const key = mitigationDedupKey(m)
     if (!seen.has(key)) {
       seen.add(key)
       result.push(m)
@@ -89,23 +104,69 @@ export function deduplicateMitigations(
 }
 
 // ---------------------------------------------------------------------------
+// aggregateMitigationsByImpact
+// ---------------------------------------------------------------------------
+
+type FunctionLike = {
+  mitigations?: Mitigation[]
+  directFundsUsd: number
+  directTokenValueUsd: number
+  reachableContracts: CompiledReachableContract[]
+}
+
+function computeFunctionTvsImpact(fn: FunctionLike): number {
+  let total = fn.directFundsUsd + fn.directTokenValueUsd
+  for (const rc of fn.reachableContracts) {
+    if (!rc.fundsAtRisk) continue
+    const raw = rc.fundsUsd + rc.tokenValueUsd
+    total +=
+      rc.effectiveCapUsd !== undefined ? Math.min(raw, rc.effectiveCapUsd) : raw
+  }
+  return total
+}
+
+/**
+ * Entity-level mitigation aggregation: drops mitigations whose only source
+ * functions have $0 TVS impact, dedupes, and sorts by descending max TVS
+ * impact across source functions. Used in places that show mitigation badges
+ * at the admin/dependency level (above any per-function expansion).
+ */
+export function aggregateMitigationsByImpact(
+  functions: FunctionLike[],
+): Mitigation[] {
+  const map = new Map<string, { mitigation: Mitigation; maxImpact: number }>()
+  for (const fn of functions) {
+    if (!fn.mitigations || fn.mitigations.length === 0) continue
+    const impact = computeFunctionTvsImpact(fn)
+    if (impact <= 0) continue
+    for (const m of fn.mitigations) {
+      const key = mitigationDedupKey(m)
+      const existing = map.get(key)
+      if (!existing) {
+        map.set(key, { mitigation: m, maxImpact: impact })
+      } else if (impact > existing.maxImpact) {
+        existing.maxImpact = impact
+      }
+    }
+  }
+  return Array.from(map.values())
+    .sort((a, b) => b.maxImpact - a.maxImpact)
+    .map((e) => e.mitigation)
+}
+
+// ---------------------------------------------------------------------------
 // MitigationsSummary — responsive badge overflow for table cells
 // ---------------------------------------------------------------------------
 
-/** Collects mitigations from an entity's functions and renders them with overflow. */
+/** Collects mitigations from an entity's functions and renders them with overflow.
+ *  Mitigations from $0-TVS-impact functions are dropped, and the survivors are
+ *  ordered by descending TVS impact of their source function. */
 export function MitigationsSummary({
   functions,
 }: {
-  functions: { mitigations?: Mitigation[] }[]
+  functions: FunctionLike[]
 }) {
-  const allMitigations: Mitigation[] = []
-  for (const fn of functions) {
-    if (fn.mitigations) {
-      allMitigations.push(...fn.mitigations)
-    }
-  }
-
-  const unique = deduplicateMitigations(allMitigations)
+  const unique = aggregateMitigationsByImpact(functions)
   const measureRef = useRef<HTMLDivElement>(null)
   const [visibleCount, setVisibleCount] = useState(unique.length)
 
@@ -207,31 +268,13 @@ export function ExpandedAdminFunctions({ admin }: { admin: CompiledAdmin }) {
   )
 }
 
-/**
- * Per-function TVS impact = direct funds + direct token value + reachable
- * contract funds/token value (capped by effectiveCapUsd where applicable).
- * Mirrors the admin-level totalReachable* aggregation but scoped to one
- * function, so the researcher can see which function actually carries the
- * impact.
- */
-function functionTvsImpact(fn: CompiledAdminFunction): number {
-  let total = fn.directFundsUsd + fn.directTokenValueUsd
-  for (const rc of fn.reachableContracts) {
-    if (!rc.fundsAtRisk) continue
-    const raw = rc.fundsUsd + rc.tokenValueUsd
-    total +=
-      rc.effectiveCapUsd !== undefined ? Math.min(raw, rc.effectiveCapUsd) : raw
-  }
-  return total
-}
-
 export function AdminFunctionTable({
   functions,
 }: {
   functions: CompiledAdminFunction[]
 }) {
   const sorted = [...functions].sort(
-    (a, b) => functionTvsImpact(b) - functionTvsImpact(a),
+    (a, b) => computeFunctionTvsImpact(b) - computeFunctionTvsImpact(a),
   )
   return (
     <table className="w-full text-xs">
@@ -245,7 +288,7 @@ export function AdminFunctionTable({
       </thead>
       <tbody>
         {sorted.map((fn) => {
-          const tvs = functionTvsImpact(fn)
+          const tvs = computeFunctionTvsImpact(fn)
           return (
             <tr
               key={`${fn.contractAddress}-${fn.functionName}`}

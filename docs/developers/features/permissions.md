@@ -176,6 +176,16 @@ Without (2), upgrade admins on ATokens never accumulate transitive mits from ora
 
 `reviewCompiler.ts` consumes the resolved mitigations directly — it does not compute or filter them itself.
 
+#### Display-time dedup and entity-level aggregation
+
+Two helpers in [`packages/defiscan-frontend/src/pages/review/views/explorer/shared.tsx`](packages/defiscan-frontend/src/pages/review/views/explorer/shared.tsx) implement the rendering side:
+
+- **`mitigationDedupKey(m)`** — the canonical visible-identity key. It mirrors what `MitigationBadge` actually paints on screen: `label:<label>` if a label exists, otherwise one of `delay:<seconds>` / `valueRange:<min>:<max>:<unit>` / `relativeValue:<maxChangePercent>` / `other:<description>`. **`scopedTo` is intentionally excluded** because scope is only ever surfaced in the tooltip, never on the badge itself. As a consequence, two delay mitigations with the same `delaySeconds` but different `scopedTo` admins now collapse to a single badge — earlier behavior preserved them as separate badges, which double-counted visually.
+
+- **`aggregateMitigationsByImpact(functions)`** — the canonical entity-level utility. Used by every place that renders mitigation badges above an admin or dependency's function list (`AdminCards`, `AdminsSection`, `DependencyCards`, `DependenciesSection`, `MitigationsSummary` in explorer tabs). For each candidate function it computes a TVS impact = `directFundsUsd + directTokenValueUsd + Σ min(rc.usd, rc.effectiveCapUsd)` over `fundsAtRisk` reachable contracts. Mitigations whose only source functions all evaluate to $0 impact are dropped (otherwise no-op functions like `getReserveAToken` would parade their `future-only` mitigation up to the admin headline). The survivors are deduped via `mitigationDedupKey` and sorted by descending max-source-function impact, so the most informative badges land first when the overflow slicer trims for narrow cells.
+
+The plain `deduplicateMitigations()` (same key, no impact filter) is retained for the small number of non-aggregated call sites that already work in a per-function context where the impact filter is not appropriate.
+
 ### Impact Cap
 
 A mitigation may carry `impactCap` to bound the maximum potentially impacted TVL of a function. **One unified shape:**
@@ -205,3 +215,28 @@ impactCap: {
 **Legacy shapes** (pre-unification: `hardcodedUsd`, `tokenAddress+fieldName+multiplier+fieldContractAddress?`, `contractAddress+fieldName+unit`) are still accepted at read time via `normalizeImpactCap()` in [types.ts](packages/l2b/src/implementations/discovery-ui/defidisco/types.ts). All persisted files (`functions.json`) were migrated to the unified shape.
 
 `resolveImpactCap()` in [projectAnalysis.ts](packages/l2b/src/implementations/discovery-ui/defidisco/projectAnalysis.ts) emits a resolved `impactCapUsd: number` on the mitigation during `getMitigationsForOwner()`. Capital analysis applies per-contract caps (`effectiveCapUsd` on `ReachableContract`) so fund sums never exceed the cap. In the public frontend, capped mitigations display an emerald "$XM Max Impact" badge.
+
+## Known limitation: permission edges over-flare reach through "logic" intermediaries
+
+`traverseForward` in [capitalAnalysis.ts](packages/l2b/src/implementations/discovery-ui/defidisco/capitalAnalysis.ts) follows three edge types in the enhanced graph: **callgraph** (statically resolved function calls), **dependency** (manual `dependencies` in functions.json), and **permission** (the contract owns this function). Callgraph and dependency edges are filtered by `sourceFunction === currentFunction`, so the BFS only follows the specific functions the admin's chain actually executes. Permission edges, by design, are followed **unconditionally** — `sourceFunction` is undefined on them, the filter doesn't apply.
+
+This is correct for **forwarder-style** intermediaries: a Timelock, governance Executor, or Safe-with-modules has a generic `execute(target, data)` that dynamic-dispatches. Static call-graph analysis can't resolve `target`, so permission edges (`Timelock owns X.foo, Y.bar, …`) are the only signal of what the admin's call can ultimately trigger. Without unconditional propagation, every Timelock-fronted admin (`Lido DAO Voting`, `Sky Governance Chief`, `Uniswap GovernorBravo`, `EtherFi Governance`, the Aave Executor chain) collapses to zero reachable capital.
+
+It is **incorrect** for **logic-style** intermediaries: when the admin's call lands on a contract whose code does *specific* hard-coded calls (e.g. Aave's `Pool.setLiquidationGracePeriod` just stores a timestamp), the contract's own `onlyX` ownership of unrelated functions (`Pool` owns `AToken.mint` because Pool's `supply()` is the only legitimate caller) gets followed regardless. The admin's actual execution doesn't touch those functions, but BFS attributes their entire reach.
+
+**Concrete example.** Aave Horizon Admin's `setReservePause` chain:
+
+```
+multisig → PoolConfigurator.setReservePause → Pool.setLiquidationGracePeriod  (stops here)
+```
+
+But because Pool also owns AToken `mint`, `burn`, `mintToTreasury` via `onlyPool`, BFS follows those permission edges from Pool and reaches every aToken in the project — flares the headline from the truthful Horizon TVS (~$502M, capped via impactCap) to ~$7.14B (uncapped reach into off-market aTokens).
+
+Why we don't filter: the only meaningful distinction between a forwarder and a logic intermediary is whether the contract has functions that perform dynamic dispatch on caller-supplied calldata. There is no clean static signal. A naive filter (e.g. "only follow permission edges where `sourceContract === ownerAddress`") was tried 2026-05-05 and **collapsed 56 admins to zero across all projects** in the audit run (see [memory note](.claude/projects/-home-emilien-defidisco/memory/project_capital_analysis_permission_overflare.md)) — the regression dwarfs the over-counting it removes.
+
+**Workarounds at the function level (preferred):**
+
+- Score the affected function `no-impact` if it provably can't extract value (cancel, veto, future-only effects).
+- Add an `impactCap` mitigation to bound the over-counted reach — the cap is applied per-contract during BFS so caps on the admin's *own* function correctly limit the displayed total even when permission edges flare downstream.
+
+A future fix at the engine level would need a per-contract "is forwarder?" signal (e.g. config-level `forwarderRole: true` on Timelock/Executor/Safe contracts; `false` on Pool/Vault/etc.) that gates whether the BFS follows that contract's permission edges. Not built yet.

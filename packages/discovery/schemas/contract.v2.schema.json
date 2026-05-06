@@ -781,6 +781,27 @@
                 },
                 "additionalProperties": false,
                 "required": ["type", "mode"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "ghoBucketCapacity" },
+                  "ghoToken": { "type": "string" }
+                },
+                "additionalProperties": false,
+                "required": ["type", "ghoToken"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "aaveMarketAggregateTvs" },
+                  "aTokenNameFilter": { "type": "string" },
+                  "priceOracleField": { "type": "string" },
+                  "poolField": { "type": "string" },
+                  "balanceOfAddress": { "type": "string" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
               }
             ]
           },

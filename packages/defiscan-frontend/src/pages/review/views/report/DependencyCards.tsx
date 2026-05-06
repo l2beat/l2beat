@@ -8,9 +8,8 @@ import { MitigationBadge } from '../../../../components/MitigationBadge'
 import type {
   CompiledReview,
   CompiledDependency,
-  Mitigation,
 } from '../../../../types'
-import { deduplicateMitigations } from '../explorer/shared'
+import { aggregateMitigationsByImpact } from '../explorer/shared'
 
 interface DependencyCardsProps {
   review: CompiledReview
@@ -218,11 +217,7 @@ function DepDistributionChart({
                     )}
                     {dep.name}
                     {(() => {
-                      const all: Mitigation[] = []
-                      for (const fn of dep.functions) {
-                        if (fn.mitigations) all.push(...fn.mitigations)
-                      }
-                      const unique = deduplicateMitigations(all)
+                      const unique = aggregateMitigationsByImpact(dep.functions)
                       const MAX_BADGES = 4
                       const visible = unique.slice(0, MAX_BADGES)
                       const remaining = unique.length - visible.length

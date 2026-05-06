@@ -1,3 +1,101 @@
+Generated with discovered.json: 0xbaaa7945c70b3043324db71a9f1becb27d73f01a
+
+# Diff at Tue, 05 May 2026 12:21:25 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@29b5e94a0fa4ea4dd9f8a1e898fcb7da9d2b8be9 block: 1777887219
+- current timestamp: 1777887219
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777887219 (main branch discovery), not current.
+
+```diff
+    contract PoolConfiguratorInstance (eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517) {
+    +++ description: None
+      values.marketAaveOracle:
++        "eth:0xE3C061981870C0C7b1f3C4F4bB36B95f1F260BE6"
+      values.marketAclManager:
++        "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0"
+      values.marketPool:
++        "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1"
+    }
+```
+
+```diff
+    contract AaveOracle (eth:0x43b64f28A678944E0655404B0B98E443851cC34F) {
+    +++ description: None
+      values.marketPool:
++        "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0"
+    }
+```
+
+```diff
+    contract AaveOracle (eth:0x54586bE62E3c3580375aE3723C145253060Ca0C2) {
+    +++ description: None
+      values.marketPool:
++        "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+    }
+```
+
+```diff
+    contract PoolConfiguratorInstance (eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27) {
+    +++ description: None
+      values.marketAaveOracle:
++        "eth:0x54586bE62E3c3580375aE3723C145253060Ca0C2"
+      values.marketAclManager:
++        "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0"
+      values.marketPool:
++        "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+    }
+```
+
+```diff
+    contract PoolConfiguratorInstance (eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F) {
+    +++ description: None
+      values.marketAaveOracle:
++        "eth:0x985BcfAB7e0f4EF2606CC5b64FC1A16311880442"
+      values.marketAclManager:
++        "eth:0xEFD5df7b87d2dCe6DD454b4240b3e0A4db562321"
+      values.marketPool:
++        "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8"
+    }
+```
+
+```diff
+    contract PoolConfiguratorInstance (eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d) {
+    +++ description: None
+      values.marketAaveOracle:
++        "eth:0x43b64f28A678944E0655404B0B98E443851cC34F"
+      values.marketAclManager:
++        "eth:0x3cE8E2eb6501d4705477643E96881B1bef6A2DB3"
+      values.marketPool:
++        "eth:0x0AA97c284e98396202b6A04024F5E2c65026F3c0"
+    }
+```
+
+```diff
+    contract AaveOracle (eth:0x985BcfAB7e0f4EF2606CC5b64FC1A16311880442) {
+    +++ description: None
+      values.marketPool:
++        "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8"
+    }
+```
+
+```diff
+    contract AaveOracle (eth:0xE3C061981870C0C7b1f3C4F4bB36B95f1F260BE6) {
+    +++ description: None
+      values.marketPool:
++        "eth:0x4e033931ad43597d96D6bcc25c280717730B58B1"
+    }
+```
+
 Generated with discovered.json: 0xd597099fc2cd40f26b6322c95cd7d9ad80670563
 
 # Diff at Sun, 03 May 2026 16:12:07 GMT:

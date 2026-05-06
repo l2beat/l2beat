@@ -9,10 +9,9 @@ import {
   type CompiledReview,
   type CompiledAdmin,
   type CompiledAdminFunction,
-  type Mitigation,
 } from '../../../../types'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
-import { deduplicateMitigations } from '../explorer/shared'
+import { aggregateMitigationsByImpact } from '../explorer/shared'
 
 interface AdminCardsProps {
   review: CompiledReview
@@ -256,11 +255,9 @@ function AdminDistributionChart({
                     )}
                     {admin.name}
                     {(() => {
-                      const all: Mitigation[] = []
-                      for (const fn of admin.functions) {
-                        if (fn.mitigations) all.push(...fn.mitigations)
-                      }
-                      const unique = deduplicateMitigations(all)
+                      const unique = aggregateMitigationsByImpact(
+                        admin.functions,
+                      )
                       const MAX_BADGES = 4
                       const visible = unique.slice(0, MAX_BADGES)
                       const remaining = unique.length - visible.length

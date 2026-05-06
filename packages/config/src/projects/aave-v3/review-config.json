@@ -49,8 +49,8 @@
       "description": "Upgradeable internal contract (PoolConfiguratorInstance) holding admin privileges over 48 functions across 185 contracts. Implementation upgradeable via Aave Governance V3. Reachable token value: {{a83cb1b4aReachableTokenValue}}."
     },
     "eth:0x13B57382c36BAB566E75C72303622AF29E27e1d3": {
-      "name": "4 of 6 (67%) Multisig",
-      "description": "4 of 6 (67%) Gnosis Safe controlling 81 permissioned functions across 205 contracts. Reachable token value: {{a13b57382ReachableTokenValue}}."
+      "name": "Aave Horizon Admin (4-of-6 Multisig)",
+      "description": "4-of-6 Gnosis Safe acting as the primary admin of the Aave Horizon (RWA) market. Holds POOL_ADMIN_ROLE and EMERGENCY_ADMIN_ROLE on the Horizon ACLManager (0xEFD5df7b...) and DEFAULT_ADMIN_ROLE on the RwaATokenManager. Can directly call PoolConfigurator upgrades, oracle changes, reserve pauses, AToken upgrades, and authorised RWA token transfers — *without* a Mainnet governance vote. The Aave Governance V3 Executor sits as DEFAULT_ADMIN_ROLE on the same ACLManager and can revoke this multisig at any time, but that is a recovery path, not a gate on the multisig's actions. Reachable token value: {{a13b57382ReachableTokenValue}}."
     },
     "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34": {
       "name": "Unknown (0x9821...Ae34)",
@@ -81,8 +81,8 @@
       "description": "Internal protocol contract (AaveCapoAgent) holding admin-role privileges over 68 functions across 201 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{acc18be38ReachableTokenValue}}."
     },
     "eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30": {
-      "name": "5 of 9 (56%) Multisig",
-      "description": "5 of 9 (56%) Gnosis Safe controlling 39 permissioned functions across 198 contracts. Reachable token value: {{a2cfe3ec4ReachableTokenValue}}."
+      "name": "Aave Protocol Emergency Guardian (5/9 Safe)",
+      "description": "5-of-9 Gnosis Safe holding EMERGENCY_ADMIN_ROLE on three ACLManagers (main V3, Lido, EtherFi markets). Permissions are pause-only: setReservePause / setPoolPause (freeze deposits, withdrawals, borrows, and liquidations on a single reserve or the entire pool), setReserveFreeze (block new deposits/borrows while allowing withdrawals), setReserveLtvzero / setAssetLtvzeroInEMode (block new collateral use), disableLiquidationGracePeriod, and StataTokenV2.setPaused. The role cannot extract funds, redirect tokens, or change configuration that affects redemption value — every function flips a config bit. Worst-case impact is operational denial-of-service while paused, plus bad-debt accrual on positions that would have been liquidated during the pause window; pause has no on-chain max duration but can be reverted by the pool admin (Aave Governance V3, Executor 0x5300A1a1...) or this same multisig. The {{a2cfe3ec4ReachableTokenValue}} reachable-token-value figure is a forward-BFS fan-out artifact (the call graph traverses every Aave reserve on touched pools) and is not the realized fund-extraction surface — actual capital at risk is zero, with operational/tail-risk loss bounded by pause duration."
     },
     "eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285": {
       "name": "GhoDirectMinter",
@@ -161,8 +161,8 @@
       "description": "Internal protocol contract (ProxyAdmin) holding admin-role privileges over 2 functions across 203 contracts; itself controlled by Aave Governance V3 (Executor 0x5300A1a1...). Reachable token value: {{a8abd1892ReachableTokenValue}}."
     },
     "eth:0xCe52ab41C40575B072A18C9700091Ccbe4A06710": {
-      "name": "5 of 9 (56%) Multisig",
-      "description": "5 of 9 (56%) Gnosis Safe controlling 7 permissioned functions across 274 contracts. Reachable token value: {{ace52ab41ReachableTokenValue}}."
+      "name": "Aave Guardian (5-of-9 Multisig)",
+      "description": "Aave DAO's Guardian Safe (5-of-9 multisig). Holds the `guardian` role on Governance V3 and PayloadsController, plus `SOLVE_EMERGENCY_ROLE` on GranularGuardianAccessControl. Powers are limited to vetoing in-flight governance — cancelling proposals before vote queue, cancelling queued payloads before execution, rescuing stuck cross-chain voting portals — and resolving cross-chain message emergencies. Cannot move protocol funds or upgrade contracts."
     },
     "eth:0xEd42a7D8559a463722Ca4beD50E0Cc05a386b0e1": {
       "name": "CrossChainControllerUpgradeRev3",

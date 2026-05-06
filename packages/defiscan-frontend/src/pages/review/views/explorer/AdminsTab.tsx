@@ -21,7 +21,12 @@ type SortDir = 'asc' | 'desc'
 
 export function AdminsTab({ review }: AdminsTabProps) {
   const { admins, totals } = review
-  const humanAdmins = useMemo(() => getHumanAdmins(admins), [admins])
+  // Governance contracts have their own dedicated tab; exclude them here so
+  // the same contract isn't listed in two places.
+  const humanAdmins = useMemo(
+    () => getHumanAdmins(admins).filter((a) => !a.isGovernance),
+    [admins],
+  )
   const [sortField, setSortField] = useState<SortField>('tvs')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())

@@ -1920,11 +1920,25 @@ export class ProjectAnalysis {
         })()
       : undefined
     if (!filteredDirect && !filteredTransitive) return undefined
-    const merged = !filteredDirect
+    const concatenated = !filteredDirect
       ? filteredTransitive!
       : !filteredTransitive
         ? filteredDirect
         : [...filteredDirect, ...filteredTransitive]
+
+    // Dedupe across direct + transitive. The transitive lookup can echo the
+    // direct mitigations when a function's call graph resolves back to the
+    // same (contract, function) pair (e.g. heuristic mis-resolution), or when
+    // a researcher legitimately repeats a description on a downstream
+    // function. Same key as collectDownstreamScopedMitigations.
+    const seenKey = new Set<string>()
+    const merged: Mitigation[] = []
+    for (const m of concatenated) {
+      const key = `${m.type}:${m.description}:${m.scopedTo?.address ?? ''}`
+      if (seenKey.has(key)) continue
+      seenKey.add(key)
+      merged.push(m)
+    }
 
     // Resolve impactCapUsd on mitigations that have an impactCap
     const dataAccess = new DiscoveredDataAccess(this.discovered)

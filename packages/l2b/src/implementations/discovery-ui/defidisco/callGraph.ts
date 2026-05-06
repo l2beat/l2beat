@@ -418,12 +418,16 @@ export async function generateCallGraph(
         }
       }
 
-      // Look up the called function in the target contract's ABI to determine if it's a view/pure
+      // Look up the called function in the target contract's ABI to determine if it's a view/pure.
+      // Pass `discovered` so the lookup falls through to the implementation's
+      // ABI when the resolved address is a proxy (Aave V3 transparent proxies
+      // have an empty user-facing ABI; the real signatures live on the impl).
       if (call.resolvedAddress) {
         const abiLookup = findFunctionInAbi(
           discovered.abis,
           call.resolvedAddress,
           call.calledFunction,
+          discovered,
         )
         if (abiLookup.found) {
           call.isViewCall = abiLookup.isView
@@ -438,6 +442,7 @@ export async function generateCallGraph(
           discovered.abis,
           contract.abiAddress,
           call.callerFunction,
+          discovered,
         )
         if (callerAbiLookup.found && callerAbiLookup.isView) {
           call.callerIsView = true
@@ -824,27 +829,46 @@ function isViewFunction(abiEntry: string): boolean {
 }
 
 /**
- * Find a function in the contract's ABI and determine if it's a view/pure function
+ * Find a function in the contract's ABI and determine if it's a view/pure function.
+ *
+ * For proxy contracts (e.g. transparent / EIP-1967), the user-facing ABI lives
+ * on the implementation, not the proxy itself — so a lookup on the proxy
+ * address typically misses everything. We accept `discovered` so we can walk
+ * `entry.values.$implementation` and retry the lookup against the impl's ABI
+ * when the proxy's ABI doesn't have the function.
  */
 function findFunctionInAbi(
   abis: Record<string, string[]>,
   contractAddress: string,
   functionName: string,
+  discovered?: DiscoveryOutput,
 ): { found: boolean; isView?: boolean } {
-  const contractAbi = abis[contractAddress]
-  if (!contractAbi) return { found: false }
-
   // Find matching function entry - use regex with word boundary to avoid false positives
   // (e.g., searching for "transfer" shouldn't match "transferFrom")
   const funcRegex = new RegExp(`^function\\s+${functionName}\\(`)
-  const funcEntry = contractAbi.find((entry) => funcRegex.test(entry))
 
-  if (!funcEntry) return { found: false }
-
-  return {
-    found: true,
-    isView: isViewFunction(funcEntry),
+  const tryAddress = (addr: string) => {
+    const abi = abis[addr]
+    if (!abi) return undefined
+    const entry = abi.find((e) => funcRegex.test(e))
+    return entry
   }
+
+  const directEntry = tryAddress(contractAddress)
+  if (directEntry) return { found: true, isView: isViewFunction(directEntry) }
+
+  if (discovered) {
+    const proxyEntry = discovered.entries.find((e) =>
+      addressesEqual(e.address, contractAddress),
+    )
+    const impl = proxyEntry?.values?.$implementation
+    if (typeof impl === 'string' && isChainAddress(impl)) {
+      const implEntry = tryAddress(impl)
+      if (implEntry) return { found: true, isView: isViewFunction(implEntry) }
+    }
+  }
+
+  return { found: false }
 }
 
 // =============================================================================
