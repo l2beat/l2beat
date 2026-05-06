@@ -30,18 +30,6 @@
         }
       ]
     },
-    "relayerAC": {
-      "handler": {
-        "type": "accessControl",
-        "pickRoleMembers": "RELAYER_ROLE"
-      },
-      "permissions": [
-        {
-          "type": "relay",
-          "description": "execute L2->L1 messages on the L1 bridge core (receiveMessageWithProof / receiveFailedMessage)."
-        }
-      ]
-    },
     "accessControl": { "handler": { "type": "accessControl" } }
   }
 }

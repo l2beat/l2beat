@@ -55,13 +55,13 @@ export const fluent: ScalingProject = {
   id: ProjectId('fluent'),
   capability: 'universal',
   addedAt: UnixTime(1721218971), // 2024-07-17, original entry as upcoming
-  badges: [BADGES.VM.EVM, BADGES.VM.WasmVM, BADGES.VM.SolanaVM],
+  badges: [BADGES.VM.EVM, BADGES.VM.WasmVM],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Fluent',
     slug: 'fluent',
     description:
-      'Fluent is an Ethereum L2 that blends Wasm, EVM and SVM-based smart contracts into a unified execution environment. It uses an optimistic-ZK hybrid: AWS Nitro Enclave preconfirmations and SP1 ZK proofs for finalization.',
+      'Fluent is an Ethereum L2 that blends Wasm and EVM smart contracts into a unified execution environment (with SVM planned). Batches are preconfirmed by an AWS Nitro Enclave and finalize after a delay; challenges are resolved by SP1 ZK proofs.',
     purposes: ['Universal'],
     links: {
       websites: ['https://fluent.xyz/'],
@@ -77,8 +77,10 @@ export const fluent: ScalingProject = {
     },
   },
   proofSystem: {
-    type: 'Validity',
+    type: 'Optimistic',
     name: 'SP1',
+    zkCatalogId: ProjectId('sp1turbo'),
+    challengeProtocol: 'Single-step',
   },
   stage: {
     stage: 'NotApplicable',
@@ -168,13 +170,13 @@ export const fluent: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
+      ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
       description:
-        RISK_VIEW.STATE_ZKP_SN.description +
-        ' Fluent uses SP1 (Succinct) STARK proofs wrapped to PLONK for onchain verification. ' +
-        'Before proofs are posted, batches can be preconfirmed by an AWS Nitro Enclave whose attestation is verified against expected PCR0 measurements via SP1. ' +
-        `Each batch is preconfirmed by the TEE, then finalizes after ${formatSeconds(finalizationDelay)} on L1 (no proof required in the happy path). Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from acceptance to dispute, and a challenge must be resolved with an SP1 proof before that same window closes. ` +
-        'Proof submission is permissioned; see the Permissions section for current role holders.',
+        RISK_VIEW.STATE_ZKP_OPTIMISTIC.description +
+        " Each batch is preconfirmed by an AWS Nitro Enclave, then finalizes on L1 without a proof unless challenged. PCR0 is a fingerprint of the enclave image; the enclave signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 matches the expected (audited) value. " +
+        `Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from batch acceptance to dispute via \`challengeBatchRoot\` or \`challengeBlock\`, and a challenge must be resolved with an SP1 proof before that same window closes. Proof submission and challenges are permissioned today; see the Permissions section for current role holders.`,
+      challengeDelay: challengeWindow,
+      executionDelay: 0,
       sentiment: 'warning',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -185,8 +187,8 @@ export const fluent: ScalingProject = {
   stateValidation: {
     categories: [
       {
-        title: 'Validity proofs',
-        description: `Fluent batches go through five stages: (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch via an ECDSA signature whose key is bound to PCR0 measurements verified by SP1; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER\` role can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
+        title: 'Challenges',
+        description: `Fluent runs an optimistic batch lifecycle backed by SP1 ZK proofs for dispute resolution. (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch with an ECDSA signature whose key was admitted onchain only after an SP1 proof verified AWS's attestation document for that key and that the document's PCR0 (a fingerprint of the enclave image) matches the expected (audited) value; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER_ROLE\` can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
         references: [
           {
             title: 'Fluent Rollup Architecture',

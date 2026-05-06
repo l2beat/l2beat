@@ -430,15 +430,7 @@
     {
       "address": "eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "relay",
-          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-          "description": "execute L2->L1 messages on the L1 bridge core (receiveMessageWithProof / receiveFailedMessage).",
-          "role": ".relayerAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SP1Verifier",
@@ -684,7 +676,6 @@
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "pauserAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "RELAYER_ROLE": "0xe2b7fb3b832174769106daebcfd6d1970523240dda11281102db9363b83b0dc4",
-        "relayerAC": ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
@@ -1998,7 +1989,7 @@
     "fluent/FastWithdrawalList": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/FluentRollup": "0x52d5d32e870df6647508e176c97eb7e8d2339807c25f724f2ff898a05d65a11b",
     "fluent/FluentTimeLock": "0x3c9bd3af13f27ac321421f8cac4f7406ae3981fe1432a2e37f15a93a254c4219",
-    "fluent/L1FluentBridge": "0x84128eba3b5f7451246de0588a82ae1580a41ce1d27fb6bf9bae4fafecef3566",
+    "fluent/L1FluentBridge": "0xe8993d6ef83713a5073cb16639daffaa7014874c1729c5079b0ca34b51078943",
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -2006,5 +1997,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25035980 },
-  "permissionsConfigHash": "0x1976af88b21832b60ffbadd5cd59798b71dbe1c26b8cdeaa375a8eab496ac834"
+  "permissionsConfigHash": "0xc5c4b7f61006ad64f63713857bd46b4a2d973dc8e7f83953160999324691d10c"
 }
