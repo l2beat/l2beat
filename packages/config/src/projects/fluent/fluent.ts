@@ -174,7 +174,7 @@ export const fluent: ScalingProject = {
       description:
         RISK_VIEW.STATE_ZKP_OPTIMISTIC.description +
         " Each batch is preconfirmed by an AWS Nitro Enclave, then finalizes on L1 without a proof unless challenged. PCR0 is a fingerprint of the enclave image; the enclave signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 matches the expected (audited) value. " +
-        `Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from batch acceptance to dispute via \`challengeBatchRoot\` or \`challengeBlock\`, and a challenge must be resolved with an SP1 proof before that same window closes. Proof submission and challenges are permissioned today; see the Permissions section for current role holders.`,
+        `Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from batch acceptance to dispute via \`challengeBatchRoot\` or \`challengeBlock\`, and a challenge must be resolved with an SP1 proof before that same window closes. Currently the role has no holders, so the dispute pipeline is inert and batches finalize purely on the time-based path. Proof submission and challenges are permissioned; see the Permissions section for current role holders.`,
       challengeDelay: challengeWindow,
       executionDelay: 0,
       sentiment: 'warning',
