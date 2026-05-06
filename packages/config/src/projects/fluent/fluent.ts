@@ -171,6 +171,7 @@ export const fluent: ScalingProject = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
+      value: 'TEE attestations',
       description:
         "Fluent ships an optimistic-with-SP1 design: batches are preconfirmed by an AWS Nitro Enclave (whose signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 — a fingerprint of the enclave image — matches the expected audited value), and SP1 ZK proofs are accepted as responses to disputes raised by holders of the CHALLENGER_ROLE. " +
         `In practice the role currently has no holders: challengeBatchRoot and challengeBlock are gated by onlyRole(CHALLENGER_ROLE), and the only path that flips a block to proven is resolveBlockChallenge (which itself requires an active challenge). With no challenger, no SP1 proof can be submitted onchain and finalizeWithProofs reverts, so every batch finalizes purely on the time-based path after ${formatSeconds(finalizationDelay)}. Effective security reduces to trust the TEE and wait the delay until the admin grants the role.`,
