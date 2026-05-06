@@ -43,7 +43,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
         '    +++ description: None',
         '+++ description: The foo value',
         '+++ severity: LOW',
@@ -55,7 +55,7 @@ describe(discoveryDiffToMarkdown.name, () => {
         '',
         '```diff',
         '-   Status: DELETED',
-        `    contract bar (${SECOND_ADDRESS.toString()})`,
+        `    contract bar (${SECOND_ADDRESS.toString()}) [N/A]`,
         '    +++ description: The contract getting deleted',
         '```',
       ].join('\n'),
@@ -73,8 +73,8 @@ describe(discoveryDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
-        '    +++ description: Non... (message too long)',
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
+        '    +++ descriptio... (message too long)',
         '```',
       ].join('\n'),
     )
@@ -106,7 +106,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
         '    +++ description: None',
         '      values.baz:',
         '-        quax',
@@ -116,7 +116,7 @@ describe(discoveryDiffToMarkdown.name, () => {
         '',
         '```diff',
         '-   Status: DELETED',
-        `    contract bar (${SECOND_ADDRESS.toString()})`,
+        `    contract bar (${SECOND_ADDRESS.toString()}) [N/A]`,
         '    +++ description: None',
         '```',
       ].join('\n'),
@@ -138,7 +138,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
         '    +++ description: None',
         '      values.baz:',
         '-        quax',
@@ -171,7 +171,52 @@ describe(contractDiffToMarkdown.name, () => {
       [
         '```diff',
         '+   Status: CREATED',
-        `    contract foo (${ADDRESS.toString()})`,
+        `    contract foo (${ADDRESS.toString()}) [N/A]`,
+        '    +++ description: None',
+        '```',
+      ].join('\n'),
+    )
+  })
+
+  it('contract creation with template renders template in header', () => {
+    const result = contractDiffToMarkdown(
+      {
+        name: 'foo',
+        address: ADDRESS,
+        addressType: 'Contract',
+        template: 'global/ProxyAdmin',
+        type: 'created',
+      },
+      undefined,
+    )
+
+    expect(result).toEqual(
+      [
+        '```diff',
+        '+   Status: CREATED',
+        `    contract foo (${ADDRESS.toString()}) [global/ProxyAdmin]`,
+        '    +++ description: None',
+        '```',
+      ].join('\n'),
+    )
+  })
+
+  it('EOA does not render template marker', () => {
+    const result = contractDiffToMarkdown(
+      {
+        name: 'foo',
+        address: ADDRESS,
+        addressType: 'EOA',
+        type: 'created',
+      },
+      undefined,
+    )
+
+    expect(result).toEqual(
+      [
+        '```diff',
+        '+   Status: CREATED',
+        `    EOA foo (${ADDRESS.toString()})`,
         '    +++ description: None',
         '```',
       ].join('\n'),
@@ -193,7 +238,7 @@ describe(contractDiffToMarkdown.name, () => {
       [
         '```diff',
         '-   Status: DELETED',
-        `    contract foo (${ADDRESS.toString()})`,
+        `    contract foo (${ADDRESS.toString()}) [N/A]`,
         '    +++ description: None',
         '```',
       ].join('\n'),
@@ -217,7 +262,7 @@ describe(contractDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
         '    +++ description: None',
         '      values.bar:',
         '-        oldValue',
@@ -273,7 +318,7 @@ describe(contractDiffToMarkdown.name, () => {
     expect(result).toEqual(
       [
         '```diff',
-        `    contract foo (${ADDRESS.toString()}) {`,
+        `    contract foo (${ADDRESS.toString()}) [N/A] {`,
         '    +++ description: The foo contract',
         '      values.bar:',
         '-        oldValue',

@@ -8,6 +8,7 @@ export interface DiscoveryDiff {
   address: ChainSpecificAddress
   addressType: StructureEntry['type']
   description?: string
+  template?: string
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
 }
@@ -30,6 +31,7 @@ export function diffDiscovery(
           address: previousContract.address,
           addressType: previousContract.type,
           description: previousContract.description,
+          template: previousContract.template,
           type: 'deleted',
         })
       }
@@ -61,6 +63,7 @@ export function diffDiscovery(
         address: currentContract.address,
         addressType: currentContract.type,
         description: currentContract.description,
+        template: currentContract.template,
         diff,
       })
     }
@@ -79,6 +82,7 @@ export function diffDiscovery(
           address: currentContract.address,
           addressType: currentContract.type,
           description: currentContract.description,
+          template: currentContract.template,
           type: 'created',
         })
       }

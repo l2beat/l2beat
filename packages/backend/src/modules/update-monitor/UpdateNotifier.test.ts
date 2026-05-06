@@ -77,7 +77,7 @@ describe(UpdateNotifier.name, () => {
         1,
         [
           `Changes: ***project-a*** at timestamp ${TIMESTAMP}\`\`\`diff`,
-          `    contract Contract (${address.toString()}) {`,
+          `    contract Contract (${address.toString()}) [N/A] {`,
           '    +++ description: None',
           '      A:',
           '-        1',
@@ -154,7 +154,7 @@ describe(UpdateNotifier.name, () => {
         1,
         [
           `Changes: ***project-a*** at timestamp ${TIMESTAMP}\`\`\`diff`,
-          `    contract Contract (${address.toString()}) {`,
+          `    contract Contract (${address.toString()}) [N/A] {`,
           '    +++ description: None',
           '+++ description: This should never be equal to two',
           '+++ severity: LOW',
@@ -224,11 +224,11 @@ describe(UpdateNotifier.name, () => {
 
       const internalMessage = [
         `Changes: ***project-a*** at timestamp ${TIMESTAMP}\`\`\`diff`,
-        `    contract Contract (${address.toString()}) {`,
+        `    contract Contract (${address.toString()}) [N/A] {`,
         '    +++ description: None',
         '      A:',
         `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(791)}... (message too long)`,
+        `+        ${'B'.repeat(785)}... (message too long)`,
         '```',
       ].join('\n')
 
@@ -299,7 +299,7 @@ describe(UpdateNotifier.name, () => {
         1,
         [
           `Changes: ***project-a*** at timestamp ${TIMESTAMP}\`\`\`diff`,
-          `    contract Contract (${address.toString()}) {`,
+          `    contract Contract (${address.toString()}) [N/A] {`,
           '    +++ description: None',
           '      errors:',
           '+        Execution reverted',
@@ -394,7 +394,7 @@ describe(UpdateNotifier.name, () => {
         [
           `Changes: ***project-a*** at timestamp ${TIMESTAMP}`,
           '*Tracked transactions might be affected.*```diff',
-          `    contract Contract (${address.toString()}) {`,
+          `    contract Contract (${address.toString()}) [N/A] {`,
           '    +++ description: None',
           '      A:',
           '-        1',
@@ -484,7 +484,7 @@ describe(UpdateNotifier.name, () => {
         1,
         [
           `Changes: ***project-a*** at timestamp ${TIMESTAMP}\`\`\`diff`,
-          `    contract Contract (${address.toString()}) {`,
+          `    contract Contract (${address.toString()}) [N/A] {`,
           '    +++ description: None',
           '      A:',
           '-        1',
