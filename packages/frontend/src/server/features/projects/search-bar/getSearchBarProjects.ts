@@ -40,6 +40,7 @@ export async function getSearchBarProjects(search: string) {
       'zkCatalogInfo',
       'contracts',
       'permissions',
+      'aliases',
     ],
   })
 

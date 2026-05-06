@@ -194,9 +194,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                 onSelect={() => {
                   setSelectedId(id)
                   setSearch('')
-                  track('filterIdSelected', {
-                    props: { name: id },
-                  })
+                  track('filterIdSelected', { name: id })
                 }}
               >
                 {filterIdToLabel[id]}

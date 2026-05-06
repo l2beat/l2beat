@@ -6,6 +6,7 @@ import { externalPublicationsCollection } from './external-publications'
 import { glossaryCollection } from './glossary'
 import { governancePublicationsCollection } from './governance-publications'
 import { monthlyUpdatesCollection } from './monthly-updates'
+import { otherPublicationsCollection } from './other-publications'
 import { pagesCollection } from './pages'
 import { partnersCollection } from './partners'
 
@@ -18,6 +19,7 @@ export const collections = {
   changelog: changelogCollection,
   pages: pagesCollection,
   partners: partnersCollection,
+  'other-publications': otherPublicationsCollection,
   'monthly-updates': monthlyUpdatesCollection,
   'external-publications': externalPublicationsCollection,
 }

@@ -28,6 +28,7 @@ export const sxt: ScalingProject = zkStackL2({
     'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code',
   display: {
     name: 'Space and Time',
+    aliases: ['SXT'],
     slug: 'sxt',
     description:
       "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT chain will serve as a settlement layer and payment hub for data queries.",

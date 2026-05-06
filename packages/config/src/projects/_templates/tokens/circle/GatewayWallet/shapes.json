@@ -3,5 +3,11 @@
     "hash": "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e",
     "address": "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
     "blockNumber": 34110983
+  },
+  "GatewayWallet_batch": {
+    "hash": "0x506e625ba860a14389c9a084a8c4fd214f27c61d2748b95699be952eb3ff6af0",
+    "address": "base:0x57DC761789b7fb1Ed4b33c3e55F2DFf14150b1e8",
+    "chain": "base",
+    "blockNumber": 45038469
   }
 }

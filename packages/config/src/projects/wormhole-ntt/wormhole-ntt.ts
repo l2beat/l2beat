@@ -8,6 +8,8 @@ export const wormholeNtt: BaseProject = {
   shortName: 'Wormhole NTT',
   addedAt: UnixTime(1770637610),
   interopConfig: {
+    description:
+      'Multichain token framework using the Wormhole message bridge.',
     plugins: [
       {
         plugin: 'wormhole-ntt',

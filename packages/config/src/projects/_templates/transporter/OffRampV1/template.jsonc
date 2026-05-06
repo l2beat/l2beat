@@ -8,21 +8,53 @@
     "currentRateLimiterState",
     "lastUpdated"
   ],
-  "ignoreRelatives": ["owner"],
+  "ignoreRelatives": ["getTokenLimitAdmin", "owner"],
   "fields": {
+    "ocrConfig": {
+      "description": "Latest OCR2 signer and transmitter config for executing messages on this OffRamp.",
+      "handler": {
+        "type": "event",
+        "select": [
+          "configCount",
+          "signers",
+          "transmitters",
+          "f",
+          "offchainConfigVersion"
+        ],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign and transmit execution reports that deliver messages and release or mint tokens through this OffRamp."
+        }
+      ]
+    },
     "commitStore": {
       "handler": {
         "type": "call",
         "method": "getStaticConfig",
         "args": []
       },
-      "edit": ["get", "commitStore"]
+      "edit": ["get", "commitStore"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "provide committed Merkle roots that this OffRamp requires before executing messages."
+        }
+      ]
     },
     "getStaticConfig": {
-      "edit": [
-        "pipe",
-        ["set", "chainSelector", ["format", "ChainIdMap"]],
-        ["set", "sourceChainSelector", ["format", "ChainIdMap"]]
+      "edit": ["pick", "chainSelector", "sourceChainSelector"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the OffRamp admin, OCR config, rate limits, token pools, and execution parameters."
+        }
       ]
     }
   }

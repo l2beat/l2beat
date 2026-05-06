@@ -133,6 +133,10 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
 })
 
+export const BlockNumberResponse = z.object({
+  result: Quantity.decode.transform((n) => Number(n)),
+})
+
 export type EVMFeeHistory = z.infer<typeof EVMFeeHistory>
 export const EVMFeeHistory = z.object({
   baseFeePerGas: z.array(Quantity.decode),
@@ -140,7 +144,6 @@ export const EVMFeeHistory = z.object({
   baseFeePerBlobGas: z.array(Quantity.decode),
   blobGasUsedRatio: z.array(z.number()),
   oldestBlock: Quantity.decode.transform((n) => Number(n)),
-  reward: z.array(z.array(Quantity.decode)),
 })
 
 export const EVMFeeHistoryResponse = z.object({
@@ -153,7 +156,7 @@ export const EVMCallResponse = z.object({
 
 export interface CallParameters {
   to: EthereumAddress
-  data: Bytes
+  input: Bytes
 }
 
 export type RPCError = z.infer<typeof RPCError>

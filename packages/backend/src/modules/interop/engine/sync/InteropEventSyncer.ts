@@ -34,6 +34,7 @@ import type {
 } from '../../plugins/types'
 import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import { withInteropRpcMetricsContext } from '../rpc/interopRpcMetrics'
 import { errorToString, toEventSelector } from '../utils'
 import { BlockProcessingStats } from './BlockProcessingStats'
 import { FollowingState } from './FollowingState'
@@ -172,11 +173,17 @@ export class InteropEventSyncer extends TimeLoop {
     options?: { clearError?: boolean },
   ) {
     try {
-      if (options?.clearError ?? true) {
-        await this.clearChainSyncError()
-      }
-      this.state = await fn(state)
-      this.hasError = false
+      await withInteropRpcMetricsContext(
+        'interop.sync',
+        this.getRpcMetricsContext(),
+        async () => {
+          if (options?.clearError ?? true) {
+            await this.clearChainSyncError()
+          }
+          this.state = await fn(state)
+          this.hasError = false
+        },
+      )
     } catch (error) {
       this.hasError = true
       this.logger.error('Error syncing chain', error, {
@@ -402,6 +409,13 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
+  }
+
+  private getRpcMetricsContext() {
+    return {
+      pluginCluster: this.cluster.name,
+      chain: this.chain,
+    }
   }
 }
 

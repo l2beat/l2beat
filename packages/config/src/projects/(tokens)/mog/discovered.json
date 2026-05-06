@@ -14,6 +14,7 @@
       "proxyType": "immutable",
       "description": "Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "base:0x20E12a9a5c738E265EC81D6F2a8E77785B6Aa8B8",
       "sinceTimestamp": 1711647579,
       "sinceBlock": 12429116,
       "values": {
@@ -62,6 +63,7 @@
         "0x4555f9c967edaed432d4b63f21fa90662252eb8abdcb6ac5a5771bf07b10a655"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x20E12a9a5c738E265EC81D6F2a8E77785B6Aa8B8",
       "sinceTimestamp": 1689822407,
       "sinceBlock": 17731591,
       "values": {

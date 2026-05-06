@@ -25,6 +25,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
       "ignoreInWatchMode": [],
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1717522343,
       "sinceBlock": 20019970,
       "values": {
@@ -80,6 +81,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
       "ignoreInWatchMode": [],
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1717522307,
       "sinceBlock": 20019967,
       "values": {
@@ -123,6 +125,7 @@
         }
       ],
       "ignoreInWatchMode": [],
+      "deployerAddress": "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B",
       "sinceTimestamp": 1692154319,
       "sinceBlock": 17924532,
       "values": {
@@ -167,6 +170,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
       "ignoreInWatchMode": [],
+      "deployerAddress": "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B",
       "sinceTimestamp": 1692154667,
       "sinceBlock": 17924561,
       "values": {
@@ -225,6 +229,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.",
       "ignoreInWatchMode": [],
+      "deployerAddress": "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B",
       "sinceTimestamp": 1692155531,
       "sinceBlock": 17924631,
       "values": {
@@ -260,6 +265,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
       "ignoreInWatchMode": ["chainHead", "getHead"],
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1717522271,
       "sinceBlock": 20019964,
       "values": {
@@ -331,6 +337,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540911,
       "sinceBlock": 20684519,
       "values": {
@@ -436,6 +443,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
       "sinceTimestamp": 1740666983,
       "sinceBlock": 21938311,
       "values": {
@@ -471,6 +479,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540863,
       "sinceBlock": 20684515,
       "values": {
@@ -523,6 +532,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540839,
       "sinceBlock": 20684513,
       "values": {
@@ -577,6 +587,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1725540887,
       "sinceBlock": 20684517,
       "values": {
@@ -622,6 +633,7 @@
         "0xa54be4566b369d95be75b2911bdb9216ec62e1bc5dc86dff8ec6bcff42c7ec28"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF",
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
       "values": { "$immutable": true },

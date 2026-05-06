@@ -19,12 +19,9 @@ const CLIENT_CONFIG = {
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'staging', 'production']).optional(),
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
-  CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
-  CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_DETAILED_PAGES: featureFlag.default(false),
+  CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -139,12 +136,9 @@ function getRawEnv(): Record<
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
-    CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
-    CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
-    CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
-    CLIENT_SIDE_INTEROP_DETAILED_PAGES:
-      process.env.CLIENT_SIDE_INTEROP_DETAILED_PAGES,
+    CLIENT_SIDE_OPENPANEL_CLIENT_ID:
+      process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
   }
 }

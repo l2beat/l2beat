@@ -8,6 +8,8 @@ export const circlegateway: BaseProject = {
   shortName: 'Gateway',
   addedAt: UnixTime(1770115878),
   interopConfig: {
+    description:
+      'Chain abstraction protocol built by Circle. Used mainly for USDC, users can deposit to get an offchain balance, that can then be used on any chain that is natively supported by Circle USDC.',
     transfersTimeMode: 'unknown',
     plugins: [
       {

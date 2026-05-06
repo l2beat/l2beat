@@ -1,3 +1,198 @@
+Generated with discovered.json: 0x3fb274921f9a3bca13f9f89c2a206edd6855b87e
+
+# Diff at Tue, 05 May 2026 10:21:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1770822607
+- current timestamp: 1770822607
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770822607 (main branch discovery), not current.
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0x05A16513BF74629b834878731f07b075Cca33f55) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      deployerAddress:
++        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract CertManager (arb1:0x27CA506AC6567Ef79d364b56cf4dE9C4141d803A) {
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+      deployerAddress:
++        "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602"
+    }
+```
+
+```diff
+    contract ApeChainMultisig (arb1:0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x4aBF0E8C011142bAb19ff3C921880B71E68150Ca) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x4fd6D0995B3016726D5674992c1Ec1bDe0989cF5) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      deployerAddress:
++        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x550B7B23Ed78BA25B3aBCBb290ADf1190aC28E19) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      deployerAddress:
++        "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x8A4ed18B4d31bCeA908B0f96B4347a9F99e816b3) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xa301f8EdD4Cdf10553b6aB39d9724c56d7ab582F) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xa3180c7a17dd46DEf808477093592D8231e024a8) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0xaB36aec5517C346D21b9C19429BAA5aa87D17fCa) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      deployerAddress:
++        "arb1:0xFb259F30199B4f4AB9c9a26019f83b195837075E"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xe032d15909e90f9A36901abB08944653e9E87d72) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c"
+    }
+```
+
 Generated with discovered.json: 0x9012c77267f76ee42e5e23e8b750740323d22215
 
 # Diff at Tue, 14 Apr 2026 11:01:10 GMT:

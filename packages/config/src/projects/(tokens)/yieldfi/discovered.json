@@ -1,6 +1,6 @@
 {
   "name": "yieldfi",
-  "timestamp": 1773669732,
+  "timestamp": 1777026534,
   "configHash": "0xf26f7a0e178ee7cc8b7ac3e1c0158f12cdea872504c533f8624842f0103f411c",
   "entries": [
     {
@@ -12,6 +12,7 @@
         "0x84da8be39a916ec799c2d515f4c612a387cb3378d34916337722b367a019b8c6"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811503,
       "sinceBlock": 22364925,
       "values": {
@@ -54,6 +55,7 @@
         "0xfeef795150202675eb781deeb753733de1bb9769ae0762cbb3f5a354690ae5e7"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812331,
       "sinceBlock": 22364994,
       "values": {
@@ -100,10 +102,7 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
           },
-          "ADMIN": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
-          },
+          "ADMIN": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
           "0x8554e4c9634c3022983cc2156859c8a963fefd7f46d6eae4e74af237818da178": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"]
@@ -142,6 +141,7 @@
         "totAssets",
         "vestingAmount"
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811527,
       "sinceBlock": 22364927,
       "values": {
@@ -204,6 +204,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811503,
       "sinceBlock": 22364925,
       "values": {
@@ -235,6 +236,7 @@
         "totAssets",
         "vestingAmount"
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1749298559,
       "sinceBlock": 22652648,
       "values": {
@@ -292,6 +294,7 @@
         "0xd39f986b40a87be666a70c453f29c7d0f0d267c79bb9ffe83efaa218827874a6"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812439,
       "sinceBlock": 22365003,
       "values": {
@@ -344,6 +347,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1749298559,
       "sinceBlock": 22652648,
       "values": {
@@ -371,6 +375,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812439,
       "sinceBlock": 22365003,
       "values": {
@@ -460,6 +465,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1747415891,
       "sinceBlock": 22497060,
       "values": {
@@ -503,6 +509,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["counter", "totalSupply"],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812367,
       "sinceBlock": 22364997,
       "values": {
@@ -517,13 +524,13 @@
         ],
         "$upgradeCount": 1,
         "administrator": "eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e",
-        "counter": 3179,
+        "counter": 3185,
         "getApproved": [],
         "name": "YieldFi Order Receipt",
         "ownerOf": [],
         "symbol": "yOR",
         "tokenURI": [],
-        "totalSupply": 22
+        "totalSupply": 26
       },
       "implementationNames": {
         "eth:0x933B4464beBE7136bC184637792c0EE514057660": "TransparentUpgradeableProxy",
@@ -597,6 +604,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812331,
       "sinceBlock": 22364994,
       "values": {
@@ -624,6 +632,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812367,
       "sinceBlock": 22364997,
       "values": {
@@ -656,6 +665,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811527,
       "sinceBlock": 22364927,
       "values": {
@@ -1237,6 +1247,6 @@
     "yieldfi/TimelockController": "0xf4f6d4f9669222f80d580819b71d8b2c9b243710e3af70c08a33151ed9b74d67",
     "yieldfi/yToken": "0xab31526167948580aae1e5509dda8270be312f0347c2dd3a4fa3cdc34b1a9643"
   },
-  "usedBlockNumbers": { "ethereum": 24670527 },
+  "usedBlockNumbers": { "ethereum": 24949229 },
   "permissionsConfigHash": "0x177fc39cfd17504c6ec0224f5cbde188d0842183b72f51e739e1992d1c823658"
 }

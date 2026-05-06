@@ -1,6 +1,6 @@
 {
   "name": "katana",
-  "timestamp": 1775809429,
+  "timestamp": 1777451715,
   "configHash": "0x806d8fc8262f28a519f8a7e4b860ccc2f7c1c9095d0f2d67132045670c079946",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -54,6 +54,7 @@
         "nextBlockNumber",
         "nextOutputIndex"
       ],
+      "deployerAddress": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "sinceTimestamp": 1746619859,
       "sinceBlock": 22431675,
       "values": {
@@ -118,12 +119,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 29060213,
-        "latestOutputIndex": 6582,
+        "latestBlockNumber": 30702125,
+        "latestOutputIndex": 7028,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 29060214,
-        "nextOutputIndex": 6583,
+        "nextBlockNumber": 30702126,
+        "nextOutputIndex": 7029,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -134,11 +135,11 @@
         "rollupConfigHash": "0x6cd1b72f40b6ddf464897d8d1b084241f38ae5fda17175ff45afb3307b2523e9",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "selectedOpSuccinctConfig": {
-          "aggregationVkey": "0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337",
-          "rangeVkeyCommitment": "0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330",
+          "aggregationVkey": "0x0065e407807b2b3610cc9ff6637ea16e815552bc34b48c206529d3cfcd9d1152",
+          "rangeVkeyCommitment": "0x5c7c05114bc5dd360fdb52ec2b4977a45f7e22806bc949a72759ea1172202229",
           "rollupConfigHash": "0x352a9738897d236014fd5bd11986bf008b3b623b037405900ab338f93cdf5272"
         },
-        "selectedOpSuccinctConfigName": "0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00",
+        "selectedOpSuccinctConfigName": "0xe719c402037f76346e69e021164101e16954889c052f75f16a29758815723dde",
         "startingBlockNumber": 4102088,
         "startingTimestamp": 1750844899,
         "SUBMISSION_INTERVAL": 1,
@@ -200,6 +201,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -222,6 +224,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -284,6 +287,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x73f2f3A4fF97B6A6d7afc03C449f0e9a0c0d90aB",
       "sinceTimestamp": 1608699144,
       "sinceBlock": 11507716,
       "values": {
@@ -304,7 +308,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 3177,
+        "nonce": 3217,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -375,6 +379,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -402,6 +407,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -444,6 +450,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -523,7 +530,31 @@
     {
       "address": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x876a24e12d1595ba43f838917743b4ea108e3957c4df5ec812cf3348b156d941",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "address": "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50",
@@ -542,6 +573,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
       "ignoreInWatchMode": ["params", "balance"],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -642,6 +674,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
       "sinceTimestamp": 1752784955,
       "sinceBlock": 22941387,
       "values": {
@@ -658,7 +691,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 318,
+        "nonce": 330,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -682,6 +715,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -718,6 +752,7 @@
         "totalSupply",
         "yield"
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -753,7 +788,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 14074 },
+        "backingDifference": { "positive": true, "difference": 53351 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -778,13 +813,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 114751469701,
+        "stakedAssets": 68398984547,
         "symbol": "vbWBTC",
-        "totalAssets": 114751469701,
-        "totalSupply": 114751455627,
+        "totalAssets": 68398984547,
+        "totalSupply": 68398931196,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 14074,
+        "yield": 53351,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -819,6 +854,7 @@
         "totalSupply",
         "yield"
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -856,7 +892,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "538668313637141606"
+          "difference": "2120197203418994276"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -882,13 +918,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "14292709872833256259737",
+        "stakedAssets": "8763044488257685337233",
         "symbol": "vbETH",
-        "totalAssets": "14292709872833256259737",
-        "totalSupply": "14292171204519619118131",
+        "totalAssets": "8763044488257685337233",
+        "totalSupply": "8760924291054266342957",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "538668313637141606",
+        "yield": "2120197203418994276",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -954,6 +990,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747898927,
       "sinceBlock": 22536924,
       "values": {
@@ -988,6 +1025,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.",
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746740171,
       "sinceBlock": 22441511,
       "values": {
@@ -1067,6 +1105,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1077,11 +1116,6 @@
       "implementationNames": {
         "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": "ProxyAdmin"
       }
-    },
-    {
-      "address": "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -1111,6 +1145,7 @@
         "totalSupply",
         "yield"
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1200,6 +1235,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50",
       "sinceTimestamp": 1754624963,
       "sinceBlock": 23093762,
       "values": {
@@ -1216,7 +1252,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 321,
+        "nonce": 333,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1240,6 +1276,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.",
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1291,6 +1328,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1318,6 +1356,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0954eC5B731501abf85766B5c6f5DE4C2B60BC44",
       "sinceTimestamp": 1680797639,
       "sinceBlock": 16990669,
       "values": {
@@ -1325,7 +1364,6 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
-          "eth:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
           "eth:0x2103c69696CB2D3779f5445393808239034E911c",
           "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007",
@@ -1342,8 +1380,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 13 (31%)",
-        "nonce": 252,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 259,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1377,6 +1415,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747746383,
       "sinceBlock": 22524319,
       "values": {
@@ -1433,6 +1472,7 @@
         "totalSupply",
         "yield"
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1468,7 +1508,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 2225277199 },
+        "backingDifference": { "positive": true, "difference": 25119980823 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1493,13 +1533,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 52639583371061,
+        "stakedAssets": 45034762799027,
         "symbol": "vbUSDC",
-        "totalAssets": 52639583371061,
-        "totalSupply": 52637358093862,
+        "totalAssets": 45034762799027,
+        "totalSupply": 45009642818204,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 2225277199,
+        "yield": 25119980823,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1543,6 +1583,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
       "values": {
@@ -1576,6 +1617,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x52EAF3F04cbac0a4B9878A75AB2523722325D4D4",
       "sinceTimestamp": 1751104547,
       "sinceBlock": 22802177,
       "values": {
@@ -1595,7 +1637,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 94,
+        "nonce": 103,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1634,6 +1676,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746740171,
       "sinceBlock": 22441511,
       "values": {
@@ -1664,6 +1707,7 @@
         "totalSupply",
         "yield"
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1699,7 +1743,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 3673838199 },
+        "backingDifference": { "positive": true, "difference": 4956824135 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1724,13 +1768,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 55942104154455,
+        "stakedAssets": 21893236808569,
         "symbol": "vbUSDT",
-        "totalAssets": 55942104154455,
-        "totalSupply": 55938430316256,
+        "totalAssets": 21893236808569,
+        "totalSupply": 21888279984434,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 3673838199,
+        "yield": 4956824135,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1741,6 +1785,11 @@
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
       "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "eth:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
@@ -1773,12 +1822,14 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
       "sinceTimestamp": 1741081103,
       "sinceBlock": 21972679,
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
           "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
           "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
           "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
@@ -1789,8 +1840,8 @@
         "domainSeparator": "0xfbb159689ec7fd867986ea91ca0b87e0b127fb4e819eb33b3bec6755cc129ebc",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 150,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 216,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1814,6 +1865,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1847,6 +1899,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -1901,6 +1954,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747897679,
       "sinceBlock": 22536821,
       "values": {
@@ -1918,7 +1972,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 39,
+        "nonce": 40,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1966,6 +2020,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1772552963,
       "sinceBlock": 24577927,
       "values": {
@@ -2067,6 +2122,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -2128,6 +2184,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747906727,
       "sinceBlock": 22537572,
       "values": {
@@ -2176,6 +2233,7 @@
         "challengePeriodFromOracle",
         "wethFromGame"
       ],
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1772552963,
       "sinceBlock": 24577927,
       "values": {
@@ -2250,6 +2308,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1772552963,
       "sinceBlock": 24577927,
       "values": {
@@ -2292,6 +2351,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -2357,10 +2417,10 @@
         "l1StandardBridge": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
         "l2ChainId": 747474,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 1000000,
         "minimumGasLimit": 21000000,
-        "operatorFeeConstant": 1351351351351,
-        "operatorFeeScalar": 0,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 100000,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -2575,12 +2635,14 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747896083,
       "sinceBlock": 22536688,
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a",
           "eth:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b",
           "eth:0xA697656ac37ee1f59A8a5318F61601B4C208960D",
           "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8",
@@ -2590,8 +2652,8 @@
         "domainSeparator": "0xe9a6f7ca104e472f8e458bdecd3e110c7b1e1463aa5767d04bf4418c30651293",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 39,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 45,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2615,6 +2677,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -2655,6 +2718,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -2751,6 +2815,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -2828,6 +2893,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "sinceTimestamp": 1747898375,
       "sinceBlock": 22536878,
       "values": {
@@ -2852,6 +2918,11 @@
       }
     },
     {
+      "address": "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Safe",
       "address": "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb",
       "type": "Contract",
@@ -2862,6 +2933,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b",
       "sinceTimestamp": 1730198999,
       "sinceBlock": 21070804,
       "values": {
@@ -2881,7 +2953,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 7 (29%)",
-        "nonce": 113,
+        "nonce": 116,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3450,6 +3522,58 @@
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": [
       "constructor(address _oracle, uint256 _stateVersion)",
@@ -4538,7 +4662,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "katana/AggchainFEP_post035": "0x87c1eb3b24e0651fdc77fa28dbc72e1a25b7122667807ef164e97af360d3b0c8",
+    "katana/AggchainFEP_post035": "0x428b3edaf13fa3a14d448eeef5e3718dd7f95d5a299666a436ce66a0def4d9d9",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -4556,6 +4680,6 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 24848108 },
-  "permissionsConfigHash": "0x247a04e8a3031529984e0e5c243cf696c4870391e1773bb21631707d5aa96193"
+  "usedBlockNumbers": { "ethereum": 24984581 },
+  "permissionsConfigHash": "0x4d234984d5db70092743f2663b9f7a97e54c8d43f8d998186799062de16eb02f"
 }

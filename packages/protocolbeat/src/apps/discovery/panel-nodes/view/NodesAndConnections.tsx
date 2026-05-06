@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
+import { perfStats } from '../perf/perfStats'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -54,6 +56,24 @@ export function NodesAndConnections() {
     isDashed: boolean
     isDimmed: boolean
   }[]
+  const fieldCount = nodes.reduce((sum, node) => sum + node.fields.length, 0)
+  const hiddenCount = nodes.length - visible.length
+
+  useEffect(() => {
+    perfStats.setScene({
+      nodes: nodes.length,
+      visibleNodes: visible.length,
+      hiddenNodes: hiddenCount,
+      connections: connections.length,
+      fields: fieldCount,
+    })
+  }, [
+    connections.length,
+    fieldCount,
+    hiddenCount,
+    nodes.length,
+    visible.length,
+  ])
 
   let minX = Number.POSITIVE_INFINITY
   let minY = Number.POSITIVE_INFINITY

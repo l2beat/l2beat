@@ -76,38 +76,54 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0x8c32fc851a0b9ccebc5587c3a270627770f41bf568f08aca50bdee6b19427875',
+        hash: '0xc50b83a66e621b8f1bea3f5fe17dcb4c7af5706e413038b3486e233a5ae40a1a',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f',
+              '0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82',
             ),
           },
         ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
-        description:
-          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      },
-      {
-        hash: '0x5748f2cfc9d31f5d13f096ee5f5d96988fa5dbc8cbd3895612aead78e2664417',
-        name: 'Lighter verifier',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationStatus: 'successful',
+        verificationSteps: `
+The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+The steps below are for Ubuntu 22.04 OS.
+
+1. Install rust, gcc, go version 1.21 and later.
+
+\`\`\`
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. .cargo/env
+
+sudo apt update
+sudo apt install build-essential
+
+# one way to install latest go on Ubuntu 22.04
+wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+sudo tar -xvf go1.21.0.linux-amd64.tar.gz
+sudo mv go /usr/local
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+source ~/.profile
+\`\`\`
+
+2. Run the correct version of the script to regenerate the keys.
+
+\`\`\`
+git clone https://github.com/elliottech/lighter-prover.git
+cd lighter-prover
+git checkout 2bbc3089365c867826d322d3bdd4c2783466d9af
+chmod +x build_circuits.sh
+./build_circuits.sh
+\`\`\`
+
+The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+`,
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
@@ -178,6 +194,7 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
           },
         ],
         verificationStatus: 'unsuccessful',
+        // sudo apt-get install jq
         verificationSteps:
           'The sources for desert verifier circuits are not published and thus the verifier cannot be independently regenerated.',
         description:

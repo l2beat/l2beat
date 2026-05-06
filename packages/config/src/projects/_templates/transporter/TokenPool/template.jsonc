@@ -3,14 +3,11 @@
   "ignoreRelatives": [
     "getToken",
     "getAllowList",
-    "owner",
     "i_messageTransmitter",
     "i_tokenMessenger",
     "getXERC20",
     "getMinter",
     "minter",
-    "getBridgeLimitAdmin",
-    "getRateLimitAdmin",
     "getLockbox",
     "getOnRamps",
     "getOffRamps",
@@ -23,5 +20,47 @@
     "getUnsiloedLiquidity",
     "getLockedTokens",
     "getSupportedChains"
-  ]
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure remote chains, pool addresses, router, allowlist, admins, and rebalancer for this token pool."
+        }
+      ]
+    },
+    "getBridgeLimitAdmin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change bridge limits and current bridged amount accepted by this token pool."
+        }
+      ]
+    },
+    "getRateLimitAdmin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change inbound and outbound rate limits for this token pool."
+        }
+      ]
+    },
+    "getRmnProxy": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block token pool operations when ARM/RMN marks a route or global subject as cursed."
+        }
+      ]
+    },
+    "getRouter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "route token transfers into and out of this token pool."
+        }
+      ]
+    }
+  }
 }

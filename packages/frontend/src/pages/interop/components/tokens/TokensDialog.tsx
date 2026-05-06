@@ -22,7 +22,7 @@ import {
 } from '~/components/core/Tabs'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '../../utils/types'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import { TokensPairsTable } from './TokenPairsTable'
 import { TokensTable } from './TokensTable'
@@ -35,6 +35,7 @@ interface TokensDialogProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   title: ReactNode
+  apiSelection: InteropSelection
   showNetMintedValueColumn?: boolean
 }
 
@@ -44,15 +45,15 @@ export function TokensDialog({
   isOpen,
   setIsOpen,
   title,
+  apiSelection,
   showNetMintedValueColumn,
 }: TokensDialogProps) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
   const [hideSameToken, setHideSameToken] = useState(false)
 
   const utils = api.useUtils()
-  const queryInput = { ...selectionForApi, id, type }
+  const queryInput = { ...apiSelection, id, type }
   const showTopProtocolColumn = id === undefined
 
   const tabsList = (

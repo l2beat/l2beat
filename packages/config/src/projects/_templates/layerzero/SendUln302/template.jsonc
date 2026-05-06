@@ -10,5 +10,6 @@
         }
       ]
     }
-  }
+  },
+  "ignoreRelatives": ["treasury"]
 }

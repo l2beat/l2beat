@@ -40,6 +40,9 @@
     },
     "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db": {
       "description": "This adapter can be used to send messages / root bundles to Tron. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+    },
+    "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3": {
+      "description": "Adapter for Solana. Uses CCTP v1 AMB to relay root bundles to the Solana spokepool."
     }
   }
 }

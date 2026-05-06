@@ -7,6 +7,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../tools/uif/ManagedChildIndexer'
 import type { BlockProcessor } from '../types'
+import { withBlockSyncRpcMetricsContext } from './blockSyncRpcMetrics'
 
 export interface BlockIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -45,7 +46,7 @@ export class BlockIndexer extends ManagedChildIndexer {
     }
     const adjustedTo = Math.min(to, adjustedFrom + this.$.batchSize - 1)
 
-    const blockNumbers = []
+    const blockNumbers: number[] = []
     for (
       let blockNumber = adjustedFrom;
       blockNumber <= adjustedTo;
@@ -63,14 +64,21 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: adjustedTo - adjustedFrom + 1,
     })
 
-    const [blocks, logs] = await Promise.all([
-      Promise.all(
-        blockNumbers.map((n) =>
-          this.$.blockProvider.getBlockWithTransactions(n),
-        ),
-      ),
-      this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
-    ])
+    const [blocks, logs] = await withBlockSyncRpcMetricsContext(
+      'blockSync.fetch',
+      {
+        chain: this.$.source,
+      },
+      () =>
+        Promise.all([
+          Promise.all(
+            blockNumbers.map((n) =>
+              this.$.blockProvider.getBlockWithTransactions(n),
+            ),
+          ),
+          this.$.logsProvider.getLogs(adjustedFrom, adjustedTo),
+        ]),
+    )
     const consistentBlocks = onlyConsistent(blocks, logs)
     if (consistentBlocks.length === 0) {
       this.logger.info("Couldn't get consistent blocks & logs", {
@@ -116,7 +124,13 @@ export class BlockIndexer extends ManagedChildIndexer {
       for (const processor of this.$.blockProcessors) {
         try {
           const start = Date.now()
-          await processor.processBlock(block, logs)
+          await withBlockSyncRpcMetricsContext(
+            'blockSync.process',
+            {
+              chain: this.$.source,
+            },
+            () => processor.processBlock(block, logs),
+          )
           const duration = Date.now() - start
           this.logger.info('Processor finished', {
             processor: processor.constructor.name,

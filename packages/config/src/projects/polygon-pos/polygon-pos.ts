@@ -53,6 +53,7 @@ export const polygonpos: ScalingProject = {
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Polygon PoS',
+    aliases: ['Matic'],
     slug: 'polygon-pos',
     purposes: ['Universal'],
     links: {
@@ -80,6 +81,8 @@ export const polygonpos: ScalingProject = {
     stage: 'NotApplicable',
   },
   interopConfig: {
+    description:
+      'The canonical bridge. Validated by the Polygon PoS validator set.',
     durationSplit: {
       lockAndMint: [
         {

@@ -2,7 +2,9 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
+import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -27,6 +29,7 @@ function getCommonColumns<
     slug: string
     name: string
     shortName: string | undefined
+    description: string | undefined
     subgroup: { name: string; iconUrl: string } | undefined
     isAggregate: boolean | undefined
   },
@@ -66,11 +69,14 @@ function getLast24hVolumeColumn<T extends { volume: number }>(
 ) {
   return columnHelper.accessor((row) => row.volume, {
     header: 'Last 24h\nVolume',
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {formatCurrency(ctx.row.original.volume, 'usd')}
-      </span>
-    ),
+    cell: (ctx) => {
+      if (!ctx.row.original.volume) return EM_DASH
+      return (
+        <span className="font-medium text-label-value-15">
+          {formatCurrency(ctx.row.original.volume, 'usd')}
+        </span>
+      )
+    },
     meta: {
       align: 'right',
       headClassName: 'text-2xs text-right',
@@ -87,7 +93,11 @@ function getTokensByVolumeColumn<
     name: string
     iconUrl: string
   },
->(columnHelper: ColumnHelper<T>, type: KnownInteropBridgeType) {
+>(
+  columnHelper: ColumnHelper<T>,
+  type: KnownInteropBridgeType,
+  apiSelection: InteropSelection,
+) {
   return columnHelper.accessor((row) => row.tokens, {
     header: 'Tokens\nby volume',
     meta: {
@@ -100,6 +110,7 @@ function getTokensByVolumeColumn<
       <TopTokensCell
         topItems={ctx.row.original.tokens}
         type={type}
+        apiSelection={apiSelection}
         showNetMintedValueColumn={type === 'lockAndMint'}
         protocol={{
           id: ctx.row.original.id,
@@ -111,54 +122,71 @@ function getTokensByVolumeColumn<
   })
 }
 
-export const nonMintingColumns = [
-  ...getCommonColumns(nonMintingColumnHelper),
-  getLast24hVolumeColumn(nonMintingColumnHelper),
-  nonMintingColumnHelper.accessor('averageValueInFlight', {
-    header: 'Last 24h avg.\nin-flight value',
-    invertSorting: true,
-    meta: {
-      align: 'right',
-      headClassName: 'text-2xs',
-      tooltip:
-        'The average USD value of funds in transit at any given second over the past 24 hours.',
-    },
-    cell: (ctx) => {
-      if (ctx.row.original.averageValueInFlight === undefined) return '-'
-      return (
-        <span className="font-medium text-label-value-15">
-          {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
-        </span>
-      )
-    },
-  }),
-  getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting'),
-]
+export function getNonMintingColumns(apiSelection: InteropSelection) {
+  return [
+    ...getCommonColumns(nonMintingColumnHelper),
+    getLast24hVolumeColumn(nonMintingColumnHelper),
+    nonMintingColumnHelper.accessor('averageValueInFlight', {
+      header: 'Last 24h avg.\nin-flight value',
+      invertSorting: true,
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          'The average USD value of funds in transit at any given second over the past 24 hours.',
+      },
+      cell: (ctx) => {
+        if (ctx.row.original.averageValueInFlight === undefined)
+          return <InteropNoDataBadge />
+        return (
+          <span className="font-medium text-label-value-15">
+            {formatCurrency(ctx.row.original.averageValueInFlight, 'usd')}
+          </span>
+        )
+      },
+    }),
+    getTokensByVolumeColumn(nonMintingColumnHelper, 'nonMinting', apiSelection),
+  ]
+}
 
-export const lockAndMintColumns = [
-  ...getCommonColumns(lockAndMintColumnHelper),
-  getLast24hVolumeColumn(lockAndMintColumnHelper),
-  lockAndMintColumnHelper.accessor('netMintedValue', {
-    header: 'Last 24h net\nminted value',
-    meta: {
-      align: 'right',
-      headClassName: 'text-2xs',
-      tooltip:
-        "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
-    },
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-15">
-        {ctx.row.original.netMintedValue
-          ? formatCurrency(ctx.row.original.netMintedValue, 'usd')
-          : EM_DASH}
-      </span>
+export function getLockAndMintColumns(apiSelection: InteropSelection) {
+  return [
+    ...getCommonColumns(lockAndMintColumnHelper),
+    getLast24hVolumeColumn(lockAndMintColumnHelper),
+    lockAndMintColumnHelper.accessor('netMintedValue', {
+      header: 'Last 24h net\nminted value',
+      meta: {
+        align: 'right',
+        headClassName: 'text-2xs',
+        tooltip:
+          "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
+      },
+      cell: (ctx) => {
+        if (ctx.row.original.netMintedValue === undefined)
+          return <InteropNoDataBadge />
+        return (
+          <span className="font-medium text-label-value-15">
+            {formatCurrency(ctx.row.original.netMintedValue, 'usd')}
+          </span>
+        )
+      },
+    }),
+    getTokensByVolumeColumn(
+      lockAndMintColumnHelper,
+      'lockAndMint',
+      apiSelection,
     ),
-  }),
-  getTokensByVolumeColumn(lockAndMintColumnHelper, 'lockAndMint'),
-]
+  ]
+}
 
-export const burnAndMintColumns = [
-  ...getCommonColumns(burnAndMintColumnHelper),
-  getLast24hVolumeColumn(burnAndMintColumnHelper),
-  getTokensByVolumeColumn(burnAndMintColumnHelper, 'burnAndMint'),
-]
+export function getBurnAndMintColumns(apiSelection: InteropSelection) {
+  return [
+    ...getCommonColumns(burnAndMintColumnHelper),
+    getLast24hVolumeColumn(burnAndMintColumnHelper),
+    getTokensByVolumeColumn(
+      burnAndMintColumnHelper,
+      'burnAndMint',
+      apiSelection,
+    ),
+  ]
+}

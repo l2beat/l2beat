@@ -80,6 +80,7 @@ const superchainConfigSources: ContractSources = {
       address: CORRECT_SUPERCHAIN_CONFIG_ADDR,
       source: {
         name: 'Proxy',
+        rootFile: 'src/universal/Proxy.sol',
         isVerified: true,
         abi: [
           'constructor(address _admin)',
@@ -139,6 +140,7 @@ const superchainConfigSources: ContractSources = {
       ),
       source: {
         name: 'SuperchainConfig',
+        rootFile: 'src/L1/SuperchainConfig.sol',
         isVerified: true,
         abi: [
           'constructor()',

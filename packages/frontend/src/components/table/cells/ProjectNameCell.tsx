@@ -3,7 +3,6 @@ import type {
   ProjectScalingCapability,
   ProjectScalingPurpose,
 } from '@l2beat/config'
-import { cva } from 'class-variance-authority'
 import type React from 'react'
 import {
   Tooltip,
@@ -14,10 +13,15 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
-import { ProjectBadge } from '~/components/projects/ProjectBadge'
+import {
+  ProjectTooltipContent,
+  type ProjectTooltipSectionData,
+  QUANTUM_RESISTANCE_TOOLTIP,
+} from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
+import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -26,21 +30,12 @@ import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
-const tooltipSectionVariants = cva('rounded-lg px-3 py-2', {
-  variants: {
-    variant: {
-      negative: 'bg-negative/20 text-black dark:text-white',
-      warning: 'bg-warning/20 text-black dark:text-white',
-      muted: 'bg-surface-secondary text-black dark:text-white',
-    },
-  },
-})
-
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   isLayer3?: boolean
   purposes?: ProjectScalingPurpose[]
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
+  quantumResistant?: boolean
 }
 
 interface ProjectCellProps {
@@ -87,6 +82,7 @@ function DesktopStatusIcons({
     <div className="flex items-center gap-1.5">
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
+      {project.quantumResistant && <QuantumResistanceIcon className="size-4" />}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -130,6 +126,13 @@ export function ProjectNameMobileStatusIcons({
           manage chain configuration values.
         </MobileProjectIconTooltip>
       )}
+      {project.quantumResistant && (
+        <MobileProjectIconTooltip
+          icon={<QuantumResistanceIcon className="size-4" />}
+        >
+          {QUANTUM_RESISTANCE_TOOLTIP}
+        </MobileProjectIconTooltip>
+      )}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -152,6 +155,15 @@ export function ProjectNameMobileStatusIcons({
             {project.statuses.verificationWarnings.programHashes && (
               <>
                 <p>{project.statuses.verificationWarnings.programHashes}</p>
+                {project.statuses.verificationWarnings
+                  .programHashesDescription && (
+                  <Markdown ignoreGlossary>
+                    {
+                      project.statuses.verificationWarnings
+                        .programHashesDescription
+                    }
+                  </Markdown>
+                )}
                 <CustomLink
                   href={`/scaling/projects/${project.slug}#program-hashes`}
                   className="inline-block text-label-value-13"
@@ -241,53 +253,90 @@ function CellBottomContent({ project }: { project: ProjectCellProject }) {
   )
 }
 
+function DesktopProjectNameContent({
+  project,
+  ignoreUnderReviewIcon,
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
+  const projectName = project.shortName ?? project.name
+
+  return (
+    <div className="max-md:hidden">
+      <div className="flex items-center gap-1.5">
+        <PrimaryValueCell className="font-bold leading-none!">
+          {projectName}
+        </PrimaryValueCell>
+        <DesktopStatusIcons
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+      </div>
+      <CellBottomContent project={project} />
+    </div>
+  )
+}
+
+function MobileProjectNameContent({
+  project,
+  ignoreUnderReviewIcon,
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
+  const projectName = project.shortName ?? project.name
+
+  return (
+    <div className="md:hidden">
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5">
+          <PrimaryValueCell className="font-bold leading-none!">
+            {projectName}
+          </PrimaryValueCell>
+          <ProjectNameMobileStatusIcons
+            className="shrink-0"
+            project={project}
+            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          />
+        </div>
+        <CellBottomContent project={project} />
+      </div>
+    </div>
+  )
+}
+
 export function ProjectNameCell({
   project,
   className,
   withInfoTooltip,
   ignoreUnderReviewIcon,
 }: ProjectCellProps) {
-  const projectName = project.shortName ?? project.name
-
   if (!withInfoTooltip) {
     return (
       <div className={className}>
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-          <ProjectNameMobileStatusIcons
-            project={project}
-            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
-          />
-        </div>
-        <CellBottomContent project={project} />
+        <MobileProjectNameContent
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+        <DesktopProjectNameContent
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
       </div>
     )
   }
 
   return (
     <div className={className}>
-      <div className="max-md:hidden">
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-          <DesktopStatusIcons
-            project={project}
-            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
-          />
-        </div>
-        <CellBottomContent project={project} />
-      </div>
-      <div className="md:hidden">
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-        </div>
-        <CellBottomContent project={project} />
-      </div>
+      <DesktopProjectNameContent
+        project={project}
+        ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+      />
+      <MobileProjectNameContent
+        project={project}
+        ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+      />
     </div>
   )
 }
@@ -300,11 +349,12 @@ export function ProjectNameInfoTooltip({
   children: React.ReactElement
 }) {
   const projectName = project.shortName ?? project.name
-  const warningSections = getTooltipWarningSections(project)
+  const sections = getTooltipSections(project)
   const hasTooltipContent =
     !!project.description ||
+    !!project.quantumResistant ||
     (project.badges?.length ?? 0) > 0 ||
-    warningSections.length > 0
+    sections.length > 0
 
   if (!hasTooltipContent) {
     return children
@@ -317,79 +367,30 @@ export function ProjectNameInfoTooltip({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">
-          <span className="text-heading-18">What is {projectName}?</span>
-          {warningSections.map((section) => (
-            <TooltipSection
-              key={section.id}
-              href={section.href}
-              variant={section.variant}
-              icon={section.icon}
-            >
-              {section.text}
-            </TooltipSection>
-          ))}
-          {project.description && <p>{project.description}</p>}
-          {project.badges && project.badges.length > 0 && (
-            <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
-              {project.badges.map((badge) => (
-                <ProjectBadge
-                  key={badge.id}
-                  badge={badge}
-                  className="h-16!"
-                  disableTooltip
-                />
-              ))}
-            </div>
-          )}
+          <ProjectTooltipContent
+            projectName={projectName}
+            description={project.description}
+            sections={sections}
+            badges={project.badges}
+            sectionsFirst
+          />
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
   )
 }
 
-interface TooltipSectionProps {
-  href?: string
-  variant: 'negative' | 'warning' | 'muted'
-  icon: React.ReactNode
-  children: string
-}
+function getTooltipSections(project: ProjectCellProject) {
+  const sections: ProjectTooltipSectionData[] = []
 
-function TooltipSection({
-  href,
-  variant,
-  icon,
-  children,
-}: TooltipSectionProps) {
-  return (
-    <div className={tooltipSectionVariants({ variant })}>
-      <div className="flex items-start gap-2">
-        <div className="shrink-0">{icon}</div>
-        <div className="min-w-0">
-          <Markdown inline ignoreGlossary>
-            {children}
-          </Markdown>
-          {href && (
-            <CustomLink
-              href={href}
-              className="mt-1 inline-block text-label-value-13"
-            >
-              View details
-            </CustomLink>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function getTooltipWarningSections(project: ProjectCellProject) {
-  const sections: Array<{
-    id: string
-    text: string
-    href?: string
-    variant: 'negative' | 'warning' | 'muted'
-    icon: React.ReactNode
-  }> = []
+  if (project.quantumResistant) {
+    sections.push({
+      id: 'quantum-resistance',
+      text: QUANTUM_RESISTANCE_TOOLTIP,
+      variant: 'muted',
+      icon: <QuantumResistanceIcon className="size-4" />,
+    })
+  }
 
   if (project.ecosystemInfo?.isPartOfSuperchain) {
     sections.push({
@@ -414,6 +415,8 @@ function getTooltipWarningSections(project: ProjectCellProject) {
     sections.push({
       id: 'program-hashes',
       text: project.statuses.verificationWarnings.programHashes,
+      textDetail:
+        project.statuses.verificationWarnings.programHashesDescription,
       href: `/scaling/projects/${project.slug}#program-hashes`,
       variant: 'negative',
       icon: <UnverifiedIcon className="size-4" />,

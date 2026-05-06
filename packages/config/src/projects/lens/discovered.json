@@ -28,6 +28,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -172,6 +173,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5063b3D23C3640d51c9E2aef41063B1d482C70ff",
       "sinceTimestamp": 1746708947,
       "sinceBlock": 22438952,
       "values": {
@@ -217,6 +219,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1769014463,
       "sinceBlock": 24284492,
       "values": {
@@ -267,6 +270,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0xEADb3890e0c3aef13e0B1D1CCFC5218395BC27a6",
       "sinceTimestamp": 1740009671,
       "sinceBlock": 21883861,
       "values": {
@@ -308,6 +312,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "deployerAddress": "eth:0x8fc4cB81975cFE4652630b77E86EF0e4193Aa17e",
       "sinceTimestamp": 1743696419,
       "sinceBlock": 22189472,
       "values": {
@@ -330,6 +335,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1769014451,
       "sinceBlock": 24284491,
       "values": {
@@ -372,6 +378,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0xEADb3890e0c3aef13e0B1D1CCFC5218395BC27a6",
       "sinceTimestamp": 1740009695,
       "sinceBlock": 21883863,
       "values": {
@@ -723,6 +730,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1769014439,
       "sinceBlock": 24284490,
       "values": {
@@ -756,6 +764,7 @@
         "0xab9a40a5f27251ca4b4884dedef5a2b49a8928796a1fd0c6655f1623be961602"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x299174d47c243B5381c6062aBEFbfF915B601D85",
       "sinceTimestamp": 1734114251,
       "sinceBlock": 21395362,
       "values": {

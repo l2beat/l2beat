@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xc0f11b53e89e0980020100d134efe3e40a841e83
+
+# Diff at Tue, 05 May 2026 10:23:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776418304
+- current timestamp: 1776418304
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776418304 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierFflonk (eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract Zeronetwork Multisig (eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA167ca2984F7e08EFd4DDf9c5a4A21D66c07813E"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
 Generated with discovered.json: 0x1ecc05c6029684f954ee11dd3b6e2a48a020b5f2
 
 # Diff at Fri, 17 Apr 2026 09:32:49 GMT:

@@ -5,6 +5,7 @@ import {
   CoingeckoClient,
   type HttpClient,
   RpcClientCompat,
+  type RpcMetricsAggregator,
 } from '@l2beat/shared'
 import { assert, type UnixTime, unique } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
@@ -16,6 +17,7 @@ import { getBlockNumberTwoProviders } from './getBlockNumberTwoProviders'
 import { HighLevelProvider } from './HighLevelProvider'
 import type { IProvider, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
+import { MeteredJsonRpcProvider } from './MeteredJsonRpcProvider'
 import { MulticallClient } from './multicall/MulticallClient'
 import { ReorgAwareCache } from './ReorgAwareCache'
 import { type AllProviderStats, ProviderStats } from './Stats'
@@ -38,19 +40,29 @@ export class AllProviders {
     http: HttpClient,
     private discoveryCache: DiscoveryCache,
     private logger: Logger,
+    rpcMetricsAggregator?: RpcMetricsAggregator,
   ) {
     for (const config of chainConfigs) {
-      const baseProvider = new providers.StaticJsonRpcProvider(
-        config.rpcUrl,
-        config.chainId,
-      )
+      const recorder = rpcMetricsAggregator?.createRecorder({
+        rpcChain: config.name,
+        rpcClient: MeteredJsonRpcProvider.name,
+      })
+      const baseProvider = recorder
+        ? new MeteredJsonRpcProvider(config.rpcUrl, config.chainId, recorder)
+        : new providers.StaticJsonRpcProvider(config.rpcUrl, config.chainId)
       const eventProvider =
         config.eventRpcUrl === undefined
           ? baseProvider
-          : new providers.StaticJsonRpcProvider(
-              config.eventRpcUrl,
-              config.chainId,
-            )
+          : recorder
+            ? new MeteredJsonRpcProvider(
+                config.eventRpcUrl,
+                config.chainId,
+                recorder,
+              )
+            : new providers.StaticJsonRpcProvider(
+                config.eventRpcUrl,
+                config.chainId,
+              )
 
       const etherscanClient = getExplorerClient(http, config.explorer, logger)
       let blobClient: BlobClient | undefined

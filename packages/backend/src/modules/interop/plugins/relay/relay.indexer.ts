@@ -53,7 +53,6 @@ export class RelayIndexer extends ManagedChildIndexer {
 
   constructor(
     chains: { id: number; name: string }[],
-    oneSidedChains: string[],
     private configs: InteropConfigStore,
     private trackedChains: string[],
     private relayApiClient: RelayApiClient,
@@ -74,10 +73,7 @@ export class RelayIndexer extends ManagedChildIndexer {
       logger,
     )
 
-    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(
-      chains,
-      oneSidedChains,
-    )
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(chains)
   }
 
   override async start(): Promise<void> {

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../../api/api'
 import type {
   Field as ApiField,
   ApiProjectResponse,
@@ -9,8 +8,12 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
+import { SHOW_PERFORMANCE } from '../../../config/perf'
+import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
+import { PerfMeter } from './perf/PerfMeter'
+import { startPerfTicker } from './perf/perfStats'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
@@ -21,13 +24,13 @@ export function NodesPanel() {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
 
   useLoadNodes(response.data, project)
   useSynchronizeSelection()
+  if (SHOW_PERFORMANCE) {
+    useStartPerfTicker()
+  }
 
   if (response.isLoading) {
     return <LoadingState />
@@ -40,6 +43,7 @@ export function NodesPanel() {
     <div className="h-full w-full overflow-x-hidden">
       <div className="relative h-full w-full flex-1">
         <Viewport />
+        {SHOW_PERFORMANCE && <PerfMeter />}
         <Controls />
       </div>
     </div>
@@ -159,6 +163,12 @@ function useSynchronizeSelection() {
     selectAndFocus,
     loaded,
   ])
+}
+
+function useStartPerfTicker() {
+  useEffect(() => {
+    startPerfTicker()
+  }, [])
 }
 
 function toNodeFields(input: ApiField[]): Field[] {

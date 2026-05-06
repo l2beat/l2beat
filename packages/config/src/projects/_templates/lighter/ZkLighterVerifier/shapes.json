@@ -81,5 +81,17 @@
     "address": "eth:0x7B2cAc7b45E87d0392ACCf7c88764b7d2288938f",
     "chain": "ethereum",
     "blockNumber": 24921906
+  },
+  "ZkLighterVerifier_v0.0.13": {
+    "hash": "0x75000ee054e0747281836448e78e3cd5bf503d1f6a9e49a7e7ce4d7386542c8d",
+    "address": "eth:0xD76E5C5507C56D721BB9cE6601DCd379d09AFaD2",
+    "chain": "ethereum",
+    "blockNumber": 24971857
+  },
+  "ZkLighterVerifier_v0.0.14": {
+    "hash": "0x5bee4c4522233c699516029292bf16813f3dea03e484fe718e479ac2ace77653",
+    "address": "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82",
+    "chain": "ethereum",
+    "blockNumber": 25021112
   }
 }

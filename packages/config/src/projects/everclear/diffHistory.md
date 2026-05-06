@@ -1,3 +1,228 @@
+Generated with discovered.json: 0xbdc980f423e4c0fb074d607bbfba1144bd5079f9
+
+# Diff at Tue, 05 May 2026 10:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777390984
+- current timestamp: 1777390984
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390984 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0x149e3df73d9D48cb6573555De9256cc1456F50B5) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "eth:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x4eb4fB614e1aa3634513319F4Ec7334bC4321356) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0xA880b3fC75928695ac75e06793277aC4bEA84a3E) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0x98a426C8ED821cAaef1b4BF7D29b514dcef970C0"
+    }
+```
+
+```diff
+    contract EverclearFastconfirmerMultisig (eth:0xE1Fc24fef87bC5Af6024a8A0c12d7B835E497501) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xEeD1Edd7599F2991159e3Fe71CC2010E9590037e"
+    }
+```
+
+Generated with discovered.json: 0x333828c67b3b43106da7c29a83363d9a0719b8cb
+
+# Diff at Tue, 28 Apr 2026 15:45:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1774433274
+- current timestamp: 1777390984
+
+## Description
+
+Gelato Multisig (`eth:0xBeA2Bc85...`) member rotation: 5 signers removed (`0x349f3839`, `0xB65540bB`, `0x58edE8C6`, `0x28bB9385`, `0x5bE3E96C`), 1 added (`0x6a0A93Cd`). Threshold dropped 4→3 and total signers 9→5 (44% → 60%). Shared multisig — same change observed on `ethernity`, `ink`, `lisk`, `reya`, and `educhain` (arb1).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.1:
+-        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.2:
+-        "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.3:
+-        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.5:
+-        "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd26515f1ce08b5f44e92f680789d05d1d7c18fa6
 
 # Diff at Wed, 25 Mar 2026 10:08:59 GMT:

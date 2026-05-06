@@ -13,6 +13,7 @@ import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration, getDurationSplit } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import { flowsMapToSorted } from './getFlows'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -105,6 +106,7 @@ export function getProtocolEntries(
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       name: project.interopConfig.name ?? project.name,
       shortName: project.interopConfig.shortName,
+      description: project.interopConfig.description,
       bridgeTypes,
       isAggregate: project.interopConfig.isAggregate,
       subgroup: subgroupProject
@@ -126,10 +128,7 @@ export function getProtocolEntries(
       maxTransferValueUsd: data.maxTransferValueUsd,
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
-      netMintedValue:
-        data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
-          ? data.mintedValueUsd - data.burnedValueUsd
-          : undefined,
+      netMintedValue: getNetMintedValueUsd(data),
       snapshotTimestamp,
     })
   }
@@ -174,12 +173,7 @@ function getByBridgeTypeData(
             TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.lockAndMint.flows, selection),
-          netMintedValue:
-            data.lockAndMint.mintedValueUsd !== undefined &&
-            data.lockAndMint.burnedValueUsd !== undefined
-              ? data.lockAndMint.mintedValueUsd -
-                data.lockAndMint.burnedValueUsd
-              : undefined,
+          netMintedValue: getNetMintedValueUsd(data.lockAndMint),
         }
       : undefined,
     nonMinting: data.nonMinting
@@ -230,6 +224,30 @@ function getByBridgeTypeData(
             TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.burnAndMint.flows, selection),
+        }
+      : undefined,
+    unknown: data.unknown
+      ? {
+          volume: data.unknown.volume,
+          transferCount: data.unknown.transferCount,
+          averageValue:
+            data.unknown.identifiedTransferCount > 0
+              ? data.unknown.volume / data.unknown.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.unknown.tokens,
+              tokensDetailsMap,
+              interopProjects: [project],
+              durationSplit: undefined,
+              unknownTransfersCount:
+                data.unknown.transferCount -
+                data.unknown.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.unknown.flows, selection),
         }
       : undefined,
   }

@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x00091ca2411b412e6fcee534af76610c308a8a36
+
+# Diff at Tue, 05 May 2026 10:22:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1770824014
+- current timestamp: 1770824014
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770824014 (main branch discovery), not current.
+
+```diff
+    contract RollupEventInbox (base:0x0961428Ce999C15f5E2624d0bEbd9729387e8185) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract Outbox (base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x133f066C470d044dB3889359fC5B542d016B5B92) {
+    +++ description: None
+      deployerAddress:
++        "base:0xC4E7263Dd870A29f1cFe438D1A7DB48547B16888"
+    }
+```
+
+```diff
+    contract ERC20Gateway (base:0x167D43d1D60DE2320B5E143F9c6a058092A913C2) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract GatewayRouter (base:0x3CaA4581e7bA1aF2607e0198aF4E4C208f09c98b) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x615b81747e819e0dB25c13570D5DA45Ef9bc81B3) {
+    +++ description: None
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (base:0x760C1B5Fe95B2C66D67662Ec544975BDbb129645) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (base:0x76600101E42Dd9355D29741288407923268C06ed) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      deployerAddress:
++        "base:0x45ed27b6c656959Ea3ee4aFDf28cc43f6218b118"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (base:0x841A6E8230CA0f563a841Eb6BF8dfe129672Bdc5) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Inbox (base:0x8635f49481A90DeD18E8D0eB374028C4b39E700F) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract OneStepProver0 (base:0x86c239F206A0878FB07243ABb4aFa932e6Ace911) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract OneStepProverMath (base:0x9F5F2dA42BE9833654C1D702e2E8cfFfC7a0A6A5) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "base:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
++        "base:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract Bridge (base:0xcdf10130c75D42a3880Ae521734EaA8631aC2905) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (base:0xd935fb2fA935Ba3D60cc001D757B0E45f540C6f1) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
++        "base:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract SequencerInbox (base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "base:0xF1843FaD6c08CeEfE2E4E5fB05Ac0E44c000F164"
+    }
+```
+
 Generated with discovered.json: 0x81760eaffac29e631ecb4aef13b4da336270aedd
 
 # Diff at Wed, 11 Feb 2026 15:34:49 GMT:

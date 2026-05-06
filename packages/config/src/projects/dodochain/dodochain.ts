@@ -11,6 +11,7 @@ export const dodochain: ScalingProject = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Birdlayer',
+    aliases: ['DODO Chain', 'DODOChain'],
     slug: 'dodochain',
     description:
       'Birdlayer is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',

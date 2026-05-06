@@ -19,6 +19,7 @@ import type {
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
 
@@ -39,6 +40,7 @@ type CommonRow = {
 function getCommonColumns<T extends CommonRow>(
   columnHelper: ColumnHelper<T>,
   showTopProtocolColumn?: boolean,
+  hideFlowsColumn?: boolean,
 ) {
   return compact([
     showTopProtocolColumn &&
@@ -64,6 +66,10 @@ function getCommonColumns<T extends CommonRow>(
             </div>
           )
         },
+        meta: {
+          tooltip:
+            'The protocol with the highest total transfer volume for this token over the past 24 hours.',
+        },
       }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
@@ -78,6 +84,8 @@ function getCommonColumns<T extends CommonRow>(
       },
       meta: {
         align: 'right',
+        tooltip:
+          'The total USD value of all token transfers completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor((row) => row.transferCount, {
@@ -89,6 +97,8 @@ function getCommonColumns<T extends CommonRow>(
       ),
       meta: {
         align: 'right',
+        tooltip:
+          'The total number of token transfer transactions completed in the past 24 hours.',
       },
     }),
     columnHelper.accessor(
@@ -105,13 +115,16 @@ function getCommonColumns<T extends CommonRow>(
       {
         header: 'Last 24h avg.\ntransfer time',
         cell: (ctx) => {
-          if (ctx.row.original.avgDuration === null) return EM_DASH
+          if (ctx.row.original.avgDuration === null)
+            return <InteropNoDataBadge />
           return (
             <AvgDurationCell averageDuration={ctx.row.original.avgDuration} />
           )
         },
         meta: {
           align: 'right',
+          tooltip:
+            'The average time it takes for a transfer to be received on the destination chain, measured over the past 24 hours.',
         },
       },
     ),
@@ -172,20 +185,29 @@ function getCommonColumns<T extends CommonRow>(
           </Tooltip>
         )
       },
-    }),
-    columnHelper.accessor(
-      (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
-      {
-        id: 'flows',
-        header: 'Flows',
-        cell: (ctx) => {
-          const flows = ctx.row.original.flows
-          if (!flows || flows.length === 0) return EM_DASH
-
-          return <TokenFlowsCell flows={flows} />
-        },
+      meta: {
+        tooltip:
+          'The average USD value per token transfer completed in the past 24 hours.',
       },
-    ),
+    }),
+    !hideFlowsColumn &&
+      columnHelper.accessor(
+        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+        {
+          id: 'flows',
+          header: 'Flows',
+          cell: (ctx) => {
+            const flows = ctx.row.original.flows
+            if (!flows || flows.length === 0) return EM_DASH
+
+            return <TokenFlowsCell flows={flows} />
+          },
+          meta: {
+            tooltip:
+              'The distribution of this token volume across source and destination chains over the past 24 hours.',
+          },
+        },
+      ),
   ])
 }
 
@@ -193,9 +215,11 @@ const tokenColumnHelper = createColumnHelper<TokenRow>()
 export const getTopTokensColumns = ({
   showNetMintedValueColumn,
   showTopProtocolColumn,
+  hideFlowsColumn,
 }: {
   showNetMintedValueColumn?: boolean
   showTopProtocolColumn?: boolean
+  hideFlowsColumn?: boolean
 } = {}) =>
   compact([
     tokenColumnHelper.display({
@@ -235,16 +259,23 @@ export const getTopTokensColumns = ({
         cellClassName: 'pl-0!',
       },
     }),
-    ...getCommonColumns(tokenColumnHelper, showTopProtocolColumn),
+    ...getCommonColumns(
+      tokenColumnHelper,
+      showTopProtocolColumn,
+      hideFlowsColumn,
+    ),
     showNetMintedValueColumn &&
       tokenColumnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',
         meta: {
           align: 'right',
           headClassName: 'text-2xs',
+          tooltip:
+            "The USD value of tokens minted through the protocol minus the USD value of tokens that were bridged back, or burned. It represents the net USD value added to the protocol's total value locked.",
         },
         cell: (ctx) => {
-          if (ctx.row.original.netMintedValue === undefined) return EM_DASH
+          if (ctx.row.original.netMintedValue === undefined)
+            return <InteropNoDataBadge />
           return (
             <span className="font-medium text-label-value-15">
               {formatCurrency(ctx.row.original.netMintedValue, 'usd')}

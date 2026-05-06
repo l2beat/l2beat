@@ -1,3 +1,222 @@
+Generated with discovered.json: 0xe559ca42eaaf8548a15916914ddd145afc7e8952
+
+# Diff at Tue, 05 May 2026 10:22:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776085185
+- current timestamp: 1776085185
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776085185 (main branch discovery), not current.
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      deployerAddress:
++        "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x235000876bd58336C802B3546Fc0250f285fCc79) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract QuoteVerifier (arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      deployerAddress:
++        "arb1:0xDf841B239bE7a6b37366005107069b7410da4Ff9"
+    }
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x7E67B50d510929610f840fb09707feA01b8E457B) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xE1d32C985825562edAa906fAC39295370Db72195) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "arb1:0x02867114B27d686f3565E2060424e985a1E565f5"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      deployerAddress:
++        "arb1:0x8Cde072E84932857262648C100d0A2227c495a55"
+    }
+```
+
 Generated with discovered.json: 0x50ccae477e3687629d42c61439f5fb88155a2806
 
 # Diff at Tue, 14 Apr 2026 10:18:02 GMT:

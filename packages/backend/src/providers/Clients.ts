@@ -20,6 +20,7 @@ import {
   PolkadotRpcClient,
   RpcClient,
   RpcClientCompat,
+  RpcMetricsAggregator,
   StarkexClient,
   StarknetClient,
   type SvmBlockClient,
@@ -52,6 +53,7 @@ export interface Clients {
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: IRpcClient[]
+  rpcMetricsAggregator: RpcMetricsAggregator
   starknetClients: StarknetClient[]
   near: NearClient | undefined
   espresso: EspressoClient | undefined
@@ -60,6 +62,9 @@ export interface Clients {
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
+  const rpcMetricsAggregator = new RpcMetricsAggregator({
+    logger: logger.for(RpcMetricsAggregator.name),
+  })
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -114,6 +119,7 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetricsAggregator,
                 timeout: blockApi.timeout,
               })
             : new RpcClient({
@@ -124,6 +130,10 @@ export function initClients(config: Config, logger: Logger): Clients {
                 retryStrategy: blockApi.retryStrategy,
                 logger,
                 multicallClient,
+                rpcMetrics: rpcMetricsAggregator.createRecorder({
+                  rpcChain: chain.name,
+                  rpcClient: RpcClient.name,
+                }),
                 timeout: blockApi.timeout,
               })
           blockClients.push(rpcClient)
@@ -386,6 +396,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     getStarknetClient,
     getRpcClient,
     rpcClients,
+    rpcMetricsAggregator,
     starknetClients,
     voyager: voyagerClient,
     lighter: lighterClient,

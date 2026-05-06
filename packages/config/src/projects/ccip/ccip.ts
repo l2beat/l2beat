@@ -8,6 +8,8 @@ export const ccip: BaseProject = {
   shortName: 'CCIP',
   addedAt: UnixTime(1769526436),
   interopConfig: {
+    description:
+      "Multichain token framework using the CCIP messaging protocol, validated by Chainlink's offchain reporting (OCR) and 'decentralised oracle network' (DON).",
     plugins: [
       {
         plugin: 'ccip',

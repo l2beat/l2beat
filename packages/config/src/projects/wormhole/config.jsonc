@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "wormhole",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 50,
+  "initialAddresses": [
+    "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+    "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
+    "eth:0xd31a59c85ae9d8edefec411d448f90841571b89c"
+  ],
+  "names": {
+    "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": "WormholeCore",
+    "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": "TokenBridge",
+    "eth:0xd31a59c85ae9d8edefec411d448f90841571b89c": "WSOL",
+    "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": "TokenImplementation"
+  },
+  "overrides": {
+    "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": {
+      "description": "Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge."
+    },
+    "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": {
+      "description": "Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.",
+      "fields": {
+        "solanaTokenBridge": {
+          "description": "The Solana Token Bridge emitter address trusted for Token Bridge VAAs from Solana.",
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "handler": {
+            "type": "call",
+            "method": "bridgeContracts",
+            "args": [1]
+          }
+        },
+        "wsolWrappedAsset": {
+          "description": "The Ethereum wrapped token contract for native SOL bridged from Solana through Wormhole Token Bridge.",
+          "severity": "HIGH",
+          "type": "EXTERNAL",
+          "handler": {
+            "type": "call",
+            "method": "wrappedAsset",
+            "args": [
+              1,
+              "0x069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f00000000001"
+            ]
+          }
+        },
+        "isWSOLWrappedAsset": {
+          "description": "True if the WSOL token is recognized by the Token Bridge as a wrapped asset.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": {
+            "type": "call",
+            "method": "isWrappedAsset",
+            "args": ["0xd31a59c85ae9d8edefec411d448f90841571b89c"]
+          }
+        },
+        "wsolEscrowedOnEthereum": {
+          "description": "Amount accounted by the Token Bridge as WSOL escrowed on Ethereum. It is zero for this route because WSOL is a wrapped asset on Ethereum; outbound transfers burn WSOL instead of locking it in the Ethereum escrow.",
+          "handler": {
+            "type": "call",
+            "method": "outstandingBridged",
+            "args": ["0xd31a59c85ae9d8edefec411d448f90841571b89c"]
+          }
+        }
+      }
+    },
+    "eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c": {
+      "category": "bridge-external",
+      "description": "WSOL is the Wormhole-wrapped ERC20 representation of native SOL on Ethereum. The Token Bridge owns this token and mints or burns it after accepting valid Token Bridge VAAs for the Solana route. The native SOL backing is escrowed on Solana, not Ethereum.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "fields": {
+        "chainId": {
+          "description": "Wormhole chain id of the native asset represented by this wrapped token.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
+        },
+        "nativeContract": {
+          "description": "The native Solana asset identifier represented by this wrapped token.",
+          "severity": "HIGH",
+          "type": "EXTERNAL"
+        },
+        "owner": {
+          "description": "The Token Bridge contract that can mint, burn, and update metadata for this wrapped token.",
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "mint or burn WSOL after the Token Bridge accepts a valid Wormhole transfer VAA."
+            },
+            {
+              "type": "interact",
+              "description": "update WSOL metadata after the Token Bridge accepts a valid Wormhole attestation VAA."
+            }
+          ]
+        },
+        "decimals": {
+          "description": "Decimals used by the WSOL ERC20 representation.",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        }
+      }
+    }
+  }
+}

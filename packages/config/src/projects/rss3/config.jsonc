@@ -12,6 +12,19 @@
     "eth:0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d": "WithdrawalOverwriterMultisig"
   },
   "overrides": {
+    "eth:0x4cbab69108Aa72151EDa5A3c164eA86845f18438": {
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.",
+      "fields": {
+        "operator": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can call sweep(token, to, amount) to transfer any ERC-20 held by the L1StandardBridge to an arbitrary address — the mechanism RSS3 is using to move bridge escrow during the VSL → Ethereum migration."
+            }
+          ]
+        }
+      }
+    },
     "eth:0x6A12432491bbbE8d3babf75F759766774C778Db4": {
       "displayName": "OptimismPortal",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",

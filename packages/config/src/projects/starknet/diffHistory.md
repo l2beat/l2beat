@@ -1,3 +1,313 @@
+Generated with discovered.json: 0xaf67142d334cad6957e03b16f4d506881d427494
+
+# Diff at Tue, 05 May 2026 10:23:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776761835
+- current timestamp: 1776761835
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776761835 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract LORDSBridge (eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      deployerAddress:
++        "eth:0xe50EdeAf57E63dD4a93d1B075bd64395011Be96C"
+    }
+```
+
+```diff
+    contract DAIBridge (eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
++        "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract WBTCBridge (eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract FXSBridge (eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract Starkware Multisig 4 (eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x030ceEE5D4CBc304287234720B11E00f47695755"
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299"
+    }
+```
+
+```diff
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      deployerAddress:
++        "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d"
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract USDTBridge (eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xCd7F67F78E76b2797678dAde0246466459b5D259"
+    }
+```
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x194E22F49BC3f58903866d55488E1e9e8d69b517"
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      deployerAddress:
++        "eth:0x555134E9d31ECe4CEa6F83674A887cDb150dA47A"
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xa126705c0d6B5dd65279253Ea2C8B19A04b96e60"
+    }
+```
+
+```diff
+    contract rETHBridge (eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract Safe (eth:0xd6FD2d2B18207a3b1A3d45C1ccA8c5624Ca82041) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x32369C32113D6A85d4B71faA40DDd048187DCe79"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract FRAXBridge (eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract MultiBridge (eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract UNIBridge (eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+Generated with discovered.json: 0x765373efc5de4d6f58568e049e4de038d6844f98
+
+# Diff at Tue, 21 Apr 2026 09:15:38 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1769510717
+- current timestamp: 1776761835
+
+## Description
+
+Starknet v0.14.2 upgrade: https://x.com/StarkWareLtd/status/2046232501887062448.
+
+Upgraded Rollup contract with minimal diff: https://disco.l2beat.com/diff/eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04/eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A (mainly added safety checks on L1 -> L2 msg hash computation).
+
+Also upgraded aggregation and starknet os programs: sources are here https://github.com/starkware-libs/sequencer/tree/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core.
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
++        "0x4ebd3e71fba7928b1daa4cdd93a1081aa0b578578cc8e6aada6a3b86b057fcb5"
+      values.$implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
+      values.$pastUpgrades.10:
++        ["2026-04-20T11:53:35.000Z","0xb2fd817ea47d39435e0b08825964bcb0b2ae08ebc4c5a47954f9b169235ed1c1",["eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.aggregatorHashMapped:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.aggregatorProgramHash:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.identify:
+-        "StarkWare_Starknet_2025_10"
++        "StarkWare_Starknet_2026_11"
+      values.implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      values.programHashHistory.13:
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+      values.programHashMapped:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A:
++        "Starknet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/Starknet.sol                          | 29 +++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x7f3a2e1fac2b6f5c35d77e1b1f0b91d087e97743
 
 # Diff at Tue, 27 Jan 2026 10:46:22 GMT:

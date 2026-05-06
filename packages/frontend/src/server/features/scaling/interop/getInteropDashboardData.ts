@@ -32,7 +32,7 @@ export type InteropDashboardData = {
 
 export async function getInteropDashboardData(
   params: InteropDashboardParams,
-): Promise<InteropDashboardData> {
+): Promise<InteropDashboardData | null> {
   if (env.MOCK) {
     return getMockInteropDashboardData()
   }
@@ -43,6 +43,18 @@ export async function getInteropDashboardData(
 
   const { records, snapshotTimestamp } =
     await getLatestAggregatedInteropTransferWithTokens(params, params.type)
+
+  if (records.length === 0) {
+    return null
+  }
+
+  const identifiedTransferCount = records.reduce(
+    (acc, record) => acc + record.identifiedCount,
+    0,
+  )
+  if (identifiedTransferCount === 0) {
+    return null
+  }
 
   const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
@@ -167,6 +179,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     slug: project.slug,
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
+    description: project.interopConfig.description,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),

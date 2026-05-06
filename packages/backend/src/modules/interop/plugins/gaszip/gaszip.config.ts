@@ -1,10 +1,22 @@
+import type { Logger } from '@l2beat/backend-tools'
+import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { TimeLoop } from '../../../../tools/TimeLoop'
+import {
+  defineConfig,
+  type InteropConfigPlugin,
+  type InteropConfigStore,
+} from '../../engine/config/InteropConfigStore'
+import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 import { defineNetworks } from '../types'
 
-export interface GasZipNetwork {
+export interface GasZipChain {
   chain: string
   gaszipId: number
   chainId: number
+}
+
+export interface GasZipNetwork extends GasZipChain {
   solver: EthereumAddress
   depositEoa: EthereumAddress
   depositContract: EthereumAddress
@@ -30,6 +42,9 @@ export const DEFAULT_DEPOSIT_CONTRACT_ADDRESS = EthereumAddress(
 export const DEFAULT_SOLVER_EOA_ADDRESS = EthereumAddress(
   '0x8C826F795466E39acbfF1BB4eEeB759609377ba1',
 )
+export const GasZipConfig = defineConfig<GasZipChain[]>('gaszip')
+
+const GASZIP_CHAINS_URL = 'https://backend.gas.zip/v2/chains'
 
 function gasZipNetwork(input: GasZipNetworkInput): GasZipNetwork {
   return {
@@ -41,6 +56,9 @@ function gasZipNetwork(input: GasZipNetworkInput): GasZipNetwork {
 }
 
 // https://dev.gas.zip/gas/chain-support/outbound
+// https://dev.gas.zip/gas/api/chains
+// live source for chain name / chainId / short-id mapping:
+// https://backend.gas.zip/v2/chains
 // chainconfeeg
 export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
   gasZipNetwork({
@@ -147,12 +165,152 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
   }),
 ])
 
-export function getChainByGaszipId(
-  gaszipId: number,
-): GasZipNetwork | undefined {
-  return GASZIP_NETWORKS.find((n) => n.gaszipId === gaszipId)
+interface GasZipApiChain {
+  name: string
+  chain: number
+  short: number
+  mainnet: boolean
 }
 
-export function getChainNameByGaszipId(gaszipId: number): string {
-  return getChainByGaszipId(gaszipId)?.chain ?? `unknown_${gaszipId}`
+interface GasZipApiResponse {
+  chains: GasZipApiChain[]
+}
+
+function normalizeGasZipChainName(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '')
+}
+
+function buildBootstrapChainNamesByChainId(
+  chains: { id: number; name: string }[],
+): Map<number, string> {
+  const counts = new Map<number, number>()
+  for (const chain of chains) {
+    counts.set(chain.id, (counts.get(chain.id) ?? 0) + 1)
+  }
+
+  return new Map(
+    chains
+      .filter((chain) => counts.get(chain.id) === 1)
+      .map((chain) => [chain.id, chain.name]),
+  )
+}
+
+function toGasZipChain(
+  entry: GasZipApiChain,
+  bootstrapChainNamesByChainId: Map<number, string>,
+): GasZipChain | undefined {
+  if (
+    !entry.mainnet ||
+    !Number.isSafeInteger(entry.chain) ||
+    !Number.isSafeInteger(entry.short) ||
+    entry.short <= 0
+  ) {
+    return
+  }
+
+  const canonicalName = bootstrapChainNamesByChainId.get(entry.chain)
+  const chain = canonicalName ?? normalizeGasZipChainName(entry.name)
+
+  if (chain.length === 0) return
+
+  return {
+    chain,
+    gaszipId: entry.short,
+    chainId: entry.chain,
+  }
+}
+
+export function getChainByGaszipId(
+  gaszipId: number,
+  configs?: InteropConfigStore,
+): GasZipChain | undefined {
+  return (
+    configs?.get(GasZipConfig)?.find((n) => n.gaszipId === gaszipId) ??
+    GASZIP_NETWORKS.find((n) => n.gaszipId === gaszipId)
+  )
+}
+
+export function getChainNameByGaszipId(
+  gaszipId: number,
+  configs?: InteropConfigStore,
+): string {
+  return getChainByGaszipId(gaszipId, configs)?.chain ?? `unknown_${gaszipId}`
+}
+
+export class GasZipConfigPlugin
+  extends TimeLoop
+  implements InteropConfigPlugin
+{
+  provides = [GasZipConfig]
+
+  private readonly bootstrapChainNamesByChainId: Map<number, string>
+
+  constructor(
+    chains: { id: number; name: string }[],
+    private store: InteropConfigStore,
+    protected logger: Logger,
+    private http: HttpClient,
+    intervalMs: number,
+  ) {
+    super({ intervalMs })
+    this.logger = logger.for(this).tag({ tag: GasZipConfig.key })
+    this.bootstrapChainNamesByChainId =
+      buildBootstrapChainNamesByChainId(chains)
+  }
+
+  async run() {
+    const previous = this.store.get(GasZipConfig)
+    const latest = await this.getLatestNetworks()
+
+    const reconciled = reconcileNetworks(previous, latest)
+
+    if (reconciled.removed.length > 0) {
+      this.logger.info('Upstream networks removed', {
+        plugin: GasZipConfig.key,
+        removed: reconciled.removed,
+      })
+    }
+
+    if (reconciled.updated.length > 0) {
+      this.logger.info('Networks updated', {
+        plugin: GasZipConfig.key,
+      })
+      this.store.set(GasZipConfig, reconciled.updated)
+    }
+  }
+
+  async getLatestNetworks(): Promise<GasZipChain[]> {
+    const response = await this.http.fetchRaw(GASZIP_CHAINS_URL, {
+      timeout: 10_000,
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+    }
+
+    const json: GasZipApiResponse = await response.json()
+    const usedNames = new Set<string>()
+    const networks: GasZipChain[] = []
+
+    for (const entry of json.chains) {
+      const network = toGasZipChain(entry, this.bootstrapChainNamesByChainId)
+      if (!network) continue
+
+      if (usedNames.has(network.chain)) {
+        const uniqueChain = `${network.chain}_${network.gaszipId}`
+        usedNames.add(uniqueChain)
+        networks.push({
+          ...network,
+          chain: uniqueChain,
+        })
+        continue
+      }
+
+      usedNames.add(network.chain)
+      networks.push(network)
+    }
+
+    networks.sort((a, b) => a.gaszipId - b.gaszipId)
+    return networks
+  }
 }

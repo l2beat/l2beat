@@ -36,19 +36,27 @@ const badgeVariants = cva('inline rounded text-center font-medium', {
   },
 })
 
-export function Badge(props: BadgeProps) {
+export function Badge({
+  className,
+  children,
+  type,
+  size,
+  padding,
+  ...rest
+}: BadgeProps) {
   return (
     <div
       className={cn(
         badgeVariants({
-          type: props.type,
-          size: props.size,
-          padding: props.padding,
+          type: type,
+          size: size,
+          padding: padding,
         }),
-        props.className,
+        className,
       )}
+      {...rest}
     >
-      {props.children}
+      {children}
     </div>
   )
 }

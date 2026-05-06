@@ -27,7 +27,9 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
+
 import { getAltDaStage } from '../common/stages/getAltDaStage'
+
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -409,6 +411,7 @@ function opStackCommon(
           : fraudProofType === 'OpSuccinctFDP'
             ? {
                 type: 'Optimistic',
+                name: 'OP Succinct Lite',
                 zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
@@ -581,7 +584,13 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: Each OP stack chain uses the state validation mechanism of the underlying chain for its canonical bridge.',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }

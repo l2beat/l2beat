@@ -80,6 +80,7 @@ export function TokenCount({
         id={undefined}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        apiSelection={selectionForApi}
         title="All tokens & pairs by volume"
       />
     </PrimaryCard>

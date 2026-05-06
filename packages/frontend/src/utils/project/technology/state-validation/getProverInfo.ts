@@ -11,7 +11,10 @@ export function getProverInfo(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
+  allProjects: Project<
+    never,
+    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
+  >[],
 ): StateValidationSectionProps['proverInfo'] {
   const zkCatalogProject = zkCatalogProjects.find(
     (x) => x.id === project.scalingInfo.proofSystem?.zkCatalogId,
@@ -34,6 +37,7 @@ export function getProverInfo(
     name: zkCatalogProject.name,
     icon: manifest.getUrl(`/icons/${zkCatalogProject.slug}.png`),
     href: `/zk-catalog/${zkCatalogProject.slug}`,
+    quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
     trustedSetups,
   }
 }

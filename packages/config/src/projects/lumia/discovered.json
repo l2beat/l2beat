@@ -76,6 +76,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "System contract defining the prism Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "sinceTimestamp": 1719499031,
       "sinceBlock": 20183666,
       "values": {

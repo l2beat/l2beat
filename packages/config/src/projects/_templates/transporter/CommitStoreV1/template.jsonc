@@ -1,26 +1,69 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["getTransmitters"],
+  "ignoreRelatives": ["getDynamicConfig", "getStaticConfig", "owner"],
   "ignoreInWatchMode": [
     "getExpectedNextSequenceNumber",
     "getLatestPriceEpochAndRound"
   ],
   "fields": {
+    "ocrConfig": {
+      "description": "Latest OCR2 signer and transmitter config for committing Merkle roots on this CommitStore.",
+      "handler": {
+        "type": "event",
+        "select": [
+          "configCount",
+          "signers",
+          "transmitters",
+          "f",
+          "offchainConfigVersion"
+        ],
+        "set": {
+          "event": "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore."
+        }
+      ]
+    },
     "priceRegistry": {
       "handler": {
         "type": "call",
         "args": [],
         "method": "getDynamicConfig"
       },
-      "edit": ["get", "priceRegistry"]
+      "edit": ["get", "priceRegistry"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "provide gas and token price data used when committing CCIP state."
+        }
+      ]
     },
     "getStaticConfig": {
       "edit": [
-        "shape",
-        ["chainSelector", ["format", "ChainIdMap"]],
-        ["sourceChainSelector", ["format", "ChainIdMap"]],
+        "pick",
+        "chainSelector",
+        "sourceChainSelector",
         "onRamp",
         "armProxy"
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "define the trusted source OnRamp and ARM/RMN safety gate for commits accepted by this CommitStore."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters."
+        }
       ]
     }
   }

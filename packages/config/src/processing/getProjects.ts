@@ -69,6 +69,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     id: p.id,
     name: p.display.name,
     shortName: p.display.shortName,
+    aliases: p.display.aliases,
     slug: p.display.slug,
     addedAt: p.addedAt,
 

@@ -8,6 +8,7 @@ export const stone: BaseProject = {
   slug: 'stone',
   name: 'Stone',
   shortName: undefined,
+  aliases: ['StarkWare'],
   addedAt: UnixTime.fromDate(new Date('2025-07-14')),
   statuses: {
     yellowWarning: undefined,
@@ -31,6 +32,7 @@ export const stone: BaseProject = {
   },
   zkCatalogInfo: {
     creator: 'Starkware',
+    quantumResistant: true,
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stone,

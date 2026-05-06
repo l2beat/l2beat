@@ -8,6 +8,7 @@ export const roninNetwork: ScalingProject = upcomingL2({
   addedAt: UnixTime(1754639625),
   display: {
     name: 'Ronin',
+    aliases: ['Sky Mavis', 'Axie Infinity'],
     slug: 'ronin-network',
     description:
       "Ronin is an Ethereum L2 running the OP rollup stack built for gaming. The network's key innovation is offering high throughput and low fees optimized for NFT transactions and in-game economies, powering ecosystems like Axie Infinity.",

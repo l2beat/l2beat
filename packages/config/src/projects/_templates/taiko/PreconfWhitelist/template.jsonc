@@ -51,6 +51,7 @@
   "ignoreInWatchMode": [
     "getOperatorForCurrentEpoch",
     "getOperatorForNextEpoch",
-    "operatorCount"
+    "operatorCount",
+    "latestActivationEpoch"
   ]
 }

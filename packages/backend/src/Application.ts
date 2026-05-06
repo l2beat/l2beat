@@ -4,6 +4,7 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
+import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
@@ -46,18 +47,35 @@ export class Application {
       blockProcessors: [],
     }
 
+    // Modules with TRPC
+    const interopModule = createInteropModule(deps)
+    const trackedTxsModule = createTrackedTxsModule(deps)
+
+    const modulesWithTrpc = [interopModule, trackedTxsModule]
+
+    const trpcContributions = modulesWithTrpc.flatMap((module) =>
+      module?.trpc ? [module.trpc] : [],
+    )
+    const backofficeModule = createBackofficeModule({
+      ...deps,
+      trpcContributions,
+    })
+
+    // All-modules entrypoint
     const modules: (ApplicationModule | undefined)[] = [
       initActivityModule(deps),
       initDataAvailabilityModule(deps),
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
-      createTrackedTxsModule(deps),
+      trackedTxsModule,
       initTvsModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
-      createInteropModule(deps),
       createBlockSyncModule(deps),
+
+      interopModule,
+      backofficeModule,
     ]
 
     const apiServer = new ApiServer(

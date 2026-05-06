@@ -83,7 +83,13 @@ Mirror existing patterns. At minimum add two bidirectional standard bridge examp
 
 The main `opstack` group should cover direct portal deposits so the generic plugin path is exercised.
 
-## 5. Run examples to verify
+## 5. Register the chain's `interopConfig`
+
+Without this, matched transfers never reach `AggregatedInteropTransfer` and the dashboard shows nothing for the canonical bridge. Add an `interopConfig` block to `packages/config/src/projects/<chain>/<chain>.ts` registering the `opstack` and `opstack-standardbridge` plugins. Copy from `ink/ink.ts`.
+
+Then from `packages/frontend` run `pnpm og-images && pnpm tinify` and commit the new `static/meta-images/interop/projects/<chain>/opengraph-image.png` plus `scripts/tinify/metadata.json`.
+
+## 6. Run examples to verify
 
 ```bash
 cd packages/backend
@@ -99,3 +105,4 @@ All messages/transfers for the new chain should report `PASS`.
 - **Using implementation addresses instead of proxies.** Implementations are shared across OP Stack chains and emit no events for your specific rollup. Always use the proxy.
 - **Custom gas token chains.** If the chain uses a non-ETH gas token (Celo-style), set `l1CustomGasToken` and expect native transfers to reference that ERC-20 on L1.
 - **No withdrawals in recent range.** The script searches the recent 10k L1 blocks for `WithdrawalFinalized`. Rollups with low activity may need a larger `l1Blocks` argument.
+- **Missing `interopConfig` on the project.** Examples pass and rows appear in `InteropTransfer`, but the dashboard shows nothing for the canonical bridge. `getInteropAggregationConfigs` iterates projects with `interopConfig`, so a chain without one is silently skipped from aggregation.

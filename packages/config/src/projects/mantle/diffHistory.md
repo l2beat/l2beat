@@ -1,3 +1,183 @@
+Generated with discovered.json: 0x2fdaa22b42ce2471cfb1d76eaa9bc0d5bddf837a
+
+# Diff at Tue, 05 May 2026 10:22:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777038258
+- current timestamp: 1777038258
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777038258 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x34e17BaAdec22651c5d0080042C216cbebe237bE"
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1MantleToken (eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      deployerAddress:
++        "eth:0xc22De539e70144c8D54E5922bF486DE78900Bb9F"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      deployerAddress:
++        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2A2954F3989a83Cc43DD58B0f038D5F276f21333"
+    }
+```
+
+Generated with discovered.json: 0x374ea1a79e3c9d9cce4f42a0e7bc229ecc004105
+
+# Diff at Fri, 24 Apr 2026 13:45:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bbeac755425cc0dab000cb7f8f3fa390682be9b7 block: 1776375430
+- current timestamp: 1777038258
+
+## Description
+
+Arsia fee mechanics activated: owner populated the Arsia-era SystemConfig fields that had been zero since the v1.4.0 upgrade. `basefeeScalar` set to 169019, `daFootprintGasScalar` to 400, `eip1559Denominator` to 50, `eip1559Elasticity` to 4, `minBaseFee` to 50 gwei, `operatorFeeScalar` to 100000000. `gasLimit` decreased from 200B (a pre-Arsia placeholder above the 500M cap) to a normal 60M.
+
+OPSuccinctL2OutputOracle rotated SP1 verification keys: `aggregationVkey` → `0x0022379400ea3157...`, `rangeVkeyCommitment` → `0x08666bcf03c2240b...`. Program hashes regenerated from [mantle-xyz/op-succinct@v2.2.0-beta.8](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.8) (commit `8542b244fac50b3db2cb027c6282b9f42fd81af9`) and added to `programHashes.ts` as `successful`.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654"
++        "0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08"
+      values.rangeVkeyCommitment:
+-        "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a"
++        "0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      values.basefeeScalar:
+-        0
++        169019
+      values.daFootprintGasScalar:
+-        0
++        400
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        50
+      values.eip1559Elasticity:
+-        0
++        4
++++ description: Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage.
++++ severity: LOW
+      values.gasLimit:
+-        200000000000
++        60000000
+      values.minBaseFee:
+-        0
++        50000000000
+      values.operatorFeeScalar:
+-        0
++        100000000
+    }
+```
+
 Generated with discovered.json: 0x73f9634ad29a5b09ba32aa344b854881e170810c
 
 # Diff at Thu, 16 Apr 2026 21:38:17 GMT:

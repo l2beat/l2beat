@@ -19,6 +19,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
+  isMayanSwiftSettlementSender,
   MAYAN_EVM_CHAINS,
   MAYAN_PROTOCOLS,
   toChainSpecificAddresses,
@@ -42,7 +43,10 @@ import {
   type MatchResult,
   Result,
 } from './types'
-import { WormholeConfig } from './wormhole/wormhole.config'
+import {
+  getWormholeCoreAddresses,
+  WormholeConfig,
+} from './wormhole/wormhole.config'
 
 // Event signatures
 const logMessagePublishedLog =
@@ -72,6 +76,9 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
       MAYAN_EVM_CHAINS,
       MAYAN_PROTOCOLS.mayanSwift,
     )
+    const wormholeCoreAddresses = getWormholeCoreAddresses(
+      this.configs.get(WormholeConfig) ?? [],
+    )
 
     return [
       {
@@ -83,14 +90,13 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: logMessagePublishedLog,
-        addresses: mayanSwiftAddresses,
+        addresses: wormholeCoreAddresses,
       },
     ]
   }
 
   capture(input: LogToCapture) {
-    const wormholeNetworks = this.configs.get(WormholeConfig)
-    if (!wormholeNetworks) return
+    const wormholeNetworks = this.configs.get(WormholeConfig) ?? []
 
     // Capture OrderUnlocked events
     const orderUnlocked = parseOrderUnlocked(input.log, [
@@ -119,10 +125,14 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
 
     // Capture batched SettlementSent from postBatch transactions
     // Non-batched settlements are captured in mayan-swift.ts
-    const logMsg = parseLogMessagePublished(input.log, null)
+    const network = wormholeNetworks.find((n) => n.chain === input.chain)
+    const logMsg = parseLogMessagePublished(
+      input.log,
+      network?.coreContract ? [network.coreContract] : null,
+    )
     if (
       logMsg &&
-      EthereumAddress(logMsg.sender) === MAYAN_PROTOCOLS.mayanSwift
+      isMayanSwiftSettlementSender(EthereumAddress(logMsg.sender))
     ) {
       const msgType = getMayanSwiftSettlementMsgType(logMsg.payload)
       if (msgType !== MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK) return

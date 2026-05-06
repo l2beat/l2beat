@@ -697,6 +697,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
             dstTokenAddress: dstToken.address,
             dstAmount: dstToken.amount,
             dstWasMinted: dstToken.wasMinted,
+            bridgeType: 'burnAndMint',
           }),
         )
       }
@@ -763,6 +764,7 @@ export class CCIPPlugin implements InteropPluginResyncable {
         srcTokenAddress: delivery.args.token,
         srcAmount: delivery.args.amount,
         srcWasBurned: delivery.args.wasBurned,
+        bridgeType: 'burnAndMint',
       }),
     ]
   }

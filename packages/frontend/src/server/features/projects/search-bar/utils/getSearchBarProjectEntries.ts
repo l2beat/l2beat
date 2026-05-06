@@ -4,7 +4,6 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -40,6 +39,7 @@ export function getSearchBarProjectEntries<
     | 'zkCatalogInfo'
     | 'contracts'
     | 'permissions'
+    | 'aliases'
   >,
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
@@ -54,7 +54,12 @@ export function getSearchBarProjectEntries<
     return []
   }
 
-  const commonTags = dedupeTags([project.slug, project.name, project.shortName])
+  const commonTags = dedupeTags([
+    project.slug,
+    project.name,
+    project.shortName,
+    ...(project.aliases ?? []),
+  ])
 
   const common = {
     type: 'project',
@@ -117,7 +122,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.interopConfig && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
+  if (project.interopConfig) {
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,

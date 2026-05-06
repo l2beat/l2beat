@@ -4,8 +4,6 @@ import {
   type json,
   type UnixTime,
 } from '@l2beat/shared-pure'
-
-import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { BlockClient } from '../types'
 import {
@@ -40,26 +38,9 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     return parsed.data.result.blockNumber
   }
 
-  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
-    const end = await this.getLatestBlockNumber()
-
-    return await getBlockNumberAtOrBefore(
-      timestamp,
-      start,
-      end,
-      async (blockNumber) => {
-        const transactions = await this.getTransactionsInBlock(blockNumber)
-        return {
-          timestamp: Math.min(...transactions.map((t) => t.createdAt)),
-        }
-      },
-    )
-  }
-
   async getBlockWithTransactions(tag: number | 'latest'): Promise<Block> {
     const blockNumber =
       tag === 'latest' ? await this.getLatestBlockNumber() : tag
-
     const transactions = await this.getTransactionsInBlock(blockNumber)
 
     return {

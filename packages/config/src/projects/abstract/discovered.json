@@ -15,6 +15,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6",
       "sinceTimestamp": 1742920979,
       "sinceBlock": 22125181,
       "values": {
@@ -103,6 +104,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -208,6 +210,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A",
       "sinceTimestamp": 1729680467,
       "sinceBlock": 21027786,
       "values": {
@@ -553,6 +556,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
       "sinceTimestamp": 1743475211,
       "sinceBlock": 22171132,
       "values": {
@@ -637,6 +641,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c",
       "sinceTimestamp": 1743434807,
       "sinceBlock": 22167779,
       "values": {
@@ -672,6 +677,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xbB943Cf3c5b90f2eD04F53658CCA49286601e808",
       "sinceTimestamp": 1743588479,
       "sinceBlock": 22180530,
       "values": {
@@ -719,6 +725,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x28228243eb37cd1754c85980c6F6Ce697d2a1332",
       "sinceTimestamp": 1742869559,
       "sinceBlock": 22120925,
       "values": {
@@ -752,6 +759,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209963,
       "sinceBlock": 24383644,
       "values": {
@@ -797,6 +805,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74",
       "sinceTimestamp": 1729784015,
       "sinceBlock": 21036380,
       "values": {
@@ -843,6 +852,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
       "sinceTimestamp": 1729083287,
       "sinceBlock": 20978253,
       "values": {
@@ -881,6 +891,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770209927,
       "sinceBlock": 24383641,
       "values": {
@@ -942,6 +953,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1770210095,
       "sinceBlock": 24383655,
       "values": {

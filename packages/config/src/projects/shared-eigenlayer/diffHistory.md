@@ -1,3 +1,481 @@
+Generated with discovered.json: 0xac43ebc0284918ab2501e017004816281684831d
+
+# Diff at Tue, 05 May 2026 10:22:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777451880
+- current timestamp: 1777451880
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451880 (main branch discovery), not current.
+
+```diff
+    contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34) {
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
+      deployerAddress:
++        "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907"
+    }
+```
+
+```diff
+    contract StrategiesBeacon (eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      deployerAddress:
++        "eth:0x61c532Eca5Bc84691F09D466A04BC8F995C145Ce"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      deployerAddress:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+    }
+```
+
+```diff
+    contract swETH-Strategy (eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract TaskMailbox (eth:0x132b466d9d5723531F68797519DfED701aC2C749) {
+    +++ description: Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.
+      deployerAddress:
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
+    contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x52D93F56F963C322153a1F76E31EE12F09B8f7c6"
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract rETH-Strategy (eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract Safe (eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE5Ad7cB2692c3A03dd9279a733c4A20666f6909c"
+    }
+```
+
+```diff
+    contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      deployerAddress:
++        "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4"
+    }
+```
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      deployerAddress:
++        "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
+    }
+```
+
+```diff
+    contract METH-Strategy (eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+    }
+```
+
+```diff
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract BN254CertificateVerifier (eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A) {
+    +++ description: Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.
+      deployerAddress:
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033"
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005"
+    }
+```
+
+```diff
+    contract EigenPod (eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907"
+    }
+```
+
+```diff
+    contract cbETH-Strategy (eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract KeyRegistrar (eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4) {
+    +++ description: Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.
+      deployerAddress:
++        "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907"
+    }
+```
+
+```diff
+    contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5) {
+    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
+      deployerAddress:
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
+    contract osETH-Strategy (eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      deployerAddress:
++        "eth:0x61c532Eca5Bc84691F09D466A04BC8F995C145Ce"
+    }
+```
+
+```diff
+    contract EmissionsController (eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      deployerAddress:
++        "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      deployerAddress:
++        "eth:0x99BBB041E6FDc9e5f21E73e74B641785A4a65ed2"
+    }
+```
+
+```diff
+    contract wBETH-Strategy (eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract Safe (eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"
+    }
+```
+
+```diff
+    contract bEIGEN token (eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      deployerAddress:
++        "eth:0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B"
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract StrategyBase (eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+    }
+```
+
+```diff
+    contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract CrossChainRegistry (eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b) {
+    +++ description: Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.
+      deployerAddress:
++        "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907"
+    }
+```
+
+```diff
+    contract stETH-Strategy (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA"
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033"
+    }
+```
+
+```diff
+    contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      deployerAddress:
++        "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4"
+    }
+```
+
+```diff
+    contract ETHx-Strategy (eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract OETH-Strategy (eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0xD5117ff053dfD06102118C6Da050F33e67E6331c"
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (eth:0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      deployerAddress:
++        "eth:0x27977e6E4426A525d055A587d2a0537b4cb376eA"
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+      deployerAddress:
++        "eth:0x4DA954dd93601A29B09bEe1EB0651492b7c08Cf4"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005"
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      deployerAddress:
++        "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033"
+    }
+```
+
+```diff
+    contract DurationVaultStrategy (eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+    }
+```
+
+```diff
+    contract ECDSACertificateVerifier (eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25) {
+    +++ description: Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.
+      deployerAddress:
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xE15AFE000789160BE164D2FBA66EaDd6c6B81e7B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x43cCe9cC63BF73f80f94BBb553aE5b258FCA701C"
+    }
+```
+
+```diff
+    contract EIGEN token (eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      deployerAddress:
++        "eth:0x45f99976eE67ce0810d1aAE9A42D0cCA7f125B52"
+    }
+```
+
+```diff
+    contract ReleaseManager (eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F) {
+    +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
+      deployerAddress:
++        "eth:0xF2D7291715D222e5C0A1a433BAC7B609A9D32907"
+    }
+```
+
+```diff
+    contract Safe (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xe2eB80C72Fa12Ba50B3bD6545709DC153D5b26D2"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (eth:0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+    }
+```
+
+Generated with discovered.json: 0xa73c9a6228b631f5fd16e3005263d4edb1e788db
+
+# Diff at Wed, 29 Apr 2026 08:39:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1776075330
+- current timestamp: 1777451880
+
+## Description
+
+Sub-Safe `eth:0xfD636E8E...` (one of the seats on the EigenLayer Pauser Multisig at `0x50503895...`) had a signer rotation: `0xfe5AF706` replaced with `0xDe64AA8F`, and `0x6DD76040` removed. Threshold unchanged at 2; total signers 9 → 8 (22% → 25%).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xfe5AF706c1b7fd30FE540ABaBB8A3f5DE68420F9"
++        "eth:0xDe64AA8F395C47c745969B96FBE295A252fe3370"
+      values.$members.2:
+-        "eth:0x6DD76040589433cc4Fc14e49db02592a25c0eC70"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0x5e2bd27b7a62b175121d585d0bd7ad4584abb7d1
 
 # Diff at Mon, 30 Mar 2026 14:54:02 GMT:

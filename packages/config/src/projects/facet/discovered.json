@@ -20,6 +20,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
+      "deployerAddress": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
       "sinceTimestamp": 1734701579,
       "sinceBlock": 21444055,
       "values": {
@@ -58,6 +59,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -86,6 +88,7 @@
           "role": ".GnosisSafe_modules"
         }
       ],
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733593847,
       "sinceBlock": 21352215,
       "values": {
@@ -107,6 +110,7 @@
       "proxyType": "immutable",
       "description": "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
       "ignoreInWatchMode": ["depositNonce"],
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1754512679,
       "sinceBlock": 23084460,
       "values": {
@@ -133,6 +137,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550083,
       "sinceBlock": 22590749,
       "values": {
@@ -173,6 +178,7 @@
         "anchorProposalId",
         "anchorRoot"
       ],
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1754512643,
       "sinceBlock": 23084457,
       "values": {
@@ -221,6 +227,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1751301179,
       "sinceBlock": 22818451,
       "values": {
@@ -280,6 +287,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733855519,
       "sinceBlock": 21373913,
       "values": {
@@ -315,6 +323,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97",
       "sinceTimestamp": 1701094787,
       "sinceBlock": 18663532,
       "values": {
@@ -351,6 +360,7 @@
       ],
       "proxyType": "immutable",
       "description": "Helper of the Safe Module that allows to send Facet transactions.",
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733593775,
       "sinceBlock": 21352209,
       "values": { "$immutable": true },
@@ -379,6 +389,7 @@
       "proxyType": "immutable",
       "description": "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "facet:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1754512691,
       "sinceBlock": 1722346,
       "values": {
@@ -408,6 +419,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "facet:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733844551,
       "sinceBlock": 0,
       "values": {

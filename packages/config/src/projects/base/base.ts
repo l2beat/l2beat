@@ -20,6 +20,7 @@ export const base: ScalingProject = opStackL2({
   genesisTimestamp,
   display: {
     name: 'Base Chain',
+    aliases: ['Coinbase'],
     slug: 'base',
     stateValidationImage: 'opfp',
     stacks: ['OP Stack'],

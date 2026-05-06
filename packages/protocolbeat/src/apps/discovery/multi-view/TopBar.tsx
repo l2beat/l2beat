@@ -23,7 +23,7 @@ export function TopBar(props: { project: string }) {
   const useDevMode = true
 
   return (
-    <div className="flex h-10 select-none items-center justify-between px-2">
+    <div className="select-none items-center justify-between px-2 max-md:invisible md:flex md:h-10">
       <div className="hidden items-center gap-2 md:flex">
         <Link to="/ui">
           <img className="-top-[3px] relative h-[20px]" src="/logo.svg" />

@@ -11,6 +11,7 @@ import type {
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -61,51 +62,58 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     to: number,
     configurations: Configuration<OnchainAmountConfig>[],
   ) {
-    const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
-    if (timestamp > to) {
-      this.logger.info('Timestamp out of range', {
-        from,
-        to,
-        timestamp,
-      })
-      return () => Promise.resolve(to)
-    }
+    return await withCoreFeatureRpcMetricsContext(
+      'tvs.amount',
+      { chain: this.$.chain },
+      async () => {
+        const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
+        if (timestamp > to) {
+          this.logger.info('Timestamp out of range', {
+            from,
+            to,
+            timestamp,
+          })
+          return () => Promise.resolve(to)
+        }
 
-    const blockNumber = await this.getBlockNumber(timestamp)
+        const blockNumber = await this.getBlockNumber(timestamp)
 
-    const escrowBalanceRecords = await this.fetchEscrowBalances(
-      configurations,
-      timestamp,
-      blockNumber,
+        const escrowBalanceRecords = await this.fetchEscrowBalances(
+          configurations,
+          timestamp,
+          blockNumber,
+        )
+
+        const totalSupplyRecords = await this.fetchRpcTotalSupplies(
+          configurations,
+          timestamp,
+          blockNumber,
+        )
+
+        const starknetTotalSupplyRecords =
+          await this.fetchStarknetTotalSupplies(
+            configurations,
+            timestamp,
+            blockNumber,
+          )
+
+        const amounts = [
+          ...escrowBalanceRecords,
+          ...totalSupplyRecords,
+          ...starknetTotalSupplyRecords,
+        ]
+
+        return async () => {
+          await this.$.db.tvsAmount.upsertMany(amounts)
+          this.logger.info('Saved onchain amounts into DB', {
+            timestamp: timestamp,
+            amounts: amounts.length,
+          })
+
+          return timestamp
+        }
+      },
     )
-
-    const totalSupplyRecords = await this.fetchRpcTotalSupplies(
-      configurations,
-      timestamp,
-      blockNumber,
-    )
-
-    const starknetTotalSupplyRecords = await this.fetchStarknetTotalSupplies(
-      configurations,
-      timestamp,
-      blockNumber,
-    )
-
-    const amounts = [
-      ...escrowBalanceRecords,
-      ...totalSupplyRecords,
-      ...starknetTotalSupplyRecords,
-    ]
-
-    return async () => {
-      await this.$.db.tvsAmount.upsertMany(amounts)
-      this.logger.info('Saved onchain amounts into DB', {
-        timestamp: timestamp,
-        amounts: amounts.length,
-      })
-
-      return timestamp
-    }
   }
 
   private async getBlockNumber(timestamp: UnixTime) {

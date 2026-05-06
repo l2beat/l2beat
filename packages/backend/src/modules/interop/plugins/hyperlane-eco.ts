@@ -3,11 +3,11 @@
  * this only tracks the settlement leg, not the fill/transfer
  */
 import { Address32 } from '@l2beat/shared-pure'
+import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   Dispatch,
   dispatchIdLog,
   dispatchLog,
-  HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
@@ -16,12 +16,12 @@ import {
   processIdLog,
   processLog,
 } from './hyperlane'
+import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
 import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
   type DataRequest,
-  findChain,
   type InteropEvent,
   type InteropEventDb,
   type InteropPluginResyncable,
@@ -87,6 +87,8 @@ const IntentProvenProcess = createInteropEventType<{
 export class HyperlaneEcoPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-eco'
 
+  constructor(private configs: InteropConfigStore) {}
+
   getDataRequests(): DataRequest[] {
     return [
       {
@@ -123,6 +125,8 @@ export class HyperlaneEcoPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    const networks = this.configs.get(HyperlaneConfig) ?? []
+
     const batchSent = parseBatchSent(input.log, null)
     const hyperInstantFulfillment = parseHyperInstantFulfillment(
       input.log,
@@ -146,9 +150,8 @@ export class HyperlaneEcoPlugin implements InteropPluginResyncable {
       const dispatchId = dispatchIdLog && parseDispatchId(dispatchIdLog, null)
       if (!dispatchId) return
 
-      const $dstChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $dstChain = findHyperlaneChain(
+        networks,
         Number(dispatch.parsed.destination),
       )
 
@@ -182,9 +185,8 @@ export class HyperlaneEcoPlugin implements InteropPluginResyncable {
       const processId = processIdLog && parseProcessId(processIdLog, null)
       if (!processId) return
 
-      const $srcChain = findChain(
-        HYPERLANE_NETWORKS,
-        (x) => x.chainId,
+      const $srcChain = findHyperlaneChain(
+        networks,
         Number(processMatch.parsed.origin), // intended
       )
 

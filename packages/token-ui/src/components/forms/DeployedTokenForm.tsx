@@ -4,6 +4,7 @@ import {
   ArrowRightIcon,
   CheckIcon,
   ChevronsUpDownIcon,
+  CircleAlertIcon,
   PlusIcon,
   SettingsIcon,
   TrashIcon,
@@ -88,6 +89,10 @@ const symbolSourceToLabel = {
   coingecko: 'CoinGecko',
 } as const
 
+type AutofillWarning =
+  RouterOutputs['deployedTokens']['checks']['warnings'][number]
+type AutofillWarningField = AutofillWarning['field']
+
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
   source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
@@ -167,7 +172,9 @@ export function DeployedTokenForm({
     tokenDetails.data?.error?.type !== 'chain-not-found' &&
     tokenDetails.data?.error?.type !== 'already-exists'
   const addressFieldSuccess =
-    tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+    tokenDetails.data &&
+    tokenDetails.data?.error?.type !== 'already-exists' &&
+    tokenDetails.data?.error?.type !== 'not-a-token'
   const fetchedSymbol = tokenDetails.data?.data?.symbol
   const symbolSource = tokenDetails.data?.data?.symbolSource as
     | keyof typeof symbolSourceToLabel
@@ -308,6 +315,10 @@ export function DeployedTokenForm({
                     <FormLabel>
                       Address{' '}
                       {tokenDetails.loading && <Spinner className="size-3.5" />}
+                      <AutofillWarningIndicator
+                        warnings={tokenDetails.data?.warnings}
+                        fields={['contractCode']}
+                      />
                     </FormLabel>
                     <div className="flex items-center gap-2">
                       <FormControl>
@@ -378,6 +389,10 @@ export function DeployedTokenForm({
                       {symbolSourceLabel}
                     </Badge>
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['symbol']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input {...field} disabled={tokenDetails.loading} />
@@ -402,6 +417,10 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['decimals']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -437,6 +456,10 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['deploymentTimestamp', 'contractCode']}
+                  />
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -477,6 +500,14 @@ export function DeployedTokenForm({
                       chainName={chainValue}
                     />
                   )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={[
+                      'abstractTokenId',
+                      'abstractTokenSuggestions',
+                      'coingeckoId',
+                    ]}
+                  />
                 </FormLabel>
                 <div className="flex items-center gap-2">
                   <Popover>
@@ -685,6 +716,35 @@ export function setDeployedTokenExistsError(
     type: 'already-exists',
     message: 'Deployed token with given address and chain already exists',
   })
+}
+
+function AutofillWarningIndicator({
+  warnings,
+  fields,
+}: {
+  warnings: AutofillWarning[] | undefined
+  fields: AutofillWarningField[]
+}) {
+  const filteredWarnings =
+    warnings?.filter((warning) => fields.includes(warning.field)) ?? []
+  if (filteredWarnings.length === 0) {
+    return null
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="ml-1 inline-flex cursor-help align-middle text-muted-foreground">
+          <CircleAlertIcon className="size-lh stroke-red-500" />
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-80 space-y-1">
+        {filteredWarnings.map((warning) => (
+          <p key={`${warning.field}:${warning.message}`}>{warning.message}</p>
+        ))}
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 function TvsMetadataFields({

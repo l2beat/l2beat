@@ -8,6 +8,7 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { toInteropApiSelection } from '../utils/toInteropApiSelection'
@@ -66,6 +67,16 @@ export async function getInteropSummaryData(
       ),
   )
 
+  const activeInteropChainsById = new Map(
+    activeInteropChains.map((chain) => [chain.id, chain]),
+  )
+  const activeInteropChainsSortedByVolume = queryState.defaultFlowChainOrder
+    .map((chainId) => activeInteropChainsById.get(chainId))
+    .filter((chain) => chain !== undefined)
+  const defaultSelectedFlowChains = activeInteropChainsSortedByVolume
+    .slice(0, MAX_SELECTED_CHAINS)
+    .map((chain) => chain.id)
+
   return {
     head: {
       manifest,
@@ -86,7 +97,8 @@ export async function getInteropSummaryData(
         ...appLayoutProps,
         mode,
         ...queryState,
-        interopChains: activeInteropChains,
+        interopChains: activeInteropChainsSortedByVolume,
+        defaultSelectedFlowChains,
         initialSelection,
       },
     },
@@ -114,11 +126,20 @@ async function getCachedData(
     apiSelection.from.length === 0 &&
     apiSelection.to.length === 0
 
+  let defaultFlowChainOrder = initialFlowsChains
+
   if (shouldPrefetchFlows) {
-    await helpers.interop.flows.prefetch({
+    const flowsData = await helpers.interop.flows.fetch({
       chains: initialFlowsChains,
       protocolIds: protocols.map((protocol) => protocol.id),
     })
+    const chainsByVolume = flowsData.chainData
+      .toSorted((a, b) => b.totalVolume - a.totalVolume)
+      .map((chain) => chain.chainId)
+
+    if (chainsByVolume.length > 0) {
+      defaultFlowChainOrder = chainsByVolume
+    }
   }
 
   return {
@@ -128,5 +149,6 @@ async function getCachedData(
       name: protocol.interopConfig.name ?? protocol.name,
       iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
     })),
+    defaultFlowChainOrder,
   }
 }

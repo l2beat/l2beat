@@ -1,3 +1,145 @@
+Generated with discovered.json: 0xd8fc80bbd047db8d0c72b7ee64598e12844e5196
+
+# Diff at Tue, 05 May 2026 10:22:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777295886
+- current timestamp: 1777295886
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777295886 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6efB5ABAfD23c1317906666B9Df8514AAB704871"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6efB5ABAfD23c1317906666B9Df8514AAB704871"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: A governance proxy that lets eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5 act through it.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (eth:0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
+      deployerAddress:
++        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      deployerAddress:
++        "eth:0x6efB5ABAfD23c1317906666B9Df8514AAB704871"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract Governance (eth:0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6efB5ABAfD23c1317906666B9Df8514AAB704871"
+    }
+```
+
+Generated with discovered.json: 0x4dcd53718b1b9f3e89a00180f0508887251f23c4
+
+# Diff at Mon, 27 Apr 2026 13:19:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@69e1ffc0f6a844a7112dfb14a6042b7d790771c0 block: 1776418606
+- current timestamp: 1777295886
+
+## Description
+
+Another trx to L2 via governance: https://tools.l2beat.com/decoder-new/?hash=0xeab9b42383251bb874b226fd6b1089763b429c60250c33b3c25dcfa24d1e64a2&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        41
++        42
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        41
++        42
+    }
+```
+
 Generated with discovered.json: 0xd17f1d42f09777bd9a8fe069b3b5d463e90619f3
 
 # Diff at Fri, 17 Apr 2026 09:37:51 GMT:

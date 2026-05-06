@@ -20,6 +20,7 @@
         "nextWithdrawalRequestId",
         "exchangeRate"
       ],
+      "deployerAddress": "eth:0x4CDbDf63ae2215eDD6B673F9DABFf789A13D4270",
       "sinceTimestamp": 1723579643,
       "sinceBlock": 20521985,
       "values": {

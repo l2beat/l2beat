@@ -34,6 +34,45 @@ export const celo: ScalingProject = opStackL2({
   proverSourceLink: 'https://github.com/succinctlabs/sp1',
   securityCouncilReference:
     'https://docs.celo.org/home/protocol/security-council',
+
+  // stage: getAltDaStage(
+  //   {
+  //     stage0: {
+  //       callsItselfValidiumOrOptimium: true,
+  //       stateRootsPostedToL1: true,
+  //       stateVerificationOnL1: true,
+  //       daAttestedByIndependentParty: true,
+  //       nodeSourceAvailable: true,
+  //       fraudProofSystemAtLeast5Outsiders: null,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       usersCanExitWithoutCooperation: true,
+  //       usersHave7DaysToExit: false,
+  //       securityCouncilProperlySetUp: true,
+  //       daVerifierSecureOnL1: true,
+  //       daVerifier7DayExitWindow: false,
+  //       daCommitteeDecentralized: true,
+  //       noRedTrustedSetups: false,
+  //       proverSourcePublished: true,
+  //       verifierContractsReproducible: true,
+  //       programHashesReproducible: true,
+  //     },
+  //     stage2: {
+  //       fraudProofSystemIsPermissionless: null,
+  //       delayWith30DExitWindow: false,
+  //       proofSystemOverriddenOnlyInCaseOfABug: false,
+  //       daVerifier30DayExitWindow: false,
+  //       daMechanismEconomicSecurity: false,
+  //     },
+  //   },
+  //   {
+  //     nodeSourceLink: 'https://github.com/celo-org/op-geth',
+  //     proverSourceLink: 'https://github.com/succinctlabs/sp1',
+  //     securityCouncilReference:
+  //       'https://docs.celo.org/home/protocol/security-council',
+  //   },
+  // ),
   additionalStateValidationReferences: [
     {
       url: 'https://docs.celo.org/home/protocol/challengers',

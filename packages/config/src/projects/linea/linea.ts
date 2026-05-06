@@ -118,6 +118,7 @@ export const linea: ScalingProject = {
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
   display: {
     name: 'Linea',
+    aliases: ['ConsenSys'],
     slug: 'linea',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
@@ -152,6 +153,8 @@ export const linea: ScalingProject = {
     },
   },
   interopConfig: {
+    description:
+      "The canonical or trust-minimized bridge: Validated with Linea's validity proof system but supporting external L1 yield sources.",
     name: 'Linea Canonical',
     durationSplit: {
       lockAndMint: [
@@ -589,7 +592,7 @@ export const linea: ScalingProject = {
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
-            url: 'https://etherscan.io/address/0xC83ed08E2262fBa264D528C749c051f8fC526897',
+            url: 'https://etherscan.io/address/0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',

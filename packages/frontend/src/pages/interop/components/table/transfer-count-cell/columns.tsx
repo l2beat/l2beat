@@ -1,6 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -8,6 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
@@ -31,6 +31,8 @@ export const columns = [
     ),
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The time at which the source-chain transfer transaction occurred.',
     },
   }),
   columnHelper.display({
@@ -64,6 +66,8 @@ export const columns = [
     },
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The token amount sent on the source chain and the token amount received on the destination chain.',
     },
   }),
   columnHelper.accessor('valueUsd', {
@@ -71,7 +75,7 @@ export const columns = [
     enableSorting: false,
     cell: (ctx) => {
       const { valueUsd } = ctx.row.original
-      if (valueUsd === undefined) return <NoDataBadge />
+      if (valueUsd === undefined) return EM_DASH
       return (
         <span className="font-medium text-label-value-14 text-primary">
           {formatCurrency(valueUsd, 'usd')}
@@ -81,6 +85,7 @@ export const columns = [
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
+      tooltip: 'The USD value of the transfer.',
     },
   }),
   columnHelper.accessor('duration', {
@@ -99,6 +104,8 @@ export const columns = [
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
+      tooltip:
+        'The time it took for the transfer to be received on the destination chain.',
     },
   }),
   columnHelper.display({
@@ -133,6 +140,8 @@ export const columns = [
     },
     meta: {
       headClassName: 'text-2xs',
+      tooltip:
+        'The source and destination chains for this transfer. External links open the corresponding chain transactions.',
     },
   }),
 ]

@@ -9,8 +9,8 @@ import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { AdaptiveTimePredictor } from '../implementations/common/AdaptiveTimePredictor'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import { TimePredictor } from '../implementations/common/TimePredictor'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 import { Separated } from './types'
 
@@ -130,7 +130,7 @@ export const RefreshDiscovery = command({
       logger.info(
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
-      const predictor = new AdaptiveTimePredictor()
+      const predictor = new TimePredictor()
       if (args.confirmed || keyInYN('Do you want to continue?')) {
         for (const [i, { config }] of toRefresh.entries()) {
           const startTime = performance.now()
@@ -165,7 +165,7 @@ export const RefreshDiscovery = command({
 
 function reportStatus(
   logger: Logger,
-  predictor: AdaptiveTimePredictor,
+  predictor: TimePredictor,
   finishedCount: number,
   count: number,
   runTime: number,

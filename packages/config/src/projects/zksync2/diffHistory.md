@@ -1,3 +1,329 @@
+Generated with discovered.json: 0x7374dd51146106159326f92cbceb09e79051765b
+
+# Diff at Tue, 05 May 2026 10:24:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777883283
+- current timestamp: 1777883283
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777883283 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      deployerAddress:
++        "eth:0x29DF43F75149D0552475A6f9B2aC96E28796ed0b"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge_wstETH (eth:0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      deployerAddress:
++        "eth:0x61ce1F6514C651C39964961DB1948C6f70a4747a"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      deployerAddress:
++        "eth:0x29DF43F75149D0552475A6f9B2aC96E28796ed0b"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      deployerAddress:
++        "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885"
+    }
+```
+
+Generated with discovered.json: 0xa6bbf0ae4277a9b40d41c9d90b0a526efeb3a552
+
+# Diff at Mon, 04 May 2026 13:52:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@49e04c9893b7bab5ccd06ae4d7a23fa1d10918a8 block: 1777296071
+- current timestamp: 1777883283
+
+## Description
+
+Era multisig validator now has 3 (out of 8) threshold, instead of 0. This effectively enables the multisig operation. This contract allows registered validators stop block execution.
+
+This multisig is also made the only entity that can precommit, commit, revert, prove and execute blocks, earlier there were also two EOAs with these permissions.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorVTL.PRECOMMITTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.PRECOMMITTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.COMMITTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.COMMITTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.REVERTER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.REVERTER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.PROVER_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.PROVER_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+      values.validatorVTL.EXECUTOR_ROLE.members.0:
+-        "eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+      values.validatorVTL.EXECUTOR_ROLE.members.1:
+-        "eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"
+    }
+```
+
+```diff
+    EOA  (eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":".validatorVTL"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validateZkStack","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":".validatorVTL"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.$threshold:
+-        0
++        3
++++ severity: HIGH
+      values.threshold:
+-        0
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777296071 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"initiate batch execution on L1 if approved by enough Validator Multisig members.","role":".executor"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"initiate batch execution on L1 if approved by enough Validator Multisig members.","role":".executor"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping."
++        "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA."
+      values.$members:
++        ["eth:0xCCEfc6dB1010af90AB0Fa0bbBd86F6D8C1627df7","eth:0x6d5Cef8F3F998C47a52e27d3e28CaEcc8AdA9693","eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F","eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b","eth:0x6D290f04A5908F0390647d9903230de3844e5cA0","eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b","eth:0xBBBCA2805c784e59E4eC2880cE63d08C08282726","eth:0xD70528Fc72fB9DAc1bE1b684ed6E3E06196f2D04"]
+      values.$threshold:
++        0
+      values.executor:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd","eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1"]}
+    }
+```
+
+Generated with discovered.json: 0xdf0dae661450d657979b94193e34cb9fb1316ecc
+
+# Diff at Mon, 27 Apr 2026 14:17:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@69e1ffc0f6a844a7112dfb14a6042b7d790771c0 block: 1776681649
+- current timestamp: 1777296071
+
+## Description
+
+Upgraded ExecutionMultisigValidator: https://disco.l2beat.com/diff/eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7/eth:0xc954B4D51031870624f3e779Ead14C57249C111D (although diff is not very readable). This is a intermediary contract that lets validators stop block execution. The main changes are:
+
+- It is made EIP1967 upgradeable
+- Multisig rotation now emits events, which allows tracking the members in disco
+- Added EIP-712 structured data hashing
+- General refactor
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorVTL.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.PRECOMMITTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.COMMITTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.COMMITTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.REVERTER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.REVERTER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.PROVER_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.PROVER_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+      values.validatorVTL.EXECUTOR_ROLE.members.0:
+-        "eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7"
+      values.validatorVTL.EXECUTOR_ROLE.members.2:
++        "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d"
+    }
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x3F0009D00cc78979d00Eb635490F23E8d6aCc481)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0x7408A268e5E6e8F08917c5b71015F4B9044970C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xAf0B2B58289857e9A6Cf91Fd30410dDcad9D9B28)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xd972d03C8A45eF3c7937a279d998E4AeCCc2b63D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionMultisigValidator (eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping and updates emit no events, so the only way to track them is to manually analyze all trxs from the owner.
+```
+
+```diff
+-   Status: DELETED
+    reference  (eth:0xFAdb20191Ab38362C50f52909817B74214CA79AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h. NOTE: This is a modified version of validatorTimelock, where a sufficient number of execution multisig members must approve a batch before execution. Multisig members are kept in a mapping.
+```
+
+## Source code changes
+
+```diff
+.../EraMultisigValidator/EraMultisigValidator.sol} | 7829 +++++++++++---------
+ .../TransparentUpgradeableProxy.p.sol              |  864 +++
+ .../src/projects/zksync2/.flat/ProxyAdmin.sol      |  217 +
+ .../.flat@1776681649/Safe/Safe.sol => /dev/null    | 1216 ---
+ .../Safe/SafeProxy.p.sol => /dev/null              |   42 -
+ 5 files changed, 5613 insertions(+), 4555 deletions(-)
+```
+
 Generated with discovered.json: 0xec69535c84a60d812b9d8cc45c4296daedd1d4eb
 
 # Diff at Mon, 20 Apr 2026 10:41:53 GMT:

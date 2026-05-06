@@ -1,9 +1,11 @@
 import { cva } from 'class-variance-authority'
 import type { ReactNode } from 'react'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 
 interface AdditionalTrustAssumptionsProps {
   percentage: number
+  className?: string
 }
 
 const additionalTrustBannerVariants = cva('w-full rounded-md px-2.5 py-2', {
@@ -28,9 +30,15 @@ const additionalTrustPercentVariants = cva('font-bold', {
 
 export function AdditionalTrustAssumptionsText({
   percentage,
+  className,
 }: AdditionalTrustAssumptionsProps) {
   return (
-    <div className="text-right font-medium text-[11px] text-secondary leading-none">
+    <div
+      className={cn(
+        'text-right font-medium text-[11px] text-secondary leading-none',
+        className,
+      )}
+    >
       <AdditionalTrustAssumptionsContent percentage={percentage}>
         with additional trust assumptions
       </AdditionalTrustAssumptionsContent>

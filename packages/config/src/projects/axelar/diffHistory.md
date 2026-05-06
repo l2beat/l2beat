@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xa0c31b38947e35eeae924081ad7c7b1b3c67f6c5
+
+# Diff at Tue, 05 May 2026 10:21:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772444704
+- current timestamp: 1772444704
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772444704 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract Gateway (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA57ADCE1d2fE72949E4308867D894CD7E7DE0ef2"
+    }
+```
+
+```diff
+    contract AxelarGasServiceOperators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract TokenDeployer (eth:0xb28478319B64f8D47e19A120209A211D902F8b8f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract AxelarAuthWeighted (eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract InterchainGovernance (eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
 Generated with discovered.json: 0xf5d06d94cfa8c3f6da273e9c8aa7e55c4241d7d4
 
 # Diff at Mon, 02 Mar 2026 09:46:12 GMT:

@@ -117,7 +117,8 @@ export function AddDeployedToken() {
     if (!checks || checksLoading) return
     if (
       checks.error?.type === 'already-exists' ||
-      checks.error?.type === 'not-found-on-coingecko'
+      checks.error?.type === 'not-found-on-coingecko' ||
+      checks.error?.type === 'not-a-token'
     ) {
       form.setError('address', {
         type: checks.error.type,
@@ -134,7 +135,7 @@ export function AddDeployedToken() {
     } else {
       form.clearErrors('chain')
     }
-    if (checks.data?.decimals) {
+    if (checks.data?.decimals !== undefined) {
       form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
     }
     if (checks.data?.deploymentTimestamp) {
@@ -176,6 +177,13 @@ export function AddDeployedToken() {
     if (checksLoading) return
     if (checks?.error?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
+      return
+    }
+    if (checks?.error?.type === 'not-a-token') {
+      form.setError('address', {
+        type: checks.error.type,
+        message: checks.error.message,
+      })
       return
     }
     if (checks?.error?.type === 'chain-not-found') {
