@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777711586,
-  "lastConsumedUpdateNotifierId": 150,
+  "lastReconciledAt": 1778060700,
+  "lastConsumedUpdateNotifierId": 160,
   "events": [
     {
       "timestamp": "2026-04-25T08:12:54.000Z",
@@ -155,6 +155,38 @@
           "field": "values.remainingDailyMintLimit",
           "before": "300000000000000000000000",
           "after": "5000000000000000000000"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 160,
+      "address": "eth:0x24C392CDbF32Cf911B258981a66d5541d85269ce",
+      "contractName": "Chronicle_BTC_USD_3",
+      "isDependency": true,
+      "entity": "Chronicle",
+      "id": "160:eth:0x24C392CDbF32Cf911B258981a66d5541d85269ce:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.tolled.12",
+          "after": "eth:0xd3FDEd3586E6f9D8B56B51Fd80A4F9737F6072c5"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 160,
+      "address": "eth:0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E",
+      "contractName": "Chronicle_ETH_USD_3",
+      "isDependency": true,
+      "entity": "Chronicle",
+      "id": "160:eth:0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.tolled.17",
+          "after": "eth:0xC51C54e39424C3419Dbdbc4000D764C1D3673fb9"
         }
       ]
     }

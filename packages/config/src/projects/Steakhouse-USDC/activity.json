@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777021991,
-  "lastConsumedUpdateNotifierId": 128,
+  "lastReconciledAt": 1778060103,
+  "lastConsumedUpdateNotifierId": 158,
   "events": [
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -437,6 +437,157 @@
           "after": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580"
         }
       ]
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "158:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.supplyQueue.4",
+          "after": "0x7e585a933ffe8443c371b4f8cfeb4430f5f6a14c2f32a898c26662c67a1cb8b8"
+        },
+        {
+          "field": "values.supplyQueue.5",
+          "after": "0x09dc9e7eb5d8fc54b2bc41d1135fd4e99057a580f680321faeb90c7a21e631c1"
+        },
+        {
+          "field": "values.supplyQueue.6",
+          "after": "0xbc99de6a88904cd0e69042ad6f266e63182801f030c636507c3caf590ffd84fe"
+        },
+        {
+          "field": "values.marketParams.4",
+          "after": {
+            "marketId": "0x7e585a933ffe8443c371b4f8cfeb4430f5f6a14c2f32a898c26662c67a1cb8b8",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "oracle": "eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.marketParams.5",
+          "after": {
+            "marketId": "0x09dc9e7eb5d8fc54b2bc41d1135fd4e99057a580f680321faeb90c7a21e631c1",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "oracle": "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.marketParams.6",
+          "after": {
+            "marketId": "0xbc99de6a88904cd0e69042ad6f266e63182801f030c636507c3caf590ffd84fe",
+            "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "collateralToken": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "oracle": "eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2",
+            "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+            "lltv": "860000000000000000"
+          }
+        },
+        {
+          "field": "values.marketOracles.4",
+          "after": "eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F"
+        },
+        {
+          "field": "values.marketOracles.5",
+          "after": "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4"
+        },
+        {
+          "field": "values.marketOracles.6",
+          "after": "eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2"
+        },
+        {
+          "field": "values.supplyQueueLength",
+          "before": 5,
+          "after": 8
+        },
+        {
+          "field": "values.withdrawQueueLength",
+          "before": 5,
+          "after": 8
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x09dbf9502d43445b33883837a51D06Fc9B9CdEC4",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "158:eth:0x09dbf9502d43445b33883837a51D06Fc9B9CdEC4:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x0acdC416C592a592Edf2E64b178aA8d4d47e05A8",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "158:eth:0x0acdC416C592a592Edf2E64b178aA8d4d47e05A8:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x2665701293fCbEB223D11A08D826563EDcCE423A",
+      "contractName": "EACAggregatorProxy",
+      "entity": null,
+      "id": "158:eth:0x2665701293fCbEB223D11A08D826563EDcCE423A:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x8c9464D99512Dcd6f80BE72aAc20dafD9Ea2C831",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "158:eth:0x8c9464D99512Dcd6f80BE72aAc20dafD9Ea2C831:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x91D32e6f01d6473b596f54c6E304e06d774f86b2",
+      "contractName": "EACAggregatorProxy",
+      "entity": null,
+      "id": "158:eth:0x91D32e6f01d6473b596f54c6E304e06d774f86b2:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2",
+      "contractName": "MetaOracleDeviationTimelock",
+      "entity": null,
+      "id": "158:eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "158:eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-06T09:34:09.000Z",
+      "updateNotifierId": 158,
+      "address": "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4",
+      "contractName": "MetaOracleDeviationTimelock",
+      "entity": null,
+      "id": "158:eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4:contract-added",
+      "type": "contract-added"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "uniswap-v2",
-  "timestamp": 1777972650,
+  "timestamp": 1778060049,
   "configHash": "0xb3f5cab14577e7164d8c48c552b36b1e58923408263f7a12c6b9eeaa0ebb8c28",
   "entries": [
     {
@@ -31,16 +31,16 @@
         "DOMAIN_SEPARATOR": "0x98d4d4ee01d4b009b73734117d1d3e83ad6ebcb6011b8223b302ede85320556c",
         "factory": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
         "getReserves": {
-          "_reserve0": "14093449694673630699455",
-          "_reserve1": "45018235133753205874",
-          "_blockTimestampLast": 1777969835
+          "_reserve0": "14114767477199782137301",
+          "_reserve1": "44965381167209770726",
+          "_blockTimestampLast": 1778054519
         },
         "kLast": "630953168289313311928295207465856702693105",
         "MINIMUM_LIQUIDITY": 1000,
         "name": "Uniswap V2",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "price0CumulativeLast": "eth:0x8775223213297840710464482892582257100861",
-        "price1CumulativeLast": "368228184612376376475393302984318748144988264",
+        "price0CumulativeLast": "eth:0x8776629807480821880066025719338181565865",
+        "price1CumulativeLast": "368365641962138701159803430930102256119820932",
         "symbol": "UNI-V2",
         "token0": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
         "token1": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -233,7 +233,7 @@
       "sinceBlock": 10000835,
       "values": {
         "$immutable": true,
-        "allPairsLength": 501866,
+        "allPairsLength": 502230,
         "feeTo": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
         "feeToSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC"
       },
@@ -277,7 +277,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "1894635654227268804718832"
+        "totalSupply": "1895629527101067329711640"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -600,6 +600,6 @@
   "usedTemplates": {
     "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30"
   },
-  "usedBlockNumbers": { "ethereum": 25027851 },
+  "usedBlockNumbers": { "ethereum": 25035118 },
   "permissionsConfigHash": "0x9c5bab73b2c7ac5a3e003a42df43948100ac0545e165b5bc30a15f3eecd156bd"
 }
