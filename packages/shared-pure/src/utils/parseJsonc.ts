@@ -170,8 +170,6 @@ function skipComment(input: string, start: number): number | undefined {
 
       index++
     }
-
-    return input.length
   }
 }
 

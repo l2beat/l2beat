@@ -181,6 +181,8 @@ describe(parseJsonc.name, () => {
       ['comment splitting a negative number', '-/* comment */1'],
       ['unterminated string', '"unterminated // not a comment'],
       ['unterminated block comment', '{"a":1 /* missing end'],
+      ['unterminated block comment after complete object', '{"a":1} /*'],
+      ['unterminated block comment after complete primitive', 'true /*'],
       ['missing comma hidden by line comment', '{"a":1 // comment\n "b":2}'],
       ['missing comma hidden by block comment', '[1 /* comment */ 2]'],
       ['leading comma in array', '[,1]'],
