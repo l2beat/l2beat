@@ -175,12 +175,13 @@ export const katana: ScalingProject = {
     dataAvailability: DATA_ON_CHAIN,
     exitWindow: {
       value: 'None',
-      description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled.`,
+      description:
+        'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
       sentiment: 'bad',
       orderHint: -1, // worse than forced tx available but instantly upgradable
       warning: {
-        value: 'The Security Council can remove the delay on upgrades.',
-        sentiment: 'bad',
+        value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, forced transactions are disabled.`,
+        sentiment: 'warning',
       },
     },
     // no node source available, assuming the op stack standard SEQUENCING_WINDOW_SECONDS is not configured

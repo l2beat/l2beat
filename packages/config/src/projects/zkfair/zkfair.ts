@@ -64,26 +64,24 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
   'requiredAmountOfSignatures',
 )
 
+const nonEmergencyUpgradeText = `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
+  trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+)}.`
+
 const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
-    upgradeDelay,
+    0,
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    {
-      upgradeDelay2: 0,
-    },
   ),
-  description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.`,
   warning: {
-    value: 'The ZkFair Owner can upgrade with no delay.',
-    sentiment: 'bad',
+    value: nonEmergencyUpgradeText,
+    sentiment: 'warning',
   },
 } as const
 
 const timelockUpgrades = {
   upgradableBy: [{ name: 'ZKFairAdmin', delay: exitWindowRisk.value }],
-  upgradeConsiderations: exitWindowRisk.description,
+  upgradeConsiderations: nonEmergencyUpgradeText,
 }
 
 const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
