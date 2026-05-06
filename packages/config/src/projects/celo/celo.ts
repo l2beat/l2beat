@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { CONTRACTS, DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
@@ -24,44 +23,17 @@ export const celo: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.Stack.OPSuccinct],
   daProvider: EIGENDA_DA_PROVIDER(true, DA_LAYERS.ETH_BLOBS),
   isPartOfSuperchain: true,
-  stage: getAltDaStage(
-    {
-      stage0: {
-        callsItselfValidiumOrOptimium: true,
-        stateRootsPostedToL1: true,
-        stateVerificationOnL1: true,
-        daAttestedByIndependentParty: true,
-        nodeSourceAvailable: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: true,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: true,
-        daVerifierSecureOnL1: true,
-        daVerifier7DayExitWindow: false,
-        daCommitteeDecentralized: true,
-        noRedTrustedSetups: false,
-        proverSourcePublished: true,
-        verifierContractsReproducible: true,
-        programHashesReproducible: true,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        daVerifier30DayExitWindow: false,
-        daMechanismEconomicSecurity: false,
-      },
-    },
-    {
-      nodeSourceLink: 'https://github.com/celo-org/op-geth',
-      proverSourceLink: 'https://github.com/succinctlabs/sp1',
-      securityCouncilReference:
-        'https://docs.celo.org/home/protocol/security-council',
-    },
-  ),
+  stage1Principle: false,
+  daAttestedByIndependentParty: true,
+  daVerifierSecureOnL1: true,
+  daVerifier7DayExitWindow: false,
+  daCommitteeDecentralized: true,
+  daVerifier30DayExitWindow: false,
+  zkVerifierContractsReproducible: true,
+  nodeSourceLink: 'https://github.com/celo-org/op-geth',
+  proverSourceLink: 'https://github.com/succinctlabs/sp1',
+  securityCouncilReference:
+    'https://docs.celo.org/home/protocol/security-council',
   additionalStateValidationReferences: [
     {
       url: 'https://docs.celo.org/home/protocol/challengers',

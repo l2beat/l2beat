@@ -27,6 +27,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
+import { getAltDaStage } from '../common/stages/getAltDaStage'
 import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -252,6 +253,20 @@ interface OpStackConfigCommon {
   isPartOfSuperchain?: boolean
   // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
   zkVerifierContractsReproducible?: boolean
+  // altDA stage inputs (used when the project is a Validium/Optimium)
+  daAttestedByIndependentParty?: boolean
+  daVerifierSecureOnL1?: boolean
+  daVerifier7DayExitWindow?: boolean
+  daVerifier30DayExitWindow?: boolean
+  daCommitteeDecentralized?: boolean
+  /** Override for the static economic-security check derived from the DA layer. */
+  daMechanismEconomicSecurity?: boolean
+  daVerifierLink?: string
+  proverSourceLink?: string
+  securityCouncilReference?: string
+  stage1PrincipleDescription?: string
+  /** Manual altDA Stage 1 principle verdict (no automation). */
+  stage1Principle?: boolean | 'UnderReview'
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -468,9 +483,7 @@ function opStackCommon(
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars, explorerUrl),
     riskView: getRiskView(templateVars, daProvider),
-    stage:
-      templateVars.stage ??
-      computedStage(templateVars, postsToEthereum(templateVars)),
+    stage: templateVars.stage ?? computedStage(templateVars),
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
     discoveryInfo: getDiscoveryInfo(allDiscoveries),
@@ -1426,11 +1439,8 @@ function getRiskViewProposerFailure(
   }
 }
 
-function computedStage(
-  templateVars: OpStackConfigCommon,
-  postsToEthereum: boolean,
-): ProjectScalingStage {
-  if (!postsToEthereum || templateVars.isNodeAvailable === undefined) {
+function computedStage(templateVars: OpStackConfigCommon): ProjectScalingStage {
+  if (templateVars.isNodeAvailable === undefined) {
     return { stage: 'NotApplicable' }
   }
 
@@ -1445,57 +1455,117 @@ function computedStage(
     OpSuccinctFDP: null,
   }
 
-  return getRollupStage(
+  if (postsToEthereum(templateVars)) {
+    return getRollupStage(
+      {
+        stage0: {
+          callsItselfRollup: true,
+          stateRootsPostedToL1: true,
+          dataAvailabilityOnL1: true,
+          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+          stateVerificationOnL1: fraudProofType !== 'None',
+          fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
+        },
+        stage1: {
+          principle:
+            fraudProofType === 'Permissionless' &&
+            (templateVars.hasProperSecurityCouncil ?? false),
+          usersHave7DaysToExit:
+            fraudProofType === 'Permissionless' &&
+            (templateVars.hasProperSecurityCouncil ?? false),
+          usersCanExitWithoutCooperation:
+            fraudProofType === 'Permissionless' ||
+            fraudProofType === 'Kailua' ||
+            fraudProofType === 'KailuaSoon',
+          securityCouncilProperlySetUp:
+            templateVars.hasProperSecurityCouncil ?? null,
+          noRedTrustedSetups:
+            fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
+              ? true
+              : null,
+          programHashesReproducible: programHashesReproducible(templateVars),
+          proverSourcePublished:
+            fraudProofType === 'Kailua' ||
+            fraudProofType === 'KailuaSoon' ||
+            fraudProofType === 'OpSuccinct' ||
+            fraudProofType === 'OpSuccinctFDP'
+              ? true
+              : null,
+          verifierContractsReproducible:
+            templateVars.zkVerifierContractsReproducible ?? null,
+        },
+        stage2: {
+          proofSystemOverriddenOnlyInCaseOfABug:
+            fraudProofType === 'None' ? null : false,
+          fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
+          delayWith30DExitWindow: false,
+        },
+      },
+      {
+        rollupNodeLink:
+          templateVars.isNodeAvailable === true
+            ? (templateVars.nodeSourceLink ??
+              'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
+            : '',
+      },
+    )
+  }
+
+  return getAltDaStage(
     {
       stage0: {
-        callsItselfRollup: true,
+        callsItselfValidiumOrOptimium: true,
         stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: templateVars.isNodeAvailable,
         stateVerificationOnL1: fraudProofType !== 'None',
+        daAttestedByIndependentParty:
+          templateVars.daAttestedByIndependentParty ?? null,
+        nodeSourceAvailable: templateVars.isNodeAvailable,
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
-        principle:
-          fraudProofType === 'Permissionless' &&
-          (templateVars.hasProperSecurityCouncil ?? false),
-        usersHave7DaysToExit:
-          fraudProofType === 'Permissionless' &&
-          (templateVars.hasProperSecurityCouncil ?? false),
+        principle: templateVars.stage1Principle ?? null,
         usersCanExitWithoutCooperation:
           fraudProofType === 'Permissionless' ||
           fraudProofType === 'Kailua' ||
           fraudProofType === 'KailuaSoon',
+        usersHave7DaysToExit:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
+        daVerifierSecureOnL1: templateVars.daVerifierSecureOnL1 ?? null,
+        daVerifier7DayExitWindow: templateVars.daVerifier7DayExitWindow ?? null,
+        daCommitteeDecentralized: templateVars.daCommitteeDecentralized ?? null,
         noRedTrustedSetups:
           fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
             ? true
             : null,
-        programHashesReproducible: programHashesReproducible(templateVars),
-        proverSourcePublished:
-          fraudProofType === 'Kailua' ||
-          fraudProofType === 'KailuaSoon' ||
-          fraudProofType === 'OpSuccinct' ||
-          fraudProofType === 'OpSuccinctFDP'
-            ? true
-            : null,
+        proverSourcePublished: templateVars.proverSourceLink ? true : null,
         verifierContractsReproducible:
           templateVars.zkVerifierContractsReproducible ?? null,
+        programHashesReproducible: programHashesReproducible(templateVars),
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug:
-          fraudProofType === 'None' ? null : false,
         fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
         delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug:
+          fraudProofType === 'None' ? null : false,
+        daVerifier30DayExitWindow:
+          templateVars.daVerifier30DayExitWindow ?? null,
+        daMechanismEconomicSecurity:
+          templateVars.daMechanismEconomicSecurity ?? null,
       },
     },
     {
-      rollupNodeLink:
+      nodeSourceLink:
         templateVars.isNodeAvailable === true
           ? (templateVars.nodeSourceLink ??
             'https://github.com/ethereum-optimism/optimism/tree/develop/op-node')
-          : '',
+          : templateVars.nodeSourceLink,
+      proverSourceLink: templateVars.proverSourceLink,
+      securityCouncilReference: templateVars.securityCouncilReference,
+      stage1PrincipleDescription: templateVars.stage1PrincipleDescription,
+      daVerifierLink: templateVars.daVerifierLink,
     },
   )
 }
