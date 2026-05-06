@@ -2,19 +2,18 @@ import type { Project, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
+import type { InteropSelection } from '~/pages/interop/utils/types'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import {
-  type ContractsSection,
-  getContractsSection,
-} from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
-import {
-  getPermissionsSection,
-  type PermissionSection,
-} from '~/utils/project/contracts-and-permissions/getPermissionsSection'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import {
   getUnderReviewStatus,
@@ -38,12 +37,14 @@ export interface InteropProtocolEntry {
     links?: ProjectLink[]
     hostChain?: string
   }
-  permissionsSection: PermissionSection | undefined
-  contractsSection: ContractsSection | undefined
+  sections: ProjectDetailsSection[]
 }
 
 export async function getInteropProtocolEntry(
   project: Project<'interopConfig', 'display' | 'statuses'>,
+  apiSelection: InteropSelection,
+  interopChains: InteropChainWithIcon[],
+  data: InteropProtocolDashboardData,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
   const [
@@ -60,6 +61,74 @@ export async function getInteropProtocolEntry(
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
 
+  const header: InteropProtocolEntry['header'] = {
+    description: project.interopConfig.description,
+    detailedDescription: project.interopConfig.detailedDescription,
+    warning: project.statuses?.yellowWarning,
+    redWarning: project.statuses?.redWarning,
+    emergencyWarning: project.statuses?.emergencyWarning,
+    links: project.display?.links
+      ? getProjectLinks(project.display.links)
+      : undefined,
+  }
+
+  const sections: ProjectDetailsSection[] = []
+
+  if (data?.entry) {
+    const sortedChains = sortChainsByFlowVolume(interopChains, data.flows)
+    const defaultSelectedChains = sortedChains
+      .slice(0, MAX_SELECTED_CHAINS)
+      .map((chain) => chain.id)
+
+    if (data.flows.length > 0) {
+      sections.push({
+        type: 'InteropVolumeSection',
+        props: {
+          id: 'interop-volume',
+          title: 'Volume and flows',
+          entry: data.entry,
+          interopChains: sortedChains,
+          defaultSelectedChains,
+        },
+      })
+    }
+
+    if (header.detailedDescription) {
+      sections.push({
+        type: 'DetailedDescriptionSection',
+        props: {
+          id: 'detailed-description',
+          title: 'Description',
+          description: header.description,
+          detailedDescription: header.detailedDescription,
+        },
+      })
+    }
+
+    sections.push({
+      type: 'InteropTokensSection',
+      props: {
+        id: 'interop-tokens',
+        projectId: project.id,
+        title: 'Top tokens by volume',
+        apiSelection,
+        data,
+      },
+    })
+
+    sections.push({
+      type: 'InteropTransfersSection',
+      props: {
+        id: 'interop-transfers',
+        projectId: project.id,
+        title: 'Transfers',
+        apiSelection,
+        data,
+        interopChains: sortedChains,
+      },
+    })
+  }
+
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
@@ -69,6 +138,16 @@ export async function getInteropProtocolEntry(
     contractUtils,
     projectsChangeReport,
   )
+  if (permissionsSection) {
+    sections.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+      },
+    })
+  }
 
   const contractsSection = getContractsSection(
     {
@@ -84,6 +163,16 @@ export async function getInteropProtocolEntry(
     allProjectsWithContracts,
     tvsStats,
   )
+  if (contractsSection) {
+    sections.push({
+      type: 'ContractsSection',
+      props: {
+        ...contractsSection,
+        id: 'contracts',
+        title: 'Smart contracts',
+      },
+    })
+  }
 
   return {
     id: project.id,
@@ -95,17 +184,27 @@ export async function getInteropProtocolEntry(
       isUnderReview,
       impactfulChange: false,
     }),
-    header: {
-      description: project.interopConfig.description,
-      detailedDescription: project.interopConfig.detailedDescription,
-      warning: project.statuses?.yellowWarning,
-      redWarning: project.statuses?.redWarning,
-      emergencyWarning: project.statuses?.emergencyWarning,
-      links: project.display?.links
-        ? getProjectLinks(project.display.links)
-        : undefined,
-    },
-    permissionsSection,
-    contractsSection,
+    header,
+    sections,
   }
+}
+
+function sortChainsByFlowVolume(
+  chains: InteropChainWithIcon[],
+  flows: InteropProtocolDashboardData['flows'],
+): InteropChainWithIcon[] {
+  const volumePerChain = new Map<string, number>()
+  for (const flow of flows) {
+    volumePerChain.set(
+      flow.srcChain,
+      (volumePerChain.get(flow.srcChain) ?? 0) + flow.volume,
+    )
+    volumePerChain.set(
+      flow.dstChain,
+      (volumePerChain.get(flow.dstChain) ?? 0) + flow.volume,
+    )
+  }
+  return chains.toSorted(
+    (a, b) => (volumePerChain.get(b.id) ?? 0) - (volumePerChain.get(a.id) ?? 0),
+  )
 }
