@@ -43,6 +43,7 @@ export async function getInteropTokensPairs(
 
 export async function getInteropTokensPairsInfinite({
   cursor,
+  limit = PAGE_SIZE,
   sort,
   ...params
 }: InteropTopItemsInfiniteParams): Promise<InteropTokensPairsResponse> {
@@ -51,9 +52,9 @@ export async function getInteropTokensPairsInfinite({
     sort,
   )
   const startIndex = cursor ?? 0
-  const items = pairs.slice(startIndex, startIndex + PAGE_SIZE)
+  const items = pairs.slice(startIndex, startIndex + limit)
   const nextCursor =
-    startIndex + PAGE_SIZE < pairs.length ? startIndex + PAGE_SIZE : undefined
+    startIndex + limit < pairs.length ? startIndex + limit : undefined
 
   return { items, nextCursor }
 }

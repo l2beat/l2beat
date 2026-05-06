@@ -48,7 +48,7 @@ export function TokensPairsTable({
     [queryInput, sort],
   )
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.tokensPairsInfinite.useInfiniteQuery(queryInputWithSort, {
+    api.interop.tokensPairs.useInfiniteQuery(queryInputWithSort, {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
 

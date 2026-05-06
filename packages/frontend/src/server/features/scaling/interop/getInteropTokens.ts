@@ -27,14 +27,15 @@ export async function getInteropTokens(
 
 export async function getInteropTokensInfinite({
   cursor,
+  limit = PAGE_SIZE,
   sort,
   ...params
 }: InteropTopItemsInfiniteParams): Promise<InteropTokensResponse> {
   const tokens = sortInteropTopItems(await getCachedInteropTokens(params), sort)
   const startIndex = cursor ?? 0
-  const items = tokens.slice(startIndex, startIndex + PAGE_SIZE)
+  const items = tokens.slice(startIndex, startIndex + limit)
   const nextCursor =
-    startIndex + PAGE_SIZE < tokens.length ? startIndex + PAGE_SIZE : undefined
+    startIndex + limit < tokens.length ? startIndex + limit : undefined
 
   return { items, nextCursor }
 }

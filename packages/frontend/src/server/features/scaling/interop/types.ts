@@ -120,6 +120,7 @@ export type InteropTopItemsInfiniteParams = v.infer<
 export const InteropTopItemsInfiniteParams = v.object({
   ...InteropTopItemsParamsShape,
   cursor: v.number().optional(),
+  limit: v.number().optional(),
   sort: InteropTopItemsSort.optional(),
 })
 

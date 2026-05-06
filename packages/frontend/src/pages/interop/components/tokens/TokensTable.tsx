@@ -48,7 +48,7 @@ export function TokensTable({
     [queryInput, sort],
   )
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.tokensInfinite.useInfiniteQuery(queryInputWithSort, {
+    api.interop.tokens.useInfiniteQuery(queryInputWithSort, {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
   const rows = useMemo(
