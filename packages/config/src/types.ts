@@ -113,6 +113,9 @@ export interface BaseProject {
   // interop data
   interopConfig?: InteropConfig
 
+  // privacy data
+  privacyInfo?: ProjectPrivacyInfo
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -837,6 +840,75 @@ export interface TrustedSetup {
   shortDescription: string
   longDescription: string
 }
+
+// #endregion
+
+// #region privacy data
+
+export interface ProjectPrivacyInfo {
+  trustedSetup: TrustedSetup
+  tokens: ProjectPrivacyToken[]
+  riskSummary?: string
+  upgradesAndGovernance?: string
+}
+
+export interface ProjectPrivacyToken {
+  token: {
+    address?: EthereumAddress
+    symbol: string
+    decimals: number
+    priceId?: string
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address?: ChainSpecificAddress
+  denomination?: string
+  flows?: PrivacyBucketFlowsConfig
+}
+
+export interface PrivacyBucketFlowsConfig {
+  sinceBlock: number
+  deposit?: PrivacyFlowSource
+  withdrawal?: PrivacyFlowSource
+}
+
+export type PrivacyFlowSource = {
+  chain: string
+  event: string
+  address?: ChainSpecificAddress
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 

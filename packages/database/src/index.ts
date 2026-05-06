@@ -71,6 +71,11 @@ export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
 export type { NotificationRecord } from './repositories/NotificationsRepository'
 export type {
+  PrivacyFlowDailyRecord,
+  PrivacyFlowDirection,
+  PrivacyFlowEventRecord,
+} from './repositories/PrivacyFlowEventRepository'
+export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,
 } from './repositories/RealTimeAnomaliesRepository'

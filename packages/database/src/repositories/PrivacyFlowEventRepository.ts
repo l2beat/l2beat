@@ -1,0 +1,163 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
+import { BaseRepository } from '../BaseRepository'
+import type { PrivacyFlowEvent } from '../kysely/generated/types'
+
+export type PrivacyFlowDirection = 'deposit' | 'withdrawal'
+
+export interface PrivacyFlowEventRecord {
+  configurationId: string
+  projectId: string
+  assetKey: string
+  bucketId: string
+  chain: string
+  direction: PrivacyFlowDirection
+  timestamp: UnixTime
+  blockNumber: number
+  txHash: string
+  logIndex: number
+  count: number
+  amount: bigint
+}
+
+export interface PrivacyFlowDailyRecord {
+  projectId: string
+  assetKey: string
+  bucketId: string
+  timestamp: UnixTime
+  depositCount: number
+  withdrawalCount: number
+  depositAmount: bigint
+  withdrawalAmount: bigint
+}
+
+export function toRecord(
+  row: Selectable<PrivacyFlowEvent>,
+): PrivacyFlowEventRecord {
+  return {
+    ...row,
+    direction: row.direction as PrivacyFlowDirection,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    amount: BigInt(row.amount),
+  }
+}
+
+export function toRow(
+  record: PrivacyFlowEventRecord,
+): Insertable<PrivacyFlowEvent> {
+  return {
+    ...record,
+    timestamp: UnixTime.toDate(record.timestamp),
+    amount: record.amount.toString(),
+  }
+}
+
+export class PrivacyFlowEventRepository extends BaseRepository {
+  async upsertMany(records: PrivacyFlowEventRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 2_000, async (batch) => {
+      await this.db
+        .insertInto('PrivacyFlowEvent')
+        .values(batch)
+        .onConflict((oc) =>
+          oc
+            .columns(['configurationId', 'txHash', 'logIndex'])
+            .doUpdateSet((eb) => ({
+              projectId: eb.ref('excluded.projectId'),
+              assetKey: eb.ref('excluded.assetKey'),
+              bucketId: eb.ref('excluded.bucketId'),
+              chain: eb.ref('excluded.chain'),
+              direction: eb.ref('excluded.direction'),
+              timestamp: eb.ref('excluded.timestamp'),
+              blockNumber: eb.ref('excluded.blockNumber'),
+              count: eb.ref('excluded.count'),
+              amount: eb.ref('excluded.amount'),
+            })),
+        )
+        .execute()
+    })
+
+    return rows.length
+  }
+
+  async getDailyByProjectIds(
+    projectIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<PrivacyFlowDailyRecord[]> {
+    if (projectIds.length === 0) return []
+
+    const day = sql<Date>`date_trunc('day', "timestamp")`
+    const rows = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .select((eb) => [
+        'projectId',
+        'assetKey',
+        'bucketId',
+        day.as('timestamp'),
+        eb.fn
+          .sum<number>('count')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositCount'),
+        eb.fn
+          .sum<number>('count')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalCount'),
+        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'deposit'), 0)`.as(
+          'depositAmount',
+        ),
+        sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
+          'withdrawalAmount',
+        ),
+      ])
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .groupBy(['projectId', 'assetKey', 'bucketId', day])
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: row.projectId,
+      assetKey: row.assetKey,
+      bucketId: row.bucketId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      depositCount: Number(row.depositCount ?? 0),
+      withdrawalCount: Number(row.withdrawalCount ?? 0),
+      depositAmount: BigInt(row.depositAmount),
+      withdrawalAmount: BigInt(row.withdrawalAmount),
+    }))
+  }
+
+  async deleteByConfigInBlockRange(
+    configurationId: string,
+    fromInclusive: number,
+    toInclusive: number,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('PrivacyFlowEvent')
+      .where('configurationId', '=', configurationId)
+      .where('blockNumber', '>=', fromInclusive)
+      .where('blockNumber', '<=', toInclusive)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async getAll(): Promise<PrivacyFlowEventRecord[]> {
+    const rows = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .selectAll()
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('PrivacyFlowEvent')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+}

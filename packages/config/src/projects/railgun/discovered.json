@@ -1,0 +1,766 @@
+{
+  "name": "railgun",
+  "timestamp": 1775744335,
+  "configHash": "0x2e8d3c793988e709ce86c3589e41ac71472accfefdb1c20d94a4ba04f5d097d0",
+  "entries": [
+    {
+      "name": "Sweeper",
+      "address": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
+        "0x0b06be077f821ae1860dd79fc78b6a3c529270e369384afc64f0ac0a9473ab33"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1669148003,
+      "sinceBlock": 16027851,
+      "values": {
+        "$admin": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+        "$implementation": "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "receiver": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f"
+      },
+      "implementationNames": {
+        "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "PausableUpgradableProxy",
+        "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": "Sweeper"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0642c913712ca7d22bb11e5be42f712f7895cbcf1f3e2a8104ce8d67baef4345"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1625961245,
+      "sinceBlock": 12802673,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
+      },
+      "implementationNames": {
+        "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "VKeySetter",
+      "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+      "type": "Contract",
+      "template": "railgun/VKeySetter",
+      "sourceHashes": [
+        "0x97c32fbfee382b7fe3932651160b482c01c51e25cee46e8e174218dadd7bcae8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1752516023,
+      "sinceBlock": 22919063,
+      "values": {
+        "$immutable": true,
+        "delegator": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "owner": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+        "state": 2,
+        "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+      },
+      "fieldMeta": {
+        "delegator": {
+          "description": "Address that approves verification key update on the core Railgun contract"
+        },
+        "owner": {
+          "description": "Address that proposes verification key update on the core Railgun contract"
+        },
+        "state": {
+          "severity": "HIGH",
+          "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)"
+        }
+      },
+      "implementationNames": {
+        "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VKeySetter"
+      }
+    },
+    {
+      "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "propose verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "VKeySetter",
+      "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+      "type": "Contract",
+      "template": "railgun/VKeySetter",
+      "sourceHashes": [
+        "0x4c94632d11362a5297c31f6eba9f37322caadd6a88247c9032529d66ebd04cdf"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1677376967,
+      "sinceBlock": 16709316,
+      "values": {
+        "$immutable": true,
+        "delegator": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "owner": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+        "state": 2,
+        "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+      },
+      "fieldMeta": {
+        "delegator": {
+          "description": "Address that approves verification key update on the core Railgun contract"
+        },
+        "owner": {
+          "description": "Address that proposes verification key update on the core Railgun contract"
+        },
+        "state": {
+          "severity": "HIGH",
+          "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)"
+        }
+      },
+      "implementationNames": {
+        "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VKeySetter"
+      }
+    },
+    {
+      "name": "GovernorRewards",
+      "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xef8b7ca35114debbd8f7c5998a55ca9dd61bbd558bf6987cbfcf5ea97e3af83a",
+        "0xd1b675b1a03700c03440f776180470c3a967a7ef2e7cbe7a6f2cb9d75c4ea8ad"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1674193031,
+      "sinceBlock": 16445969,
+      "values": {
+        "$admin": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+        "$implementation": "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BASIS_POINTS": 10000,
+        "currentInterval": 124,
+        "DISTRIBUTION_INTERVAL": 1209600,
+        "intervalAtTime": [],
+        "intervalBP": 200,
+        "nextSnapshotPreCalcInterval": 125,
+        "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "staking": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
+        "STAKING_DEPLOY_TIME": 1625670240,
+        "STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER": 14,
+        "treasury": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40"
+      },
+      "implementationNames": {
+        "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": "PausableUpgradableProxy",
+        "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": "GovernorRewards"
+      }
+    },
+    {
+      "name": "Delegator",
+      "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+      "type": "Contract",
+      "template": "railgun/Delegator",
+      "sourceHashes": [
+        "0xb2e5d4b92141657f0ac259d83e128a7a6504cd491e1326fa625354186d937b28"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "approve verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "approve verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+          "description": "mint RAIL tokens up to the cap.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add/remove tokens to/from the blacklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "set zk verification key to upgrade the verifier circuit.",
+          "role": ".owner"
+        }
+      ],
+      "sinceTimestamp": 1625810239,
+      "sinceBlock": 12791440,
+      "values": {
+        "$immutable": true,
+        "grantedPermissions": {
+          "eth:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "eth:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "eth:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": [
+            {
+              "contractAddress": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ],
+          "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": [
+            {
+              "contractAddress": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ]
+        },
+        "owner": "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC"
+      },
+      "fieldMeta": {
+        "grantedPermissions": {
+          "description": "Selector 0x2ec0f359 is function setVerificationKey on the main railgun contract."
+        }
+      },
+      "implementationNames": {
+        "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": "Delegator"
+      }
+    },
+    {
+      "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "propose verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
+      "name": "Voting",
+      "address": "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb43f60b5a1864a059b570289a0d863684c488d36606efea6af35821ad64b0e69"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1662770918,
+      "sinceBlock": 15505853,
+      "values": {
+        "$immutable": true,
+        "DELEGATOR_CONTRACT": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "EXECUTION_END_OFFSET": 1209600,
+        "EXECUTION_START_OFFSET": 604800,
+        "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
+        "proposalsLength": 22,
+        "QUORUM": "2000000000000000000000000",
+        "SPONSOR_LOCKOUT_TIME": 604800,
+        "SPONSOR_WINDOW": 2592000,
+        "STAKING_CONTRACT": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
+        "VOTING_NAY_END_OFFSET": 518400,
+        "VOTING_START_OFFSET": 172800,
+        "VOTING_YAY_END_OFFSET": 432000
+      },
+      "implementationNames": {
+        "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": "Voting"
+      }
+    },
+    {
+      "name": "RailToken",
+      "address": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+      "type": "Contract",
+      "template": "railgun/RailToken",
+      "sourceHashes": [
+        "0xa82346e65e8737f6ecea9914efe8654029b2c87c2af1186d3515a49ce1b9db39"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1625318205,
+      "sinceBlock": 12754822,
+      "values": {
+        "$immutable": true,
+        "cap": "100000000000000000000000000",
+        "decimals": 18,
+        "DEPLOY_TIME": 1625318205,
+        "name": "Rail",
+        "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "symbol": "RAIL",
+        "totalSupply": "57500000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D": "RailToken"
+      }
+    },
+    {
+      "name": "Treasury",
+      "address": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
+        "0x1e581c91de9e0c3cd50906d9d30663d1b8fe037db6a5a80caf0c20e961d7eb41"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1657776059,
+      "sinceBlock": 15138802,
+      "values": {
+        "$admin": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+        "$implementation": "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+      },
+      "implementationNames": {
+        "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": "PausableUpgradableProxy",
+        "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255": "Treasury"
+      }
+    },
+    {
+      "name": "Getters",
+      "address": "eth:0xe90275239D734899e8D94646139213F6F97bEB0E",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2b27b919f2f0ceebf6a30b8b3af7426812898663d4c26085ab9a97200354f7a6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1670115011,
+      "sinceBlock": 16107975,
+      "values": {
+        "$immutable": true,
+        "governorRewards": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
+        "staking": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20"
+      },
+      "implementationNames": {
+        "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": "Getters"
+      }
+    },
+    {
+      "name": "Staking",
+      "address": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2bff1afa5e292171f2c6c15a1e62198b014ff5a8b42eedc6ad43ba8a0627787d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1625670240,
+      "sinceBlock": 12780995,
+      "values": {
+        "$immutable": true,
+        "currentInterval": 1736,
+        "DEPLOY_TIME": 1625670240,
+        "globalsSnapshotLength": 1594,
+        "intervalAtTime": [],
+        "latestGlobalsSnapshotInterval": 1736,
+        "SNAPSHOT_INTERVAL": 86400,
+        "STAKE_LOCKTIME": 2592000,
+        "stakingToken": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+        "totalStaked": "42030639848522321468243584",
+        "totalVotingPower": "40635588592274652749882913"
+      },
+      "implementationNames": {
+        "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": "Staking"
+      }
+    },
+    {
+      "name": "RailgunCore",
+      "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+      "type": "Contract",
+      "template": "railgun/RailgunSmartWallet",
+      "sourceHashes": [
+        "0xbfd517af5073b0a89f8f8dfce2d11e2bc003968785985ed504c9f9ab571f9d75",
+        "0xcf70d21ec20aa9f668a3d77681b3214b2b7aab73bc22211bf503612e1be5b813"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["lastEventBlock", "merkleRoot", "nextLeafIndex"],
+      "sinceTimestamp": 1651422389,
+      "sinceBlock": 14693013,
+      "values": {
+        "$admin": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+        "$implementation": "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "lastEventBlock": 24842702,
+        "merkleRoot": "0x045c02d29697c5ee92f55fdb34cc29db43f0e32ff64650a716375d383aae36fe",
+        "nextLeafIndex": 8835,
+        "nftFee": 0,
+        "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "shieldFee": 25,
+        "totalShielded": 51980,
+        "totalUnshielded": 75016,
+        "treasury": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+        "treeNumber": 3,
+        "unshieldFee": 25,
+        "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
+      },
+      "fieldMeta": {
+        "totalShielded": {
+          "description": "Total number of deposits into Railgun, all tokens combined."
+        },
+        "totalUnshielded": {
+          "description": "Total number of withdrawals from Railgun, all tokens combined."
+        }
+      },
+      "implementationNames": {
+        "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": "PausableUpgradableProxy",
+        "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": "RailgunSmartWallet"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    }
+  ],
+  "abis": {
+    "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": [
+      "constructor(address _receiver)",
+      "function receiver() view returns (address)",
+      "function transferERC20(address _token)",
+      "function transferETH()"
+    ],
+    "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": [
+      "constructor(address _admin)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function pause(address _proxy)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function transferProxyOwnership(address _proxy, address _newOwner)",
+      "function unpause(address _proxy)",
+      "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": [
+      "constructor(address _admin, address _delegator, address _verifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function batchCommitVerificationKey(uint256[] _nullifiers, uint256[] _commitments)",
+      "function batchSetVerificationKey(uint256[] _nullifiers, uint256[] _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic)[] _verifyingKey)",
+      "function commitVerificationKey(uint256 _nullifiers, uint256 _commitments)",
+      "function delegator() view returns (address)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function state() view returns (uint8)",
+      "function stateToCommitting()",
+      "function stateToSetting()",
+      "function stateToWaiting()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": [
+      "constructor(address _admin, address _delegator, address _verifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function batchCommitVerificationKey(uint256[] _nullifiers, uint256[] _commitments)",
+      "function batchSetVerificationKey(uint256[] _nullifiers, uint256[] _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic)[] _verifyingKey)",
+      "function commitVerificationKey(uint256 _nullifiers, uint256 _commitments)",
+      "function delegator() view returns (address)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function state() view returns (uint8)",
+      "function stateToCommitting()",
+      "function stateToSetting()",
+      "function stateToWaiting()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255": [
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function TRANSFER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initializeTreasury(address _admin)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferERC20(address _token, address _to, uint256 _amount)",
+      "function transferETH(address _to, uint256 _amount)"
+    ],
+    "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b": [
+      "event Claim(address token, address account, uint256 amount, uint256 startInterval, uint256 endInterval)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function BASIS_POINTS() view returns (uint256)",
+      "function DISTRIBUTION_INTERVAL() view returns (uint256)",
+      "function STAKING_DEPLOY_TIME() view returns (uint256)",
+      "function STAKING_DISTRIBUTION_INTERVAL_MULTIPLIER() view returns (uint256)",
+      "function addTokens(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function calculateRewards(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, bool _ignoreClaimed) view returns (uint256[])",
+      "function checkSafetyVectors()",
+      "function claim(address[] _tokens, address _account, uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints)",
+      "function currentInterval() view returns (uint256)",
+      "function distributionIntervalToStakingInterval(uint256 _distributionInterval) pure returns (uint256)",
+      "function earmark(address _token)",
+      "function earmarked(address, uint256) view returns (uint256)",
+      "function fetchAccountSnapshots(uint256 _startingInterval, uint256 _endingInterval, address _account, uint256[] _hints) view returns (uint256[])",
+      "function fetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints) view returns (uint256[])",
+      "function getClaimed(address _account, address _token, uint256 _interval) view returns (bool)",
+      "function initializeGovernorRewards(address _staking, address _treasury, uint256 _startingInterval, address[] _tokens)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function intervalBP() view returns (uint256)",
+      "function nextEarmarkInterval(address) view returns (uint256)",
+      "function nextSnapshotPreCalcInterval() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function precalculatedGlobalSnapshots(uint256) view returns (uint256)",
+      "function prefetchGlobalSnapshots(uint256 _startingInterval, uint256 _endingInterval, uint256[] _hints, address[] _postProcessTokens)",
+      "function removeTokens(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function safetyVector(uint256) view returns (bool)",
+      "function setIntervalBP(uint256 _newIntervalBP)",
+      "function staking() view returns (address)",
+      "function tokens(address) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)"
+    ],
+    "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b": [
+      "event AddToBlocklist(address indexed token)",
+      "event FeeChange(uint256 shieldFee, uint256 unshieldFee, uint256 nftFee)",
+      "event Initialized(uint8 version)",
+      "event Nullified(uint16 treeNumber, bytes32[] nullifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemoveFromBlocklist(address indexed token)",
+      "event Shield(uint256 treeNumber, uint256 startPosition, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value)[] commitments, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey)[] shieldCiphertext, uint256[] fees)",
+      "event Transact(uint256 treeNumber, uint256 startPosition, bytes32[] hash, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] ciphertext)",
+      "event TreasuryChange(address treasury)",
+      "event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)",
+      "event VerifyingKeySet(uint256 nullifiers, uint256 commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) verifyingKey)",
+      "function ZERO_VALUE() view returns (bytes32)",
+      "function addToBlocklist(address[] _tokens)",
+      "function addVector(uint256 vector)",
+      "function changeFee(uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee)",
+      "function changeTreasury(address _treasury)",
+      "function checkSafetyVectors()",
+      "function getFee(uint136 _amount, bool _isInclusive, uint120 _feeBP) pure returns (uint120, uint120)",
+      "function getInsertionTreeNumberAndStartingIndex(uint256 _newCommitments) view returns (uint256, uint256)",
+      "function getTokenID(tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) _tokenData) pure returns (bytes32)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function hashBoundParams(tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) _boundParams) pure returns (uint256)",
+      "function hashCommitment(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _commitmentPreimage) pure returns (bytes32)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function initializeRailgunLogic(address _treasury, uint120 _shieldFee, uint120 _unshieldFee, uint256 _nftFee, address _owner)",
+      "function lastEventBlock() view returns (uint256)",
+      "function merkleRoot() view returns (bytes32)",
+      "function nextLeafIndex() view returns (uint256)",
+      "function nftFee() view returns (uint256)",
+      "function nullifiers(uint256, bytes32) view returns (bool)",
+      "function owner() view returns (address)",
+      "function removeFromBlocklist(address[] _tokens)",
+      "function removeVector(uint256 vector)",
+      "function renounceOwnership()",
+      "function rootHistory(uint256, bytes32) view returns (bool)",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function shield(tuple(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) preimage, tuple(bytes32[3] encryptedBundle, bytes32 shieldKey) ciphertext)[] _shieldRequests)",
+      "function shieldFee() view returns (uint120)",
+      "function snarkSafetyVector(uint256) view returns (bool)",
+      "function sumCommitments(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions) pure returns (uint256)",
+      "function tokenBlocklist(address) view returns (bool)",
+      "function tokenIDMapping(bytes32) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubID)",
+      "function transact(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage)[] _transactions)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function treeNumber() view returns (uint256)",
+      "function unshieldFee() view returns (uint120)",
+      "function validateCommitmentPreimage(tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) _note) view returns (bool, string)",
+      "function validateTransaction(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool, string)",
+      "function verify(tuple(tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) proof, bytes32 merkleRoot, bytes32[] nullifiers, bytes32[] commitments, tuple(uint16 treeNumber, uint72 minGasPrice, uint8 unshield, uint64 chainID, address adaptContract, bytes32 adaptParams, tuple(bytes32[4] ciphertext, bytes32 blindedSenderViewingKey, bytes32 blindedReceiverViewingKey, bytes annotationData, bytes memo)[] commitmentCiphertext) boundParams, tuple(bytes32 npk, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint120 value) unshieldPreimage) _transaction) view returns (bool)",
+      "function verifyProof(tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey, tuple(tuple(uint256 x, uint256 y) a, tuple(uint256[2] x, uint256[2] y) b, tuple(uint256 x, uint256 y) c) _proof, uint256[] _inputs) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)"
+    ],
+    "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": [
+      "constructor(address _admin)",
+      "event GrantPermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RevokePermission(address indexed caller, address indexed contractAddress, bytes4 indexed selector)",
+      "function callContract(address _contract, bytes _data, uint256 _value) returns (bool success, bytes returnData)",
+      "function checkPermission(address _caller, address _contract, bytes4 _selector) view returns (bool)",
+      "function owner() view returns (address)",
+      "function permissions(address, address, bytes4) view returns (bool)",
+      "function renounceOwnership()",
+      "function setPermission(address _caller, address _contract, bytes4 _selector, bool _permission)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": [
+      "constructor(address _stakingContract, address _delegator)",
+      "error ExecutionFailed(uint256 index, bytes data)",
+      "event Execution(uint256 indexed id)",
+      "event Proposal(uint256 indexed id, address indexed proposer)",
+      "event Sponsorship(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event SponsorshipRevocation(uint256 indexed id, address indexed sponsor, uint256 amount)",
+      "event VoteCall(uint256 indexed id)",
+      "event VoteCast(uint256 indexed id, address indexed voter, bool affirmative, uint256 votes)",
+      "event VoteKeySet(address indexed account, address votingKey)",
+      "function DELEGATOR_CONTRACT() view returns (address)",
+      "function EXECUTION_END_OFFSET() view returns (uint256)",
+      "function EXECUTION_START_OFFSET() view returns (uint256)",
+      "function PROPOSAL_SPONSOR_THRESHOLD() view returns (uint256)",
+      "function QUORUM() view returns (uint256)",
+      "function SPONSOR_LOCKOUT_TIME() view returns (uint256)",
+      "function SPONSOR_WINDOW() view returns (uint256)",
+      "function STAKING_CONTRACT() view returns (address)",
+      "function VOTING_NAY_END_OFFSET() view returns (uint256)",
+      "function VOTING_START_OFFSET() view returns (uint256)",
+      "function VOTING_YAY_END_OFFSET() view returns (uint256)",
+      "function callVote(uint256 _id)",
+      "function createProposal(string _proposalDocument, tuple(address callContract, bytes data, uint256 value)[] _actions) returns (uint256)",
+      "function executeProposal(uint256 _id)",
+      "function getActions(uint256 _id) view returns (tuple(address callContract, bytes data, uint256 value)[])",
+      "function getSponsored(uint256 _id, address _account) view returns (uint256)",
+      "function getVotes(uint256 _id, address _account) view returns (uint256)",
+      "function lastSponsored(address) view returns (uint256 lastSponsorTime, uint256 proposalID)",
+      "function proposals(uint256) view returns (bool executed, address proposer, string proposalDocument, uint256 publishTime, uint256 voteCallTime, uint256 sponsorship, uint256 yayVotes, uint256 nayVotes, uint256 sponsorInterval, uint256 votingInterval)",
+      "function proposalsLength() view returns (uint256)",
+      "function setVotingKey(address _votingKey)",
+      "function sponsorProposal(uint256 _id, uint256 _amount, address _account, uint256 _hint)",
+      "function unsponsorProposal(uint256 _id, uint256 _amount, address _account)",
+      "function vote(uint256 _id, uint256 _amount, bool _affirmative, address _account, uint256 _hint)",
+      "function votingKey(address) view returns (address)"
+    ],
+    "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D": [
+      "constructor(address _initialHolder, uint256 _initialSupply, uint256 _cap, address _owner, address[] _lps)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DEPLOY_TIME() view returns (uint256)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function governanceMint(address _account, uint256 _amount) returns (bool success)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address _recipient, uint256 _amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ],
+    "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": [
+      "constructor(address _staking, address _governorRewards)",
+      "function getAccountSnapshots(address _account) view returns (tuple(uint256 interval, uint256 votingPower)[])",
+      "function getClaimed(address _account, address[] _tokens, uint256 _startingInterval, uint256 _endingInterval) view returns (bool[])",
+      "function getEarnedTokensPerInterval(address _account, address _token, uint256 _startingInterval, uint256 _endingInterval) view returns (uint256[])",
+      "function getGlobalsSnapshots() view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked)[])",
+      "function governorRewards() view returns (address)",
+      "function staking() view returns (address)"
+    ],
+    "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": [
+      "constructor(address _stakingToken)",
+      "event Claim(address indexed account, uint256 indexed stakeID)",
+      "event Delegate(address indexed owner, address indexed _from, address indexed to, uint256 stakeID, uint256 amount)",
+      "event Stake(address indexed account, uint256 indexed stakeID, uint256 amount)",
+      "event Unlock(address indexed account, uint256 indexed stakeID)",
+      "function DEPLOY_TIME() view returns (uint256)",
+      "function SNAPSHOT_INTERVAL() view returns (uint256)",
+      "function STAKE_LOCKTIME() view returns (uint256)",
+      "function accountSnapshot(address _account, uint256 _index) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotAt(address _account, uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 votingPower))",
+      "function accountSnapshotLength(address _account) view returns (uint256)",
+      "function claim(uint256 _stakeID)",
+      "function currentInterval() view returns (uint256)",
+      "function delegate(uint256 _stakeID, address _to)",
+      "function globalsSnapshot(uint256 _index) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotAt(uint256 _interval, uint256 _hint) view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked))",
+      "function globalsSnapshotLength() view returns (uint256)",
+      "function intervalAtTime(uint256 _time) view returns (uint256)",
+      "function latestAccountSnapshotInterval(address _account) view returns (uint256)",
+      "function latestGlobalsSnapshotInterval() view returns (uint256)",
+      "function stake(uint256 _amount) returns (uint256)",
+      "function stakes(address, uint256) view returns (address delegate, uint256 amount, uint256 staketime, uint256 locktime, uint256 claimedTime)",
+      "function stakesLength(address _account) view returns (uint256)",
+      "function stakingToken() view returns (address)",
+      "function totalStaked() view returns (uint256)",
+      "function totalVotingPower() view returns (uint256)",
+      "function undelegate(uint256 _stakeID)",
+      "function unlock(uint256 _stakeID)",
+      "function votingPower(address) view returns (uint256)"
+    ],
+    "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": [
+      "constructor(address _admin)",
+      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
+      "event ProxyPause()",
+      "event ProxyUnpause()",
+      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
+      "function pause()",
+      "function transferOwnership(address _newOwner)",
+      "function unpause()",
+      "function upgrade(address _newImplementation)"
+    ]
+  },
+  "usedTemplates": {
+    "railgun/Delegator": "0xc04930700142a4832ff948883e6ed52b480426c2852cc39659daf374c9ca78d3",
+    "railgun/RailgunSmartWallet": "0xbd0e212266f20188ba4f5347869d904bfba8f748e6be147db4ebe9dc7153e620",
+    "railgun/RailToken": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "railgun/VKeySetter": "0xa776e2f4ac35e4d76017ef554585cdcbf5a1134b3d0741a972261951d375ffcb"
+  },
+  "usedBlockNumbers": { "ethereum": 24842709 },
+  "permissionsConfigHash": "0x444ea795eaa51e78ec91fa2b593ab7c6c2a135f162527e28c00ca5d6d3f9793f"
+}

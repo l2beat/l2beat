@@ -10,6 +10,7 @@ import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
 import { getInteropFeatureConfig } from './features/interop'
+import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -159,6 +160,7 @@ export async function makeConfig(
       chains,
       activeChains,
     ),
+    privacy: flags.isEnabled('privacy') && (await getPrivacyConfig(ps, flags)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

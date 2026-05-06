@@ -11,6 +11,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -69,6 +70,7 @@ export class Application {
       createFlatSourcesModule(deps),
       trackedTxsModule,
       initTvsModule(deps),
+      createPrivacyModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),

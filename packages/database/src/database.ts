@@ -29,6 +29,7 @@ import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
+import { PrivacyFlowEventRepository } from './repositories/PrivacyFlowEventRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
@@ -109,6 +110,10 @@ export function createDatabase(
     realTimeLiveness: new RealTimeLivenessRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
+    // #endregion
+
+    // #region Privacy
+    privacyFlowEvent: new PrivacyFlowEventRepository(db),
     // #endregion
 
     // #region Token Knowledge

@@ -270,6 +270,26 @@ model TokenMetadata {
   @@index([projectId])
 }
 
+model PrivacyFlowEvent {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  assetKey        String   @db.VarChar(255)
+  bucketId        String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  direction       String   @db.VarChar(16)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  txHash          String   @db.VarChar(66)
+  logIndex        Int
+  count           Int
+  amount          Decimal  @db.Decimal(80, 0)
+
+  @@id([configurationId, txHash, logIndex])
+  @@index([projectId, timestamp])
+  @@index([projectId, assetKey, bucketId, timestamp])
+  @@index([configurationId, blockNumber])
+}
+
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)

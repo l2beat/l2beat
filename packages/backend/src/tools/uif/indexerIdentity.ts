@@ -15,5 +15,8 @@ export const INDEXER_NAMES = {
   TVS_CIRCULATING_SUPPLY: 'tvs_circulating_supply_indexer',
   TVS_TOKEN_VALUE: 'tvs_token_value',
   TVS_CLEANER: 'tvs_cleaner',
+  PRIVACY_FLOW: 'privacy_flow_indexer',
+  PRIVACY_PRICE: 'privacy_price_indexer',
+  PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
 }
