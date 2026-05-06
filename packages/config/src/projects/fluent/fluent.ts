@@ -56,7 +56,7 @@ export const fluent: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1721218971), // 2024-07-17, original entry as upcoming
   badges: [BADGES.VM.EVM, BADGES.VM.WasmVM],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Fluent',
     slug: 'fluent',
@@ -170,14 +170,10 @@ export const fluent: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
+      ...RISK_VIEW.STATE_NONE,
       description:
-        RISK_VIEW.STATE_ZKP_OPTIMISTIC.description +
-        " Each batch is preconfirmed by an AWS Nitro Enclave, then finalizes on L1 without a proof unless challenged. PCR0 is a fingerprint of the enclave image; the enclave signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 matches the expected (audited) value. " +
-        `Holders of the \`CHALLENGER_ROLE\` have ${formatSeconds(challengeWindow)} from batch acceptance to dispute via \`challengeBatchRoot\` or \`challengeBlock\`, and a challenge must be resolved with an SP1 proof before that same window closes. Currently the role has no holders, so the dispute pipeline is inert and batches finalize purely on the time-based path. Proof submission and challenges are permissioned; see the Permissions section for current role holders.`,
-      challengeDelay: challengeWindow,
-      executionDelay: 0,
-      sentiment: 'warning',
+        "Fluent ships an optimistic-with-SP1 design: batches are preconfirmed by an AWS Nitro Enclave (whose signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 — a fingerprint of the enclave image — matches the expected audited value), and SP1 ZK proofs are accepted as responses to disputes raised by holders of the `CHALLENGER_ROLE`. " +
+        `In practice the role currently has no holders: \`challengeBatchRoot\` and \`challengeBlock\` are gated by \`onlyRole(CHALLENGER_ROLE)\`, and the only path that flips a block to "proven" is \`resolveBlockChallenge\` (which itself requires an active challenge). With no challenger, no SP1 proof can be submitted onchain and \`finalizeWithProofs\` reverts, so every batch finalizes purely on the time-based path after ${formatSeconds(finalizationDelay)}. Effective security reduces to "trust the TEE and wait the delay" until the admin grants the role.`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
