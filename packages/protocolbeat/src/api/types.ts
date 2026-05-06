@@ -64,6 +64,32 @@ export interface ApiConfigFileResponse {
   config: string
 }
 
+export type ApiDiffHistorySectionKind =
+  | 'watched-changes'
+  | 'initial-discovery'
+  | 'source-code-changes'
+  | 'config-related-changes'
+
+export interface ApiDiffHistorySection {
+  kind: ApiDiffHistorySectionKind
+  body: string
+}
+
+export interface ApiDiffHistoryEntry {
+  date: string
+  timestamp: number | null
+  author: string | null
+  comparing: { ref: string; commit: string; block: number } | null
+  discoveryHash: string | null
+  description: string
+  sections: ApiDiffHistorySection[]
+}
+
+export interface ApiDiffHistoryResponse {
+  total: number
+  entries: ApiDiffHistoryEntry[]
+}
+
 type RefreshReason =
   | {
       type: 'TEMPLATE_NO_LONGER_MATCHES'

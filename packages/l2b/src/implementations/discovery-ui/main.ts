@@ -9,9 +9,11 @@ import {
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import express from 'express'
+import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
 import { attachConfigRouter } from './configs/router'
+import { DiffHistoryParser } from './DiffHistoryParser'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
@@ -73,6 +75,21 @@ const findMintersSchema = z.object({
   address: ethereumAddressSchema,
 })
 
+const nonNegativeIntFromString = z
+  .string()
+  .check((v) => /^\d+$/.test(v), 'must be a non-negative integer')
+  .transform((v) => Number(v))
+
+const positiveIntFromString = z
+  .string()
+  .check((v) => /^\d+$/.test(v) && Number(v) > 0, 'must be a positive integer')
+  .transform((v) => Number(v))
+
+const diffHistoryQuerySchema = z.object({
+  offset: nonNegativeIntFromString.optional(),
+  limit: positiveIntFromString.optional(),
+})
+
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const app = express()
   const port = process.env.PORT ?? 2021
@@ -86,6 +103,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configHealthService = new ConfigHealthService()
 
   const diffoveryController = new DiffoveryController()
+  const diffHistoryParser = new DiffHistoryParser()
 
   app.use(express.json())
 
@@ -226,6 +244,35 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
     res.json({
       config: configText,
+    })
+  })
+
+  app.get('/api/projects/:project/diff-history', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const queryValidation = diffHistoryQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+    const offset = queryValidation.data.offset ?? 0
+    const limit = queryValidation.data.limit ?? 10
+
+    const projectPath = configReader.getProjectPath(project)
+    const filePath = path.join(projectPath, 'diffHistory.md')
+    if (!existsSync(filePath)) {
+      res.json({ total: 0, entries: [] })
+      return
+    }
+    const content = readFileSync(filePath, 'utf-8')
+    const entries = diffHistoryParser.parse(content)
+    res.json({
+      total: entries.length,
+      entries: entries.slice(offset, offset + limit),
     })
   })
 

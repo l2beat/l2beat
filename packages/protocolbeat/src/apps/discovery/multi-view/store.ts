@@ -10,6 +10,7 @@ export const PANEL_IDS = [
   'terminal',
   'template',
   'config',
+  'diffHistory',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
