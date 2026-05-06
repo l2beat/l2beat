@@ -1,7 +1,7 @@
+import { parseJsonc } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { Type } from 'cmd-ts'
 import { readFileSync } from 'fs'
-import { parseJsonc } from '@l2beat/shared-pure'
 import { join } from 'path'
 import type {
   InteropEvent,

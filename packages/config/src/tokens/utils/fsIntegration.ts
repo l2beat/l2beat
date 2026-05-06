@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync } from 'fs'
 import { parseJsonc } from '@l2beat/shared-pure'
+import { readFileSync, writeFileSync } from 'fs'
 import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import type { ScriptLogger } from './ScriptLogger'
 
