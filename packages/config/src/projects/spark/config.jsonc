@@ -84,10 +84,24 @@
     },
     // --- Leaf: Chronicle core oracles (authed/feeds/tolled pull full Chronicle infra) ---
     "eth:0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E": {
-      "ignoreRelatives": ["authed", "feeds", "tolled"]
+      "ignoreRelatives": [
+        "authed",
+        "feeds",
+        "tolled"
+      ],
+      "ignoreInWatchMode": [
+        "tolled"
+      ]
     },
     "eth:0x24C392CDbF32Cf911B258981a66d5541d85269ce": {
-      "ignoreRelatives": ["authed", "feeds", "tolled"]
+      "ignoreRelatives": [
+        "authed",
+        "feeds",
+        "tolled"
+      ],
+      "ignoreInWatchMode": [
+        "tolled"
+      ]
     },
     // --- Leaf: Redstone price feeds (ERC1967 proxies) ---
     "eth:0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4": {

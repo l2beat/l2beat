@@ -351,7 +351,10 @@
     // names so the same field appears on every market.
     "eth:0x342631c6CeFC9cfbf97b2fe4aa242a236e1fd517": {
       "ignoreInWatchMode": [
-        "CONFIGURATOR_REVISION"
+        "CONFIGURATOR_REVISION",
+        "marketAaveOracle",
+        "marketAclManager",
+        "marketPool"
       ],
       "fields": {
         "proxyAdmin": {
@@ -368,7 +371,10 @@
     },
     "eth:0x64b761D848206f447Fe2dd461b0c635Ec39EbB27": {
       "ignoreInWatchMode": [
-        "CONFIGURATOR_REVISION"
+        "CONFIGURATOR_REVISION",
+        "marketAaveOracle",
+        "marketAclManager",
+        "marketPool"
       ],
       "fields": {
         "proxyAdmin": {
@@ -385,7 +391,10 @@
     },
     "eth:0x83Cb1B4af26EEf6463aC20AFbAC9c0e2E017202F": {
       "ignoreInWatchMode": [
-        "CONFIGURATOR_REVISION"
+        "CONFIGURATOR_REVISION",
+        "marketAaveOracle",
+        "marketAclManager",
+        "marketPool"
       ],
       "fields": {
         "proxyAdmin": {
@@ -402,7 +411,10 @@
     },
     "eth:0x8438F4D29D895d75C86BDC25360c25eF0607E65d": {
       "ignoreInWatchMode": [
-        "CONFIGURATOR_REVISION"
+        "CONFIGURATOR_REVISION",
+        "marketAaveOracle",
+        "marketAclManager",
+        "marketPool"
       ],
       "fields": {
         "proxyAdmin": {
@@ -755,7 +767,10 @@
     //     Returns { asset → source } pairs; both sides become discovery relatives, landing each underlying
     //     token AND each price feed as a leaf node (each pruned via its own `ignoreRelatives` override below).
     "eth:0x43b64f28A678944E0655404B0B98E443851cC34F": {
-      "ignoreInWatchMode": ["BASE_CURRENCY_UNIT"],
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT",
+        "marketPool"
+      ],
       "fields": {
         "assetSources": {
           "handler": {
@@ -769,7 +784,10 @@
       }
     },
     "eth:0x54586bE62E3c3580375aE3723C145253060Ca0C2": {
-      "ignoreInWatchMode": ["BASE_CURRENCY_UNIT"],
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT",
+        "marketPool"
+      ],
       "fields": {
         "assetSources": {
           "handler": {
@@ -783,7 +801,10 @@
       }
     },
     "eth:0x985BcfAB7e0f4EF2606CC5b64FC1A16311880442": {
-      "ignoreInWatchMode": ["BASE_CURRENCY_UNIT"],
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT",
+        "marketPool"
+      ],
       "fields": {
         "assetSources": {
           "handler": {
@@ -797,7 +818,10 @@
       }
     },
     "eth:0xE3C061981870C0C7b1f3C4F4bB36B95f1F260BE6": {
-      "ignoreInWatchMode": ["BASE_CURRENCY_UNIT"],
+      "ignoreInWatchMode": [
+        "BASE_CURRENCY_UNIT",
+        "marketPool"
+      ],
       "fields": {
         "assetSources": {
           "handler": {

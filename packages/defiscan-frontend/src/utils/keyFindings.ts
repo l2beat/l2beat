@@ -99,7 +99,7 @@ function detectMultisigs(review: CompiledReview): KeyFinding | null {
 
   return {
     type: 'warning',
-    title: `${multisigs.length} multisig${multisigs.length > 1 ? 's' : ''} governing the protocol`,
+    title: `${multisigs.length} multisig${multisigs.length > 1 ? 's' : ''} with permissioned access`,
     detail: `Multisig wallets provide distributed control but still require trust in a known group of signers. ${multisigs.map((m) => m.name).join(', ')}.`,
   }
 }
