@@ -33,14 +33,14 @@ export async function getInteropProtocolPageData(
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     }))
 
-  const [appLayoutProps, protocolData] = await Promise.all([
+  const [appLayoutProps, protocolData, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getInteropProtocolData({
       id: project.id,
       ...apiSelection,
     }),
+    getInteropProtocolEntry(project),
   ])
-  const projectEntry = getInteropProtocolEntry(project)
 
   return {
     head: {

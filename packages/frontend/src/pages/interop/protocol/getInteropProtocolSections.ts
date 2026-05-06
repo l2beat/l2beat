@@ -11,7 +11,6 @@ interface GetInteropProtocolSectionsOptions {
   projectEntry: InteropProtocolEntry
   apiSelection: InteropSelection
   interopChains: InteropChainWithIcon[]
-
   data: InteropProtocolDashboardData | undefined
 }
 
@@ -80,6 +79,28 @@ export function getInteropProtocolSections({
       interopChains: sortedChains,
     },
   })
+
+  if (projectEntry.permissionsSection) {
+    sections.push({
+      type: 'PermissionsSection',
+      props: {
+        ...projectEntry.permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+      },
+    })
+  }
+
+  if (projectEntry.contractsSection) {
+    sections.push({
+      type: 'ContractsSection',
+      props: {
+        ...projectEntry.contractsSection,
+        id: 'contracts',
+        title: 'Smart contracts',
+      },
+    })
+  }
 
   return sections
 }
