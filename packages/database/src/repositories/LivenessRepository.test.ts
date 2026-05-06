@@ -104,6 +104,30 @@ describeDatabase(LivenessRepository.name, (db) => {
   })
 
   describe(
+    LivenessRepository.prototype.getLatestTimestampsByConfigId.name,
+    () => {
+      it('returns latest timestamp for each configuration', async () => {
+        const results = await repository.getLatestTimestampsByConfigId()
+
+        expect(results).toEqualUnsorted([
+          {
+            configurationId: txIdA,
+            latestTimestamp: START - 1 * UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdB,
+            latestTimestamp: START - 3 * UnixTime.HOUR,
+          },
+          {
+            configurationId: txIdC,
+            latestTimestamp: START - 3 * UnixTime.HOUR,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
     LivenessRepository.prototype.getByConfigurationIdWithinTimeRange.name,
     () => {
       it('should return rows within given time range', async () => {

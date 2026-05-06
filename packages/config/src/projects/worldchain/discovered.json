@@ -1,6 +1,6 @@
 {
   "name": "worldchain",
-  "timestamp": 1777042663,
+  "timestamp": 1777994321,
   "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
@@ -30,7 +30,6 @@
           "role": ".GnosisSafe_modules"
         }
       ],
-      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
       "values": {
@@ -65,7 +64,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
-      "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1736166323,
       "sinceBlock": 21565406,
       "values": {
@@ -98,7 +96,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11280,
+        "gameCount": 11543,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xb42Dc014FD85994eCeD29430a5eFe887f4228398",
@@ -113,7 +111,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 11278,
+        "permissionedGamesTotal": 11541,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -155,7 +153,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1716902219,
       "sinceBlock": 19968607,
       "values": {
@@ -198,7 +195,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
-      "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1724427575,
       "sinceBlock": 20592251,
       "values": {
@@ -247,7 +243,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432995,
       "sinceBlock": 20178187,
       "values": {
@@ -319,7 +314,6 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -366,7 +360,6 @@
           "role": ".livenessGuard"
         }
       ],
-      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1717149791,
       "sinceBlock": 19989094,
       "values": {
@@ -432,7 +425,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432959,
       "sinceBlock": 20178184,
       "values": {
@@ -491,7 +483,6 @@
           "role": "admin"
         }
       ],
-      "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377355,
       "sinceBlock": 17365800,
       "values": {
@@ -514,7 +505,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432815,
       "sinceBlock": 20178172,
       "values": {
@@ -563,7 +553,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420875,
       "sinceBlock": 19185554,
       "values": {
@@ -611,7 +600,6 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
-      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
       "values": {
@@ -646,7 +634,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432947,
       "sinceBlock": 20178183,
       "values": {
@@ -727,7 +714,7 @@
         "l1StandardBridge": "eth:0x470458C91978D2d929704489Ad730DC3E3001113",
         "l2ChainId": 480,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 250000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -795,7 +782,6 @@
           "role": ".GnosisSafe_modules"
         }
       ],
-      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1748963099,
       "sinceBlock": 22624903,
       "values": {
@@ -837,7 +823,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432983,
       "sinceBlock": 20178186,
       "values": {
@@ -910,7 +895,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420755,
       "sinceBlock": 19185544,
       "values": {
@@ -960,7 +944,6 @@
         "challengePeriodFromOracle",
         "wethFromGame"
       ],
-      "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1763733803,
       "sinceBlock": 23847851,
       "values": {
@@ -1014,11 +997,6 @@
       ]
     },
     {
-      "address": "eth:0x92827223f6b397CE9F208eE352bacA710765cACb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SuperchainConfig",
       "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "type": "Contract",
@@ -1029,7 +1007,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
-      "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -1191,7 +1168,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432803,
       "sinceBlock": 20178171,
       "values": {
@@ -1212,7 +1188,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1253,7 +1229,6 @@
           "role": ".GnosisSafe_modules"
         }
       ],
-      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1764596735,
       "sinceBlock": 23919014,
       "values": { "$immutable": true, "version": "1.10.1" },
@@ -1284,7 +1259,6 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1777015403,
       "sinceBlock": 24948304,
       "values": {
@@ -1387,7 +1361,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
-      "deployerAddress": "eth:0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
       "sinceTimestamp": 1763733803,
       "sinceBlock": 23847851,
       "values": {
@@ -1454,7 +1427,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xad70Ad7Ac30Cee75EB9638D377EACD8DfDfE0C3c",
       "sinceTimestamp": 1707420419,
       "sinceBlock": 19185517,
       "values": {
@@ -1473,7 +1445,7 @@
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
+          "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
         ],
         "$threshold": 10,
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
@@ -1482,7 +1454,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1492,6 +1464,11 @@
     },
     {
       "address": "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1517,7 +1494,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "ignoreInWatchMode": ["params", "balance"],
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432935,
       "sinceBlock": 20178182,
       "values": {
@@ -1571,7 +1547,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1326609,
-          "prevBlockNum": 24950556
+          "prevBlockNum": 25029591
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1670,7 +1646,6 @@
           "role": "admin"
         }
       ],
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432827,
       "sinceBlock": 20178173,
       "values": {
@@ -1705,7 +1680,6 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
       "values": {
@@ -1744,7 +1718,6 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
-      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432971,
       "sinceBlock": 20178185,
       "values": {
@@ -1793,7 +1766,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698326",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292699903",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2909,6 +2882,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24950569 },
-  "permissionsConfigHash": "0x910d87ebf63c3af4f124b93f5c7ea501d550f95a3e0e828ca5ea7a97650fc960"
+  "usedBlockNumbers": { "ethereum": 25029651 },
+  "permissionsConfigHash": "0x83ea9823c0769e27073ef3b31bf64ded8f97bff62849cdecc4008f4047352e18"
 }

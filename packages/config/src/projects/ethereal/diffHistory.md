@@ -1,3 +1,284 @@
+Generated with discovered.json: 0xef0b5269eb16ec1906e952ef2e31bc69dc222e50
+
+# Diff at Tue, 05 May 2026 15:19:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c30884758a8f4ef4178d2eb572fb25911670bcff block: 1777390976
+- current timestamp: 1777994290
+
+## Description
+
+ExchangeGateway admin/owner moved from old SafeL2 (`0xae703b50...`) to a newly-deployed SafeL2 (`0x14Fb412e...`). The old SafeL2 also had member `0x690d1E0f` removed (5-of-11 → 5-of-10). Net effect: governance over the DEX entrypoint shifted to a new multisig contract.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) {
+    +++ description: None
+      values.$members.10:
+-        "ethereal:0x690d1E0fac0599874b849EE88AeA27F7b348e1f2"
+      values.multisigThreshold:
+-        "5 of 11 (45%)"
++        "5 of 10 (50%)"
+    }
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      values.$admin:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
++        "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351"
+      values.owner:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
++        "ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../SafeL2.sol                                     | 1286 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390976 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x18Cc27B3a95a6FdEf9EAA391eff28F48F42fFe3F) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Ethereal Multisig (arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x620d7E459cfFcdC56a874536dC19147De801a4A1"
+    }
+```
+
+```diff
+    contract ERC20MigrationOutbox (arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14) {
+    +++ description: Simple contract that, if set as allowedOutbox in the arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8, allows to sweep all native tokens from the escrow to arb1:0x33Fbf4E75d54bBec0e432B6dc27bDEa0ca5DEdf9.
+      deployerAddress:
+-        "arb1:0xe74b5a7369847e0263a8de9F144f66622aD8E99F"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x583F8BA007580c83EFB4B02C66694096cD5c56d1) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x61006c8566fac9a3315F646dA4624C00BbCF15E4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x75c070fe237817Bd027d402327069e9cd07De078) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
+-        "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x78B101eC9736c4Ab06b0833f01Fd4c011f7CA612) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (arb1:0xA4444d9536595d35967206b86067a90aD053e1EF) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
+-        "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xB08Ca18499389ABfDF7b14b09BD2Bd4d56D7fbbb) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
+-        "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xc1136ea5F91f82cb468Fc7650579A95605D9f5C2) {
+    +++ description: None
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xDde7f92D0f2225f5951564D387e158b9b57f95F3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
+-        "arb1:0xd095aB623CFe1aBA384FAE82d9053FE5009DcaCD"
+    }
+```
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) {
+    +++ description: None
+      deployerAddress:
+-        "ethereal:0xb93C042c688F1Cf038bab03C4F832F2630Bb7d8F"
+    }
+```
+
+```diff
+    contract SafeL2 (ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8) {
+    +++ description: None
+      deployerAddress:
+-        "ethereal:0x0B9E74f490d731690Da1D0C70F7DB9433C9B4658"
+    }
+```
+
+```diff
+    contract Liquidation (ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract CollateralManager (ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract ActionHandler (ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract OrbitNativeOFTAdapter (ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3) {
+    +++ description: An OApp in the LayerZero protocol. It allows to mint the native token using the arbNativeTokenManager precompile on ArbOs. This means that the native token inherits all trust assumptions of the LayerZero security stack configured for this OApp and its crosschein peers, including minting and burning.
+      deployerAddress:
+-        "ethereal:0x31a9FFd7bCea9fC810D96D85DB701dC3f04710Dd"
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) {
+    +++ description: Used to verify offchain signed oracle data.
+      deployerAddress:
+-        "ethereal:0x78357316239040e19fC823372cC179ca75e64b81"
+    }
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract ExchangeConfig (ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract PerpEngine (ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
+```diff
+    contract Deleverage (ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B) {
+    +++ description: Auxiliary contract of the ExchangeGateway.
+      deployerAddress:
+-        "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11"
+    }
+```
+
 Generated with discovered.json: 0x2104e76e7047367b3d338b01bd8d599cf211cfe7
 
 # Diff at Tue, 05 May 2026 10:22:09 GMT:

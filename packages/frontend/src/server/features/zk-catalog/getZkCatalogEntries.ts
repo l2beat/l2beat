@@ -42,6 +42,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     await Promise.all([
       ps.getProjects({
         select: ['zkCatalogInfo', 'display', 'statuses'],
+        whereNot: ['archivedAt'],
       }),
       ps.getProjects({
         optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
