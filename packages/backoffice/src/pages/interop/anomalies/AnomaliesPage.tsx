@@ -61,9 +61,10 @@ export function AnomaliesPage() {
               {idsWithSrcDstMismatch} side mismatches
             </Badge>
             <Badge variant="secondary">
-              Side mismatch: both sides {'>='} $
-              {Math.round(aggregateSideMismatchMinVolumeUsd).toLocaleString()}{' '}
-              and diff {'>='} {aggregateSideMismatchDiffPercent.toFixed(0)}%
+              Side mismatch: larger side {'>='} $
+              {Math.round(aggregateSideMismatchMinVolumeUsd).toLocaleString()},
+              both sides {'>'} $0, and diff {'>='}{' '}
+              {aggregateSideMismatchDiffPercent.toFixed(0)}%
             </Badge>
           </CardContent>
         </Card>
