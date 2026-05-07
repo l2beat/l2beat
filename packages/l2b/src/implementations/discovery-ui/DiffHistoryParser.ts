@@ -9,11 +9,25 @@ export interface DiffHistorySection {
   body: string
 }
 
+// Older diff histories used block numbers, newer ones use unix timestamps.
+// Discriminated so consumers must handle both.
+export type ChainPoint =
+  | { kind: 'timestamp'; value: number }
+  | { kind: 'block'; value: number }
+
+/**
+ * @notice Do not add support for any more legacy edge cases
+ * Just unify all legacy cases into single format is possible
+ */
 export interface DiffHistoryEntry {
   date: string
-  timestamp: number | null
+  current: ChainPoint | null
   author: string | null
-  comparing: { ref: string; commit: string; block: number } | null
+  comparing: {
+    ref: string
+    commit: string
+    at: ChainPoint | null
+  } | null
   discoveryHash: string | null
   description: string
   sections: DiffHistorySection[]
@@ -21,7 +35,8 @@ export interface DiffHistoryEntry {
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 const ENTRY_HEADER_RE = /^# Diff at (.+):\s*$/
-const COMPARING_RE = /^(\S+)@([0-9a-fA-F]+)\s+block:\s+(\d+)$/
+// `block: N` is optional — some older entries omit it.
+const COMPARING_RE = /^(\S+)@([0-9a-fA-F]+)(?:\s+block:\s+(\d+))?$/
 
 const SECTION_HEADERS: Record<string, DiffHistorySectionKind> = {
   '## Watched changes': 'watched-changes',
@@ -72,8 +87,11 @@ export class DiffHistoryParser {
     bodyLines: string[],
   ): DiffHistoryEntry {
     let author: string | null = null
-    let comparing: DiffHistoryEntry['comparing'] = null
-    let timestamp: number | null = null
+    let comparingRef: string | null = null
+    let comparingCommit = ''
+    let comparingValue: number | null = null
+    let kind: ChainPoint['kind'] | null = null
+    let currentValue: number | null = null
     let description = ''
     const sections: DiffHistorySection[] = []
 
@@ -88,16 +106,22 @@ export class DiffHistoryParser {
         const rest = line.slice('- comparing to:'.length).trim()
         const m = rest.match(COMPARING_RE)
         if (m) {
-          comparing = {
-            ref: m[1] ?? '',
-            commit: m[2] ?? '',
-            block: Number(m[3] ?? '0'),
-          }
+          comparingRef = m[1] ?? ''
+          comparingCommit = m[2] ?? ''
+          const blockStr = m[3]
+          comparingValue = blockStr !== undefined ? Number(blockStr) : null
         }
       } else if (line.startsWith('- current timestamp:')) {
         const num = Number(line.slice('- current timestamp:'.length).trim())
         if (Number.isFinite(num)) {
-          timestamp = num
+          kind = 'timestamp'
+          currentValue = num
+        }
+      } else if (line.startsWith('- current block number:')) {
+        const num = Number(line.slice('- current block number:'.length).trim())
+        if (Number.isFinite(num)) {
+          kind = 'block'
+          currentValue = num
         }
       }
       i++
@@ -122,21 +146,37 @@ export class DiffHistoryParser {
         i = j
         continue
       }
-      const kind = SECTION_HEADERS[trimmed]
-      if (kind !== undefined) {
+      const sectionKind = SECTION_HEADERS[trimmed]
+      if (sectionKind !== undefined) {
         const start = i + 1
         const j = sectionEnd(start)
         const body = bodyLines.slice(start, j).join('\n').trim()
-        sections.push({ kind, body })
+        sections.push({ kind: sectionKind, body })
         i = j
         continue
       }
       i++
     }
 
+    const current: ChainPoint | null =
+      kind !== null && currentValue !== null
+        ? { kind, value: currentValue }
+        : null
+
+    let comparing: DiffHistoryEntry['comparing'] = null
+    if (comparingRef !== null) {
+      // Comparing's value (if any) shares the entry's kind. Default to 'block'
+      // when only the comparing line is present (the literal label says block).
+      const at: ChainPoint | null =
+        comparingValue !== null
+          ? { kind: kind ?? 'block', value: comparingValue }
+          : null
+      comparing = { ref: comparingRef, commit: comparingCommit, at }
+    }
+
     return {
       date,
-      timestamp,
+      current,
       author,
       comparing,
       discoveryHash,

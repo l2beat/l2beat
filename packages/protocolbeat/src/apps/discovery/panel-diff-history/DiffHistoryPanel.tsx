@@ -29,6 +29,10 @@ import { cn } from '../../../utils/cn'
 
 const PAGE_SIZE = 10
 
+function chainPointLabel(kind: 'timestamp' | 'block'): string {
+  return kind === 'timestamp' ? 'ts' : 'block'
+}
+
 const SECTION_TITLE: Record<ApiDiffHistorySectionKind, string> = {
   'watched-changes': 'Watched changes',
   'initial-discovery': 'Initial discovery',
@@ -306,11 +310,15 @@ const Entry = memo(function Entry({ entry, index, bulkOp }: EntryProps) {
     >
       <header className="flex flex-col gap-1 border-coffee-600 border-b p-2 text-xs">
         <div className="flex flex-wrap items-baseline gap-2">
-          {entry.timestamp ? (
+          {entry.current ? (
             <SwitchableValue
               className="font-bold"
               valueA={<h2>{entry.date}</h2>}
-              valueB={<h2>{entry.timestamp}</h2>}
+              valueB={
+                <h2>
+                  {chainPointLabel(entry.current.kind)}: {entry.current.value}
+                </h2>
+              }
             />
           ) : (
             <h2 className="font-bold">{entry.date}</h2>
@@ -324,8 +332,11 @@ const Entry = memo(function Entry({ entry, index, bulkOp }: EntryProps) {
             <summary className="cursor-pointer select-none">Metadata</summary>
             {entry.comparing && (
               <div className="break-all">
-                comparing to: {entry.comparing.ref}@{entry.comparing.commit} ts:{' '}
-                {entry.comparing.block}
+                comparing to: {entry.comparing.ref}@{entry.comparing.commit}
+                {entry.comparing.at &&
+                  ` ${chainPointLabel(entry.comparing.at.kind)}: ${
+                    entry.comparing.at.value
+                  }`}
               </div>
             )}
             {entry.discoveryHash && (

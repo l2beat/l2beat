@@ -75,11 +75,19 @@ export interface ApiDiffHistorySection {
   body: string
 }
 
+export type ApiChainPoint =
+  | { kind: 'timestamp'; value: number }
+  | { kind: 'block'; value: number }
+
 export interface ApiDiffHistoryEntry {
   date: string
-  timestamp: number | null
+  current: ApiChainPoint | null
   author: string | null
-  comparing: { ref: string; commit: string; block: number } | null
+  comparing: {
+    ref: string
+    commit: string
+    at: ApiChainPoint | null
+  } | null
   discoveryHash: string | null
   description: string
   sections: ApiDiffHistorySection[]
