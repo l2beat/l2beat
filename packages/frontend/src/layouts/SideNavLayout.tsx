@@ -126,6 +126,10 @@ export function SideNavLayout({
                 selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
                 '/interop/burn-and-mint',
             },
+            {
+              title: 'Token frameworks',
+              href: '/interop/token-frameworks',
+            },
           ],
         },
         {
