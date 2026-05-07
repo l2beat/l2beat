@@ -691,7 +691,10 @@ export function EXIT_WINDOW(
 }
 
 export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): TableReadyValue {
-  const description = `Non-emergency upgrades go through a ${formatSeconds(upgradeDelay)} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
+  const description =
+    upgradeDelay > 0
+      ? `Non-emergency upgrades go through a ${formatSeconds(upgradeDelay)} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
+      : 'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.'
   return {
     ...EXIT_WINDOW(0, 0),
     warning: {
