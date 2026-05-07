@@ -150,7 +150,7 @@ export function TanStackTable<TData extends RowData>({
     <div
       className={cn('flex min-h-0 flex-col', fillHeight && 'flex-1', className)}
     >
-      <div className="shrink-0 flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex shrink-0 flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           {onSearchValueChange ? (
             <div className="relative w-full sm:max-w-sm">
@@ -349,7 +349,7 @@ export function TanStackTable<TData extends RowData>({
         </CoreTable>
       </div>
 
-      <div className="shrink-0 flex flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex shrink-0 flex-col gap-3 border-t px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
         <span className="text-muted-foreground text-sm">
           Page {pageIndex + 1} of {pageCount}
         </span>
