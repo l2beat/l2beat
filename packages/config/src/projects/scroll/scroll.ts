@@ -287,6 +287,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
           sinceTimestamp: UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+          untilTimestamp: UnixTime(1724227415), // superseded by finalizeBundleWithProof
         },
       },
       {
@@ -303,6 +304,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBundleWithProof(bytes,bytes32,bytes32,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745508700), // superseded by finalizeBundlePostEuclidV2 at Euclid v2 upgrade
         },
       },
       {
@@ -352,6 +354,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745508700), // superseded by commitBatches at Euclid v2 upgrade
         },
       },
       {

@@ -171,6 +171,7 @@ export const paradex: ScalingProject = {
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1689850631),
+          untilTimestamp: UnixTime(1710346919), // superseded by updateStateKzgDA
         },
       },
       {
