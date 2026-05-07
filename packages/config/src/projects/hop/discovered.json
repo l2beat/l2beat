@@ -14,6 +14,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x60B8e50B60c52EaE5c887faA76063488003F66B4",
       "sinceTimestamp": 1625076853,
       "sinceBlock": 12736916,
       "values": {
@@ -46,6 +47,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1628225875,
       "sinceBlock": 12969385,
       "values": {
@@ -71,6 +73,7 @@
         "0xd8c1c87ab8dd6a488c6544d121da18bd936a01cde20a7dd2b3d0f771e376fe37"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xfEfeC7D3EB14a004029D278393e6AB8B46fb4FCa",
       "sinceTimestamp": 1625550046,
       "sinceBlock": 12772100,
       "values": {
@@ -94,6 +97,7 @@
         "0x0280d9153cd7cca43f1ed48d033d6863660ddf85ced54664b3491bf99b2af313"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1623907245,
       "sinceBlock": 12650032,
       "values": {
@@ -119,6 +123,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1631654328,
       "sinceBlock": 13226217,
       "values": {
@@ -144,6 +149,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1626739308,
       "sinceBlock": 12860139,
       "values": {
@@ -174,6 +180,7 @@
         "0x2b7aa191c2727e479449690cdb41f98bbcc67a31189e00edcd25ef5e4d272224"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1664398079,
       "sinceBlock": 15634323,
       "values": {
@@ -199,6 +206,7 @@
         "0x8a2a80add79397b17c716d503c7aa7cc60889161cdef47d55c8b8b519f5b90d7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1663897247,
       "sinceBlock": 15592825,
       "values": {
@@ -230,6 +238,7 @@
         "0xaed8456169cf92120561541e8b5eee9af6a7b97882c06a21febf326148a53bc3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1633066189,
       "sinceBlock": 13331564,
       "values": {
@@ -254,6 +263,7 @@
         "0x75e421fb2a98b163a7e8946c6cd7a5ed33e6fbc412c10c85963f5f25be17f56c"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x924AC9910C09A0215b06458653b30471A152022F",
       "sinceTimestamp": 1635022634,
       "sinceBlock": 13476113,
       "values": {
@@ -284,6 +294,7 @@
         "0x6b63f571e92a25b4c3f2638c0d2dfbc59d1208a0253e4e99ee58a21c681621ba"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9AA99C23F67c81701C772B106b4F83f6e858dd2E",
       "sinceTimestamp": 1654646429,
       "sinceBlock": 14923681,
       "values": {
@@ -313,6 +324,7 @@
         "0xa6a292449d803c10fc738e9af7e5ad07eac4346aee687901ea5a9957b3ff4272"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9AA99C23F67c81701C772B106b4F83f6e858dd2E",
       "sinceTimestamp": 1654646382,
       "sinceBlock": 14923676,
       "values": {

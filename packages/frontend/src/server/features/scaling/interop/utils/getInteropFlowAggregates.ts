@@ -21,6 +21,7 @@ export interface InteropFlowAggregates {
   chainTopProtocols: Map<string, TopEntry[]>
   chainPairTopProtocols: Map<string, TopEntry[]>
   topToken: TopEntry | undefined
+  topProtocol: TopEntry | undefined
   tokenIds: string[]
 }
 
@@ -34,6 +35,7 @@ export function getInteropFlowAggregates(
   const globalTokens = new Map<string, number>()
   const chainProtocols = new GroupedVolumes()
   const pairProtocols = new GroupedVolumes()
+  const globalProtocols = new Map<string, number>()
 
   for (const record of records) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
@@ -59,15 +61,20 @@ export function getInteropFlowAggregates(
       )
     }
 
-    // Protocol volumes: by chain and by pair
+    // Protocol volumes: by chain, by pair, and global
     chainProtocols.add(record.srcChain, record.id, volume)
     chainProtocols.add(record.dstChain, record.id, volume)
     pairProtocols.add(pairKey, record.id, volume)
+    globalProtocols.set(
+      record.id,
+      (globalProtocols.get(record.id) ?? 0) + volume,
+    )
   }
 
   const chainTopTokens = chainTokens.topByGroup(3)
   const chainPairTopTokens = pairTokens.topByGroup(3)
   const topToken = topEntries(globalTokens, 3)[0]
+  const topProtocol = topEntries(globalProtocols, 1)[0]
 
   return {
     flows: toFlows(flowMap),
@@ -76,6 +83,7 @@ export function getInteropFlowAggregates(
     chainTopProtocols: chainProtocols.topByGroup(3),
     chainPairTopProtocols: pairProtocols.topByGroup(3),
     topToken,
+    topProtocol,
     tokenIds: [...globalTokens.keys()],
   }
 }

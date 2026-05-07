@@ -307,6 +307,13 @@ export const DATA_POS: TableReadyValue = {
   sentiment: 'warning',
 }
 
+export const DATA_POS_NOBRIDGE: TableReadyValue = {
+  value: 'PoS network',
+  description:
+    'Data is made available by an external proof of stake network of validators. Since there is no DA bridge, Ethereum cannot verify whether any data was made available on Gnosis Chain or whether incoming messages originate from state that was attested to by the PoS network.',
+  sentiment: 'bad',
+}
+
 export function DATA_ESPRESSO(isUsingLightClient: boolean): TableReadyValue {
   const additional = isUsingLightClient
     ? ' Sequencer tx roots are checked against the HotShot light client bridge data roots, signed off by Espresso validators.'
@@ -805,6 +812,7 @@ export const RISK_VIEW = {
   DATA_AVAIL,
   DATA_EIGENDA,
   DATA_POS,
+  DATA_POS_NOBRIDGE,
   DATA_ESPRESSO,
 
   // validatedBy

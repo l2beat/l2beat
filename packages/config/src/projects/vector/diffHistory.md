@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xde9f4cf784d9dbb5abec8333c9b22be358cf8333
+
+# Diff at Tue, 05 May 2026 10:23:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1763483689
+- current timestamp: 1763483689
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763483689 (main branch discovery), not current.
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      deployerAddress:
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract Avail Multisig 2 (eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      deployerAddress:
++        "eth:0xCE914b30e46334Cf76D2D3e2556F8aF0bEf9Bd42"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+    }
+```
+
 Generated with discovered.json: 0x91505dbf050e1d953ed41137bb6dea5122716245
 
 # Diff at Tue, 18 Nov 2025 16:35:52 GMT:

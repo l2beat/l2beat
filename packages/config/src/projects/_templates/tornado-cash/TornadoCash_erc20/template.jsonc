@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoCash_erc20",
+  "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+  "category": "core",
+  "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
+  "fields": {
+    "denomination": {
+      "description": "Fixed token amount accepted by this pool.",
+      "severity": "LOW"
+    },
+    "operator": {
+      "description": "Legacy operator role retained from the trusted-setup phase.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the withdrawal verifier."
+        },
+        {
+          "type": "interact",
+          "description": "transfer the operator role."
+        }
+      ]
+    },
+    "token": {
+      "description": "ERC20 token accepted by this mixer instance."
+    },
+    "verifier": {
+      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
+      "severity": "HIGH"
+    }
+  }
+}

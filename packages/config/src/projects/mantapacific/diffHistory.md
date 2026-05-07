@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xf527c5611a1b8d190154eb824e53ce53a6a6053e
+
+# Diff at Tue, 05 May 2026 10:22:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1761589819
+- current timestamp: 1761589819
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x3B95bC951EE0f553ba487327278cAc44f29715E5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract MantaMultisig (eth:0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract FinalityRelayerManager (eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E) {
+    +++ description: Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60) {
+    +++ description: Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract  (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
+```diff
+    contract  (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+    }
+```
+
 Generated with discovered.json: 0xa610723e86ab783abf365feece2c68c12bb878e5
 
 # Diff at Fri, 12 Sep 2025 10:10:08 GMT:

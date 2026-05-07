@@ -9,6 +9,7 @@ export const airbender: BaseProject = {
   slug: 'airbender',
   name: 'Airbender',
   shortName: undefined,
+  aliases: ['Matter Labs', 'ZKsync'],
   addedAt: UnixTime.fromDate(new Date('2025-09-09')),
   display: {
     description:

@@ -7,7 +7,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -15,6 +14,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { PROGRAM_HASHES } from '../../common/programHashes'
+import { getAltDaStage } from '../../common/stages/getAltDaStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
   getCommittee,
@@ -64,7 +64,6 @@ export const brine: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     redWarning: {
       text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
@@ -93,9 +92,41 @@ export const brine: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: getAltDaStage(
+    {
+      stage0: {
+        callsItselfValidiumOrOptimium: true,
+        stateRootsPostedToL1: true,
+        stateVerificationOnL1: true,
+        daAttestedByIndependentParty: true,
+        nodeSourceAvailable: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
+        usersCanExitWithoutCooperation: 'UnderReview',
+        usersHave7DaysToExit: 'UnderReview',
+        securityCouncilProperlySetUp: false,
+        daVerifierSecureOnL1: true,
+        daVerifier7DayExitWindow: 'UnderReview',
+        daCommitteeDecentralized: false,
+        noRedTrustedSetups: 'UnderReview',
+        proverSourcePublished: 'UnderReview',
+        verifierContractsReproducible: 'UnderReview',
+        programHashesReproducible: 'UnderReview',
+      },
+      stage2: {
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        daVerifier30DayExitWindow: 'UnderReview',
+        daMechanismEconomicSecurity: false,
+      },
+    },
+    {
+      nodeSourceLink: 'https://github.com/starkware-libs/starkex-contracts',
+    },
+  ),
   chainConfig: {
     name: 'brine',
     chainId: undefined,

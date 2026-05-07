@@ -50,6 +50,7 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
@@ -99,6 +100,7 @@ interface AgglayerBaseConfig {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   upgradesAndGovernance?: string
+  stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
   additionalBadges?: Badge[]
@@ -307,7 +309,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     },
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
-    stage: { stage: 'NotApplicable' },
+    stage: config.stage ?? { stage: 'NotApplicable' },
     technology: variantSections.technology,
     stateDerivation: variantSections.stateDerivation,
     stateValidation: variantSections.stateValidation,

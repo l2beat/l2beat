@@ -21,6 +21,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995131,
       "sinceBlock": 23786834,
       "values": {
@@ -57,6 +58,7 @@
         }
       ],
       "ignoreInWatchMode": ["getCurrentRound"],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995059,
       "sinceBlock": 23786828,
       "values": {
@@ -142,6 +144,7 @@
         }
       ],
       "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995071,
       "sinceBlock": 23786829,
       "values": {
@@ -181,6 +184,7 @@
       ],
       "proxyType": "immutable",
       "description": "Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -213,6 +217,7 @@
       ],
       "proxyType": "immutable",
       "description": "One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -260,6 +265,7 @@
       ],
       "proxyType": "immutable",
       "description": "Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.",
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
       "values": {
@@ -286,6 +292,7 @@
       ],
       "proxyType": "immutable",
       "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.",
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
       "values": {
@@ -313,6 +320,7 @@
       ],
       "proxyType": "immutable",
       "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -347,6 +355,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995107,
       "sinceBlock": 23786832,
       "values": {
@@ -373,6 +382,7 @@
       ],
       "proxyType": "immutable",
       "description": "ZK proof verification contract.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654135,
       "sinceBlock": 24586320,
       "values": { "$immutable": true },
@@ -407,6 +417,7 @@
       "proxyType": "immutable",
       "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.",
       "ignoreInWatchMode": ["getCurrentHatch"],
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654171,
       "sinceBlock": 24586323,
       "values": {
@@ -488,6 +499,7 @@
         "getState",
         "getTotalMessagesInserted"
       ],
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -550,6 +562,7 @@
       "proxyType": "immutable",
       "description": "AZTEC token contract",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d",
       "sinceTimestamp": 1751359739,
       "sinceBlock": 22823299,
       "values": {
@@ -586,6 +599,7 @@
       "proxyType": "immutable",
       "description": "Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.",
       "ignoreInWatchMode": ["getCurrentRound"],
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -633,6 +647,7 @@
       "proxyType": "immutable",
       "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995035,
       "sinceBlock": 23786826,
       "values": {
@@ -663,6 +678,7 @@
       ],
       "proxyType": "immutable",
       "description": "A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": { "$immutable": true, "getURI": "SlashPayload" },
@@ -697,6 +713,7 @@
         "getTips",
         "getProvingCostPerManaInFeeAsset"
       ],
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -898,6 +915,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
       "sinceTimestamp": 1762176359,
       "sinceBlock": 23719087,
       "values": {
@@ -937,6 +955,7 @@
       ],
       "proxyType": "immutable",
       "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+      "deployerAddress": "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560",
       "sinceTimestamp": 1772654159,
       "sinceBlock": 24586322,
       "values": {
@@ -967,6 +986,7 @@
       ],
       "proxyType": "immutable",
       "description": "Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked.",
+      "deployerAddress": "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D",
       "sinceTimestamp": 1756897955,
       "sinceBlock": 23282209,
       "values": {

@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xab73f1bf8feb2b3473f2e96150cc7086b0f5f69b
+
+# Diff at Tue, 05 May 2026 10:22:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776179280
+- current timestamp: 1776179280
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776179280 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierV3 (eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB22167f12C232e825D26ffbb3780E024c506664E"
+    }
+```
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
+    }
+```
+
+```diff
+    contract EspressoOpsMultisig (eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608"
+    }
+```
+
+```diff
+    contract OpsTimelock (eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700) {
+    +++ description: A timelock with access control. The current minimum delay is 2d.
+      deployerAddress:
++        "eth:0x4905147341FB390F0A3F4F01178a040Bc27d8A04"
+    }
+```
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      deployerAddress:
++        "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+    }
+```
+
+```diff
+    contract OperatorRegistryV1Admin (eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xce2B7bbFE257D910711EEA510176e0fb21cf1761"
+    }
+```
+
 Generated with discovered.json: 0xfa443d52777f4a37cecbf757e54aaa66deee9300
 
 # Diff at Tue, 14 Apr 2026 15:09:05 GMT:

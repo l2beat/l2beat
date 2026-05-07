@@ -18,6 +18,7 @@ export const ink: ScalingProject = opStackL2({
   discovery,
   display: {
     name: 'Ink',
+    aliases: ['Kraken'],
     slug: 'ink',
     stateValidationImage: 'opfp',
     description:

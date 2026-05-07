@@ -26,7 +26,6 @@ import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
-import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
@@ -91,7 +90,6 @@ export const refactored: BaseProject[] = [
   memo,
   // chains
   bsc,
-  gnosis,
   gateway,
   avalanche,
   monad,

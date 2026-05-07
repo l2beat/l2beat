@@ -13,6 +13,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "eth:0xB7d2E57aE1a8eCc5f5487b010E1fCd60f4b84dC0",
       "sinceTimestamp": 1701811163,
       "sinceBlock": 18722779,
       "values": {

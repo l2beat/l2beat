@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x8b3fc54ca5fe2f83d44721ec807d2ae39457bc44
+
+# Diff at Tue, 05 May 2026 10:21:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1747043363
+- current timestamp: 1747043363
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1747043363 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+      deployerAddress:
++        "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
+    }
+```
+
+```diff
+    contract TurboVerifier (eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8) {
+    +++ description: Turbo Plonk ZK verifier.
+      deployerAddress:
++        "eth:0x36bB84D28Bb2d9772158cc9A09feaa5472Ebfd32"
+    }
+```
+
+```diff
+    contract RollupProcessor (eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
+    }
+```
+
+```diff
+    contract Aztec Multisig (eth:0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xD4CD0b1EF54E8E4D73f68b01b5ccc125b13E3d1e"
+    }
+```
+
 Generated with discovered.json: 0x7befc9357f417d47248a0d49edc08fad322f88b2
 
 # Diff at Wed, 05 Nov 2025 12:46:28 GMT:
