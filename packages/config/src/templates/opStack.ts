@@ -17,9 +17,9 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
-  stackExitWindowRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'

@@ -33,7 +33,7 @@ export function ExitWindowCell({ value, href }: Props) {
             {regular ? `Emergency: ${value.value}` : value.value}
           </SentimentText>
         </TwoRowCell.First>
-        {regular ? (
+        {regular && (
           <TwoRowCell.Second className="mt-0.5">
             <SentimentText
               sentiment={regular.sentiment ?? 'neutral'}
@@ -42,10 +42,6 @@ export function ExitWindowCell({ value, href }: Props) {
               {`Regular: ${regular.value}`}
             </SentimentText>
           </TwoRowCell.Second>
-        ) : (
-          value.secondLine && (
-            <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-          )
         )}
       </TwoRowCell>
     </TableLink>

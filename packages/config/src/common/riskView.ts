@@ -638,7 +638,6 @@ export function EXIT_WINDOW(
   options: {
     upgradeDelay2?: number
     existsBlocklist?: boolean
-    multisig?: { threshold: number; count: number }
   } = {},
 ): TableReadyValue & { seconds?: number } {
   let window: number = upgradeDelay - exitDelay
@@ -675,9 +674,6 @@ export function EXIT_WINDOW(
   return {
     value: windowText,
     description: description,
-    secondLine: options.multisig
-      ? `${options.multisig.threshold}/${options.multisig.count} Multisig`
-      : undefined,
     sentiment,
     orderHint: window,
   }
