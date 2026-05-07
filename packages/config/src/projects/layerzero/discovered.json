@@ -27,6 +27,7 @@
           "role": ".getExecutorConfig"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -75,6 +76,7 @@
       ],
       "proxyType": "immutable",
       "description": "Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -126,6 +128,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple LayerZero library that blocks all messages if configured.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -165,6 +168,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
       "sinceTimestamp": 1706495231,
       "sinceBlock": 19109198,
       "values": {
@@ -217,6 +221,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307995,
       "sinceBlock": 19093742,
       "values": {
@@ -265,6 +270,7 @@
       ],
       "proxyType": "immutable",
       "description": "LayerZero library used to read state from remote blockchains.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -306,6 +312,7 @@
       ],
       "proxyType": "immutable",
       "description": "An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.",
+      "deployerAddress": "eth:0x1f7A03b70C5448DFd0a2C5a7865169253c2C769b",
       "sinceTimestamp": 1707185231,
       "sinceBlock": 19166120,
       "values": {
@@ -358,6 +365,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307875,
       "sinceBlock": 19093732,
       "values": {
@@ -392,6 +400,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
       "sinceTimestamp": 1732036019,
       "sinceBlock": 21223166,
       "values": {
@@ -436,6 +445,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -464,6 +474,7 @@
       ],
       "proxyType": "immutable",
       "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -539,6 +550,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
       "values": {
@@ -580,6 +592,7 @@
       ],
       "proxyType": "immutable",
       "description": "LayerZero-deployed receive library, defining the validation of received messages.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -635,6 +648,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
       "sinceTimestamp": 1702240463,
       "sinceBlock": 18758223,
       "values": {

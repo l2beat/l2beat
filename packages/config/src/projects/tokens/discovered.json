@@ -29,6 +29,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x8De14E014402C0677B075A69122F94C0425Cc179",
       "sinceTimestamp": 1729849434,
       "sinceBlock": 267466557,
       "values": {
@@ -70,6 +71,7 @@
         "0x775ec46d31d03f2687835380ad135abaab92a7ad5cd897280e4b1551244a01a9"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375",
       "sinceTimestamp": 1729851127,
       "sinceBlock": 267473304,
       "values": {
@@ -111,6 +113,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "arb1:0xEd608cf38968C0ba09676843D90B33Dd59dd7375",
       "sinceTimestamp": 1729851160,
       "sinceBlock": 267473436,
       "values": {
@@ -214,6 +217,7 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP",
+      "deployerAddress": "base:0x196D99971BC280d5377d9081acB91b383eD0fE70",
       "sinceTimestamp": 1695052853,
       "sinceBlock": 4131753,
       "values": {
@@ -286,6 +290,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint or minter of USDC on this chain for the Gateway protocol.",
+      "deployerAddress": "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1752720393,
       "sinceBlock": 32965523,
       "values": {
@@ -343,6 +348,7 @@
           "role": ".masterMinter"
         }
       ],
+      "deployerAddress": "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B",
       "sinceTimestamp": 1692385055,
       "sinceBlock": 2797854,
       "values": {
@@ -370,6 +376,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
+      "deployerAddress": "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739223627,
       "sinceBlock": 26217140,
       "values": {
@@ -549,6 +556,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x620d7E459cfFcdC56a874536dC19147De801a4A1",
       "sinceTimestamp": 1735857797,
       "sinceBlock": 24534225,
       "values": {
@@ -646,6 +654,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Exit point or burner of USDC on this chain for the Gateway protocol.",
+      "deployerAddress": "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1752720491,
       "sinceBlock": 32965572,
       "values": {
@@ -716,6 +725,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Part of CCTP",
       "ignoreInWatchMode": ["nextAvailableNonce"],
+      "deployerAddress": "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739223595,
       "sinceBlock": 26217124,
       "values": {
@@ -765,6 +775,7 @@
       ],
       "proxyType": "ZeppelinOS proxy",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "base:0x6aAFF8af0ae8017725312C388bA3745dfE91185B",
       "sinceTimestamp": 1692383789,
       "sinceBlock": 2797221,
       "values": {
@@ -913,6 +924,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0xce96ae6De784181d8Eb2639F1E347fD40b4fD403",
       "sinceTimestamp": 1715021197,
       "sinceBlock": 14115925,
       "values": {
@@ -987,6 +999,7 @@
       "proxyType": "immutable",
       "description": "Part of CCTP",
       "ignoreInWatchMode": ["nextAvailableNonce"],
+      "deployerAddress": "base:0xe2982b6F5c4d4d93047d49075Cd21c583930135F",
       "sinceTimestamp": 1695052831,
       "sinceBlock": 4131742,
       "values": {
@@ -1076,6 +1089,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245",
       "sinceTimestamp": 1713443375,
       "sinceBlock": 13327014,
       "values": {
@@ -1140,6 +1154,7 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
+      "deployerAddress": "base:0x925c0014EEfc2432eA7522EeF02C35A52229B754",
       "sinceTimestamp": 1695052867,
       "sinceBlock": 4131760,
       "values": {
@@ -1193,6 +1208,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "base:0x58890A9cB27586E83Cb51d2d26bbE18a1a647245",
       "sinceTimestamp": 1725274881,
       "sinceBlock": 19242767,
       "values": {
@@ -1256,6 +1272,7 @@
       ],
       "proxyType": "immutable",
       "description": "Part of CCTP: Used for automated access control for minting.",
+      "deployerAddress": "base:0xadB384F7fa7486422051D2a896417EAAb9E5A9D1",
       "sinceTimestamp": 1739223567,
       "sinceBlock": 26217110,
       "values": {
@@ -1293,6 +1310,7 @@
       "proxyType": "immutable",
       "description": "Ethereum Beacon Chain deposit contract.",
       "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
+      "deployerAddress": "eth:0xb20a608c624Ca5003905aA834De7156C68b2E1d0",
       "sinceTimestamp": 1602667372,
       "sinceBlock": 11052984,
       "values": {
@@ -1310,6 +1328,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x8646861A7cF453dDD086874d622b0696dE5b9674",
       "sinceTimestamp": 1739979863,
       "sinceBlock": 21881389,
       "values": { "$immutable": true },
@@ -1323,6 +1342,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0B799C86a49DEeb90402691F1041aa3AF2d3C875",
       "sinceTimestamp": 1705610111,
       "sinceBlock": 19036164,
       "values": { "$immutable": true },
@@ -1348,6 +1368,7 @@
         "0xe40cdacf85295b79ce35608aea6526762e642df543bb498f3457de2d03e02455"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766475,
       "sinceBlock": 23933048,
       "values": {
@@ -1391,6 +1412,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D",
       "sinceTimestamp": 1619019362,
       "sinceBlock": 12284400,
       "values": {
@@ -1434,6 +1456,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["availableBalance"],
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766355,
       "sinceBlock": 23933038,
       "values": {
@@ -1463,6 +1486,7 @@
         "0x50b1f029cbc9832f0464c9fb50f05553e7d8689e5bf07c118c523edd42acff5d"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
       "sinceTimestamp": 1758112595,
       "sinceBlock": 23382844,
       "values": {
@@ -1522,6 +1546,7 @@
         "getResumeSinceTimestamp",
         "getTotalRequestsProcessed"
       ],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683024035,
       "sinceBlock": 17172556,
       "values": {
@@ -1632,6 +1657,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["vaultsCount"],
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766391,
       "sinceBlock": 23933041,
       "values": {
@@ -1698,6 +1724,7 @@
         "0x1e6251dca4b84f2e5eed8aac4e97c799286763ee4feef14722e7a83fd18dcf91"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766271,
       "sinceBlock": 23933031,
       "values": {
@@ -1730,6 +1757,7 @@
         "0xd88820a97d649ac3bcce0fb26e37ce6f1db8e4c2afc721076b4f7267f7b96c19"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766283,
       "sinceBlock": 23933032,
       "values": {
@@ -1760,6 +1788,7 @@
         "0x26cc32bd36fc0ef84955e8396853432eecfd75a2d5018a994325ed26f9334edb"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766463,
       "sinceBlock": 23933047,
       "values": {
@@ -1860,6 +1889,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xe4C119804BE7532dE5C172db5973684e45C22293",
       "sinceTimestamp": 1704869507,
       "sinceBlock": 18974876,
       "values": {
@@ -1894,6 +1924,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x75cAD9D719b1109d6fb987A863D41e7A7dF13c8D",
       "sinceTimestamp": 1619019667,
       "sinceBlock": 12284421,
       "values": {
@@ -1935,6 +1966,7 @@
         "0xd7305a2d008e26be8f8e72e060e9781b7b5e8b3037fad9d367b5ae5d624d08c1"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xDB65702A9b26f8a643a31a4c84b9392589e03D7c",
       "sinceTimestamp": 1653382011,
       "sinceBlock": 14834805,
       "values": {
@@ -2089,6 +2121,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -2142,6 +2175,7 @@
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
+      "deployerAddress": "eth:0xD4eD284969E88eBDF8737271933836c2a0DdA50f",
       "sinceTimestamp": 1767963923,
       "sinceBlock": 24197309,
       "values": {
@@ -2206,6 +2240,7 @@
       ],
       "proxyType": "ZeppelinOS proxy",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x36C2E652A6c774f4c48F6d3aE747c17916Aeb537",
       "sinceTimestamp": 1566830180,
       "sinceBlock": 8426430,
       "values": {
@@ -2266,6 +2301,7 @@
         "0xe9044668de5a790902b6bfed112ac2d764965db11a13b730c985ceff09edff4d"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
       "values": {
@@ -2321,6 +2357,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
+      "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
       "values": {
@@ -2394,6 +2431,7 @@
         "getActiveNodeOperatorsCount",
         "getNodeOperatorsCount"
       ],
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -2476,6 +2514,7 @@
         "latestReportTimestamp",
         "vaultsCount"
       ],
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766343,
       "sinceBlock": 23933037,
       "values": {
@@ -2528,6 +2567,7 @@
         "0x5217226f6d0d771ac4dec680c53cb340e7e91c54b6b442d0b2509d249701210a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766367,
       "sinceBlock": 23933039,
       "values": {
@@ -2575,6 +2615,7 @@
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
+      "deployerAddress": "eth:0xA9920F5d0b2671a3ad0bB456DFeDCB0648908DEB",
       "sinceTimestamp": 1766610323,
       "sinceBlock": 24085053,
       "values": {
@@ -2646,6 +2687,7 @@
         "getReportVariants",
         "getInitialRefSlot"
       ],
+      "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
       "sinceTimestamp": 1728566351,
       "sinceBlock": 20935463,
       "values": {
@@ -2775,6 +2817,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["tokensPerStEth", "stEthPerToken", "totalSupply"],
+      "deployerAddress": "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b",
       "sinceTimestamp": 1613752640,
       "sinceBlock": 11888477,
       "values": {
@@ -2815,6 +2858,7 @@
         "getReportVariants",
         "getInitialRefSlot"
       ],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683024059,
       "sinceBlock": 17172558,
       "values": {
@@ -2913,6 +2957,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getConsensusReport", "getProcessingState"],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683023999,
       "sinceBlock": 17172553,
       "values": {
@@ -2996,6 +3041,7 @@
         "0x00350407c4a32b62d60dbac5ac3093bf4bffd482f40b2df2a9cd3268365b84e5"
       ],
       "proxyType": "EIP897 proxy",
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -3036,6 +3082,7 @@
         "unfinalizedRequestNumber",
         "unfinalizedStETH"
       ],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683023927,
       "sinceBlock": 17172547,
       "values": {
@@ -3123,6 +3170,7 @@
         "0x15185b2d9f11dcf2ea4d005741fa941922e233e89fc5742793ebfb0ca05897c4"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683023915,
       "sinceBlock": 17172546,
       "values": { "$immutable": true },
@@ -3148,6 +3196,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
       "sinceTimestamp": 1732026023,
       "sinceBlock": 21222337,
       "values": {
@@ -3195,6 +3244,7 @@
         "0x766bf5f8bd85cd18a36ec23449bcbb22c66fbc01f44a2e38ff2a06dd5919eb4b"
       ],
       "proxyType": "EIP897 proxy",
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -3241,6 +3291,7 @@
         "0xc1deebfbd111e2f8e2157336320630099bc5658e2dac19d1ff99e0c76d95e5fd"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
       "sinceTimestamp": 1758112319,
       "sinceBlock": 23382821,
       "values": {
@@ -3309,6 +3360,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["treeCid", "treeRoot"],
+      "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
       "sinceTimestamp": 1758112631,
       "sinceBlock": 23382847,
       "values": {
@@ -3362,6 +3414,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x052ab6bFa8aA30CC47ea02e648f90c3B24749B7b",
       "sinceTimestamp": 1766954279,
       "sinceBlock": 24113572,
       "values": {
@@ -3411,6 +3464,7 @@
         "getExternalShares",
         "getMaxMintableExternalShares"
       ],
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -3500,6 +3554,7 @@
         "getActiveNodeOperatorsCount",
         "getNodeOperatorsCount"
       ],
+      "deployerAddress": "eth:0x9B4064C9d9801f062f377512e61bD19484e7F365",
       "sinceTimestamp": 1701921935,
       "sinceBlock": 18731922,
       "values": {
@@ -3562,6 +3617,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1707991727,
       "sinceBlock": 19232636,
       "values": {
@@ -3607,6 +3663,7 @@
         "0x452458b35204910fe71376b423bd8d2887a1e82d22843fd79880d4ac0dce2a33"
       ],
       "proxyType": "EIP897 proxy",
+      "deployerAddress": "eth:0x55Bc991b2edF3DDb4c520B222bE4F378418ff0fA",
       "sinceTimestamp": 1608242396,
       "sinceBlock": 11473216,
       "values": {
@@ -3642,6 +3699,7 @@
         "0x02a7455341d351b5cf754695894d7496179272403e2b811db5202057c6373cad"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xe19fc582dd93FA876CF4061Eb5456F310144F57b",
       "sinceTimestamp": 1626093401,
       "sinceBlock": 12812480,
       "values": {
@@ -3691,6 +3749,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB7182815B471Cb251632eF2d1E99Ff1559EEb8e8",
       "sinceTimestamp": 1762173047,
       "sinceBlock": 23718812,
       "values": {
@@ -3722,6 +3781,7 @@
         "0x04d8a8a48b4238c64fe27aef387c89bd9d925104d58ae9f3a471fe4684f9dd2e"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d",
       "sinceTimestamp": 1757671259,
       "sinceBlock": 23346249,
       "values": {
@@ -3755,6 +3815,7 @@
         "0x6f38bad385eb6769def612742a8a4ab65d19921bffe96d1ee9241121e2ae1aba"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683022991,
       "sinceBlock": 17172469,
       "values": {
@@ -3780,6 +3841,7 @@
         "0x6c381d08f81d8ee374fd642f9db4a93a697a4e8d8feb28b1a269e11b3329190c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x2A78076BF797dAC2D25c9568F79b61aFE565B88C",
       "sinceTimestamp": 1681295123,
       "sinceBlock": 17031323,
       "values": {
@@ -3902,6 +3964,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["nodeOperatorCount", "tiersCount"],
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766451,
       "sinceBlock": 23933046,
       "values": {
@@ -3942,6 +4005,7 @@
         "0xa2a2abe99fefa83e09c282ce11527c7eccc31adfa7d899e7f8e3a633550a260d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A0e4961A6b7f5D7b4807df876Ae068731102d44",
       "sinceTimestamp": 1758112691,
       "sinceBlock": 23382852,
       "values": {
@@ -3996,6 +4060,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0xF28f34B4E8983eE4422538bb0b4aA36D6e7d8130",
       "sinceTimestamp": 1668610211,
       "sinceBlock": 15983290,
       "values": {
@@ -4031,6 +4096,7 @@
         "0x3691fdeb4948182156b23943d1951957e54192b7f9f7ab4c88828089d29d58d7"
       ],
       "proxyType": "StarkWare proxy",
+      "deployerAddress": "eth:0xdC863FDb545F4DB986DD76F78085AcaFf0271C00",
       "sinceTimestamp": 1732195643,
       "sinceBlock": 21236399,
       "values": {
@@ -4088,6 +4154,7 @@
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
+      "deployerAddress": "eth:0xC0b1d6e785f547b605744BC287E01c070ED5fE48",
       "sinceTimestamp": 1767554987,
       "sinceBlock": 24163397,
       "values": {
@@ -4135,6 +4202,7 @@
         "0x914444eb1e15eba41dafc9099a1e9e51a554ff786ce9f7b5159cb306f4779477"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xBb01c09DE4Bf967AbaB418450c3e18Df46358322",
       "sinceTimestamp": 1724328047,
       "sinceBlock": 20584007,
       "values": {
@@ -4170,6 +4238,7 @@
         "getReportVariants",
         "getInitialRefSlot"
       ],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683024023,
       "sinceBlock": 17172555,
       "values": {
@@ -4268,6 +4337,7 @@
         "pendingSharesToDistribute",
         "distributionDataHistoryCount"
       ],
+      "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
       "sinceTimestamp": 1728566351,
       "sinceBlock": 20935463,
       "values": {
@@ -4322,6 +4392,7 @@
         "getStakingModuleSummary",
         "getNodeOperatorsCount"
       ],
+      "deployerAddress": "eth:0xD87c8526faCecfD27cec98A629a3b7876B2cda11",
       "sinceTimestamp": 1728566339,
       "sinceBlock": 20935462,
       "values": {
@@ -4390,6 +4461,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getExitRequestLimitFullInfo"],
+      "deployerAddress": "eth:0x88133C759fdF2D713dEa478D3fD9046853eD198d",
       "sinceTimestamp": 1757671211,
       "sinceBlock": 23346245,
       "values": {
@@ -4432,6 +4504,7 @@
       ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["availableBalance"],
+      "deployerAddress": "eth:0xcD6Fb078F9e1D29e3C04902D3C82e4b24C078Ad9",
       "sinceTimestamp": 1770199811,
       "sinceBlock": 24382800,
       "values": {
@@ -4496,6 +4569,7 @@
         "getNonCoverSharesBurnt",
         "getSharesRequestedToBurn"
       ],
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766319,
       "sinceBlock": 23933035,
       "values": {
@@ -4543,6 +4617,7 @@
         "0xb1ae7110938670e0ac737a01859c9c6cec20361c269e686d82d1f9007f79dbd6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766427,
       "sinceBlock": 23933044,
       "values": {
@@ -4591,6 +4666,7 @@
         "0x95ddbbdfb56975dd1a0b91463d3e9a4362231c44b46f40b47781724ceef477c5"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0xF1e3D730fCc52C789cAe327Fd38C1541cDb6ee76",
       "sinceTimestamp": 1764766415,
       "sinceBlock": 23933043,
       "values": {
@@ -4675,6 +4751,7 @@
         "getStakingModules",
         "getStakingRewardsDistribution"
       ],
+      "deployerAddress": "eth:0x8Ea83AD72396f1E0cD2f8E72b1461db8Eb6aF7B5",
       "sinceTimestamp": 1683023963,
       "sinceBlock": 17172550,
       "values": {
@@ -4896,6 +4973,7 @@
         "0xec602317aa2fc4de0a89b5c910911635f678fb88b51a6a46f12d8b1148d95d71"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x1F27e93D9E178b2d8e808110a551A65b7fD9F182",
       "sinceTimestamp": 1728395471,
       "sinceBlock": 20921272,
       "values": {

@@ -11,6 +11,7 @@
         "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1743130499,
       "sinceBlock": 22142559,
       "values": {
@@ -32,6 +33,7 @@
         "0xc98f03651ddf430db5e0fa5d49b57551e01975529019ff3fbc1897109cd6dc9e"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1719379319,
       "sinceBlock": 20173741,
       "values": { "$immutable": true },
@@ -147,6 +149,7 @@
           "role": ".scNoDelay"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
       "values": {
@@ -216,6 +219,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1770902411,
       "sinceBlock": 24440955,
       "values": {
@@ -259,6 +263,7 @@
           "role": ".opsFast"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
       "values": {
@@ -331,6 +336,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
       "sinceTimestamp": 1732063151,
       "sinceBlock": 21225420,
       "values": {
@@ -518,6 +524,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1732607939,
       "sinceBlock": 21270585,
       "values": {
@@ -593,6 +600,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696661687,
       "sinceBlock": 18296951,
       "values": {
@@ -630,6 +638,7 @@
         "0xcd6a67da07fdd0ff4f75a99bf03d70659a6a00d98f1219b1aff2756b7ce971bd"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1712907503,
       "sinceBlock": 19638084,
       "values": { "$immutable": true },
@@ -651,6 +660,7 @@
         "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1722833039,
       "sinceBlock": 20460054,
       "values": {
@@ -688,6 +698,7 @@
         "0x4ad50f22109a8ff91daad934d6d1519aa3d186c4d8ebc1ffdc165e0986aa23ae"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1753339799,
       "sinceBlock": 22987338,
       "values": { "$immutable": true },
@@ -719,6 +730,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1729781135,
       "sinceBlock": 21036143,
       "values": {
@@ -799,6 +811,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1752663515,
       "sinceBlock": 22931304,
       "values": {
@@ -844,6 +857,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1764678203,
       "sinceBlock": 23925755,
       "values": {
@@ -865,6 +879,7 @@
         "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1712907539,
       "sinceBlock": 19638087,
       "values": {
@@ -884,6 +899,7 @@
         "0x29ee0fd7e29697f9960266e0f8fc2b84b927300952d489ee40ea3cff695bd819"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1696780751,
       "sinceBlock": 18306805,
       "values": { "$immutable": true },
@@ -907,6 +923,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used to update the verifier and keep track of current and old versions.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1722833675,
       "sinceBlock": 20460107,
       "values": {
@@ -986,6 +1003,7 @@
         "nextCrossDomainMessageIndex",
         "nextUnfinalizedQueueIndex"
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1742476139,
       "sinceBlock": 22088276,
       "values": {
@@ -1034,6 +1052,7 @@
         "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782311,
       "sinceBlock": 18306933,
       "values": {
@@ -1062,6 +1081,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC721 tokens from L1 to L2.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1107,6 +1127,7 @@
         "0xac7d02f7eaff4b15c79e0507b392db7e05fbf7f5f5a594a7b091a936d951bb3a"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1719379451,
       "sinceBlock": 20173752,
       "values": {
@@ -1127,6 +1148,7 @@
         "0x255712204c1736d1d147513fc6d0ded282eb2cd0cff359e7710a06463935c260"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696920503,
       "sinceBlock": 18318364,
       "values": {
@@ -1179,6 +1201,7 @@
         "0x5d09a2c78d20d4e9f61774a32aa4da8e74be21a247188625d5eeffdac11e5eb4"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696920095,
       "sinceBlock": 18318330,
       "values": {
@@ -1217,6 +1240,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1285,6 +1309,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xc8B6bF89877337188Ea84eA93547687225389553",
       "sinceTimestamp": 1732150523,
       "sinceBlock": 21232661,
       "values": {
@@ -1384,6 +1409,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the proper sender.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1437,6 +1463,7 @@
         "0x35ded5d00c89b25126b147567eab9e1d28535673e16322b341512fa00e573a4d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1764678143,
       "sinceBlock": 23925750,
       "values": { "$immutable": true },
@@ -1483,6 +1510,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
       "values": {
@@ -1643,6 +1671,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge WETH from L1 to L2.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1692,6 +1721,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -1765,6 +1795,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1730294447,
       "sinceBlock": 21078719,
       "values": {
@@ -1831,6 +1862,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1742476115,
       "sinceBlock": 22088274,
       "values": {
@@ -1885,6 +1917,7 @@
         "0x438a888895bdfdd405a223087c58ce76dcd866a0c5e208b94c63e83922724cb3"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1722833027,
       "sinceBlock": 20460053,
       "values": { "$immutable": true },
@@ -1906,6 +1939,7 @@
         "0xdd6da115b0a4c879746bcca2a71fa1daa79f7e3a074369d9246f614b327e9322"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1724898419,
       "sinceBlock": 20631259,
       "values": { "$immutable": true },
@@ -1930,6 +1964,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x8211c6196B80c640c4E6A6DF0328473bfF12Ac57",
       "sinceTimestamp": 1728588635,
       "sinceBlock": 20937315,
       "values": {
@@ -1965,6 +2000,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696661975,
       "sinceBlock": 18296974,
       "values": {
@@ -2016,6 +2052,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
       "sinceTimestamp": 1730285903,
       "sinceBlock": 21078008,
       "values": {
@@ -2056,6 +2093,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
+      "deployerAddress": "eth:0xFDD744Be62CFf3a95D7C638aAf88551bd792eb4d",
       "sinceTimestamp": 1713173507,
       "sinceBlock": 19660037,
       "values": {
@@ -2110,6 +2148,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
       "ignoreInWatchMode": ["miscData", "lastFinalizedBatchIndex"],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2213,6 +2252,7 @@
         "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1753339811,
       "sinceBlock": 22987339,
       "values": {
@@ -2247,6 +2287,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2299,6 +2340,7 @@
         "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1753067003,
       "sinceBlock": 22964754,
       "values": {
@@ -2333,6 +2375,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC1155 tokens from L1 to L2.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2385,6 +2428,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["totalBridgedUSDC"],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1770271583,
       "sinceBlock": 24388735,
       "values": {
@@ -2493,6 +2537,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696661411,
       "sinceBlock": 18296928,
       "values": {
@@ -2525,6 +2570,7 @@
         "0xb3a265a8eb78423c08d849d4239a3a2a76deeeca1a1cb7d7857b3d7775b78c4d"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0c5cc5155b346453154059aD9d2Ff695dB92f774",
       "sinceTimestamp": 1754694995,
       "sinceBlock": 23099560,
       "values": {
@@ -2553,6 +2599,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
       "sinceTimestamp": 1730932211,
       "sinceBlock": 21131603,
       "values": {
@@ -2586,6 +2633,7 @@
         "0xa3e375ce1143ce7410edcfff2fbfa0ee90c06ef0710c4f11af9533ca40cdbb61"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1724898431,
       "sinceBlock": 20631260,
       "values": {
@@ -2604,6 +2652,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB1223481748C5e4c7e9160DE04cE83BEb7792E1e",
       "sinceTimestamp": 1743130487,
       "sinceBlock": 22142558,
       "values": { "$immutable": true },
@@ -2628,6 +2677,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -2789,6 +2839,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782311,
       "sinceBlock": 18306933,
       "values": {
@@ -2922,6 +2973,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B",
       "sinceTimestamp": 1696660175,
       "sinceBlock": 18296825,
       "values": {
@@ -2959,6 +3011,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge USDC tokens from L1 to L2.",
       "ignoreInWatchMode": ["totalBridgedUSDC"],
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696919351,
       "sinceBlock": 18318268,
       "values": {
@@ -3007,6 +3060,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.",
+      "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696782323,
       "sinceBlock": 18306934,
       "values": {
@@ -3108,6 +3162,7 @@
       ],
       "proxyType": "ZeppelinOS proxy",
       "description": "Contract of the USDC token on Scroll.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919085,
       "sinceBlock": 37,
       "values": {
@@ -3192,6 +3247,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x7742637569CE1dd9AA9F4F91EaAc7c028C5e1f4d",
       "sinceTimestamp": 1732062791,
       "sinceBlock": 11241317,
       "values": {
@@ -3252,6 +3308,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696918061,
       "sinceBlock": 4,
       "values": {
@@ -3485,6 +3542,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1732607988,
       "sinceBlock": 11413777,
       "values": {
@@ -3558,6 +3616,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1730295071,
       "sinceBlock": 10662938,
       "values": {
@@ -3650,6 +3709,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696921139,
       "sinceBlock": 198,
       "values": {
@@ -3697,6 +3757,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696918064,
       "sinceBlock": 5,
       "values": {
@@ -3771,6 +3832,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x1Da431d2D5ECA4Df735F69fB5ea10c8E630b8f50",
       "sinceTimestamp": 1725250119,
       "sinceBlock": 8919021,
       "values": {
@@ -3803,6 +3865,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to propose and manage onchain governance proposals.",
+      "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377334,
       "sinceBlock": 8963441,
       "values": {
@@ -3864,6 +3927,7 @@
         "0x95d0a93e505de37e492898ac79ac01f5cef9385f3a6777ecd7d22d02974b05f2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919404,
       "sinceBlock": 65,
       "values": {
@@ -3914,6 +3978,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x70DFdAE47E29D2C40EE58Cefa7379588B421a86d",
       "sinceTimestamp": 1752663598,
       "sinceBlock": 17260969,
       "values": {
@@ -3961,6 +4026,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1GatewayRouter contract.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -3993,6 +4059,7 @@
       "proxyType": "immutable",
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
       "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"],
+      "deployerAddress": "scr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1696917614,
       "sinceBlock": 0,
       "values": {
@@ -4027,6 +4094,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC1155Gateway contract.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -4066,6 +4134,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -4114,6 +4183,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -4141,6 +4211,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xc8B6bF89877337188Ea84eA93547687225389553",
       "sinceTimestamp": 1732152045,
       "sinceBlock": 11269033,
       "values": {
@@ -4209,6 +4280,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract of the L2ScrollMessenger contract.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -4252,6 +4324,7 @@
         "0x63855826f13b683ca4730e3b6e9fbdd89bb5f95af7eba4f5464dea8f6ad59a4e"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -4309,6 +4382,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -4362,6 +4436,7 @@
           "role": ".timelock"
         }
       ],
+      "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377342,
       "sinceBlock": 8963444,
       "values": {
@@ -4391,6 +4466,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC721Gateway contract.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -4441,6 +4517,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377322,
       "sinceBlock": 8963437,
       "values": {
@@ -4465,6 +4542,7 @@
         "0x3866d5cca89c55c7c54c690ea7b1ad3012848a806644c91ed30da987e2de27a8"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696920429,
       "sinceBlock": 143,
       "values": {
@@ -4517,6 +4595,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1708227003,
       "sinceBlock": 3432119,
       "values": {
@@ -4538,6 +4617,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x8211c6196B80c640c4E6A6DF0328473bfF12Ac57",
       "sinceTimestamp": 1730019644,
       "sinceBlock": 10570718,
       "values": {
@@ -4583,6 +4663,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x8BBf9D47752fED1437Bb0EC7Ac4A2fAc2164F424",
       "sinceTimestamp": 1730286685,
       "sinceBlock": 10660134,
       "values": {
@@ -4693,6 +4774,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -4721,6 +4803,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1730295517,
       "sinceBlock": 10663087,
       "values": {
@@ -4786,6 +4869,7 @@
         "0xb77c71261ba124ec5867a07a7ea820670c5142e6878b94bb7c4d74e3de75b1bc"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1753067278,
       "sinceBlock": 17428392,
       "values": {
@@ -4834,6 +4918,7 @@
       ],
       "proxyType": "immutable",
       "description": " Contract that uses controllers to manage minters for USDC on Scroll.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696919091,
       "sinceBlock": 38,
       "values": {
@@ -4897,6 +4982,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696921130,
       "sinceBlock": 196,
       "values": {
@@ -4937,6 +5023,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
       "sinceTimestamp": 1730932266,
       "sinceBlock": 10873971,
       "values": {
@@ -4966,6 +5053,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract of the ERC20 standard token used by the ERC20 factory.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917920,
       "sinceBlock": 3,
       "values": {
@@ -5005,6 +5093,7 @@
         "0x04d776ff58fa371ab516a53f4b7a12f5f0f1dd00f20206aea3906014017297ba"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C",
       "sinceTimestamp": 1725336741,
       "sinceBlock": 8949006,
       "values": {
@@ -5068,6 +5157,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "scr:0x51eEfA64567AC847CAE747608E5cC139e8eFE44C",
       "sinceTimestamp": 1725336741,
       "sinceBlock": 8949006,
       "values": {
@@ -5094,6 +5184,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696917917,
       "sinceBlock": 2,
       "values": {
@@ -5228,6 +5319,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696921121,
       "sinceBlock": 194,
       "values": {
@@ -5306,6 +5398,7 @@
         "0x6441f3b0fb49b443c0b25abe353f29f6a2360f7e34071f7d2ab83686ad8d1593"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "scr:0x648BFC4dB7e43e799a84d0f607aF0b4298F932DB",
       "sinceTimestamp": 1725377313,
       "sinceBlock": 8963433,
       "values": {

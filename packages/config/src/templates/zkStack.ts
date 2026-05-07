@@ -22,7 +22,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -391,7 +391,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ? {
             stage: 'NotApplicable',
           }
-        : getStage(
+        : getRollupStage(
             {
               stage0: {
                 callsItselfRollup: true,

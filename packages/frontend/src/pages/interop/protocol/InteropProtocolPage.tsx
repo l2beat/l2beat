@@ -15,22 +15,18 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
-import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { TopTokenWidget } from '../components/widgets/TopTokenWidget'
 import type { InteropSelection } from '../utils/types'
 import { InteropProtocolSummary } from './components/InteropProtocolSummary'
-import { getInteropProtocolSections } from './getInteropProtocolSections'
 
 interface Props extends AppLayoutProps {
   projectEntry: InteropProtocolEntry
   protocolData: InteropProtocolDashboardData
-  interopChains: InteropChainWithIcon[]
   apiSelection: InteropSelection
 }
 
 export function InteropProtocolPage({
   projectEntry,
-  interopChains,
   apiSelection,
   protocolData,
   ...props
@@ -39,7 +35,6 @@ export function InteropProtocolPage({
     <AppLayout {...props}>
       <Content
         projectEntry={projectEntry}
-        interopChains={interopChains}
         apiSelection={apiSelection}
         protocolData={protocolData}
       />
@@ -49,23 +44,16 @@ export function InteropProtocolPage({
 
 function Content({
   projectEntry,
-  interopChains,
   apiSelection,
   protocolData,
 }: {
   projectEntry: InteropProtocolEntry
-  interopChains: InteropChainWithIcon[]
   apiSelection: InteropSelection
   protocolData: InteropProtocolDashboardData
 }) {
-  const sections = getInteropProtocolSections({
-    projectId: projectEntry.id,
-    projectEntry,
-    data: protocolData,
-    apiSelection,
-    interopChains,
-  })
-  const navigationSections = projectDetailsToNavigationSections(sections)
+  const navigationSections = projectDetailsToNavigationSections(
+    projectEntry.sections,
+  )
   const isNavigationEmpty = navigationSections.length === 0
 
   return (
@@ -116,7 +104,7 @@ function Content({
             />
 
             <HighlightableLinkContextProvider>
-              <ProjectDetails items={sections} />
+              <ProjectDetails items={projectEntry.sections} />
             </HighlightableLinkContextProvider>
           </div>
           {!isNavigationEmpty && (

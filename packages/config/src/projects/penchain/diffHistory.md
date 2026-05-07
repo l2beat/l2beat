@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd54cd904871c15d5565abb5ec7240eddb63ac65c
+
+# Diff at Tue, 05 May 2026 10:22:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777962030
+- current timestamp: 1777962030
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777962030 (main branch discovery), not current.
+
+```diff
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6"
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7) {
+    +++ description: System contract defining the Pentagon Games Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      deployerAddress:
++        "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
+    }
+```
+
 Generated with discovered.json: 0x868a4190fe06390e8e297bde85d508b3e735cf79
 
 # Diff at Tue, 05 May 2026 06:37:36 GMT:

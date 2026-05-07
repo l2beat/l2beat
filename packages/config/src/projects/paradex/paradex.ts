@@ -171,6 +171,7 @@ export const paradex: ScalingProject = {
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1689850631),
+          untilTimestamp: UnixTime(1710428663), // last call: https://etherscan.io/tx/0x3230dafe64b826cfddf3ad1326effc46324c092e5c04a69b06d859cb6a5ecec3
         },
       },
       {

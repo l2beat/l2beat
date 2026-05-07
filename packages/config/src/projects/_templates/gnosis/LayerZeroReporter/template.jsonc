@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["endpoint", "LAYER_ZERO_ENDPOINT", "HEADER_STORAGE"],
+  "ignoreMethods": ["endpointIds"],
+  "description": "Hashi reporter that forwards Yaho-dispatched block or message hashes through LayerZero to a remote adapter.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the chain-to-endpoint mapping, LayerZero execution gas setting, and refund address used for LayerZero deliveries."
+        }
+      ]
+    },
+    "YAHO": {
+      "description": "Yaho contract allowed to ask this reporter to forward message hashes.",
+      "severity": "HIGH"
+    },
+    "LAYER_ZERO_ENDPOINT": {
+      "description": "LayerZero endpoint used to send the encoded hashes to the remote adapter.",
+      "severity": "HIGH"
+    },
+    "fee": {
+      "description": "Executor gas option requested for remote LayerZero message delivery.",
+      "severity": "HIGH"
+    }
+  }
+}

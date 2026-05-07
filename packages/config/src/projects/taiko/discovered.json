@@ -25,6 +25,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library for managing PEM certificate chains.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true },
@@ -43,6 +44,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -64,6 +66,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using RISC Zero.",
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -101,6 +104,7 @@
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks.",
       "ignoreInWatchMode": ["nextInstanceId"],
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -146,6 +150,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237363,
       "sinceBlock": 20079231,
       "values": {
@@ -199,6 +204,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDFbD5490462963Cc242471913B53b034B209B32c",
       "sinceTimestamp": 1744669439,
       "sinceBlock": 22270189,
       "values": {
@@ -234,6 +240,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A signer list for registering agents, similar to a Multisig.",
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -281,6 +288,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
+      "deployerAddress": "eth:0x742dcFae3A8AD6e93Db29349E576dfb0e035Fbcf",
       "sinceTimestamp": 1747268759,
       "sinceBlock": 22484949,
       "values": {
@@ -340,6 +348,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.",
       "ignoreInWatchMode": ["clock"],
+      "deployerAddress": "eth:0x000001043b3b967d62657116fb4Ff349cBA08974",
       "sinceTimestamp": 1714033799,
       "sinceBlock": 19731197,
       "values": {
@@ -459,6 +468,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
       "sinceTimestamp": 1744670315,
       "sinceBlock": 22270262,
       "values": {
@@ -492,6 +502,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
       "values": {
@@ -517,6 +528,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -564,6 +576,7 @@
       ],
       "proxyType": "immutable",
       "description": "A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.",
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -611,6 +624,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
       "sinceTimestamp": 1713774047,
       "sinceBlock": 19709707,
       "values": {
@@ -654,6 +668,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1720099223,
       "sinceBlock": 20233410,
       "values": {
@@ -763,6 +778,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d",
       "sinceTimestamp": 1744099343,
       "sinceBlock": 22222858,
       "values": {
@@ -803,6 +819,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library for verifying signatures.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": { "$immutable": true },
@@ -827,6 +844,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a",
       "sinceTimestamp": 1745580551,
       "sinceBlock": 22345744,
       "values": {
@@ -879,6 +897,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x39cc8f0FEb8DFBa96674098a80eC304879576E6D",
       "sinceTimestamp": 1765210763,
       "sinceBlock": 23969231,
       "values": {
@@ -918,6 +937,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.",
       "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772642207,
       "sinceBlock": 24585332,
       "values": {
@@ -1127,6 +1147,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xe36C0F16d5fB473CC5181f5fb86b6Eb3299aD9cb",
       "sinceTimestamp": 1748146475,
       "sinceBlock": 22557392,
       "values": {
@@ -1176,6 +1197,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771084331,
       "sinceBlock": 24456046,
       "values": {
@@ -1199,6 +1221,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
       "values": {
@@ -1288,6 +1311,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
       "values": {
@@ -1316,6 +1340,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines withdrawal limits per token.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1715578067,
       "sinceBlock": 19859002,
       "values": {
@@ -1390,6 +1415,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using SP1.",
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -1431,6 +1457,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.",
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -1522,6 +1549,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Shared vault for Taiko chains for bridged ERC20 tokens.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -1597,6 +1625,7 @@
       ],
       "proxyType": "immutable",
       "description": "Enforces the Taiko Multiprover policy and routes to the downstream router contracts.",
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -1638,6 +1667,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
       "sinceTimestamp": 1714192631,
       "sinceBlock": 19744335,
       "values": {
@@ -1886,6 +1916,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -1928,6 +1959,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2008,6 +2040,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
+      "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
       "values": {
@@ -2038,6 +2071,7 @@
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks.",
       "ignoreInWatchMode": ["nextInstanceId"],
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -2065,6 +2099,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
       "sinceTimestamp": 1734939971,
       "sinceBlock": 21463784,
       "values": {
@@ -2110,6 +2145,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x946138B088524414EEDaf0699BA10d7Fb5673A34",
       "sinceTimestamp": 1745211803,
       "sinceBlock": 22315159,
       "values": {
@@ -2145,6 +2181,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
       "sinceTimestamp": 1732702979,
       "sinceBlock": 21278465,
       "values": {
@@ -2200,6 +2237,7 @@
         "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
       "values": {
@@ -2237,6 +2275,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1724204135,
       "sinceBlock": 20573748,
       "values": {
@@ -2299,6 +2338,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Shared bridge for Taiko chains for bridged ETH.",
       "ignoreInWatchMode": ["nextMessageId"],
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2396,6 +2436,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
+      "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
@@ -2461,6 +2502,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.",
       "ignoreInWatchMode": ["whitelisted"],
+      "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772641607,
       "sinceBlock": 24585282,
       "values": {
@@ -2501,6 +2543,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+      "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2625,6 +2668,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9",
       "sinceTimestamp": 1744116143,
       "sinceBlock": 22224254,
       "values": {
@@ -2660,6 +2704,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
       "sinceTimestamp": 1777253879,
       "sinceBlock": 24968135,
       "values": {
@@ -2761,6 +2806,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
+      "deployerAddress": "eth:0xe36C0F16d5fB473CC5181f5fb86b6Eb3299aD9cb",
       "sinceTimestamp": 1746942803,
       "sinceBlock": 22458143,
       "values": {
@@ -2804,6 +2850,7 @@
         "operatorCount",
         "latestActivationEpoch"
       ],
+      "deployerAddress": "eth:0xcdCEBD75cDcb9DEd637D537776431Db563Ff0821",
       "sinceTimestamp": 1753275179,
       "sinceBlock": 22981993,
       "values": {
@@ -2877,6 +2924,7 @@
         "0x5f895f5e5eff391b355fd960e8891da71f24b40a469036685e6306937f582f93"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -2954,6 +3002,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
+      "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -3000,6 +3049,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+      "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -3086,6 +3136,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
+      "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -3210,6 +3261,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "taiko:0xe36C0F16d5fB473CC5181f5fb86b6Eb3299aD9cb",
       "sinceTimestamp": 1748151239,
       "sinceBlock": 1173134,
       "values": {

@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xa14dd8494a1d392d3689de6a1d0f336308542ac7
+
+# Diff at Tue, 05 May 2026 10:24:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777026534
+- current timestamp: 1777026534
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777026534 (main branch discovery), not current.
+
+```diff
+    contract Manager (eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract Administrator (eth:0x10472f91f67C49260BDD65F016ea0757bb1Fc91e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract yUSD (eth:0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x25249946D42a5fba2b6b1d191127BCaEc70bD103) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract vyUSD (eth:0x2e3C5e514EEf46727DE1FE44618027A9b70D92FC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract Yield (eth:0x392017161a9507F19644E8886A237C58809212B5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3C6ECDcdAc78B65BDD85985285C1A1d140A79a63) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6569089dd56A140777014d27B6113d96f3544f71) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract YieldFiTimelockController (eth:0x8E31eFdA4453494a84Fa6168D53Eb1418c0b4aC4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract RequestReceipt (eth:0x933B4464beBE7136bC184637792c0EE514057660) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc79920D40206cc28f7B70E72d623Ff7fB83004C1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xCfD925b89D4ccfee2eC9287b362648854aCbBF03) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE26E1D2ae51dcB89E382CA7400b080e6632117B9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E"
+    }
+```
+
 Generated with discovered.json: 0x466747869499119540bf0127a3e71869017860b4
 
 # Diff at Fri, 24 Apr 2026 10:30:15 GMT:

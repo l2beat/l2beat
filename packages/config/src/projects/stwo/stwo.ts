@@ -8,6 +8,7 @@ export const stwo: BaseProject = {
   slug: 'stwo',
   name: 'Stwo',
   shortName: undefined,
+  aliases: ['StarkWare'],
   addedAt: UnixTime.fromDate(new Date('2025-10-29')),
   statuses: {
     yellowWarning: undefined,

@@ -34,6 +34,7 @@
         "getLockedTokens",
         "getSupportedChains"
       ],
+      "deployerAddress": "eth:0x26D595DdDbAd81Bf976eF6f24686a12A800b141F",
       "sinceTimestamp": 1736358971,
       "sinceBlock": 21581390,
       "values": {
@@ -159,6 +160,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689096839,
       "sinceBlock": 17671884,
       "values": {
@@ -565,6 +567,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x289952Dec78C17DC5CC095FE6BCC3Aee1c63787f",
       "sinceTimestamp": 1695826667,
       "sinceBlock": 18227834,
       "values": {
@@ -720,6 +723,7 @@
           "role": ".getStaticConfig"
         }
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1688661563,
       "sinceBlock": 17636043,
       "values": {
@@ -858,6 +862,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689097535,
       "sinceBlock": 17671941,
       "values": {
@@ -972,6 +977,7 @@
           "role": ".ExecutorRoleGranted"
         }
       ],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1765317515,
       "sinceBlock": 23978035,
       "values": { "$immutable": true },
@@ -996,6 +1002,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0xEAF6183bAb3eFD3bF856Ac5C058431C8592394d6",
       "sinceTimestamp": 1694513963,
       "sinceBlock": 18119610,
       "values": {
@@ -1049,6 +1056,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1765317503,
       "sinceBlock": 23978034,
       "values": {
@@ -1128,6 +1136,7 @@
         "tokenPools",
         "getExpectedNextSequenceNumber"
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1727977943,
       "sinceBlock": 20886594,
       "values": {
@@ -1238,6 +1247,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1765316399,
       "sinceBlock": 23977945,
       "values": {
@@ -1517,6 +1527,7 @@
           "role": ".getRouter"
         }
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1700593571,
       "sinceBlock": 18622113,
       "values": {
@@ -1563,6 +1574,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1765317431,
       "sinceBlock": 23978028,
       "values": {
@@ -1952,6 +1964,7 @@
           "role": ".ExecutorRoleGranted"
         }
       ],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689097595,
       "sinceBlock": 17671946,
       "values": { "$immutable": true },
@@ -1977,6 +1990,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1765317395,
       "sinceBlock": 23978025,
       "values": {
@@ -2232,6 +2246,7 @@
           "role": ".priceRegistry"
         }
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1700593583,
       "sinceBlock": 18622114,
       "values": {
@@ -2328,6 +2343,7 @@
         "getExpectedNextSequenceNumber",
         "getLatestPriceEpochAndRound"
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1701287831,
       "sinceBlock": 18679496,
       "values": {
@@ -2556,6 +2572,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689096875,
       "sinceBlock": 17671887,
       "values": {
@@ -3013,6 +3030,7 @@
           "role": ".getBridgeLimitAdmin"
         }
       ],
+      "deployerAddress": "eth:0x26D595DdDbAd81Bf976eF6f24686a12A800b141F",
       "sinceTimestamp": 1736359979,
       "sinceBlock": 21581474,
       "values": {
@@ -3113,6 +3131,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689260771,
       "sinceBlock": 17685354,
       "values": {
@@ -3188,6 +3207,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744208183,
       "sinceBlock": 22231886,
       "values": {
@@ -3482,6 +3502,7 @@
         }
       ],
       "ignoreInWatchMode": ["getRootMetadata", "getRoot", "getOpCount"],
+      "deployerAddress": "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99",
       "sinceTimestamp": 1689096911,
       "sinceBlock": 17671890,
       "values": {
@@ -3761,6 +3782,7 @@
           "role": ".getARM"
         }
       ],
+      "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752923,
       "sinceBlock": 22277104,
       "values": {
@@ -3822,6 +3844,7 @@
           "role": ".arbitrumOffRamp"
         }
       ],
+      "deployerAddress": "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414",
       "sinceTimestamp": 1701287843,
       "sinceBlock": 18679497,
       "values": {

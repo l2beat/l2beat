@@ -1,3 +1,125 @@
+Generated with discovered.json: 0xb10cba850916fedffd992e8789035af1c0a8ef79
+
+# Diff at Tue, 05 May 2026 10:22:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1745587139
+- current timestamp: 1745587139
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745587139 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x0485Ca8A73682B3D3f5ae98cdca1E5b512E728e9) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x0f33D824d74180598311b3025095727BeA61f219) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1d1c4C89AD5FF486c3C67E3DD84A22CF05420711) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract Race Multisig 2 (eth:0x2E7B9465B25C081c07274A31DbD05C6146f67961) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcB02bacC44e8f2b71b6eD3706263E23581D70159"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract Race Multisig 1 (eth:0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x680969A6c58183987c8126ca4DE6b59C6540Cd2a) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x8bF8442d49d52377d735a90F19657a29f29aA83c) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract Race Multisig 3 (eth:0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7d2F521cDb6278AD7c3B64125A0b98A070a6AA0F"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xCB73B7348705a9F925643150Eb00350719380FF8) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xc919978828d8749d971DDEf3E57ef635C0119cE2"
+    }
+```
+
 Generated with discovered.json: 0xced31467d04ebe40997502b207df3012a566c864
 
 # Diff at Tue, 04 Nov 2025 11:33:57 GMT:

@@ -32,7 +32,7 @@ type ProjectParams = {
   tvsConfig?: TvsToken[]
 }
 
-type ContractsSection = Omit<
+export type ContractsSection = Omit<
   ContractsSectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 >

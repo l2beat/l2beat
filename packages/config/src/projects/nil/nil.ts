@@ -9,6 +9,7 @@ export const nil: ScalingProject = upcomingL2({
   addedAt: UnixTime(1708529553), // 2024-02-21T15:32:33Z
   display: {
     name: '=nil;',
+    aliases: ['nil Foundation'],
     slug: 'nil',
     description:
       '=nil; is a zkRollup that securely scales Ethereum through zkSharding, empowering web3 developers to build scalable and composable applications.',

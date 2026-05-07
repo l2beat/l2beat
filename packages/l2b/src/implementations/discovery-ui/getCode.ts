@@ -2,6 +2,7 @@ import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
+import type { FlatSourceClient } from './diffovery/FlatSourceClient'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
@@ -69,18 +70,39 @@ function isFlatCodeCurrent(
   return true
 }
 
-export function getCode(
+export async function getCodeFromEtherscan(
   configReader: ConfigReader,
   project: string,
   address: ChainSpecificAddress,
-  checkFlatCode = false,
+  flatSourceClient: FlatSourceClient,
+): Promise<ApiCodeResponse> {
+  const { entryName, links } = getEntryLinks(configReader, project, address)
+
+  const sources = await Promise.all(
+    links.map(async ({ address, name }) => ({
+      name,
+      code: (await flatSourceClient.getFlat(address)).flat,
+    })),
+  )
+
+  return { entryName, sources }
+}
+
+function getFallbackSourceName(index: number, total: number): string {
+  if (index === 0 && total > 1) return 'Proxy'
+  if (total <= 2) return 'Implementation'
+  return `Implementation #${index}`
+}
+
+export function getCodeFromDisk(
+  configReader: ConfigReader,
+  project: string,
+  address: ChainSpecificAddress,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(configReader, project, address)
 
-  if (checkFlatCode) {
-    if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
-      throw new Error('Flat code is outdated')
-    }
+  if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
+    throw new Error('Flat code is outdated')
   }
 
   return {
@@ -135,6 +157,30 @@ export function getAllCode(
   }
 
   return result
+}
+
+function getEntryLinks(
+  configReader: ConfigReader,
+  project: string,
+  address: ChainSpecificAddress,
+): {
+  entryName: string | undefined
+  links: { address: ChainSpecificAddress; name: string }[]
+} {
+  const entry = getProjectDiscoveries(configReader, project)
+    .map((d) => d.entries.find((x) => x.address === address))
+    .find((e) => e && e.type !== 'Reference')
+
+  const addresses = entry
+    ? [entry.address, ...get$Implementations(entry.values)]
+    : []
+
+  const names = entry?.implementationNames ?? {}
+  const links = addresses.map((a, i) => ({
+    address: a,
+    name: names[a] ?? getFallbackSourceName(i, addresses.length),
+  }))
+  return { entryName: entry?.name, links }
 }
 
 export function getCodePaths(

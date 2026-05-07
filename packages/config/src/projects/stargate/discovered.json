@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
+      "deployerAddress": "arb1:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837025,
       "sinceBlock": 215658770,
       "values": {
@@ -70,6 +71,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "arb1:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837008,
       "sinceBlock": 215658702,
       "values": {
@@ -122,6 +124,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "arb1:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837018,
       "sinceBlock": 215658745,
       "values": {
@@ -200,6 +203,7 @@
         "tvl",
         "getTransferGasLimit"
       ],
+      "deployerAddress": "arb1:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837016,
       "sinceBlock": 215658734,
       "values": {
@@ -253,6 +257,7 @@
         "tvl",
         "getTransferGasLimit"
       ],
+      "deployerAddress": "base:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837017,
       "sinceBlock": 15023835,
       "values": {
@@ -300,6 +305,7 @@
       ],
       "proxyType": "immutable",
       "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
+      "deployerAddress": "base:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837023,
       "sinceBlock": 15023838,
       "values": {
@@ -367,6 +373,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "base:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837009,
       "sinceBlock": 15023831,
       "values": {
@@ -479,6 +486,7 @@
           "role": ".treasurer"
         }
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837503,
       "sinceBlock": 19963243,
       "values": {
@@ -510,6 +518,7 @@
           "role": ".getExecutorConfig"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
@@ -563,6 +572,7 @@
       ],
       "proxyType": "immutable",
       "description": "A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -610,6 +620,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple LayerZero library that blocks all messages if configured.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
       "values": {
@@ -642,6 +653,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837323,
       "sinceBlock": 19963228,
       "values": {
@@ -700,6 +712,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307995,
       "sinceBlock": 19093742,
       "values": {
@@ -733,6 +746,7 @@
       ],
       "proxyType": "immutable",
       "description": "A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.",
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837383,
       "sinceBlock": 19963233,
       "values": {
@@ -789,6 +803,7 @@
       ],
       "proxyType": "immutable",
       "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837371,
       "sinceBlock": 19963232,
       "values": {
@@ -824,6 +839,7 @@
       ],
       "proxyType": "immutable",
       "description": "LayerZero library used to read state from remote blockchains.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1730488859,
       "sinceBlock": 21094853,
       "values": {
@@ -867,6 +883,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837299,
       "sinceBlock": 19963227,
       "values": {
@@ -919,6 +936,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "eth:0x5e6e4f234c7Ad525700fcF5B7862589950589ed5",
       "sinceTimestamp": 1756256951,
       "sinceBlock": 23229076,
       "values": {
@@ -978,6 +996,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837359,
       "sinceBlock": 19963231,
       "values": {
@@ -1030,6 +1049,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307875,
       "sinceBlock": 19093732,
       "values": {
@@ -1058,6 +1078,7 @@
           "role": ".getUlnConfig"
         }
       ],
+      "deployerAddress": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
       "sinceTimestamp": 1706489567,
       "sinceBlock": 19108732,
       "values": {
@@ -1086,6 +1107,7 @@
       ],
       "proxyType": "immutable",
       "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307839,
       "sinceBlock": 19093729,
       "values": {
@@ -1145,6 +1167,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
       "values": {
@@ -1304,6 +1327,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
       "sinceTimestamp": 1755895787,
       "sinceBlock": 23199114,
       "values": {
@@ -1351,6 +1375,7 @@
         "tvl",
         "getTransferGasLimit"
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837347,
       "sinceBlock": 19963230,
       "values": {
@@ -1398,6 +1423,7 @@
       ],
       "proxyType": "immutable",
       "description": "LayerZero-deployed receive library, defining the validation of received messages.",
+      "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307863,
       "sinceBlock": 19093731,
       "values": {
@@ -1443,6 +1469,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "eth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837335,
       "sinceBlock": 19963229,
       "values": {
@@ -1564,6 +1591,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "oeth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837025,
       "sinceBlock": 120619124,
       "values": {
@@ -1617,6 +1645,7 @@
         "tvl",
         "getTransferGasLimit"
       ],
+      "deployerAddress": "oeth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837017,
       "sinceBlock": 120619120,
       "values": {
@@ -1696,6 +1725,7 @@
         "getTransferGasLimit",
         "deficitOffset"
       ],
+      "deployerAddress": "oeth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837009,
       "sinceBlock": 120619116,
       "values": {
@@ -1741,6 +1771,7 @@
       ],
       "proxyType": "immutable",
       "description": "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.",
+      "deployerAddress": "oeth:0x4A79AdC4539905376D339C69b6a7092D0598cc24",
       "sinceTimestamp": 1716837031,
       "sinceBlock": 120619127,
       "values": {

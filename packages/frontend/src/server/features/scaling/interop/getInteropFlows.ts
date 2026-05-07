@@ -1,14 +1,16 @@
-import { assert, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
-import type { InteropFlowsParams } from './types'
+import type { InteropFlowsParams, TokenData } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
 import type { TopEntry } from './utils/getInteropFlowAggregates'
 import { getInteropFlowAggregates } from './utils/getInteropFlowAggregates'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getSummaryTokensData } from './utils/getSummaryTokensData'
+import { getTopItems, type TopItems } from './utils/getTopItems'
 
 export interface FlowToken {
   symbol: string
@@ -59,9 +61,12 @@ interface FlowsStats {
   totalVolume: number
   totalTransferCount: number
   activeFlows: number
+  tokenCount: number
+  topTokens: TopItems<TokenData>
   topRoute: { srcChain: string; dstChain: string } | undefined
   topChain: FlowChain | undefined
   topToken: FlowToken | undefined
+  topProtocol: FlowProtocol | undefined
 }
 
 export type InteropFlowsData = {
@@ -95,9 +100,12 @@ export async function getInteropFlows(
         totalVolume: 0,
         totalTransferCount: 0,
         activeFlows: 0,
+        tokenCount: 0,
+        topTokens: { items: [], remainingCount: 0 },
         topRoute: undefined,
         topChain: undefined,
         topToken: undefined,
+        topProtocol: undefined,
       },
     }
   }
@@ -109,6 +117,9 @@ export async function getInteropFlows(
   const subgroupProjects = new Set(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
+  const nonSubgroupRecords = records.filter(
+    (record) => !subgroupProjects.has(record.id as ProjectId),
+  )
 
   const {
     flows,
@@ -117,10 +128,16 @@ export async function getInteropFlows(
     chainTopProtocols,
     chainPairTopProtocols,
     topToken: topTokenEntry,
+    topProtocol: topProtocolEntry,
     tokenIds,
   } = getInteropFlowAggregates(records, subgroupProjects)
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
+  const summaryTokens = getSummaryTokensData(
+    nonSubgroupRecords,
+    detailsMap,
+    interopProjects,
+  )
 
   const protocolDetailsMap = new Map<
     string,
@@ -193,6 +210,9 @@ export async function getInteropFlows(
   }
 
   const topToken = topTokenEntry ? resolveToken(topTokenEntry) : undefined
+  const topProtocol = topProtocolEntry
+    ? resolveProtocol(topProtocolEntry)
+    : undefined
   const chainData = computeChainsData(
     flows,
     params.chains,
@@ -212,6 +232,8 @@ export async function getInteropFlows(
       totalVolume,
       totalTransferCount,
       activeFlows: flows.length,
+      tokenCount: summaryTokens.length,
+      topTokens: getTopItems(summaryTokens, 5),
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
         : undefined,
@@ -222,6 +244,7 @@ export async function getInteropFlows(
           }
         : undefined,
       topToken,
+      topProtocol,
     },
   }
 }
@@ -321,6 +344,42 @@ function getMockInteropFlows(): InteropFlowsData {
       totalVolume: flows.reduce((sum, f) => sum + f.volume, 0),
       totalTransferCount: flows.reduce((sum, f) => sum + f.transferCount, 0),
       activeFlows: flows.length,
+      tokenCount: 2,
+      topTokens: {
+        items: [
+          {
+            id: 'eth',
+            symbol: 'ETH',
+            issuer: 'ethereum',
+            iconUrl: '/icons/tokens/ether.png',
+            topProtocol: undefined,
+            volume: 1_000_000,
+            transferCount: 100,
+            avgDuration: null,
+            avgValue: 10_000,
+            minTransferValueUsd: undefined,
+            maxTransferValueUsd: undefined,
+            netMintedValue: undefined,
+            flows: [],
+          },
+          {
+            id: 'usdc',
+            symbol: 'USDC',
+            issuer: 'circle',
+            iconUrl: '/icons/tokens/usdc.png',
+            topProtocol: undefined,
+            volume: 500_000,
+            transferCount: 50,
+            avgDuration: null,
+            avgValue: 10_000,
+            minTransferValueUsd: undefined,
+            maxTransferValueUsd: undefined,
+            netMintedValue: undefined,
+            flows: [],
+          },
+        ],
+        remainingCount: 0,
+      },
       topRoute: flows[0]
         ? { srcChain: flows[0].srcChain, dstChain: flows[0].dstChain }
         : undefined,
@@ -333,6 +392,13 @@ function getMockInteropFlows(): InteropFlowsData {
       topToken: {
         symbol: 'ETH',
         iconUrl: '/icons/tokens/ether.png',
+        volume: 1_000_000,
+      },
+      topProtocol: {
+        id: 'layerzero',
+        slug: 'layerzero',
+        name: 'LayerZero',
+        iconUrl: '/icons/layerzero.png',
         volume: 1_000_000,
       },
     },

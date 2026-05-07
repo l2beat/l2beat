@@ -1,5 +1,8 @@
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
-import type { ImpMeta, Validator } from '@l2beat/validate/dist/cjs/validate'
+import type {
+  ImpDefinition,
+  Validator,
+} from '@l2beat/validate/dist/cjs/validate'
 import type { Application, Request, RequestHandler } from 'express'
 import { GenericErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'
@@ -9,11 +12,11 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   summary?: string
   description?: string
   tags?: Tags[]
-  params?: Validator<P> & { meta?: ImpMeta }
-  query?: Validator<Q> & { meta?: ImpMeta }
-  result: Validator<O> & { meta?: ImpMeta }
+  params?: Validator<P> & { definition?: ImpDefinition }
+  query?: Validator<Q> & { definition?: ImpDefinition }
+  result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
-  errors?: Record<number, Validator<E> & { meta?: ImpMeta }>
+  errors?: Record<number, Validator<E> & { definition?: ImpDefinition }>
 }
 
 type OpenApiPath = {
@@ -40,7 +43,7 @@ type OpenApiResponse = {
   }
 }
 
-type Tags = 'projects' | 'tvs' | 'activity'
+type Tags = 'projects' | 'tvs' | 'activity' | 'interop'
 
 const BadRequestResponse = v
   .object({
@@ -58,7 +61,7 @@ interface Route {
 }
 
 export interface BaseOpenApiSchema {
-  openapi: '3.0.0'
+  openapi: '3.1.0'
   info: {
     title: string
     version: string
@@ -153,12 +156,12 @@ export class OpenApi {
     for (const route of this.routes) {
       const { result, params, query, errors } = route.options
       if (
-        result.meta?.type === 'array' &&
-        result.meta.element.description &&
-        !schemas[result.meta.element.description]
+        result.definition?.type === 'array' &&
+        result.definition.element.description &&
+        !schemas[result.definition.element.description]
       ) {
-        schemas[result.meta.element.description] = this.toJsonSchema(
-          result.meta.element,
+        schemas[result.definition.element.description] = this.toJsonSchema(
+          result.definition.element,
         )
       }
       if (result.description && !schemas[result.description]) {
@@ -269,19 +272,19 @@ export class OpenApi {
 
   private schemaToParameters<T>(
     type: 'params' | 'query',
-    schema: Validator<T> & { meta?: ImpMeta },
+    schema: Validator<T> & { definition?: ImpDefinition },
   ): OpenApiParameter[] {
-    if (!schema.meta) {
-      throw new Error('Schema meta is required')
+    if (!schema.definition) {
+      throw new Error('Schema definition is required')
     }
-    if (schema.meta.type !== 'object') {
+    if (schema.definition.type !== 'object') {
       throw new Error('Schema must be an object')
     }
 
-    return Object.entries(schema.meta.schema).map(([key, value]) => ({
+    return Object.entries(schema.definition.schema).map(([key, value]) => ({
       name: key,
       in: type === 'query' ? 'query' : 'path',
-      required: value.meta.type !== 'optional',
+      required: value.definition.type !== 'optional',
       schema: this.toJsonSchemaWithRefs(value),
     }))
   }
@@ -291,16 +294,16 @@ export class OpenApi {
   }
 
   private toJsonSchemaWithRefs<T>(
-    validator: Validator<T> & { meta?: ImpMeta },
+    validator: Validator<T> & { definition?: ImpDefinition },
   ) {
     if (
-      validator.meta?.type === 'array' &&
-      validator.meta.element.description
+      validator.definition?.type === 'array' &&
+      validator.definition.element.description
     ) {
       return {
         type: 'array',
         items: {
-          $ref: `#/components/schemas/${validator.meta.element.description}`,
+          $ref: `#/components/schemas/${validator.definition.element.description}`,
         },
       }
     }

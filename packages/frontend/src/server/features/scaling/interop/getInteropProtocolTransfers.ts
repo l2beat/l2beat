@@ -2,6 +2,7 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -51,6 +52,10 @@ export async function getInteropProtocolTransfers({
       items: [],
       nextCursor: undefined,
     }
+  }
+
+  if (env.MOCK) {
+    return getMockInteropProtocolTransfers({ from, to })
   }
 
   const interopProject = await ps.getProject({
@@ -274,4 +279,44 @@ function getTxHashHref(
   }
 
   return `${explorerUrl}/tx/${txHash}`
+}
+
+function getMockInteropProtocolTransfers({
+  from,
+  to,
+}: {
+  from: string[]
+  to: string[]
+}): InteropProtocolTransfersResponse {
+  const ethIcon =
+    'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880'
+  const srcChain = from[0] ?? 'ethereum'
+  const dstChain = to[0] ?? 'optimism'
+  const timestamp = UnixTime.now() - UnixTime.HOUR
+
+  const items: InteropProtocolTransferDetailsItem[] = Array.from(
+    { length: 5 },
+    (_, i) => ({
+      transferId: `mock-transfer-${i}`,
+      timestamp: timestamp - i * 60,
+      srcAmount: 1_000,
+      srcSymbol: 'ETH',
+      srcTokenIconUrl: ethIcon,
+      dstAmount: 1_000,
+      dstSymbol: 'ETH',
+      dstTokenIconUrl: ethIcon,
+      valueUsd: 1_000,
+      duration: 60_000,
+      srcChain,
+      srcChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(srcChain),
+      srcTxHash: undefined,
+      srcTxHashHref: undefined,
+      dstChain,
+      dstChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(dstChain),
+      dstTxHash: undefined,
+      dstTxHashHref: undefined,
+    }),
+  )
+
+  return { items, nextCursor: undefined }
 }

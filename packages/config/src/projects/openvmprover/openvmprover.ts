@@ -9,6 +9,7 @@ export const openvmprover: BaseProject = {
   slug: 'openvmprover',
   name: 'OpenVM',
   shortName: undefined,
+  aliases: ['Axiom'],
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {
     yellowWarning: undefined,

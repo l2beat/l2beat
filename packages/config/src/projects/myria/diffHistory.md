@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xe35e7f9a2bd99b236041a12e8f7e220b0fd607e8
+
+# Diff at Tue, 05 May 2026 10:22:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777891434
+- current timestamp: 1777891434
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891434 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (eth:0x1e601435E181423e7A8430813d7500012a6169cB) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract OrderRegistry (eth:0x806d435a82B0381bD884540c2235147c13B97fe6) {
+    +++ description: Helper contract for registering limit orders from L1.
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
 Generated with discovered.json: 0xc7e1a48a78e81c140600f0bd67786515097fe72a
 
 # Diff at Mon, 04 May 2026 10:44:57 GMT:

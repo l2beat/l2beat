@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1774020135,
+  "timestamp": 1777991279,
   "configHash": "0x624070f84d32564193d229c0cb17f1701a2a589695e7dcfc040d889a516fb0bd",
   "entries": [
     {
@@ -31,7 +31,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
         "NAME": "Gnosis Safe",
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -131,7 +131,7 @@
         "$members": [
           "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e",
           "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
-          "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863",
+          "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
           "eth:0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
         ],
         "$threshold": 3,
@@ -139,7 +139,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 441,
+        "nonce": 446,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -247,7 +247,7 @@
         "nextTargets": [],
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 12
+        "versionId": 13
       },
       "implementationNames": {
         "eth:0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper"
@@ -341,7 +341,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18873
+        "totalSupply": 18928
       },
       "implementationNames": {
         "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "ZkSyncNFTFactory"
@@ -373,7 +373,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
-        "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
+        "0x61d3f542bbc9d106202e9567a3c0c27937e00124d0184672b28771278a57fcb7"
       ],
       "proxyType": "zkSync Lite proxy",
       "sinceTimestamp": 1592218707,
@@ -381,14 +381,15 @@
       "values": {
         "$admin": "eth:0x38A43F4330f24fe920F943409709fc9A6084C939",
         "$implementation": [
-          "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9",
-          "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
+          "eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff",
+          "eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d"
         ],
         "approvedUpgradeNoticePeriod": 1814400,
         "exodusMode": false,
         "getNoticePeriod": 0,
         "governance": "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
         "isReadyForUpgrade": true,
+        "pausedDeposits": true,
         "revertedBlocks": [
           { "totalBlocksCommitted": 141, "totalBlocksVerified": 141 },
           { "totalBlocksCommitted": 859, "totalBlocksVerified": 859 },
@@ -425,8 +426,8 @@
       },
       "implementationNames": {
         "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": "Proxy",
-        "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9": "ZkSync",
-        "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD": "AdditionalZkSync"
+        "eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff": "ZkSync",
+        "eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d": "AdditionalZkSync"
       }
     },
     {
@@ -450,17 +451,17 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -506,7 +507,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
         "NAME": "Gnosis Safe",
-        "nonce": 126,
+        "nonce": 130,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -554,38 +555,6 @@
     ],
     "eth:0x225d3822De44E58eE935440E0c0B829C4232086e": [
       "constructor(address _masterCopy)"
-    ],
-    "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD": [
-      "event ApproveCutUpgradeNoticePeriod(address indexed addr)",
-      "event BlockCommit(uint32 indexed blockNumber)",
-      "event BlockVerification(uint32 indexed blockNumber)",
-      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
-      "event Deposit(uint16 indexed tokenId, uint128 amount)",
-      "event DepositCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
-      "event ExodusMode()",
-      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
-      "event FullExitCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
-      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
-      "event NoticePeriodChange(uint256 newNoticePeriod)",
-      "event Withdrawal(address indexed owner, uint16 indexed tokenId, uint128 amount)",
-      "event WithdrawalNFT(uint32 indexed tokenId)",
-      "event WithdrawalNFTPending(uint32 indexed tokenId)",
-      "event WithdrawalPending(uint16 indexed tokenId, address indexed recipient, uint128 amount, uint8 withdrawalType)",
-      "function authFacts(address, uint32) view returns (bytes32)",
-      "function authFactsResetTimer(address, uint32) view returns (uint256)",
-      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
-      "function cutUpgradeNoticePeriod(bytes32 targetsHash)",
-      "function cutUpgradeNoticePeriodBySignature(bytes[] signatures)",
-      "function exodusMode() view returns (bool)",
-      "function firstPriorityRequestId() view returns (uint64)",
-      "function performExodus(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment) _storedBlockInfo, address _owner, uint32 _accountId, uint32 _tokenId, uint128 _amount, uint32 _nftCreatorAccountId, address _nftCreatorAddress, uint32 _nftSerialId, bytes32 _nftContentHash, uint256[] _proof)",
-      "function revertBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment)[] _blocksToRevert)",
-      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
-      "function storedBlockHashes(uint32) view returns (bytes32)",
-      "function totalBlocksCommitted() view returns (uint32)",
-      "function totalBlocksExecuted() view returns (uint32)",
-      "function totalBlocksProven() view returns (uint32)",
-      "function totalOpenPriorityRequests() view returns (uint64)"
     ],
     "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01": [
       "constructor(address target, bytes targetInitializationParameters)",
@@ -822,27 +791,29 @@
       "function totalSupply() view returns (uint256)",
       "function transferFrom(address from, address to, uint256 tokenId)"
     ],
-    "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9": [
+    "eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff": [
       "constructor()",
       "event ApproveCutUpgradeNoticePeriod(address indexed addr)",
       "event BlockCommit(uint32 indexed blockNumber)",
       "event BlockVerification(uint32 indexed blockNumber)",
       "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ClaimRootSet(bytes32 claimRoot)",
       "event Deposit(uint16 indexed tokenId, uint128 amount)",
       "event DepositCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event DepositsPause()",
       "event ExodusMode()",
       "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
       "event FullExitCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event L1ClaimDistributorSet(address indexed claimDistributor)",
       "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
       "event NoticePeriodChange(uint256 newNoticePeriod)",
+      "event TokenMigrationExecuted(address indexed token)",
       "event Withdrawal(address indexed owner, uint16 indexed tokenId, uint128 amount)",
       "event WithdrawalNFT(uint32 indexed tokenId)",
       "event WithdrawalNFTPending(uint32 indexed tokenId)",
       "event WithdrawalPending(uint16 indexed tokenId, address indexed recipient, uint128 amount, uint8 withdrawalType)",
-      "function activateExodusMode() returns (bool)",
       "function authFacts(address, uint32) view returns (bytes32)",
       "function authFactsResetTimer(address, uint32) view returns (uint256)",
-      "function cancelOutstandingDepositsForExodusMode(uint64 _n, bytes[] _depositsPubdata)",
       "function commitBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment) _lastCommittedBlockData, tuple(bytes32 newStateHash, bytes publicData, uint256 timestamp, tuple(bytes ethWitness, uint32 publicDataOffset)[] onchainOperations, uint32 blockNumber, uint32 feeAccount)[] _newBlocksData)",
       "function cutUpgradeNoticePeriod(bytes32 targetsHash)",
       "function cutUpgradeNoticePeriodBySignature(bytes[] signatures)",
@@ -855,12 +826,16 @@
       "function getPendingBalance(address _address, address _token) view returns (uint128)",
       "function initialize(bytes initializationParameters)",
       "function isReadyForUpgrade() pure returns (bool)",
-      "function performExodus(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment) _storedBlockInfo, address _owner, uint32 _accountId, uint32 _tokenId, uint128 _amount, uint32 _nftCreatorAccountId, address _nftCreatorAddress, uint32 _nftSerialId, bytes32 _nftContentHash, uint256[] _proof)",
+      "function isTokenMigrated(address token) view returns (bool)",
+      "function migrateToken(address token)",
+      "function pauseDeposits()",
+      "function pausedDeposits() view returns (bool)",
       "function proveBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment)[] _committedBlocks, tuple(uint256[] recursiveInput, uint256[] proof, uint256[] commitments, uint8[] vkIndexes, uint256[16] subproofsLimbs) _proof)",
       "function requestFullExit(uint32 _accountId, address _token)",
       "function requestFullExitNFT(uint32 _accountId, uint32 _tokenId)",
       "function revertBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment)[] _blocksToRevert)",
       "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function setClaimRoot(address _claimDistributor)",
       "function storedBlockHashes(uint32) view returns (bytes32)",
       "function totalBlocksCommitted() view returns (uint32)",
       "function totalBlocksExecuted() view returns (uint32)",
@@ -893,6 +868,42 @@
     "eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6": [
       "constructor(address _masterCopy)"
     ],
+    "eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d": [
+      "event ApproveCutUpgradeNoticePeriod(address indexed addr)",
+      "event BlockCommit(uint32 indexed blockNumber)",
+      "event BlockVerification(uint32 indexed blockNumber)",
+      "event BlocksRevert(uint32 totalBlocksVerified, uint32 totalBlocksCommitted)",
+      "event ClaimRootSet(bytes32 claimRoot)",
+      "event Deposit(uint16 indexed tokenId, uint128 amount)",
+      "event DepositCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event DepositsPause()",
+      "event ExodusMode()",
+      "event FactAuth(address indexed sender, uint32 nonce, bytes fact)",
+      "event FullExitCommit(uint32 indexed zkSyncBlockId, uint32 indexed accountId, address owner, uint16 indexed tokenId, uint128 amount)",
+      "event L1ClaimDistributorSet(address indexed claimDistributor)",
+      "event NewPriorityRequest(address sender, uint64 serialId, uint8 opType, bytes pubData, uint256 expirationBlock)",
+      "event NoticePeriodChange(uint256 newNoticePeriod)",
+      "event TokenMigrationExecuted(address indexed token)",
+      "event Withdrawal(address indexed owner, uint16 indexed tokenId, uint128 amount)",
+      "event WithdrawalNFT(uint32 indexed tokenId)",
+      "event WithdrawalNFTPending(uint32 indexed tokenId)",
+      "event WithdrawalPending(uint16 indexed tokenId, address indexed recipient, uint128 amount, uint8 withdrawalType)",
+      "function authFacts(address, uint32) view returns (bytes32)",
+      "function authFactsResetTimer(address, uint32) view returns (uint256)",
+      "function cutUpgradeNoticePeriod(bytes32 targetsHash)",
+      "function cutUpgradeNoticePeriodBySignature(bytes[] signatures)",
+      "function exodusMode() view returns (bool)",
+      "function firstPriorityRequestId() view returns (uint64)",
+      "function migrateToken(address token)",
+      "function pausedDeposits() view returns (bool)",
+      "function revertBlocks(tuple(uint32 blockNumber, uint64 priorityOperations, bytes32 pendingOnchainOperationsHash, uint256 timestamp, bytes32 stateHash, bytes32 commitment)[] _blocksToRevert)",
+      "function setAuthPubkeyHash(bytes _pubkeyHash, uint32 _nonce)",
+      "function storedBlockHashes(uint32) view returns (bytes32)",
+      "function totalBlocksCommitted() view returns (uint32)",
+      "function totalBlocksExecuted() view returns (uint32)",
+      "function totalBlocksProven() view returns (uint32)",
+      "function totalOpenPriorityRequests() view returns (uint64)"
+    ],
     "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99": [
       "constructor(address _masterCopy)"
     ]
@@ -900,6 +911,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24699580 },
-  "permissionsConfigHash": "0xd47e278f277e688b1014acc16dd6496d5c5d7f0571c2f91092a167403f2f5160"
+  "usedBlockNumbers": { "ethereum": 25029400 },
+  "permissionsConfigHash": "0xd57dd6cfb29228716bde6ff74e8040cf4537e104e4c0be76afa3c5662d77c337"
 }

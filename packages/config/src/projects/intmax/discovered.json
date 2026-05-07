@@ -27,6 +27,7 @@
           "role": ".amlPermitter"
         }
       ],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750501451,
       "sinceBlock": 22752223,
       "values": {
@@ -104,6 +105,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.",
       "ignoreInWatchMode": ["getRequest"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1771122743,
       "sinceBlock": 24459233,
       "values": {
@@ -143,6 +145,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
       "ignoreInWatchMode": ["getCurrentPeriod"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500551,
       "sinceBlock": 22752148,
       "values": {
@@ -197,6 +200,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
       "values": { "$immutable": true },
@@ -223,6 +227,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",
       "sinceTimestamp": 1762283363,
       "sinceBlock": 23727944,
       "values": {
@@ -268,6 +273,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1750497179,
       "sinceBlock": 22751867,
       "values": {
@@ -339,6 +345,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1751444639,
       "sinceBlock": 22830326,
       "values": {
@@ -375,6 +382,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.",
       "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
+      "deployerAddress": "eth:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500599,
       "sinceBlock": 22752152,
       "values": {
@@ -475,6 +483,7 @@
         }
       ],
       "ignoreInWatchMode": ["getDeployedPolicies"],
+      "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
       "values": {
@@ -620,6 +629,7 @@
         "getLatestBlockNumber",
         "lastProcessedDepositId"
       ],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752665870,
       "sinceBlock": 17261666,
       "values": {
@@ -669,6 +679,7 @@
       ],
       "proxyType": "immutable",
       "description": "A wrapper verifier that can check both withdrawal zk proofs to exit from INTMAX network and zk proofs for claiming rewards of the privacy mining program.",
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1754301333,
       "sinceBlock": 18309372,
       "values": { "$immutable": true },
@@ -692,6 +703,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getCurrentPeriod", "nullifierNonce"],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752740586,
       "sinceBlock": 17291619,
       "values": {
@@ -755,6 +767,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).",
       "ignoreInWatchMode": ["getCurrentPeriod"],
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1750500006,
       "sinceBlock": 16627826,
       "values": {
@@ -796,6 +809,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.",
+      "deployerAddress": "scr:0x673A3705008407f05E6d89528F5661350ABA4744",
       "sinceTimestamp": 1752665900,
       "sinceBlock": 17261677,
       "values": {
@@ -872,6 +886,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "sinceTimestamp": 1750496732,
       "sinceBlock": 16626983,
       "values": {

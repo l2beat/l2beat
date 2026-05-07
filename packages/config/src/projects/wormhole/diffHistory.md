@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xc943d354561759b6a886f15d4417047eda9a84e7
+
+# Diff at Tue, 05 May 2026 10:23:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777964358
+- current timestamp: 1777964358
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777964358 (main branch discovery), not current.
+
+```diff
+    contract TokenImplementation (eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: Wormhole wrapped ERC20 token implementation. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.
+      deployerAddress:
++        "eth:0xE2e2d9E31d7e1CC1178Fe0d1c5950f6C809816a3"
+    }
+```
+
+```diff
+    contract TokenBridge (eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.
+      deployerAddress:
++        "eth:0x96D13cbEFFE7BAE169B9032Fe69Ed56eB07b300F"
+    }
+```
+
+```diff
+    contract WormholeCore (eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge.
+      deployerAddress:
++        "eth:0x5B3899809Ae2c87FdA11280b7c61C06A5F4db1de"
+    }
+```
+
+```diff
+    contract WSOL (eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c) {
+    +++ description: WSOL is the Wormhole-wrapped ERC20 representation of native SOL on Ethereum. The Token Bridge owns this token and mints or burns it after accepting valid Token Bridge VAAs for the Solana route. The native SOL backing is escrowed on Solana, not Ethereum.
+      deployerAddress:
++        "eth:0x4687f8d4a661545DF7E368972a50c4bcF0D11Ae1"
+    }
+```
+
 Generated with discovered.json: 0x2da78b1c0ab9c97b9e9acab9264221de4a4fd47a
 
 # Diff at Tue, 05 May 2026 07:13:32 GMT:

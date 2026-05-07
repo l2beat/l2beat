@@ -6,6 +6,7 @@ export const hyperevm: BaseProject = {
   slug: 'hyperevm',
   name: 'HyperEVM',
   shortName: undefined,
+  aliases: ['Hyperliquid'],
   addedAt: UnixTime(1773154357),
   statuses: {
     yellowWarning: undefined,

@@ -60,6 +60,7 @@
         "verifiedPriorityRequestCount",
         "createdMarkets"
       ],
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -306,6 +307,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1766000843,
       "sinceBlock": 24034515,
       "values": {
@@ -401,6 +403,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
       "sinceTimestamp": 1737058487,
       "sinceBlock": 21639370,
       "values": {
@@ -454,6 +457,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -544,6 +548,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1747063631,
       "sinceBlock": 22468085,
       "values": {
@@ -580,6 +585,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1766000783,
       "sinceBlock": 24034510,
       "values": {
@@ -616,6 +622,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -664,6 +671,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
       "values": {
@@ -707,6 +715,7 @@
       ],
       "proxyType": "immutable",
       "description": "ZK verifier used to verify forced exits during desert mode.",
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1764848159,
       "sinceBlock": 23939434,
       "values": { "$immutable": true },

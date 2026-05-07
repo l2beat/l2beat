@@ -22,6 +22,7 @@ export const blobstream: BaseProject = {
   slug: 'blobstream',
   name: 'Blobstream',
   shortName: undefined,
+  aliases: ['Celestia'],
   addedAt: UnixTime(1729253328), // 2024-10-18T12:08:48Z
   // data
   statuses: {

@@ -9,6 +9,7 @@ export const sp1hypercube: BaseProject = {
   slug: 'sp1hypercube',
   name: 'SP1 Hypercube',
   shortName: undefined,
+  aliases: ['Succinct'],
   addedAt: UnixTime.fromDate(new Date('2026-03-04')),
   statuses: {
     yellowWarning: undefined,
@@ -138,6 +139,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
       {
         projectId: ProjectId('taiko'),
         sinceTimestamp: UnixTime(1774964687),
+      },
+      {
+        projectId: ProjectId('mantle'),
+        sinceTimestamp: UnixTime(1778001356),
       },
     ],
     verifierHashes: [

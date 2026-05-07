@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcd0810c9f5292d850e354189b6f0a71299157864
+
+# Diff at Tue, 05 May 2026 10:24:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752830495
+- current timestamp: 1752830495
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830495 (main branch discovery), not current.
+
+```diff
+    contract STASIS EURS Token (eth:0xdB25f211AB05b1c97D595516F45794528a807ad8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5873421BcC7086fb0072e7fca29ae9fa9bA75dE6"
+    }
+```
+
 Generated with discovered.json: 0xdd8a5817f90be7748e390f7011a903ce66fcef91
 
 # Diff at Wed, 10 Sep 2025 16:42:54 GMT:

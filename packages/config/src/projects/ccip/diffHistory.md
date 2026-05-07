@@ -1,3 +1,205 @@
+Generated with discovered.json: 0xec0e018630fd338c89265be8940f7135496b3925
+
+# Diff at Tue, 05 May 2026 10:22:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract GHOEthereumTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) {
+    +++ description: GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.
+      deployerAddress:
++        "eth:0x26D595DdDbAd81Bf976eF6f24686a12A800b141F"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerBypasser (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract EthereumToArbitrumOnRampTokenLimitAdmin (eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x289952Dec78C17DC5CC095FE6BCC3Aee1c63787f"
+    }
+```
+
+```diff
+    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) {
+    +++ description: ARM proxy used by the Router, OnRamp, CommitStore, OffRamp, and GHO token pool to read RMN curse and blessing state.
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
+```diff
+    contract ARMProxyOwner (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) {
+    +++ description: Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerExecutor (eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610) {
+    +++ description: Public call proxy that forwards any caller to RMNRemoteOwner, allowing anyone to execute already-scheduled RMNRemoteOwner operations after the timelock delay.
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract Executor (eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A) {
+    +++ description: Aave governance executor that owns the GHO Ethereum token pool.
+      deployerAddress:
++        "eth:0xEAF6183bAb3eFD3bF856Ac5C058431C8592394d6"
+    }
+```
+
+```diff
+    contract RMNRemoteOwner (eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A) {
+    +++ description: Timelock administering RMNRemote signer configuration and curse/blessing controls.
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract EthereumToArbitrumOnRamp (eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284) {
+    +++ description: Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerProposer (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerCanceller (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerExecutor (eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e) {
+    +++ description: Public call proxy that forwards any caller to ARMProxyOwner, allowing anyone to execute already-scheduled ARMProxyOwner operations after the timelock delay.
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerBypasser (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract PriceRegistry (eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: PriceRegistry used by the OnRamp and CommitStore to price fees, tokens, and gas for this route.
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
+```diff
+    contract ArbitrumToEthereumCommitStore (eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: Arbitrum-to-Ethereum CommitStore. Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerCanceller (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract GhoCcipSteward (eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39) {
+    +++ description: Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.
+      deployerAddress:
++        "eth:0x26D595DdDbAd81Bf976eF6f24686a12A800b141F"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerGnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerProposer (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract ARMProxyOwnerProposer2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"
+    }
+```
+
+```diff
+    contract RMNRemote (eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20) {
+    +++ description: RMNRemote contract behind the ARM proxy. It exposes RMN curse state and RMN 1.6 report verification. For pre-1.6 isBlessed() checks, it relays to the legacy RMN contract supplied in the constructor.
+      deployerAddress:
++        "eth:0x062f05CD6c835677B05a8658A351969476861316"
+    }
+```
+
+```diff
+    contract ArbitrumToEthereumOffRamp (eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) {
+    +++ description: Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.
+      deployerAddress:
++        "eth:0x5c19826E72A40cf73681f757D6bf90f5cDA89414"
+    }
+```
+
 Generated with discovered.json: 0x848d15c3a02a7d31754eb3c8d95f747a94237469
 
 # Diff at Tue, 28 Apr 2026 14:58:00 GMT:

@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,10 +11,6 @@ export const penchain: ScalingProject = agglayer({
   addedAt: UnixTime(1740706975),
   additionalPurposes: ['Gaming'],
   additionalBadges: [BADGES.RaaS.Zeeve],
-  reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
-  ],
   display: {
     name: 'Pentagon Chain',
     slug: 'penchain',

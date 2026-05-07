@@ -12,6 +12,7 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "eth:0x5873421BcC7086fb0072e7fca29ae9fa9bA75dE6",
       "sinceTimestamp": 1529686012,
       "sinceBlock": 5835251,
       "values": {

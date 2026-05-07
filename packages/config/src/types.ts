@@ -1265,6 +1265,12 @@ export interface InteropConfig {
   /** If configured avg. duration can be split into custom labeled groups.
    The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
+  /** Contracts displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  contracts?: ProjectContracts
+  /** Permissions displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  permissions?: Record<string, ProjectPermissions>
 }
 
 export type InteropPlugin = {
