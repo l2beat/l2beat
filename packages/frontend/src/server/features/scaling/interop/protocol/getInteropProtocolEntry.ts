@@ -47,19 +47,6 @@ export async function getInteropProtocolEntry(
   data: InteropProtocolDashboardData,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
-  const [
-    contractUtils,
-    projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
-    tvsStats,
-  ] = await Promise.all([
-    getContractUtils(),
-    getProjectsChangeReport(),
-    ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ select: ['contracts'] }),
-    get7dTvsBreakdown({ type: 'layer2' }),
-  ])
 
   const header: InteropProtocolEntry['header'] = {
     description: project.interopConfig.description,
@@ -129,49 +116,65 @@ export async function getInteropProtocolEntry(
     })
   }
 
-  const permissionsSection = getPermissionsSection(
-    {
-      id: project.id,
-      isUnderReview,
-      permissions: project.interopConfig.permissions,
-    },
-    contractUtils,
-    projectsChangeReport,
-  )
-  if (permissionsSection) {
-    sections.push({
-      type: 'PermissionsSection',
-      props: {
-        ...permissionsSection,
-        id: 'permissions',
-        title: 'Permissions',
-      },
-    })
-  }
+  if (project.interopConfig.permissions || project.interopConfig.contracts) {
+    const [
+      contractUtils,
+      projectsChangeReport,
+      zkCatalogProjects,
+      allProjectsWithContracts,
+      tvsStats,
+    ] = await Promise.all([
+      getContractUtils(),
+      getProjectsChangeReport(),
+      ps.getProjects({ select: ['zkCatalogInfo'] }),
+      ps.getProjects({ select: ['contracts'] }),
+      get7dTvsBreakdown({ type: 'layer2' }),
+    ])
 
-  const contractsSection = getContractsSection(
-    {
-      id: project.id,
-      slug: project.slug,
-      isUnderReview,
-      isVerified: true,
-      contracts: project.interopConfig.contracts,
-    },
-    contractUtils,
-    projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
-    tvsStats,
-  )
-  if (contractsSection) {
-    sections.push({
-      type: 'ContractsSection',
-      props: {
-        ...contractsSection,
-        id: 'contracts',
-        title: 'Smart contracts',
+    const permissionsSection = getPermissionsSection(
+      {
+        id: project.id,
+        isUnderReview,
+        permissions: project.interopConfig.permissions,
       },
-    })
+      contractUtils,
+      projectsChangeReport,
+    )
+    if (permissionsSection) {
+      sections.push({
+        type: 'PermissionsSection',
+        props: {
+          ...permissionsSection,
+          id: 'permissions',
+          title: 'Permissions',
+        },
+      })
+    }
+
+    const contractsSection = getContractsSection(
+      {
+        id: project.id,
+        slug: project.slug,
+        isUnderReview,
+        isVerified: true,
+        contracts: project.interopConfig.contracts,
+      },
+      contractUtils,
+      projectsChangeReport,
+      zkCatalogProjects,
+      allProjectsWithContracts,
+      tvsStats,
+    )
+    if (contractsSection) {
+      sections.push({
+        type: 'ContractsSection',
+        props: {
+          ...contractsSection,
+          id: 'contracts',
+          title: 'Smart contracts',
+        },
+      })
+    }
   }
 
   return {
