@@ -919,6 +919,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: UnixTime(1636979180),
+          untilTimestamp: UnixTime(1710352043), // last call: https://etherscan.io/tx/0xd7cfa525566850a190eec7937da2f8e43c8e87873747e5a41c74adb404210472
         },
       },
       {
