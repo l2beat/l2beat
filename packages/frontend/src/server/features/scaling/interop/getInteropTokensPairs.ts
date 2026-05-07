@@ -1,4 +1,4 @@
-import { assert, unique } from '@l2beat/shared-pure'
+import { assert, InMemoryCache, unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -6,6 +6,8 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
 import type {
   CommonInteropData,
+  InteropTokensPairsResponse,
+  InteropTopItemsInfiniteParams,
   InteropTopItemsParams,
   TokenFlowData,
   TokensPairData,
@@ -23,17 +25,58 @@ import {
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
+import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
   protocols: Map<string, number>
 }
 
-export async function getInteropTokensPairs({
+const PAGE_SIZE = 100
+const interopTokensPairsCache = new InMemoryCache({})
+
+export async function getInteropTokensPairsInfinite({
+  cursor,
+  limit = PAGE_SIZE,
+  sort,
+  ...params
+}: InteropTopItemsInfiniteParams): Promise<InteropTokensPairsResponse> {
+  const pairs = sortInteropTopItems(
+    await getCachedInteropTokensPairs(params),
+    sort,
+  )
+  const startIndex = cursor ?? 0
+  const items = pairs.slice(startIndex, startIndex + limit)
+  const nextCursor =
+    startIndex + limit < pairs.length ? startIndex + limit : undefined
+
+  return { items, nextCursor }
+}
+
+async function getCachedInteropTokensPairs(params: InteropTopItemsParams) {
+  return await interopTokensPairsCache.get(
+    {
+      key: [
+        'interop-token-pairs',
+        params.id?.toString() ?? 'all',
+        params.type ?? 'all',
+        [...params.from].sort().join(','),
+        [...params.to].sort().join(','),
+        [...(params.protocolIds ?? [])].sort().join(','),
+      ],
+      ttl: 60 * 10,
+      staleWhileRevalidate: 60 * 15,
+    },
+    () => getInteropTokensPairsData(params),
+  )
+}
+
+async function getInteropTokensPairsData({
   id,
   from,
   to,
   type,
+  protocolIds,
 }: InteropTopItemsParams): Promise<TokensPairData[]> {
   const db = getDb()
 
@@ -49,14 +92,19 @@ export async function getInteropTokensPairs({
   if (!snapshotTimestamp) {
     return []
   }
+  if (protocolIds?.length === 0) {
+    return []
+  }
 
-  const pairs = await db.aggregatedInteropTokensPair.getByChainsIdAndTimestamp(
-    snapshotTimestamp,
-    from,
-    to,
-    id,
-    type,
-  )
+  const pairs = (
+    await db.aggregatedInteropTokensPair.getByChainsIdAndTimestamp(
+      snapshotTimestamp,
+      from,
+      to,
+      id,
+      type,
+    )
+  ).filter((pair) => !protocolIds || protocolIds.includes(pair.id))
 
   const abstractTokenIds = unique(
     pairs
