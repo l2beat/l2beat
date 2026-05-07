@@ -1,49 +1,67 @@
 {
   "version": "1.0",
-  "lastModified": "2026-05-06T16:24:38.691Z",
+  "lastModified": "2026-05-07T12:57:41.597Z",
   "contracts": {
     "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1": {
       "functions": [
         {
           "functionName": "changeAdmin",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.259Z",
+          "timestamp": "2026-05-07T10:55:50.361Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.259Z"
+            "date": "2026-05-07T10:55:50.361Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.361Z"
           }
         },
         {
           "functionName": "upgradeTo",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.261Z",
+          "timestamp": "2026-05-07T10:55:50.362Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.261Z"
+            "date": "2026-05-07T10:55:50.362Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.362Z"
           }
         },
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.262Z",
+          "timestamp": "2026-05-07T10:55:50.363Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.262Z"
+            "date": "2026-05-07T10:55:50.363Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.363Z"
           }
         }
       ]
@@ -53,295 +71,564 @@
         {
           "functionName": "pause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.pauser"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.263Z",
+          "timestamp": "2026-05-07T10:55:50.365Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.263Z"
+            "date": "2026-05-07T10:55:50.365Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.365Z"
           }
         },
         {
           "functionName": "unpause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Restores normal token operations. No fund extraction path — calling unpause cannot drain or redirect user balances.",
           "ownerDefinitions": [
             {
               "path": "$self.pauser"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.264Z",
+          "timestamp": "2026-05-07T10:55:50.329Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.264Z"
+            "date": "2026-05-07T10:55:50.329Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.329Z"
           }
         },
         {
           "functionName": "updatePauser",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.264Z",
+          "timestamp": "2026-05-07T10:55:50.366Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.264Z"
-          }
-        },
-        {
-          "functionName": "blacklist",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.blacklister"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.265Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.366Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.265Z"
-          }
-        },
-        {
-          "functionName": "unBlacklist",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.blacklister"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.266Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.266Z"
+            "date": "2026-05-07T10:55:50.366Z"
           }
         },
         {
           "functionName": "updateBlacklister",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.268Z",
+          "timestamp": "2026-05-07T10:55:50.367Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.268Z"
+            "date": "2026-05-07T10:55:50.367Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.367Z"
           }
         },
         {
           "functionName": "updateMasterMinter",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.269Z",
+          "timestamp": "2026-05-07T10:55:50.368Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.269Z"
+            "date": "2026-05-07T10:55:50.368Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.368Z"
           }
         },
         {
           "functionName": "transferOwnership",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.269Z",
+          "timestamp": "2026-05-07T10:55:50.369Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.269Z"
+            "date": "2026-05-07T10:55:50.369Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.369Z"
           }
         },
         {
           "functionName": "updateRescuer",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.270Z",
+          "timestamp": "2026-05-07T10:55:50.370Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.270Z"
-          }
-        },
-        {
-          "functionName": "mint",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.minters"
-            }
-          ],
-          "timestamp": "2026-05-06T15:21:09.087Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.370Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:21:09.087Z"
-          }
-        },
-        {
-          "functionName": "burn",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.minters"
-            }
-          ],
-          "timestamp": "2026-05-06T15:21:09.089Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:21:09.089Z"
-          }
-        },
-        {
-          "functionName": "configureMinter",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.masterMinter"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.274Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.274Z"
-          }
-        },
-        {
-          "functionName": "removeMinter",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.masterMinter"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.275Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.275Z"
-          }
-        },
-        {
-          "functionName": "rescueERC20",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.rescuer"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.276Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.276Z"
+            "date": "2026-05-07T10:55:50.370Z"
           }
         },
         {
           "functionName": "updateOracle",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.277Z",
+          "timestamp": "2026-05-07T10:55:50.370Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.277Z"
-          }
-        },
-        {
-          "functionName": "updateExchangeRate",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.oracle"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.278Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.370Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.278Z"
+            "date": "2026-05-07T10:55:50.370Z"
           }
         },
         {
           "functionName": "updateEthReceiver",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.278Z",
+          "timestamp": "2026-05-07T10:55:50.371Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.278Z"
+            "date": "2026-05-07T10:55:50.371Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.371Z"
           }
         },
         {
           "functionName": "updateOperator",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.279Z",
+          "timestamp": "2026-05-07T10:55:50.372Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.279Z"
+            "date": "2026-05-07T10:55:50.372Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.372Z"
+          }
+        },
+        {
+          "functionName": "blacklist",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.373Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.373Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.373Z"
+          }
+        },
+        {
+          "functionName": "unBlacklist",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Removes a blacklist restriction from an address. Net-positive action; no fund extraction path.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.331Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.331Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.331Z"
+          }
+        },
+        {
+          "functionName": "configureMinter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.374Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.374Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.374Z"
+          }
+        },
+        {
+          "functionName": "removeMinter",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Revokes an account's minting allowance. Reduces attack surface; no path to drain existing user balances.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.333Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.333Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.333Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minters"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.375Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.375Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.375Z"
+          }
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Burns the caller's own wBETH tokens. The operator uses this after fulfilling ETH withdrawals to destroy redeemed tokens. No third-party balances are touched.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.minters"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.336Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.336Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.336Z"
+          }
+        },
+        {
+          "functionName": "rescueERC20",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "The rescuer role is currently the zero address, making this function uncallable in the current state. Even if enabled via updateRescuer, the contract guards against sweeping wBETH itself — only accidentally-sent third-party tokens can be recovered.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.rescuer"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.338Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.338Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.338Z"
+          }
+        },
+        {
+          "functionName": "updateExchangeRate",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.oracle"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "rate-limited-update",
+              "description": "Rate updates are bounded per caller by ExchangeRateUpdater's allowance system. Each configured caller has a maxAllowances ceiling replenished at a fixed interval; a single updateExchangeRate call can only move the rate by the caller's current remaining allowance. Sustained large-scale manipulation requires holding caller access across many replenishment intervals."
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.376Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.376Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.376Z"
           }
         },
         {
           "functionName": "supplyEth",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Receives ETH from an external sender to back the wBETH token supply. Net-positive for the protocol reserve; no extraction path.",
           "ownerDefinitions": [
             {
               "path": "$self.operator"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.282Z",
+          "timestamp": "2026-05-07T10:55:50.340Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.282Z"
+            "date": "2026-05-07T10:55:50.340Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.340Z"
           }
         },
         {
           "functionName": "moveToStakingAddress",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Moves ETH from the token contract to the Binance staking address. Critical because the staking address is an admin-configurable parameter: a compromised operator combined with a redirected staking address can drain ETH momentarily held in the token contract between supplyEth and stake cycles.",
           "ownerDefinitions": [
             {
               "path": "$self.operator"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.283Z",
+          "timestamp": "2026-05-07T10:55:50.343Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.283Z"
+            "date": "2026-05-07T10:55:50.343Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.343Z"
           }
         },
         {
           "functionName": "moveToUnwrapAddress",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "description": "Moves ETH from the token contract into UnwrapTokenV1ETH to fund the withdrawal queue. Critical because the destination (unwrapAddress parameter) is admin-configurable; a redirected address could drain ETH in transit.",
           "ownerDefinitions": [
             {
               "path": "$self.operator"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.284Z",
+          "timestamp": "2026-05-07T10:55:50.345Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.284Z"
+            "date": "2026-05-07T10:55:50.345Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.345Z"
+          }
+        }
+      ]
+    },
+    "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06": {
+      "functions": [
+        {
+          "functionName": "configureCaller",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.377Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.377Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.377Z"
+          }
+        },
+        {
+          "functionName": "removeCaller",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Revokes a caller's permission to update the exchange rate. Reduces attack surface; no fund extraction path.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.347Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.347Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.347Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.378Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.378Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.378Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.379Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.379Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.379Z"
+          }
+        },
+        {
+          "functionName": "updateExchangeRate",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.callers"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "rate-limited-update",
+              "description": "Rate updates are bounded per caller by ExchangeRateUpdater's allowance system. Each configured caller has a maxAllowances ceiling replenished at a fixed interval; a single updateExchangeRate call can only move the rate by the caller's current remaining allowance. Sustained large-scale manipulation requires holding caller access across many replenishment intervals."
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.380Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.380Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.380Z"
+          }
+        },
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "description": "One-shot initializer guarded by the !initialized check; can no longer be called now that the contract is initialized.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-05-07T12:57:41.597Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T12:57:41.597Z"
           }
         }
       ]
@@ -351,43 +638,61 @@
         {
           "functionName": "changeAdmin",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.290Z",
+          "timestamp": "2026-05-07T10:55:50.380Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.290Z"
+            "date": "2026-05-07T10:55:50.380Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.380Z"
           }
         },
         {
           "functionName": "upgradeTo",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.291Z",
+          "timestamp": "2026-05-07T10:55:50.381Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.291Z"
+            "date": "2026-05-07T10:55:50.381Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.381Z"
           }
         },
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.292Z",
+          "timestamp": "2026-05-07T10:55:50.382Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.292Z"
+            "date": "2026-05-07T10:55:50.382Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.382Z"
           }
         }
       ]
@@ -397,313 +702,361 @@
         {
           "functionName": "pause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.pauser"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.292Z",
+          "timestamp": "2026-05-07T10:55:50.383Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.292Z"
+            "date": "2026-05-07T10:55:50.383Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.383Z"
           }
         },
         {
           "functionName": "unpause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Restores normal withdrawal queue operations. No fund extraction path.",
           "ownerDefinitions": [
             {
               "path": "$self.pauser"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.293Z",
+          "timestamp": "2026-05-07T10:55:50.349Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.293Z"
+            "date": "2026-05-07T10:55:50.349Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.349Z"
           }
         },
         {
           "functionName": "updatePauser",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.294Z",
+          "timestamp": "2026-05-07T10:55:50.385Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.294Z"
+            "date": "2026-05-07T10:55:50.385Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.385Z"
           }
         },
         {
-          "functionName": "blacklist",
+          "functionName": "transferOwnership",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
-              "path": "$self.blacklister"
+              "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.294Z",
+          "timestamp": "2026-05-07T10:55:50.385Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.294Z"
-          }
-        },
-        {
-          "functionName": "unBlacklist",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.blacklister"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.295Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.385Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.295Z"
+            "date": "2026-05-07T10:55:50.385Z"
           }
         },
         {
           "functionName": "updateBlacklister",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.296Z",
+          "timestamp": "2026-05-07T10:55:50.387Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.296Z"
-          }
-        },
-        {
-          "functionName": "transferOwnership",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.296Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.387Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.296Z"
-          }
-        },
-        {
-          "functionName": "allocate",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.operatorAddress"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.298Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.298Z"
+            "date": "2026-05-07T10:55:50.387Z"
           }
         },
         {
           "functionName": "setNewOperator",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.299Z",
+          "timestamp": "2026-05-07T10:55:50.388Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.299Z"
+            "date": "2026-05-07T10:55:50.388Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.388Z"
           }
         },
         {
           "functionName": "setRechargeAddress",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.300Z",
+          "timestamp": "2026-05-07T10:55:50.388Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.300Z"
+            "date": "2026-05-07T10:55:50.388Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.388Z"
           }
         },
         {
           "functionName": "setEthBackAddress",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.301Z",
+          "timestamp": "2026-05-07T10:55:50.389Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.301Z"
+            "date": "2026-05-07T10:55:50.389Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.389Z"
           }
         },
         {
-          "functionName": "setLockTime",
+          "functionName": "blacklist",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
-              "path": "$self.operatorAddress"
+              "path": "$self.blacklister"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.301Z",
+          "timestamp": "2026-05-07T10:55:50.390Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.301Z"
+            "date": "2026-05-07T10:55:50.390Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.390Z"
           }
         },
         {
-          "functionName": "setNewEthStaked",
+          "functionName": "unBlacklist",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Removes a blacklist restriction. Net-positive; no fund extraction path.",
           "ownerDefinitions": [
             {
-              "path": "$self.operatorAddress"
+              "path": "$self.blacklister"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.302Z",
+          "timestamp": "2026-05-07T10:55:50.350Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.302Z"
+            "date": "2026-05-07T10:55:50.350Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.350Z"
           }
         },
         {
-          "functionName": "rechargeFromRechargeAddress",
+          "functionName": "requestWithdraw",
           "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.rechargeAddress"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.302Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.302Z"
-          }
-        },
-        {
-          "functionName": "moveToBackAddress",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.operatorAddress"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.303Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T15:03:09.303Z"
-          }
-        },
-        {
-          "functionName": "moveFromWrapContract",
-          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Adds a pending withdrawal entry to the queue. ETH stays in UnwrapTokenV1ETH until allocate() and claimWithdraw() are called — no funds leave the contract.",
           "ownerDefinitions": [
             {
               "path": "$self.WBETH_TOKEN_ADDRESS"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.304Z",
+          "timestamp": "2026-05-07T10:55:50.352Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.304Z"
-          }
-        }
-      ]
-    },
-    "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06": {
-      "functions": [
-        {
-          "functionName": "initialize",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2026-05-06T15:03:09.306Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.352Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.306Z"
+            "date": "2026-05-07T10:55:50.352Z"
           }
         },
         {
-          "functionName": "updateExchangeRate",
+          "functionName": "moveFromWrapContract",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Called exclusively by WrapTokenV3ETH.moveToUnwrapAddress to transfer ETH into this withdrawal queue. Protocol-internal bridge; no external actor can trigger arbitrary transfers outside the protocol's own call chain.",
           "ownerDefinitions": [
             {
-              "path": "$self.callers"
+              "path": "$self.WBETH_TOKEN_ADDRESS"
             }
           ],
-          "timestamp": "2026-05-06T15:21:09.090Z",
+          "timestamp": "2026-05-07T10:55:50.353Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:21:09.090Z"
+            "date": "2026-05-07T10:55:50.353Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.353Z"
           }
         },
         {
-          "functionName": "configureCaller",
+          "functionName": "allocate",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Marks queued withdrawal requests as ready for claiming by committing available ETH against them. Operator action that fulfills obligations; no extraction path — ETH moves from 'uncommitted' to 'claimable by requestors'.",
           "ownerDefinitions": [
             {
-              "path": "$self.owner"
+              "path": "$self.operatorAddress"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.307Z",
+          "timestamp": "2026-05-07T10:55:50.354Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.307Z"
+            "date": "2026-05-07T10:55:50.354Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.354Z"
           }
         },
         {
-          "functionName": "removeCaller",
+          "functionName": "setLockTime",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
-              "path": "$self.owner"
+              "path": "$self.operatorAddress"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.307Z",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Only a floor constraint (MIN_LOCK_TIME = 172 800 s, 2 days) is enforced. No upper bound exists in the contract — setting lockTime to uint256_max permanently prevents claimWithdraw from succeeding for every pending request, locking all queued ETH indefinitely.",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "172800"
+                },
+                "unit": "s"
+              }
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.391Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.307Z"
+            "date": "2026-05-07T10:55:50.391Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.391Z"
           }
         },
         {
-          "functionName": "transferOwnership",
+          "functionName": "setNewEthStaked",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Updates the accounting record of ETH staked with Binance validators. Does not move any ETH; effect is limited to the reported staking-total figure.",
           "ownerDefinitions": [
             {
-              "path": "$self.owner"
+              "path": "$self.operatorAddress"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.308Z",
+          "timestamp": "2026-05-07T10:55:50.355Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.308Z"
+            "date": "2026-05-07T10:55:50.355Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.355Z"
           }
         },
         {
-          "functionName": "renounceOwnership",
+          "functionName": "moveToBackAddress",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
-              "path": "$self.owner"
+              "path": "$self.operatorAddress"
             }
           ],
-          "timestamp": "2026-05-06T15:03:09.309Z",
+          "timestamp": "2026-05-07T10:55:50.391Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T15:03:09.309Z"
+            "date": "2026-05-07T10:55:50.391Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.391Z"
+          }
+        },
+        {
+          "functionName": "rechargeFromRechargeAddress",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Pulls ETH from the configured recharge address into the withdrawal queue. Net-positive action — adds ETH supply to cover pending claims.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.rechargeAddress"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.356Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.356Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.356Z"
           }
         }
       ]
@@ -713,43 +1066,61 @@
         {
           "functionName": "changeAdmin",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.677Z",
+          "timestamp": "2026-05-07T10:55:50.392Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.677Z"
+            "date": "2026-05-07T10:55:50.392Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.392Z"
           }
         },
         {
           "functionName": "upgradeTo",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.680Z",
+          "timestamp": "2026-05-07T10:55:50.393Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.680Z"
+            "date": "2026-05-07T10:55:50.393Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.393Z"
           }
         },
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.682Z",
+          "timestamp": "2026-05-07T10:55:50.394Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.682Z"
+            "date": "2026-05-07T10:55:50.394Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.394Z"
           }
         }
       ]
@@ -759,147 +1130,227 @@
         {
           "functionName": "pause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Suspends the OperatorWallet's ability to call external contracts (mint, transfer, etc.). Existing user wBETH balances and the withdrawal queue are unaffected — no user can be blocked from redeeming; only new operational flows are halted.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.684Z",
+          "timestamp": "2026-05-07T10:55:50.357Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.684Z"
+            "date": "2026-05-07T10:55:50.357Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.357Z"
           }
         },
         {
           "functionName": "unpause",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Restores OperatorWallet operation. No fund extraction path.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.685Z",
+          "timestamp": "2026-05-07T10:55:50.357Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.685Z"
+            "date": "2026-05-07T10:55:50.357Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.357Z"
           }
         },
         {
           "functionName": "transferOwnership",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.685Z",
+          "timestamp": "2026-05-07T10:55:50.395Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.685Z"
+            "date": "2026-05-07T10:55:50.395Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.395Z"
           }
         },
         {
           "functionName": "addHotWallet",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.686Z",
+          "timestamp": "2026-05-07T10:55:50.396Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.686Z"
+            "date": "2026-05-07T10:55:50.396Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.396Z"
           }
         },
         {
           "functionName": "removeHotWallet",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Revokes a hot wallet's authorization. Reduces attack surface; no fund extraction path.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.687Z",
+          "timestamp": "2026-05-07T10:55:50.358Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.687Z"
+            "date": "2026-05-07T10:55:50.358Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.358Z"
           }
         },
         {
           "functionName": "changeOperator",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.688Z",
+          "timestamp": "2026-05-07T10:55:50.397Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.688Z"
-          }
-        },
-        {
-          "functionName": "mint",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.operator"
-            },
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2026-05-06T16:24:38.688Z",
-          "lastChangedBy": {
+            "date": "2026-05-07T10:55:50.397Z"
+          },
+          "completedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.688Z"
-          }
-        },
-        {
-          "functionName": "transfer",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.operator"
-            },
-            {
-              "path": "$self.owner"
-            }
-          ],
-          "timestamp": "2026-05-06T16:24:38.689Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-05-06T16:24:38.689Z"
+            "date": "2026-05-07T10:55:50.397Z"
           }
         },
         {
           "functionName": "execTransaction",
           "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.690Z",
+          "timestamp": "2026-05-07T10:55:50.398Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.690Z"
+            "date": "2026-05-07T10:55:50.398Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.398Z"
           }
         },
         {
           "functionName": "withdraw",
           "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sends ETH or tokens held by the OperatorWallet itself back to the operator address. The OperatorWallet custodies only its own operational float (gas ETH, token allowances), not user funds — this cannot reach user deposits in WrapTokenV3ETH or UnwrapTokenV1ETH.",
           "ownerDefinitions": [
             {
               "path": "$self.owner"
             }
           ],
-          "timestamp": "2026-05-06T16:24:38.691Z",
+          "timestamp": "2026-05-07T10:55:50.359Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-05-06T16:24:38.691Z"
+            "date": "2026-05-07T10:55:50.359Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.359Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            },
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.399Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.399Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.399Z"
+          }
+        },
+        {
+          "functionName": "transfer",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "no-impact",
+          "description": "Sends tokens held by the OperatorWallet's own balance. Same containment as withdraw — only the OperatorWallet's operational holdings, not user funds.",
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            },
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-05-07T10:55:50.360Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.360Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.360Z"
+          }
+        },
+        {
+          "functionName": "acceptOwnership",
+          "isPermissioned": true,
+          "checked": true,
+          "score": "critical",
+          "timestamp": "2026-05-07T10:55:50.399Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.399Z"
+          },
+          "completedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T10:55:50.399Z"
           }
         }
       ]

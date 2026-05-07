@@ -1,9 +1,9 @@
 {
-  "framework": "Centralized (Binance)",
+  "framework": "None",
   "voteExecution": "offchain",
-  "votingUnit": "None — single-key Binance control",
-  "proposalRequirements": "No on-chain proposal mechanism. All admin actions are Binance corporate decisions, signed by Binance-held EOAs that hold owner, pauser, blacklister, masterMinter, operator, rescuer, and proxy-admin roles on the wBETH/Unwrap/ExchangeRateUpdater/OperatorWallet contracts.",
-  "votingProcess": "No on-chain voting. Binance executes via single-key EOAs holding owner, pauser, masterMinter, operator, and proxy admin roles.",
+  "votingUnit": "None",
+  "proposalRequirements": "No on-chain governance. All privileged roles are Binance-controlled EOAs with no timelock or multisig.",
+  "votingProcess": "All protocol changes executed directly by Binance-controlled EOAs. No voting, no timelock, no DAO.",
   "proposalPeriod": { "kind": "none" },
   "executionDelay": { "kind": "none" }
 }

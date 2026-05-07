@@ -1,64 +1,67 @@
 {
   "version": "1.0",
-  "lastModified": "2026-05-06T20:45:00Z",
-  "verified": false,
+  "lastModified": "2026-05-07T11:01:59.473Z",
   "protocolSlug": "wbeth",
-  "protocolName": "Binance Staked ETH",
+  "protocolName": "Wrapped Binance Beacon ETH",
   "tokenName": "wBETH",
   "chain": "Ethereum",
   "projectType": "liquid-staking",
-  "description": "Binance Staked ETH (wBETH) is a value-accruing liquid staking receipt token issued by Binance, currently sized at {{wbethMarketCap}} circulating. Users supply ETH to the wBETH contract and receive wBETH 1:1; the redemption rate then drifts upward as Binance applies an off-chain `updateExchangeRate` from a single dedicated EOA. The protocol has no on-chain governance: every admin role (proxy admin, owner/pauser/blacklister/masterMinter, operator, rescuer, recharge address) is held by a Binance-controlled EOA, and the actual mint authority sits in a separate Binance-deployed `OperatorWallet` proxy that is itself controlled by another set of Binance EOAs. wBETH has no external dependencies (no oracle, no other protocol) — the exchange rate is set by Binance internally and pushed on-chain.",
+  "description": "wBETH (Wrapped Binance Beacon ETH) is a liquid staking token issued by Binance, representing ETH staked through Binance's validator infrastructure. Users deposit ETH via the Binance platform and receive wBETH at an accruing exchange rate; on-chain, the contracts manage token issuance (WrapTokenV3ETH), the pending-withdrawal queue (UnwrapTokenV1ETH), and exchange rate updates (ExchangeRateUpdater). The backing ETH is held off-chain with Binance validators — only the withdrawal queue holds on-chain ETH ({{withdrawalQueueBalance}}), while the token itself has a market capitalization of {{wbethTokenValue}}. All contracts are upgradeable ZeppelinOS proxies controlled exclusively by Binance EOAs; there is no timelock, multisig, or on-chain governance.",
   "admins": {
     "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853": {
-      "name": "wBETH/Unwrap Proxy Admin (EOA)",
-      "description": "Single Binance EOA that is the proxy admin (`$admin`) of both the wBETH wrap proxy and the Unwrap proxy. Can call `upgradeTo`, `upgradeToAndCall`, and `changeAdmin` on either proxy at will, replacing the implementation logic of the protocol's two user-facing contracts without delay or governance review."
+      "name": "Proxy Admin (EOA)",
+      "description": "EOA holding the ZeppelinOS proxy admin role for both WrapTokenV3ETH and UnwrapTokenV1ETH. Can replace the proxy admin and upgrade both contract implementations, with the ability to alter all protocol logic or redirect user funds. Controls {{proxyAdminDirectCapital}} in direct capital exposure."
     },
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {
-      "name": "wBETH Protocol Owner (EOA)",
-      "description": "Single Binance EOA that simultaneously holds `owner`, `pauser`, `blacklister`, and `masterMinter` on WrapTokenV3ETH and `owner`/`pauser`/`blacklister` on UnwrapTokenV1ETH, plus `owner` on ExchangeRateUpdater. This one key can pause and unpause, blacklist or unblacklist any user, configure or remove minters, configure or remove rate-update callers, and rotate every other admin role on every contract."
+      "name": "Protocol Owner (EOA)",
+      "description": "Omnibus Binance EOA holding the owner, pauser, masterMinter, and blacklister roles across WrapTokenV3ETH, UnwrapTokenV1ETH, and ExchangeRateUpdater. Can pause all token transfers, configure minting allowances, blacklist any address, replace the exchange rate oracle and operator, and transfer ownership of all three contracts. Controls {{protocolOwnerDirectCapital}} in direct capital exposure."
     },
     "eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6": {
       "name": "OperatorWallet (Minter)",
-      "description": "Binance-deployed upgradeable contract that is the sole entry in wBETH's `minters` set, authorised to call `mint(uint256)` and `burn(uint256)` on wBETH. Its own admin and owner are a separate pair of Binance EOAs (see below); the result is a two-hop minting trust chain that ultimately resolves to single-key control."
+      "description": "Upgradeable proxy contract holding the sole minting authorization for WrapTokenV3ETH. Executes all on-chain wBETH issuance and burning; its behavior is determined by the OperatorWallet implementation, which is separately upgradeable by a distinct proxy admin EOA."
     },
     "eth:0x0000000000000000000000000000000000000000": {
-      "name": "Zero Address (Renounced)",
-      "description": "The `rescuer` role on wBETH, which would otherwise let its holder sweep stuck ERC-20s out of the contract via `rescueERC20`, is set to the zero address. This permission is effectively renounced — no party can invoke `rescueERC20` until the owner reassigns the role."
+      "name": "Zero Address (Revoked)",
+      "description": "The rescuer role on WrapTokenV3ETH is set to the zero address, disabling the rescueERC20 function. No tokens can be rescued from the token contract in the current state."
     },
     "eth:0x81720695e43A39C52557Ce6386feB3FAAC215f06": {
       "name": "ExchangeRateUpdater",
-      "description": "Internal protocol contract registered as the `oracle` on wBETH; its only privilege is calling `updateExchangeRate` on wBETH. The contract itself is owner-gated via the wBETH Protocol Owner EOA above and rate-limited per authorised caller. Listed as an admin only because it sits between the operator EOA and the wBETH state, not because it is a human controller."
+      "description": "Immutable contract that mediates all exchange rate updates to WrapTokenV3ETH. Configured callers may update the wBETH:ETH rate subject to a per-caller allowance cap and a replenishment interval, limiting the magnitude of any single update."
     },
     "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5": {
-      "name": "Protocol Operator (EOA)",
-      "description": "Single Binance EOA registered as `operator` on both wBETH and the Unwrap contract, and as the only authorised entry in ExchangeRateUpdater's `callers` set. Controls all daily fund movements (`supplyEth`, `moveToStakingAddress`, `moveToUnwrapAddress`, `moveToBackAddress`, `allocate`), the `lockTime`/`ethStaked` operational parameters on Unwrap, and the rate-limited `updateExchangeRate` call that adjusts wBETH's redemption ratio against ETH."
-    },
-    "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1": {
-      "name": "Unwrap Recharge Address (EOA)",
-      "description": "Single Binance EOA registered as `rechargeAddress` on UnwrapTokenV1ETH. Its only on-chain authority is calling `rechargeFromRechargeAddress` to top up the contract's ETH float so it can satisfy queued unwrap claims."
+      "name": "Operator (EOA)",
+      "description": "Binance operational EOA serving as operator on WrapTokenV3ETH, operatorAddress on UnwrapTokenV1ETH, and the sole configured caller on ExchangeRateUpdater. Controls ETH flows between contracts (moveToStakingAddress, moveToUnwrapAddress), manages the withdrawal queue (setLockTime, moveToBackAddress), and submits exchange rate updates. Controls {{operatorDirectCapital}} in direct capital exposure."
     },
     "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1": {
-      "name": "WrapTokenV3ETH (Self)",
-      "description": "The wBETH contract itself is the only authorised caller of `moveFromWrapContract` on UnwrapTokenV1ETH. This is a contract-to-contract call gate (the `onlyWrapTokenAddress` modifier), not a human admin — it cannot be invoked from outside the wBETH wrap flow."
+      "name": "WrapTokenV3ETH",
+      "description": "Internal call source for UnwrapTokenV1ETH's requestWithdraw and moveFromWrapContract functions. These are protocol-internal bridges invoked only by WrapTokenV3ETH's own logic; no external party can trigger them independently of the token contract."
+    },
+    "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1": {
+      "name": "Recharge Address (EOA)",
+      "description": "EOA configured as the recharge address on UnwrapTokenV1ETH. When the operator calls rechargeFromRechargeAddress, ETH is pulled from this address into the withdrawal queue to cover pending claims."
     },
     "eth:0x7CfE99c15537753682def016D17d4b29A7caB4EE": {
       "name": "OperatorWallet Proxy Admin (EOA)",
-      "description": "Single Binance EOA that is the `$admin` of the OperatorWallet proxy. Can replace the OperatorWallet implementation at any time via `upgradeTo`/`upgradeToAndCall`. A successful upgrade gives the new implementation full control of the wBETH minter (since OperatorWallet is the sole entry in `minters`)."
+      "description": "EOA holding the ZeppelinOS proxy admin role for OperatorWallet. Can upgrade the OperatorWallet implementation, replacing all minting and operational logic of the authorized minter."
     },
     "eth:0xB2F56fc21EFe0f3921FC28adeCacC36A4bFdcAC1": {
       "name": "OperatorWallet Owner (EOA)",
-      "description": "Single Binance EOA that owns the OperatorWallet contract. Can call `mint` and `transfer` (the wBETH-minting and ERC-20-transfer entry points on OperatorWallet), `addHotWallet`/`removeHotWallet`, `changeOperator`, `pause`/`unpause`, `withdraw`, and the unrestricted `execTransaction(target, value, data)` — an arbitrary-call escape hatch with no scope or amount limit."
+      "description": "Owner of the OperatorWallet proxy. Can add and remove hot wallets, change the operator address, pause or unpause the wallet, and transfer ownership of OperatorWallet."
     },
     "eth:0xa42436335a41fA6C82CDe224Ae2B82C025027e5b": {
       "name": "OperatorWallet Operator (EOA)",
-      "description": "Single Binance EOA registered as `operator` on the OperatorWallet contract. Authorised to call `mint(token, recipient, amount)` and `transfer(token, recipient, amount)` on OperatorWallet — i.e. can independently mint wBETH (within the `notHotWallet` recipient guard) without the OperatorWallet Owner's signature."
+      "description": "Active operator within OperatorWallet. Can call mint on WrapTokenV3ETH via OperatorWallet.mint to issue new wBETH, and transfer tokens from the OperatorWallet's own holdings."
     }
   },
   "dependencies": {},
   "funds": {
     "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1": {
       "name": "WrapTokenV3ETH (wBETH)",
-      "description": "The wBETH token contract itself. Circulating supply is {{wbethMarketCap}}, representing every staked ETH and accrued staking rewards held by Binance on users' behalf since the 2023-04-27 launch. The contract also keeps a small operational ETH buffer of {{wbethEthBuffer}} on-chain (used to satisfy instant unwraps before they hit the queued Unwrap flow); the rest of the staked ETH sits in Binance's off-chain validator infrastructure."
+      "description": "The wBETH token contract. Tracks a market capitalization of {{wbethTokenValue}}; the backing ETH is not held on-chain but with Binance validators off-chain."
+    },
+    "eth:0x79973d557CD9dd87eb61E250cc2572c990e20196": {
+      "name": "UnwrapTokenV1ETH (ETH)",
+      "description": "Withdrawal queue contract holding {{withdrawalQueueBalance}} in ETH pending redemption. Users' withdrawal requests are queued here; the operator allocates ETH and claimants call claimWithdraw once the lock period elapses."
     }
   },
   "sections": {
@@ -91,7 +94,12 @@
     }
   },
   "dataKeys": {
-    "wbethMarketCap": "fundsdata.contracts[\"eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1\"].tokenInfo.tokenValue",
-    "wbethEthBuffer": "fundsdata.contracts[\"eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1\"].balances.totalUsdValue"
-  }
+    "wbethTokenValue": "fundsdata.contracts[\"eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1\"].tokenInfo.tokenValue",
+    "withdrawalQueueBalance": "fundsdata.contracts[\"eth:0x79973d557CD9dd87eb61E250cc2572c990e20196\"].balances.totalUsdValue",
+    "proxyAdminDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853\"].totalDirectCapital",
+    "protocolOwnerDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7\"].totalDirectCapital",
+    "operatorDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x2B59215778e99035CF38663454eF1240a7AE70F5\"].totalDirectCapital",
+    "totalCapitalAtRisk": "v2score.inventory.admins.totalCapitalAtRisk"
+  },
+  "verified": false
 }

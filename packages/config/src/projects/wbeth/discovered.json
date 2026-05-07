@@ -1,7 +1,7 @@
 {
   "name": "wbeth",
-  "timestamp": 1778085300,
-  "configHash": "0x0149083f474b00f722e19759027c7d83e42e96e77f73770129cc817851fc63d9",
+  "timestamp": 1778158633,
+  "configHash": "0x46ebd271aa7148b14193959633d2df18e98583c615601e235f0c9a1eb122d59c",
   "entries": [
     {
       "address": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
@@ -39,11 +39,10 @@
       "proxyType": "ZeppelinOS proxy",
       "ignoreInWatchMode": [
         "MAX_LOOP_NUM",
-        "WBETH_TOKEN_ADDRESS",
+        "MIN_LOCK_TIME",
         "availableAllocateAmount",
         "ethStaked",
         "getNeedRechargeEthAmount",
-        "implementation",
         "needEthAmount",
         "nextIndex",
         "startAllocatedEthIndex"
@@ -101,7 +100,6 @@
         "0x98e3bbdacc542e5c3a095b9d74ad28c8ec703afb58eff6f7ead1a92ef1a5dd18"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["tokenContract"],
       "sinceTimestamp": 1681902335,
       "sinceBlock": 17080242,
       "values": {
@@ -130,11 +128,8 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH",
         "_EXCHANGE_RATE_UNIT",
-        "_UNWRAP_ETH_ADDRESS",
         "currency",
         "decimals",
-        "exchangeRate",
-        "implementation",
         "name",
         "symbol",
         "totalSupply",
@@ -168,7 +163,7 @@
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xd37a875f1ef2a63f2649b9d08b634c22faa1921cbcb1de62790e04176d134bab",
         "ethReceiver": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
-        "exchangeRate": "1096934295653000000",
+        "exchangeRate": "1097008996878000000",
         "implementation": "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB",
         "masterMinter": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "minters": ["eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6"],
@@ -182,7 +177,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "wBETH",
-        "totalSupply": "3174794353661280245921922",
+        "totalSupply": "3174794422683461709781384",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -492,6 +487,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 25037217 },
+  "usedBlockNumbers": { "ethereum": 25043304 },
   "permissionsConfigHash": "0x56dcc208fc53dc38aeff2362dddbcae3eb6797d2a2d152fda8b2c784eb0cd3e2"
 }
