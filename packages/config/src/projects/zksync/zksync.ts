@@ -182,9 +182,7 @@ export const zksync: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
-        upgradeDelay2: 0,
-      }),
+      ...RISK_VIEW.EXIT_WINDOW(0, forcedWithdrawalDelay),
       warning: {
         value: `Users have ${formatSeconds(
           upgradeDelay - forcedWithdrawalDelay,
