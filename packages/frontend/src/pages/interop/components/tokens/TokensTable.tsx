@@ -1,8 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import {
-  functionalUpdate,
-  getCoreRowModel,
-} from '@tanstack/react-table'
+import { functionalUpdate, getCoreRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
