@@ -1,4 +1,6 @@
-export function statusRank(status: 'missing' | 'stale' | 'fresh') {
+export type Status = 'missing' | 'stale' | 'fresh'
+
+export function statusRank(status: Status) {
   switch (status) {
     case 'stale':
       return 0

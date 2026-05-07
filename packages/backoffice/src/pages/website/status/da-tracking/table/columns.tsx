@@ -3,17 +3,17 @@ import { Badge } from '~/components/core/Badge'
 import { formatAge } from '~/utils/formatAge'
 import { formatTimestamp } from '~/utils/formatTimestamp'
 import { statusRank } from '~/utils/statusRank'
-import type { TrackedTxsStatusRow } from '../types'
+import type { DaTrackingStatusRow } from '../types'
 
-const columnHelper = createColumnHelper<TrackedTxsStatusRow>()
+const columnHelper = createColumnHelper<DaTrackingStatusRow>()
 
-export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns'] =
+export const daTrackingStatusColumns: TableOptions<DaTrackingStatusRow>['columns'] =
   [
     columnHelper.accessor('status', {
       header: 'Status',
       sortingFn: (rowA, rowB, columnId) =>
-        statusRank(rowA.getValue<TrackedTxsStatusRow['status']>(columnId)) -
-        statusRank(rowB.getValue<TrackedTxsStatusRow['status']>(columnId)),
+        statusRank(rowA.getValue<DaTrackingStatusRow['status']>(columnId)) -
+        statusRank(rowB.getValue<DaTrackingStatusRow['status']>(columnId)),
       cell: ({ getValue }) => {
         const value = getValue()
         const className =
@@ -53,29 +53,29 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
         filter: { kind: 'select' },
       },
     }),
-    columnHelper.accessor('feature', {
-      header: 'Feature',
+    columnHelper.accessor('daLayer', {
+      header: 'DA layer',
       cell: ({ getValue }) => <Badge variant="outline">{getValue()}</Badge>,
       meta: {
-        csvHeader: 'Feature',
+        csvHeader: 'DA layer',
         filter: { kind: 'select' },
       },
     }),
-    columnHelper.accessor('subtype', {
-      header: 'Subtype',
+    columnHelper.accessor('type', {
+      header: 'Type',
       cell: ({ getValue }) => <Badge variant="outline">{getValue()}</Badge>,
       meta: {
-        csvHeader: 'Subtype',
+        csvHeader: 'Type',
         filter: { kind: 'select' },
       },
     }),
-    columnHelper.accessor('formula', {
-      header: 'Formula',
+    columnHelper.accessor('details', {
+      header: 'Details',
       cell: ({ getValue }) => (
         <span className="font-mono text-xs">{getValue()}</span>
       ),
       meta: {
-        csvHeader: 'Formula',
+        csvHeader: 'Details',
         filter: { kind: 'select' },
       },
     }),
@@ -108,17 +108,25 @@ export const trackedTxsStatusColumns: TableOptions<TrackedTxsStatusRow>['columns
         getCsvValue: ({ row }) => formatAge(row.original.ageSeconds),
       },
     }),
-    columnHelper.accessor('sinceTimestamp', {
+    columnHelper.accessor('since', {
       header: 'Since',
-      cell: ({ getValue }) => (
+      cell: ({ row }) => (
         <span className="font-mono text-xs">
-          {formatTimestamp(getValue())} UTC
+          {formatSince(row.original.since, row.original.sinceUnit)}
         </span>
       ),
       meta: {
         csvHeader: 'Since',
         getCsvValue: ({ row }) =>
-          `${formatTimestamp(row.original.sinceTimestamp)} UTC`,
+          formatSince(row.original.since, row.original.sinceUnit),
       },
     }),
   ]
+
+function formatSince(value: number, unit: DaTrackingStatusRow['sinceUnit']) {
+  if (unit === 'timestamp') {
+    return `${formatTimestamp(value)} UTC`
+  }
+
+  return value.toString()
+}
