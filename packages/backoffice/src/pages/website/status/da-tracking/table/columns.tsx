@@ -1,5 +1,10 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { Badge } from '~/components/core/Badge'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/Popover'
 import { formatAge } from '~/utils/formatAge'
 import { formatTimestamp } from '~/utils/formatTimestamp'
 import { statusRank } from '~/utils/statusRank'
@@ -71,9 +76,7 @@ export const daTrackingStatusColumns: TableOptions<DaTrackingStatusRow>['columns
     }),
     columnHelper.accessor('details', {
       header: 'Details',
-      cell: ({ getValue }) => (
-        <span className="font-mono text-xs">{getValue()}</span>
-      ),
+      cell: ({ getValue }) => <DetailsCell value={getValue()} />,
       meta: {
         csvHeader: 'Details',
         filter: { kind: 'select' },
@@ -129,4 +132,23 @@ function formatSince(value: number, unit: DaTrackingStatusRow['sinceUnit']) {
   }
 
   return value.toString()
+}
+
+function DetailsCell({ value }: { value: string }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className="block max-w-[28rem] truncate text-left font-mono text-xs underline-offset-2 hover:underline"
+          title={value}
+        >
+          {value}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-[min(40rem,90vw)]">
+        <p className="break-all font-mono text-xs">{value}</p>
+      </PopoverContent>
+    </Popover>
+  )
 }
