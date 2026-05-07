@@ -208,9 +208,6 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       supertest:
         specifier: ^6.2.3
         version: 6.3.4
@@ -412,9 +409,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -500,9 +494,6 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6216,9 +6207,6 @@ packages:
 
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
-
-  jsonc-parser@3.3.1:
-    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
@@ -13659,8 +13647,6 @@ snapshots:
   json-parse-even-better-errors@2.3.1: {}
 
   json-stringify-safe@5.0.1: {}
-
-  jsonc-parser@3.3.1: {}
 
   jsonfile@4.0.0:
     optionalDependencies:

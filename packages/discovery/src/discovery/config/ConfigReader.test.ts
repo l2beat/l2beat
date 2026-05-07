@@ -37,7 +37,7 @@ describe('resolveImports', () => {
     const reader = new ConfigReader('/base')
     expect(() =>
       reader.resolveImports('/base', ['invalid.jsonc'], new Set()),
-    ).toThrow('Cannot parse file')
+    ).toThrow('Unexpected token')
   })
 
   it('should resolve nested imports', () => {
