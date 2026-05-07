@@ -26,7 +26,10 @@ describe(parseJsonc.name, () => {
       ['control escapes', String.raw`"\b\f\n\r\t"`],
       ['unicode escapes', String.raw`"\u0041\uD834\uDD1E"`],
       ['literal non-ascii string', '"' + String.fromCharCode(0xdc) + '"'],
-      ['literal unicode line separator', '"' + String.fromCharCode(0x2028) + '"'],
+      [
+        'literal unicode line separator',
+        '"' + String.fromCharCode(0x2028) + '"',
+      ],
       ['empty array', '[]'],
       ['deeply nested empty arrays', '[[],[[]]]'],
       ['empty object', '{}'],
