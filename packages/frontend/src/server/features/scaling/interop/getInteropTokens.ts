@@ -1,21 +1,63 @@
-import { unique } from '@l2beat/shared-pure'
+import { InMemoryCache, unique } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
-import type { InteropTopItemsParams, TokenData } from './types'
+import type {
+  InteropTokensResponse,
+  InteropTopItemsInfiniteParams,
+  InteropTopItemsParams,
+  TokenData,
+} from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
+import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 const logger = getLogger().for('getInteropTokens')
+const PAGE_SIZE = 100
+const interopTokensCache = new InMemoryCache({})
 
-export async function getInteropTokens({
+export async function getInteropTokensInfinite({
+  cursor,
+  limit = PAGE_SIZE,
+  sort,
+  ...params
+}: InteropTopItemsInfiniteParams): Promise<InteropTokensResponse> {
+  const tokens = sortInteropTopItems(await getCachedInteropTokens(params), sort)
+  const startIndex = cursor ?? 0
+  const items = tokens.slice(startIndex, startIndex + limit)
+  const nextCursor =
+    startIndex + limit < tokens.length ? startIndex + limit : undefined
+
+  return { items, nextCursor }
+}
+
+async function getCachedInteropTokens(params: InteropTopItemsParams) {
+  return await interopTokensCache.get(
+    {
+      key: [
+        'interop-tokens',
+        params.id?.toString() ?? 'all',
+        params.type ?? 'all',
+        [...params.from].sort().join(','),
+        [...params.to].sort().join(','),
+        [...(params.protocolIds ?? [])].sort().join(','),
+      ],
+      ttl: 60 * 10,
+      staleWhileRevalidate: 60 * 15,
+    },
+    () => getInteropTokensData(params),
+  )
+}
+
+async function getInteropTokensData({
   id,
   from,
   to,
   type,
+  protocolIds,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   const [interopProject, interopProjects] = await Promise.all([
     id ? ps.getProject({ id, select: ['interopConfig'] }) : undefined,
@@ -28,7 +70,7 @@ export async function getInteropTokens({
   const { records } = await getLatestAggregatedInteropTransferWithTokens(
     { from, to },
     type,
-    id ? [id] : undefined,
+    id ? [id] : protocolIds,
   )
 
   const counts = {

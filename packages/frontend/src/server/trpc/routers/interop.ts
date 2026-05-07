@@ -1,13 +1,13 @@
 import { getInteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlows'
 import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
-import { getInteropTokens } from '~/server/features/scaling/interop/getInteropTokens'
-import { getInteropTokensPairs } from '~/server/features/scaling/interop/getInteropTokensPairs'
+import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
+import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop/getInteropTokensPairs'
 import {
   InteropDashboardParams,
   InteropFlowsParams,
   InteropProtocolTransfersParams,
-  InteropTopItemsParams,
+  InteropTopItemsInfiniteParams,
 } from '~/server/features/scaling/interop/types'
 import { procedure, router } from '../trpc'
 
@@ -16,11 +16,11 @@ export const interopRouter = router({
     .input(InteropDashboardParams)
     .query(({ input }) => getInteropDashboardData(input)),
   tokens: procedure
-    .input(InteropTopItemsParams)
-    .query(({ input }) => getInteropTokens(input)),
+    .input(InteropTopItemsInfiniteParams)
+    .query(({ input }) => getInteropTokensInfinite(input)),
   tokensPairs: procedure
-    .input(InteropTopItemsParams)
-    .query(({ input }) => getInteropTokensPairs(input)),
+    .input(InteropTopItemsInfiniteParams)
+    .query(({ input }) => getInteropTokensPairsInfinite(input)),
   transfers: procedure
     .input(InteropProtocolTransfersParams)
     .query(({ input }) => getInteropProtocolTransfers(input)),
