@@ -1,5 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
@@ -7,10 +16,28 @@ import { decodeType } from './decode'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
-  if (!values) return <Form onSubmit={setValues} />
-  if (values.hash && !values.data)
-    return <FetchTx values={values} setValues={setValues} />
-  return <DecodedView values={values} />
+
+  const showForm = !values
+  const showFetch = values && values.hash && !values.data
+  const showDecoded = values && !(values.hash && !values.data)
+
+  return (
+    <ChainsContextProvider>
+      {showForm && <Form onSubmit={setValues} />}
+      {showFetch && <FetchTx values={values} setValues={setValues} />}
+      {showDecoded && <DecodedView values={values} />}
+    </ChainsContextProvider>
+  )
+}
+
+const ChainsContext = createContext<API.Chain[]>([])
+
+function ChainsContextProvider({ children }: { children: ReactNode }) {
+  const query = useQuery({
+    queryFn: () => API.getChains(),
+    queryKey: [],
+  })
+  return <ChainsContext value={query.data ?? []} children={children} />
 }
 
 export function FetchTx(props: {
@@ -24,10 +51,6 @@ export function FetchTx(props: {
         chainId: props.values.chainId || undefined,
       }),
     queryKey: [props.values.chainId, props.values.hash],
-    staleTime: Number.POSITIVE_INFINITY,
-    gcTime: 0,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
   })
 
   useEffect(() => {
@@ -43,7 +66,7 @@ export function FetchTx(props: {
 
   if (query.error) {
     return (
-      <main className="mx-auto max-w-[900px] p-4 pb-20">
+      <main className="mx-auto max-w-[1200px] p-12 pb-20">
         <div className="text-red-500">Something went wrong :(</div>
       </main>
     )
@@ -51,14 +74,14 @@ export function FetchTx(props: {
 
   if (query.data === null) {
     return (
-      <main className="mx-auto max-w-[900px] p-4 pb-20">
+      <main className="mx-auto max-w-[1200px] p-12 pb-20">
         Transaction {props.values.hash} not found.
       </main>
     )
   }
 
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
+    <main className="mx-auto max-w-[1200px] p-12 pb-20">
       <div className="text-zinc-500">Loading...</div>
     </main>
   )
@@ -74,16 +97,19 @@ interface Signature {
 interface State {
   selectors: Record<`0x${string}`, Signature[]>
   pendingSelectors: Record<`0x${string}`, boolean>
+  tooltipId: string
 }
 
 interface Actions {
   registerSelector(selector: `0x${string}`): void
   addSignatures(signatures: Signature[]): void
+  showTooltip(id: string): void
 }
 
 const useStore = create<State & Actions>((set) => ({
   selectors: {},
   pendingSelectors: {},
+  tooltipId: '',
   registerSelector: (selector) =>
     set((state) => {
       if (state.selectors[selector] || state.pendingSelectors[selector]) {
@@ -103,6 +129,8 @@ const useStore = create<State & Actions>((set) => ({
       }
       return { selectors }
     }),
+  showTooltip: (id) =>
+    set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
 }))
 
 function useDebouncedValue<T>(value: T, delay: number): T {
@@ -163,7 +191,7 @@ function DecodedView({ values }: { values: FormValues }) {
   }, [values])
 
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
+    <main className="mx-auto max-w-[1200px] p-12 pb-20">
       <SelectorChecker />
       <DecodedValue value={value} />
     </main>
@@ -204,11 +232,9 @@ function DecodedValue({ value }: { value: ValueToDecode }) {
   }
 
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
-      <pre>
-        <code>{JSON.stringify(value, null, 2)}</code>
-      </pre>
-    </main>
+    <pre>
+      <code>{JSON.stringify(value, null, 2)}</code>
+    </pre>
   )
 }
 
@@ -221,15 +247,97 @@ function DecodedCall({ value }: { value: ValueToDecode }) {
   return (
     <div>
       <DisplayAddress address={value.address} chainId={value.chainId} />
-      <span>.</span>
-      <span>{decoded.type.name}</span>
-      <span>(</span>
+      <span className="text-zinc-300">.</span>
+      <span className="text-orange-300">{decoded.type.name}</span>
+      <span className="text-zinc-300">(</span>
       <span>{decoded.members?.length ?? 0}</span>
-      <span>)</span>
+      <span className="text-zinc-300">)</span>
     </div>
   )
 }
 
-function DisplayAddress(props: { address: `0x${string}` | undefined, chainId: number }) {
-  return <span>{props.address ?? '?'}</span>
+function DisplayAddress(props: {
+  address: `0x${string}` | undefined
+  chainId: number
+}) {
+  const state = useStore()
+  const tooltipId = useId()
+  const chains = useContext(ChainsContext)
+  const chain = chains.find((x) => x.chainId === props.chainId)
+  if (!props.address) return <span>?</span>
+
+  const start = props.address.slice(0, 8)
+  const end = props.address.slice(-8)
+
+  return (
+    <span className="relative" onClick={() => state.showTooltip(tooltipId)}>
+      {state.tooltipId === tooltipId && (
+        <Tooltip>
+          <TooltipItem
+            onClick={() => navigator.clipboard.writeText(props.address ?? '')}
+          >
+            Copy
+          </TooltipItem>
+          {chain && (
+            <TooltipItem href={`${chain.explorerUrl}/address/${props.address}`}>
+              Explorer
+            </TooltipItem>
+          )}
+        </Tooltip>
+      )}
+      <span className="cursor-pointer select-none font-mono text-blue-400">
+        {chain?.shortName && <small>{chain.shortName}:</small>}
+        {start}&#8230;{end}
+      </span>
+    </span>
+  )
+}
+
+function Tooltip(props: { children?: ReactNode }) {
+  const items = React.Children.toArray(props.children)
+  return (
+    <div className="-top-8 absolute left-[50%] flex translate-x-[-50%] rounded-md bg-zinc-800 font-sans text-zinc-300">
+      {items.flatMap((child, index) =>
+        index === items.length - 1
+          ? [child]
+          : [
+              child,
+              <span
+                key={`separator-${index}`}
+                aria-hidden="true"
+                className="text-zinc-500"
+              >
+                |
+              </span>,
+            ],
+      )}
+    </div>
+  )
+}
+
+function TooltipItem(props: {
+  children?: ReactNode
+  onClick?: () => void
+  href?: string
+}) {
+  if (props.href) {
+    return (
+      <a
+        className="rounded-md px-2 py-px hover:bg-zinc-700"
+        href={props.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {props.children}
+      </a>
+    )
+  }
+  return (
+    <button
+      className="cusor-pointer rounded-md px-2 py-px hover:bg-zinc-700"
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  )
 }
