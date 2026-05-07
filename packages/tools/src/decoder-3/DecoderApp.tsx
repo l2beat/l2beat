@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
@@ -9,7 +9,7 @@ export function DecoderApp() {
   if (!values) return <Form onSubmit={setValues} />
   if (values.hash && !values.data)
     return <FetchTx values={values} setValues={setValues} />
-  return <DecodedWrapper values={values} />
+  return <DecodedView values={values} />
 }
 
 export function FetchTx(props: {
@@ -125,12 +125,17 @@ function SelectorChecker() {
     for (const selector of toFetch) {
       ref.current[selector] = true
     }
-  }, [pendingSelectors, ref])
+    if (toFetch.length > 0) {
+      API
+        .lookup({ selectors: toFetch, addresses: [] })
+        .then(res => store.addSignatures(res))
+    }
+  }, [pendingSelectors, ref, store.addSignatures])
 
   return null
 }
 
-function DecodedWrapper({ values }: { values: FormValues }) {
+function DecodedView({ values }: { values: FormValues }) {
   const store = useStore()
   const selector = values.data.slice(0, 10) as `0x${string}`
   useEffect(() => {
@@ -139,14 +144,71 @@ function DecodedWrapper({ values }: { values: FormValues }) {
     }
   }, [selector, store.registerSelector])
 
+  useEffect(() => {
+    console.log(store.selectors)
+  }, [store.selectors])
+
+  const value = useMemo((): ValueToDecode => {
+    return {
+      hint: 'call',
+      raw: values.data as `0x${string}`,
+      chainId: values.chainId,
+      address: values.address as `0x${string}` | undefined
+    }
+  }, [values])
+
   return (
-    <>
+    <main className="mx-auto max-w-[900px] p-4 pb-20">
       <SelectorChecker />
-      <main className="mx-auto max-w-[900px] p-4 pb-20">
-        <pre>
-          <code>{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      </main>
-    </>
+      <DecodedValue value={value} />
+    </main>
   )
+}
+
+interface ValueToDecode {
+  hint: Decoder
+  name?: string
+  raw: `0x${string}`
+  chainId?: number
+  address?: `0x${string}`
+}
+
+type Decoder =
+  | 'bytes'
+  | 'hash'
+  | 'number'
+  | 'decimal6'
+  | 'decimal9'
+  | 'decimal18'
+  | 'time'
+  | 'duration'
+  | 'boolean'
+  | 'string'
+  | 'array'
+  | 'tuple'
+  | 'call'
+
+
+function DecodedValue({ value }: { value: ValueToDecode }) {
+  const [decoder, setDecoder] = useState<Decoder>('bytes')
+  useEffect(() => {
+    setDecoder(value.hint)
+  }, [value.hint])
+
+  if (decoder === 'call') {
+    return <DecodedCall value={value} />
+  }
+
+  return (
+    <main className="mx-auto max-w-[900px] p-4 pb-20">
+      <pre>
+        <code>{JSON.stringify(value, null, 2)}</code>
+      </pre>
+    </main>
+  )
+}
+
+function DecodedCall({ value }: { value: ValueToDecode }) {
+  const store = useStore()
+  return null
 }

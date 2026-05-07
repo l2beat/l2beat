@@ -51,7 +51,7 @@ export function createDecoderModule(
     alchemyClient,
     config.chains,
   )
-  const router = createDecoderRouter(controller)
+  const router = createDecoderRouter(config.chains, controller)
 
   return {
     start: () => {},
