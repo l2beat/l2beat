@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
 
@@ -22,8 +23,8 @@ export function FetchTx(props: {
         chainId: props.values.chainId || undefined,
       }),
     queryKey: [props.values.chainId, props.values.hash],
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: Infinity,
+    gcTime: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
   })
@@ -62,12 +63,90 @@ export function FetchTx(props: {
   )
 }
 
+interface Signature {
+  selector: `0x${string}`
+  signature: string,
+  chainId?: number,
+  address?: `0x${string}`
+}
+
+interface State {
+  selectors: Record<`0x${string}`, Signature[]>
+  pendingSelectors: Record<`0x${string}`, boolean>
+}
+
+interface Actions {
+  registerSelector(selector: `0x${string}`): void
+  addSignatures(signatures: Signature[]): void
+}
+
+const useStore = create<State & Actions>((set) => ({
+  selectors: {},
+  pendingSelectors: {},
+  registerSelector: (selector) => set(state => {
+    if (state.selectors[selector] || state.pendingSelectors[selector]) {
+      return {}
+    }
+    return { pendingSelectors: {...state.pendingSelectors, [selector]: true }}
+  }),
+  addSignatures: (signatures) => set(state => {
+    const selectors = {...state.selectors}
+    for (const signature of signatures) {
+      const array = selectors[signature.selector] ?? []
+      if (array.find(x => x.signature === signature.signature)) continue
+      selectors[signature.selector] = [...array, signature]
+    }
+    return { selectors }
+  }),
+}))
+
+function useDebouncedValue<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState(value)
+  useEffect(() => {
+    const handler = setTimeout(() => setDebounced(value), delay)
+    return () => clearTimeout(handler)
+  }, [value, delay])
+  return debounced
+}
+
+function SelectorChecker() {
+  const store = useStore()
+  const pendingSelectors = useDebouncedValue(store.pendingSelectors, 100);
+  const ref = useRef<Record<`0x${string}`, boolean>>({})
+
+  useEffect(() => {
+    const toFetch: `0x${string}`[] = []
+    for (const s in pendingSelectors) {
+      const selector = s as `0x${string}`
+      if (!ref.current[selector]) {
+        toFetch.push(selector)
+      }
+    }
+    for (const selector of toFetch) {
+      ref.current[selector] = true
+    }
+  }, [pendingSelectors, ref])
+
+  return null
+}
+
 function DecodedWrapper({ values }: { values: FormValues }) {
+  const store = useStore()
+  const selector = values.data.slice(0, 10) as `0x${string}`
+  useEffect(() => {
+    if (selector.length === 10) {
+      store.registerSelector(selector)
+    }
+  }, [selector, store.registerSelector])
+
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
-      <pre>
-        <code>{JSON.stringify(values, null, 2)}</code>
-      </pre>
-    </main>
+    <>
+      <SelectorChecker />
+      <main className="mx-auto max-w-[900px] p-4 pb-20">
+        <pre>
+          <code>{JSON.stringify(values, null, 2)}</code>
+        </pre>
+      </main>
+    </>
   )
 }
