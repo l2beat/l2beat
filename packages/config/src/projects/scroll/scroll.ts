@@ -287,6 +287,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
           sinceTimestamp: UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+          untilTimestamp: UnixTime(1724229443), // last call: https://etherscan.io/tx/0x823e2e65c62306957dc9332f471bd435c808a3d3dc8a8b10cafd80f750802cf6
         },
       },
       {
@@ -303,6 +304,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function finalizeBundleWithProof(bytes,bytes32,bytes32,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745309183), // last call: https://etherscan.io/tx/0x5a90ef68d881b7b4f4de38bf87c545cc79c103f58fdcefb3ea3a30f7349f5efb
         },
       },
       {
@@ -318,7 +320,7 @@ export const scroll: ScalingProject = {
           selector: '0xc1aa4e19',
           functionSignature:
             'function finalizeBundlePostEuclidV2(bytes,uint256,bytes32,bytes32,bytes)',
-          sinceTimestamp: UnixTime(1745508700),
+          sinceTimestamp: UnixTime(1745316335), // first call: https://etherscan.io/tx/0x04f9f09aeb12063883db691e7f005f2be468ffa6baee5eabbb59196f9bb746bf
         },
       },
       {
@@ -352,6 +354,7 @@ export const scroll: ScalingProject = {
           functionSignature:
             'function commitBatchWithBlobProof(uint8,bytes,bytes[],bytes,bytes)',
           sinceTimestamp: UnixTime(1724227415),
+          untilTimestamp: UnixTime(1745305547), // last call: https://etherscan.io/tx/0x0371738167d4e426aac5ea9e60000d21253bca00a112db76a3defee087c8594a
         },
       },
       {
@@ -367,7 +370,7 @@ export const scroll: ScalingProject = {
           selector: '0x9bbaa2ba',
           functionSignature:
             'function commitBatches(uint8 version, bytes32 parentBatchHash, bytes32 lastBatchHash)',
-          sinceTimestamp: UnixTime(1745508700),
+          sinceTimestamp: UnixTime(1745308727), // first call: https://etherscan.io/tx/0x0da7cd78c30021c34e4335d7ed8c71f0ee0a75308a43fa4921db9deea2fb8704
         },
       },
     ],
