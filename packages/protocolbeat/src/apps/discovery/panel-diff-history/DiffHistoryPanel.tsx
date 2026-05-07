@@ -1,5 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { useParams } from 'react-router-dom'
 import { getDiffHistory } from '../../../api/api'
 import type {
@@ -12,6 +19,7 @@ import { Button } from '../../../components/Button'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { Markdown } from '../../../components/Markdown'
+import { cn } from '../../../utils/cn'
 
 const PAGE_SIZE = 10
 
@@ -101,7 +109,7 @@ export function DiffHistoryPanel() {
 
   return (
     <div ref={scrollRef} className="flex h-full flex-col overflow-auto p-2">
-      <div className="mb-3 flex flex-wrap items-center gap-2 text-2xs text-coffee-400">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-2xs text-coffee-400 italic">
         <span>
           Loaded {entries.length} / {total}
         </span>
@@ -138,24 +146,34 @@ const Entry = memo(function Entry({ entry }: { entry: ApiDiffHistoryEntry }) {
     <article className="border border-coffee-600 bg-coffee-800">
       <header className="flex flex-col gap-1 border-coffee-600 border-b p-2 text-xs">
         <div className="flex flex-wrap items-baseline gap-2">
-          <h2 className="font-bold">{entry.date}</h2>
-          {entry.timestamp !== null && (
-            <span className="text-coffee-400">ts: {entry.timestamp}</span>
+          {entry.timestamp ? (
+            <SwitchableValue
+              className="font-bold"
+              valueA={<h2>{entry.date}</h2>}
+              valueB={<h2>{entry.timestamp}</h2>}
+            />
+          ) : (
+            <h2 className="font-bold">{entry.date}</h2>
           )}
         </div>
         {entry.author && (
           <div className="text-coffee-400">author: {entry.author}</div>
         )}
-        {entry.comparing && (
-          <div className="break-all text-coffee-400">
-            comparing to: {entry.comparing.ref}@{entry.comparing.commit} block:{' '}
-            {entry.comparing.block}
-          </div>
-        )}
-        {entry.discoveryHash && (
-          <div className="break-all text-coffee-400">
-            discovered.json: {entry.discoveryHash}
-          </div>
+        {(entry.comparing || entry.discoveryHash) && (
+          <details className="text-2xs text-coffee-400">
+            <summary className="cursor-pointer select-none">Metadata</summary>
+            {entry.comparing && (
+              <div className="break-all">
+                comparing to: {entry.comparing.ref}@{entry.comparing.commit} ts:{' '}
+                {entry.comparing.block}
+              </div>
+            )}
+            {entry.discoveryHash && (
+              <div className="break-all">
+                discovered.json: {entry.discoveryHash}
+              </div>
+            )}
+          </details>
         )}
       </header>
       {entry.description && (
@@ -187,5 +205,22 @@ function CollapsibleSection({ section }: { section: ApiDiffHistorySection }) {
       </button>
       {open && <Markdown>{section.body}</Markdown>}
     </section>
+  )
+}
+
+function SwitchableValue(props: {
+  valueA: ReactNode
+  valueB: ReactNode
+  className?: string
+}) {
+  const [isSwitched, setIsSwitched] = useState(false)
+
+  return (
+    <div
+      className={cn('cursor-pointer', props.className)}
+      onClick={() => setIsSwitched(!isSwitched)}
+    >
+      {isSwitched ? props.valueB : props.valueA}
+    </div>
   )
 }
