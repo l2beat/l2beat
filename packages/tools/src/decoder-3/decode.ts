@@ -1,225 +1,30 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Chain } from './api'
-
-export type Address = `${string}:0x${string}`
-
-export interface DecodedResult {
-  transaction?: {
-    hash: string
-    explorerLink: string
-  }
-  data: Value
-  to?: DecodedAddress
-  chainId?: number
-}
-
-export interface Value {
-  name: string
-  abi: string
-  encoded: `0x${string}`
-  decoded: DecodedValue | undefined
-}
-
-export type DecodedValue =
-  | DecodedNumber
-  | DecodedAmount
-  | DecodedBoolean
-  | DecodedBytes
-  | DecodedHash
-  | DecodedString
-  | DecodedAddress
-  | DecodedCall
-  | DecodedArray
-
-export interface DecodedNumber {
-  type: 'number'
-  hint?: 'e6' | 'e8' | 'e18' | 'date' | 'seconds'
-  value: string
-}
-
-export interface DecodedAmount {
-  type: 'amount'
-  value: string
-  decimals: number
-  currency: string
-  currencyLink?: string
-}
-
-export interface DecodedBoolean {
-  type: 'boolean'
-  value: boolean
-}
-
-export interface DecodedBytes {
-  type: 'bytes'
-  dynamic: boolean
-  value: `0x${string}`
-  extra?: `0x${string}`
-}
-
-export interface DecodedHash {
-  type: 'hash'
-  value: string
-  minusOne?: boolean
-}
-
-export interface DecodedString {
-  type: 'string'
-  value: string
-  extra?: `0x${string}`
-}
-
-export interface DecodedAddress {
-  type: 'address'
-  value: Address
-  explorerLink: string
-  name?: string
-  discovered?: boolean
-}
-
-export interface DecodedCall {
-  type: 'call'
-  selector: `0x${string}`
-  abi: string
-  interface?: string
-  arguments: Value[]
-  extra?: `0x${string}`
-}
-
-export interface DecodedArray {
-  type: 'array'
-  values: Value[]
-  extra?: `0x${string}`
-}
-
-
-export function decode(signature: string, data: `0x${string}`, chain: Chain) {
-  if (!signature.startsWith('function ')) {
-    throw new Error('Abi provided is not a function')
-  }
-  const { decoded } = decodeType(signature, data)
-  if (decoded.type !== 'call') {
-    throw new Error('Programmer error, decoding failed')
-  }
-  const result: DecodedCall = {
-    type: 'call',
-    abi: signature,
-    selector: decoded.selector,
-    arguments: decoded.parameters.map((x) => toResultValue(x, chain)),
-    extra: decoded.extra !== '0x' ? decoded.extra : undefined,
-  }
-  return result
-}
-
-export function toResultValue(value: AbiValue, chain: Chain): Value {
-  const common = {
-    abi: value.abi,
-    name: value.name,
-    encoded: value.encoded,
-  }
-  if (value.decoded.type === 'address') {
-    return {
-      ...common,
-      decoded: {
-        type: 'address',
-        value: `${chain.shortName}:${value.decoded.value}`,
-        explorerLink: `${chain.explorerUrl}/address/${value.decoded.value}`,
-      },
-    }
-  }
-  if (value.decoded.type === 'number') {
-    return {
-      ...common,
-      decoded: { type: 'number', value: value.decoded.value },
-    }
-  }
-  if (value.decoded.type === 'string') {
-    return {
-      ...common,
-      decoded: {
-        type: 'string',
-        value: value.decoded.value,
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'bytes') {
-    return {
-      ...common,
-      decoded: {
-        type: 'bytes',
-        dynamic: value.decoded.dynamic,
-        value: value.decoded.value,
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'bool') {
-    return {
-      ...common,
-      decoded: { type: 'boolean', value: value.decoded.value },
-    }
-  }
-  if (value.decoded.type === 'array') {
-    return {
-      ...common,
-      decoded: {
-        type: 'array',
-        values: value.decoded.value.map((x) => toResultValue(x, chain)),
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  if (value.decoded.type === 'call') {
-    return {
-      ...common,
-      decoded: {
-        type: 'call',
-        abi: value.abi,
-        selector: value.decoded.selector,
-        arguments: value.decoded.parameters.map((x) => toResultValue(x, chain)),
-        extra: value.decoded.extra !== '0x' ? value.decoded.extra : undefined,
-      },
-    }
-  }
-  assertUnreachable(value.decoded)
-}
-
 const INT_COMPLEMENT = 2n ** 255n
 
-export interface AbiValue {
-  name: string
-  abi: string
+export interface DecodedValue {
+  type: ParsedType
   encoded: `0x${string}`
-  decoded: AbiDecoded
+  extra?: `0x${string}`
+  value: string
+  members?: DecodedMember[]
 }
 
-export type AbiDecoded =
-  | { type: 'number'; value: string }
-  | { type: 'address'; value: `0x${string}` }
-  | { type: 'bool'; value: boolean }
-  | {
-      type: 'bytes'
-      value: `0x${string}`
-      extra: `0x${string}`
-      dynamic: boolean
-    }
-  | { type: 'string'; value: string; extra: `0x${string}` }
-  | { type: 'array'; value: AbiValue[]; extra: `0x${string}` }
-  | {
-      type: 'call'
-      selector: `0x${string}`
-      parameters: AbiValue[]
-      extra: `0x${string}`
-    }
+export interface DecodedMember {
+  name: string
+  type: ParsedType
+  encoded: `0x${string}`
+}
 
-export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
-  return decodeParsed(parseType(type), encoded)
+export function decodeType(
+  type: string | ParsedType,
+  encoded: `0x${string}`,
+): DecodedValue {
+  const parsedType = typeof type !== 'string' ? type : parseType(type)
+  return decodeParsed(parsedType, encoded)
 }
 
 const DEBUG = false
 
-function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
+function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
   if (DEBUG) {
     console.log(type.type, type.dynamic ? 'dynamic' : type.size)
     let p = encoded.slice(2)
@@ -238,10 +43,8 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     }
   }
 
-  const common = { name: type.name ?? '', abi: type.type, encoded }
-  let selector: `0x${string}` | undefined
+  const common = { type, encoded, value: '' }
   if (type.function) {
-    selector = sliceBytes(encoded, 0, 4)
     encoded = sliceBytes(encoded, 4)
   }
   let elements: ParsedType[] | undefined
@@ -270,7 +73,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       hasDynamic ||= element.dynamic
     }
     offset *= 32
-    const array = elements.map((e, i) => {
+    const members = elements.map((e, i): DecodedMember => {
       if (e.dynamic) {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         const start = dynamicOffsets[i]!
@@ -279,65 +82,61 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
         }
         const end = dynamicOffsets.find((x, j) => j > i && x !== undefined)
         offset = end ?? -1
-        return decodeParsed(e, sliceBytes(encoded, start, end))
+        return {
+          name: e.name ?? i.toString(),
+          type: e,
+          encoded: sliceBytes(encoded, start, end),
+        }
       }
       // biome-ignore lint/style/noNonNullAssertion: It's there
-      return decodeParsed(e, staticData[i]!)
+      return { name: e.name ?? i.toString(), type: e, encoded: staticData[i]! }
     })
-    let extra: `0x${string}` = '0x'
     if (!hasDynamic) {
-      extra = sliceBytes(encoded, offset)
+      const extra = sliceBytes(encoded, offset)
+      if (extra !== '0x') return { ...common, members, extra }
     }
-    if (selector) {
-      return {
-        ...common,
-        decoded: { type: 'call', selector, parameters: array, extra },
-      }
-    }
-    return { ...common, decoded: { type: 'array', value: array, extra } }
+    return { ...common, members }
   }
   if (type.type === 'bytes') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
-    return {
-      ...common,
-      decoded: { type: 'bytes', value: bytes, extra, dynamic: true },
-    }
+    if (extra !== '0x') return { ...common, value: bytes, extra }
+    return { ...common, value: bytes }
   }
   if (type.type === 'string') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
     const value = hexToString(bytes)
-    return { ...common, decoded: { type: 'string', value, extra } }
+    if (extra !== '0x') return { ...common, value, extra }
+    return { ...common, value }
   }
   if (type.type.startsWith('uint')) {
-    const uint = decodeUint(type.type, encoded)
-    return { ...common, decoded: { type: 'number', value: uint.toString() } }
-  }
-  if (type.type.startsWith('ufixed')) {
-    const uint = decodeUint('uint256', encoded)
-    return { ...common, decoded: { type: 'number', value: uint.toString() } }
+    const value = decodeUint(type.type, encoded)
+    return { ...common, value: value.toString() }
   }
   if (type.type.startsWith('int')) {
-    const int = decodeInt(type.type, encoded)
-    return { ...common, decoded: { type: 'number', value: int.toString() } }
+    const value = decodeInt(type.type, encoded)
+    return { ...common, value: value.toString() }
+  }
+  if (type.type.startsWith('ufixed')) {
+    const value = decodeUint('uint256', encoded)
+    return { ...common, value: value.toString() }
   }
   if (type.type.startsWith('fixed')) {
-    const int = decodeInt('int256', encoded)
-    return { ...common, decoded: { type: 'number', value: int.toString() } }
+    const value = decodeInt('int256', encoded)
+    return { ...common, value: value.toString() }
   }
   if (type.type === 'address') {
     const padding = sliceBytes(encoded, 0, 12)
     if (!isZeroed(padding)) {
       throw new Error('Invalid encoding')
     }
-    const address = sliceBytes(encoded, 12)
-    return { ...common, decoded: { type: 'address', value: address } }
+    return { ...common, value: sliceBytes(encoded, 12) }
   }
   if (type.type === 'bool') {
-    const uint = decodeUint('uint256', encoded)
-    if (uint !== 0n && uint !== 1n) {
+    const value = decodeUint('uint256', encoded)
+    if (value !== 0n && value !== 1n) {
       throw new Error('Invalid encoding')
     }
-    return { ...common, decoded: { type: 'bool', value: uint === 1n } }
+    return { ...common, value: value ? 'true' : 'false' }
   }
   if (type.type.startsWith('bytes')) {
     const size = Number.parseInt(type.type.slice('bytes'.length))
@@ -346,10 +145,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       throw new Error('Invalid encoding')
     }
     const bytes = sliceBytes(encoded, 0, size)
-    return {
-      ...common,
-      decoded: { type: 'bytes', value: bytes, extra: '0x', dynamic: false },
-    }
+    return { ...common, value: bytes }
   }
   throw new Error(`Invalid type: ${type.type}`)
 }

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
+import { decodeType } from './decode'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
@@ -23,7 +24,7 @@ export function FetchTx(props: {
         chainId: props.values.chainId || undefined,
       }),
     queryKey: [props.values.chainId, props.values.hash],
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 0,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -65,8 +66,8 @@ export function FetchTx(props: {
 
 interface Signature {
   selector: `0x${string}`
-  signature: string,
-  chainId?: number,
+  signature: string
+  chainId?: number
   address?: `0x${string}`
 }
 
@@ -83,21 +84,25 @@ interface Actions {
 const useStore = create<State & Actions>((set) => ({
   selectors: {},
   pendingSelectors: {},
-  registerSelector: (selector) => set(state => {
-    if (state.selectors[selector] || state.pendingSelectors[selector]) {
-      return {}
-    }
-    return { pendingSelectors: {...state.pendingSelectors, [selector]: true }}
-  }),
-  addSignatures: (signatures) => set(state => {
-    const selectors = {...state.selectors}
-    for (const signature of signatures) {
-      const array = selectors[signature.selector] ?? []
-      if (array.find(x => x.signature === signature.signature)) continue
-      selectors[signature.selector] = [...array, signature]
-    }
-    return { selectors }
-  }),
+  registerSelector: (selector) =>
+    set((state) => {
+      if (state.selectors[selector] || state.pendingSelectors[selector]) {
+        return {}
+      }
+      return {
+        pendingSelectors: { ...state.pendingSelectors, [selector]: true },
+      }
+    }),
+  addSignatures: (signatures) =>
+    set((state) => {
+      const selectors = { ...state.selectors }
+      for (const signature of signatures) {
+        const array = selectors[signature.selector] ?? []
+        if (array.find((x) => x.signature === signature.signature)) continue
+        selectors[signature.selector] = [...array, signature]
+      }
+      return { selectors }
+    }),
 }))
 
 function useDebouncedValue<T>(value: T, delay: number): T {
@@ -111,7 +116,7 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 
 function SelectorChecker() {
   const store = useStore()
-  const pendingSelectors = useDebouncedValue(store.pendingSelectors, 100);
+  const pendingSelectors = useDebouncedValue(store.pendingSelectors, 100)
   const ref = useRef<Record<`0x${string}`, boolean>>({})
 
   useEffect(() => {
@@ -126,9 +131,9 @@ function SelectorChecker() {
       ref.current[selector] = true
     }
     if (toFetch.length > 0) {
-      API
-        .lookup({ selectors: toFetch, addresses: [] })
-        .then(res => store.addSignatures(res))
+      API.lookup({ selectors: toFetch, addresses: [] }).then((res) =>
+        store.addSignatures(res),
+      )
     }
   }, [pendingSelectors, ref, store.addSignatures])
 
@@ -153,7 +158,7 @@ function DecodedView({ values }: { values: FormValues }) {
       hint: 'call',
       raw: values.data as `0x${string}`,
       chainId: values.chainId,
-      address: values.address as `0x${string}` | undefined
+      address: values.address as `0x${string}` | undefined,
     }
   }, [values])
 
@@ -169,7 +174,7 @@ interface ValueToDecode {
   hint: Decoder
   name?: string
   raw: `0x${string}`
-  chainId?: number
+  chainId: number
   address?: `0x${string}`
 }
 
@@ -187,7 +192,6 @@ type Decoder =
   | 'array'
   | 'tuple'
   | 'call'
-
 
 function DecodedValue({ value }: { value: ValueToDecode }) {
   const [decoder, setDecoder] = useState<Decoder>('bytes')
@@ -210,5 +214,22 @@ function DecodedValue({ value }: { value: ValueToDecode }) {
 
 function DecodedCall({ value }: { value: ValueToDecode }) {
   const store = useStore()
-  return null
+  const selector = value.raw.slice(0, 10) as `0x${string}`
+  const signature = store.selectors[selector]?.[0]
+  if (!signature) return <div>????</div>
+  const decoded = decodeType(signature.signature, value.raw)
+  return (
+    <div>
+      <DisplayAddress address={value.address} chainId={value.chainId} />
+      <span>.</span>
+      <span>{decoded.type.name}</span>
+      <span>(</span>
+      <span>{decoded.members?.length ?? 0}</span>
+      <span>)</span>
+    </div>
+  )
+}
+
+function DisplayAddress(props: { address: `0x${string}` | undefined, chainId: number }) {
+  return <span>{props.address ?? '?'}</span>
 }

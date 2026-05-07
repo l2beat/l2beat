@@ -1,12 +1,12 @@
 import type {
-  TransactionQuery,
-  TransactionResult,
+  Chain,
   LookupQuery,
   LookupResult,
-  Chain,
+  TransactionQuery,
+  TransactionResult,
 } from '@l2beat/tools-api/types'
 
-export { TransactionQuery, TransactionResult, LookupQuery, LookupResult, Chain };
+export { TransactionQuery, TransactionResult, LookupQuery, LookupResult, Chain }
 
 const baseUrl =
   process.env.NODE_ENV === 'production'
@@ -26,19 +26,23 @@ export async function getTransaction(
 }
 
 export async function lookup(query: {
-  selectors: `0x${string}`[],
-  addresses: { chainId: number, address: `0x${string}` }[],
+  selectors: `0x${string}`[]
+  addresses: { chainId: number; address: `0x${string}` }[]
 }) {
-  const selectorQueries = query.selectors.map((selector):  LookupQuery => ({
-    type: 'selector',
-    selector
-  }))
-  const addressQueries = query.addresses.map(({ chainId, address }): LookupQuery => ({
-    type: 'address',
-    chainId,
-    address
-  }))
-  const queries: LookupQuery[] = [...selectorQueries, ...addressQueries];
+  const selectorQueries = query.selectors.map(
+    (selector): LookupQuery => ({
+      type: 'selector',
+      selector,
+    }),
+  )
+  const addressQueries = query.addresses.map(
+    ({ chainId, address }): LookupQuery => ({
+      type: 'address',
+      chainId,
+      address,
+    }),
+  )
+  const queries: LookupQuery[] = [...selectorQueries, ...addressQueries]
   const res = await fetch(`${baseUrl}/api/lookup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
