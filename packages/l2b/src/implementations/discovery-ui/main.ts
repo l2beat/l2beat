@@ -144,16 +144,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project, address } = paramsValidation.data
 
     const isLocal = readonly === false
-    const response = isLocal
-      ? getCodeFromDisk(configReader, project, address)
-      : await getCodeFromEtherscan(
-          configReader,
-          project,
-          address,
-          flatSourceClient,
-        )
-
-    res.json(response)
+    try {
+      const response = isLocal
+        ? getCodeFromDisk(configReader, project, address)
+        : await getCodeFromEtherscan(
+            configReader,
+            project,
+            address,
+            flatSourceClient,
+          )
+      res.json(response)
+    } catch (e) {
+      console.error(e)
+      res.status(500).json({ error: 'Failed to fetch code' })
+    }
   })
 
   app.get('/api/template-files', (req, res) => {
