@@ -12,16 +12,27 @@ describe(parseJsonc.name, () => {
       ['true', 'true'],
       ['false', 'false'],
       ['integer', '123'],
+      ['zero', '0'],
+      ['decimal zero', '0.1'],
+      ['negative decimal zero', '-0.1'],
       ['negative number', '-123.45'],
       ['positive exponent', '6.022e23'],
       ['negative exponent', '1E-9'],
+      ['uppercase exponent with plus', '90E+123'],
+      ['lowercase exponent with plus', '90e+123'],
+      ['uppercase exponent without sign', '90E123'],
       ['empty string', '""'],
       ['escaped string', String.raw`"quote: \" backslash: \\ slash: \/"`],
       ['control escapes', String.raw`"\b\f\n\r\t"`],
       ['unicode escapes', String.raw`"\u0041\uD834\uDD1E"`],
+      ['literal non-ascii string', '"' + String.fromCharCode(0xdc) + '"'],
+      ['literal unicode line separator', '"' + String.fromCharCode(0x2028) + '"'],
       ['empty array', '[]'],
+      ['deeply nested empty arrays', '[[],[[]]]'],
       ['empty object', '{}'],
+      ['empty property name', '{"":true}'],
       ['nested values', '{"a":[1,true,null,{"b":"c"}],"d":{}}'],
+      ['nested object levels with siblings', '{"a":{"b":{"c":5},"d":1}}'],
       ['duplicate keys', '{"a":1,"a":2}'],
       ['whitespace around root', ' \n\t\r { "a": 1 } \r\t\n '],
       ['string containing comment markers', String.raw`"http://a/b//c/*d*/"`],
@@ -95,6 +106,12 @@ describe(parseJsonc.name, () => {
       const input = '{\r\n  "a": 1, // comment\r\n  "b": 2\r\n}'
 
       expect(parseJsonc(input)).toEqual({ a: 1, b: 2 })
+    })
+
+    it('supports multiline block comments with mixed line endings', () => {
+      const input = '{/* first\r\nsecond\nthird */"a":1}'
+
+      expect(parseJsonc(input)).toEqual({ a: 1 })
     })
 
     it('supports a line comment at end of file', () => {
@@ -173,14 +190,21 @@ describe(parseJsonc.name, () => {
   describe('invalid inputs', () => {
     const invalidInputs: Array<[string, string]> = [
       ['empty input', ''],
+      ['whitespace only', '   \n\t\r'],
       ['line comment only', '// only a comment'],
       ['block comment only', '/* only a comment */'],
+      ['bare slash', '/ ttt'],
       ['comment splitting true', 'tr/* comment */ue'],
       ['comment splitting null', 'nu// comment\nll'],
       ['comment splitting a number', '1/* comment */2'],
       ['comment splitting a negative number', '-/* comment */1'],
+      ['invalid escape sequence', String.raw`"\v"`],
+      ['raw tab in string', '"\t"'],
+      ['raw null character in string', '"\0 "'],
       ['unterminated string', '"unterminated // not a comment'],
+      ['newline in string', '"test\n"'],
       ['unterminated block comment', '{"a":1 /* missing end'],
+      ['unterminated multiline block comment', '/* this is a \ncomment'],
       ['unterminated block comment after complete object', '{"a":1} /*'],
       ['unterminated block comment after complete primitive', 'true /*'],
       ['missing comma hidden by line comment', '{"a":1 // comment\n "b":2}'],
@@ -195,9 +219,21 @@ describe(parseJsonc.name, () => {
       ['only trailing comma after block comment in object', '{/* comment */,}'],
       ['only trailing comma after line comment in object', '{// comment\n,}'],
       ['extra token after root', '{"a":1}, {"b":2}'],
+      ['extra root primitive', '1,1'],
       ['trailing comma after root primitive', 'true,'],
+      ['lone minus', '-'],
+      ['leading decimal point number', '.0'],
       ['unquoted object key', '{a:1}'],
+      ['invalid keyword casing', 'True'],
+      ['invalid keyword suffix', 'nulllll'],
+      ['unknown bare word', 'foo'],
+      ['unknown bare word with hyphen', 'foo-bar'],
       ['single quoted string', "{'a':1}"],
+      ['missing colon in object', '{"foo"}'],
+      ['missing property value', '{"foo":}'],
+      ['number used as object key', '{8,"foo":9}'],
+      ['missing comma in object', '{"bar":8 "xoo":"foo"}'],
+      ['missing comma in array', '[1 2,3]'],
       ['hex number', '[0x10]'],
       ['leading plus number', '[+1]'],
       ['leading zero number', '[01]'],
