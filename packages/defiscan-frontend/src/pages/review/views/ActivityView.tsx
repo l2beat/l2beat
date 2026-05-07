@@ -170,9 +170,14 @@ export function ActivityView({ review }: ActivityViewProps) {
             Real-time alerts for trust surface changes.
           </p>
         </div>
-        <div className="flex w-full max-w-md cursor-not-allowed items-center justify-between gap-4 rounded-xl border border-border bg-white px-4 py-4 opacity-60">
+        <a
+          href="https://t.me/+_FwWfNxKo8tmZjA0"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex w-full max-w-md items-center justify-between gap-4 rounded-xl border border-border bg-white px-4 py-4 transition-colors hover:border-text-primary"
+        >
           <div className="flex items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-bg-card text-text-muted">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-bg-card text-text-primary">
               <svg
                 className="size-5"
                 viewBox="0 0 24 24"
@@ -187,14 +192,14 @@ export function ActivityView({ review }: ActivityViewProps) {
                 Telegram Feed
               </p>
               <p className="text-text-muted text-xs uppercase tracking-wider">
-                Upcoming
+                Join channel
               </p>
             </div>
           </div>
-          <span className="inline-flex items-center rounded-sm border border-border bg-bg-card px-2 py-0.5 font-bold text-[10px] text-text-muted uppercase tracking-wider">
-            Soon
+          <span className="inline-flex items-center rounded-sm border border-border bg-bg-card px-2 py-0.5 font-bold text-[10px] text-text-primary uppercase tracking-wider">
+            Open
           </span>
-        </div>
+        </a>
       </div>
 
       {/* Section header */}
