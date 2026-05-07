@@ -9,8 +9,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { cn } from '~/utils/cn'
-import { sentimentToFillColor } from '~/utils/sentiment'
 
 interface Props {
   value: ExitWindowRisk
@@ -18,42 +16,30 @@ interface Props {
 }
 
 type ExitWindowRisk = TableReadyValue & {
-  emergency?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
 }
 
 export function ExitWindowCell({ value, href }: Props) {
-  const emergency = value.emergency
+  const regular = value.regular
 
   const trigger = (
     <TableLink href={href}>
       <TwoRowCell>
-        <TwoRowCell.First className="flex items-center gap-1">
+        <TwoRowCell.First>
           <SentimentText
-            sentiment={
-              emergency
-                ? (emergency.sentiment ?? 'neutral')
-                : (value.sentiment ?? 'neutral')
-            }
+            sentiment={value.sentiment ?? 'neutral'}
             className="font-medium"
           >
-            {emergency ? `Emergency: ${emergency.value}` : value.value}
+            {regular ? `Emergency: ${value.value}` : value.value}
           </SentimentText>
-          {value.warning && (
-            <RoundedWarningIcon
-              className={cn(
-                'size-3.5 md:size-4',
-                sentimentToFillColor(value.warning.sentiment),
-              )}
-            />
-          )}
         </TwoRowCell.First>
-        {emergency ? (
+        {regular ? (
           <TwoRowCell.Second className="mt-0.5">
             <SentimentText
-              sentiment={value.sentiment ?? 'neutral'}
+              sentiment={regular.sentiment ?? 'neutral'}
               className="font-medium"
             >
-              {`Regular: ${value.value}`}
+              {`Regular: ${regular.value}`}
             </SentimentText>
           </TwoRowCell.Second>
         ) : (

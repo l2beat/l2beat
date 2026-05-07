@@ -106,7 +106,7 @@ export const kinto: ScalingProject = orbitStackL2({
     exitWindow: {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
+        'There is no exit window for users to exit in case of unwanted upgrades of the L1 as they are initiated by the Security Council with instant upgrade power and without proper notice. Upgrades initiated by actors other than the Security Council (e.g. KYC providers) on Layer 2 guarantee at least a 7d exit window to the user.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },

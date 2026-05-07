@@ -44,7 +44,7 @@ const exitWindow = governanceConfiguration.executionDelay - hardCodedExitSimTime
 const exitWindowObject = {
   value: formatSeconds(exitWindow),
   sentiment: 'warning' as Sentiment,
-  description: `Users have ${formatSeconds(exitWindow)} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(governanceConfiguration.executionDelay)} delay before a regular upgrade is applied, and withdrawal inclusion via the decentralized sequencer set is probabilistic and simulated to take up to ${formatSeconds(hardCodedExitSimTime)} to be processed. Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${formatSeconds(governanceConfiguration.executionDelay)} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an upgrade for the exit window.`,
+  description: `Users have ${formatSeconds(exitWindow)} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(governanceConfiguration.executionDelay)} delay before an upgrade is applied, and withdrawal inclusion via the decentralized sequencer set is probabilistic and simulated to take up to ${formatSeconds(hardCodedExitSimTime)} to be processed. Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${formatSeconds(governanceConfiguration.executionDelay)} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an upgrade for the exit window.`,
 }
 
 const activeSequencerCount = discovery.getContractValue<number>(

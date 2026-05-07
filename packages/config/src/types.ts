@@ -42,7 +42,7 @@ export interface TableReadyValue<T extends string = string> {
 }
 
 export interface ExitWindowRisk extends TableReadyValue {
-  emergency?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
 }
 
 export interface ProjectTechnologyChoice {

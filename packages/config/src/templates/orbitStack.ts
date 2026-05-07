@@ -21,6 +21,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   pickWorseRisk,
+  stackExitWindowRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   sumRisk,
@@ -754,7 +755,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(
+        stackExitWindowRisk(
           common.riskView.exitWindow,
           baseChain.riskView.exitWindow,
         ),

@@ -1,12 +1,7 @@
 import { assert, formatSeconds, type ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { ProjectScalingRiskView } from '../internalTypes'
-import type {
-  ExitWindowRisk,
-  Sentiment,
-  TableReadyValue,
-  WarningWithSentiment,
-} from '../types'
+import type { ExitWindowRisk, Sentiment, TableReadyValue } from '../types'
 import { getDacSentiment } from './dataAvailability'
 
 // State validation
@@ -637,11 +632,6 @@ function PROPOSER_POS(
   }
 }
 
-export const SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING: WarningWithSentiment = {
-  value: 'The Security Council can upgrade with no delay.',
-  sentiment: 'bad',
-}
-
 export function EXIT_WINDOW(
   upgradeDelay: number,
   exitDelay: number,
@@ -672,10 +662,10 @@ export function EXIT_WINDOW(
     upgradeDelay === 0 ? ' since contracts are instantly upgradable' : ''
   const description =
     (windowText === 'None'
-      ? `There is no window for users to exit in case of an unwanted regular upgrade${instantlyUpgradable}.`
-      : `Users have ${windowText} to exit funds in case of an unwanted regular upgrade. There is a ${formatSeconds(
+      ? `There is no window for users to exit in case of an unwanted upgrade${instantlyUpgradable}.`
+      : `Users have ${windowText} to exit funds in case of an unwanted upgrade. There is a ${formatSeconds(
           upgradeDelay,
-        )} delay before a regular upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
+        )} delay before a upgrade is applied${instantlyUpgradable}, and withdrawals can take up to ${formatSeconds(
           exitDelay,
         )} to be processed.`) +
     (options.existsBlocklist
@@ -693,13 +683,20 @@ export function EXIT_WINDOW(
   }
 }
 
-export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): TableReadyValue {
+export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): ExitWindowRisk {
+  const description =
+    upgradeDelay > 0
+      ? `Non-emergency upgrades go through a ${formatSeconds(upgradeDelay)} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
+      : 'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.'
   return {
-    value: 'None',
-    sentiment: 'bad',
-    description: `There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is ${formatSeconds(
-      upgradeDelay,
-    )}.`,
+    ...EXIT_WINDOW(0, 0),
+    ...(upgradeDelay > 0 && {
+      regular: { value: formatSeconds(upgradeDelay), sentiment: 'warning' },
+    }),
+    warning: {
+      value: description,
+      sentiment: 'warning',
+    },
   }
 }
 
@@ -727,11 +724,14 @@ export function EXIT_WINDOW_NITRO(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
   return {
-    ...withEmergencyExitWindow(
+    ...withRegularExitWindow(
+      EXIT_WINDOW(0, selfSequencingDelay),
       EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
     ),
-    description: description,
-    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
+    warning: {
+      value: description,
+      sentiment: 'warning',
+    },
   }
 }
 
@@ -742,11 +742,14 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
 ): ExitWindowRisk {
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
   return {
-    ...withEmergencyExitWindow(
+    ...withRegularExitWindow(
+      EXIT_WINDOW(0, selfSequencingDelay),
       EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
     ),
-    description: description,
-    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
+    warning: {
+      value: description,
+      sentiment: 'warning',
+    },
   }
 }
 
@@ -768,19 +771,26 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
 
 export function EXIT_WINDOW_STARKNET(upgradeDelay: number): ExitWindowRisk {
   const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
-  const value = formatSeconds(upgradeDelay - scReactionTime)
-  return withEmergencyExitWindow({
-    value,
-    sentiment: 'warning',
-    description: `Standard upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}.`,
-    warning: SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
-  })
+  const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${formatSeconds(upgradeDelay - scReactionTime)} to exit.`
+  return {
+    ...withRegularExitWindow(
+      EXIT_WINDOW(0, scReactionTime),
+      EXIT_WINDOW(upgradeDelay, scReactionTime),
+    ),
+    warning: {
+      value: description,
+      sentiment: 'warning',
+    },
+  }
 }
 
-function withEmergencyExitWindow(value: TableReadyValue): ExitWindowRisk {
+function withRegularExitWindow(
+  emergency: TableReadyValue,
+  regular: TableReadyValue,
+): ExitWindowRisk {
   return {
-    ...value,
-    emergency: { value: 'No delay', sentiment: 'bad' },
+    ...emergency,
+    regular: { value: regular.value, sentiment: regular.sentiment },
   }
 }
 
@@ -853,7 +863,6 @@ export const RISK_VIEW = {
   PROPOSER_POS,
 
   // exitWindow
-  SECURITY_COUNCIL_INSTANT_UPGRADE_WARNING,
   EXIT_WINDOW,
   EXIT_WINDOW_NITRO,
   EXIT_WINDOW_PERMISSIONLESS_BOLD,
@@ -894,6 +903,22 @@ export function compareRisk(a: TableReadyValue, b: TableReadyValue): -1 | 1 {
 
 export const pickWorseRisk = (a: TableReadyValue, b: TableReadyValue) =>
   compareRisk(a, b) === -1 ? a : b
+
+export function stackExitWindowRisk(
+  common: ExitWindowRisk,
+  baseChain: ExitWindowRisk,
+): ExitWindowRisk {
+  const worse = pickWorseRisk(common, baseChain) as ExitWindowRisk
+  // The stacked regular exit window only exists if BOTH layers have one.
+  // If either layer can be upgraded instantly on its regular path, the
+  // stacked regular path collapses to no exit window: drop the regular
+  // second line and the regular-path warning that goes with it.
+  if (common.regular && baseChain.regular) {
+    return worse
+  }
+  const { regular: _regular, warning: _warning, ...rest } = worse
+  return rest
+}
 
 export function sumRisk(
   a: TableReadyValue,

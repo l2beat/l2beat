@@ -181,18 +181,18 @@ export const zksync: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay, {
-        upgradeDelay2: 0,
-      }),
-      sentiment: 'warning',
-      description: `Users have ${formatSeconds(
-        upgradeDelay - forcedWithdrawalDelay,
-      )} to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
-        forcedWithdrawalDelay,
-      )} to be processed.`,
+      ...RISK_VIEW.EXIT_WINDOW(0, forcedWithdrawalDelay),
+      regular: {
+        value: formatSeconds(upgradeDelay - forcedWithdrawalDelay),
+        sentiment: 'warning',
+      },
       warning: {
-        value: 'The Security Council can upgrade with no delay.',
-        sentiment: 'bad',
+        value: `Users have ${formatSeconds(
+          upgradeDelay - forcedWithdrawalDelay,
+        )} to exit funds in case of an unwanted non-emergency upgrade. There is a ${upgradeDelayString} delay before a non-emergency upgrade is applied, and withdrawals can take up to ${formatSeconds(
+          forcedWithdrawalDelay,
+        )} to be processed.`,
+        sentiment: 'warning',
       },
     },
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
