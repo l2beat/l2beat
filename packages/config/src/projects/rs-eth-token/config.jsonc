@@ -314,6 +314,9 @@
       "category": "core",
       "description": "Global configuration and role authority for the rsETH system. It controls supported assets, strategy mappings, protocol fees, and reward receiver routing.",
       "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        },
         "$admin": {
           "severity": "HIGH",
           "type": "CODE_CHANGE",
@@ -388,6 +391,9 @@
       "category": "gov",
       "description": "Timelock owner of the shared ProxyAdmin for rsETH core contracts.",
       "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        },
         "getMinDelay": {
           "severity": "HIGH",
           "type": "RISK_PARAMETER",
