@@ -28,6 +28,8 @@ const SECTION_HEADERS: Record<string, DiffHistorySectionKind> = {
   '## Initial discovery': 'initial-discovery',
   '## Source code changes': 'source-code-changes',
   '## Config/verification related changes': 'config-related-changes',
+  // Older diff histories used a shorter heading; recognize it too.
+  '## Config related changes': 'config-related-changes',
 }
 
 export class DiffHistoryParser {
@@ -112,14 +114,15 @@ export class DiffHistoryParser {
         }
         return j
       }
-      if (line === '## Description') {
+      const trimmed = line.trimEnd()
+      if (trimmed === '## Description') {
         const start = i + 1
         const j = sectionEnd(start)
         description = bodyLines.slice(start, j).join('\n').trim()
         i = j
         continue
       }
-      const kind = SECTION_HEADERS[line]
+      const kind = SECTION_HEADERS[trimmed]
       if (kind !== undefined) {
         const start = i + 1
         const j = sectionEnd(start)
