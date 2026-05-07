@@ -102,6 +102,8 @@ export const InteropTopItemsSort = v.object({
   desc: v.boolean(),
 })
 export type InteropTopItemsSort = v.infer<typeof InteropTopItemsSort>
+export const InteropTopItemsSorting = v.array(InteropTopItemsSort)
+export type InteropTopItemsSorting = v.infer<typeof InteropTopItemsSorting>
 
 const InteropTopItemsParamsShape = {
   id: v.union([
@@ -121,7 +123,7 @@ export const InteropTopItemsInfiniteParams = v.object({
   ...InteropTopItemsParamsShape,
   cursor: v.number().optional(),
   limit: v.number().optional(),
-  sort: InteropTopItemsSort.optional(),
+  sort: InteropTopItemsSorting.optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<

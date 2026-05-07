@@ -1,9 +1,4 @@
-import {
-  assert,
-  notUndefined,
-  type ProjectId,
-  unique,
-} from '@l2beat/shared-pure'
+import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
@@ -134,14 +129,7 @@ export async function getInteropFlows(
     tokenIds,
   } = getInteropFlowAggregates(records, subgroupProjects)
 
-  const allTokenIds = unique(
-    nonSubgroupRecords.flatMap((record) =>
-      record.tokens.map((token) => token.abstractTokenId),
-    ),
-  )
-  const detailsMap = await buildTokensDetailsMap(
-    unique([...tokenIds, ...allTokenIds]),
-  )
+  const detailsMap = await buildTokensDetailsMap(tokenIds)
   const summaryTokens = getSummaryTokensData(
     nonSubgroupRecords,
     detailsMap,

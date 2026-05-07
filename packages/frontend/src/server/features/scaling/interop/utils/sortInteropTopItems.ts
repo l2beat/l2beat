@@ -1,6 +1,7 @@
 import type {
   AverageDuration,
   InteropTopItemsSort,
+  InteropTopItemsSorting,
   TokenData,
   TokensPairData,
 } from '../types'
@@ -9,9 +10,9 @@ type SortableTopItem = TokenData | TokensPairData
 
 export function sortInteropTopItems<T extends SortableTopItem>(
   items: T[],
-  sort: InteropTopItemsSort | undefined,
+  sorting: InteropTopItemsSorting | undefined,
 ): T[] {
-  const effectiveSort = sort ?? { id: 'volume', desc: true }
+  const effectiveSort = sorting?.[0] ?? { id: 'volume', desc: true }
 
   return items.toSorted((a, b) => {
     const aValue = getSortValue(a, effectiveSort.id)

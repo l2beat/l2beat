@@ -10,7 +10,7 @@ describe(sortInteropTopItems.name, () => {
       token({ id: 'unknown', symbol: 'Unknown', volume: null }),
     ]
 
-    const result = sortInteropTopItems(items, { id: 'volume', desc: true })
+    const result = sortInteropTopItems(items, [{ id: 'volume', desc: true }])
 
     expect(result.map((item) => item.id)).toEqual(['eth', 'usdc', 'unknown'])
   })
@@ -22,7 +22,7 @@ describe(sortInteropTopItems.name, () => {
       token({ id: 'usdc', symbol: 'USDC', avgValue: 50 }),
     ]
 
-    const result = sortInteropTopItems(items, { id: 'avgValue', desc: true })
+    const result = sortInteropTopItems(items, [{ id: 'avgValue', desc: true }])
 
     expect(result.map((item) => item.id)).toEqual(['eth', 'usdc', 'unknown'])
   })
@@ -53,10 +53,12 @@ describe(sortInteropTopItems.name, () => {
       }),
     ]
 
-    const result = sortInteropTopItems(items, {
-      id: 'avgDuration',
-      desc: false,
-    })
+    const result = sortInteropTopItems(items, [
+      {
+        id: 'avgDuration',
+        desc: false,
+      },
+    ])
 
     expect(result.map((item) => item.id)).toEqual(['fast', 'slow'])
   })

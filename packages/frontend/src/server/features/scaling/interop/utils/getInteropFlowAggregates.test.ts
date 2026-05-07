@@ -17,6 +17,7 @@ describe(getInteropFlowAggregates.name, () => {
           tokens: [
             { id: 'eth', volume: 10 },
             { id: 'usdc', volume: 5 },
+            { id: 'dai', volume: 1 },
           ],
         }),
         record({
@@ -75,7 +76,7 @@ describe(getInteropFlowAggregates.name, () => {
       { id: 'usdc', volume: 5 },
     ])
     expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
-    expect(result.tokenIds.toSorted()).toEqual(['eth', 'usdc', 'usdt'])
+    expect(result.tokenIds.toSorted()).toEqual(['dai', 'eth', 'usdc', 'usdt'])
   })
 })
 

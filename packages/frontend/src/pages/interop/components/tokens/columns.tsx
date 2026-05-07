@@ -219,12 +219,10 @@ export const getTopTokensColumns = ({
   showNetMintedValueColumn,
   showTopProtocolColumn,
   showFlowsColumn,
-  hideFlowsColumn,
 }: {
   showNetMintedValueColumn?: boolean
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
-  hideFlowsColumn?: boolean
 } = {}) =>
   compact([
     tokenColumnHelper.display({
@@ -267,7 +265,7 @@ export const getTopTokensColumns = ({
     ...getCommonColumns(
       tokenColumnHelper,
       showTopProtocolColumn,
-      showFlowsColumn ?? !hideFlowsColumn,
+      showFlowsColumn,
     ),
     showNetMintedValueColumn &&
       tokenColumnHelper.accessor('netMintedValue', {

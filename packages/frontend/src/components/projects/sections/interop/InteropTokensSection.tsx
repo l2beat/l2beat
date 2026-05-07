@@ -53,7 +53,7 @@ export function InteropTokensSection({
     )
 
   const columns = useMemo(
-    () => getTopTokensColumns({ hideFlowsColumn: true }),
+    () => getTopTokensColumns({ showFlowsColumn: false }),
     [],
   )
 

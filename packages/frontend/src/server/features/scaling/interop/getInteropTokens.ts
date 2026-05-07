@@ -19,12 +19,6 @@ const logger = getLogger().for('getInteropTokens')
 const PAGE_SIZE = 100
 const interopTokensCache = new InMemoryCache({})
 
-export async function getInteropTokens(
-  params: InteropTopItemsParams,
-): Promise<TokenData[]> {
-  return await getCachedInteropTokens(params)
-}
-
 export async function getInteropTokensInfinite({
   cursor,
   limit = PAGE_SIZE,

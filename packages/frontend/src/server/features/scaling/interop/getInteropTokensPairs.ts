@@ -35,12 +35,6 @@ type TokensPairInteropData = CommonInteropData & {
 const PAGE_SIZE = 100
 const interopTokensPairsCache = new InMemoryCache({})
 
-export async function getInteropTokensPairs(
-  params: InteropTopItemsParams,
-): Promise<TokensPairData[]> {
-  return await getCachedInteropTokensPairs(params)
-}
-
 export async function getInteropTokensPairsInfinite({
   cursor,
   limit = PAGE_SIZE,
