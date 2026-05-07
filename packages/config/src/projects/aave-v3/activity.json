@@ -164,40 +164,6 @@
     {
       "timestamp": "2026-05-07T09:45:17.000Z",
       "updateNotifierId": 164,
-      "address": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e",
-      "contractName": "Legacy Frax Dollar Token",
-      "isDependency": true,
-      "entity": "Frax",
-      "id": "164:eth:0x853d955aCEf822Db058eb8505911ED77F175b99e:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.globalCollateralValue",
-          "before": "518691608677294588795951325",
-          "after": "518689125177194588795951325"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-05-07T09:45:17.000Z",
-      "updateNotifierId": 164,
-      "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
-      "contractName": "Rocket Pool Protocol Token",
-      "isDependency": true,
-      "entity": "Rocket Pool",
-      "id": "164:eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getInflationCalcTime",
-          "before": 1775713314,
-          "after": 1778132514
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-05-07T09:45:17.000Z",
-      "updateNotifierId": 164,
       "address": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
       "contractName": "Umbrella",
       "entity": null,

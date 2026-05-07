@@ -802,6 +802,17 @@
                 },
                 "additionalProperties": false,
                 "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "umbrellaAggregateTvs" },
+                  "poolAddressesProviderField": { "type": "string" },
+                  "oracleField": { "type": "string" },
+                  "stkTokensField": { "type": "string" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
               }
             ]
           },

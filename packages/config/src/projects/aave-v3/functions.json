@@ -13632,7 +13632,7 @@
         {
           "functionName": "solveEmergency",
           "isPermissioned": true,
-          "score": "critical",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.SOLVE_EMERGENCY_ROLE.members"
@@ -13644,25 +13644,20 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "emergency-mode gated",
-              "description": "Only callable while the CrossChainController is in emergency mode \u2014 a state auto-triggered when upstream cross-chain message-validity windows lapse. The multisig cannot invoke this during normal operation."
-            },
-            {
-              "type": "other",
-              "label": "downstream 1d delay",
-              "description": "Even if invoked, the reconfigured bridge adapters and approved senders only affect future cross-chain governance messages. Any such message still queues at the PayloadsController and waits the standard execution delay (minimum 1 day) before the L1 Executor runs it, giving the DAO time to revoke SOLVE_EMERGENCY_ROLE and cancel the queued payload."
+              "label": "inert on mainnet",
+              "description": "Forwards into the CrossChainController's solveEmergency selector, which only exists on the L2 receiver-side variant (CrossChainControllerWithEmergencyMode + EmergencyConsumer). Aave's Ethereum-mainnet CrossChainController is the governance forwarder side and does not inherit EmergencyConsumer, so the underlying selector is absent and the call reverts. The 5-of-9 SOLVE_EMERGENCY_ROLE multisig has no fund-impacting path through this function on mainnet. Re-evaluate if the mainnet CrossChainController proxy (0xEd42...b0e1) is ever upgraded to an emergency-mode-enabled implementation."
             }
           ],
-          "timestamp": "2026-04-27T21:01:00.437Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:00.437Z"
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {
           "functionName": "solveEmergencyDeprecated",
           "isPermissioned": true,
-          "score": "critical",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.SOLVE_EMERGENCY_ROLE.members"
@@ -13674,19 +13669,14 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "emergency-mode gated",
-              "description": "Deprecated variant of solveEmergency, kept for legacy CrossChainController revisions. Only callable while the CrossChainController is in emergency mode \u2014 a state auto-triggered when upstream cross-chain message-validity windows lapse. The multisig cannot invoke this during normal operation."
-            },
-            {
-              "type": "other",
-              "label": "downstream 1d delay",
-              "description": "Even if invoked, the reconfigured bridge adapters and approved senders only affect future cross-chain governance messages. Any such message still queues at the PayloadsController and waits the standard execution delay (minimum 1 day) before the L1 Executor runs it, giving the DAO time to revoke SOLVE_EMERGENCY_ROLE and cancel the queued payload."
+              "label": "inert on mainnet",
+              "description": "Legacy variant of solveEmergency targeting an older receiver-side interface. Same outcome as solveEmergency on Ethereum mainnet: the underlying CrossChainController never implements either selector, so the call reverts. Re-evaluate if the mainnet CrossChainController proxy (0xEd42...b0e1) is ever upgraded to an emergency-mode-enabled implementation."
             }
           ],
-          "timestamp": "2026-04-27T21:01:00.445Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:00.445Z"
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {
@@ -24514,14 +24504,76 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "slash-parameters",
-              "description": "updateSlashingConfigs sets the slashing parameters (percentage, cooldown, etc.) for Umbrella staking tokens. Increasing the slashable percentage enables larger slashing events on subsequent slash calls. Governed by the Umbrella admin (Aave governance)."
+              "label": "deficit required",
+              "description": "Cannot drain on demand. slash() requires the Aave Pool to already hold an actual reserve deficit (poolDeficit > deficitOffset + pendingDeficit). Without real bad debt the configs change nothing and no funds move."
+            },
+            {
+              "type": "other",
+              "label": "fee ≤ 100%",
+              "description": "Per-config liquidationFee is capped at ONE_HUNDRED_PERCENT in the validator, so any single slash can extract at most 2× the actual deficit (deficit + 100% fee)."
+            },
+            {
+              "type": "other",
+              "label": "fixed recipient",
+              "description": "SLASHED_FUNDS_RECIPIENT is set once in the initializer (currently the Aave Collector) and has no setter. The admin cannot redirect slashed funds to itself — worst case is forced loss to a stake token's depositors with proceeds flowing to the Aave DAO treasury.",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
+                  "fieldName": "umbrellaAggregateTvs"
+                },
+                "unit": {
+                  "kind": "usd"
+                },
+                "multiplier": 2.0
+              }
             }
           ],
-          "timestamp": "2026-04-27T21:01:01.506Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:01.506Z"
+            "date": "2026-05-07T00:00:00.000Z"
+          }
+        },
+        {
+          "functionName": "setDeficitOffset",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.adminRole"
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "deficit required",
+              "description": "Lowering the offset only exposes pre-existing pool deficit to slashing; it cannot create deficit. Bounded by the actual on-chain Pool deficit at slash time."
+            },
+            {
+              "type": "other",
+              "label": "fixed recipient",
+              "description": "Slashed funds always flow to the immutable SLASHED_FUNDS_RECIPIENT (Aave Collector). Admin cannot redirect proceeds.",
+              "impactCap": {
+                "value": {
+                  "mode": "fieldRef",
+                  "contractAddress": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
+                  "fieldName": "umbrellaAggregateTvs"
+                },
+                "unit": {
+                  "kind": "usd"
+                },
+                "multiplier": 2.0
+              }
+            }
+          ],
+          "timestamp": "2026-05-07T00:00:00.000Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {
@@ -24552,7 +24604,7 @@
         {
           "functionName": "createStakeTokens",
           "isPermissioned": true,
-          "score": "critical",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
@@ -24564,14 +24616,14 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "new-stake-token",
-              "description": "createStakeTokens deploys new Umbrella staking tokens. A malicious configuration could create staking tokens that drain supplied assets on slash. Governed by the Umbrella admin (Aave governance)."
+              "label": "empty on create",
+              "description": "Newly deployed stake tokens hold no deposits. Drain only materializes via a separate updateSlashingConfigs call, which has its own bounds."
             }
           ],
-          "timestamp": "2026-04-27T21:01:01.514Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:01.514Z"
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {
@@ -24627,7 +24679,7 @@
         {
           "functionName": "emergencyTokenTransferStk",
           "isPermissioned": true,
-          "score": "critical",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.RESCUE_GUARDIAN_ROLE.members"
@@ -24639,20 +24691,20 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "rescue function",
-              "description": "emergencyTokenTransferStk sends ERC-20 tokens from a specific staking token contract to an arbitrary address. Intended for recovering stuck tokens. The loss is bounded by the staking token contract's token balances."
+              "label": "principal protected",
+              "description": "maxRescue caps the staked asset at balanceOf - totalAssets (dust only); principal cannot leave the contract."
             }
           ],
-          "timestamp": "2026-04-27T21:01:01.522Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:01.522Z"
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {
           "functionName": "emergencyEtherTransferStk",
           "isPermissioned": true,
-          "score": "critical",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.RESCUE_GUARDIAN_ROLE.members"
@@ -24664,14 +24716,14 @@
           "mitigations": [
             {
               "type": "other",
-              "label": "rescue function",
-              "description": "emergencyEtherTransferStk sends ETH from a staking token contract to an arbitrary address. Bounded by the contract's ETH balance."
+              "label": "no ETH held",
+              "description": "Stake tokens are ERC4626 vaults that don't intentionally hold ETH; drain target is essentially zero."
             }
           ],
-          "timestamp": "2026-04-27T21:01:01.531Z",
+          "timestamp": "2026-05-07T00:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-04-27T21:01:01.531Z"
+            "date": "2026-05-07T00:00:00.000Z"
           }
         },
         {

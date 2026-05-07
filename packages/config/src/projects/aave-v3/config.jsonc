@@ -1379,6 +1379,7 @@
         "COLLATERAL_RATIO_PAUSER",
         "eth_usd_price",
         "genesis_supply",
+        "globalCollateralValue",
         "last_call_time",
         "name",
         "price_band",
@@ -1663,6 +1664,7 @@
     "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": {
       "ignoreRelatives": ["getInflationRewardsContractAddress"],
       "ignoreInWatchMode": [
+        "getInflationCalcTime",
         "getInflationIntervalsPassed",
         "inflationCalculate",
         "name",
@@ -3960,8 +3962,16 @@
           "handler": {
             "type": "accessControl"
           }
+        },
+        "umbrellaAggregateTvs": {
+          "handler": {
+            "type": "umbrellaAggregateTvs"
+          }
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "umbrellaAggregateTvs"
+      ]
     },
     "eth:0x4655Ce3D625a63d30bA704087E52B4C31E38188B": {
       "fields": {

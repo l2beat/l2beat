@@ -52,6 +52,10 @@
       "name": "Aave Horizon Admin (4-of-6 Multisig)",
       "description": "4-of-6 Gnosis Safe acting as the primary admin of the Aave Horizon (RWA) market. Holds POOL_ADMIN_ROLE and EMERGENCY_ADMIN_ROLE on the Horizon ACLManager (0xEFD5df7b...) and DEFAULT_ADMIN_ROLE on the RwaATokenManager. Can directly call PoolConfigurator upgrades, oracle changes, reserve pauses, AToken upgrades, and authorised RWA token transfers — *without* a Mainnet governance vote. The Aave Governance V3 Executor sits as DEFAULT_ADMIN_ROLE on the same ACLManager and can revoke this multisig at any time, but that is a recovery path, not a gate on the multisig's actions. Reachable token value: {{a13b57382ReachableTokenValue}}."
     },
+    "eth:0x53cb4BB8F61fa45405dC75F476FaDAd801e653D9": {
+      "name": "Aave Recovery Guardian (3-of-5 Multisig)",
+      "description": "3-of-5 Gnosis Safe sharing Umbrella's DEFAULT_ADMIN_ROLE with the Aave Governance V3 Executor. Can update slashing configs and the deficit offset on Umbrella, but cannot redirect slashed funds — SLASHED_FUNDS_RECIPIENT is fixed at deployment to the Aave Collector. Two of its five signers are themselves multisigs (0x3CD9a2... 2-of-3, 0x985F32... 3-of-4). The Executor retains DEFAULT_ADMIN_ROLE and can revoke this multisig at any time."
+    },
     "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34": {
       "name": "Unknown (0x9821...Ae34)",
       "description": "Unverified contract or unlabelled address controlling 51 functions across 201 contracts. Reachable token value: {{a98217a06ReachableTokenValue}}."

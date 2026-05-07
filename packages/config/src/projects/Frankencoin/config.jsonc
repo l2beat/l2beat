@@ -129,6 +129,11 @@
           "severity": "HIGH"
         }
       }
+    },
+    "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78": {
+      "ignoreInWatchMode": [
+        "totalSupply"
+      ]
     }
   }
 }

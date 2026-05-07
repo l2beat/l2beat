@@ -127,6 +127,42 @@
     },
     "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2": {
       "ignoreInWatchMode": ["price"]
+    },
+    "eth:0x09dbf9502d43445b33883837a51D06Fc9B9CdEC4": {
+      "ignoreInWatchMode": [
+        "price"
+      ]
+    },
+    "eth:0x0acdC416C592a592Edf2E64b178aA8d4d47e05A8": {
+      "ignoreInWatchMode": [
+        "price"
+      ]
+    },
+    "eth:0x8c9464D99512Dcd6f80BE72aAc20dafD9Ea2C831": {
+      "ignoreInWatchMode": [
+        "price"
+      ]
+    },
+    "eth:0x9F983115741D0F7F2EAE07831415057AD3de34d2": {
+      "ignoreInWatchMode": [
+        "backupPrice",
+        "getDeviation",
+        "price",
+        "primaryPrice"
+      ]
+    },
+    "eth:0xe087AD7FE989cF63F8383579D160a20Ee7e69F9F": {
+      "ignoreInWatchMode": [
+        "price"
+      ]
+    },
+    "eth:0xf1561bC4b3D1bA49053986Fb9ee88D4fE22d0Cf4": {
+      "ignoreInWatchMode": [
+        "backupPrice",
+        "getDeviation",
+        "price",
+        "primaryPrice"
+      ]
     }
   }
 }

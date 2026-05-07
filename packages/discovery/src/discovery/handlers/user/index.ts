@@ -150,6 +150,10 @@ import {
   AaveMarketAggregateTvsHandler,
   AaveMarketAggregateTvsHandlerDefinition,
 } from '../defidisco/AaveMarketAggregateTvsHandler'
+import {
+  UmbrellaAggregateTvsHandler,
+  UmbrellaAggregateTvsHandlerDefinition,
+} from '../defidisco/UmbrellaAggregateTvsHandler'
 
 const DEFINITIONS = [
   StorageHandlerDefinition,
@@ -193,6 +197,7 @@ const DEFINITIONS = [
   MetaMorphoCapHandlerDefinition,
   GhoBucketCapacityHandlerDefinition,
   AaveMarketAggregateTvsHandlerDefinition,
+  UmbrellaAggregateTvsHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -245,6 +250,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   metaMorphoCap: MetaMorphoCapHandlerDefinition,
   ghoBucketCapacity: GhoBucketCapacityHandlerDefinition,
   aaveMarketAggregateTvs: AaveMarketAggregateTvsHandlerDefinition,
+  umbrellaAggregateTvs: UmbrellaAggregateTvsHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -335,5 +341,7 @@ export function getUserHandler(
       return new GhoBucketCapacityHandler(field, definition, abi)
     case 'aaveMarketAggregateTvs':
       return new AaveMarketAggregateTvsHandler(field, definition, abi)
+    case 'umbrellaAggregateTvs':
+      return new UmbrellaAggregateTvsHandler(field, definition, abi)
   }
 }
