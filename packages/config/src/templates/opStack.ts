@@ -1384,7 +1384,7 @@ function getRiskViewExitWindow(
     return {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+        'There is no exit window for users to exit in case of unwanted upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
       orderHint: -finalizationPeriod,
     }

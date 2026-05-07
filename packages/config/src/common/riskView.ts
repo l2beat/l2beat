@@ -694,7 +694,7 @@ export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): TableReadyValue {
   return {
     value: 'None',
     sentiment: 'bad',
-    description: `There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is ${formatSeconds(
+    description: `There is no window for users to exit in case of an unwanted upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The upgrade delay is ${formatSeconds(
       upgradeDelay,
     )}.`,
   }
