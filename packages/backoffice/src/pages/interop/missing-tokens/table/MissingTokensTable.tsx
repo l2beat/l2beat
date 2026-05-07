@@ -144,8 +144,8 @@ export function MissingTokensTable({
   ).length
 
   return (
-    <>
-      <div className="flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="shrink-0 flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
           <span className="text-muted-foreground text-sm">
             {selectedRows.length === 0
@@ -194,6 +194,7 @@ export function MissingTokensTable({
             ? 'No supported missing tokens found. Disable "Hide unsupported" to review unsupported rows.'
             : 'No missing tokens found.'
         }
+        fillHeight
         enableCsvExport={enableCsvExport}
         getCsvFilename={() =>
           `interop-missing-tokens-${new Date().toISOString()}.csv`
@@ -210,6 +211,6 @@ export function MissingTokensTable({
         searchPlaceholder={searchPlaceholder}
         isSearchPending={isSearchPending}
       />
-    </>
+    </div>
   )
 }

@@ -49,6 +49,7 @@ export function TransferDetailsTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No transfers found for the selected filters."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-transfer-details-${new Date().toISOString()}.csv`

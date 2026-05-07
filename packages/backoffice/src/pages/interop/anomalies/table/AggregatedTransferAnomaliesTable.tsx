@@ -48,6 +48,7 @@ export function AggregatedTransferAnomaliesTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No aggregated transfer anomalies found."
+      fillHeight
       enableVirtualization={false}
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
