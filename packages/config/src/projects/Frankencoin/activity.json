@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1777627212,
-  "lastConsumedUpdateNotifierId": 147,
+  "lastReconciledAt": 1778147385,
+  "lastConsumedUpdateNotifierId": 163,
   "events": [
     {
       "timestamp": "2026-04-21T09:00:35.000Z",
@@ -122,6 +122,22 @@
       "entity": null,
       "id": "147:eth:0xEAFBa0d16D6a0Ff3C6c5d0A46ca7b8fbFf21A9d3:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 163,
+      "address": "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78",
+      "contractName": "AllUnity",
+      "entity": null,
+      "id": "163:eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.totalSupply",
+          "before": 4430022160000,
+          "after": 4930022160000
+        }
+      ]
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-05-06T09:35:03.049Z",
+  "lastModified": "2026-05-07T09:46:55.951Z",
   "contracts": {
     "eth:0xbeef01735c132ada46aa9aa4c54623caa92a64cb": {
-      "lastFetched": "2026-05-06T09:35:02.428Z",
+      "lastFetched": "2026-05-07T09:46:54.744Z",
       "balances": {
         "tokens": [
           {
@@ -12,7 +12,7 @@
             "name": "Royal Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000023739528214564956
+            "usdValue": 0.000002305757851870446
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -20,7 +20,7 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0006043029946164747
+            "usdValue": 0.000605656914332417
           },
           {
             "assetAddress": "0x33f1f813b596299b458257018600d943c8aff474",
@@ -28,7 +28,7 @@
             "name": "Lil Manyu",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000053712660912911215
+            "usdValue": 0.000005223965808952495
           },
           {
             "assetAddress": "0x3e391e5cb8ea766c93134faf486e6393158032c2",
@@ -36,7 +36,7 @@
             "name": "Brave Bear",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000023521295489673645
+            "usdValue": 0.0000022843907764323947
           },
           {
             "assetAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
@@ -44,11 +44,11 @@
             "name": "USD Coin",
             "balance": "6011",
             "decimals": 6,
-            "usdValue": 0.006011601160116011
+            "usdValue": 0.006011
           }
         ],
-        "totalUsdValue": 0.0066260015031942,
-        "timestamp": "2026-05-06T09:35:02.819Z",
+        "totalUsdValue": 0.0066264710287696725,
+        "timestamp": "2026-05-07T09:46:55.108Z",
         "source": "debank"
       },
       "positions": {
@@ -61,121 +61,121 @@
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 39286556.78623562,
+                  "assetUsdValue": 39434367.375766,
                   "debtUsdValue": 0,
-                  "netUsdValue": 39286556.78623562
+                  "netUsdValue": 39434367.375766
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 39282628.130557,
-                    "price": 1.000100010001
+                    "amount": 39434367.375766,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 86591867.44281527,
+                  "assetUsdValue": 85360393.256419,
                   "debtUsdValue": 0,
-                  "netUsdValue": 86591867.44281527
+                  "netUsdValue": 85360393.256419
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 86583208.256071,
-                    "price": 1.000100010001
+                    "amount": 85360393.256419,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 3585931.1453375337,
+                  "assetUsdValue": 3420822.773505,
                   "debtUsdValue": 0,
-                  "netUsdValue": 3585931.1453375337
+                  "netUsdValue": 3420822.773505
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 3585572.552223,
-                    "price": 1.000100010001
+                    "amount": 3420822.773505,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 2636550.4075867585,
+                  "assetUsdValue": 3354652.687392,
                   "debtUsdValue": 0,
-                  "netUsdValue": 2636550.4075867585
+                  "netUsdValue": 3354652.687392
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 2636286.752546,
-                    "price": 1.000100010001
+                    "amount": 3354652.687392,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 94313.35959495947,
+                  "assetUsdValue": 201360.842957,
                   "debtUsdValue": 0,
-                  "netUsdValue": 94313.35959495947
+                  "netUsdValue": 201360.842957
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 94303.928259,
-                    "price": 1.000100010001
+                    "amount": 201360.842957,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 89010.14498649864,
+                  "assetUsdValue": 88271.718718,
                   "debtUsdValue": 0,
-                  "netUsdValue": 89010.14498649864
+                  "netUsdValue": 88271.718718
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 89001.243972,
-                    "price": 1.000100010001
+                    "amount": 88271.718718,
+                    "price": 1
                   }
                 ]
               },
               {
                 "name": "Supply",
                 "stats": {
-                  "assetUsdValue": 3042.0166706670666,
+                  "assetUsdValue": 16034.853426,
                   "debtUsdValue": 0,
-                  "netUsdValue": 3042.0166706670666
+                  "netUsdValue": 16034.853426
                 },
                 "tokens": [
                   {
                     "symbol": "USDC",
                     "name": "USD Coin",
-                    "amount": 3041.712469,
-                    "price": 1.000100010001
+                    "amount": 16034.853426,
+                    "price": 1
                   }
                 ]
               }
             ],
-            "totalUsdValue": 132287271.30322732
+            "totalUsdValue": 131875903.50818302
           }
         ],
-        "totalUsdValue": 132287271.30322732,
-        "timestamp": "2026-05-06T09:35:03.049Z",
+        "totalUsdValue": 131875903.50818302,
+        "timestamp": "2026-05-07T09:46:55.951Z",
         "source": "onchain/debank"
       }
     }

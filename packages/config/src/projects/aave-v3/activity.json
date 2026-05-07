@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1778060391,
-  "lastConsumedUpdateNotifierId": 159,
+  "lastReconciledAt": 1778147655,
+  "lastConsumedUpdateNotifierId": 164,
   "events": [
     {
       "timestamp": "2026-05-04T09:33:39.000Z",
@@ -160,6 +160,99 @@
           "after": "eth:0xbf113Fa52454A94185b65e6f2E818B7f178f937a"
         }
       ]
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e",
+      "contractName": "Legacy Frax Dollar Token",
+      "isDependency": true,
+      "entity": "Frax",
+      "id": "164:eth:0x853d955aCEf822Db058eb8505911ED77F175b99e:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.globalCollateralValue",
+          "before": "518691608677294588795951325",
+          "after": "518689125177194588795951325"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
+      "contractName": "Rocket Pool Protocol Token",
+      "isDependency": true,
+      "entity": "Rocket Pool",
+      "id": "164:eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getInflationCalcTime",
+          "before": 1775713314,
+          "after": 1778132514
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0xD400fc38ED4732893174325693a63C30ee3881a8",
+      "contractName": "Umbrella",
+      "entity": null,
+      "id": "164:eth:0xD400fc38ED4732893174325693a63C30ee3881a8:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.accessControl.DEFAULT_ADMIN_ROLE.members.1",
+          "after": "eth:0x53cb4BB8F61fa45405dC75F476FaDAd801e653D9"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "164:eth:0xDe841Bf4B67970f5a19165443B0e9ec808E1cC85:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.5",
+          "before": "eth:0x753de005261e9Ff910B541A07282544Ec433d08c",
+          "after": "eth:0xEE63c668A5774110243A0708e7920A64DAFC6278"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0x3CD9a21c32Ea7CAeF54fDeF3eA690A9981A83703",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "164:eth:0x3CD9a21c32Ea7CAeF54fDeF3eA690A9981A83703:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0x53cb4BB8F61fa45405dC75F476FaDAd801e653D9",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "164:eth:0x53cb4BB8F61fa45405dC75F476FaDAd801e653D9:contract-added",
+      "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-05-07T09:45:17.000Z",
+      "updateNotifierId": 164,
+      "address": "eth:0x985F3290d7971a840152E46d00b5ceb60A56f235",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "164:eth:0x985F3290d7971a840152E46d00b5ceb60A56f235:contract-added",
+      "type": "contract-added"
     }
   ]
 }

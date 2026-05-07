@@ -1,6 +1,6 @@
 {
   "name": "Steakhouse-Prime-USDC",
-  "timestamp": 1778060049,
+  "timestamp": 1778147117,
   "configHash": "0xa8c27cb6281e66f665061b5e81687bcc0263387b10712d541dca9feb60c8cc41",
   "entries": [
     {
@@ -438,7 +438,7 @@
         "feedCap_0xd7818272B9e248357d13057AAb0B417aF31E817d": "200000000000000",
         "feeRecipient": "base:0x255c7705e8BB334DfCae438197f7C4297988085a",
         "guardian": "base:0x894d59017Ed0F8dcd8f2B6e89a3C26eF76876D33",
-        "lastTotalAssets": 469672876470219,
+        "lastTotalAssets": 471045599360124,
         "lostAssets": 0,
         "marketCap_oracle_0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9": "1000000000000000",
         "marketCap_oracle_0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295": "200000000000000",
@@ -449,8 +449,8 @@
           "base:0x663BECd10daE6C4A3Dcd89F1d76c1174199639B9",
           "base:0xFEa2D58cEfCb9fcb597723c6bAE66fFE4193aFE4",
           "base:0x97FF9CbD7E77348b2B8FfBB883bF29452aD18295",
-          "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
           "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+          "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
           "base:0x0000000000000000000000000000000000000000"
         ],
         "marketParams": [
@@ -479,18 +479,18 @@
             "lltv": "770000000000000000"
           },
           {
-            "marketId": "0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad",
-            "loanToken": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-            "collateralToken": "base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
-            "oracle": "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
-            "irm": "base:0x46415998764C29aB2a25CbeA6254146D50D22687",
-            "lltv": "860000000000000000"
-          },
-          {
             "marketId": "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae",
             "loanToken": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
             "collateralToken": "base:0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
             "oracle": "base:0xD7A1abA119a236Fea5BBC5cAC6836465cbe9289A",
+            "irm": "base:0x46415998764C29aB2a25CbeA6254146D50D22687",
+            "lltv": "860000000000000000"
+          },
+          {
+            "marketId": "0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad",
+            "loanToken": "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+            "collateralToken": "base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+            "oracle": "base:0xb40d93F44411D8C09aD17d7F88195eF9b05cCD96",
             "irm": "base:0x46415998764C29aB2a25CbeA6254146D50D22687",
             "lltv": "860000000000000000"
           },
@@ -521,15 +521,15 @@
           "0x9103c3b4e834476c9a62ea009ba2c884ee42e94e6e314a26f04d312434191836",
           "0x8793cf302b8ffd655ab97bd1c695dbd967807e8367a65cb2f4edaf1380ba1bda",
           "0x0ca10126f6c94cbd9cf0a48cc9516ae5e3dec5aa68303e6d988ee37c5149bf0d",
-          "0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad",
           "0x13c42741a359ac4a8aa8287d2be109dcf28344484f91185f9a79bd5a805a55ae",
+          "0x1c21c59df9db44bf6f645d854ee710a8ca17b479451447e9f56758aee10a2fad",
           "0x38c846197ac32a752a60c25d4536ebb0c3920c532e9a859c38c91efb7b8c2abb"
         ],
         "supplyQueueLength": 6,
         "symbol": "steakUSDC",
         "timelock": 604800,
-        "totalAssets": 469672885812141,
-        "totalSupply": "451267298592167624716084645",
+        "totalAssets": 471045613407643,
+        "totalSupply": "452537136887010184895733819",
         "withdrawQueueLength": 6
       },
       "fieldMeta": {
@@ -1232,6 +1232,6 @@
     "morpho/MetaMorpho": "0xe0915107aa936a9fe6a482059f207ff899ea3a5e2baee3944223a6c6d35a96ce",
     "morpho/Morpho": "0xdbb54f2b25b761df9e05263570b2b0fcfef7676c541d7bdfa2974680fe1e3682"
   },
-  "usedBlockNumbers": { "base": 45635328 },
+  "usedBlockNumbers": { "base": 45678885 },
   "permissionsConfigHash": "0x6d985944fcacd2991eb167ede5f13eb1ec777248cba1cdbca2036721b6a951bf"
 }
