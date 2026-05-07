@@ -40,7 +40,13 @@ export async function getInteropProtocolPageData(
       ...apiSelection,
     }),
   ])
-  const projectEntry = getInteropProtocolEntry(project)
+
+  const projectEntry = await getInteropProtocolEntry(
+    project,
+    apiSelection,
+    interopChainsWithIcons,
+    protocolData,
+  )
 
   return {
     head: {
@@ -60,7 +66,6 @@ export async function getInteropProtocolPageData(
         ...appLayoutProps,
         projectEntry,
         protocolData,
-        interopChains: interopChainsWithIcons,
         apiSelection,
       },
     },
