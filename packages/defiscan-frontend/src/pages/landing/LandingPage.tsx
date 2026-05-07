@@ -656,7 +656,7 @@ export function LandingPage() {
 }
 
 function AccessControlStat() {
-  const PCT = 80
+  const PCT = 75
   const radius = 70
   const stroke = 14
   const circumference = 2 * Math.PI * radius
@@ -692,7 +692,7 @@ function AccessControlStat() {
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-4xl md:text-5xl font-black text-text-primary tracking-tight leading-none">
-            80%
+            75%
           </span>
           <span className="text-[10px] md:text-xs font-bold uppercase tracking-[1.5px] text-text-muted mt-2">
             of 2025 losses
