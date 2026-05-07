@@ -27,8 +27,8 @@ export function DaTrackingStatusPage() {
   const freshCount = rows.filter((row) => row.status === 'fresh').length
 
   return (
-    <AppLayout>
-      <div className="flex flex-col gap-3">
+    <AppLayout className="h-[calc(100svh-var(--spacing-environment-banner))] overflow-hidden">
+      <div className="flex min-h-0 flex-1 flex-col gap-3">
         <Card className="shrink-0 gap-0 py-4">
           <CardHeader className="space-y-0 px-6 pt-0 pb-0">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -74,14 +74,19 @@ export function DaTrackingStatusPage() {
           </CardHeader>
         </Card>
 
-        <Card className="gap-0 py-0">
-          <CardContent className="px-0 pb-6">
+        <Card className="min-h-0 flex-1 gap-0 py-0">
+          <CardContent className="flex min-h-0 flex-1 flex-col px-0 pb-6">
             {isLoading ? <LoadingState className="m-6" /> : null}
             {isError ? (
               <ErrorState className="m-6" cause={error.message} />
             ) : null}
             {!isLoading && !isError ? (
-              <DaTrackingStatusTable data={rows} enableCsvExport />
+              <DaTrackingStatusTable
+                data={rows}
+                className="min-h-0 flex-1"
+                scrollViewportClassName="min-h-0 flex-1 max-h-none"
+                enableCsvExport
+              />
             ) : null}
           </CardContent>
         </Card>

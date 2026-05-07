@@ -7,11 +7,15 @@ import { daTrackingStatusColumns } from './columns'
 interface DaTrackingStatusTableProps {
   data: DaTrackingStatusRow[]
   enableCsvExport?: boolean
+  className?: string
+  scrollViewportClassName?: string
 }
 
 export function DaTrackingStatusTable({
   data,
   enableCsvExport = false,
+  className,
+  scrollViewportClassName,
 }: DaTrackingStatusTableProps) {
   const {
     filteredRowsCount,
@@ -49,6 +53,8 @@ export function DaTrackingStatusTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No active DA tracking configs found."
+      className={className}
+      scrollViewportClassName={scrollViewportClassName}
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `da-tracking-status-${new Date().toISOString()}.csv`
