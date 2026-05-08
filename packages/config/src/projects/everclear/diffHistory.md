@@ -8,21 +8,20 @@ Generated with discovered.json: 0xc25fc0b706be0be82ea70acf0de322592f687627
 
 ## Description
 
-**🚨 Everclear Hub L3 has stopped producing blocks. Chain dark since 2026-05-01.**
+**Everclear Hub L3 halt and ownership transfer.** Chain stopped producing blocks on 2026-05-01.
 
-On-chain (Ethereum L1):
-- **RollupProxy** (`eth:0xc6CAd31D...`) — `paused: false → true`. Rollup explicitly paused.
-- `stakerCount` 2 → 0; `setValidatorCount` 4 → 5; new validator `0xA7275dd1...` added; two zombie validators appearing (`0xA7275dd1`, `0xe778F5Bf`) with `latestStakedNode` 324 and 1198.
-- `totalWithdrawableFunds` 0 → 0.1 ETH — bond withdrawal in progress.
-- **Gelato Multisig** (`eth:0xBeA2Bc85...`) deleted; UpgradeExecutor `EXECUTOR_ROLE` member 0 reassigned to a fresh **SafeL2** at `0x1e0Ef0eb...`.
+L1 changes (Ethereum):
+- **RollupProxy** (`eth:0xc6CAd31D...`) — `paused: false → true`.
+- `stakerCount` 2 → 0; `setValidatorCount` 4 → 5; new validator `0xA7275dd1...` added; zombie validators `0xA7275dd1` and `0xe778F5Bf` appear with `latestStakedNode` 324 and 1198.
+- `totalWithdrawableFunds` 0 → 0.1 ETH (bond withdrawal in progress).
+- **Gelato Multisig** (`eth:0xBeA2Bc85...`) deleted; UpgradeExecutor `EXECUTOR_ROLE` member 0 reassigned to a new **SafeL2** at `0x1e0Ef0eb...`.
 
-L3 (chainID 25327, scan.everclear.org):
-- Last block 4779858 produced at **2026-05-01 21:13 UTC** — 6+ days ago at time of writing.
-- `transactions_today: 0`. Average block time was ~10 min historically; current gap is ~13 hours of average pace = chain halted.
+L3 (chainId 25327):
+- Last block 4779858 at 2026-05-01 21:13 UTC; `transactions_today: 0`. Historical block time ~10 min — current gap is ~80x normal cadence.
 
-Public statements: no announcement found on `everclear.org/blog`, `docs.everclear.org`, or via web search of `@EverclearOrg` X posts. The Everclear *protocol* (cross-chain clearing layer / CLEAR token) appears to keep operating on its supported L2s; what halted is the Everclear *Hub* L3 specifically.
+Public statements: no shutdown announcement on `everclear.org/blog`, `docs.everclear.org`, or in indexed `@EverclearOrg` X posts at time of writing. The Everclear clearing-layer protocol (CLEAR token, supported L2s) remains operational; the halt is specific to the Hub L3.
 
-Recommend `archivedAt` + `redWarning` on the project once a public statement appears, or sooner if the team is confident the silence is intentional. Same shape as the RSS3 VSL wind-down pattern.
+Project file updated: `archivedAt` set to the L3 halt timestamp, `chainConfig.untilTimestamp` set to the same, `redWarning` added describing the halt and ownership transfer, and an incident milestone recorded for 2026-05-01.
 
 ## Watched changes
 
