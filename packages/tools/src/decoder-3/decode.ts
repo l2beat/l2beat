@@ -13,6 +13,7 @@ export type DecodedType =
 export interface DecodedValue {
   name?: string
   functionName?: string
+  functionAbi?: string
   type: DecodedType
   value: string
   members?: DecodedValue[]
@@ -32,6 +33,16 @@ export function decodeType(
   const decoded = decodeParsed(parsedType, encoded, chainId)
   if (address && decoded.type === 'call') {
     decoded.address = address
+  }
+  if (decoded.type === 'call') {
+    if (address) {
+      decoded.address = address
+    }
+    if (typeof type === 'string') {
+      decoded.functionAbi = type
+    } else {
+      decoded.functionAbi = type.type
+    }
   }
   return decoded
 }

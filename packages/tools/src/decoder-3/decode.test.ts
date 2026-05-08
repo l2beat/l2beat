@@ -335,6 +335,7 @@ describe(decodeType.name, () => {
     expect(d).toEqual({
       type: 'call',
       functionName: 'approve',
+      functionAbi: 'function approve(address spender, uint256 amount)',
       bytes: e,
       value: '',
       members: [
@@ -361,6 +362,7 @@ describe(decodeType.name, () => {
     expect(d).toEqual({
       type: 'call',
       functionName: 'name',
+      functionAbi: 'function name()',
       bytes: e,
       value: '',
       members: [],
@@ -407,6 +409,7 @@ describe(decodeType.name, () => {
     expect(d).toEqual({
       type: 'call',
       functionName: 'approve',
+      functionAbi: 'function approve(address spender, uint256 amount)',
       bytes: e,
       value: '',
       members: [

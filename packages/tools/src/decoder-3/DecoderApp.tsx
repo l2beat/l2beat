@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { clsx } from 'clsx'
 import React, {
   createContext,
+  Fragment,
   type ReactNode,
   useContext,
   useEffect,
@@ -14,6 +15,7 @@ import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
 import type { DecodedValue } from './decode'
+import { formatNumber, getFormatHint } from './format'
 import { decode } from './plugins'
 
 export function DecoderApp() {
@@ -249,9 +251,21 @@ function DecodedView({ value }: { value: DecodedValue }) {
     return (
       <div className="group">
         {nameElement}
-        <DisplayAddress address={decoded.address} chainId={decoded.chainId} />
+        <DisplayAddress
+          short
+          address={decoded.address}
+          chainId={decoded.chainId}
+        />
         <span className="text-zinc-300">.</span>
-        <span className="text-orange-400">{decoded.functionName}</span>
+        <ValueWithTooltip
+          items={[
+            { name: 'Copy bytes', copy: decoded.bytes },
+            { name: 'Copy selector', copy: decoded.bytes.slice(0, 10) },
+            { name: 'Copy abi', copy: decoded.functionAbi },
+          ]}
+        >
+          <span className="text-orange-400">{decoded.functionName}</span>
+        </ValueWithTooltip>
         <span className="text-zinc-300">(</span>
         {members}
         <span className="text-zinc-300">)</span>
@@ -276,7 +290,9 @@ function DecodedView({ value }: { value: DecodedValue }) {
       return (
         <div>
           {nameElement}
-          <code>{decoded.bytes}</code>
+          <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
+          <span className='font-mono'>{decoded.bytes}</span>
+          </ValueWithTooltip>
         </div>
       )
     }
@@ -285,7 +301,9 @@ function DecodedView({ value }: { value: DecodedValue }) {
       return (
         <div>
           {nameElement}
-          <code>{decoded.bytes.slice(0, 66)}…</code>
+          <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
+          <span className='font-mono'>{decoded.bytes.slice(0, 66)}…</span>
+          </ValueWithTooltip>
           <button
             className="ml-2 cursor-pointer text-zinc-500"
             onClick={() => setMoreBytes(true)}
@@ -321,96 +339,166 @@ function DecodedView({ value }: { value: DecodedValue }) {
     )
   }
 
+  if (decoded.type === 'address') {
+    return (
+      <div>
+        {nameElement}
+        <DisplayAddress address={decoded.bytes} chainId={decoded.chainId} />
+      </div>
+    )
+  }
+
+  if (decoded.type === 'number') {
+    return (
+      <div>
+        {nameElement}
+        <DisplayNumber
+          name={value.name}
+          bytes={decoded.bytes}
+          value={decoded.value}
+        />
+      </div>
+    )
+  }
+
+  if (decoded.type === 'string') {
+    return (
+      <div>
+        {nameElement}
+        <ValueWithTooltip items={[{ name: 'Copy bytes', copy: decoded.bytes }]}>
+          <span className="select-none text-zinc-500">&ldquo;</span>
+          <span>{decoded.value}</span>
+          <span className="select-none text-zinc-500">&rdquo;</span>
+        </ValueWithTooltip>
+      </div>
+    )
+  }
+
+  if (decoded.type === 'bool') {
+    return (
+      <div>
+        {nameElement}
+        <ValueWithTooltip items={[{ name: 'Copy bytes', copy: decoded.bytes }]}>
+          <span className="font-mono">{decoded.value}</span>
+        </ValueWithTooltip>
+      </div>
+    )
+  }
+}
+
+function DisplayNumber(props: {
+  name?: string
+  bytes: `0x${string}`
+  value: string
+}) {
+  const [format, setFormat] = useState('e0')
+  useEffect(() => {
+    setFormat(getFormatHint(props.name ?? ''))
+  }, [props.name, setFormat])
+
   return (
-    <div>
-      {nameElement}
-      <code>{decoded.value}</code>
-    </div>
+    <ValueWithTooltip
+      items={[
+        { name: 'Copy bytes', copy: props.bytes },
+        { name: 'e0', onClick: () => setFormat('e0') },
+        { name: 'e6', onClick: () => setFormat('e6') },
+        { name: 'e8', onClick: () => setFormat('e8') },
+        { name: 'e18', onClick: () => setFormat('e18') },
+        { name: 'date', onClick: () => setFormat('date') },
+        { name: 'seconds', onClick: () => setFormat('seconds') },
+      ]}
+    >
+      <span className="font-mono">
+        {formatNumber(props.value, format)}
+        {format.startsWith('e') && format !== 'e0' && (
+          <span className="text-zinc-500">{format}</span>
+        )}
+      </span>
+    </ValueWithTooltip>
   )
 }
+
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 function DisplayAddress(props: {
   address: `0x${string}` | undefined
   chainId: number | undefined
+  short?: boolean
 }) {
-  const state = useStore()
-  const tooltipId = useId()
   const chains = useContext(ChainsContext)
   const chain = chains.find((x) => x.chainId === props.chainId)
+  const explorer = chain?.explorerUrl || 'https://etherscan.io'
   if (!props.address) return <span>?</span>
 
-  const start = props.address.slice(0, 8)
-  const end = props.address.slice(-8)
+  return (
+    <ValueWithTooltip
+      items={[
+        { name: 'Copy', copy: props.address },
+        { name: 'Explorer', href: `${explorer}/address/${props.address}` },
+      ]}
+    >
+      <span
+        className={clsx(
+          'font-mono',
+          props.address === ADDRESS_ZERO ? 'text-zinc-500' : 'text-blue-400',
+        )}
+      >
+        {props.short ? <>{props.address.slice(0, 6)}</> : props.address}
+      </span>
+    </ValueWithTooltip>
+  )
+}
 
+interface ValueWithTooltipProps {
+  children: ReactNode
+  items: {
+    name: string
+    onClick?: () => void
+    copy?: string
+    href?: string
+  }[]
+}
+
+function ValueWithTooltip(props: ValueWithTooltipProps) {
+  const tooltipId = useId()
+  const state = useStore()
   return (
     <span className="relative" onClick={() => state.showTooltip(tooltipId)}>
       {state.tooltipId === tooltipId && (
-        <Tooltip>
-          <TooltipItem
-            onClick={() => navigator.clipboard.writeText(props.address ?? '')}
-          >
-            Copy
-          </TooltipItem>
-          {chain && (
-            <TooltipItem href={`${chain.explorerUrl}/address/${props.address}`}>
-              Explorer
-            </TooltipItem>
-          )}
-        </Tooltip>
+        <div className="-top-8 absolute left-[50%] flex translate-x-[-50%] whitespace-nowrap rounded-md bg-zinc-800 font-sans text-zinc-300">
+          {props.items.filter(x => x.onClick || x.copy || x.href).map((item, i) => (
+            <Fragment key={i}>
+              {i !== 0 && (
+                <span aria-hidden="true" className="text-zinc-500">
+                  |
+                </span>
+              )}
+              {(item.onClick || item.copy) && (
+                <button
+                  className="cusor-pointer rounded-md px-1.5 py-px hover:bg-zinc-700"
+                  onClick={
+                    item.onClick ??
+                    (() => navigator.clipboard.writeText(item.copy ?? ''))
+                  }
+                >
+                  {item.name}
+                </button>
+              )}
+              {item.href && (
+                <a
+                  className="rounded-md px-1.5 py-px hover:bg-zinc-700"
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.name}
+                </a>
+              )}
+            </Fragment>
+          ))}
+        </div>
       )}
-      <span className="cursor-pointer select-none font-mono text-blue-400">
-        {chain?.shortName && <small>{chain.shortName}:</small>}
-        {start}…{end}
-      </span>
+      <span className="cursor-pointer hover:bg-zinc-800">{props.children}</span>
     </span>
-  )
-}
-
-function Tooltip(props: { children?: ReactNode }) {
-  const items = React.Children.toArray(props.children)
-  return (
-    <div className="-top-8 absolute left-[50%] flex translate-x-[-50%] rounded-md bg-zinc-800 font-sans text-zinc-300">
-      {items.flatMap((child, index) =>
-        index === items.length - 1
-          ? [child]
-          : [
-              child,
-              <span
-                key={`separator-${index}`}
-                aria-hidden="true"
-                className="text-zinc-500"
-              >
-                |
-              </span>,
-            ],
-      )}
-    </div>
-  )
-}
-
-function TooltipItem(props: {
-  children?: ReactNode
-  onClick?: () => void
-  href?: string
-}) {
-  if (props.href) {
-    return (
-      <a
-        className="rounded-md px-2 py-px hover:bg-zinc-700"
-        href={props.href}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {props.children}
-      </a>
-    )
-  }
-  return (
-    <button
-      className="cusor-pointer rounded-md px-2 py-px hover:bg-zinc-700"
-      onClick={props.onClick}
-    >
-      {props.children}
-    </button>
   )
 }
