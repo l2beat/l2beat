@@ -1,9 +1,12 @@
 import { v as z } from '@l2beat/validate'
 import express from 'express'
+import type { Chain } from '../../types'
 import type { ApiController, ApiQuery } from './domain/ApiController'
-import { Chain } from '../../types'
 
-export function createDecoderRouter(chains: Chain[], controller: ApiController): express.Router {
+export function createDecoderRouter(
+  chains: Chain[],
+  controller: ApiController,
+): express.Router {
   const router = express.Router()
 
   router.get('/api/decode', async (req, res) => {
@@ -34,7 +37,7 @@ export function createDecoderRouter(chains: Chain[], controller: ApiController):
     res.json(result)
   })
 
-  router.get('/api/chains', async (req, res) => {
+  router.get('/api/chains', (_, res) => {
     res.json(chains)
   })
 

@@ -5,14 +5,18 @@ import React, {
   useContext,
   useEffect,
   useId,
-  useMemo,
   useRef,
   useState,
 } from 'react'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
-import { decodeType } from './decode'
+import {
+  type DecodedValue,
+  decodeType,
+  type ParsedType,
+  parseType,
+} from './decode'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
@@ -23,9 +27,18 @@ export function DecoderApp() {
 
   return (
     <ChainsContextProvider>
+      <SelectorChecker />
       {showForm && <Form onSubmit={setValues} />}
       {showFetch && <FetchTx values={values} setValues={setValues} />}
-      {showDecoded && <DecodedView values={values} />}
+      {showDecoded && (
+        <main className="mx-auto max-w-[1200px] p-12 pb-20">
+          <DecodedView
+            encoded={values.data as `0x${string}`}
+            chainId={values.chainId}
+            address={values.address as `0x${string}` | undefined}
+          />
+        </main>
+      )}
     </ChainsContextProvider>
   )
 }
@@ -96,7 +109,7 @@ interface Signature {
 
 interface State {
   selectors: Record<`0x${string}`, Signature[]>
-  pendingSelectors: Record<`0x${string}`, boolean>
+  registered: Record<`0x${string}`, boolean>
   tooltipId: string
 }
 
@@ -108,15 +121,15 @@ interface Actions {
 
 const useStore = create<State & Actions>((set) => ({
   selectors: {},
-  pendingSelectors: {},
+  registered: {},
   tooltipId: '',
   registerSelector: (selector) =>
     set((state) => {
-      if (state.selectors[selector] || state.pendingSelectors[selector]) {
+      if (state.selectors[selector] || state.registered[selector]) {
         return {}
       }
       return {
-        pendingSelectors: { ...state.pendingSelectors, [selector]: true },
+        registered: { ...state.registered, [selector]: true },
       }
     }),
   addSignatures: (signatures) =>
@@ -144,7 +157,7 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 
 function SelectorChecker() {
   const store = useStore()
-  const pendingSelectors = useDebouncedValue(store.pendingSelectors, 100)
+  const pendingSelectors = useDebouncedValue(store.registered, 100)
   const ref = useRef<Record<`0x${string}`, boolean>>({})
 
   useEffect(() => {
@@ -168,90 +181,105 @@ function SelectorChecker() {
   return null
 }
 
-function DecodedView({ values }: { values: FormValues }) {
-  const store = useStore()
-  const selector = values.data.slice(0, 10) as `0x${string}`
-  useEffect(() => {
-    if (selector.length === 10) {
-      store.registerSelector(selector)
-    }
-  }, [selector, store.registerSelector])
-
-  useEffect(() => {
-    console.log(store.selectors)
-  }, [store.selectors])
-
-  const value = useMemo((): ValueToDecode => {
-    return {
-      hint: 'call',
-      raw: values.data as `0x${string}`,
-      chainId: values.chainId,
-      address: values.address as `0x${string}` | undefined,
-    }
-  }, [values])
-
-  return (
-    <main className="mx-auto max-w-[1200px] p-12 pb-20">
-      <SelectorChecker />
-      <DecodedValue value={value} />
-    </main>
-  )
-}
-
-interface ValueToDecode {
-  hint: Decoder
+interface DecodedViewProps {
   name?: string
-  raw: `0x${string}`
+  type?: ParsedType
+  encoded: `0x${string}`
   chainId: number
   address?: `0x${string}`
 }
 
-type Decoder =
-  | 'bytes'
-  | 'hash'
-  | 'number'
-  | 'decimal6'
-  | 'decimal9'
-  | 'decimal18'
-  | 'time'
-  | 'duration'
-  | 'boolean'
-  | 'string'
-  | 'array'
-  | 'tuple'
-  | 'call'
+function DecodedView(props: DecodedViewProps) {
+  const store = useStore()
+  const [decoded, setDecoded] = useState<DecodedValue>()
 
-function DecodedValue({ value }: { value: ValueToDecode }) {
-  const [decoder, setDecoder] = useState<Decoder>('bytes')
   useEffect(() => {
-    setDecoder(value.hint)
-  }, [value.hint])
+    console.log({
+      pending: Object.keys(store.registered),
+      selectors: Object.keys(store.selectors),
+    })
+  }, [store.registered, store.selectors])
 
-  if (decoder === 'call') {
-    return <DecodedCall value={value} />
+  useEffect(() => {
+    if (decoded?.type.type === 'bytes') {
+      const selector = decoded.bytes.slice(0, 10) as `0x${string}`
+      store.registerSelector(selector)
+    }
+  }, [decoded, store.registerSelector])
+
+  useEffect(() => {
+    if (props.type) {
+      try {
+        setDecoded(decodeType(props.type, props.encoded))
+        return
+      } catch {}
+    }
+    setDecoded({
+      type: parseType('bytes'),
+      bytes: props.encoded,
+      value: props.encoded,
+    })
+  }, [props.type, props.encoded, store.selectors])
+
+  useEffect(() => {
+    if (!decoded) return
+    if (decoded.type.type === 'bytes') {
+      const selector = decoded.bytes.slice(0, 10) as `0x${string}`
+      const signature = store.selectors[selector]?.[0]
+      if (signature) {
+        const type = parseType(signature.signature)
+        try {
+          setDecoded(decodeType(type, decoded.bytes))
+        } catch {}
+      }
+    }
+  }, [decoded, store.selectors])
+
+  if (!decoded) return null
+
+  const nameElement = props.name && (
+    <>
+      <span className="text-zinc-300">.</span>
+      <span className="text-green-400">{props.name}</span>
+      <span className="text-zinc-300"> = </span>
+    </>
+  )
+
+  if (decoded.type.function) {
+    return (
+      <div>
+        {nameElement}
+        <DisplayAddress address={props.address} chainId={props.chainId} />
+        <span className="text-zinc-300">.</span>
+        <span className="text-orange-400">{decoded.type.name}</span>
+        {decoded.members && decoded.members.length > 0 ? (
+          <>
+            <span className="text-zinc-300">(</span>
+            <ol className="pl-4">
+              {decoded.members.map((m, i) => (
+                <li key={i}>
+                  <DecodedView
+                    name={m.name}
+                    encoded={m.encoded}
+                    type={m.type}
+                    chainId={props.chainId}
+                  />
+                </li>
+              ))}
+            </ol>
+            <span className="text-zinc-300">)</span>
+          </>
+        ) : (
+          <span className="text-zinc-300">()</span>
+        )}
+      </div>
+    )
   }
 
   return (
-    <pre>
-      <code>{JSON.stringify(value, null, 2)}</code>
-    </pre>
-  )
-}
-
-function DecodedCall({ value }: { value: ValueToDecode }) {
-  const store = useStore()
-  const selector = value.raw.slice(0, 10) as `0x${string}`
-  const signature = store.selectors[selector]?.[0]
-  if (!signature) return <div>????</div>
-  const decoded = decodeType(signature.signature, value.raw)
-  return (
     <div>
-      <DisplayAddress address={value.address} chainId={value.chainId} />
-      <span className="text-zinc-300">.</span>
-      <span className="text-orange-300">{decoded.type.name}</span>
-      <span className="text-zinc-300">(</span>
-      <span>{decoded.members?.length ?? 0}</span>
-      <span className="text-zinc-300">)</span>
+      {nameElement}
+      <code>{decoded.value}</code>
     </div>
   )
 }

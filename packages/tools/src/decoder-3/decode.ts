@@ -89,7 +89,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
     return { ...common, bytes, value }
   }
 
-  if (encoded.length !== 66) throw new Error("Invalid encoding")
+  if (encoded.length !== 66) throw new Error('Invalid encoding')
 
   if (type.type.startsWith('uint')) {
     const value = decodeUint(type.type, encoded)
