@@ -237,7 +237,7 @@ export const fluent: ScalingProject = {
         ...EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay),
         description:
           EXITS.REGULAR_WITHDRAWAL('zk', finalizationDelay).description +
-          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is preconfirmed (TEE-signed) or finalized, an address with RELAYER_ROLE delivers the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block). First delivery is permissioned, so withdrawals progress only when the relayer acts; if a delivered message's L1-side execution reverts, anyone can retry via the permissionless receiveFailedMessage. For L1->L2 deposits there is no user-initiated refund path: only PAUSER_ROLE can clear expired deposits via skipExpiredDeposits, and rollbackMessageWithProof is declared but reverts with NOT_IMPLEMENTED.",
+          " On Fluent, the message hash enters the block's withdrawal root which becomes part of the next batch root; once the batch is finalized, an address with RELAYER_ROLE delivers the message on L1 via receiveMessageWithProof with two Merkle proofs (block-against-batch and message-against-block). First delivery is permissioned, so withdrawals progress only when the relayer acts; if a delivered message's L1-side execution reverts, anyone can retry via the permissionless receiveFailedMessage.",
         references: [
           {
             title: 'Fluent Bridge Architecture',
@@ -248,10 +248,6 @@ export const fluent: ScalingProject = {
           {
             category: 'Funds can be frozen if',
             text: 'the RELAYER_ROLE holder stops delivering L2->L1 messages on L1, since first delivery is permissioned and there is no user-initiated bypass.',
-          },
-          {
-            category: 'Funds can be frozen if',
-            text: 'an L1->L2 deposit expires before inclusion: only PAUSER_ROLE can clear it (which does not refund), and the user-initiated rollback path is unimplemented.',
           },
         ],
       },
