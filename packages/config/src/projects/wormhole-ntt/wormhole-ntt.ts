@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
+import { WORMHOLE_DETAILED_DESCRIPTION } from '../wormhole/shared'
 
 export const wormholeNtt: BaseProject = {
   id: ProjectId('wormhole-ntt'),
@@ -10,6 +11,7 @@ export const wormholeNtt: BaseProject = {
   interopConfig: {
     description:
       'Multichain token framework using the Wormhole message bridge.',
+    detailedDescription: WORMHOLE_DETAILED_DESCRIPTION,
     plugins: [
       {
         plugin: 'wormhole-ntt',
