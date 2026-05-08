@@ -178,6 +178,18 @@ interface OrbitStackConfigCommon {
   celestiaProofSystemInactive?: boolean
   nonTemplateZkVerifiers?: ChainSpecificAddress[]
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  /**
+   * batchSubmission selectors this chain's sequencer never used. The template
+   * retires each at the chain genesis timestamp so they don't appear as stale
+   * on the status page.
+   */
+  unusedBatchSubmissionSelectors?: string[]
+  /**
+   * Explicit `untilTimestamp` overrides for batchSubmission selectors that
+   * were used and then stopped at a specific cutover (e.g. the sequencer
+   * switched overloads). Keyed by 4-byte selector.
+   */
+  batchSubmissionSelectorCutovers?: Record<string, number>
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -1254,6 +1266,21 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
     outbox.sinceTimestamp,
   )
 
+  const unused = new Set(templateVars.unusedBatchSubmissionSelectors ?? [])
+  const cutovers = templateVars.batchSubmissionSelectorCutovers ?? {}
+  const withOverride = (entry: Layer2TxConfig): Layer2TxConfig => {
+    if (entry.query.formula !== 'functionCall') return entry
+    const sel = entry.query.selector
+    let until: number | undefined
+    if (unused.has(sel)) until = genesisTimestamp
+    else if (cutovers[sel] !== undefined) until = cutovers[sel]
+    if (until === undefined) return entry
+    return {
+      ...entry,
+      query: { ...entry.query, untilTimestamp: UnixTime(until) },
+    }
+  }
+
   return [
     {
       uses: [
@@ -1367,7 +1394,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },
-  ]
+  ].map(withOverride)
 }
 
 function extractDAs(daProviders: DAProvider[]): ProjectScalingDa[] {

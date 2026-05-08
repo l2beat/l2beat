@@ -87,4 +87,12 @@ export const galxegravity: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
+  // sequencer uses 0x8f111f3c + 0x69cacded; retire the rest
+  unusedBatchSubmissionSelectors: [
+    '0xe0bc9729',
+    '0x37501551',
+    '0x3e5aa082',
+    '0x6e620055',
+    '0x917cf8ac',
+  ],
 })

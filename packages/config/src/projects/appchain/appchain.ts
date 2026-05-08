@@ -71,4 +71,17 @@ export const appchain: ScalingProject = orbitStackL2({
     PROGRAM_HASHES(succinctConfig.verifierId),
     PROGRAM_HASHES(succinctConfig.aggregatorId),
   ],
+  unusedBatchSubmissionSelectors: [
+    '0xe0bc9729',
+    '0x3e5aa082',
+    '0x6e620055',
+    '0x917cf8ac',
+    '0x69cacded',
+  ],
+  // sequencer switched from 0x8f111f3c to the BoLD-era 0x37501551 overload
+  // on 2025-05-29; last 0x8f111f3c call:
+  // https://etherscan.io/tx/0x1e9b66ab18239c6307edda85979ca0fb9368590ccd5eae83359571cb5ab4392d
+  batchSubmissionSelectorCutovers: {
+    '0x8f111f3c': 1748538083,
+  },
 })

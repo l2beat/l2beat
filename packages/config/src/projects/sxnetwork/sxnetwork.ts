@@ -68,4 +68,13 @@ export const sxnetwork: ScalingProject = orbitStackL2({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
+  // sequencer only uses addSequencerL2BatchFromOrigin (0x8f111f3c)
+  unusedBatchSubmissionSelectors: [
+    '0xe0bc9729',
+    '0x37501551',
+    '0x3e5aa082',
+    '0x6e620055',
+    '0x917cf8ac',
+    '0x69cacded',
+  ],
 })
