@@ -4,6 +4,10 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { FrameworkDominanceWidget } from './components/FrameworkDominanceWidget'
+import {
+  TotalTransfersWidget,
+  TotalVolumeWidget,
+} from './components/FrameworkTotalsWidgets'
 import { TokenFrameworksChainSelector } from './components/TokenFrameworksChainSelector'
 import { TopTokensWidget } from './components/TopTokensWidget'
 import type { InteropTokenFramework } from './getInteropTokenFrameworksData'
@@ -29,9 +33,11 @@ export function InteropTokenFrameworksPage({
           <div className="mt-4">
             <TokenFrameworksChainSelector allChains={interopChains} />
           </div>
-          <div className="grid grid-cols-2 grid-rows-6 gap-4">
+          <div className="mt-4 grid grid-cols-4 grid-rows-6 gap-4">
             <FrameworkDominanceWidget tokenFrameworks={tokenFrameworks} />
             <TopTokensWidget tokenFrameworks={tokenFrameworks} />
+            <TotalVolumeWidget />
+            <TotalTransfersWidget />
           </div>
         </SideNavLayout>
       </TokenFrameworksSelectedChainsProvider>

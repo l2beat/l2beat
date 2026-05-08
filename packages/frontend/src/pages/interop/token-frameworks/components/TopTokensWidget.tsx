@@ -31,7 +31,7 @@ export function TopTokensWidget({
   const items = data?.topTokens[activeTab]
 
   return (
-    <PrimaryCard className="row-span-2 mt-4">
+    <PrimaryCard className="col-span-2 row-span-2">
       <div className="flex items-center gap-2.5">
         <h2 className="font-bold text-heading-20">Top Tokens by Volume</h2>
         <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
