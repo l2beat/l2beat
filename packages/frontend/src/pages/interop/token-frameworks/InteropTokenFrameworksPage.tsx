@@ -5,6 +5,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { FrameworkDominanceWidget } from './components/FrameworkDominanceWidget'
 import { TokenFrameworksChainSelector } from './components/TokenFrameworksChainSelector'
+import { TopTokensWidget } from './components/TopTokensWidget'
 import type { InteropTokenFramework } from './getInteropTokenFrameworksData'
 import { TokenFrameworksSelectedChainsProvider } from './utils/TokenFrameworksSelectedChainsContext'
 
@@ -28,8 +29,9 @@ export function InteropTokenFrameworksPage({
           <div className="mt-4">
             <TokenFrameworksChainSelector allChains={interopChains} />
           </div>
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 grid-rows-6 gap-4">
             <FrameworkDominanceWidget tokenFrameworks={tokenFrameworks} />
+            <TopTokensWidget tokenFrameworks={tokenFrameworks} />
           </div>
         </SideNavLayout>
       </TokenFrameworksSelectedChainsProvider>
