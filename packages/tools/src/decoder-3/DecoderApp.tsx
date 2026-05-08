@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { clsx } from 'clsx'
 import React, {
   createContext,
   type ReactNode,
@@ -192,6 +193,7 @@ interface DecodedViewProps {
 function DecodedView(props: DecodedViewProps) {
   const store = useStore()
   const [decoded, setDecoded] = useState<DecodedValue>()
+  const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
     console.log({
@@ -276,6 +278,62 @@ function DecodedView(props: DecodedViewProps) {
     )
   }
 
+  if (decoded.type.type === 'bytes') {
+    if (decoded.bytes.length < 66) {
+      return (
+        <div>
+          {nameElement}
+          <code>{decoded.bytes}</code>
+        </div>
+      )
+    }
+
+    if (!expanded) {
+      return (
+        <div>
+          {nameElement}
+          <code>{decoded.bytes.slice(0, 66)}…</code>
+          <button
+            className="ml-2 cursor-pointer text-zinc-400"
+            onClick={() => setExpanded(true)}
+          >
+            More ({decoded.bytes.length / 2 - 1} B total)
+          </button>
+        </div>
+      )
+    }
+    const isCallLike = (decoded.bytes.length - 10) % 64 === 0
+    return (
+      <div>
+        {nameElement}
+        <button
+          className="cursor-pointer text-zinc-400"
+          onClick={() => setExpanded(false)}
+        >
+          Less ({decoded.bytes.length / 2 - 1} B total)
+        </button>
+        <div className="pl-4">
+          <span
+            className={clsx(
+              'block break-all font-mono',
+              isCallLike
+                ? 'max-w-[74ch] pl-[10ch] indent-[-10ch]'
+                : 'max-w-[66ch] pl-[2ch] indent-[-2ch]',
+            )}
+          >
+            {decoded.bytes}
+          </span>
+          <button
+            className="cursor-pointer text-zinc-400"
+            onClick={() => setExpanded(false)}
+          >
+            Less ({decoded.bytes.length / 2 - 1} B total)
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
       {nameElement}
@@ -315,7 +373,7 @@ function DisplayAddress(props: {
       )}
       <span className="cursor-pointer select-none font-mono text-blue-400">
         {chain?.shortName && <small>{chain.shortName}:</small>}
-        {start}&#8230;{end}
+        {start}…{end}
       </span>
     </span>
   )
