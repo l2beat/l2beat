@@ -32,7 +32,7 @@ export const STATE_FP_1R: ProjectScalingRiskView['stateValidation'] = {
 
 export function STATE_FP_INT(
   challengePeriodSeconds?: number,
-  executionDelaySeconds: number = 0,
+  executionDelaySeconds = 0,
   executionDelayMode?: 'always' | 'if-challenged',
 ): ProjectScalingRiskView['stateValidation'] {
   return {

@@ -34,76 +34,76 @@ export function OptimisticProofSystemCell({
         <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
         <div className="flex items-center gap-1.5">
           {zkCatalog && (
-          <Tooltip>
-            <TooltipTrigger>
-              <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-                <Badge
-                  type={
-                    isMixed || hasNotVerified
-                      ? 'gray'
-                      : hasSuccessful
-                        ? 'green'
+            <Tooltip>
+              <TooltipTrigger>
+                <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+                  <Badge
+                    type={
+                      isMixed || hasNotVerified
+                        ? 'gray'
+                        : hasSuccessful
+                          ? 'green'
+                          : hasUnsuccessful
+                            ? 'error'
+                            : null
+                    }
+                    className={cn(
+                      'flex items-center gap-1',
+                      isMixed || hasNotVerified
+                        ? 'border-divider! bg-surface-secondary! text-primary'
                         : hasUnsuccessful
-                          ? 'error'
-                          : null
-                  }
-                  className={cn(
-                    'flex items-center gap-1',
-                    isMixed || hasNotVerified
-                      ? 'border-divider! bg-surface-secondary! text-primary'
-                      : hasUnsuccessful
-                        ? 'border border-negative'
-                        : null,
+                          ? 'border border-negative'
+                          : null,
+                    )}
+                  >
+                    {zkCatalog.name}
+                    {hasSuccessful && <VerifiedIcon className="size-4" />}
+                    {hasNotVerified && (
+                      <CircleQuestionMarkIcon className="size-4" />
+                    )}
+                    {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
+                  </Badge>
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="text-label-value-15 md:text-label-value-16">
+                  The project uses {zkCatalog.name} prover.
+                </p>
+                <div className="mt-2 flex flex-col gap-2">
+                  {hasSuccessful && (
+                    <Callout
+                      color="green"
+                      small
+                      icon={<VerifiedIcon className="mt-px size-4" />}
+                      className="p-2"
+                      body={getSuccessfulText(zkCatalog.successful)}
+                    />
                   )}
-                >
-                  {zkCatalog.name}
-                  {hasSuccessful && <VerifiedIcon className="size-4" />}
                   {hasNotVerified && (
-                    <CircleQuestionMarkIcon className="size-4" />
+                    <Callout
+                      color="gray"
+                      small
+                      className="p-2"
+                      icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
+                      body={getNotVerifiedText(zkCatalog.notVerified)}
+                    />
                   )}
-                  {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
-                </Badge>
-              </a>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p className="text-label-value-15 md:text-label-value-16">
-                The project uses {zkCatalog.name} prover.
-              </p>
-              <div className="mt-2 flex flex-col gap-2">
-                {hasSuccessful && (
-                  <Callout
-                    color="green"
-                    small
-                    icon={<VerifiedIcon className="mt-px size-4" />}
-                    className="p-2"
-                    body={getSuccessfulText(zkCatalog.successful)}
-                  />
-                )}
-                {hasNotVerified && (
-                  <Callout
-                    color="gray"
-                    small
-                    className="p-2"
-                    icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
-                    body={getNotVerifiedText(zkCatalog.notVerified)}
-                  />
-                )}
-                {hasUnsuccessful && (
-                  <Callout
-                    color="red"
-                    small
-                    className="p-2"
-                    icon={<UnverifiedIcon className="mt-px size-4" />}
-                    body={getUnsuccessfulText(zkCatalog.unsuccessful)}
-                  />
-                )}
-              </div>
-              <p className="mt-2 text-label-value-13 text-secondary">
-                Click to view details
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
+                  {hasUnsuccessful && (
+                    <Callout
+                      color="red"
+                      small
+                      className="p-2"
+                      icon={<UnverifiedIcon className="mt-px size-4" />}
+                      body={getUnsuccessfulText(zkCatalog.unsuccessful)}
+                    />
+                  )}
+                </div>
+                <p className="mt-2 text-label-value-13 text-secondary">
+                  Click to view details
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          )}
           {proofSystem?.challengeProtocol && (
             <Tooltip>
               <TooltipTrigger>

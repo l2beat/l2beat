@@ -23,8 +23,7 @@ function defenderAdvantageLine(
   if (da === undefined || da === 'not-applicable' || da === 'not-assessed')
     return undefined
   if (da.shape === 'log') return 'Favors defender (log)'
-  if (da.multiplier >= 1)
-    return `Favors defender ${da.multiplier.toFixed(2)}×`
+  if (da.multiplier >= 1) return `Favors defender ${da.multiplier.toFixed(2)}×`
   return `Favors attacker ${(1 / da.multiplier).toFixed(2)}×`
 }
 

@@ -7,11 +7,11 @@ import {
 import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
+  computeBoldDefenderAdvantage,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
   UPGRADE_MECHANISM,
-  computeBoldDefenderAdvantage,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
