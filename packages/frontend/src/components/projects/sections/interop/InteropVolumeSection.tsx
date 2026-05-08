@@ -136,7 +136,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         </div>
       )}
       {chainA && (
-        <div className="grid grid-cols-1 gap-2 max-lg:order-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 max-lg:order-3 md:grid-cols-2 md:grid-rows-2 md:[&>*:first-child]:row-span-2">
           {visibleHighlightedChains.length === 1 && (
             <SingleChainStats
               chainId={chainA.id}
