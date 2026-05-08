@@ -10,9 +10,8 @@
     "blockNumber": 23975101
   },
   "SuperchainConfig_boba": {
-    "hash": "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b",
+    "hash": "0x4b6112b20005468606b7ad8a57a804691831c75294e9c4285fb4ec919dc97adb",
     "address": "eth:0xCe28685EB204186b557133766eCA00334EB441E4",
-    "chain": "ethereum",
     "blockNumber": 25030000
   }
 }

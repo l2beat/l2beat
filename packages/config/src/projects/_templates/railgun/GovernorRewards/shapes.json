@@ -1,8 +1,7 @@
 {
   "GovernorRewards": {
-    "hash": "0xd1b675b1a03700c03440f776180470c3a967a7ef2e7cbe7a6f2cb9d75c4ea8ad",
+    "hash": "0x6719d1d65fb919b52e894f249bcbbde8d2fddde75de20893e50e1b96ec608f06",
     "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-    "chain": "ethereum",
     "blockNumber": 16445969
   }
 }

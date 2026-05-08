@@ -1,8 +1,7 @@
 {
   "RailgunSmartWallet": {
-    "hash": "0xcf70d21ec20aa9f668a3d77681b3214b2b7aab73bc22211bf503612e1be5b813",
+    "hash": "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
     "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-    "chain": "ethereum",
     "blockNumber": 14693013
   }
 }

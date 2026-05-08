@@ -2,7 +2,6 @@
   "GasCompensationVault": {
     "hash": "0xabc0a896c211941058cb90aa8fdf4cfc36bc0eb6416a410b0368e266c17abcf9",
     "address": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }
