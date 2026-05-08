@@ -10,9 +10,9 @@ import {
   TotalVolumeWidget,
 } from './components/FrameworkTotalsWidgets'
 import { FrameworkTransferSizeWidget } from './components/FrameworkTransferSizeWidget'
-import { FrameworkTransferSpeedWidget } from './components/FrameworkTransferSpeedWidget'
 import { TokenFrameworksChainSelector } from './components/TokenFrameworksChainSelector'
 import { TopTokensWidget } from './components/TopTokensWidget'
+import { FrameworkTransferSpeedWidget } from './components/transfer-speed/FrameworkTransferSpeedWidget'
 import type { InteropTokenFramework } from './getInteropTokenFrameworksData'
 import { TokenFrameworksSelectedChainsProvider } from './utils/TokenFrameworksSelectedChainsContext'
 
