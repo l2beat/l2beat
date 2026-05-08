@@ -143,19 +143,26 @@ export function Form(props: FormProps) {
 
 function FormExamples(props: { setHash: (hash: string) => void }) {
   if (process.env.NODE_ENV === 'production') return null
+  const h = (hash: string) => () => props.setHash(hash)
   return (
     <>
       <h2>Examples:</h2>
       <ul>
         <li
           className="cursor-pointer text-blue-400"
-          onClick={() =>
-            props.setHash(
-              '0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770',
-            )
-          }
+          onClick={h(
+            '0x079984c56c5670108f5c6f664904178f9b364340351949a42e4637d1f645f770',
+          )}
         >
-          <span>Arbitrum KelpDAO rescue</span>
+          Arbitrum KelpDAO rescue
+        </li>
+        <li
+          className="cursor-pointer text-blue-400"
+          onClick={h(
+            '0x4abd06966262345c8c7bc536c65cfb6c250c7f7f75f48aad6f9abf61cad7e965',
+          )}
+        >
+          Scroll SC upgrade
         </li>
       </ul>
     </>

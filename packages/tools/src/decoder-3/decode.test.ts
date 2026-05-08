@@ -325,6 +325,28 @@ describe(decodeType.name, () => {
       extra: '0xdeadbeef',
     })
   })
+
+  it('(uint _ugly, uint _)', () => {
+    const e = encode('(uint _ugly, uint _)', [1n, 2n])
+    const d = decodeType('(uint _ugly, uint _)', e)
+    expect(d).toEqual({
+      type: parseType('(uint _ugly, uint _)'),
+      bytes: e,
+      value: '',
+      members: [
+        {
+          name: 'ugly',
+          type: parseType('uint _ugly'),
+          encoded: encode('uint', 1n),
+        },
+        {
+          name: '_',
+          type: parseType('uint _'),
+          encoded: encode('uint256', 2n),
+        },
+      ],
+    })
+  })
 })
 
 function encode(type: string, value: unknown): `0x${string}` {

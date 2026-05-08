@@ -63,13 +63,13 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
         const end = dynamicOffsets.find((x, j) => j > i && x !== undefined)
         offset = end ?? -1
         return {
-          name: e.name ?? i.toString(),
+          name: memberName(e.name, i),
           type: e,
           encoded: sliceBytes(encoded, start, end),
         }
       }
       // biome-ignore lint/style/noNonNullAssertion: It's there
-      return { name: e.name ?? i.toString(), type: e, encoded: staticData[i]! }
+      return { name: memberName(e.name, i), type: e, encoded: staticData[i]! }
     })
     if (!hasDynamic) {
       const extra = sliceBytes(encoded, offset)
@@ -132,6 +132,13 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
     return { ...common, bytes, value: bytes }
   }
   throw new Error(`Invalid type: ${type.type}`)
+}
+
+function memberName(name: string | undefined, index: number) {
+  if (name) {
+    return name.startsWith('_') && name !== '_' ? name.slice(1) : name
+  }
+  return index.toString()
 }
 
 function decodeUint(type: string, encoded: `0x${string}`) {

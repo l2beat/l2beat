@@ -193,7 +193,8 @@ interface DecodedViewProps {
 function DecodedView(props: DecodedViewProps) {
   const store = useStore()
   const [decoded, setDecoded] = useState<DecodedValue>()
-  const [expanded, setExpanded] = useState(false)
+  const [moreBytes, setMoreBytes] = useState(false)
+  const [lessMembers, setLessMembers] = useState(false)
 
   useEffect(() => {
     console.log({
@@ -247,33 +248,61 @@ function DecodedView(props: DecodedViewProps) {
     </>
   )
 
+  const members = decoded.members && decoded.members.length > 0 && (
+    <>
+      <button
+        className="text-zinc-500"
+        onClick={() => setLessMembers(!lessMembers)}
+      >
+        {lessMembers ? `[+ ${decoded.members.length} items]` : '[-]'}
+      </button>
+      <ol className={clsx('pl-4', lessMembers && 'hidden')}>
+        {decoded.members.map((m, i) => (
+          <li key={i}>
+            <DecodedView
+              name={m.name}
+              encoded={m.encoded}
+              type={m.type}
+              chainId={props.chainId}
+            />
+          </li>
+        ))}
+      </ol>
+    </>
+  )
+
   if (decoded.type.function) {
     return (
-      <div>
+      <div className="group">
         {nameElement}
         <DisplayAddress address={props.address} chainId={props.chainId} />
         <span className="text-zinc-300">.</span>
         <span className="text-orange-400">{decoded.type.name}</span>
-        {decoded.members && decoded.members.length > 0 ? (
-          <>
-            <span className="text-zinc-300">(</span>
-            <ol className="pl-4">
-              {decoded.members.map((m, i) => (
-                <li key={i}>
-                  <DecodedView
-                    name={m.name}
-                    encoded={m.encoded}
-                    type={m.type}
-                    chainId={props.chainId}
-                  />
-                </li>
-              ))}
-            </ol>
-            <span className="text-zinc-300">)</span>
-          </>
-        ) : (
-          <span className="text-zinc-300">()</span>
-        )}
+        <span className="text-zinc-300">(</span>
+        {members}
+        <span className="text-zinc-300">)</span>
+      </div>
+    )
+  }
+
+  if (decoded.type.arrayElement) {
+    return (
+      <div className="group">
+        {nameElement}
+        <span className="text-zinc-300">[</span>
+        {members}
+        <span className="text-zinc-300">]</span>
+      </div>
+    )
+  }
+
+  if (decoded.type.tupleElements) {
+    return (
+      <div className="group">
+        {nameElement}
+        <span className="text-zinc-300">{'{'}</span>
+        {members}
+        <span className="text-zinc-300">{'}'}</span>
       </div>
     )
   }
@@ -288,16 +317,16 @@ function DecodedView(props: DecodedViewProps) {
       )
     }
 
-    if (!expanded) {
+    if (!moreBytes) {
       return (
         <div>
           {nameElement}
           <code>{decoded.bytes.slice(0, 66)}…</code>
           <button
-            className="ml-2 cursor-pointer text-zinc-400"
-            onClick={() => setExpanded(true)}
+            className="ml-2 cursor-pointer text-zinc-500"
+            onClick={() => setMoreBytes(true)}
           >
-            More ({decoded.bytes.length / 2 - 1} B total)
+            [+ {decoded.bytes.length / 2 - 1} B]
           </button>
         </div>
       )
@@ -307,10 +336,10 @@ function DecodedView(props: DecodedViewProps) {
       <div>
         {nameElement}
         <button
-          className="cursor-pointer text-zinc-400"
-          onClick={() => setExpanded(false)}
+          className="cursor-pointer text-zinc-500"
+          onClick={() => setMoreBytes(false)}
         >
-          Less ({decoded.bytes.length / 2 - 1} B total)
+          [-]
         </button>
         <div className="pl-4">
           <span
@@ -323,12 +352,6 @@ function DecodedView(props: DecodedViewProps) {
           >
             {decoded.bytes}
           </span>
-          <button
-            className="cursor-pointer text-zinc-400"
-            onClick={() => setExpanded(false)}
-          >
-            Less ({decoded.bytes.length / 2 - 1} B total)
-          </button>
         </div>
       </div>
     )
