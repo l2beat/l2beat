@@ -173,9 +173,7 @@ export const fluent: ScalingProject = {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
       value: 'TEE attestations',
-      description:
-        "Fluent ships an optimistic-with-SP1 design: batches are preconfirmed by an AWS Nitro Enclave (whose signing key is authorized onchain only after an SP1 proof verifies AWS's attestation document for that key and that the document's PCR0 — a fingerprint of the enclave image — matches the expected audited value), and SP1 ZK proofs are accepted as responses to disputes raised by holders of the CHALLENGER_ROLE. " +
-        `In practice the role currently has no holders: challengeBatchRoot and challengeBlock are gated by onlyRole(CHALLENGER_ROLE), and the only path that flips a block to proven is resolveBlockChallenge (which itself requires an active challenge). With no challenger, no SP1 proof can be submitted onchain and finalizeWithProofs reverts, so every batch finalizes purely on the time-based path after ${formatSeconds(finalizationDelay)}. Effective security reduces to trust the TEE and wait the delay until the admin grants the role.`,
+      description: `State roots are accepted on the basis of an AWS Nitro Enclave preconfirmation and a ${formatSeconds(finalizationDelay)} time delay; the SP1 ZK proof system exists in the contracts but is currently unreachable because CHALLENGER_ROLE has no holders. Effective security reduces to trust the TEE and wait the delay. See the State Validation section below for details.`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
@@ -186,7 +184,11 @@ export const fluent: ScalingProject = {
     categories: [
       {
         title: 'Challenges',
-        description: `Fluent runs an optimistic batch lifecycle backed by SP1 ZK proofs for dispute resolution. (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch with an ECDSA signature whose key was admitted onchain only after an SP1 proof verified AWS's attestation document for that key and that the document's PCR0 (a fingerprint of the enclave image) matches the expected (audited) value; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER_ROLE\` can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`). The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
+        description: `Fluent runs an optimistic batch lifecycle backed by SP1 ZK proofs for dispute resolution. (1) the sequencer commits a batch root via \`commitBatch\`; (2) EIP-4844 blob hashes are pinned via \`submitBlobs\`; (3) an AWS Nitro Enclave preconfirms the batch with an ECDSA signature whose key was admitted onchain only after an SP1 proof verified AWS's attestation document for that key and that the document's PCR0 (a fingerprint of the enclave image) matches the expected (audited) value; (4) within ${formatSeconds(challengeWindow)} of acceptance, addresses with the \`CHALLENGER_ROLE\` can dispute via \`challengeBatchRoot\` or \`challengeBlock\` and the prover must resolve each challenge with an SP1 proof before the same window closes; (5) batches finalize either after a ${formatSeconds(finalizationDelay)} L1 delay (\`finalizeBatches\`, no proof needed in the happy path) or immediately once all challenged blocks are proven (\`finalizeWithProofs\`).
+
+Currently \`CHALLENGER_ROLE\` has no holders, so \`challengeBatchRoot\` and \`challengeBlock\` cannot be invoked. Because \`_provenBlocks\` is only populated inside \`resolveBlockChallenge\` (which itself requires an active challenge), no SP1 proof can be submitted onchain in this state and \`finalizeWithProofs\` reverts. Every batch therefore finalizes purely through the time-based path, and effective security reduces to trust the TEE plus the ${formatSeconds(finalizationDelay)} delay until the admin grants the role.
+
+The \`PROVER\`, \`EMERGENCY\`, and \`CHALLENGER\` roles on the Rollup are gated by access control; see the Permissions section for the current holders.`,
         references: [
           {
             title: 'Fluent Rollup Architecture',
