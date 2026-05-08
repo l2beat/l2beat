@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8b83cdad2b61e4f006a0b276653f9a2e2e94ee3a
+
+# Diff at Fri, 08 May 2026 09:37:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1765379686
+- current timestamp: 1778233010
+
+## Description
+
+SequencerInbox (`arb-nova:0xe347C122...`) — `maxTimeVariation` widened 10x: `delayBlocks` 5,760 → 57,600 and `delaySeconds` 86,400 → 864,000 (24h → 240h / 10 days). Materially more leeway for the sequencer to delay/reorder forced inbox messages.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        57600
+      values.maxTimeVariation.delaySeconds:
+-        86400
++        864000
+    }
+```
+
 Generated with discovered.json: 0x6ad108584ca685aa6585973e4f232699d5d64408
 
 # Diff at Fri, 08 May 2026 07:51:46 GMT:

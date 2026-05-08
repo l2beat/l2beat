@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf031b5d8dcf40925bf2791d377a2c99b64e07519
+
+# Diff at Fri, 08 May 2026 09:36:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1776422736
+- current timestamp: 1778232916
+
+## Description
+
+Shared Safe (`eth:0x6Dc61D9E...`) — signer `0x5582a8A4` removed. Threshold unchanged at 2; total signers 4 → 3 (50% → 67%). Same shared multisig is referenced on `apechain`, `molten`, `rari` (arb1 deployments).
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x4bfc8c730d71d84451644fdd17826a7abed9fa63
 
 # Diff at Fri, 08 May 2026 07:51:03 GMT:

@@ -1,8 +1,18 @@
 {
   "name": "apechain",
-  "timestamp": 1770822607,
+  "timestamp": 1778232906,
   "configHash": "0x2e012665f91cb90c6b62b837bbf1a3d03f6818319570417fbff15be0b55c40b9",
   "entries": [
+    {
+      "address": "arb1:0x00591eb8Be46684a32a1B0B3fb1AC5Ef09B414e6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x007e3a37dd3d34C51De4407B2da992722d331db2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "arb1:0x00B0bC28380B470f5916b10AA2d453a233DE5d85",
       "type": "EOA",
@@ -10,6 +20,11 @@
     },
     {
       "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x03b0B696aab6985db9a15CFD8f566b7Def5c7446",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -45,12 +60,37 @@
           "arb1:0x723a034bE94323747Fc3321992C679a1EB00de1F",
           "arb1:0x99bB093821cbD1Ae99DA0AF1ef6787e116a22e41",
           "arb1:0xf74dE607db52BBeDc6CDB2E420082c15fCBB9b3E",
-          "arb1:0x0619eA103A0EE6BAdb95E101c57ea52aAAac0b99"
+          "arb1:0x0619eA103A0EE6BAdb95E101c57ea52aAAac0b99",
+          "arb1:0x271081b59e43e45AFAfa373B05c90b48f3642c1A",
+          "arb1:0xBc1c855815EA37e236bFC751aE1D717D9C4DD632",
+          "arb1:0x8f774Af6Ffa2A4C75050D24e15B5Dd1b784F7622",
+          "arb1:0x7989407ef8057B0D7431f6776Bf5A08e74517367",
+          "arb1:0x007e3a37dd3d34C51De4407B2da992722d331db2",
+          "arb1:0xb41507cB17E5C390333F9D2e84EC458D603AAB21",
+          "arb1:0xcaEF18CBEa2f174EF84297EC66235D1d6a8859a6",
+          "arb1:0x92BB2444773f5c286259B57821a577eF8DF79aC6",
+          "arb1:0x00591eb8Be46684a32a1B0B3fb1AC5Ef09B414e6",
+          "arb1:0xAAF1c577bcB1902B303F511C3eC28796f6B0E4ee",
+          "arb1:0x0861019EC2C7f4946Fac8e0c82707c6C4E1291cA",
+          "arb1:0x68B8d5EbC351A8B477D7F2AA5f478830bD5dd858",
+          "arb1:0x8bb3dBe51f4E3d754d34ce5CE34B0Fd5E37A203f",
+          "arb1:0xF3B6e1F39ec0d4Fb9cA6C1F1bF552A2a87C99DBD",
+          "arb1:0x787556312EF04040EE2C627ed74EEAdffe1f19E0",
+          "arb1:0x5d410ec53dFC5bf6e821c4f908af1480DF5Fdfe0",
+          "arb1:0x85bC32aD27D73dA5A4038107B830d32621c3c434",
+          "arb1:0x84c0262941e77Ed3A2231b2C17465F01EE43C878",
+          "arb1:0x03b0B696aab6985db9a15CFD8f566b7Def5c7446",
+          "arb1:0xa33F7fE4F9c2462F84675a0958960906D62655B2",
+          "arb1:0x14D6aA8F8E0D0b3fe7427a04122A61ebc441ECA4"
         ],
         "validEnclaveHashes": [
           "0x38ac1d01767230812dbfb944356ebc69bc5642f938f9f86392cd761549e58dc0",
           "0x0f4604a024c66fe26fbbc6781a127cc8c2041feed8845e8b54ad182e7cd4669e",
-          "0x416422a7f57fa1bdc9748c88c38602aef08c87eb474a32827f90fe46ff734d0d"
+          "0x416422a7f57fa1bdc9748c88c38602aef08c87eb474a32827f90fe46ff734d0d",
+          "0x191af03e97910937ea51b58aa61f5a9191960abca0ed381f9313da365b91df1a",
+          "0xfb1d77a88ba8e01ad8c120f017e79fb4bc1429fd9b62d5681ebca927b94baffc",
+          "0xa953e4e32a1a1da51fe05de9eef8d26d69999bc9e30541e5d8fc882024d91093",
+          "0x6ca7d50cbf3858e181ea4fbd7c9347eb162b3262fe20cd1c2861ae7c70bc2951"
         ]
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
@@ -60,6 +100,16 @@
     },
     {
       "address": "arb1:0x0619eA103A0EE6BAdb95E101c57ea52aAAac0b99",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x0861019EC2C7f4946Fac8e0c82707c6C4E1291cA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x14D6aA8F8E0D0b3fe7427a04122A61ebc441ECA4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -162,6 +212,11 @@
       "implementationNames": {
         "arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507": "ProxyAdmin"
       }
+    },
+    {
+      "address": "arb1:0x271081b59e43e45AFAfa373B05c90b48f3642c1A",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CertManager",
@@ -312,7 +367,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -372,13 +427,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 12367,
+        "firstUnresolvedNode": 14368,
         "inbox": "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20628667,
-        "latestConfirmed": 12366,
-        "latestNodeCreated": 12518,
+        "latestConfirmed": 14367,
+        "latestNodeCreated": 14518,
         "loserStakeEscrow": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF",
@@ -608,12 +663,12 @@
       }
     },
     {
-      "address": "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
+      "address": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "arb1:0x5737CDBb3a67001441C0DA8b86e6b1826705601c",
+      "address": "arb1:0x5d410ec53dFC5bf6e821c4f908af1480DF5Fdfe0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -634,6 +689,11 @@
     },
     {
       "address": "arb1:0x65c10dD3d50B10D0E1Bb459675b03367B1b52eD1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x68B8d5EbC351A8B477D7F2AA5f478830bD5dd858",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -698,7 +758,7 @@
         "allowedOutboxList": [
           "arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"
         ],
-        "delayedMessageCount": 1232,
+        "delayedMessageCount": 1242,
         "inboxHistory": [
           "arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15",
           "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F",
@@ -709,8 +769,8 @@
         "outboxHistory": ["arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF"],
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerInbox": "arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C",
-        "sequencerMessageCount": 73928,
-        "sequencerReportedSubMessageCount": 33591644
+        "sequencerMessageCount": 76047,
+        "sequencerReportedSubMessageCount": 37674335
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -775,7 +835,6 @@
         "$implementation": "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
           "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63",
-          "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6",
           "arb1:0x5E768dd03BD821703ef825e057434De85913EEAC",
           "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f"
         ],
@@ -783,8 +842,8 @@
         "domainSeparator": "0xe9d88a0c16a72a228eb14e40bc8da2e839d32257df5479740ffc147dcb6a414c",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 23,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -798,7 +857,27 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0x787556312EF04040EE2C627ed74EEAdffe1f19E0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x7989407ef8057B0D7431f6776Bf5A08e74517367",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x83F58bBB1a940E364ED2dE775D1FD5218135cCE3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x84c0262941e77Ed3A2231b2C17465F01EE43C878",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x85bC32aD27D73dA5A4038107B830d32621c3c434",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -826,7 +905,22 @@
       }
     },
     {
+      "address": "arb1:0x8bb3dBe51f4E3d754d34ce5CE34B0Fd5E37A203f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x8f774Af6Ffa2A4C75050D24e15B5Dd1b784F7622",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0x9173d4E736A1625400a8711E08A5d9C20A7c9131",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0x92BB2444773f5c286259B57821a577eF8DF79aC6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -876,6 +970,16 @@
       "implementationNames": {
         "arb1:0xa3180c7a17dd46DEf808477093592D8231e024a8": "OneStepProofEntry"
       }
+    },
+    {
+      "address": "arb1:0xa33F7fE4F9c2462F84675a0958960906D62655B2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xAAF1c577bcB1902B303F511C3eC28796f6B0E4ee",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ChallengeManager",
@@ -946,6 +1050,11 @@
       ]
     },
     {
+      "address": "arb1:0xb41507cB17E5C390333F9D2e84EC458D603AAB21",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xB5D61FF9a82703cf8edC4CEA8CEbd48a30FC1491",
       "type": "EOA",
       "proxyType": "EOA"
@@ -957,6 +1066,11 @@
     },
     {
       "address": "arb1:0xb9e40b6E60CcD5361774cf4D36d1fCe66B649b63",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xBc1c855815EA37e236bFC751aE1D717D9C4DD632",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1020,6 +1134,11 @@
     },
     {
       "address": "arb1:0xCA4b5B2bd05853bd81d8dE4b1F0877955205510e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "arb1:0xcaEF18CBEa2f174EF84297EC66235D1d6a8859a6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1151,7 +1270,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 73928,
+        "batchCount": 76047,
         "batchPosterManager": "arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B",
         "batchPosters": ["arb1:0x3918b6ecc471211a942B0A904fbFb36302348f6B"],
         "bridge": "arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8",
@@ -1188,7 +1307,7 @@
         "rollup": "arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1232,
+        "totalDelayedMessagesRead": 1242,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1235,6 +1354,11 @@
         "arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F": "TransparentUpgradeableProxy",
         "arb1:0xF088dccfD7d39b24Ce0D4c91a4fEC3F56e3DBC96": "ERC20RollupEventInbox"
       }
+    },
+    {
+      "address": "arb1:0xF3B6e1F39ec0d4Fb9cA6C1F1bF552A2a87C99DBD",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xf74dE607db52BBeDc6CDB2E420082c15fCBB9b3E",
@@ -2012,6 +2136,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 431005210 },
-  "permissionsConfigHash": "0xc17fc95fa51d5b9431efe59d66a703c3785a9e1ef29ef3b56ca60c9e2844f633"
+  "usedBlockNumbers": { "arbitrum": 460628803 },
+  "permissionsConfigHash": "0xcb04e7d8e977ad8799452ba4b0234f40ab6c447b88bc486dab6c64f117bdab8a"
 }
