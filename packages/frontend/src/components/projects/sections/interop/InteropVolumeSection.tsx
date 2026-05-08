@@ -141,6 +141,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
             <SingleChainStats
               chainId={chainA.id}
               selectedChains={selectedChains}
+              hideTopProtocols
             />
           )}
           {visibleHighlightedChains.length === 2 && chainB && (
@@ -148,6 +149,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
               chainIdA={chainA.id}
               chainIdB={chainB.id}
               selectedChains={selectedChains}
+              hideTopProtocols
             />
           )}
         </div>
