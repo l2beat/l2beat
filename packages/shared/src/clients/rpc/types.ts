@@ -113,7 +113,7 @@ const _EVMBlock = {
   parentBeaconBlockRoot: z.string().optional(),
 }
 export type EVMBlock = z.infer<typeof EVMBlock>
-const EVMBlock = z.object(_EVMBlock)
+export const EVMBlock = z.object(_EVMBlock)
 
 export const EVMBlockResponse = z.object({
   result: EVMBlock,

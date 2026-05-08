@@ -23,10 +23,11 @@ interface PrivacyFlowIndexerDeps
   blockProvider: BlockProvider
   logsProvider: LogsProvider
   db: Database
-  batchSize: number
 }
 
 export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerConfig> {
+  private readonly blockTimestampCache = new Map<number, UnixTime>()
+
   constructor(
     private readonly $: PrivacyFlowIndexerDeps,
     logger: Logger,
@@ -50,31 +51,17 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     to: number,
     configurations: Configuration<PrivacyFlowIndexerConfig>[],
   ) {
-    const adjustedTo = Math.min(to, from + this.$.batchSize - 1)
-
     this.logger.info('Fetching privacy flow logs', {
       from,
-      to: adjustedTo,
+      to,
       configurations: configurations.length,
     })
 
-    const groups = groupConfigurationsByFilter(configurations)
-    const records: PrivacyFlowEventRecord[] = []
-    const blockTimestampCache = new Map<number, Promise<UnixTime>>()
-
-    for (const [_, groupConfigs] of groups) {
-      const groupRecords = await this.fetchRecordsForGroup(
-        groupConfigs,
-        from,
-        adjustedTo,
-        blockTimestampCache,
-      )
-      records.push(...groupRecords)
-    }
+    const records = await this.fetchRecordsForGroup(configurations, from, to)
 
     this.logger.info('Fetched privacy flow logs', {
       from,
-      to: adjustedTo,
+      to,
       records: records.length,
     })
 
@@ -83,11 +70,11 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
 
       this.logger.info('Saved privacy flow events into DB', {
         from,
-        to: adjustedTo,
+        to,
         records: records.length,
       })
 
-      return adjustedTo
+      return to
     }
   }
 
@@ -117,27 +104,71 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     configurations: Configuration<PrivacyFlowIndexerConfig>[],
     from: number,
     to: number,
-    blockTimestampCache: Map<number, Promise<UnixTime>>,
   ): Promise<PrivacyFlowEventRecord[]> {
     if (configurations.length === 0) return []
 
-    const source = configurations[0].properties
-    const logs = await this.$.logsProvider.getLogs(
-      from,
-      to,
-      source.address ? [source.address.toString()] : undefined,
-      [source.event],
+    const hourFrom = UnixTime.toStartOf(from, 'hour')
+    const hourTo = UnixTime.toStartOf(to, 'hour')
+
+    const blockFrom =
+      await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
+        this.$.chain,
+        hourFrom,
+      )
+    const blockTo =
+      await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
+        this.$.chain,
+        hourTo,
+      )
+
+    assert(
+      blockFrom !== undefined && blockTo !== undefined,
+      `Missing block timestamp mapping for ${this.$.chain}: from=${hourFrom} to=${hourTo}`,
     )
 
-    const records: PrivacyFlowEventRecord[] = []
+    const { addresses, events } = buildLogFilter(configurations)
+    const logs = await this.$.logsProvider.getLogs(
+      blockFrom,
+      blockTo,
+      addresses,
+      events,
+    )
+
+    const blockNumbers = new Set<number>(logs.map((l) => l.blockNumber))
+    const blockTimestampLookup = await this.buildBlockTimestampLookup(
+      Array.from(blockNumbers),
+    )
+
+    const configMap = buildConfigMap(configurations)
+    const rawRecords = this.extractRawRecords(
+      logs,
+      configMap,
+      blockTimestampLookup,
+    )
+
+    if (rawRecords.length === 0) return []
+
+    const priceLookup = await this.buildPriceLookup(rawRecords)
+    return this.buildRecords(rawRecords, priceLookup)
+  }
+
+  private extractRawRecords(
+    logs: Log[],
+    configMap: Map<string, Configuration<PrivacyFlowIndexerConfig>[]>,
+    blockTimestampLookup: Map<number, UnixTime>,
+  ): RawRecord[] {
+    const rawRecords: RawRecord[] = []
 
     for (const log of logs) {
-      for (const configuration of configurations) {
+      const key = `${log.address.toLowerCase()}:${log.topics[0]?.toLowerCase() ?? ''}`
+      const matching = configMap.get(key) ?? []
+
+      for (const configuration of matching) {
         let result: { count: number; amount: bigint } | undefined
         try {
           result = extractPrivacyFlow(configuration.properties, log)
         } catch (error) {
-          this.logger.warn('Failed to extract privacy flow from log', {
+          this.logger.error('Failed to extract privacy flow from log', {
             configurationId: configuration.id,
             blockNumber: log.blockNumber,
             txHash: log.transactionHash,
@@ -151,58 +182,123 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
           continue
         }
 
-        const timestamp = await this.getBlockTimestamp(log, blockTimestampCache)
-
-        records.push({
-          configurationId: configuration.id,
-          projectId: configuration.properties.projectId,
-          assetKey: configuration.properties.assetKey,
-          bucketId: configuration.properties.bucketId,
-          chain: configuration.properties.chain,
-          direction: configuration.properties.direction,
+        const timestamp = blockTimestampLookup.get(log.blockNumber)
+        assert(
           timestamp,
-          blockNumber: log.blockNumber,
-          txHash: log.transactionHash,
-          logIndex: log.logIndex,
+          `Missing block timestamp for block ${log.blockNumber}`,
+        )
+
+        rawRecords.push({
+          configuration,
+          log,
           count: result.count,
           amount: result.amount,
+          timestamp,
         })
       }
     }
 
-    return records
+    return rawRecords
   }
 
-  private async getBlockTimestamp(
-    log: Log,
-    cache: Map<number, Promise<UnixTime>>,
-  ): Promise<UnixTime> {
-    const cached = cache.get(log.blockNumber)
-    if (cached) return await cached
+  private buildRecords(
+    rawRecords: RawRecord[],
+    priceLookup: Map<string, number>,
+  ): PrivacyFlowEventRecord[] {
+    return rawRecords.map((raw) => {
+      const config = raw.configuration.properties
+      const hourTimestamp = UnixTime.toStartOf(raw.timestamp, 'hour')
+      const price = priceLookup.get(`${config.priceId}:${hourTimestamp}`)
+      assert(
+        price !== undefined,
+        `Missing price for ${config.priceId} at ${hourTimestamp}`,
+      )
+      const valueUsd = (Number(raw.amount) * price) / 10 ** config.decimals
 
-    const promise = this.$.blockProvider
-      .getBlockWithTransactions(log.blockNumber)
-      .then((block) => {
-        assert(
-          block.number === log.blockNumber,
-          `Expected block ${log.blockNumber}, got ${block.number}`,
-        )
-        return UnixTime(block.timestamp)
-      })
+      return {
+        configurationId: raw.configuration.id,
+        projectId: config.projectId,
+        bucketId: config.bucketId,
+        chain: config.chain,
+        direction: config.direction,
+        timestamp: raw.timestamp,
+        blockNumber: raw.log.blockNumber,
+        txHash: raw.log.transactionHash,
+        logIndex: raw.log.logIndex,
+        count: raw.count,
+        amount: raw.amount,
+        priceId: config.priceId,
+        valueUsd,
+      }
+    })
+  }
 
-    cache.set(log.blockNumber, promise)
-    return await promise
+  private async buildPriceLookup(
+    rawRecords: {
+      configuration: Configuration<PrivacyFlowIndexerConfig>
+      timestamp: UnixTime
+    }[],
+  ): Promise<Map<string, number>> {
+    const priceIds = new Set(
+      rawRecords.map((r) => r.configuration.properties.priceId),
+    )
+    const timestamps = rawRecords.map((r) => r.timestamp)
+    const minTimestamp = UnixTime.toStartOf(Math.min(...timestamps), 'hour')
+    const maxTimestamp = UnixTime.toStartOf(Math.max(...timestamps), 'hour')
+
+    const lookup = new Map<string, number>()
+
+    const priceResults = await Promise.all(
+      Array.from(priceIds).map((priceId) =>
+        this.$.db.privacyPrice
+          .getPricesByPriceIdInRange(priceId, minTimestamp, maxTimestamp)
+          .then((prices) => ({ priceId, prices })),
+      ),
+    )
+
+    for (const { priceId, prices } of priceResults) {
+      for (const price of prices) {
+        lookup.set(`${priceId}:${price.timestamp}`, price.priceUsd)
+      }
+    }
+
+    return lookup
+  }
+
+  private async buildBlockTimestampLookup(
+    blockNumbers: number[],
+  ): Promise<Map<number, UnixTime>> {
+    const lookup = new Map<number, UnixTime>()
+    const missing: number[] = []
+
+    for (const blockNumber of blockNumbers) {
+      const cached = this.blockTimestampCache.get(blockNumber)
+      if (cached !== undefined) {
+        lookup.set(blockNumber, cached)
+      } else {
+        missing.push(blockNumber)
+      }
+    }
+
+    if (missing.length > 0) {
+      const timestamps = await this.$.blockProvider.getBlockTimestamps(missing)
+      for (const [blockNumber, timestamp] of timestamps) {
+        this.blockTimestampCache.set(blockNumber, timestamp)
+        lookup.set(blockNumber, timestamp)
+      }
+    }
+
+    return lookup
   }
 
   static idToConfigurationId(config: PrivacyFlowIndexerConfig): string {
     return createPrivacyConfigurationId([
       'privacy-flow',
       config.projectId,
-      config.assetKey,
       config.bucketId,
       config.direction,
       config.chain,
-      config.address?.toString() ?? '',
+      config.address.toString(),
       config.event,
       config.extractor,
       stringifyParams(config.params),
@@ -210,20 +306,43 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   }
 }
 
-function groupConfigurationsByFilter(
+interface RawRecord {
+  configuration: Configuration<PrivacyFlowIndexerConfig>
+  log: Log
+  count: number
+  amount: bigint
+  timestamp: UnixTime
+}
+
+function buildLogFilter(
+  configurations: Configuration<PrivacyFlowIndexerConfig>[],
+): { addresses: string[]; events: string[] } {
+  const addresses = Array.from(
+    new Set(configurations.map((c) => c.properties.address.toString())),
+  )
+
+  const events = Array.from(
+    new Set(configurations.map((c) => c.properties.event)),
+  )
+
+  return { addresses, events }
+}
+
+function buildConfigMap(
   configurations: Configuration<PrivacyFlowIndexerConfig>[],
 ): Map<string, Configuration<PrivacyFlowIndexerConfig>[]> {
-  const groups = new Map<string, Configuration<PrivacyFlowIndexerConfig>[]>()
+  const configMap = new Map<string, Configuration<PrivacyFlowIndexerConfig>[]>()
 
   for (const configuration of configurations) {
-    const source = configuration.properties
-    const key = `${source.chain}:${source.address?.toString() ?? ''}:${source.event}`
-    const existing = groups.get(key) ?? []
+    const addr = configuration.properties.address.toString().toLowerCase()
+    const event = configuration.properties.event.toLowerCase()
+    const key = `${addr}:${event}`
+    const existing = configMap.get(key) ?? []
     existing.push(configuration)
-    groups.set(key, existing)
+    configMap.set(key, existing)
   }
 
-  return groups
+  return configMap
 }
 
 function stringifyParams(params: Record<string, unknown>): string {

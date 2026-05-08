@@ -867,7 +867,7 @@ export interface ProjectPrivacyBucket {
   id: string
   type: 'pool' | 'denomination'
   label: string
-  address?: ChainSpecificAddress
+  address: ChainSpecificAddress
   denomination?: string
   flows?: PrivacyBucketFlowsConfig
 }
@@ -881,7 +881,7 @@ export interface PrivacyBucketFlowsConfig {
 export type PrivacyFlowSource = {
   chain: string
   event: string
-  address?: ChainSpecificAddress
+  address: ChainSpecificAddress
 } & PrivacyFlowExtractorConfig
 
 export type PrivacyFlowExtractorConfig =

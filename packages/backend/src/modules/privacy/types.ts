@@ -19,14 +19,21 @@ export interface PrivacyConfig {
 
 export type PrivacyFlowIndexerConfig = {
   projectId: string
-  assetKey: string
   bucketId: string
   direction: 'deposit' | 'withdrawal'
   chain: string
-  address?: EthereumAddress
+  address: EthereumAddress
   event: string
   sinceBlock: number
+  sinceTimestamp: UnixTime
+  priceId: string
+  decimals: number
 } & PrivacyFlowExtractorConfig
+
+export interface PrivacyBlockTimestampConfig {
+  chain: string
+  sinceTimestamp: UnixTime
+}
 
 export interface PrivacyPriceIndexerConfig {
   priceId: string

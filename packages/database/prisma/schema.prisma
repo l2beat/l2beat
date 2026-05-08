@@ -280,10 +280,19 @@ model PrivacyPrice {
   @@index([priceId])
 }
 
+model PrivacyBlockTimestamp {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  chain           String   @db.VarChar(255)
+  blockNumber     Int
+
+  @@id([timestamp, configurationId])
+  @@index([chain])
+}
+
 model PrivacyFlowEvent {
   configurationId String   @db.Char(12)
   projectId       String   @db.VarChar(255)
-  assetKey        String   @db.VarChar(255)
   bucketId        String   @db.VarChar(255)
   chain           String   @db.VarChar(32)
   direction       String   @db.VarChar(16)
@@ -293,10 +302,12 @@ model PrivacyFlowEvent {
   logIndex        Int
   count           Int
   amount          Decimal  @db.Decimal(80, 0)
+  priceId         String   @db.VarChar(255)
+  valueUsd        Float    @db.Real
 
   @@id([configurationId, txHash, logIndex])
   @@index([projectId, timestamp])
-  @@index([projectId, assetKey, bucketId, timestamp])
+  @@index([projectId, bucketId, timestamp])
   @@index([configurationId, blockNumber])
 }
 

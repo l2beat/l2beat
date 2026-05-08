@@ -1,10 +1,7 @@
 import type { PrivacyFlowSource, ProjectService } from '@l2beat/config'
-import {
-  ChainSpecificAddress,
-  type EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
+import { writeFileSync } from 'fs'
 import type {
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
@@ -34,18 +31,21 @@ export async function getPrivacyConfig(
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
-      const tokenKey = getTokenKey(token.token.address, token.token.symbol)
       for (const bucket of token.buckets) {
         if (!bucket.flows) continue
+
+        const sinceTimestamp = token.token.sinceTimestamp ?? UnixTime(0)
 
         if (bucket.flows.deposit) {
           flowConfigs.push(
             toFlowConfig(
               project.projectId,
-              tokenKey,
               bucket.id,
               'deposit',
               bucket.flows.sinceBlock,
+              sinceTimestamp,
+              token.token.priceId,
+              token.token.decimals,
               bucket.flows.deposit,
             ),
           )
@@ -55,10 +55,12 @@ export async function getPrivacyConfig(
           flowConfigs.push(
             toFlowConfig(
               project.projectId,
-              tokenKey,
               bucket.id,
               'withdrawal',
               bucket.flows.sinceBlock,
+              sinceTimestamp,
+              token.token.priceId,
+              token.token.decimals,
               bucket.flows.withdrawal,
             ),
           )
@@ -91,6 +93,8 @@ export async function getPrivacyConfig(
     sinceTimestamp,
   }))
 
+  writeFileSync('priceConfigs.json', JSON.stringify(priceConfigs, null, 2))
+
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
 
   const minBlockByChain = new Map<string, number>()
@@ -119,31 +123,26 @@ export function createPrivacyConfigurationId(input: string[]): string {
 
 function toFlowConfig(
   projectId: string,
-  assetKey: string,
   bucketId: string,
   direction: 'deposit' | 'withdrawal',
   sinceBlock: number,
+  sinceTimestamp: UnixTime,
+  priceId: string,
+  decimals: number,
   source: PrivacyFlowSource,
 ): PrivacyFlowIndexerConfig {
   return {
     projectId,
-    assetKey,
     bucketId,
     direction,
-    address: source.address
-      ? ChainSpecificAddress.address(source.address)
-      : undefined,
+    address: ChainSpecificAddress.address(source.address),
     sinceBlock,
+    sinceTimestamp,
     chain: source.chain,
     event: source.event,
     extractor: source.extractor,
     params: source.params,
+    priceId,
+    decimals,
   } as PrivacyFlowIndexerConfig
-}
-
-function getTokenKey(
-  address: EthereumAddress | undefined,
-  symbol: string,
-): string {
-  return (address ?? symbol).toString().toLowerCase()
 }

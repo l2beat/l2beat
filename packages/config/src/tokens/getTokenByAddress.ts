@@ -1,3 +1,4 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
@@ -5,6 +6,7 @@ interface TokenInfo {
   symbol: string
   decimals: number
   coingeckoId: string
+  coingeckoListingTimestamp: UnixTime
   address?: string
   chainId: number
 }
@@ -18,6 +20,7 @@ for (const raw of generated.tokens) {
     symbol: parsed.symbol,
     decimals: parsed.decimals,
     coingeckoId: parsed.coingeckoId.toString(),
+    coingeckoListingTimestamp: parsed.coingeckoListingTimestamp,
     address: parsed.address?.toString(),
     chainId: Number(parsed.chainId),
   }
@@ -38,7 +41,7 @@ export function getTokenByAddress(
   chainId = 1,
 ): TokenInfo | undefined {
   if (address.toLowerCase() === ETH_SENTINEL) {
-    return { symbol: 'ETH', decimals: 18, coingeckoId: 'ethereum', chainId }
+    return getTokenBySymbol('ETH')
   }
   const token = TOKEN_BY_ADDRESS.get(address.toLowerCase())
   if (!token || token.chainId !== chainId) return undefined

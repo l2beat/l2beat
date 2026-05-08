@@ -77,7 +77,6 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         expect(result).toEqualUnsorted([
           {
             projectId: 'proj-a',
-            assetKey: 'asset',
             bucketId: 'bucket',
             timestamp: UnixTime.toStartOf(START, 'day'),
             depositCount: 3,
@@ -158,11 +157,11 @@ function flowEvent(
   direction: 'deposit' | 'withdrawal',
   count: number,
   amount: bigint,
+  valueUsd: number | null = null,
 ): PrivacyFlowEventRecord {
   return {
     configurationId: 'a'.repeat(12),
     projectId,
-    assetKey: 'asset',
     bucketId: 'bucket',
     chain: 'ethereum',
     direction,
@@ -172,5 +171,7 @@ function flowEvent(
     logIndex: blockNumber,
     count,
     amount,
+    priceId: 'ethereum',
+    valueUsd,
   }
 }

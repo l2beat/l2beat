@@ -9,7 +9,6 @@ export type PrivacyFlowDirection = 'deposit' | 'withdrawal'
 export interface PrivacyFlowEventRecord {
   configurationId: string
   projectId: string
-  assetKey: string
   bucketId: string
   chain: string
   direction: PrivacyFlowDirection
@@ -19,11 +18,12 @@ export interface PrivacyFlowEventRecord {
   logIndex: number
   count: number
   amount: bigint
+  priceId: string
+  valueUsd: number
 }
 
 export interface PrivacyFlowDailyRecord {
   projectId: string
-  assetKey: string
   bucketId: string
   timestamp: UnixTime
   depositCount: number
@@ -67,7 +67,6 @@ export class PrivacyFlowEventRepository extends BaseRepository {
             .columns(['configurationId', 'txHash', 'logIndex'])
             .doUpdateSet((eb) => ({
               projectId: eb.ref('excluded.projectId'),
-              assetKey: eb.ref('excluded.assetKey'),
               bucketId: eb.ref('excluded.bucketId'),
               chain: eb.ref('excluded.chain'),
               direction: eb.ref('excluded.direction'),
@@ -75,6 +74,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
               blockNumber: eb.ref('excluded.blockNumber'),
               count: eb.ref('excluded.count'),
               amount: eb.ref('excluded.amount'),
+              priceId: eb.ref('excluded.priceId'),
+              valueUsd: eb.ref('excluded.valueUsd'),
             })),
         )
         .execute()
@@ -95,7 +96,6 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .selectFrom('PrivacyFlowEvent')
       .select((eb) => [
         'projectId',
-        'assetKey',
         'bucketId',
         day.as('timestamp'),
         eb.fn
@@ -116,13 +116,12 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
-      .groupBy(['projectId', 'assetKey', 'bucketId', day])
+      .groupBy(['projectId', 'bucketId', day])
       .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map((row) => ({
       projectId: row.projectId,
-      assetKey: row.assetKey,
       bucketId: row.bucketId,
       timestamp: UnixTime.fromDate(row.timestamp),
       depositCount: Number(row.depositCount ?? 0),

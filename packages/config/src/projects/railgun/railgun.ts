@@ -76,13 +76,14 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
       symbol: resolved.symbol,
       decimals: resolved.decimals,
       priceId: resolved.coingeckoId,
-      sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
+      sinceTimestamp: resolved.coingeckoListingTimestamp,
     },
     buckets: [
       {
         id: `railgun-${resolved.symbol}`,
         type: 'pool',
         label: resolved.symbol,
+        address: railgunCore.address,
         flows: {
           sinceBlock: railgunCore.sinceBlock ?? 0,
           deposit: {

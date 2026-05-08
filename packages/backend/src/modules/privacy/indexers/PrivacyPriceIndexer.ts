@@ -14,12 +14,10 @@ import type {
   Configuration,
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
-import type { SyncOptimizer } from '../../tvs/tools/SyncOptimizer'
 import type { PrivacyPriceIndexerConfig } from '../types'
 
 export interface PrivacyPriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<PrivacyPriceIndexerConfig>, 'name'> {
-  syncOptimizer: SyncOptimizer
   priceProvider: PriceProvider
 }
 
@@ -44,15 +42,6 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
     configurations: Configuration<PrivacyPriceIndexerConfig>[],
   ) {
     const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
-
-    if (this.isEmptyRange(from, adjustedTo)) {
-      this.logger.info('No timestamps to sync in range', {
-        from,
-        to,
-        adjustedTo,
-      })
-      return () => Promise.resolve(to)
-    }
 
     this.logger.info('Fetching privacy prices', {
       from,
@@ -79,11 +68,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
               }),
             )
 
-            const optimizedRecords = configurationRecords.filter((p) =>
-              this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-            )
-
-            return optimizedRecords
+            return configurationRecords
           } catch (error) {
             if (
               error instanceof Error &&
@@ -123,12 +108,6 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
 
       return adjustedTo
     }
-  }
-
-  private isEmptyRange(from: number, adjustedTo: number) {
-    return (
-      this.$.syncOptimizer.getTimestampsToSync(from, adjustedTo, 1).length === 0
-    )
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

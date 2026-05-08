@@ -1,5 +1,6 @@
-import { assert, type Block, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
 import type { BlockClient } from '../../clients'
+import { RpcClient } from '../../clients/rpc/RpcClient'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
@@ -33,6 +34,76 @@ export class BlockProvider {
           )
         }
         return block
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  async getBlock(
+    x: number | 'latest',
+  ): Promise<{ number: number; timestamp: number; hash: string }> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        const clientWithGetBlock = client as BlockClient & {
+          getBlock(
+            blockNumber: number | 'latest',
+            includeTxs: false,
+          ): Promise<{ number: number; timestamp: number; hash: string }>
+        }
+        if (clientWithGetBlock.getBlock) {
+          const block = await clientWithGetBlock.getBlock(x, false)
+          if (typeof x === 'number') {
+            assert(
+              block.number === x,
+              `Invalid response: expected block number ${x}, got ${block.number}`,
+            )
+          }
+          return block
+        }
+
+        const block = await client.getBlockWithTransactions(x)
+        if (typeof x === 'number') {
+          assert(
+            block.number === x,
+            `Invalid response: expected block number ${x}, got ${block.number}`,
+          )
+        }
+        return {
+          number: block.number,
+          timestamp: block.timestamp,
+          hash: block.hash,
+        }
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, UnixTime>> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        if (client instanceof RpcClient) {
+          const timestamps = await client.getBlockTimestamps(blockNumbers)
+          const out = new Map<number, UnixTime>()
+          for (const [n, ts] of timestamps) {
+            out.set(n, UnixTime(ts))
+          }
+          return out
+        }
+
+        const out = new Map<number, UnixTime>()
+        for (const n of blockNumbers) {
+          const block = await this.getBlock(n)
+          out.set(block.number, UnixTime(block.timestamp))
+        }
+        return out
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }
