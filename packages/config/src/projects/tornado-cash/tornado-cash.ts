@@ -32,7 +32,6 @@ interface TornadoBucket {
   tokenInfo: { symbol: string; decimals: number; priceId: string }
   denomination: string
   denominationAmount: string
-  sinceBlock: number
   sinceTimestamp: UnixTime
   depositEvent: string
   withdrawalEvent: string
@@ -123,26 +122,20 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       type: 'denomination',
       label: `${bucket.tokenInfo.symbol} ${bucket.denomination}`,
       address: bucket.address,
+      sinceTimestamp: bucket.sinceTimestamp,
       denomination: bucket.denomination,
-      flows: {
-        sinceBlock: bucket.sinceBlock,
-        deposit: {
-          chain: 'ethereum',
-          event: bucket.depositEvent,
-          address: bucket.address,
-          extractor: 'fixedAmount',
-          params: {
-            amount: bucket.denominationAmount,
-          },
+      deposit: {
+        event: bucket.depositEvent,
+        extractor: 'fixedAmount',
+        params: {
+          amount: bucket.denominationAmount,
         },
-        withdrawal: {
-          chain: 'ethereum',
-          event: bucket.withdrawalEvent,
-          address: bucket.address,
-          extractor: 'fixedAmount',
-          params: {
-            amount: bucket.denominationAmount,
-          },
+      },
+      withdrawal: {
+        event: bucket.withdrawalEvent,
+        extractor: 'fixedAmount',
+        params: {
+          amount: bucket.denominationAmount,
         },
       },
     })
@@ -198,7 +191,6 @@ function getTornadoBuckets(): TornadoBucket[] {
       },
       denomination,
       denominationAmount: denominationAmount.toString(),
-      sinceBlock: pool.sinceBlock ?? 0,
       sinceTimestamp: pool.sinceTimestamp ?? 0,
       depositEvent: TORNADO_DEPOSIT_EVENT,
       withdrawalEvent: TORNADO_WITHDRAWAL_EVENT,

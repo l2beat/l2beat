@@ -14,7 +14,6 @@ export interface PrivacyConfig {
   flowConfigs: PrivacyFlowIndexerConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
   chains: string[]
-  minBlockByChain: Map<string, number>
 }
 
 export type PrivacyFlowIndexerConfig = {
@@ -24,7 +23,6 @@ export type PrivacyFlowIndexerConfig = {
   chain: string
   address: EthereumAddress
   event: string
-  sinceBlock: number
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number

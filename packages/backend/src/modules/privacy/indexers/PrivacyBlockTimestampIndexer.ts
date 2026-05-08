@@ -123,9 +123,7 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
     }
   }
 
-  static idToConfigurationId(
-    config: PrivacyBlockTimestampConfig,
-  ): string {
+  static idToConfigurationId(config: PrivacyBlockTimestampConfig): string {
     return createPrivacyConfigurationId([
       'privacy-block-timestamp',
       config.chain,
@@ -133,6 +131,8 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
   }
 
   private getTimestampToSync(from: number): number {
-    return UnixTime.toStartOf(from, 'hour')
+    const hourStart = UnixTime.toStartOf(from, 'hour')
+    // toStartOf rounds down, but UIF requires returned height >= from
+    return hourStart < from ? hourStart + UnixTime.HOUR : hourStart
   }
 }

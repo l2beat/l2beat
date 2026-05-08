@@ -1,4 +1,8 @@
-import type { PrivacyFlowSource, ProjectService } from '@l2beat/config'
+import type {
+  ProjectPrivacyBucket,
+  ProjectPrivacyToken,
+  ProjectService,
+} from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
@@ -31,39 +35,10 @@ export async function getPrivacyConfig(
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
-        if (!bucket.flows) continue
-
-        const sinceTimestamp = token.token.sinceTimestamp ?? UnixTime(0)
-
-        if (bucket.flows.deposit) {
-          flowConfigs.push(
-            toFlowConfig(
-              project.projectId,
-              bucket.id,
-              'deposit',
-              bucket.flows.sinceBlock,
-              sinceTimestamp,
-              token.token.priceId,
-              token.token.decimals,
-              bucket.flows.deposit,
-            ),
-          )
-        }
-
-        if (bucket.flows.withdrawal) {
-          flowConfigs.push(
-            toFlowConfig(
-              project.projectId,
-              bucket.id,
-              'withdrawal',
-              bucket.flows.sinceBlock,
-              sinceTimestamp,
-              token.token.priceId,
-              token.token.decimals,
-              bucket.flows.withdrawal,
-            ),
-          )
-        }
+        flowConfigs.push(
+          toFlowConfig(project.projectId, bucket, 'deposit', token.token),
+          toFlowConfig(project.projectId, bucket, 'withdrawal', token.token),
+        )
       }
     }
   }
@@ -94,23 +69,11 @@ export async function getPrivacyConfig(
 
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
 
-  const minBlockByChain = new Map<string, number>()
-  for (const config of flowConfigs) {
-    const current = minBlockByChain.get(config.chain)
-    minBlockByChain.set(
-      config.chain,
-      current === undefined
-        ? config.sinceBlock
-        : Math.min(current, config.sinceBlock),
-    )
-  }
-
   return {
     projects,
     flowConfigs,
     priceConfigs,
     chains,
-    minBlockByChain,
   }
 }
 
@@ -120,26 +83,20 @@ export function createPrivacyConfigurationId(input: string[]): string {
 
 function toFlowConfig(
   projectId: string,
-  bucketId: string,
+  bucket: ProjectPrivacyBucket,
   direction: 'deposit' | 'withdrawal',
-  sinceBlock: number,
-  sinceTimestamp: UnixTime,
-  priceId: string,
-  decimals: number,
-  source: PrivacyFlowSource,
+  token: ProjectPrivacyToken['token'],
 ): PrivacyFlowIndexerConfig {
+  const source = bucket[direction]
   return {
     projectId,
-    bucketId,
+    bucketId: bucket.id,
     direction,
-    address: ChainSpecificAddress.address(source.address),
-    sinceBlock,
-    sinceTimestamp,
-    chain: source.chain,
-    event: source.event,
-    extractor: source.extractor,
-    params: source.params,
-    priceId,
-    decimals,
-  } as PrivacyFlowIndexerConfig
+    chain: ChainSpecificAddress.longChain(bucket.address),
+    address: ChainSpecificAddress.address(bucket.address),
+    sinceTimestamp: bucket.sinceTimestamp,
+    priceId: token.priceId,
+    decimals: token.decimals,
+    ...source,
+  }
 }

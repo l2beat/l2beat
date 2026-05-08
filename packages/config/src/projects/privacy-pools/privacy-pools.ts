@@ -25,7 +25,6 @@ interface PrivacyPoolBucket {
   address: ChainSpecificAddress
   tokenAddress: EthereumAddress
   tokenInfo: { symbol: string; decimals: number; priceId: string }
-  sinceBlock: number
   sinceTimestamp: UnixTime
   depositEvent: string
   withdrawalEvent: string
@@ -121,22 +120,16 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       type: 'pool',
       label: `${bucket.tokenInfo.symbol} pool`,
       address: bucket.address,
-      flows: {
-        sinceBlock: bucket.sinceBlock,
-        deposit: {
-          chain: 'ethereum',
-          event: bucket.depositEvent,
-          address: bucket.address,
-          extractor: 'privacyPoolsValue',
-          params: {},
-        },
-        withdrawal: {
-          chain: 'ethereum',
-          event: bucket.withdrawalEvent,
-          address: bucket.address,
-          extractor: 'privacyPoolsValue',
-          params: {},
-        },
+      sinceTimestamp: bucket.sinceTimestamp,
+      deposit: {
+        event: bucket.depositEvent,
+        extractor: 'privacyPoolsValue',
+        params: {},
+      },
+      withdrawal: {
+        event: bucket.withdrawalEvent,
+        extractor: 'privacyPoolsValue',
+        params: {},
       },
     })
   }
@@ -180,7 +173,6 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
         decimals: resolved.decimals,
         priceId: resolved.coingeckoId,
       },
-      sinceBlock: pool.sinceBlock ?? 0,
       sinceTimestamp: UnixTime(pool.sinceTimestamp ?? 0),
       depositEvent: PRIVACY_POOLS_DEPOSIT_EVENT,
       withdrawalEvent: PRIVACY_POOLS_WITHDRAWAL_EVENT,

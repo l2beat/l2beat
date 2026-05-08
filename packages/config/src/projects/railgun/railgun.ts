@@ -84,25 +84,19 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
         type: 'pool',
         label: resolved.symbol,
         address: railgunCore.address,
-        flows: {
-          sinceBlock: railgunCore.sinceBlock ?? 0,
-          deposit: {
-            chain: 'ethereum',
-            event: RAILGUN_DEPOSIT_EVENT,
-            address: railgunCore.address,
-            extractor: 'railgunShield',
-            params: {
-              tokenAddress: EthereumAddress(token.address),
-            },
+        sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
+        deposit: {
+          event: RAILGUN_DEPOSIT_EVENT,
+          extractor: 'railgunShield',
+          params: {
+            tokenAddress: EthereumAddress(token.address),
           },
-          withdrawal: {
-            chain: 'ethereum',
-            event: RAILGUN_WITHDRAWAL_EVENT,
-            address: railgunCore.address,
-            extractor: 'railgunUnshield',
-            params: {
-              tokenAddress: EthereumAddress(token.address),
-            },
+        },
+        withdrawal: {
+          event: RAILGUN_WITHDRAWAL_EVENT,
+          extractor: 'railgunUnshield',
+          params: {
+            tokenAddress: EthereumAddress(token.address),
           },
         },
       },

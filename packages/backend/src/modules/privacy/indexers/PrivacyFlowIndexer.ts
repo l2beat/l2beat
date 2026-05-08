@@ -51,17 +51,26 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     to: number,
     configurations: Configuration<PrivacyFlowIndexerConfig>[],
   ) {
+    const adjustedFrom =
+      UnixTime.toStartOf(from, 'hour') < from
+        ? UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
+        : UnixTime.toStartOf(from, 'hour')
+    const adjustedTo = Math.min(UnixTime.toEndOf(adjustedFrom, 'day'), to)
     this.logger.info('Fetching privacy flow logs', {
-      from,
-      to,
+      from: adjustedFrom,
+      to: adjustedTo,
       configurations: configurations.length,
     })
 
-    const records = await this.fetchRecordsForGroup(configurations, from, to)
+    const records = await this.fetchRecordsForGroup(
+      configurations,
+      adjustedFrom,
+      adjustedTo,
+    )
 
     this.logger.info('Fetched privacy flow logs', {
-      from,
-      to,
+      from: adjustedFrom,
+      to: adjustedTo,
       records: records.length,
     })
 
@@ -69,12 +78,12 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       await this.$.db.privacyFlowEvent.upsertMany(records)
 
       this.logger.info('Saved privacy flow events into DB', {
-        from,
-        to,
+        from: adjustedFrom,
+        to: adjustedTo,
         records: records.length,
       })
 
-      return to
+      return adjustedTo
     }
   }
 
@@ -107,7 +116,10 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   ): Promise<PrivacyFlowEventRecord[]> {
     if (configurations.length === 0) return []
 
-    const hourFrom = UnixTime.toStartOf(from, 'hour')
+    const hourFrom =
+      UnixTime.toStartOf(from, 'hour') < from
+        ? UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
+        : UnixTime.toStartOf(from, 'hour')
     const hourTo = UnixTime.toStartOf(to, 'hour')
 
     const blockFrom =
@@ -122,8 +134,12 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       )
 
     assert(
-      blockFrom !== undefined && blockTo !== undefined,
-      `Missing block timestamp mapping for ${this.$.chain}: from=${hourFrom} to=${hourTo}`,
+      blockFrom !== undefined,
+      `Missing block timestamp mapping for ${this.$.chain}: from=${hourFrom}`,
+    )
+    assert(
+      blockTo !== undefined,
+      `Missing block timestamp mapping for ${this.$.chain}: to=${hourTo}`,
     )
 
     const { addresses, events } = buildLogFilter(configurations)

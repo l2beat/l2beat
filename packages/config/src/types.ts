@@ -858,7 +858,7 @@ export interface ProjectPrivacyToken {
     symbol: string
     decimals: number
     priceId: string
-    sinceTimestamp?: UnixTime
+    sinceTimestamp: UnixTime
   }
   buckets: ProjectPrivacyBucket[]
 }
@@ -868,20 +868,14 @@ export interface ProjectPrivacyBucket {
   type: 'pool' | 'denomination'
   label: string
   address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
   denomination?: string
-  flows?: PrivacyBucketFlowsConfig
-}
-
-export interface PrivacyBucketFlowsConfig {
-  sinceBlock: number
-  deposit?: PrivacyFlowSource
-  withdrawal?: PrivacyFlowSource
+  deposit: PrivacyFlowSource
+  withdrawal: PrivacyFlowSource
 }
 
 export type PrivacyFlowSource = {
-  chain: string
   event: string
-  address: ChainSpecificAddress
 } & PrivacyFlowExtractorConfig
 
 export type PrivacyFlowExtractorConfig =
