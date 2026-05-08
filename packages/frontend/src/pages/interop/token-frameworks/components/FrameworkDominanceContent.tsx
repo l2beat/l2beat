@@ -18,14 +18,6 @@ import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 
 type Metric = 'volume' | 'transfers'
 
-const FRAMEWORK_COLORS: Record<string, string> = {
-  oft: '#7B61FF',
-  cct: '#2A5ADA',
-  warp: '#E64980',
-  ntt: '#22C55E',
-  its: '#F59E0B',
-}
-
 export function FrameworkDominanceContent({
   tokenFrameworks,
   frameworkDominance,
@@ -118,7 +110,6 @@ function FrameworkRowItem({
 }) {
   const value = metric === 'volume' ? entry.volume : entry.transferCount
   const share = total > 0 ? (value / total) * 100 : 0
-  const color = FRAMEWORK_COLORS[entry.id] ?? '#7B61FF'
 
   return (
     <div className="flex flex-col gap-2">
@@ -151,7 +142,7 @@ function FrameworkRowItem({
           className="h-full rounded-full"
           style={{
             width: `${Math.max(0, Math.min(share, 100))}%`,
-            backgroundColor: color,
+            backgroundColor: framework.color,
           }}
         />
       </div>

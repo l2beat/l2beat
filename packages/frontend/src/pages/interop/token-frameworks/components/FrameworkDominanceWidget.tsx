@@ -1,4 +1,3 @@
-import { Badge } from '~/components/badge/Badge'
 import {
   Tabs,
   TabsContent,
@@ -9,6 +8,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
+import { FrameworkCompareContent } from './FrameworkCompareContent'
 import { FrameworkDominanceContent } from './FrameworkDominanceContent'
 
 export function FrameworkDominanceWidget({
@@ -42,9 +42,11 @@ export function FrameworkDominanceWidget({
           />
         </TabsContent>
         <TabsContent value="compare" className="mt-2">
-          <div className="flex min-h-40 items-center justify-center">
-            <Badge type="gray">Coming soon</Badge>
-          </div>
+          <FrameworkCompareContent
+            tokenFrameworks={tokenFrameworks}
+            frameworkDominance={data?.frameworkDominance}
+            isLoading={isLoading}
+          />
         </TabsContent>
       </Tabs>
     </PrimaryCard>

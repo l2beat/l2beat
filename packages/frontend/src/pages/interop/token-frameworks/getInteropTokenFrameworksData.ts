@@ -14,6 +14,7 @@ export type InteropTokenFramework = {
   slug: string
   name: string
   iconUrl: string
+  color: string
 }
 
 export async function getInteropTokenFrameworksData(
@@ -80,6 +81,7 @@ async function getTokenFrameworks(
       slug: project.slug,
       name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      color: framework.color,
     }
   })
 }
