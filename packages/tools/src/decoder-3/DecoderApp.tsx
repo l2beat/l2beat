@@ -13,7 +13,8 @@ import React, {
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
-import { type DecodedValue, decodeType, parseType } from './decode'
+import type { DecodedValue } from './decode'
+import { decode } from './plugins'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
@@ -200,15 +201,15 @@ function DecodedView({ value }: { value: DecodedValue }) {
     if (decoded.type === 'bytes') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.registerSelector(selector)
-      const signature = store.selectors[selector]?.[0]
-      if (signature) {
-        const type = parseType(signature.signature)
-        try {
-          setDecoded(
-            decodeType(type, decoded.bytes, decoded.chainId, decoded.address),
-          )
-        } catch {}
-      }
+      const signatures =
+        store.selectors[selector]?.map((x) => x.signature) ?? []
+      const newDecoded = decode(
+        decoded.bytes,
+        signatures,
+        decoded.chainId ?? 1,
+        decoded.address,
+      )
+      if (newDecoded) setDecoded(newDecoded)
     }
   }, [decoded, store.registerSelector, store.selectors])
 
