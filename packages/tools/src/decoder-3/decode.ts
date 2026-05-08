@@ -2,7 +2,7 @@ const INT_COMPLEMENT = 2n ** 255n
 
 export interface DecodedValue {
   type: ParsedType
-  encoded: `0x${string}`
+  bytes: `0x${string}`
   extra?: `0x${string}`
   value: string
   members?: DecodedMember[]
@@ -22,28 +22,8 @@ export function decodeType(
   return decodeParsed(parsedType, encoded)
 }
 
-const DEBUG = false
-
 function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
-  if (DEBUG) {
-    console.log(type.type, type.dynamic ? 'dynamic' : type.size)
-    let p = encoded.slice(2)
-    if (type.function) {
-      console.log(p.slice(0, 8))
-      p = p.slice(8)
-    }
-    let i = 0
-    while (p && i < 5) {
-      i++
-      console.log(p.slice(0, 64))
-      p = p.slice(64)
-    }
-    if (p) {
-      console.log('...truncated')
-    }
-  }
-
-  const common = { type, encoded, value: '' }
+  const common = { type, bytes: encoded, value: '' }
   if (type.function) {
     encoded = sliceBytes(encoded, 4)
   }
@@ -99,15 +79,18 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
   }
   if (type.type === 'bytes') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
-    if (extra !== '0x') return { ...common, value: bytes, extra }
-    return { ...common, value: bytes }
+    if (extra !== '0x') return { ...common, bytes, value: bytes, extra }
+    return { ...common, bytes, value: bytes }
   }
   if (type.type === 'string') {
     const { bytes, extra } = decodeBytes(type.type, encoded)
     const value = hexToString(bytes)
-    if (extra !== '0x') return { ...common, value, extra }
-    return { ...common, value }
+    if (extra !== '0x') return { ...common, bytes, value, extra }
+    return { ...common, bytes, value }
   }
+
+  if (encoded.length !== 66) throw new Error("Invalid encoding")
+
   if (type.type.startsWith('uint')) {
     const value = decodeUint(type.type, encoded)
     return { ...common, value: value.toString() }
@@ -129,7 +112,8 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
     if (!isZeroed(padding)) {
       throw new Error('Invalid encoding')
     }
-    return { ...common, value: sliceBytes(encoded, 12) }
+    const bytes = sliceBytes(encoded, 12)
+    return { ...common, bytes, value: bytes }
   }
   if (type.type === 'bool') {
     const value = decodeUint('uint256', encoded)
@@ -145,7 +129,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
       throw new Error('Invalid encoding')
     }
     const bytes = sliceBytes(encoded, 0, size)
-    return { ...common, value: bytes }
+    return { ...common, bytes, value: bytes }
   }
   throw new Error(`Invalid type: ${type.type}`)
 }
