@@ -1,7 +1,7 @@
-import { toFunctionSelector } from 'viem'
+import { getCreate2Address, toFunctionSelector } from 'viem'
 import { type DecodedValue, decodeType } from './decode'
 
-const plugins = [multiSendPlugin]
+const plugins = [multiSendPlugin, create2FactoryPlugin]
 
 export function decode(
   data: `0x${string}`,
@@ -9,16 +9,37 @@ export function decode(
   chainId: number,
   address?: `0x${string}`,
 ): DecodedValue | undefined {
+  let value: DecodedValue | undefined
   for (const plugin of plugins) {
     try {
-      const value = plugin(data, chainId, address)
-      if (value) return value
+      value = plugin(data, chainId, address)
+      if (value) break
     } catch {}
   }
-  for (const signature of signatures) {
-    try {
-      return decodeType(signature, data, chainId, address)
-    } catch {}
+  if (!value) {
+    for (const signature of signatures) {
+      try {
+        value = decodeType(signature, data, chainId, address)
+        if (value) break
+      } catch {}
+    }
+  }
+  if (value) applyCallTargetHeuristic(value)
+  return value
+}
+
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
+
+function applyCallTargetHeuristic(value: DecodedValue) {
+  if (!value.members) return
+  const target = value.members.find(
+    (x) => x.type === 'address' && x.value !== ADDRESS_ZERO,
+  )?.value
+  for (const member of value.members) {
+    applyCallTargetHeuristic(member)
+    if (target && member.type === 'bytes') {
+      member.address = target as `0x${string}`
+    }
   }
 }
 
@@ -96,6 +117,54 @@ function multiSendPlugin(
   }
   decoded.members = values
   return decoded
+}
+
+const CREATE2_DEPLOYER = '0x4e59b44847b379578588920ca78fbf26c0b4956c'
+
+function create2FactoryPlugin(
+  data: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+): DecodedValue | undefined {
+  if (address !== CREATE2_DEPLOYER) return
+  const salt = data.slice(0, 66) as `0x${string}`
+  const bytecode: `0x${string}` = `0x${data.slice(66)}`
+  const deployment = getCreate2Address({
+    bytecode: bytecode,
+    from: CREATE2_DEPLOYER,
+    salt,
+  })
+  return {
+    type: 'call',
+    address,
+    chainId,
+    functionName: '<CREATE2 factory>',
+    bytes: data,
+    value: '',
+    members: [
+      {
+        type: 'address',
+        name: 'deployment',
+        bytes: deployment,
+        value: deployment,
+        chainId,
+      },
+      {
+        type: 'bytes',
+        name: 'salt',
+        bytes: salt,
+        value: salt,
+        chainId,
+      },
+      {
+        type: 'bytes',
+        name: 'bytecode',
+        bytes: bytecode,
+        value: bytecode,
+        chainId,
+      },
+    ],
+  }
 }
 
 class BinaryReader {

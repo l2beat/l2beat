@@ -229,7 +229,11 @@ function DecodedView({ value }: { value: DecodedValue }) {
         className="text-zinc-500"
         onClick={() => setLessMembers(!lessMembers)}
       >
-        {lessMembers ? `[+ ${decoded.members.length} items]` : '[-]'}
+        {!lessMembers && '[-]'}
+        {lessMembers && decoded.members.length === 1 && '[+ 1 member]'}
+        {lessMembers &&
+          decoded.members.length > 1 &&
+          `[+ ${decoded.members.length} members]`}
       </button>
       <ol className={clsx('pl-4', lessMembers && 'hidden')}>
         {decoded.members.map((m, i) => (
@@ -268,7 +272,7 @@ function DecodedView({ value }: { value: DecodedValue }) {
   }
 
   if (decoded.type === 'bytes') {
-    if (decoded.bytes.length < 66) {
+    if (decoded.bytes.length <= 66) {
       return (
         <div>
           {nameElement}
