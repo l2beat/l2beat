@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xff5545e9036046fe801d925b528e16015b7d3793
+
+# Diff at Fri, 08 May 2026 09:36:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1777994290
+- current timestamp: 1778232940
+
+## Description
+
+ExchangeGateway-owning SafeL2 (`ethereal:0x14Fb412e...`, the one ethereal moved to on 2026-05-05) added 2 signers (`0xcE7a6c96`, `0x9D217887`). Threshold 2 → 3, total 3 → 5 (2-of-3 → 3-of-5).
+
+## Watched changes
+
+```diff
+    contract SafeL2 (ethereal:0x14Fb412e1B692Cfc8C56ec285169e8bF27A7a351) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9"
+      values.$members.1:
++        "ethereal:0x9D2178879e0387B1820168463670c43889536042"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x26528f28a22d7d91a12cb02d6586e18e6082fba0
 
 # Diff at Fri, 08 May 2026 07:51:18 GMT:
