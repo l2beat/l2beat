@@ -1417,6 +1417,68 @@ describeDatabase(InteropTransferRepository.name, (db) => {
     },
   )
 
+  describe(InteropTransferRepository.prototype.getExistingItems.name, () => {
+    it('returns rows that match the requested src/dst pairs', async () => {
+      const t1 = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      t1.srcTxHash = '0xa'
+      t1.dstTxHash = '0xx'
+      const t2 = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+      t2.srcTxHash = '0xb'
+      t2.dstTxHash = '0xy'
+
+      await repository.insertMany([t1, t2])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xa', dstTxHash: '0xx' },
+        { srcTxHash: '0xb', dstTxHash: '0xy' },
+      ])
+
+      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+    })
+
+    it('does not return rows that only cross-match individual hashes', async () => {
+      const requested1 = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      requested1.srcTxHash = '0xa'
+      requested1.dstTxHash = '0xx'
+      const requested2 = transfer('plugin1', 'msg2', 'deposit', UnixTime(200))
+      requested2.srcTxHash = '0xb'
+      requested2.dstTxHash = '0xy'
+      // Trap row: src is in the requested src list, dst is in the requested
+      // dst list, but the pair (A, Y) was never asked for.
+      const trap = transfer('plugin1', 'msg3', 'deposit', UnixTime(300))
+      trap.srcTxHash = '0xa'
+      trap.dstTxHash = '0xy'
+
+      await repository.insertMany([requested1, requested2, trap])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xa', dstTxHash: '0xx' },
+        { srcTxHash: '0xb', dstTxHash: '0xy' },
+      ])
+
+      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+    })
+
+    it('lowercases input tx hashes when matching', async () => {
+      const record = transfer('plugin1', 'msg1', 'deposit', UnixTime(100))
+      record.srcTxHash = '0xabc'
+      record.dstTxHash = '0xdef'
+
+      await repository.insertMany([record])
+
+      const result = await repository.getExistingItems([
+        { srcTxHash: '0xABC', dstTxHash: '0xDEF' },
+      ])
+
+      expect(result.map((r) => r.transferId)).toEqual(['msg1'])
+    })
+
+    it('returns empty array for empty input', async () => {
+      const result = await repository.getExistingItems([])
+      expect(result).toEqual([])
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
