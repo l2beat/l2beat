@@ -1,19 +1,12 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { TOKEN_FRAMEWORKS } from '~/server/features/scaling/interop/utils/tokenFrameworksList'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-
-const TOKEN_FRAMEWORKS: { id: string; label: string; projectId: ProjectId }[] =
-  [
-    { id: 'oft', label: 'OFT', projectId: ProjectId('layerzero') },
-    { id: 'cct', label: 'CCT', projectId: ProjectId('ccip') },
-    { id: 'warp', label: 'Warp', projectId: ProjectId('hyperlane-hwr') },
-    { id: 'ntt', label: 'NTT', projectId: ProjectId('wormhole-ntt') },
-    { id: 'its', label: 'ITS', projectId: ProjectId('axelar-its') },
-  ]
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
 
 export type InteropTokenFramework = {
   id: string
@@ -31,6 +24,14 @@ export async function getInteropTokenFrameworksData(
     getAppLayoutProps(),
     getTokenFrameworks(manifest),
   ])
+
+  const interopChains = getInteropChains()
+  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }))
 
   return {
     head: {
@@ -50,6 +51,7 @@ export async function getInteropTokenFrameworksData(
       props: {
         ...appLayoutProps,
         tokenFrameworks,
+        interopChains: interopChainsWithIcons,
       },
     },
   }
@@ -73,7 +75,8 @@ async function getTokenFrameworks(
     }
 
     return {
-      ...framework,
+      id: framework.id,
+      label: framework.label,
       slug: project.slug,
       name: project.interopConfig.name ?? project.name,
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
