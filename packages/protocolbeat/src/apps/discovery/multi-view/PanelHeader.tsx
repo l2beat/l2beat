@@ -86,7 +86,7 @@ export function PanelHeader(props: { id: PanelId }) {
                   <RadixSelect.Item
                     key={id}
                     value={id}
-                    className="relative flex items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
+                    className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
                   >
                     <ItemIcon className="size-3.5 shrink-0" />
                     <RadixSelect.ItemText>{id}</RadixSelect.ItemText>
