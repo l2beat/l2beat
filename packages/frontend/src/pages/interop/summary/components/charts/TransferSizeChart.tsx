@@ -7,6 +7,7 @@ import {
   XAxis,
   type XAxisTickContentProps,
   YAxis,
+  type YAxisTickContentProps,
 } from 'recharts'
 import {
   ChartLegend,
@@ -30,9 +31,12 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
+type ChartItem = TransferSizeDataPoint & { frameworkLabel?: string }
+
 interface Props {
-  data: TransferSizeDataPoint[]
+  data: ChartItem[]
   isLoading: boolean
+  horizontal?: boolean
 }
 
 const chartMeta = {
@@ -63,11 +67,19 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function TransferSizeChart({ data, isLoading }: Props) {
+export function TransferSizeChart({
+  data,
+  isLoading,
+  horizontal = false,
+}: Props) {
   const isClient = useIsClient()
 
   if (isLoading || !isClient) {
-    return <Skeleton className="mt-5 h-full min-h-[250px] w-full" />
+    return (
+      <Skeleton
+        className={cn('h-full w-full', !horizontal && 'mt-5 min-h-[250px]')}
+      />
+    )
   }
 
   return (
@@ -77,19 +89,27 @@ export function TransferSizeChart({ data, isLoading }: Props) {
           responsive
           width="100%"
           data={data}
-          margin={{ top: 20 }}
-          maxBarSize={24}
-          barGap={4}
-          className="size-full min-h-[250px]! md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11!"
+          layout={horizontal ? 'vertical' : undefined}
+          margin={
+            horizontal ? { top: 4, right: 8, bottom: 4, left: 4 } : { top: 20 }
+          }
+          maxBarSize={horizontal ? undefined : 24}
+          barSize={horizontal ? 10 : undefined}
+          barGap={horizontal ? undefined : 4}
+          barCategoryGap={horizontal ? 6 : undefined}
+          className={cn(
+            'size-full md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11!',
+            !horizontal && 'min-h-[250px]!',
+          )}
         >
           <ChartLegend
-            verticalAlign="top"
-            align="left"
+            verticalAlign={horizontal ? 'bottom' : 'top'}
+            align={horizontal ? 'center' : 'left'}
             content={<ChartLegendContent />}
           />
           {Object.keys(chartMeta).map((bucket) => {
             const actualKey = bucket as keyof typeof chartMeta
-            return [
+            return (
               <Bar
                 key={actualKey}
                 dataKey={actualKey}
@@ -97,35 +117,60 @@ export function TransferSizeChart({ data, isLoading }: Props) {
                 fill={chartMeta[actualKey].color}
                 fillOpacity={0.8}
                 isAnimationActive={false}
-              />,
-            ]
+              />
+            )
           })}
           <CartesianGrid
-            vertical={false}
+            vertical={horizontal}
+            horizontal={!horizontal}
             strokeDasharray="5 5"
             zIndex={DefaultZIndexes.line + 1}
           />
-          <YAxis
-            tickCount={5}
-            axisLine={false}
-            tickLine={false}
-            width={30}
-            dx={5}
-            unit="%"
-            domain={[0, 100]}
-            allowDataOverflow={true}
-          />
-          <XAxis
-            tickLine={false}
-            dataKey="name"
-            type="category"
-            interval={0}
-            tick={(props) => <XAxisTick {...props} data={data} />}
-          />
+          {horizontal ? (
+            <XAxis
+              type="number"
+              domain={[0, 100]}
+              tickCount={5}
+              axisLine={false}
+              tickLine={false}
+              unit="%"
+              allowDataOverflow={true}
+            />
+          ) : (
+            <XAxis
+              tickLine={false}
+              dataKey="name"
+              type="category"
+              interval={0}
+              tick={(props) => <CategoryXAxisTick {...props} data={data} />}
+            />
+          )}
+          {horizontal ? (
+            <YAxis
+              type="category"
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              interval={0}
+              width={130}
+              tick={(props) => <CategoryYAxisTick {...props} data={data} />}
+            />
+          ) : (
+            <YAxis
+              tickCount={5}
+              axisLine={false}
+              tickLine={false}
+              width={30}
+              dx={5}
+              unit="%"
+              domain={[0, 100]}
+              allowDataOverflow={true}
+            />
+          )}
           <ChartTooltip
             filterNull={false}
-            content={<CustomTooltip />}
-            allowEscapeViewBox={{ y: true }}
+            content={<CustomTooltip horizontal={horizontal} />}
+            allowEscapeViewBox={horizontal ? { x: true } : { y: true }}
           />
         </BarChart>
       </SimpleChartContainer>
@@ -139,13 +184,13 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   )
 }
 
-function XAxisTick({
+function CategoryXAxisTick({
   x,
   y,
   payload,
   data,
 }: XAxisTickContentProps & {
-  data: TransferSizeDataPoint[]
+  data: ChartItem[]
 }) {
   const item = data.find((item) => item.name === payload.value)
   assert(item, 'Item not found')
@@ -161,6 +206,41 @@ function XAxisTick({
   )
 }
 
+function CategoryYAxisTick({
+  x,
+  y,
+  payload,
+  data,
+}: YAxisTickContentProps & {
+  data: ChartItem[]
+}) {
+  const item = data.find((item) => item.name === payload.value)
+  assert(item, 'Item not found')
+  return (
+    <g transform={`translate(${x ?? 0},${y ?? 0})`}>
+      <foreignObject x={-126} y={-9} width={122} height={18} overflow="visible">
+        <div className="flex h-full items-center gap-1">
+          <img
+            src={item.iconUrl}
+            alt={item.name}
+            className="size-3.5 shrink-0 rounded-full"
+          />
+          {item.frameworkLabel ? (
+            <span className="truncate text-secondary text-subtitle-11">
+              <span className="font-bold">{item.frameworkLabel}</span>{' '}
+              <span className="font-medium">{item.name}</span>
+            </span>
+          ) : (
+            <span className="truncate font-bold text-secondary text-subtitle-11">
+              {item.name}
+            </span>
+          )}
+        </div>
+      </foreignObject>
+    </g>
+  )
+}
+
 const percentageToCountKey: Record<
   Extract<keyof TransferSizeDataPoint, `percentage${string}`>,
   Extract<keyof TransferSizeDataPoint, `count${string}`>
@@ -172,13 +252,16 @@ const percentageToCountKey: Record<
   percentageOver100K: 'countOver100K',
 }
 
-function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
+function CustomTooltip({
+  payload,
+  label,
+  horizontal,
+}: CustomChartTooltipProps & { horizontal: boolean }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'string' || !payload[0]) return null
 
-  const data = payload[0].payload as TransferSizeDataPoint
+  const data = payload[0].payload as ChartItem
 
-  // Calculate total transfers
   const totalTransfers =
     data.countUnder100 +
     data.count100To1K +
@@ -186,13 +269,18 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
     data.count10KTo100K +
     data.countOver100K
 
-  // To match with bar order
-  const reversedPayload = [...payload].reverse()
+  // Vertical bars stack bottom-to-top; reverse to match visual order.
+  const orderedPayload = horizontal ? payload : [...payload].reverse()
+
+  const title =
+    horizontal && data.frameworkLabel
+      ? `${data.frameworkLabel} ${label}`
+      : label
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {label}
+        {title}
       </div>
 
       <HorizontalSeparator className="my-1.5" />
@@ -206,7 +294,7 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
             {formatInteger(totalTransfers)} transfers
           </span>
         </div>
-        {reversedPayload.map((entry, index) => {
+        {orderedPayload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry || entry.hide) return null
 

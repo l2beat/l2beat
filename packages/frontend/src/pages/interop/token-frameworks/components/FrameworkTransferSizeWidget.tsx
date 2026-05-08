@@ -1,7 +1,7 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
+import { TransferSizeChart } from '../../summary/components/charts/TransferSizeChart'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
-import { FrameworkTransferSizeChart } from './charts/FrameworkTransferSizeChart'
 
 export function FrameworkTransferSizeWidget() {
   const { selectedChains } = useTokenFrameworksSelectedChains()
@@ -21,9 +21,10 @@ export function FrameworkTransferSizeWidget() {
         </div>
       </div>
       <div className="min-h-0 flex-1">
-        <FrameworkTransferSizeChart
+        <TransferSizeChart
           data={data?.transferSizeChartData ?? []}
           isLoading={isLoading}
+          horizontal
         />
       </div>
     </PrimaryCard>
