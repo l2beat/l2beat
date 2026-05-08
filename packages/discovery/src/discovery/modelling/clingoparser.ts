@@ -75,6 +75,7 @@ class ClingoFactParser {
     const atom = this.parseIdent()
     if (atom === undefined) this.fail('expected atom')
     if (atom === 'cons') this.fail("'cons' is reserved")
+    if (atom === 'nil') this.fail("'nil' cannot be used as a fact name")
     this.expect('(')
     const params = this.parseParamList()
     this.expect(')')
@@ -114,6 +115,7 @@ class ClingoFactParser {
       this.expect(')')
       return [head, ...((tail as ClingoValue[]) ?? [])]
     }
+    if (ident === 'nil') this.fail("'nil' cannot be used as a fact name")
     const params = this.parseParamList()
     this.expect(')')
     return { atom: ident, params }
