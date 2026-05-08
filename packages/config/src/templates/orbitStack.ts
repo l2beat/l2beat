@@ -32,7 +32,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -838,7 +838,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: Each Arbitrum stack chain uses the state validation mechanism of the underlying chain for its canonical bridge.',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -1389,7 +1395,7 @@ function computedStage(
     'RollupProxy',
     'wasmModuleRoot',
   )
-  return getStage(
+  return getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

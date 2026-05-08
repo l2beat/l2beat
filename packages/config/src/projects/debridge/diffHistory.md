@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x8b97b34d0fff646274b3c2954a18df0b3e284bdf
+
+# Diff at Tue, 05 May 2026 10:22:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1753092647
+- current timestamp: 1753092647
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753092647 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeGate (eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9f856fC3e2ea6D2ef7b1f030D4A8BF34556eAc5d"
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract SignatureVerifier (eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
+```diff
+    contract DeBridgeToken (eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x51256C824B193909F1B1BCD9F4a5Fa200cBCee78"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844"
+    }
+```
+
 Generated with discovered.json: 0x6a6aced6f6ba01565af4f1973d2a6240e691eb0a
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

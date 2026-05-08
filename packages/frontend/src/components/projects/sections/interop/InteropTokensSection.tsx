@@ -15,45 +15,49 @@ import {
 } from '~/components/Pagination'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import {
   getTopTokensColumns,
   type TokenRow,
 } from '~/pages/interop/components/tokens/columns'
-import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
+import type { InteropSelection } from '~/pages/interop/utils/types'
+import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 const TOKENS_PER_PAGE = 6
+const ALL_TOKENS_LIMIT = 10_000
 
 export interface InteropTokensSectionProps extends ProjectSectionProps {
   projectId: ProjectId
+  apiSelection: InteropSelection
+  data: InteropProtocolDashboardData
 }
 
 export function InteropTokensSection({
   projectId,
+  apiSelection,
+  data,
   ...sectionProps
 }: InteropTokensSectionProps) {
-  const { selectionForApi } = useInteropSelectedChains()
-  const { data: protocolData } = api.interop.protocol.useQuery({
-    ...selectionForApi,
-    id: projectId,
-  })
+  const { data: tokensData, isLoading: isTokensLoading } =
+    api.interop.tokens.useQuery(
+      {
+        ...apiSelection,
+        id: projectId,
+        limit: ALL_TOKENS_LIMIT,
+      },
+      {
+        enabled: !!data.entry,
+      },
+    )
 
-  const { data, isLoading: isTokensLoading } = api.interop.tokens.useQuery(
-    {
-      ...selectionForApi,
-      id: projectId,
-    },
-    {
-      enabled: protocolData !== undefined,
-    },
+  const columns = useMemo(
+    () => getTopTokensColumns({ showFlowsColumn: false }),
+    [],
   )
 
-  const columns = useMemo(() => getTopTokensColumns(), [])
-
-  const tableData = useMemo(() => data ?? [], [data])
+  const tableData = useMemo(() => tokensData?.items ?? [], [tokensData])
 
   const table = useTable<TokenRow>({
     data: tableData,
@@ -88,7 +92,6 @@ export function InteropTokensSection({
 
   return (
     <ProjectSection {...sectionProps}>
-      <BetweenChainsInfo className="mb-3" />
       <BasicTable
         skeletonCount={TOKENS_PER_PAGE}
         table={table}

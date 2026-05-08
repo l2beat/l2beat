@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x48d88a18e6bd3c8820b360189672dfd9f992bfbb
+
+# Diff at Tue, 05 May 2026 10:22:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x17ae0a6BE2e97b384165626dB2569729d5006640"
+    }
+```
+
+```diff
+    contract AggchainECDSAMultisig (eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: System contract defining the polygon zkEVM Aggchain logic. It only enforces bridge accounting (pessimistic) proofs to protect the shared bridge while the Aggchain state transitions are not proven. They must instead be signed by 1 aggchainSigner(s).
+      deployerAddress:
++        "eth:0x0F8352cA7C57731382cB7e1b80D2603e31e056F4"
+    }
+```
+
+```diff
+    contract usdcBridge (eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x528Ce6792fC825115e6537C2e3b3af53f385d927"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      deployerAddress:
++        "eth:0x17C8acE2dBa0d3060a7400B5AF79094a714d1537"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3"
+    }
+```
+
 Generated with discovered.json: 0xff71a32df1b34c61b6cd0f08c9efad95ec7e760d
 
 # Diff at Mon, 05 Jan 2026 10:17:33 GMT:

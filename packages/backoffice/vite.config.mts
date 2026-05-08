@@ -10,9 +10,20 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/trpc': {
-        target: process.env.TRPC_URL ?? 'http://localhost:3001',
+      '/trpc/local': {
+        target: 'http://localhost:3001',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/trpc\/local/, '/trpc'),
+      },
+      '/trpc/staging': {
+        target: 'https://be-stag.l2beat.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/trpc\/staging/, '/trpc'),
+      },
+      '/trpc/production': {
+        target: 'https://be-prod.l2beat.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/trpc\/production/, '/trpc'),
       },
     },
   },

@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x79390eae24442873619472e94c6c9fad8810e1df
+
+# Diff at Tue, 05 May 2026 10:22:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1743926099
+- current timestamp: 1743926099
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743926099 (main branch discovery), not current.
+
+```diff
+    contract Challenge (eth:0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract ChainOracle (eth:0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract Lightlink Multisig 1 (eth:0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+      deployerAddress:
++        "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B"
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (eth:0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
+      deployerAddress:
++        "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B"
+    }
+```
+
+```diff
+    contract L1ERC20Predicate (eth:0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
+      deployerAddress:
++        "eth:0xd2b61b1Ec06c5DeB8Cc6228344b367651DCd570B"
+    }
+```
+
+```diff
+    contract CanonicalStateChain (eth:0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x670E1C42A7A5962348138110E3ede3F422c10e2f) {
+    +++ description: Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract Lightlink Multisig 2 (eth:0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract LightLinkPortal (eth:0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE) {
+    +++ description: Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
+```diff
+    contract RLPReader (eth:0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcc90c738acfc1695D19336Bc3E392a46234112BF"
+    }
+```
+
 Generated with discovered.json: 0x64833a9858d8652569c2439e8ee68bf27f940c95
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

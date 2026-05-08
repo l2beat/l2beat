@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x336f659ead2db077614917c3e8e539bb3031ce9c
+
+# Diff at Tue, 05 May 2026 10:23:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1768816541
+- current timestamp: 1768816541
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768816541 (main branch discovery), not current.
+
+```diff
+    contract Validium (eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      deployerAddress:
++        "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      deployerAddress:
++        "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (eth:0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      deployerAddress:
++        "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
+    }
+```
+
 Generated with discovered.json: 0xb8649cd15536d565128dafc8ee692515ce5eea36
 
 # Diff at Mon, 19 Jan 2026 09:56:47 GMT:

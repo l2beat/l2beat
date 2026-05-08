@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoRouter",
+  "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and burns relayer stake through the relayer registry during withdrawals.",
+  "category": "core",
+  "fields": {
+    "governance": {
+      "description": "Governance address for router administration.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "rescue tokens sent to the router."
+        }
+      ]
+    },
+    "instanceRegistry": {
+      "description": "Registry consulted to determine whether a pool instance is enabled and how to handle its asset type.",
+      "severity": "HIGH"
+    },
+    "relayerRegistry": {
+      "description": "Registry used to burn relayer stake during withdrawals.",
+      "severity": "HIGH"
+    }
+  }
+}

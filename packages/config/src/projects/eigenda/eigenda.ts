@@ -22,6 +22,7 @@ export const eigenda: BaseProject = {
   slug: 'eigenda',
   name: 'EigenDA',
   shortName: undefined,
+  aliases: ['EigenLayer', 'EigenCloud'],
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   // data
   statuses: {

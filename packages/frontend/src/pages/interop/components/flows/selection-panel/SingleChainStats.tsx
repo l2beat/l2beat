@@ -12,9 +12,11 @@ import { TopItemsList } from './TopItemsList'
 export function SingleChainStats({
   chainId,
   selectedChains,
+  linkTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  linkTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -47,6 +49,7 @@ export function SingleChainStats({
           items={chainData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
+            href: linkTopProtocols ? `/interop/protocols/${p.slug}` : undefined,
           }))}
         />
       )}

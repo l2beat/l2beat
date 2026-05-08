@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ArbitrumSender",
+  "description": "Immutable L1 messenger that lets Railgun governance create Arbitrum retryable tickets to ready L2 tasks. If you trust this contract, you trust its owner to control the cross-chain governance path to the configured L2 executor.",
+  "category": "gov",
+  "ignoreRelatives": ["executorL2"],
+  "fields": {
+    "owner": {
+      "description": "Current controller of the Arbitrum sender bridge.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the configured Arbitrum executor address."
+        },
+        {
+          "type": "interact",
+          "description": "create retryable tickets on Arbitrum that ready L2 governance tasks."
+        }
+      ]
+    },
+    "ARBITRUM_INBOX": {
+      "description": "External Arbitrum inbox contract used to submit retryable tickets from Ethereum.",
+      "severity": "HIGH",
+      "type": "EXTERNAL"
+    },
+    "executorL2": {
+      "description": "Configured L2 executor address that receives readyTask retryable tickets on Arbitrum.",
+      "severity": "HIGH",
+      "type": "L2"
+    }
+  }
+}

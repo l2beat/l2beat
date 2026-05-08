@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { ChainSpecificAddress, UnixTime, unique } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import path from 'path'
 import type {
   DiscoveryChainConfig,
@@ -12,6 +13,7 @@ import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
+import type { AddressStats } from './engine/DiscoveryEngine'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
@@ -57,15 +59,16 @@ export async function runDiscovery(
 
   const timestampDate = getTimestamp(configReader, config)
 
-  const { result, timestamp, usedBlockNumbers, providerStats } = await discover(
-    paths,
-    chainConfigs,
-    projectConfig,
-    logger,
-    timestampDate,
-    http,
-    config.overwriteCache,
-  )
+  const { result, timestamp, usedBlockNumbers, providerStats, addressStats } =
+    await discover(
+      paths,
+      chainConfigs,
+      projectConfig,
+      logger,
+      timestampDate,
+      http,
+      config.overwriteCache,
+    )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
@@ -114,6 +117,39 @@ export async function runDiscovery(
     projectConfig.color,
     templateService,
   )
+
+  if (addressStats.skipped > 0) {
+    printMaxAddressesWarning(
+      logger,
+      addressStats.skipped,
+      projectConfig.structure.maxAddresses,
+    )
+  }
+}
+
+function printMaxAddressesWarning(
+  logger: Logger,
+  skipped: number,
+  maxAddresses: number,
+) {
+  const lines = [
+    '  ⚠  WARNING — DISCOVERY IS INCOMPLETE  ⚠  ',
+    '',
+    `  maxAddresses limit reached: ${skipped} address${skipped === 1 ? '' : 'es'} were SKIPPED.`,
+    '  These addresses were NOT analyzed and are MISSING from discovered.json.',
+    '',
+    `  FIX: raise "maxAddresses" (currently ${maxAddresses}) in the project config,`,
+    '       then re-run discovery.',
+  ]
+  const width = lines.reduce((max, l) => Math.max(max, l.length), 0)
+  const padded = lines.map((l) => ' ' + l.padEnd(width) + ' ')
+  const blank = ' '.repeat(width + 2)
+  const banner = [blank, ...padded, blank].map((l) => chalk.bgRed.white.bold(l))
+  logger.info('')
+  for (const line of banner) {
+    logger.info(line)
+  }
+  logger.info('')
 }
 
 export async function dryRunDiscovery(
@@ -202,6 +238,7 @@ export async function discover(
   timestamp: UnixTime
   usedBlockNumbers: Record<string, number>
   providerStats: Record<string, AllProviderStats>
+  addressStats: AddressStats
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
 
@@ -217,11 +254,8 @@ export async function discover(
     logger,
   )
   const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
-  const result = await discoveryEngine.discover(
-    allProviders,
-    config.structure,
-    timestamp,
-  )
+  const { analyses: result, stats: addressStats } =
+    await discoveryEngine.discover(allProviders, config.structure, timestamp)
   const chains = unique(
     result.map((c) => ChainSpecificAddress.longChain(c.address)),
   )
@@ -237,5 +271,6 @@ export async function discover(
     timestamp,
     usedBlockNumbers,
     providerStats: allProviders.getStats(),
+    addressStats,
   }
 }

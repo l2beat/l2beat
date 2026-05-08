@@ -8,6 +8,7 @@ export const meson: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1772110772),
   interopConfig: {
+    description: 'Liquidity bridge specialised on alt-L1s.',
     plugins: [
       {
         plugin: 'meson',

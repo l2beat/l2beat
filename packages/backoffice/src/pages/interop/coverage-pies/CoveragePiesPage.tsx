@@ -1,4 +1,5 @@
 import { RefreshCwIcon } from 'lucide-react'
+import { useState } from 'react'
 import {
   Cell,
   Label,
@@ -16,11 +17,15 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import { Input } from '~/components/core/Input'
+import { Label as FieldLabel } from '~/components/core/Label'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import type { CoveragePieChart, CoveragePieSlice } from './types'
+
+const DEFAULT_COLLAPSE_THRESHOLD_PCT = 2
 
 const integerFormatter = new Intl.NumberFormat('en-US')
 const percentFormatter = new Intl.NumberFormat('en-US', {
@@ -177,13 +182,24 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
 }
 
 export function CoveragePiesPage() {
+  const [thresholdInput, setThresholdInput] = useState<string>(
+    String(DEFAULT_COLLAPSE_THRESHOLD_PCT),
+  )
+  const parsedThreshold = Number(thresholdInput)
+  const collapseThresholdPct =
+    thresholdInput === '' ||
+    Number.isNaN(parsedThreshold) ||
+    parsedThreshold < 0
+      ? DEFAULT_COLLAPSE_THRESHOLD_PCT
+      : parsedThreshold
+
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.coveragePies.data.useQuery()
+    api.interop.coveragePies.data.useQuery({ collapseThresholdPct })
 
   const charts = data?.charts ?? []
 
   return (
-    <AppLayout className="min-h-screen">
+    <AppLayout>
       <div className="flex flex-col gap-4 p-4">
         <Card className="gap-4">
           <CardHeader className="flex flex-row items-start justify-between gap-3">
@@ -191,18 +207,39 @@ export function CoveragePiesPage() {
               <CardTitle>Coverage pies</CardTitle>
               <CardDescription>
                 Support source of truth: <code>InteropEvent.unsupported</code>.
-                Small slices are collapsed by support status.
+                Small slices are collapsed by support status. Set threshold to{' '}
+                <code>0</code> to disable collapsing.
               </CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => void refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
-              Refresh
-            </Button>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <FieldLabel
+                  htmlFor="collapse-threshold"
+                  className="whitespace-nowrap text-[8px] text-muted-foreground"
+                >
+                  Collapse {'<'}
+                </FieldLabel>
+                <Input
+                  id="collapse-threshold"
+                  type="number"
+                  min={0}
+                  step={0.1}
+                  value={thresholdInput}
+                  onChange={(e) => setThresholdInput(e.target.value)}
+                  className="h-9 w-20"
+                />
+                <span className="text-muted-foreground text-xs">%</span>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void refetch()}
+                disabled={isFetching}
+              >
+                <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+                Refresh
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
             <Badge variant="secondary">{charts.length} charts</Badge>

@@ -8,6 +8,8 @@ export const debridgeDln: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768915493),
   interopConfig: {
+    description:
+      'Intent framework built on top of the deBridge messaging protocol.',
     plugins: [
       {
         plugin: 'debridge-dln',

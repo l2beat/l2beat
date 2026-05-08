@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProject } from '../../api/api'
 import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
 import { findSelected } from '../../utils/findSelected'
+import { useProjectQueryOptions } from './hooks/projectQuery'
 import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
 import { CodePanel } from './panel-code/CodePanel'
@@ -22,10 +22,7 @@ export function ProjectPage() {
   if (!project) {
     throw new Error('Missing project!')
   }
-  const response = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
+  const response = useQuery(useProjectQueryOptions(project))
   const select = usePanelStore((state) => state.select)
   const selectedAddress = usePanelStore((state) => state.selected)
   useEffect(() => {

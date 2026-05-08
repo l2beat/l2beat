@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoCash_Eth_01",
+  "description": "Legacy fixed-denomination ETH mixer for 0.1 ETH deposits. This older pool generation keeps an operator role that can replace the withdrawal verifier and, for this instance, perform a one-time state migration.",
+  "category": "core",
+  "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
+  "fields": {
+    "denomination": {
+      "description": "Fixed ETH amount accepted by this pool.",
+      "severity": "LOW"
+    },
+    "operator": {
+      "description": "Legacy operator role retained from the trusted-setup phase.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the withdrawal verifier."
+        },
+        {
+          "type": "interact",
+          "description": "transfer the operator role and perform the one-time legacy state migration."
+        }
+      ]
+    },
+    "verifier": {
+      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
+      "severity": "HIGH"
+    },
+    "isMigrated": {
+      "description": "Whether the one-time legacy state migration path has already been used.",
+      "severity": "LOW"
+    }
+  }
+}

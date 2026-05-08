@@ -67,7 +67,7 @@ describe('flatten', () => {
       },
     ]
 
-    const flattened = flattenStartingFrom('R1', files, remappings)
+    const flattened = flattenStartingFrom('R1', 'Root.sol', files, remappings)
 
     expect(flattened).toEqual(
       [
@@ -99,7 +99,7 @@ contract R1 is C2, C3, C4 {
 `,
     }
 
-    const flattened = flattenStartingFrom('R1', [file], [])
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [])
     expect(flattened).toEqual(
       String.raw`contract C4 { }
 
@@ -142,7 +142,7 @@ contract R1 is C2, C3, C4 {
 `,
     }
 
-    const flattened = flattenStartingFrom('R1', [file], [], {
+    const flattened = flattenStartingFrom('R1', 'Root.sol', [file], [], {
       includeAll: true,
     })
     expect(flattened).toEqual(
@@ -193,7 +193,12 @@ contract R1 is Namespace.C2 {
       content: String.raw`contract C2 { }`,
     }
 
-    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [])
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, c2File],
+      [],
+    )
     expect(flattened).toEqual(
       String.raw`contract C2 { }
 
@@ -224,6 +229,7 @@ contract R1 is StringClass {
 
     const flattened = flattenStartingFrom(
       'R1',
+      'a/b/c/Root.sol',
       [rootFile, c2File],
       ['@stdlib=../somewhere/'],
     )
@@ -259,9 +265,13 @@ contract R1 {
           `,
     }
 
-    const flattened = flattenStartingFrom('R1', [rootFile, c2File], [], {
-      includeAll: true,
-    })
+    const flattened = flattenStartingFrom(
+      'R1',
+      'Root.sol',
+      [rootFile, c2File],
+      [],
+      { includeAll: true },
+    )
 
     expect(flattened).toEqual(
       String.raw`error CustomError(address account);
@@ -295,7 +305,7 @@ contract Main is Base {
 `,
       }
 
-      const flattened = flattenStartingFrom('Main', [file], [])
+      const flattened = flattenStartingFrom('Main', 'Root.sol', [file], [])
 
       // Should NOT include comments in default mode
       expect(flattened).not.toInclude('/// @title')
@@ -324,7 +334,7 @@ contract Main is Base {
 `,
       }
 
-      const flattened = flattenStartingFrom('Main', [file], [], {
+      const flattened = flattenStartingFrom('Main', 'Root.sol', [file], [], {
         includeAll: true,
       })
 
@@ -346,9 +356,13 @@ contract MyContract {
 `,
       }
 
-      const flattened = flattenStartingFrom('MyContract', [file], [], {
-        includeAll: true,
-      })
+      const flattened = flattenStartingFrom(
+        'MyContract',
+        'Root.sol',
+        [file],
+        [],
+        { includeAll: true },
+      )
 
       // Should include block comment
       expect(flattened).toInclude('/**')
@@ -379,9 +393,13 @@ contract Main is IBase {
 `,
       }
 
-      const flattened = flattenStartingFrom('Main', [mainFile, baseFile], [], {
-        includeAll: true,
-      })
+      const flattened = flattenStartingFrom(
+        'Main',
+        'Main.sol',
+        [mainFile, baseFile],
+        [],
+        { includeAll: true },
+      )
 
       // Should include comments from both files
       expect(flattened).toInclude('/// @title IBase interface')
@@ -401,9 +419,13 @@ contract Rollup {
 `,
       }
 
-      const flattened = flattenStartingFrom('Rollup', [file], [], {
-        includeAll: true,
-      })
+      const flattened = flattenStartingFrom(
+        'Rollup',
+        'Rollup.sol',
+        [file],
+        [],
+        { includeAll: true },
+      )
 
       expect(flattened).toInclude('/// @title Rollup')
       expect(flattened).toInclude('/// @author Aztec Labs')

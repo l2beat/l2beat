@@ -13,9 +13,10 @@ import type { Server } from 'http'
 import path, { join } from 'path'
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
+import { FlatSourceClient } from './diffovery/FlatSourceClient'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
-import { getCode, getCodePaths } from './getCode'
+import { getCodeFromDisk, getCodeFromEtherscan, getCodePaths } from './getCode'
 import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
@@ -37,6 +38,14 @@ const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
 export const projectParamsSchema = z.object({
   project: safeStringSchema,
+})
+
+const projectQuerySchema = z.object({
+  maxDepth: z
+    .string()
+    .check((v) => /^\d+$/.test(v), 'maxDepth must be a non-negative integer')
+    .transform((v) => Number(v))
+    .optional(),
 })
 
 const projectAddressParamsSchema = z.object({
@@ -77,7 +86,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
 
-  const diffoveryController = new DiffoveryController()
+  const flatSourceClient = new FlatSourceClient()
+  const diffoveryController = new DiffoveryController(flatSourceClient)
 
   app.use(express.json())
 
@@ -96,9 +106,20 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       res.status(400).json({ errors: paramsValidation.message })
       return
     }
+    const queryValidation = projectQuerySchema.safeParse(req.query)
+    if (!queryValidation.success) {
+      res.status(400).json({ errors: queryValidation.message })
+      return
+    }
     const { project } = paramsValidation.data
+    const { maxDepth } = queryValidation.data
 
-    const response = getProject(configReader, templateService, project)
+    const response = getProject(
+      configReader,
+      templateService,
+      project,
+      maxDepth,
+    )
     res.json(response)
   })
 
@@ -114,7 +135,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/:project/code/:address', (req, res) => {
+  app.get('/api/projects/:project/code/:address', async (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
       res.status(400).json({ errors: paramsValidation.message })
@@ -122,9 +143,21 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
     const { project, address } = paramsValidation.data
 
-    const checkFlatCode = readonly === false
-    const response = getCode(configReader, project, address, checkFlatCode)
-    res.json(response)
+    const isLocal = readonly === false
+    try {
+      const response = isLocal
+        ? getCodeFromDisk(configReader, project, address)
+        : await getCodeFromEtherscan(
+            configReader,
+            project,
+            address,
+            flatSourceClient,
+          )
+      res.json(response)
+    } catch (e) {
+      console.error(e)
+      res.status(500).json({ error: 'Failed to fetch code' })
+    }
   })
 
   app.get('/api/template-files', (req, res) => {

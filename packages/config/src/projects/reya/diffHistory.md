@@ -1,3 +1,212 @@
+Generated with discovered.json: 0xd4b44aca0609ebb56f4284d4a3ebc4c064761f8d
+
+# Diff at Tue, 05 May 2026 10:22:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777390991
+- current timestamp: 1777390991
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777390991 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      deployerAddress:
++        "eth:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x383c03c4EfF819E73409DbC690755a9992393814) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x672109752635177ebcb17F2C7e04575A709014BD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract SocketVault_Reya (eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0x91Ef6E02740bDcc9dB248F995c7f394D7617d7a1"
+    }
+```
+
+Generated with discovered.json: 0xf70e3c676e0a849513aea07e9c5e6489c20edc27
+
+# Diff at Tue, 28 Apr 2026 15:45:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0695512a70f7175257fb7756eb2008702d3f0dc5 block: 1774433302
+- current timestamp: 1777390991
+
+## Description
+
+Gelato Multisig (`eth:0xBeA2Bc85...`) member rotation: 5 signers removed (`0x349f3839`, `0xB65540bB`, `0x58edE8C6`, `0x28bB9385`, `0x5bE3E96C`), 1 added (`0x6a0A93Cd`). Threshold dropped 4→3 and total signers 9→5 (44% → 60%). Shared multisig — same change observed on `ethernity`, `ink`, `lisk`, `everclear`, and `educhain` (arb1).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.1:
+-        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.2:
+-        "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.3:
+-        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.5:
+-        "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f9079f1cabffd363e9f5f55f5b619236610ea31
 
 # Diff at Wed, 25 Mar 2026 10:09:26 GMT:

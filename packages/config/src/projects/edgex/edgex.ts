@@ -80,7 +80,6 @@ export const edgex: ScalingProject = {
     BADGES.Stack.StarkEx,
     BADGES.Infra.SHARP,
   ],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
     name: 'EdgeX',
     slug: 'edgex',
@@ -104,6 +103,7 @@ export const edgex: ScalingProject = {
     type: 'Validity',
     zkCatalogId: ProjectId('stone'),
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   stage: {
     stage: 'NotApplicable',
   },

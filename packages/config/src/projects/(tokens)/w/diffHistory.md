@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa5b82f1efabb643d0082aded90f37c388fdc76d7
+
+# Diff at Tue, 05 May 2026 10:24:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752832725
+- current timestamp: 1752832725
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752832725 (main branch discovery), not current.
+
+```diff
+    contract Wormhole Token (arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95"
+    }
+```
+
+```diff
+    contract Wormhole Token (base:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91) {
+    +++ description: None
+      deployerAddress:
++        "base:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95"
+    }
+```
+
 Generated with discovered.json: 0xe82a521b4ac2446032bd7b6a345a4a60844cf98e
 
 # Diff at Fri, 26 Sep 2025 14:26:55 GMT:

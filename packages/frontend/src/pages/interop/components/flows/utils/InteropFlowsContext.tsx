@@ -38,12 +38,14 @@ interface InteropFlowsProviderProps {
   protocols: (ProtocolDisplayable & {
     id: string
   })[]
+  defaultSelectedChains: string[]
 }
 
 export function InteropFlowsProvider({
   children,
   chains,
   protocols,
+  defaultSelectedChains,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
   const allProtocolIds = useMemo(
@@ -51,10 +53,12 @@ export function InteropFlowsProvider({
     [protocols],
   )
 
-  const defaultSelectedChainIds = useMemo(
-    () => allChainIds.slice(0, MAX_SELECTED_CHAINS),
-    [allChainIds],
-  )
+  const defaultSelectedChainIds = useMemo(() => {
+    const provided = new Set(defaultSelectedChains)
+    return allChainIds
+      .filter((id) => provided.has(id))
+      .slice(0, MAX_SELECTED_CHAINS)
+  }, [allChainIds, defaultSelectedChains])
 
   const [chainsParam, setChainsParam] = useQueryParam(
     CHAINS_QUERY_KEY,

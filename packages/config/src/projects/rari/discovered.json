@@ -65,6 +65,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -114,6 +115,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -168,6 +170,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1747075454,
       "sinceBlock": 335999776,
       "values": { "$immutable": true },
@@ -196,6 +199,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -268,6 +272,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716148,
       "sinceBlock": 172197986,
       "values": {
@@ -304,6 +309,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1747075451,
       "sinceBlock": 335999762,
       "values": { "$immutable": true },
@@ -321,6 +327,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1747075458,
       "sinceBlock": 335999792,
       "values": {
@@ -351,6 +358,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -502,6 +510,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -548,6 +557,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1747075457,
       "sinceBlock": 335999788,
       "values": {
@@ -570,6 +580,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -601,6 +612,7 @@
       ],
       "proxyType": "immutable",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
+      "deployerAddress": "arb1:0x7E212E611826122dC69098FBe0F4057B823751F1",
       "sinceTimestamp": 1732459265,
       "sinceBlock": 277848126,
       "values": {
@@ -624,6 +636,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716148,
       "sinceBlock": 172197986,
       "values": {
@@ -787,6 +800,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x1E85A7F629B4E52BA34C19BEA149c804b00722eF",
       "sinceTimestamp": 1754922534,
       "sinceBlock": 367325020,
       "values": {
@@ -833,6 +847,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0xba9A3c0a22bAebE8c4926227BdE32d6EdC0D5d28",
       "sinceTimestamp": 1764785015,
       "sinceBlock": 406817741,
       "values": {
@@ -984,6 +999,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
       "sinceTimestamp": 1709766231,
       "sinceBlock": 187813903,
       "values": {
@@ -1023,6 +1039,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716148,
       "sinceBlock": 172197986,
       "values": {
@@ -1064,6 +1081,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -1113,6 +1131,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1704540879,
       "sinceBlock": 167664692,
       "values": { "$immutable": true },
@@ -1136,6 +1155,7 @@
         "totalDelayedMessagesRead",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -1243,6 +1263,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "arb1:0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
       "sinceTimestamp": 1705716145,
       "sinceBlock": 172197973,
       "values": {
@@ -1308,6 +1329,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1747075453,
       "sinceBlock": 335999773,
       "values": { "$immutable": true },
@@ -1384,6 +1406,7 @@
       "proxyType": "immutable",
       "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
       "ignoreInWatchMode": [""],
+      "deployerAddress": "arb1:0x93616128705070474e0D8EdD11349c45668ac9DC",
       "sinceTimestamp": 1738111205,
       "sinceBlock": 300328531,
       "values": {

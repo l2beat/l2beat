@@ -20,7 +20,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -368,7 +368,7 @@ export const taiko: ScalingProject = {
       description: `Anyone can propose after ${formatSeconds(forcedInclusionPermissionlessDelay)} if forced inclusions are ignored, and proving becomes permissionless after ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} if a proposal remains unproven.`,
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

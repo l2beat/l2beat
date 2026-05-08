@@ -1,5 +1,0 @@
-{
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["getPendingMessageHash", "currentNonce"],
-  "description": "Contract handling outbound messages for the Hashi protocol."
-}

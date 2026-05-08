@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "dev:bo": "./scripts/dev-backoffice-backend.sh --no-backend-logs",
     "build": "vite build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:backoffice",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:backoffice",

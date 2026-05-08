@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xfdf3a2d8077ade0a7562b3c8d2edb97add99f8d1
+
+# Diff at Tue, 05 May 2026 10:22:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1711616603
+- current timestamp: 1711616603
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1711616603 (main branch discovery), not current.
+
+```diff
+    contract Hop Multisig (eth:0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x60B8e50B60c52EaE5c887faA76063488003F66B4"
+    }
+```
+
+```diff
+    contract MATIC Bridge (eth:0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract Timelock (eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xfEfeC7D3EB14a004029D278393e6AB8B46fb4FCa"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract DAI Bridge (eth:0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract USDT Bridge (eth:0x3E4a3a4796d16c0Cd582C382691998f7c06420B6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract SNX Bridge (eth:0x893246FACF345c99e4235E5A7bbEE7404c988b96) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract HOP Bridge (eth:0x914f986a44AcB623A277d6Bd17368171FCbe4273) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract ETH Bridge (eth:0xb8901acB165ed027E32754E0FFe830802919727f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract WBTC Bridge (eth:0xb98454270065A31D71Bf635F6F7Ee6A518dFb849) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x924AC9910C09A0215b06458653b30471A152022F"
+    }
+```
+
+```diff
+    contract Hop Governor (eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9AA99C23F67c81701C772B106b4F83f6e858dd2E"
+    }
+```
+
+```diff
+    contract Timelock Controller (eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9AA99C23F67c81701C772B106b4F83f6e858dd2E"
+    }
+```
+
 Generated with discovered.json: 0xa38721c27f62eea6680b28dde145ae2aff78ca20
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

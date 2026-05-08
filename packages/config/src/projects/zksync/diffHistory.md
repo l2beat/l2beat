@@ -1,3 +1,275 @@
+Generated with discovered.json: 0x70e9107cbebc2f83b20951a9180662547eb14e00
+
+# Diff at Tue, 05 May 2026 14:29:03 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1774020135
+- current timestamp: 1777991279
+
+## Description
+
+Paused deposits to zksync. Upgraded zksync contract by adding token migration to claim distributor: https://disco.l2beat.com/diff/eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9/eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff. More precisely, added:
+
+- `l1ClaimDistributor` smart contract that will likely be this contract: https://etherscan.io/address/0xfb94f8a45e81fa9f6256ddb0eec0735b8520cdea#code. It's supposed to store Merkle root of all toknes `claimRoot` and let users permissionlessly claim their funds agains the root
+- `pauseDeposits` function that permanently halts deposits into zksync L2
+- `setClaimRoot` function that sets withdrawal smart contracts and activates exodus mode
+- `migrateToken` function that transfers given token to the registered claim distributor contract.
+
+Deposits to L2 were halted, no further actions (setting claim distributor, claim root) were taken yet. 
+
+## Watched changes
+
+```diff
+    contract Multisig 3 (eth:0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863"
++        "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      values.versionId:
+-        12
++        13
+    }
+```
+
+```diff
+    contract ZkSync (eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
++        "0x61d3f542bbc9d106202e9567a3c0c27937e00124d0184672b28771278a57fcb7"
+      values.$implementation.0:
+-        "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9"
++        "eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff"
+      values.$implementation.1:
+-        "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
++        "eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d"
+      values.pausedDeposits:
++        true
+      implementationNames.eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9:
+-        "ZkSync"
+      implementationNames.eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD:
+-        "AdditionalZkSync"
+      implementationNames.eth:0x803B96fA3cE086A722CB6C1e2C79D304c8a263Ff:
++        "ZkSync"
+      implementationNames.eth:0xBF8ee0141203A7986142000B85f7afaBeee1279d:
++        "AdditionalZkSync"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkSync/AdditionalZkSync.2.sol                  | 2281 ++----------------
+ .../ZkSync/ZkSync.1.sol                            | 2484 ++------------------
+ 2 files changed, 386 insertions(+), 4379 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774020135 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xbEA07b01E8Fe3936A3D206158521A87addB65cfE"
+    }
+```
+
+```diff
+    contract Multisig 2 (eth:0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x1D08182eF64C4be7398d71bA62c409D37a677344"
+    }
+```
+
+```diff
+    contract Multisig 3 (eth:0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x083fc10cE7e97CaFBaE0fE332a9c4384c5f54E45"
+    }
+```
+
+```diff
+    contract Governance (eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract TokenGovernance (eth:0x35cc31f63deef017c38d51B038891bAE7d614e86) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xA91c2d27AF465D09C8FE01255197d1d81148c136"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract NftFactory (eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x58BD2E164D119E48a9b07ceECA1c3D1A83e55d9b"
+    }
+```
+
+```diff
+    contract ZkSync (eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract Proxy (eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x07F455F30e862E13E3E3D960762cB11c4F744d52"
+    }
+```
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      deployerAddress:
+-        "eth:0x78199272621046Ef1569fc6AF229c18413ccE00f"
+    }
+```
+
+Generated with discovered.json: 0x3cbbde1f2ca447f09b89b862ce74ad2323f12f60
+
+# Diff at Tue, 05 May 2026 10:24:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1774020135
+- current timestamp: 1774020135
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774020135 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xbEA07b01E8Fe3936A3D206158521A87addB65cfE"
+    }
+```
+
+```diff
+    contract Multisig 2 (eth:0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1D08182eF64C4be7398d71bA62c409D37a677344"
+    }
+```
+
+```diff
+    contract Multisig 3 (eth:0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x083fc10cE7e97CaFBaE0fE332a9c4384c5f54E45"
+    }
+```
+
+```diff
+    contract Governance (eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract TokenGovernance (eth:0x35cc31f63deef017c38d51B038891bAE7d614e86) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA91c2d27AF465D09C8FE01255197d1d81148c136"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract Verifier (eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract NftFactory (eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x58BD2E164D119E48a9b07ceECA1c3D1A83e55d9b"
+    }
+```
+
+```diff
+    contract ZkSync (eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8"
+    }
+```
+
+```diff
+    contract Proxy (eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x07F455F30e862E13E3E3D960762cB11c4F744d52"
+    }
+```
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x78199272621046Ef1569fc6AF229c18413ccE00f"
+    }
+```
+
 Generated with discovered.json: 0x39a366b037118b460d5e8940aad1cc833b59306f
 
 # Diff at Fri, 20 Mar 2026 15:23:18 GMT:

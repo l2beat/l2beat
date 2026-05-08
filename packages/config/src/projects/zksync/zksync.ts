@@ -19,7 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -64,6 +64,7 @@ export const zksync: ScalingProject = {
   id: ProjectId('zksync'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1777975746), // 2026-05-05T10:09:06Z
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
@@ -71,7 +72,7 @@ export const zksync: ScalingProject = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     headerWarning:
-      '[ZKsync Lite will be deprecated in 2026.](https://x.com/zksync/status/1997776813708242975?s=20).',
+      '[ZKsync Lite enters sunset phase](https://x.com/zksync/status/2051210912141295768).',
     purposes: ['Payments', 'Exchange', 'NFT'],
     stacks: ['ZKsync Lite'],
     links: {
@@ -198,7 +199,7 @@ export const zksync: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -243,9 +244,8 @@ export const zksync: ScalingProject = {
             url: 'https://docs.lite.zksync.io/userdocs/security/#validity-proofs',
           },
           {
-            title:
-              'ZkSync.sol#L549 - Etherscan source code, proveBlocks function',
-            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L549',
+            title: 'ZkSync.sol - Etherscan source code, proveBlocks function',
+            url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L568',
           },
         ],
       },
@@ -261,9 +261,8 @@ export const zksync: ScalingProject = {
         },
 
         {
-          title:
-            'ZkSync.sol#L44 - Etherscan source code, commitBlockInfo struct',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L44',
+          title: 'ZkSync.sol - Etherscan source code, commitBlockInfo struct',
+          url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L44',
         },
       ],
     },
@@ -276,8 +275,8 @@ export const zksync: ScalingProject = {
         },
         {
           title:
-            'ZkSync.sol#L422 - Etherscan source code, requireActiveValidator in commitBlock function',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L427',
+            'ZkSync.sol - Etherscan source code, requireActiveValidator in commitBlock function',
+          url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L446',
         },
       ],
     },
@@ -290,13 +289,12 @@ export const zksync: ScalingProject = {
         },
         {
           title:
-            'ZkSync.sol#L977 - Etherscan source code, addPriorityRequest function',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L977',
+            'ZkSync.sol - Etherscan source code, addPriorityRequest function',
+          url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L951',
         },
         {
-          title:
-            'ZkSync.sol#L600 - Etherscan source code, activateExodusMode function',
-          url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L600',
+          title: 'ZkSync.sol - Etherscan source code, setClaimRoot function',
+          url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L183',
         },
       ],
     },
@@ -319,13 +317,13 @@ export const zksync: ScalingProject = {
           },
           {
             title:
-              'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
-            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L325',
+              'ZkSync.sol - Etherscan source code, requestFullExit function',
+            url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L344',
           },
           {
             title:
-              'ZkSync.sol#L360 - Etherscan source code, requestFullExitNFT function',
-            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L360',
+              'ZkSync.sol - Etherscan source code, requestFullExitNFT function',
+            url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F22#L379',
           },
         ],
       },
@@ -342,8 +340,8 @@ export const zksync: ScalingProject = {
           },
           {
             title:
-              'ZkSync.sol#L622 - Etherscan source code, performExodus function',
-            url: 'https://etherscan.io/address/0x8e972b354e6933275513c355ee14d44a832ad2d9#code#F1#L622',
+              'AdditionalZkSync.sol - Etherscan source code, migrateToken function',
+            url: 'https://etherscan.io/address/0x803b96fa3ce086a722cb6c1e2c79d304c8a263ff#code#F1#L41',
           },
         ],
       },
@@ -420,7 +418,7 @@ export const zksync: ScalingProject = {
             references: [
               {
                 title: 'Security Council Members - Etherscan source code',
-                url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+                url: 'https://etherscan.io/address/0xBF8ee0141203A7986142000B85f7afaBeee1279d#code#F1#L75',
               },
               {
                 title: 'Security Council 2.0 - Matter Labs blog post',
@@ -456,6 +454,14 @@ export const zksync: ScalingProject = {
       url: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
       description: 'ZKsync becomes ZKsync Lite.',
+      type: 'general',
+    },
+    {
+      title: 'ZKsync Lite sunsets',
+      url: 'https://x.com/zksync/status/2051210912141295768',
+      date: '2026-05-04T00:00:00Z',
+      description:
+        'Block production halts for ZKsync Lite, and the orderly sunset process begins.',
       type: 'general',
     },
   ],

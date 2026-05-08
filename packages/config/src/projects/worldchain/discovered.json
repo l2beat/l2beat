@@ -1,6 +1,6 @@
 {
   "name": "worldchain",
-  "timestamp": 1777042663,
+  "timestamp": 1777994321,
   "configHash": "0x42bff111a3a859dd0eefe0f8ea62d3974e0033474d7f26f46e73afb61ec22445",
   "entries": [
     {
@@ -96,7 +96,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11280,
+        "gameCount": 11543,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xb42Dc014FD85994eCeD29430a5eFe887f4228398",
@@ -111,7 +111,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 11278,
+        "permissionedGamesTotal": 11541,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -714,7 +714,7 @@
         "l1StandardBridge": "eth:0x470458C91978D2d929704489Ad730DC3E3001113",
         "l2ChainId": 480,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 250000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -997,11 +997,6 @@
       ]
     },
     {
-      "address": "eth:0x92827223f6b397CE9F208eE352bacA710765cACb",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "SuperchainConfig",
       "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "type": "Contract",
@@ -1193,7 +1188,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1450,7 +1445,7 @@
           "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "eth:0x0a8742365a7EB0A3698293ac54357B5Ac04cefE6",
           "eth:0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "eth:0x92827223f6b397CE9F208eE352bacA710765cACb"
+          "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6"
         ],
         "$threshold": 10,
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
@@ -1459,7 +1454,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1469,6 +1464,11 @@
     },
     {
       "address": "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xcbC7dCeb857F0b25523618cCa0A03c419a6d7eA6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1547,7 +1547,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1326609,
-          "prevBlockNum": 24950556
+          "prevBlockNum": 25029591
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1766,7 +1766,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698326",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292699903",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2882,6 +2882,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24950569 },
-  "permissionsConfigHash": "0x910d87ebf63c3af4f124b93f5c7ea501d550f95a3e0e828ca5ea7a97650fc960"
+  "usedBlockNumbers": { "ethereum": 25029651 },
+  "permissionsConfigHash": "0x83ea9823c0769e27073ef3b31bf64ded8f97bff62849cdecc4008f4047352e18"
 }

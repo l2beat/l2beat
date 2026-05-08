@@ -22,8 +22,8 @@ describe(MulticallV3Client.name, () => {
       const data2 = Bytes.fromHex('0xabcdef')
 
       const requests = [
-        { to: to1, data: data1 },
-        { to: to2, data: data2 },
+        { to: to1, input: data1 },
+        { to: to2, input: data2 },
       ]
 
       const result = client.encodeBatches(requests)
@@ -42,13 +42,13 @@ describe(MulticallV3Client.name, () => {
       )
 
       expect(result[0].to).toEqual(address)
-      expect(result[0].data).toEqual(Bytes.fromHex(expectedCalldata))
+      expect(result[0].input).toEqual(Bytes.fromHex(expectedCalldata))
     })
 
     it('splits requests into multiple batches when exceeding batch size', () => {
       const requests = Array.from({ length: 7 }, () => ({
         to: EthereumAddress.random(),
-        data: Bytes.fromHex('0x1234'),
+        input: Bytes.fromHex('0x1234'),
       }))
 
       const result = client.encodeBatches(requests)
@@ -60,7 +60,9 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(0, 3).map((r) => [r.to.toString(), r.data.toString()]),
+          requests
+            .slice(0, 3)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
@@ -69,7 +71,9 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(3, 6).map((r) => [r.to.toString(), r.data.toString()]),
+          requests
+            .slice(3, 6)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
@@ -78,13 +82,15 @@ describe(MulticallV3Client.name, () => {
         'tryAggregate',
         [
           false,
-          requests.slice(6, 7).map((r) => [r.to.toString(), r.data.toString()]),
+          requests
+            .slice(6, 7)
+            .map((r) => [r.to.toString(), r.input.toString()]),
         ],
       )
 
-      expect(result[0].data).toEqual(Bytes.fromHex(firstBatchCalldata))
-      expect(result[1].data).toEqual(Bytes.fromHex(secondBatchCalldata))
-      expect(result[2].data).toEqual(Bytes.fromHex(thirdBatchCalldata))
+      expect(result[0].input).toEqual(Bytes.fromHex(firstBatchCalldata))
+      expect(result[1].input).toEqual(Bytes.fromHex(secondBatchCalldata))
+      expect(result[2].input).toEqual(Bytes.fromHex(thirdBatchCalldata))
     })
 
     it('returns empty array for empty requests', () => {
@@ -185,7 +191,7 @@ describe(MulticallV3Client.name, () => {
       )
 
       expect(result.to).toEqual(address)
-      expect(result.data).toEqual(Bytes.fromHex(expectedCalldata))
+      expect(result.input).toEqual(Bytes.fromHex(expectedCalldata))
     })
   })
 })

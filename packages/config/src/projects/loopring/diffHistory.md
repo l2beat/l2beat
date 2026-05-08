@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x0b8f157742045df1494b2fe2a4d93ebecc8e756c
+
+# Diff at Tue, 05 May 2026 10:22:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1755157592
+- current timestamp: 1755157592
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755157592 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract AgentRegistry (eth:0x39B9bf169a7e225ba037C443A40460c77438ea14) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract ProtocolFeeVault (eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract ForcedWithdrawalAgent (eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract BlockVerifier (eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract LoopringCoin V2 Token (eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5593b2B8Dc63d0ed68aa8f885707b2Dc5787E391"
+    }
+```
+
+```diff
+    contract LoopringMultisig (eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB89cdf808dA6Cfb39F3c2e167fFB5DDfc811C33E"
+    }
+```
+
+```diff
+    contract LoopringV3 (eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract FastWithdrawalAgent (eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
+```diff
+    contract UserStakingPool (eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4374D3d032B3c96785094ec9f384f07077792768"
+    }
+```
+
 Generated with discovered.json: 0x883afe756aac8ea6eb629a675ed301199aaea001
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

@@ -86,36 +86,63 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
-export type InteropProtocolTokensParams = v.infer<
-  typeof InteropProtocolTokensParams
->
-export const InteropProtocolTokensParams = v.object({
-  id: v.string().transform((value) => ProjectId(value)),
-  ...InteropSelectionInputShape,
-  type: KnownInteropBridgeType.optional(),
-})
-
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
-export const InteropTopItemsParams = v.object({
+export const InteropTopItemsSort = v.object({
+  id: v.enum([
+    'symbol',
+    'pair',
+    'topProtocol',
+    'volume',
+    'transferCount',
+    'avgDuration',
+    'avgValue',
+    'flows',
+    'netMintedValue',
+  ]),
+  desc: v.boolean(),
+})
+export type InteropTopItemsSort = v.infer<typeof InteropTopItemsSort>
+export const InteropTopItemsSorting = v.array(InteropTopItemsSort)
+export type InteropTopItemsSorting = v.infer<typeof InteropTopItemsSorting>
+
+const InteropTopItemsParamsShape = {
   id: v.union([
     v.string().transform((value) => ProjectId(value)),
     v.undefined(),
   ]),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  protocolIds: v.array(v.string()).optional(),
+}
+export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
+
+export type InteropTopItemsInfiniteParams = v.infer<
+  typeof InteropTopItemsInfiniteParams
+>
+export const InteropTopItemsInfiniteParams = v.object({
+  ...InteropTopItemsParamsShape,
+  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  sort: InteropTopItemsSorting.optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
+export type InteropProtocolTransfersCursor = v.infer<
+  typeof InteropProtocolTransfersCursor
+>
+export const InteropProtocolTransfersCursor = v.object({
+  timestamp: v.number(),
+  transferId: v.string(),
+})
 export const InteropProtocolTransfersParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
-  expectedTransferCount: v.number(),
-  expectedVolume: v.number(),
   snapshotTimestamp: v.number(),
-  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
 })
 
 export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
@@ -145,15 +172,9 @@ export type InteropProtocolTransferDetailsItem = {
   dstTxHashHref: string | undefined
 }
 
-export type InteropProtocolTransferStats = {
-  transferCount: number
-  volume: number
-}
-
 export type InteropProtocolTransfersResponse = {
   items: InteropProtocolTransferDetailsItem[]
-  hasIntegrityMismatch: boolean
-  nextCursor: number | undefined
+  nextCursor: InteropProtocolTransfersCursor | undefined
 }
 
 export type AggregatedInteropTransferWithTokens =
@@ -204,6 +225,11 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
+export type InteropTokensResponse = {
+  items: TokenData[]
+  nextCursor: number | undefined
+}
+
 export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
@@ -217,6 +243,11 @@ export type TokensPairData = {
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
   flows: TokenFlowData[]
+}
+
+export type InteropTokensPairsResponse = {
+  items: TokensPairData[]
+  nextCursor: number | undefined
 }
 
 export type ChainData = {

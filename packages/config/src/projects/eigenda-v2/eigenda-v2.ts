@@ -20,6 +20,7 @@ export const eigendaV2: BaseProject = {
   slug: 'eigenda-v2',
   name: 'EigenDA V2',
   shortName: 'EigenDA V2',
+  aliases: ['EigenLayer', 'EigenCloud'],
   addedAt: UnixTime.fromDate(new Date('2025-10-22')),
   statuses: {
     yellowWarning: undefined,

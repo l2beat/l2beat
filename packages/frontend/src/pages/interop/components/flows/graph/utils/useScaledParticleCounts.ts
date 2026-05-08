@@ -37,6 +37,7 @@ export function useScaledParticleCounts(
   chainIds: string[],
   chainData: ChainData[] | undefined,
   flows: Flow[] | undefined,
+  baseDollarsPerParticle: number = DOLLARS_PER_PARTICLE,
 ): Result {
   return useMemo(() => {
     const filteredFlows = flows?.filter((f) => f.volume > 0) ?? []
@@ -67,11 +68,14 @@ export function useScaledParticleCounts(
 
     const exactCounts = filteredFlows.map((flow, i) => {
       const volumePerSecond = flow.volume / UnixTime.DAY
-      const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
+      const particlesPerSecond = volumePerSecond / baseDollarsPerParticle
       return particlesPerSecond * (travelDurations[i] ?? 0)
     })
 
-    const { counts, dollarsPerParticle } = getScaledParticleCounts(exactCounts)
+    const { counts, dollarsPerParticle } = getScaledParticleCounts(
+      exactCounts,
+      baseDollarsPerParticle,
+    )
 
     const result = new Map<string, FlowParticles>()
     for (let i = 0; i < filteredFlows.length; i++) {
@@ -85,5 +89,5 @@ export function useScaledParticleCounts(
     }
 
     return { dollarsPerParticle, flowsParticles: result }
-  }, [chainIds, chainData, flows])
+  }, [chainIds, chainData, flows, baseDollarsPerParticle])
 }

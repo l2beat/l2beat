@@ -111,7 +111,7 @@ export const ContractSource = v.object({
   EVMVersion: v.string(),
   CompilerSettings: v
     .object({
-      libraries: v.record(v.string(), v.string()),
+      libraries: v.record(v.string(), v.record(v.string(), v.string())),
       optimizer: v.object({
         enabled: v.boolean(),
         runs: v.number(),

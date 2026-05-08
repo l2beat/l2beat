@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1776765734,
+  "timestamp": 1777882868,
   "configHash": "0x2a97090a1f82df157cf39326ea5d38bd428032ba90248499c341e4e15917100f",
   "entries": [
     {
@@ -14,6 +14,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814567,
       "sinceBlock": 20292687,
       "values": {
@@ -84,6 +85,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf",
       "sinceTimestamp": 1721774711,
       "sinceBlock": 20372302,
       "values": {
@@ -120,6 +122,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814495,
       "sinceBlock": 20292681,
       "values": {
@@ -156,6 +159,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738855967,
       "sinceBlock": 21788382,
       "values": {
@@ -198,6 +202,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747199351,
       "sinceBlock": 22479245,
       "values": {
@@ -224,6 +229,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720813955,
       "sinceBlock": 20292637,
       "values": {
@@ -273,6 +279,7 @@
           "role": ".admin"
         }
       ],
+      "deployerAddress": "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A",
       "sinceTimestamp": 1722434735,
       "sinceBlock": 20427018,
       "values": {
@@ -323,6 +330,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520639,
       "sinceBlock": 20019828,
       "values": {
@@ -555,6 +563,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x98fdE0e52fd38eeE6D319B3E45bcaFF48237384c",
       "sinceTimestamp": 1721989115,
       "sinceBlock": 20390079,
       "values": {
@@ -589,6 +598,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x3846c3A30E62075Fa916216b35EF04B8F53931f6",
       "sinceTimestamp": 1722377435,
       "sinceBlock": 20422264,
       "values": {
@@ -646,6 +656,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x53e94a4Cb27BDa5493ccDfb852324B276aa36F77",
       "sinceTimestamp": 1722184895,
       "sinceBlock": 20406309,
       "values": {
@@ -680,6 +691,7 @@
       "proxyType": "immutable",
       "description": "Diamond implementation code to initialize new ZK chains. Used to set their chainID.",
       "ignoreInWatchMode": ["sharedTree"],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758286091,
       "sinceBlock": 23397225,
       "values": { "$immutable": true },
@@ -760,6 +772,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A",
       "sinceTimestamp": 1666872275,
       "sinceBlock": 15839298,
       "values": {
@@ -780,7 +793,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 257,
+        "nonce": 260,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -799,6 +812,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814339,
       "sinceBlock": 20292668,
       "values": {
@@ -835,6 +849,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814399,
       "sinceBlock": 20292673,
       "values": {
@@ -871,6 +886,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814195,
       "sinceBlock": 20292656,
       "values": {
@@ -908,6 +924,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
       "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109035,
       "sinceBlock": 21809367,
       "values": {
@@ -975,6 +992,7 @@
           "role": ".GUARDIANS"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738855979,
       "sinceBlock": 21788383,
       "values": {
@@ -1031,6 +1049,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
       "ignoreInWatchMode": ["sharedTree"],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109203,
       "sinceBlock": 21809380,
       "values": {
@@ -1094,6 +1113,7 @@
           "role": ".SECURITY_COUNCIL"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738855991,
       "sinceBlock": 21788384,
       "values": {
@@ -1177,6 +1197,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x663ec2BfB273447DC236A646d6dAAA333aAB08f7",
       "sinceTimestamp": 1722412487,
       "sinceBlock": 20425173,
       "values": {
@@ -1220,6 +1241,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814051,
       "sinceBlock": 20292645,
       "values": {
@@ -1265,6 +1287,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
       "values": { "$immutable": true },
@@ -1284,6 +1307,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x72BA1965320ab5352FD6D68235Cc3C5306a6FFA2",
       "sinceTimestamp": 1721854115,
       "sinceBlock": 20378889,
       "values": {
@@ -1335,6 +1359,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x50F7ED54C8c0Bc0E395Bfa48A156602da1F28250",
       "sinceTimestamp": 1721755031,
       "sinceBlock": 20370671,
       "values": {
@@ -1373,6 +1398,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109071,
       "sinceBlock": 21809370,
       "values": {
@@ -1440,6 +1466,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F",
       "sinceTimestamp": 1721748419,
       "sinceBlock": 20370122,
       "values": {
@@ -1475,6 +1502,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xBab69188f07F2569A41C5B875e147216D974eB3e",
       "sinceTimestamp": 1721951675,
       "sinceBlock": 20386973,
       "values": {
@@ -1571,6 +1599,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x896E7D2108245ae8d5Aa7E4763024b3945AEd77F",
       "sinceTimestamp": 1721772071,
       "sinceBlock": 20372086,
       "values": {
@@ -1619,6 +1648,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1721665487,
       "sinceBlock": 20363246,
       "values": {
@@ -1655,6 +1685,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109131,
       "sinceBlock": 21809375,
       "values": {
@@ -1749,6 +1780,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520627,
       "sinceBlock": 20019827,
       "values": {
@@ -1775,6 +1807,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,4.",
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
       "values": {
@@ -1849,6 +1882,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1722034463,
       "sinceBlock": 20393837,
       "values": {
@@ -1905,6 +1939,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xD9b0579e2B8387fE153201631EBC4be9dEFA1A6d",
       "sinceTimestamp": 1720814279,
       "sinceBlock": 20292663,
       "values": {
@@ -1946,6 +1981,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
+      "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717521479,
       "sinceBlock": 20019898,
       "values": {
@@ -2019,6 +2055,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758286391,
       "sinceBlock": 23397250,
       "values": {
@@ -2128,6 +2165,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738855967,
       "sinceBlock": 21788382,
       "values": {
@@ -2207,6 +2245,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108879,
       "sinceBlock": 21809354,
       "values": {
@@ -2404,6 +2443,7 @@
           "role": ".emergencyUpgradeBoard"
         }
       ],
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738856003,
       "sinceBlock": 21788385,
       "values": {
@@ -2458,6 +2498,7 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2F73918C0F92FA9aD3Cfa87611677345a98CEa6f",
       "sinceTimestamp": 1721992847,
       "sinceBlock": 20390387,
       "values": {
@@ -2489,6 +2530,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1747199375,
       "sinceBlock": 22479247,
       "values": {
@@ -2529,6 +2571,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738853604,
       "sinceBlock": 55404657,
       "values": {
@@ -2583,6 +2626,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
       "ignoreInWatchMode": ["clock", "totalSupply"],
+      "deployerAddress": "zksync:0x478A1eBE665396ce0F2F87aB0F057aC273451B92",
       "sinceTimestamp": 1716317326,
       "sinceBlock": 34572100,
       "values": {
@@ -2650,7 +2694,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1776765729,
+        "clock": 1777882868,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2672,7 +2716,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "14656407645609595008485956342"
+        "totalSupply": "14667178499732409664459870497"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2746,6 +2790,7 @@
         }
       ],
       "ignoreInWatchMode": ["clock"],
+      "deployerAddress": "zksync:0x478A1eBE665396ce0F2F87aB0F057aC273451B92",
       "sinceTimestamp": 1723144920,
       "sinceBlock": 41196850,
       "values": {
@@ -2757,7 +2802,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1776765729,
+        "clock": 1777882868,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2775,7 +2820,7 @@
         "lateQuorumVoteExtension": 259200,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 16,
-        "proposalQueuedCount": 14,
+        "proposalQueuedCount": 15,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -2855,6 +2900,7 @@
         }
       ],
       "ignoreInWatchMode": ["clock"],
+      "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739000132,
       "sinceBlock": 55519658,
       "values": {
@@ -2866,7 +2912,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1776765729,
+        "clock": 1777882868,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2922,6 +2968,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738971649,
       "sinceBlock": 55500644,
       "values": {
@@ -2994,6 +3041,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "zksync:0x478A1eBE665396ce0F2F87aB0F057aC273451B92",
       "sinceTimestamp": 1716317321,
       "sinceBlock": 34572095,
       "values": {
@@ -3029,6 +3077,7 @@
           "role": ".timelockAdminAC"
         }
       ],
+      "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739000122,
       "sinceBlock": 55519651,
       "values": {
@@ -3123,6 +3172,7 @@
         }
       ],
       "ignoreInWatchMode": ["clock"],
+      "deployerAddress": "zksync:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1738971666,
       "sinceBlock": 55500650,
       "values": {
@@ -3134,7 +3184,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1776765729,
+        "clock": 1777882868,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -4565,6 +4615,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 24927566, "zksync2": 69675556 },
+  "usedBlockNumbers": { "ethereum": 25020404, "zksync2": 69893170 },
   "permissionsConfigHash": "0x787109b667032e5b93d07d994dcb86a16417ce0cb5a17ba36a7e00a8b41bfd3a"
 }

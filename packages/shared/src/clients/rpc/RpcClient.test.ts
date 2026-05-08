@@ -352,7 +352,7 @@ describe(RpcClient.name, () => {
       const result = await rpc.call(
         {
           to: EthereumAddress('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
-          data: Bytes.fromHex('0x70a08231'),
+          input: Bytes.fromHex('0x70a08231'),
         },
         'latest',
       )
@@ -366,7 +366,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              data: '0x70a08231',
+              input: '0x70a08231',
             },
             'latest',
           ],
@@ -389,7 +389,7 @@ describe(RpcClient.name, () => {
       await rpc.call(
         {
           to: EthereumAddress('0x1234567890123456789012345678901234567890'),
-          data: Bytes.fromHex('0x'),
+          input: Bytes.fromHex('0x'),
         },
         12345678,
       )
@@ -400,7 +400,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               to: '0x1234567890123456789012345678901234567890',
-              data: '0x',
+              input: '0x',
             },
             '0xbc614e',
           ],
@@ -423,7 +423,7 @@ describe(RpcClient.name, () => {
       await rpc.call(
         {
           to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
-          data: Bytes.fromHex('0x123456'),
+          input: Bytes.fromHex('0x123456'),
         },
         'latest',
       )
@@ -434,7 +434,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-              data: '0x123456',
+              input: '0x123456',
             },
             'latest',
           ],
@@ -457,7 +457,7 @@ describe(RpcClient.name, () => {
       const result = await rpc.call(
         {
           to: EthereumAddress('0x1234567890123456789012345678901234567890'),
-          data: Bytes.fromHex('0x'),
+          input: Bytes.fromHex('0x'),
         },
         'latest',
       )
@@ -536,7 +536,7 @@ describe(RpcClient.name, () => {
       const calls = [
         {
           to: EthereumAddress.random(),
-          data: Bytes.fromHex('0x123456'),
+          input: Bytes.fromHex('0x123456'),
         },
       ]
 
@@ -565,7 +565,7 @@ describe(RpcClient.name, () => {
       const calls = [
         {
           to: EthereumAddress.random(),
-          data: Bytes.fromHex('0x123456'),
+          input: Bytes.fromHex('0x123456'),
         },
       ]
 
@@ -585,11 +585,11 @@ describe(RpcClient.name, () => {
       const encodeBatchesMock = mockFn().returns([
         {
           to: multicallAddress,
-          data: Bytes.fromHex('0xaaaaaa'),
+          input: Bytes.fromHex('0xaaaaaa'),
         },
         {
           to: multicallAddress,
-          data: Bytes.fromHex('0xbbbbbb'),
+          input: Bytes.fromHex('0xbbbbbb'),
         },
       ])
       multicallClient.encodeBatches = encodeBatchesMock
@@ -621,15 +621,15 @@ describe(RpcClient.name, () => {
       const calls = [
         {
           to: EthereumAddress.random(),
-          data: Bytes.fromHex('0x111'),
+          input: Bytes.fromHex('0x111'),
         },
         {
           to: EthereumAddress.random(),
-          data: Bytes.fromHex('0x222'),
+          input: Bytes.fromHex('0x222'),
         },
         {
           to: EthereumAddress.random(),
-          data: Bytes.fromHex('0x333'),
+          input: Bytes.fromHex('0x333'),
         },
       ]
 
@@ -673,21 +673,21 @@ describe(RpcClient.name, () => {
         {
           params: {
             to: EthereumAddress('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
-            data: Bytes.fromHex('0x70a08231'),
+            input: Bytes.fromHex('0x70a08231'),
           },
           blockNumber: 'latest' as const,
         },
         {
           params: {
             to: EthereumAddress('0x1234567890123456789012345678901234567890'),
-            data: Bytes.fromHex('0x'),
+            input: Bytes.fromHex('0x'),
           },
           blockNumber: 12345678,
         },
         {
           params: {
             to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
-            data: Bytes.fromHex('0x123456'),
+            input: Bytes.fromHex('0x123456'),
           },
           blockNumber: 'latest' as const,
         },
@@ -708,7 +708,7 @@ describe(RpcClient.name, () => {
             params: [
               {
                 to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-                data: '0x70a08231',
+                input: '0x70a08231',
               },
               'latest',
             ],
@@ -720,7 +720,7 @@ describe(RpcClient.name, () => {
             params: [
               {
                 to: '0x1234567890123456789012345678901234567890',
-                data: '0x',
+                input: '0x',
               },
               '0xbc614e', // Encoded block number 12345678
             ],
@@ -732,7 +732,7 @@ describe(RpcClient.name, () => {
             params: [
               {
                 to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-                data: '0x123456',
+                input: '0x123456',
               },
               'latest',
             ],

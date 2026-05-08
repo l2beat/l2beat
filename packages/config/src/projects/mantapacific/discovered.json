@@ -56,6 +56,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224883,
       "sinceBlock": 18095727,
       "values": {
@@ -124,6 +125,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224835,
       "sinceBlock": 18095723,
       "values": {
@@ -146,6 +148,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224907,
       "sinceBlock": 18095729,
       "values": {
@@ -235,6 +238,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
       "sinceTimestamp": 1695706187,
       "sinceBlock": 18217879,
       "values": {
@@ -297,6 +301,7 @@
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224919,
       "sinceBlock": 18095730,
       "values": {
@@ -374,6 +379,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224895,
       "sinceBlock": 18095728,
       "values": {
@@ -447,6 +453,7 @@
         }
       ],
       "ignoreInWatchMode": ["confirmBatchId"],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": {
@@ -501,6 +508,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224871,
       "sinceBlock": 18095726,
       "values": {
@@ -585,6 +593,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224847,
       "sinceBlock": 18095724,
       "values": {
@@ -620,6 +629,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.",
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": {
@@ -682,6 +692,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": { "$immutable": true },
@@ -722,6 +733,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": { "$immutable": true },

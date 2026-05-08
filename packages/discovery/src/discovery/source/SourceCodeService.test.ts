@@ -10,6 +10,7 @@ describe(SourceCodeService.name, () => {
   const FOO_METADATA: ContractSource = {
     abi: [],
     name: 'Foo',
+    rootFile: '',
     isVerified: false,
     solidityVersion: '0.8.0',
     constructorArguments: '',
@@ -22,6 +23,7 @@ describe(SourceCodeService.name, () => {
   const BAR_METADATA: ContractSource = {
     abi: ['function bar()'],
     name: 'Bar',
+    rootFile: 'root.sol',
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',
@@ -34,6 +36,7 @@ describe(SourceCodeService.name, () => {
   const BAZ_METADATA: ContractSource = {
     abi: ['function baz()'],
     name: 'Baz',
+    rootFile: 'root.sol',
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',

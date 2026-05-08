@@ -9,6 +9,7 @@ export const zkprover: BaseProject = {
   slug: 'zkprover',
   name: 'zkProver',
   shortName: undefined,
+  aliases: ['Polygon Zero'],
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
     yellowWarning: undefined,

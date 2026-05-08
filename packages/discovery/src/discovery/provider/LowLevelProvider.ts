@@ -24,8 +24,15 @@ import {
   type StorageSlot,
 } from './batchStorageReader'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import type { ContractDeployment, RawProviders } from './IProvider'
+import type { RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
+
+export interface RawContractDeployment {
+  deployer: EthereumAddress
+  transactionHash: Hash256
+  blockNumber: number
+  timestamp: UnixTime
+}
 
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s
@@ -200,7 +207,7 @@ export class LowLevelProvider {
 
   getDeployment(
     address: EthereumAddress,
-  ): Promise<ContractDeployment | undefined> {
+  ): Promise<RawContractDeployment | undefined> {
     return this.measure(async () => {
       const transactionHash =
         await this.etherscanClient.getContractDeploymentTx(address)

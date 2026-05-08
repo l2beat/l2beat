@@ -283,6 +283,26 @@ describe('getProjects', () => {
     }
   })
 
+  describe('zk catalog projects are archived when all their projects are archived', () => {
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+
+      const tvsProjects = project.zkCatalogInfo.projectsForTvs ?? []
+      if (tvsProjects.length === 0) continue
+
+      const allTvsProjectsArchived = tvsProjects.every((tvsProject) => {
+        const tvsProjectConfig = projectsById.get(tvsProject.projectId)
+        return tvsProjectConfig?.archivedAt !== undefined
+      })
+
+      if (!allTvsProjectsArchived) continue
+
+      it(`${project.id} should be archived because all projects using it are archived`, () => {
+        expect(project.archivedAt).not.toEqual(undefined)
+      })
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {

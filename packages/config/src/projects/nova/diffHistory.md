@@ -1,3 +1,406 @@
+Generated with discovered.json: 0x41d9c70eda092ecb6bb9a4ae1057c0557632f4bb
+
+# Diff at Tue, 05 May 2026 10:22:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1777299200
+- current timestamp: 1777299200
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777299200 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2SurplusFee (arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      deployerAddress:
++        "arb-nova:0xf148b0653cCC3AF4ee3Fd0fFC840449e79f0bcC8"
+    }
+```
+
+```diff
+    contract StandardArbERC20 (arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2WethGateway (arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
++        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+      deployerAddress:
++        "arb-nova:0xf148b0653cCC3AF4ee3Fd0fFC840449e79f0bcC8"
+    }
+```
+
+```diff
+    contract L2BaseFee (arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      deployerAddress:
++        "arb-nova:0xf148b0653cCC3AF4ee3Fd0fFC840449e79f0bcC8"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3:
+-        "SafeProxy"
++        "GnosisSafeProxy"
+      deployerAddress:
++        "arb-nova:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xf148b0653cCC3AF4ee3Fd0fFC840449e79f0bcC8"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      deployerAddress:
++        "arb-nova:0xf148b0653cCC3AF4ee3Fd0fFC840449e79f0bcC8"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd3132d052C9045D7cB0236586C9E2276e654343D"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract CustomGateway (eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract Validator (eth:0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ProxyAdmin 2 (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa4bac4c2ec4492cd6d81550fBf42d8d698D40647"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0x97f63339374fCe157Aa8Ee27830172d2AF76A786) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract L1Escrow (eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xd3132d052C9045D7cB0236586C9E2276e654343D"
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
+    }
+```
+
+```diff
+    contract Bridge (eth:0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (eth:0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xf7FAf474aB8c503CF1786FfE708c861b438A59c6"
+    }
+```
+
+```diff
+    contract Inbox (eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x64379Dee676ab442B48925Ed603771f386510Ee7"
+    }
+```
+
+```diff
+    contract Outbox (eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB"
+    }
+```
+
+```diff
+    contract ValidatorWallet (eth:0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa4ba90Fd7a3fa6830a8cDcc18e00309ba8c40c4B"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa4ba90Fd7a3fa6830a8cDcc18e00309ba8c40c4B"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa4bac4c2ec4492cd6d81550fBf42d8d698D40647"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
 Generated with discovered.json: 0x97da4703972af7465fd9d1973e24a4c3d10c9fb6
 
 # Diff at Tue, 28 Apr 2026 14:28:15 GMT:

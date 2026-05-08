@@ -2,7 +2,6 @@ import { v } from '@l2beat/validate'
 import type { RowSelectionState } from '@tanstack/react-table'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '~/components/core/Button'
-import { Checkbox } from '~/components/core/Checkbox'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
@@ -39,7 +38,6 @@ export function MissingTokensTable({
     v.array(v.string()),
   )
   const clickedActionIdsSetRef = useRef(new Set(clickedActionIds))
-  const [hideUnsupported, setHideUnsupported] = useState(false)
 
   const selectableRowIds = useMemo(
     () =>
@@ -53,17 +51,6 @@ export function MissingTokensTable({
   const currentRowIds = useMemo(
     () => new Set(data.map((row) => getMissingTokenRowId(row))),
     [data],
-  )
-  const unsupportedRowsCount = useMemo(
-    () => data.filter((row) => row.tokenDbStatus === 'unsupported').length,
-    [data],
-  )
-  const visibleData = useMemo(
-    () =>
-      hideUnsupported
-        ? data.filter((row) => row.tokenDbStatus !== 'unsupported')
-        : data,
-    [data, hideUnsupported],
   )
 
   useEffect(() => {
@@ -126,9 +113,12 @@ export function MissingTokensTable({
     table,
     totalRowsCount,
   } = useTanStackTable({
-    data: visibleData,
+    data,
     columns,
     initialSorting: [{ id: 'count', desc: true }],
+    initialColumnFilters: [
+      { id: 'tokenDbStatus', value: ['ready', 'incomplete', 'missing'] },
+    ],
     getRowId: getMissingTokensSelectionId,
     searchPlaceholder: 'Search chains, addresses, plugins, and status',
     rowSelection,
@@ -152,17 +142,6 @@ export function MissingTokensTable({
               ? 'Select rows to requeue matching transfers.'
               : `${selectedRows.length} selected, ${selectedReadyCount} ready to requeue`}
           </span>
-
-          <label className="flex items-center gap-2 text-sm">
-            <Checkbox
-              checked={hideUnsupported}
-              disabled={unsupportedRowsCount === 0}
-              onCheckedChange={(checked) =>
-                setHideUnsupported(checked === true)
-              }
-            />
-            <span>Hide unsupported ({unsupportedRowsCount})</span>
-          </label>
         </div>
 
         <Button
@@ -189,11 +168,7 @@ export function MissingTokensTable({
         table={table}
         pageSizeOption={pageSizeOption}
         onPageSizeOptionChange={setPageSizeOption}
-        emptyMessage={
-          hideUnsupported && unsupportedRowsCount > 0
-            ? 'No supported missing tokens found. Disable "Hide unsupported" to review unsupported rows.'
-            : 'No missing tokens found.'
-        }
+        emptyMessage="No missing tokens found"
         enableCsvExport={enableCsvExport}
         getCsvFilename={() =>
           `interop-missing-tokens-${new Date().toISOString()}.csv`

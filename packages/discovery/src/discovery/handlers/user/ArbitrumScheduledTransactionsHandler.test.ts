@@ -27,6 +27,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       ],
       isVerified: true,
       name: 'name_of_' + address.toString(),
+      rootFile: '',
       solidityVersion: '1.0.0',
       source: 'source_of_' + address.toString(),
       constructorArguments: '',

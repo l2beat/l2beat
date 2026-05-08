@@ -9,6 +9,7 @@ export const risc0: BaseProject = {
   slug: 'risc0',
   name: 'RISC Zero',
   shortName: undefined,
+  aliases: ['Risc0'],
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {
     yellowWarning: undefined,

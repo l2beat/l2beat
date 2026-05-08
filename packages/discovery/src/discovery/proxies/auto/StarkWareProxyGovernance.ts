@@ -47,7 +47,7 @@ async function getProxyGovernanceV4Down(
   const fullGovernance = await getFullGovernance(
     provider,
     address,
-    ChainSpecificAddress.fromLong(provider.chain, deployment.deployer),
+    deployment.deployer,
   )
 
   // One contract emits same events for proxy and implementation governance

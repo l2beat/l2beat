@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -62,6 +63,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1767733343,
       "sinceBlock": 24178194,
       "values": {
@@ -108,6 +110,7 @@
         "anchorProposalId",
         "anchorRoot"
       ],
+      "deployerAddress": "eth:0x6976bD97EE6dc7517c5C288251d9305A77Db2e26",
       "sinceTimestamp": 1767969599,
       "sinceBlock": 24197780,
       "values": {
@@ -165,6 +168,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97",
       "sinceTimestamp": 1701094787,
       "sinceBlock": 18663532,
       "values": {
@@ -212,6 +216,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": {
@@ -239,6 +244,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": {
@@ -263,6 +269,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": {
@@ -304,6 +311,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
       "values": { "$immutable": true },

@@ -14,7 +14,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
@@ -45,6 +45,7 @@ export const zkspace: ScalingProject = {
   ],
   display: {
     name: 'ZKBase',
+    aliases: ['ZKSpace'],
     slug: 'zkspace',
     description:
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
@@ -128,7 +129,7 @@ export const zkspace: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

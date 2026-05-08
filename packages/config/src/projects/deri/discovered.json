@@ -45,6 +45,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -93,6 +94,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "sinceTimestamp": 1747878040,
       "sinceBlock": 339188760,
       "values": {
@@ -117,6 +119,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -199,6 +202,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -220,6 +224,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -392,6 +397,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "sinceTimestamp": 1747878035,
       "sinceBlock": 339188741,
       "values": { "$immutable": true },
@@ -409,6 +415,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "arb1:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
       "values": { "$immutable": true },
@@ -426,6 +433,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "sinceTimestamp": 1747878038,
       "sinceBlock": 339188751,
       "values": { "$immutable": true },
@@ -450,6 +458,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -592,6 +601,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -637,6 +647,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700371966,
       "sinceBlock": 151869147,
       "values": {
@@ -673,6 +684,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700371966,
       "sinceBlock": 151869147,
       "values": {
@@ -709,6 +721,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "sinceTimestamp": 1747878030,
       "sinceBlock": 339188722,
       "values": { "$immutable": true },
@@ -745,6 +758,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -811,6 +825,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0x46A78349aBA0369D18292a285DE6d5FC5CC2de5c",
       "sinceTimestamp": 1747878033,
       "sinceBlock": 339188731,
       "values": { "$immutable": true },
@@ -835,6 +850,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {
@@ -912,6 +928,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700371966,
       "sinceBlock": 151869147,
       "values": {
@@ -954,6 +971,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xD1C955A1544cF449F4a8463E9fE2AC4Ff0798E05",
       "sinceTimestamp": 1700367819,
       "sinceBlock": 151854509,
       "values": {

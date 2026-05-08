@@ -8,6 +8,7 @@ export const sandchain: ScalingProject = upcomingL2({
   addedAt: UnixTime(1763446757),
   display: {
     name: 'SANDchain',
+    aliases: ['The Sandbox'],
     slug: 'sandchain',
     description:
       'SANDchain is a dedicated Layer 2 network designed to empower creators and their communities by providing a financial backbone for the Creator Nation.',

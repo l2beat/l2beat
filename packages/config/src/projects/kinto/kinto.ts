@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { EXITS, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
@@ -132,7 +132,7 @@ export const kinto: ScalingProject = orbitStackL2({
       'Crosschain DeFi applications',
     ],
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

@@ -67,6 +67,7 @@ export const reddioex: ScalingProject = {
   ],
   display: {
     name: 'RedSonic',
+    aliases: ['Reddio'],
     slug: 'redsonic',
     headerWarning:
       'This project was sunset on 2024-09-20 and deposits after that time may not be recoverable.',

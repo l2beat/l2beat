@@ -1,6 +1,7 @@
 import type { Database } from '@l2beat/database'
 import type { jwtVerify } from 'jose'
-import { type AuthConfig, getSession, type Session } from './session'
+import type { BackofficeAuthConfig } from '../config/Config'
+import { getSession, type Session } from './session'
 
 export interface BaseContext {
   headers: Headers
@@ -11,7 +12,7 @@ export interface BaseContext {
 export async function createTRPCContext(opts: {
   headers: Headers
   db: Database
-  auth: AuthConfig
+  auth: BackofficeAuthConfig | false
   jwtVerifyFn?: typeof jwtVerify
 }): Promise<BaseContext> {
   const session = await getSession(opts.headers, opts.auth, {

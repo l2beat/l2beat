@@ -1,6 +1,6 @@
 {
   "name": "myria",
-  "timestamp": 1741185779,
+  "timestamp": 1777891434,
   "configHash": "0x2faaf2da24c57f1cadf6ac511a56d8da395293aa33308eed7330d411ef33d985",
   "entries": [
     {
@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1659542607,
       "sinceBlock": 15270396,
       "values": {
@@ -60,6 +61,7 @@
         "getVaultRoot",
         "getValidiumVaultRoot"
       ],
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1659542607,
       "sinceBlock": 15270396,
       "values": {
@@ -120,8 +122,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 6164,
-        "getOrderRoot": "779488176562075115994287817509657204015073364594642772006453192437794205120",
+        "getLastBatchId": 8414,
+        "getOrderRoot": "2938393185665255938147965069949948873943528841479390350348885563798312293038",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "eth:0x1e601435E181423e7A8430813d7500012a6169cB"
@@ -131,10 +133,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 6160,
+        "getSequenceNumber": 8409,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "3456979876377068891115942070581016015345567152036437695800975845138251655693",
+        "getValidiumVaultRoot": "2836643187968786902994714112811533015427861233654430505700269597006389819357",
         "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -206,6 +208,7 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
@@ -261,6 +264,7 @@
       ],
       "proxyType": "immutable",
       "description": "Helper contract for registering limit orders from L1.",
+      "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
@@ -695,6 +699,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 21981354 },
+  "usedBlockNumbers": { "ethereum": 25021111 },
   "permissionsConfigHash": "0x13539b2d31e14624324e158e2f105b4c4add7621d9dc722ca6967d27eedb134c"
 }

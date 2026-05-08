@@ -13,8 +13,11 @@ import type { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { CacheEntry } from './DiscoveryCache'
-import type { ContractDeployment, RawProviders } from './IProvider'
-import type { LowLevelProvider } from './LowLevelProvider'
+import type { RawProviders } from './IProvider'
+import type {
+  LowLevelProvider,
+  RawContractDeployment,
+} from './LowLevelProvider'
 import type { MulticallClient } from './multicall/MulticallClient'
 import type { ReorgAwareCache } from './ReorgAwareCache'
 import { ProviderMeasurement, ProviderStats } from './Stats'
@@ -656,7 +659,7 @@ export class BatchingAndCachingProvider {
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
     let duration = -performance.now()
-    const entry = await this.cache.entry('getSource', [address], undefined)
+    const entry = await this.cache.entry('getSource-v2', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
       duration += performance.now()
@@ -672,7 +675,7 @@ export class BatchingAndCachingProvider {
 
   async getDeployment(
     address: EthereumAddress,
-  ): Promise<ContractDeployment | undefined> {
+  ): Promise<RawContractDeployment | undefined> {
     let duration = -performance.now()
     const entry = await this.cache.entry('getDeployment', [address], undefined)
     const cached = entry.read()

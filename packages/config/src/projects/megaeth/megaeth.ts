@@ -50,9 +50,15 @@ export const megaeth: ScalingProject = opStackL2({
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
     links: {
       websites: ['https://megaeth.com/'],
-      bridges: ['https://docs.megaeth.com/frontier#using-the-canonical-bridge'],
+      bridges: [
+        'https://bridge.megaeth.com/',
+        'https://rabbithole.megaeth.com/bridge',
+      ],
       documentation: ['https://docs.megaeth.com/'],
-      explorers: ['https://megaeth.blockscout.com/'],
+      explorers: [
+        'https://mega.etherscan.io/',
+        'https://megaeth.blockscout.com/',
+      ],
       repositories: ['https://github.com/megaeth-labs'],
       socialMedia: [
         'https://x.com/megaeth',

@@ -22,8 +22,11 @@ function getBackofficeAuthConfig(env: Env): BackofficeAuthConfig {
   const aud = env.string(['BACKOFFICE_CF_ACCESS_AUD', 'CF_ACCESS_AUD'])
 
   return {
-    JWKS: createRemoteJWKSet(new URL(`${teamDomain}/cdn-cgi/access/certs`)),
-    aud,
-    teamDomain,
+    zeroTrust: {
+      JWKS: createRemoteJWKSet(new URL(`${teamDomain}/cdn-cgi/access/certs`)),
+      aud,
+      teamDomain,
+    },
+    authToken: env.optionalString('BACKOFFICE_AUTH_TOKEN'),
   }
 }

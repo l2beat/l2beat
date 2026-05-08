@@ -26,7 +26,7 @@ export async function getGovernancePublicationData(
       }),
     },
     ssr: {
-      page: 'GovernancePublicationPage',
+      page: 'PublicationPage',
       props: {
         ...appLayoutProps,
         publication,

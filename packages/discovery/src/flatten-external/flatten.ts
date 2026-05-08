@@ -13,6 +13,7 @@ import type { FlattenOptions } from './types'
 
 export function flattenStartingFrom(
   rootContractName: string,
+  rootFile: string | undefined,
   files: FileContent[],
   remappingStrings: string[],
   options?: FlattenOptions,
@@ -22,7 +23,11 @@ export function flattenStartingFrom(
     remappingStrings,
     options,
   )
-  const rootContract = parsedFileManager.findRootDeclaration(rootContractName)
+  const rootContract = parsedFileManager.findDeclarationAt(
+    rootContractName,
+    rootFile,
+  )
+  assert(rootContract !== undefined, 'Failed to find the root contract')
   const order = topologicalSort(parsedFileManager, rootContract)
   const shouldBeInterface = computeShouldBeInterface(
     parsedFileManager,

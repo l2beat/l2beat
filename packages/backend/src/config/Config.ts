@@ -267,6 +267,11 @@ export interface BackofficeFeatureConfig {
 }
 
 export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string

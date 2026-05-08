@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-canonical",
+  "description": "Module used by HomeOmnibridge to decide whether specific tokens, senders, or receivers must use the oracle-driven lane or the manual lane for bridge requests.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change which Omnibridge transfers are routed through the oracle-driven lane or forced into the manual lane."
+        }
+      ]
+    }
+  }
+}

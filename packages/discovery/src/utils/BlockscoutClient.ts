@@ -109,6 +109,7 @@ export class BlockscoutClient implements IEtherscanClient {
 
       return {
         name: '',
+        rootFile: undefined,
         isVerified: false,
         abi: [],
         solidityVersion: '',
@@ -135,6 +136,7 @@ export class BlockscoutClient implements IEtherscanClient {
 
     return {
       name: result.ContractName.trim(),
+      rootFile: result.FileName === '' ? undefined : result.FileName,
       isVerified: true,
       abi: jsonToHumanReadableAbi(result.ABI),
       solidityVersion: result.CompilerVersion,
