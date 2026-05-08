@@ -1,3 +1,4 @@
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -8,6 +9,7 @@ import {
   TotalTransfersWidget,
   TotalVolumeWidget,
 } from './components/FrameworkTotalsWidgets'
+import { FrameworkTransferSizeWidget } from './components/FrameworkTransferSizeWidget'
 import { TokenFrameworksChainSelector } from './components/TokenFrameworksChainSelector'
 import { TopTokensWidget } from './components/TopTokensWidget'
 import type { InteropTokenFramework } from './getInteropTokenFrameworksData'
@@ -39,6 +41,8 @@ export function InteropTokenFrameworksPage({
             <TotalVolumeWidget />
             <TotalTransfersWidget />
           </div>
+          <HorizontalSeparator className="my-4" />
+          <FrameworkTransferSizeWidget />
         </SideNavLayout>
       </TokenFrameworksSelectedChainsProvider>
     </AppLayout>

@@ -23,6 +23,10 @@ import {
   type ProtocolData,
 } from './utils/getProtocolsDataMap'
 import {
+  getTransferSizeChartData,
+  type TransferSizeDataPoint,
+} from './utils/getTransferSizeChartData'
+import {
   TOKEN_FRAMEWORKS,
   type TokenFrameworkDefinition,
 } from './utils/tokenFrameworksList'
@@ -56,12 +60,17 @@ export type TopTokenItem = {
   topRoute: TopTokenChainRoute | undefined
 }
 
+export type FrameworkTransferSizeDataPoint = TransferSizeDataPoint & {
+  frameworkLabel: string | undefined
+}
+
 export type TokenFrameworksData = {
   frameworkDominance: {
     transfers: FrameworkDominanceMetric
     volume: FrameworkDominanceMetric
   }
   topTokens: Record<string, TopTokenItem[]>
+  transferSizeChartData: FrameworkTransferSizeDataPoint[] | undefined
 }
 
 export async function getTokenFrameworksData(
@@ -109,6 +118,21 @@ export async function getTokenFrameworksData(
     topTokens[framework.id] = buildTopTokens(frameworkRecords, tokensDetailsMap)
   }
 
+  const projectNameToFrameworkLabel = new Map<string, string>()
+  for (const framework of TOKEN_FRAMEWORKS) {
+    const project = projectsById.get(framework.projectId)
+    if (!project) continue
+    const name = project.interopConfig.name ?? project.name
+    projectNameToFrameworkLabel.set(name, framework.label)
+  }
+  const transferSizeChartData = getTransferSizeChartData(
+    records,
+    interopProjects,
+  )?.map((entry) => ({
+    ...entry,
+    frameworkLabel: projectNameToFrameworkLabel.get(entry.name),
+  }))
+
   return {
     frameworkDominance: {
       transfers: {
@@ -121,6 +145,7 @@ export async function getTokenFrameworksData(
       },
     },
     topTokens,
+    transferSizeChartData,
   }
 }
 
@@ -210,6 +235,26 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     }),
   )
 
+  const transferSizeChartData: FrameworkTransferSizeDataPoint[] =
+    TOKEN_FRAMEWORKS.map((framework, i) => ({
+      name: framework.projectId.toString(),
+      frameworkLabel: framework.label,
+      iconUrl: `/icons/${framework.projectId.toString()}.png`,
+      countUnder100: 50 - i * 5,
+      percentageUnder100: 50 - i * 5,
+      count100To1K: 25,
+      percentage100To1K: 25,
+      count1KTo10K: 15,
+      percentage1KTo10K: 15,
+      count10KTo100K: 8,
+      percentage10KTo100K: 8,
+      countOver100K: 2 + i,
+      percentageOver100K: 2 + i,
+      minTransferValueUsd: 50,
+      maxTransferValueUsd: 250_000,
+      averageTransferSizeUsd: 12_500,
+    }))
+
   const mockTokens: TopTokenItem[] = [
     {
       id: 'usdt0',
@@ -290,5 +335,6 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
       },
     },
     topTokens,
+    transferSizeChartData,
   }
 }
