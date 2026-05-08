@@ -1,6 +1,6 @@
 {
   "name": "fluent",
-  "timestamp": 1778070408,
+  "timestamp": 1778223577,
   "configHash": "0x246ec42237c390d9e498ca94e11d79bde502c343b82b13324808346af86ec677",
   "entries": [
     {
@@ -168,14 +168,14 @@
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 1533,
+        "lastFinalizedBatchIndex": 1682,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
         "MIN_CHALLENGE_RESOLUTION_WINDOW": 3600,
         "MIN_CHALLENGE_WINDOW": 3600,
         "MIN_PRECONFIRMATION_WINDOW": 3600,
-        "nextBatchIndex": 1703,
+        "nextBatchIndex": 1852,
         "nitroVerifiers": [
           "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
           "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F"
@@ -269,7 +269,7 @@
         {
           "permission": "interact",
           "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-          "description": "pause / unpause the L1 bridge core and skip expired deposits.",
+          "description": "pause / unpause the L1 bridge core and clear expired L1->L2 deposits via skipExpiredDeposits (no user-initiated refund path exists; rollbackMessageWithProof reverts with NOT_IMPLEMENTED).",
           "role": ".pauserAC"
         },
         {
@@ -430,7 +430,15 @@
     {
       "address": "eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relay",
+          "from": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
+          "description": "deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once).",
+          "role": ".relayerAC"
+        }
+      ]
     },
     {
       "name": "SP1Verifier",
@@ -660,14 +668,14 @@
         "getExecuteGasLimit": 5000,
         "getFeeTreasury": "eth:0x0000000000000000000000000000000000000000",
         "getNativeSender": "eth:0x0000000000000000000000000000000000000000",
-        "getNonce": 968,
+        "getNonce": 977,
         "getOtherBridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-        "getReceivedNonce": 461,
+        "getReceivedNonce": 469,
         "getReceiveMessageDeadline": 7200,
         "getRollup": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
-        "getSentMessageCursor": 968,
+        "getSentMessageCursor": 976,
         "getSentMessageFee": 0,
-        "getSentMessageQueueSize": 0,
+        "getSentMessageQueueSize": 1,
         "isCurrentBatchPreconfirmed": false,
         "isOldestUnconsumedExpired": false,
         "MAX_DEPOSIT_PROCESSING_WINDOW": 50400,
@@ -676,6 +684,7 @@
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "pauserAC": ["eth:0x33C0B99F3210a9578d81d5B13dEC03160F58ff11"],
         "RELAYER_ROLE": "0xe2b7fb3b832174769106daebcfd6d1970523240dda11281102db9363b83b0dc4",
+        "relayerAC": ["eth:0x4A0e88275dC08a15Bad0d12e7805574Ca0853A48"],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
@@ -1989,13 +1998,13 @@
     "fluent/FastWithdrawalList": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/FluentRollup": "0x52d5d32e870df6647508e176c97eb7e8d2339807c25f724f2ff898a05d65a11b",
     "fluent/FluentTimeLock": "0x3c9bd3af13f27ac321421f8cac4f7406ae3981fe1432a2e37f15a93a254c4219",
-    "fluent/L1FluentBridge": "0xe8993d6ef83713a5073cb16639daffaa7014874c1729c5079b0ca34b51078943",
+    "fluent/L1FluentBridge": "0x84128eba3b5f7451246de0588a82ae1580a41ce1d27fb6bf9bae4fafecef3566",
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25035980 },
-  "permissionsConfigHash": "0xc5c4b7f61006ad64f63713857bd46b4a2d973dc8e7f83953160999324691d10c"
+  "usedBlockNumbers": { "ethereum": 25048699 },
+  "permissionsConfigHash": "0x5d20d4e96de79968356dcb52be71fa60e5683db4dbf60f44bf47346abace7965"
 }

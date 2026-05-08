@@ -26,7 +26,19 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "pause / unpause the L1 bridge core and skip expired deposits."
+          "description": "pause / unpause the L1 bridge core and clear expired L1->L2 deposits via skipExpiredDeposits (no user-initiated refund path exists; rollbackMessageWithProof reverts with NOT_IMPLEMENTED)."
+        }
+      ]
+    },
+    "relayerAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "RELAYER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "relay",
+          "description": "deliver L2->L1 messages on L1 via receiveMessageWithProof; this is the only entry point for first-time delivery, so user withdrawals progress only when a holder of this role acts (failed-execution retries via receiveFailedMessage are permissionless once a message has been delivered at least once)."
         }
       ]
     },
