@@ -6,25 +6,33 @@ import React, {
   useContext,
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
 } from 'react'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
-import {
-  type DecodedValue,
-  decodeType,
-  type ParsedType,
-  parseType,
-} from './decode'
+import { type DecodedValue, decodeType, parseType } from './decode'
 
 export function DecoderApp() {
   const [values, setValues] = useState<FormValues | undefined>()
 
   const showForm = !values
   const showFetch = values && values.hash && !values.data
-  const showDecoded = values && !(values.hash && !values.data)
+
+  const value: DecodedValue | undefined = useMemo(() => {
+    if (!values) return undefined
+    return {
+      type: 'bytes',
+      bytes: values.data as `0x${string}`,
+      value: values.data as `0x${string}`,
+      chainId: values.chainId,
+      address: values.address as `0x${string}`,
+    }
+  }, [values])
+
+  const showDecoded = values && value && !(values.hash && !values.data)
 
   return (
     <ChainsContextProvider>
@@ -33,11 +41,7 @@ export function DecoderApp() {
       {showFetch && <FetchTx values={values} setValues={setValues} />}
       {showDecoded && (
         <main className="mx-auto max-w-[1200px] p-12 pb-20">
-          <DecodedView
-            encoded={values.data as `0x${string}`}
-            chainId={values.chainId}
-            address={values.address as `0x${string}` | undefined}
-          />
+          <DecodedView value={value} />
         </main>
       )}
     </ChainsContextProvider>
@@ -182,68 +186,38 @@ function SelectorChecker() {
   return null
 }
 
-interface DecodedViewProps {
-  name?: string
-  type?: ParsedType
-  encoded: `0x${string}`
-  chainId: number
-  address?: `0x${string}`
-}
-
-function DecodedView(props: DecodedViewProps) {
+function DecodedView({ value }: { value: DecodedValue }) {
   const store = useStore()
-  const [decoded, setDecoded] = useState<DecodedValue>()
   const [moreBytes, setMoreBytes] = useState(false)
   const [lessMembers, setLessMembers] = useState(false)
+  const [decoded, setDecoded] = useState(value)
 
   useEffect(() => {
-    console.log({
-      pending: Object.keys(store.registered),
-      selectors: Object.keys(store.selectors),
-    })
-  }, [store.registered, store.selectors])
+    setDecoded(value)
+  }, [value])
 
   useEffect(() => {
-    if (decoded?.type.type === 'bytes') {
+    if (decoded.type === 'bytes') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       store.registerSelector(selector)
-    }
-  }, [decoded, store.registerSelector])
-
-  useEffect(() => {
-    if (props.type) {
-      try {
-        setDecoded(decodeType(props.type, props.encoded))
-        return
-      } catch {}
-    }
-    setDecoded({
-      type: parseType('bytes'),
-      bytes: props.encoded,
-      value: props.encoded,
-    })
-  }, [props.type, props.encoded, store.selectors])
-
-  useEffect(() => {
-    if (!decoded) return
-    if (decoded.type.type === 'bytes') {
-      const selector = decoded.bytes.slice(0, 10) as `0x${string}`
       const signature = store.selectors[selector]?.[0]
       if (signature) {
         const type = parseType(signature.signature)
         try {
-          setDecoded(decodeType(type, decoded.bytes))
+          setDecoded(
+            decodeType(type, decoded.bytes, decoded.chainId, decoded.address),
+          )
         } catch {}
       }
     }
-  }, [decoded, store.selectors])
+  }, [decoded, store.registerSelector, store.selectors])
 
   if (!decoded) return null
 
-  const nameElement = props.name && (
+  const nameElement = value.name && (
     <>
       <span className="text-zinc-300">.</span>
-      <span className="text-green-400">{props.name}</span>
+      <span className="text-green-400">{value.name}</span>
       <span className="text-zinc-300"> = </span>
     </>
   )
@@ -259,25 +233,20 @@ function DecodedView(props: DecodedViewProps) {
       <ol className={clsx('pl-4', lessMembers && 'hidden')}>
         {decoded.members.map((m, i) => (
           <li key={i}>
-            <DecodedView
-              name={m.name}
-              encoded={m.encoded}
-              type={m.type}
-              chainId={props.chainId}
-            />
+            <DecodedView value={m} />
           </li>
         ))}
       </ol>
     </>
   )
 
-  if (decoded.type.function) {
+  if (decoded.type === 'call') {
     return (
       <div className="group">
         {nameElement}
-        <DisplayAddress address={props.address} chainId={props.chainId} />
+        <DisplayAddress address={decoded.address} chainId={decoded.chainId} />
         <span className="text-zinc-300">.</span>
-        <span className="text-orange-400">{decoded.type.name}</span>
+        <span className="text-orange-400">{decoded.functionName}</span>
         <span className="text-zinc-300">(</span>
         {members}
         <span className="text-zinc-300">)</span>
@@ -285,29 +254,19 @@ function DecodedView(props: DecodedViewProps) {
     )
   }
 
-  if (decoded.type.arrayElement) {
+  if (decoded.type === 'array' || decoded.type === 'tuple') {
+    const isTuple = decoded.type === 'tuple'
     return (
       <div className="group">
         {nameElement}
-        <span className="text-zinc-300">[</span>
+        <span className="text-zinc-300">{isTuple ? '{' : '['}</span>
         {members}
-        <span className="text-zinc-300">]</span>
+        <span className="text-zinc-300">{isTuple ? '}' : ']'}</span>
       </div>
     )
   }
 
-  if (decoded.type.tupleElements) {
-    return (
-      <div className="group">
-        {nameElement}
-        <span className="text-zinc-300">{'{'}</span>
-        {members}
-        <span className="text-zinc-300">{'}'}</span>
-      </div>
-    )
-  }
-
-  if (decoded.type.type === 'bytes') {
+  if (decoded.type === 'bytes') {
     if (decoded.bytes.length < 66) {
       return (
         <div>
@@ -367,7 +326,7 @@ function DecodedView(props: DecodedViewProps) {
 
 function DisplayAddress(props: {
   address: `0x${string}` | undefined
-  chainId: number
+  chainId: number | undefined
 }) {
   const state = useStore()
   const tooltipId = useId()

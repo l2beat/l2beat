@@ -9,7 +9,7 @@ describe(decodeType.name, () => {
     const e = encode('uint', 12345n)
     const d = decodeType('uint', e)
     expect(d).toEqual({
-      type: parseType('uint'),
+      type: 'number',
       bytes: e,
       value: '12345',
     })
@@ -19,7 +19,7 @@ describe(decodeType.name, () => {
     const e = encode('uint8', 15)
     const d = decodeType('uint8', e)
     expect(d).toEqual({
-      type: parseType('uint8'),
+      type: 'number',
       bytes: e,
       value: '15',
     })
@@ -34,7 +34,7 @@ describe(decodeType.name, () => {
     const e = encode('int', -12345n)
     const d = decodeType('int', e)
     expect(d).toEqual({
-      type: parseType('int256'),
+      type: 'number',
       bytes: e,
       value: '-12345',
     })
@@ -44,7 +44,7 @@ describe(decodeType.name, () => {
     const e = encode('int', 12345n)
     const d = decodeType('int', e)
     expect(d).toEqual({
-      type: parseType('int256'),
+      type: 'number',
       bytes: e,
       value: '12345',
     })
@@ -54,7 +54,7 @@ describe(decodeType.name, () => {
     const e = encode('int8', -17)
     const d = decodeType('int8', e)
     expect(d).toEqual({
-      type: parseType('int8'),
+      type: 'number',
       bytes: e,
       value: '-17',
     })
@@ -64,7 +64,7 @@ describe(decodeType.name, () => {
     const e = encode('int8', -128)
     const d = decodeType('int8', e)
     expect(d).toEqual({
-      type: parseType('int8'),
+      type: 'number',
       bytes: e,
       value: '-128',
     })
@@ -79,7 +79,7 @@ describe(decodeType.name, () => {
     const e = encode('address', '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')
     const d = decodeType('address', e)
     expect(d).toEqual({
-      type: parseType('address'),
+      type: 'address',
       bytes: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       value: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     })
@@ -94,7 +94,7 @@ describe(decodeType.name, () => {
     const e = encode('bool', true)
     const d = decodeType('bool', e)
     expect(d).toEqual({
-      type: parseType('bool'),
+      type: 'bool',
       bytes: e,
       value: 'true',
     })
@@ -104,7 +104,7 @@ describe(decodeType.name, () => {
     const e = encode('bool', false)
     const d = decodeType('bool', e)
     expect(d).toEqual({
-      type: parseType('bool'),
+      type: 'bool',
       bytes: e,
       value: 'false',
     })
@@ -119,7 +119,7 @@ describe(decodeType.name, () => {
     const e: `0x${string}` = `0x${'deadbeef'.repeat(8)}`
     const d = decodeType('bytes32', e)
     expect(d).toEqual({
-      type: parseType('bytes32'),
+      type: 'bytes',
       bytes: e,
       value: e,
     })
@@ -129,7 +129,7 @@ describe(decodeType.name, () => {
     const e = encode('bytes4', '0xdeadbeef')
     const d = decodeType('bytes4', e)
     expect(d).toEqual({
-      type: parseType('bytes4'),
+      type: 'bytes',
       bytes: '0xdeadbeef',
       value: '0xdeadbeef',
     })
@@ -145,7 +145,7 @@ describe(decodeType.name, () => {
     const e = encode('bytes', bytes)
     const d = decodeType('bytes', e)
     expect(d).toEqual({
-      type: parseType('bytes'),
+      type: 'bytes',
       bytes,
       value: bytes,
     })
@@ -156,7 +156,7 @@ describe(decodeType.name, () => {
     const e: `0x${string}` = `${encode('bytes', bytes)}${'deadbeef'.repeat(8)}`
     const d = decodeType('bytes', e)
     expect(d).toEqual({
-      type: parseType('bytes'),
+      type: 'bytes',
       bytes,
       value: bytes,
       extra: `0x${'deadbeef'.repeat(8)}`,
@@ -168,7 +168,7 @@ describe(decodeType.name, () => {
     const e = encode('string', s)
     const d = decodeType('string', e)
     expect(d).toEqual({
-      type: parseType('string'),
+      type: 'string',
       bytes: '0x49206c696b652070616e63616b657321',
       value: s,
     })
@@ -178,19 +178,21 @@ describe(decodeType.name, () => {
     const e = encode('uint[2]', [1n, 2n])
     const d = decodeType('uint[2]', e)
     expect(d).toEqual({
-      type: parseType('uint[2]'),
+      type: 'array',
       bytes: e,
       value: '',
       members: [
         {
           name: '0',
-          type: parseType('uint'),
-          encoded: `0x${'0'.repeat(63)}1`,
+          type: 'number',
+          bytes: encode('uint', 1n),
+          value: '1',
         },
         {
           name: '1',
-          type: parseType('uint'),
-          encoded: `0x${'0'.repeat(63)}2`,
+          type: 'number',
+          bytes: encode('uint', 2n),
+          value: '2',
         },
       ],
     })
@@ -200,19 +202,21 @@ describe(decodeType.name, () => {
     const e: `0x${string}` = `${encode('uint[2]', [1n, 2n])}deadbeef`
     const d = decodeType('uint[2]', e)
     expect(d).toEqual({
-      type: parseType('uint[2]'),
+      type: 'array',
       bytes: e,
       value: '',
       members: [
         {
           name: '0',
-          type: parseType('uint'),
-          encoded: encode('uint', 1n),
+          type: 'number',
+          bytes: encode('uint', 1n),
+          value: '1',
         },
         {
           name: '1',
-          type: parseType('uint'),
-          encoded: encode('uint', 2n),
+          type: 'number',
+          bytes: encode('uint', 2n),
+          value: '2',
         },
       ],
       extra: '0xdeadbeef',
@@ -223,19 +227,21 @@ describe(decodeType.name, () => {
     const e = encode('uint[]', [1n, 2n])
     const d = decodeType('uint[]', e)
     expect(d).toEqual({
-      type: parseType('uint[]'),
+      type: 'array',
       bytes: e,
       value: '',
       members: [
         {
           name: '0',
-          type: parseType('uint'),
-          encoded: encode('uint', 1n),
+          type: 'number',
+          bytes: encode('uint', 1n),
+          value: '1',
         },
         {
           name: '1',
-          type: parseType('uint'),
-          encoded: encode('uint', 2n),
+          type: 'number',
+          bytes: encode('uint', 2n),
+          value: '2',
         },
       ],
     })
@@ -245,19 +251,21 @@ describe(decodeType.name, () => {
     const e = encode('string[]', ['foo', 'bar'])
     const d = decodeType('string[]', e)
     expect(d).toEqual({
-      type: parseType('string[]'),
+      type: 'array',
       bytes: e,
       value: '',
       members: [
         {
           name: '0',
-          type: parseType('string'),
-          encoded: encode('string', 'foo'),
+          type: 'string',
+          bytes: '0x666f6f',
+          value: 'foo',
         },
         {
           name: '1',
-          type: parseType('string'),
-          encoded: encode('string', 'bar'),
+          type: 'string',
+          bytes: '0x626172',
+          value: 'bar',
         },
       ],
     })
@@ -270,19 +278,49 @@ describe(decodeType.name, () => {
     ])
     const d = decodeType('(uint256, string)[]', e)
     expect(d).toEqual({
-      type: parseType('(uint256, string)[]'),
+      type: 'array',
       bytes: e,
       value: '',
       members: [
         {
           name: '0',
-          type: parseType('(uint256, string)'),
-          encoded: encode('(uint256, string)', [1n, 'foo']),
+          type: 'tuple',
+          bytes: encode('(uint256, string)', [1n, 'foo']),
+          value: '',
+          members: [
+            {
+              name: '0',
+              type: 'number',
+              value: '1',
+              bytes: encode('uint', 1n),
+            },
+            {
+              name: '1',
+              type: 'string',
+              bytes: '0x666f6f',
+              value: 'foo',
+            },
+          ],
         },
         {
           name: '1',
-          type: parseType('(uint256, string)'),
-          encoded: encode('(uint256, string)', [2n, 'bar']),
+          type: 'tuple',
+          bytes: encode('(uint256, string)', [2n, 'bar']),
+          value: '',
+          members: [
+            {
+              name: '0',
+              type: 'number',
+              value: '2',
+              bytes: encode('uint', 2n),
+            },
+            {
+              name: '1',
+              type: 'string',
+              bytes: '0x626172',
+              value: 'bar',
+            },
+          ],
         },
       ],
     })
@@ -295,19 +333,22 @@ describe(decodeType.name, () => {
     const e: `0x${string}` = `${selector}${tuple.slice(2)}`
     const d = decodeType('function approve(address spender, uint256 amount)', e)
     expect(d).toEqual({
-      type: parseType('function approve(address spender, uint256 amount)'),
+      type: 'call',
+      functionName: 'approve',
       bytes: e,
       value: '',
       members: [
         {
           name: 'spender',
-          type: parseType('address spender'),
-          encoded: encode('address', spender),
+          type: 'address',
+          bytes: spender,
+          value: spender,
         },
         {
           name: 'amount',
-          type: parseType('uint256 amount'),
-          encoded: encode('uint256', 1234n),
+          type: 'number',
+          bytes: encode('uint256', 1234n),
+          value: '1234',
         },
       ],
     })
@@ -318,7 +359,8 @@ describe(decodeType.name, () => {
     const e: `0x${string}` = `${selector}deadbeef`
     const d = decodeType('function name()', e)
     expect(d).toEqual({
-      type: parseType('function name()'),
+      type: 'call',
+      functionName: 'name',
       bytes: e,
       value: '',
       members: [],
@@ -330,21 +372,61 @@ describe(decodeType.name, () => {
     const e = encode('(uint _ugly, uint _)', [1n, 2n])
     const d = decodeType('(uint _ugly, uint _)', e)
     expect(d).toEqual({
-      type: parseType('(uint _ugly, uint _)'),
+      type: 'tuple',
       bytes: e,
       value: '',
       members: [
         {
           name: 'ugly',
-          type: parseType('uint _ugly'),
-          encoded: encode('uint', 1n),
+          type: 'number',
+          bytes: encode('uint', 1n),
+          value: '1',
         },
         {
           name: '_',
-          type: parseType('uint _'),
-          encoded: encode('uint256', 2n),
+          type: 'number',
+          bytes: encode('uint', 2n),
+          value: '2',
         },
       ],
+    })
+  })
+
+  it('propagates address and chainId', () => {
+    const contract: `0x${string}` = `0x${'cafebabe'.repeat(5)}`
+    const spender: `0x${string}` = `0x${'deadbeef'.repeat(5)}`
+    const selector = '0x095ea7b3'
+    const tuple = encode('(address spender, uint256 amount)', [spender, 1234n])
+    const e: `0x${string}` = `${selector}${tuple.slice(2)}`
+    const d = decodeType(
+      'function approve(address spender, uint256 amount)',
+      e,
+      1,
+      contract,
+    )
+    expect(d).toEqual({
+      type: 'call',
+      functionName: 'approve',
+      bytes: e,
+      value: '',
+      members: [
+        {
+          name: 'spender',
+          type: 'address',
+          bytes: spender,
+          value: spender,
+          chainId: 1,
+        },
+        {
+          name: 'amount',
+          type: 'number',
+          bytes: encode('uint256', 1234n),
+          value: '1234',
+          chainId: 1,
+        },
+      ],
+      chainId: 1,
+      address: contract,
     })
   })
 })

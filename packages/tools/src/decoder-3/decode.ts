@@ -1,31 +1,68 @@
 const INT_COMPLEMENT = 2n ** 255n
 
+export type DecodedType =
+  | 'number'
+  | 'bool'
+  | 'address'
+  | 'string'
+  | 'bytes'
+  | 'tuple'
+  | 'array'
+  | 'call'
+
 export interface DecodedValue {
-  type: ParsedType
+  name?: string
+  functionName?: string
+  type: DecodedType
+  value: string
+  members?: DecodedValue[]
   bytes: `0x${string}`
   extra?: `0x${string}`
-  value: string
-  members?: DecodedMember[]
-}
-
-export interface DecodedMember {
-  name: string
-  type: ParsedType
-  encoded: `0x${string}`
+  chainId?: number
+  address?: `0x${string}`
 }
 
 export function decodeType(
   type: string | ParsedType,
   encoded: `0x${string}`,
+  chainId?: number,
+  address?: `0x${string}`,
 ): DecodedValue {
   const parsedType = typeof type !== 'string' ? type : parseType(type)
-  return decodeParsed(parsedType, encoded)
+  const decoded = decodeParsed(parsedType, encoded, chainId)
+  if (address && decoded.type === 'call') {
+    decoded.address = address
+  }
+  return decoded
 }
 
-function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
-  const common = { type, bytes: encoded, value: '' }
+function toDecodedType(type: ParsedType): DecodedType {
+  if (type.function) return 'call'
+  if (type.type.endsWith(']')) return 'array'
+  if (type.type.endsWith(')')) return 'tuple'
+  if (type.type.startsWith('bytes')) return 'bytes'
+  if (type.type === 'string') return 'string'
+  if (type.type === 'address') return 'address'
+  if (type.type === 'bool') return 'bool'
+  return 'number'
+}
+
+function decodeParsed(
+  type: ParsedType,
+  encoded: `0x${string}`,
+  chainId?: number,
+): DecodedValue {
+  const common: DecodedValue = {
+    type: toDecodedType(type),
+    bytes: encoded,
+    value: '',
+  }
+  if (chainId !== undefined) {
+    common.chainId = chainId
+  }
   if (type.function) {
     encoded = sliceBytes(encoded, 4)
+    common.functionName = type.name
   }
   let elements: ParsedType[] | undefined
   if (type.tupleElements) {
@@ -53,7 +90,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
       hasDynamic ||= element.dynamic
     }
     offset *= 32
-    const members = elements.map((e, i): DecodedMember => {
+    const members = elements.map((e, i): DecodedValue => {
       if (e.dynamic) {
         // biome-ignore lint/style/noNonNullAssertion: It's there
         const start = dynamicOffsets[i]!
@@ -62,14 +99,14 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): DecodedValue {
         }
         const end = dynamicOffsets.find((x, j) => j > i && x !== undefined)
         offset = end ?? -1
-        return {
-          name: memberName(e.name, i),
-          type: e,
-          encoded: sliceBytes(encoded, start, end),
-        }
+        const decoded = decodeType(e, sliceBytes(encoded, start, end), chainId)
+        decoded.name = memberName(e.name, i)
+        return decoded
       }
       // biome-ignore lint/style/noNonNullAssertion: It's there
-      return { name: memberName(e.name, i), type: e, encoded: staticData[i]! }
+      const decoded = decodeType(e, staticData[i]!, chainId)
+      decoded.name = memberName(e.name, i)
+      return decoded
     })
     if (!hasDynamic) {
       const extra = sliceBytes(encoded, offset)
