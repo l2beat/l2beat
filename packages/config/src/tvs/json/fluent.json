@@ -91,6 +91,25 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "fluent-BLEND",
+      "priceId": "fluent-network",
+      "symbol": "BLEND",
+      "name": "Fluent",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172981/large/fluent_token_kraken_1x.webp?1776957074",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xd8a271974e8edae9d7b58e3370dc1669427503f4",
+        "chain": "ethereum",
+        "escrowAddress": "0xFD4C62647A34FF6d6802092F5fbe176099223B61",
+        "decimals": 18,
+        "sinceTimestamp": 1776988800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }
