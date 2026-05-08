@@ -54,9 +54,7 @@ function FrameworkTotalCard({
   className?: string
 }) {
   return (
-    <PrimaryCard
-      className={cn('flex h-28 flex-col gap-2 px-5! py-4!', className)}
-    >
+    <PrimaryCard className={cn('flex flex-col gap-2 px-5! py-4!', className)}>
       <div className="flex items-center gap-2">
         <h3 className="font-bold text-heading-18 leading-none">{title}</h3>
         <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
