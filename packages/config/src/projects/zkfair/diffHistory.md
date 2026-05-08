@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xd640746ffada297dce38ac77865076ae88fa4232
+
+# Diff at Fri, 08 May 2026 07:52:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1745306051
+- current timestamp: 1745306051
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745306051 (main branch discovery), not current.
+
+```diff
+    contract ZKFairAdmin (eth:0x0110B1B231aA3b96a94c900eb3056297526AB725) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract ZKFairValidium (eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf130a993ad1c6ad92168bdcb2f36fa45071cfdfccb13dd005d7d45e454089482"
++        "0xa3f5da1ad510d4c2473d1183eb3f49caad451ab83d0e2d229b7d458f5f7f949d"
+    }
+```
+
+```diff
+    contract Timelock (eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1946b3da4b7b9101624b6f56e88c5546848e9acadd62375f5cc8772c0f11f92c"
++        "0x36a5c0e90e7742bbc9215125500deb9a915c10cc35c270a721515cae13d1f999"
+    }
+```
+
+```diff
+    contract GlobalExitRoot (eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xb7beee2e185ac88119ddf52a7b183100c31b13dbb35154dd5b60e74c16684cba"
++        "0x5f76760e6c9b44727fdf76e6eff25ca109f2a7418040e00e16a9857a8ccb71d3"
+    }
+```
+
+```diff
+    contract ZKFairOwner (eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (eth:0x997CfB0838544f68E59f877EDc905001456F125b) [N/A] {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      sourceHashes.1:
+-        "0x9cc000b5f37484491701d9b554b9a01ea89a6a59f918d1d53c8e173b5b14a0fe"
++        "0xeae190bbb061d4c8c39bc82caf62a1fddce730091c8b5d1900da070c7d6186c9"
+    }
+```
+
 Generated with discovered.json: 0xe19d3c10dacf6b255048c374e903d1c09f531c6e
 
 # Diff at Tue, 05 May 2026 10:24:00 GMT:

@@ -16,7 +16,7 @@
       "template": "shared-zk-stack/ValidatorTimelock_post29",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
+        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -81,7 +81,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -165,7 +165,7 @@
       "address": "eth:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
       "type": "Contract",
       "sourceHashes": [
-        "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
+        "0x68a4eaa232ccd85c72b3fc57f0777278acae07f3019914c3fd1ff7a87e0bd8e7"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
@@ -240,7 +240,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
+        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -591,7 +591,7 @@
       "address": "eth:0xA8998F231a660Eca365B382943c71ad9b7619139",
       "type": "Contract",
       "sourceHashes": [
-        "0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"
+        "0x436d68e0f82eae7917204ebc32727c61c717f4794bdbf2805c978d715690e75b"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -640,7 +640,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [

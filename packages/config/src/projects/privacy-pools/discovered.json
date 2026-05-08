@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265199,
       "sinceBlock": 22153709,
       "values": { "$immutable": true },
@@ -27,7 +28,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -38,6 +39,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752503003,
       "sinceBlock": 22917987,
       "values": {
@@ -87,7 +89,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -98,6 +100,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753975583,
       "sinceBlock": 23039970,
       "values": {
@@ -147,7 +150,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -158,6 +161,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752848471,
       "sinceBlock": 22946646,
       "values": {
@@ -231,12 +235,13 @@
       "type": "Contract",
       "template": "privacy-pools/Entrypoint",
       "sourceHashes": [
-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0x2a185e630005e18ddf039fbf7c694eaa05c51c5497249d11744f1146a8ac64df"
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0xc0803a56928ed2a65accbfc22d51bd281c0eb4a0e377078e13b26d12153628ec"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals.",
       "ignoreInWatchMode": ["latestRoot"],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265247,
       "sinceBlock": 22153713,
       "values": {
@@ -329,7 +334,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -340,6 +345,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1756377743,
       "sinceBlock": 23239091,
       "values": {
@@ -393,6 +399,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265211,
       "sinceBlock": 22153710,
       "values": { "$immutable": true },
@@ -408,7 +415,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -444,6 +451,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
       "sinceTimestamp": 1742919851,
       "sinceBlock": 22125088,
       "values": {
@@ -479,7 +487,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -490,6 +498,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753353035,
       "sinceBlock": 22988431,
       "values": {
@@ -539,7 +548,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -550,6 +559,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1770806867,
       "sinceBlock": 24433029,
       "values": {
@@ -599,7 +609,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -610,6 +620,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752782999,
       "sinceBlock": 22941225,
       "values": {
@@ -659,7 +670,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -670,6 +681,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583179,
       "sinceBlock": 23090298,
       "values": {
@@ -719,7 +731,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -730,6 +742,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583623,
       "sinceBlock": 23090335,
       "values": {
@@ -779,7 +792,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -790,6 +803,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1765446455,
       "sinceBlock": 23988640,
       "values": {
@@ -837,7 +851,7 @@
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
       "type": "EOA",
       "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -868,7 +882,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -879,6 +893,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583083,
       "sinceBlock": 23090290,
       "values": {
@@ -928,7 +943,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -939,6 +954,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753352915,
       "sinceBlock": 22988421,
       "values": {
@@ -988,7 +1004,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolSimple",
       "sourceHashes": [
-        "0x6cd03829f963a4753b1197064a6fc568184d89cdc380b934148ff6c8941f7ae9"
+        "0x3252809f9d07f7ff3537481cd733b81f8455c6ecfde29a27f9ed7e3094998f44"
       ],
       "proxyType": "immutable",
       "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -999,6 +1015,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265259,
       "sinceBlock": 22153714,
       "values": {
@@ -1048,7 +1065,7 @@
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
       "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
@@ -1059,6 +1076,7 @@
         "currentTreeSize",
         "nonce"
       ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753975703,
       "sinceBlock": 23039980,
       "values": {

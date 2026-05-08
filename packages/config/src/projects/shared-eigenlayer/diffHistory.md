@@ -1,3 +1,363 @@
+Generated with discovered.json: 0x31e2fb1352241a2eab5b4a57e4b4472035c28b2b
+
+# Diff at Fri, 08 May 2026 07:52:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777451880
+- current timestamp: 1777451880
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451880 (main branch discovery), not current.
+
+```diff
+    contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34) [eigenlayer/AllocationManagerView] {
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
+      sourceHashes.0:
+-        "0x8fd5aaae7cd8d30718a551c73e39462b7efc6311727a90bad9169e63d03a6a35"
++        "0x8c8188001d5193b337d50c48a5d32d1a72dfff4f6a9cefcea208327bb4fd5a97"
+    }
+```
+
+```diff
+    contract StrategiesBeacon (eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) [eigenlayer/StrategiesBeacon] {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      sourceHashes.0:
+-        "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
++        "0x05f61b665c3028da1e527b92cb59d37090446939f8fe57c7573dd45e80c8c9f7"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      sourceHashes.0:
+-        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
++        "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
+    }
+```
+
+```diff
+    contract TaskMailbox (eth:0x132b466d9d5723531F68797519DfED701aC2C749) [eigenlayer/TaskMailbox] {
+    +++ description: Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.
+      sourceHashes.1:
+-        "0x5d66587993bf7e1ba4de9178047d31a31b0124239565dec87441be722a7b8fa7"
++        "0xf0c5c44e89743f6c6d928f4b4a4500fb632da4ba5181aa560261e9a96ac7bc79"
+    }
+```
+
+```diff
+    contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) [eigenlayer/AVSDirectory] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x2e898060c596c2058f1140538534ecf4a6c7aeea4f1db17d15eddf3487f5a1fc"
++        "0xc2346a42502220ff86a519abb898d6c25a1544f9a840e6cc1d0baeb4868dc71d"
+    }
+```
+
+```diff
+    contract Safe (eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) [eigenlayer/PermissionController] {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      sourceHashes.1:
+-        "0xd6b47b90782b90fdfe85151507e668372b0c9cbb4435e30d1dad12ffa8299cde"
++        "0x850c3d71bc9eb3f34cd741ea23314b4ddbe4402dd203a24afdbd8b7d5d289d29"
+    }
+```
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) [eigenlayer/ProtocolRegistry] {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      sourceHashes.1:
+-        "0xfd66642e2065d7696010adbf4f0b644be69e758254a9d997b2015ed787112238"
++        "0xdb7f97bb66203510d9eb247a3c8f8b2bf7ffd4acc518d3ea43c4e9da23188797"
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) [eigenlayer/DelegationManager] {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      sourceHashes.1:
+-        "0xc7434c1abe25723dac4061deb679b18972a97bda6317eb9b36833da48f9c59c1"
++        "0x2876ad926c0041bb58be266172b9bb1bf7450f4e7c3a54bd9b4fa01e2255bbcc"
+    }
+```
+
+```diff
+    contract BN254CertificateVerifier (eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A) [eigenlayer/BN254CertificateVerifier] {
+    +++ description: Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.
+      sourceHashes.1:
+-        "0x504a60f47b309973e425e409450bc282511a4c815f38f6b685f0a17aa6f0ea79"
++        "0xd8df15901b1336e962d3e71f7c3517073136a50765283de0fe4681ab888b7b34"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract EigenPod (eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868) [eigenlayer/EigenPod] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x9a89e7cdf7812524bbdd180835cd7bfee457964bd306493ad2803805e90059f4"
++        "0x2ba1252fbd602ed4365dfa83aa707a8b009853e110376220ca5871407c736fec"
+    }
+```
+
+```diff
+    contract KeyRegistrar (eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4) [eigenlayer/KeyRegistrar] {
+    +++ description: Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.
+      sourceHashes.1:
+-        "0x0b18244acec0de89e13bc9da32dfe7d8ed6abbf222c56ea1de92a381fe773ef4"
++        "0x6859026fbb6c2d25b3487e1ccd1c91317df070c47a3b19eeda86b71b1968a33f"
+    }
+```
+
+```diff
+    contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5) [eigenlayer/OperatorTableUpdater] {
+    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
+      sourceHashes.1:
+-        "0x7db9f3647c67eb8b48f7aea6a644a92bed899c097e628e1b3815d0ea30fcdd75"
++        "0xda0466fbadc4502778eff2f7d0b65b506e64a6551a6d13c524940a7bb2a718f3"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) [eigenlayer/StrategiesBeacon] {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      sourceHashes.0:
+-        "0x8ccc6002eb6665381c95bfbb12e2ef5edee25f5e9d381c1938e9e96ac89c0313"
++        "0x05f61b665c3028da1e527b92cb59d37090446939f8fe57c7573dd45e80c8c9f7"
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) [eigenlayer/StrategyFactory] {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sourceHashes.1:
+-        "0x6be3a76a4cd2b21fe46a575940a550918c0bf2325ab8d92bc266964c1086ffab"
++        "0x6c8fe2017652e376f87e63411537a85b1d70d09248914a9d1b8f560d9af0f15e"
+    }
+```
+
+```diff
+    contract EmissionsController (eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x082a57ec17cd156b70509b22b39484e8309a91bf2aab47060c671d8c62a46974"
++        "0xc872b12df6b611323431b60479be280877ca17858376d6906dba72026b0c512f"
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53) [eigenlayer/TimelockControllerOwning] {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      sourceHashes.0:
+-        "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
++        "0x96410c844efab67b7307847ea08e9748d6f088374cb8746076cf411333743a58"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) [N/A] {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      sourceHashes.1:
+-        "0x7b1f03011cfcb15bf1f9fef4f3d459a2b254ee80329a6e767143b333475ae702"
++        "0x9c1c1ddf120f88700a80e66fd00c618f8f15b362f2f369a3db24624c4a3f03e1"
+    }
+```
+
+```diff
+    contract Safe (eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract bEIGEN token (eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) [eigenlayer/bEIGENToken] {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      sourceHashes.1:
+-        "0x06b65d2894679524c6c376c7f4f4de01c85bb91d59784505b3aca00b9e976a09"
++        "0x5794af1c6d5a48ec8b20ed2f71b94f69d8e3096fbe90862cc35b0a2e60febca5"
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x736195a6d0101e08cc21210f3e0cceae0ac4db2bfdb3e79e113fdae1fc8c418c"
++        "0x6549a6827b021dbac39a6289f7c3299e90833c946b67de173e2b13fb3792fac8"
+    }
+```
+
+```diff
+    contract StrategyBase (eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6de8001496304446f5d9df42d9d1b7f8955ae44c92e6376e167f1fde5b550924"
++        "0x6b9d33f0e7eeadbb659d41512844d85afd8e51c34570cbd024672e11ad1dc5b7"
+    }
+```
+
+```diff
+    contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) [eigenlayer/EigenPodManager] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x202a0be086b58267c42f08c1e1cade3232244aaf3fef2195bc77fc74db6b5459"
++        "0x245975ad7adc13f927e8868e714a575babf5a3aa2d0892a45d3a26cedceb9272"
+    }
+```
+
+```diff
+    contract CrossChainRegistry (eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b) [eigenlayer/CrossChainRegistry] {
+    +++ description: Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.
+      sourceHashes.1:
+-        "0xf51d0ada6b18d7b7004efea98898403287f9a9a8fa394f9a878d054206faa246"
++        "0x91b5b8bb3cd1c1cb1ca2c5fdd344dccfd0b118ac9a262c96bbaea7a89f5fc58b"
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) [eigenlayer/AllocationManager] {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      sourceHashes.1:
+-        "0x403e87c83844ebe1b8b808ea7ba2b87e2b40009fcd11ed4d5b6f84a0062504cb"
++        "0xfa267a54cc4fb6e26658dc02037c52dac4e60aab13b44dabef81608cfef7b59c"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) [eigenlayer/TimelockControllerOwning] {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      sourceHashes.0:
+-        "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
++        "0x96410c844efab67b7307847ea08e9748d6f088374cb8746076cf411333743a58"
+    }
+```
+
+```diff
+    contract DurationVaultStrategy (eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd8602dc01c11ebc220915530013a75b9d5b518af0c6de59d9183ea31f8fb3001"
++        "0x57b6af6f97e4423299b8600bcc20ec74936cf7e6a8955a08d4c73bb7c5bf5bd2"
+    }
+```
+
+```diff
+    contract ECDSACertificateVerifier (eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25) [eigenlayer/ECDSACertificateVerifier] {
+    +++ description: Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.
+      sourceHashes.1:
+-        "0x49c0a977830fc37b116704994699d4dc6e836152a337c9013ce34d8ab64bbf71"
++        "0xa4a85910bfb582b768edecc11b0dcdfcabf604d4d3e8e29e293a2a3f9bd50471"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xE15AFE000789160BE164D2FBA66EaDd6c6B81e7B) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract EIGEN token (eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) [eigenlayer/EIGENToken] {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      sourceHashes.1:
+-        "0xb8dbca65e053a47c078cebe919fab85c18b0b261e0b86e6a776e6262ba02a097"
++        "0x597ce12d4f62214f9fbf3fade349f8d99884f6e408dfb95416470171607b9476"
+    }
+```
+
+```diff
+    contract ReleaseManager (eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F) [eigenlayer/ReleaseManager] {
+    +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
+      sourceHashes.1:
+-        "0xed18954ab0ab6cfadebc1f75256772ecc259609499471f82bdb158fcc17f2860"
++        "0xed3c4100d1c4e2fade1ac9fb68b57fe2a7bda37166ea5195f406ef086d356eae"
+    }
+```
+
+```diff
+    contract Safe (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (eth:0xFEA47018D632A77bA579846c840d5706705Dc598) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0xac43ebc0284918ab2501e017004816281684831d
 
 # Diff at Tue, 05 May 2026 10:22:47 GMT:

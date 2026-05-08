@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xc84a4aacc161e48db7a46eb106cd8c53794dfa53
+
+# Diff at Fri, 08 May 2026 07:52:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1768370794
+- current timestamp: 1768370794
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768370794 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) [polygon-cdk/PolygonDataCommittee] {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      sourceHashes.1:
+-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
++        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
+    }
+```
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      sourceHashes.1:
+-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
++        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
+    }
+```
+
 Generated with discovered.json: 0xc99f73a2c6050dc10fab1b25152d2c98ceb880bc
 
 # Diff at Tue, 05 May 2026 10:23:22 GMT:

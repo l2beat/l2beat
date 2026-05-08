@@ -1,3 +1,214 @@
+Generated with discovered.json: 0x4bfc8c730d71d84451644fdd17826a7abed9fa63
+
+# Diff at Fri, 08 May 2026 07:51:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776422736
+- current timestamp: 1776422736
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776422736 (main branch discovery), not current.
+
+```diff
+    contract Inbox (eth:0x010aDE5d8F9DC340531140802438798C189c36E0) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
++        "0x079413b2ba56c63471a9435a6cbf3759e7d14eb942e6ce789b0b893ec3e6f947"
+    }
+```
+
+```diff
+    contract NitroEnclaveVerifier (eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      sourceHashes.0:
+-        "0x17b0e343334d9d6d39fead84d7cfc2adec7c0a43842d1ad09bd2674f4cd1c813"
++        "0xf656ce2d63c52a1771ea6f9603f0b5af9463f80b497d23d4a26cd8ed015fb107"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x19df42E085e2c3fC4497172E412057F54D9f013E) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x51c0020e16ab14fa334bbb0c637103c261dee3865d1816e88356aaaa5b629bb9"
++        "0x27dcae4ee9636f0fad2d26decd5b663003bb957d045d1f1bd1b6559e2819aa93"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sourceHashes.1:
+-        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
++        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x28293c7855797B0441000EF144119727f3cBCA9B) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x294a1Ee119C4B2510530572481A6a50892A9ae9f) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
++        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+    }
+```
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+    }
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x7c4e8195FB560D1557C52f051dCdA4724a2894b3) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x724a7b4f0fa3a5ce6b00cc932e70b6b83a05d1a846a341cbf8477dc95f6c916c"
++        "0x02b5ed4b727632bc3bef07ea342e78a72508a1be7313d874dfd5ee7511a4e571"
+    }
+```
+
+```diff
+    contract QuoteVerifier (eth:0x816ADa3B63F3c643fb04152eA32B58Db89aadd89) [espresso/Sequencing/QuoteVerifier] {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (eth:0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      sourceHashes.0:
+-        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
++        "0x3a2d0c56ad02170b854c91e68bf5664f91e6ffeaf6e4c03da8815afea464c874"
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (eth:0x98206aBE6bdB21765458f27F199fd813343a3C3b) [espresso/Sequencing/EspressoSGXTEEVerifier] {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      sourceHashes.0:
+-        "0xb506b0038120d7c5021a0964fa2fa3ac35c16fe8c6d8942f99102c158074d57a"
++        "0xbbe9c2cadf076bfa995abfadb25ecea15fdba6af89aefc39fca6442113844b93"
+    }
+```
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f) [espresso/Sequencing/EspressoNitroTEEVerifier] {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      sourceHashes.0:
+-        "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e"
++        "0x2605440fbb12f634b4f76ca3df637bfb0ac30ae84b0c455e6dee76bd20010c2f"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0xB9B007aE55B81dd1498Bc500a54ad9Ae53234c9C) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) [espresso/Sequencing/EspressoTEEVerifier_gateway] {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+      sourceHashes.0:
+-        "0x6ccdd5bbf0ec94df446cc0d8fb3fc929c373c8d1dcbaced844d6e39997b294cb"
++        "0x01a9491f3fb770154d17c7bba9803dedc2c226526e22ef5f13a068811dac8b75"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xd79fd59b73c814D9607aB93C4A1aDCea06F91692) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xf6a307A5868eB9c4a00F5efbD1EF8462AC63783f) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xFe53F58bAd7B83B01C47CC86471507911263ac91) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+    }
+```
+
 Generated with discovered.json: 0xfc23b1e375442e1c0f24092558e5cb719638939a
 
 # Diff at Tue, 05 May 2026 10:21:55 GMT:

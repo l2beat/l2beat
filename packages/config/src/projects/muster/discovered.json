@@ -10,7 +10,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -32,6 +32,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -77,10 +78,11 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x421aa98d340c2ad3e475ce29bb1e72660c213f0997591e567c0fd3d3ae2365a8"
+        "0xa8ec42edee4ac983b2d5fed2ee80ff160072927ebae439c96414a1b729fd6455"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -123,10 +125,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
-        "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8"
+        "0x77205826da8d9f9fc88c16ff5e5d19f15f0dc037b43c41a051418acf0a8bbc3a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117760,
       "sinceBlock": 332189402,
       "values": { "$immutable": true },
@@ -180,6 +183,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -197,10 +201,11 @@
       "template": "orbitstack/EdgeChallengeManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
+        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1752720229,
       "sinceBlock": 358506342,
       "values": {
@@ -332,10 +337,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874"
+        "0xd6db03371959751fe7d2023d543e1842bb9200ff391a235ea6f7a6eba3b5ace6"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117617,
       "sinceBlock": 332188829,
       "values": { "$immutable": true },
@@ -349,10 +355,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787"
+        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117833,
       "sinceBlock": 332189694,
       "values": {
@@ -372,10 +379,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x549b7c350bf6e1da7e8aa5fda9440889a76d5611ed7c6e37411d364ee36f8d5b"
+        "0xb54274c3341eb7cf840d05f3da649b35db6e4f7cd4e76f3e4a8f2f6d171dcd66"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117542,
       "sinceBlock": 332188531,
       "values": { "$immutable": true },
@@ -390,10 +398,11 @@
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
+        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -426,10 +435,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0xeb0b77a8bbbb65eabcb1e26f29f9eac4db26d0b5974e37d9cc57ffc03b7be0e1"
+        "0x5bd5c472d09dfca8febfe8da2a09b7c0a1a11653ed9a4908ce4719abc68caf2b"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "arb1:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1746117689,
       "sinceBlock": 332189122,
       "values": { "$immutable": true },
@@ -444,7 +454,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1"
+        "0x29acc2652c0eb213e1a10f1c211600303d26e856116587d65e6fb4d40f0e6bae"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -453,6 +463,7 @@
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -549,6 +560,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {
@@ -602,8 +614,8 @@
       "type": "Contract",
       "template": "orbitstack/RollupProxyBoLD",
       "sourceHashes": [
-        "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642",
-        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
+        "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2",
+        "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
@@ -612,6 +624,7 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1752720229,
       "sinceBlock": 358506342,
       "values": {
@@ -725,7 +738,7 @@
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de"
+        "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
@@ -735,6 +748,7 @@
         "buffer",
         "postsBlobs"
       ],
+      "deployerAddress": "arb1:0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9",
       "sinceTimestamp": 1702284862,
       "sinceBlock": 159001296,
       "values": {

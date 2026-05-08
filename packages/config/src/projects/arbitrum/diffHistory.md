@@ -1,3 +1,654 @@
+Generated with discovered.json: 0xaf1bba088d3fea7d73abe2cb22e1958e75a86ed0
+
+# Diff at Fri, 08 May 2026 07:51:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777994260
+- current timestamp: 1777994260
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777994260 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      sourceHashes.1:
+-        "0x7ab56232b17ce06beb4a64963bb9e8d0c7fdef3c45ab8f1ae306699d7b80c637"
++        "0x129bc64718fbe02c1c01fe148ce6831e9e9aa9db3643b064d87c1620367f90db"
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract ConstitutionHash (arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417) [orbitstack/layer2/ConstitutionHash] {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2SurplusFee (arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) [orbitstack/layer2/L2SurplusFee] {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      sourceHashes.0:
+-        "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
++        "0xedd329504ad09a563db00b68cf4a75eea158c9ca98475ad0b0575df7f459aae9"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) [orbitstack/layer2/L2Timelock] {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      sourceHashes.1:
+-        "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
++        "0x74189ae7282e97b79113e0f1594c1c16c051876e9d806f83482c69641a74c40b"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract StandardArbERC20 (arb1:0x3f770Ac673856F105b586bb393d122721265aD46) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf98882c836bb8026b07fe0c6af0e5fc52578e78078c523fcd7974fb69b833732"
++        "0xe4d43e76384584d53cab700932fa421d994299b690b20da123bde9c061308eba"
+      deployerAddress:
++        "arb1:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4522be863ce454f4a528c27299d26dc69d407f11e5807129aaff93f36b44dd53"
++        "0x7384c556c7a90691c29fd68a1e34ec97e7d24e57f02c199fdf4ee0cc5ce319c2"
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2DAIGateway (arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) [orbitstack/layer2/L2DAIGateway] {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      sourceHashes.0:
+-        "0x88d1226b13a00325eaaf0822116a64fc4a6a5dc3b56c15fc942a24a6be815715"
++        "0x4475551b42fcb831784718203ccaeb325df56b125ceab65f7d3dc08b3ab36071"
+      deployerAddress:
++        "arb1:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
+    +++ description: Token governance contract for the Security Council member elections.
+      sourceHashes.1:
+-        "0xbcc218f5d48d8d9586a0b76adac248d0d98ed5bfff9fe653d1bfe25a169b6ffa"
++        "0x6805c05309804f79f96a644fade8cac594d451dd03868dbc4a8d608602ab2573"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      sourceHashes.1:
+-        "0x6b2f9c454049196975edab9674208890663911ceebf0cf2c64d3c26a32aa300c"
++        "0x2fe74618c07723fe5442034cc13b3e7090f51379de0ed92154e9477566c4eddd"
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      sourceHashes.1:
+-        "0xadf7f548448c8cfc2273cb5feeb31bcdd088e2d60e9be8756da94535ef5667d7"
++        "0x3cc8d996c68b6fe0e139d30931b60a5e09fda64ce72f7209d2efe7bc411582b5"
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2LPTGateway (arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318) [orbitstack/layer2/L2LPTGateway] {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      sourceHashes.0:
+-        "0xed35d20c6e0ab17ec40fb3266b83c36153ce768a59b7b850e22dad1c84eb93b0"
++        "0x879ee4c15c2c743c0f96995cfe21668694362b8944ce620776e949c7123946dd"
+      deployerAddress:
++        "arb1:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) [orbitstack/layer2/SecurityCouncilMemberRemovalGovernor] {
+    +++ description: Token governance contract for the Security Council member removals.
+      sourceHashes.1:
+-        "0x5bdeb7706e97db783f9241a25d475bd0ea0437e6f9447bf27327c10f14f3340f"
++        "0xfdc95bb8181efd526673a0d50fd1a4ed6c9d4afd6df75ec00198daad02685ad3"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) [orbitstack/layer2/UpgradeExecRouteBuilder] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4ed0927cf3d1bda79c1506ba72809f27e5eca436a34b45c47d5e1fa221a685b3"
++        "0x90f9c5059447ce7c4df6424257aede8c13c8e51660604e82a90cdb2db5ac8878"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) [orbitstack/layer2/TreasuryGovernor] {
+    +++ description: Token governance contract used for creating non-constitutional AIPs (treasury proposals), e.g., transferring funds out of the DAO Treasury. Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      sourceHashes.1:
+-        "0xe40be3b5838593c8514cc9b6f9df16c4b85fc87bbb9b87f2841837c35b98b027"
++        "0xb976b1b47d3a1afbbbf4f9741af9fe6ab4a167c21a11e018a8cdc279c0122a2b"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      sourceHashes.1:
+-        "0x1b614f721e7a1fbf0cd6458e4e4e3149daadc88d1ec12b6621c365ea9b6632be"
++        "0x467a6d321abaf3adf3783b74c4ab2cb9712f8c21a21696fde01fc236733df050"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      sourceHashes.1:
+-        "0x81f61863f4f68a0a85c555c0e2ceab81eecd68a77f2c9d290f4caaca4d53aad9"
++        "0xc65e6b00e388040ff1fa8195448aac18f0539c6f29f0e7c933c3803306761c56"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) [orbitstack/layer2/SecurityCouncilMemberSyncAction] {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      sourceHashes.0:
+-        "0x91e27e9c4588835bc07a823b2eebf255b0ad88bf9f7dc94bd0d785e53a8f24a7"
++        "0x3c8b8d9b5b0e53b27467c2a986ad215ffb3c6dcada7804f62cab1e2602d97f79"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2BaseFee (arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) [orbitstack/layer2/L2BaseFee] {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      sourceHashes.0:
+-        "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
++        "0xedd329504ad09a563db00b68cf4a75eea158c9ca98475ad0b0575df7f459aae9"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract TreasuryTimelock (arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) [orbitstack/layer2/TreasuryTimelock] {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      sourceHashes.1:
+-        "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
++        "0x74189ae7282e97b79113e0f1594c1c16c051876e9d806f83482c69641a74c40b"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "arb1:0x1E37aCE759DF68E5AD2FD258BD030fcDBA9F7838"
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) [orbitstack/layer2/L2ARBGateway] {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      sourceHashes.1:
+-        "0xc6750fc78a712b7df53681fe94fecdda2f06e26d6bc08a7742dbbc68c48c040b"
++        "0x53a1f300077580da8bac6eb0d19c11e26e0d41f91ef0c96bcc131484fe3818c6"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      sourceHashes.1:
+-        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
++        "0x404b422e4f3c5aebc79f8e98018dba99a74160264438944292fdeee40a4e68f1"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      sourceHashes.1:
+-        "0xad301a24e9bb35dd5c200ced58fcd66b9b9b8bdeb182b6d4243fe3339c632072"
++        "0xf2eeba703974bbc2cb02cd7d24845f71be941a764f033493e85fba52b3d6de28"
+      deployerAddress:
++        "arb1:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
++        "0xcf83b51a83c868f91bcdc8e0f58ce736f03c19aa7240458c5274bcb7f26a8c40"
+      deployerAddress:
++        "arb1:0xBB1a241DCBd6A3894cB61F659034874Dc9CF65D4"
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      sourceHashes.1:
+-        "0xe40be3b5838593c8514cc9b6f9df16c4b85fc87bbb9b87f2841837c35b98b027"
++        "0xb976b1b47d3a1afbbbf4f9741af9fe6ab4a167c21a11e018a8cdc279c0122a2b"
+      deployerAddress:
++        "arb1:0x2B9AcFd85440B7828DB8E54694Ee07b2B056B30C"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      deployerAddress:
++        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xbd9ad3a060bba138bf31ab27d9c9a59159aeddab49620a728f0485165d7cb05d"
++        "0x0fefec2c5552ab12224ba07be070505d17b5aa8a4e57e4806c5f5134ef814d99"
+      deployerAddress:
++        "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc8db6bf1c1522e439ab4b7d52970913a9d905bb60e32473199eb4ad572932bad"
++        "0xcf83b51a83c868f91bcdc8e0f58ce736f03c19aa7240458c5274bcb7f26a8c40"
+      deployerAddress:
++        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x2ed1d03b24d3bd002e3beedd7f0891a044867ed42912798e50803900c26fd0b8"
++        "0xb349d04cbbc00d5a3ae534e0706ad304f28ff023460595f8225415dc01b5867f"
+      deployerAddress:
++        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x549b7c350bf6e1da7e8aa5fda9440889a76d5611ed7c6e37411d364ee36f8d5b"
++        "0xb54274c3341eb7cf840d05f3da649b35db6e4f7cd4e76f3e4a8f2f6d171dcd66"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
++        "0x404b422e4f3c5aebc79f8e98018dba99a74160264438944292fdeee40a4e68f1"
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract ParentToChildRewardRouter (eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999) [orbitstack/ParentToChildRewardRouter] {
+    +++ description: Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury.
+      sourceHashes.0:
+-        "0xc88bb6c32f0ba67edea5bee7a5b31a2d0b854654eb753fca6ede5467024b68eb"
++        "0xd6d5a0da2cea6939e9bd11a616d918f0f7489b1973d1fc167429dc05a167039a"
+      deployerAddress:
++        "eth:0x45816240B90254EFF0e35141069d777f7FC699f5"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787"
++        "0xd5ebe4d74cb7850108973c618f80d9f0c18624f45c9e8cfc3ffa07197ca1423d"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x421aa98d340c2ad3e475ce29bb1e72660c213f0997591e567c0fd3d3ae2365a8"
++        "0xa8ec42edee4ac983b2d5fed2ee80ff160072927ebae439c96414a1b729fd6455"
+      deployerAddress:
++        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      sourceHashes.0:
+-        "0x951637f3a8787d8273dbd619921f256bd87a38b9d955e65c2e520772c2e0a642"
++        "0xc66527a2dd7fcfbb954018194b0db35218725aa1072451f6ec2470d103b4a0a2"
+      sourceHashes.1:
+-        "0x7b0429a0a98808dee6774a44d8d1ed15305ecc4b6fee4670db2d49f9caf65e51"
++        "0x865eda6aeccd46252ab6f23f58421b95f106676e38c62d4aaa768a6d5f2c26e9"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sourceHashes.1:
+-        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
++        "0x6aedbb6059216584b86626e8ce4bc3f123bb7cdf3890b83063e1d3ef2b16be19"
+      deployerAddress:
++        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract OutboxV0 (eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x20497774f6f2ef1febbb63646e0eb3b2ed5190f6a53f178032f86d972f0ca99d"
++        "0x70ebbacb2d55339a06b88df41f2b9181e88bda21bce2a3e1eea4d1e7adb0d395"
+      deployerAddress:
++        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract LPTL1Escrow (eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5"
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      sourceHashes.1:
+-        "0x265fc73d2eec7f0b459f92a25a37b145c8db22527232f08f3022d5cc18d6af9d"
++        "0xe1f35ab5f962c4bdd2b790158d32ab3b6818e20110f380a3f54deb0053084c16"
+      deployerAddress:
++        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract OutboxV1 (eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x00ef6edf5319c5f35e60c03df0fb64df6d630fb23373f9a084d86a868812b4ed"
++        "0x1d51b6dd26457bab1431585e9c38a9ed8e500bfdcedb77fcaa3f13c99f98bf73"
+      deployerAddress:
++        "eth:0x1c7d91ccBdBf378bAC0F074678b09CB589184e4E"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1"
++        "0x29acc2652c0eb213e1a10f1c211600303d26e856116587d65e6fb4d40f0e6bae"
+      deployerAddress:
++        "eth:0x2f7cf35d65FfcB50C919B24A730E6f8F4aa76F46"
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x95e26ae3077f12aa3b383e87c553884e67eaf30c17ca083768d76822d0916cb8"
++        "0x77205826da8d9f9fc88c16ff5e5d19f15f0dc037b43c41a051418acf0a8bbc3a"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract L1Escrow (eth:0xA10c7CE4b876998858b1a9E12b10092229539400) [maker/L1Escrow] {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) [orbitstack/ERC20Gateway2] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      sourceHashes.1:
+-        "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"
++        "0xcd2bf9407f1d5c747601cf6222a416e07ef41fdc76c812aa462a9e65463463e7"
+      deployerAddress:
++        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      sourceHashes.1:
+-        "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
++        "0x38a98fd3246d8aa8d3efab5b6fe60b4369399691b395325bcea9f939a52fddc5"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0xeb0b77a8bbbb65eabcb1e26f29f9eac4db26d0b5974e37d9cc57ffc03b7be0e1"
++        "0x5bd5c472d09dfca8febfe8da2a09b7c0a1a11653ed9a4908ce4719abc68caf2b"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract OutboxEntry (eth:0xc4940069140142236D4065b866018f7b2BeC77fD) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1FcCBE3369eada96887A3b2857B57bBA65E83Dc1"
+    }
+```
+
+```diff
+    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      sourceHashes.1:
+-        "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"
++        "0xbd18fb9954c1ed251b5c75e94e963af99e6dbd374c00385d7ef041211fb39245"
+      deployerAddress:
++        "eth:0x5B34380C518da5A8851f762D4fA29605ACc3c0e2"
+    }
+```
+
+```diff
+    contract Arbitrum Multisig 1 (eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x64379Dee676ab442B48925Ed603771f386510Ee7"
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0xD3B5b60020504bc3489D6949d545893982BA3011) [orbitstack/L1DaiGateway] {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      sourceHashes.0:
+-        "0x2bfb3c9871d8a7db172d350d7b4678c49eb33a98483f71cb89d3d059a7322efb"
++        "0x9d499228bd0448415db23cad15b17603c83aafde0fee4b38cacdc91b1b6dd3be"
+      deployerAddress:
++        "eth:0x075da589886BA445d7c7e81c472059dE7AE65250"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874"
++        "0xd6db03371959751fe7d2023d543e1842bb9200ff391a235ea6f7a6eba3b5ace6"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.1:
+-        "0x2b1c83d005613e3b0fd4bc9ef90faf86e00bc099fd61088045e83ee3892c6f5e"
++        "0xb438310200c94060a2cffe793403fe13659d060b5f5eadcadec41b7331c28230"
+      deployerAddress:
++        "eth:0x1C8db745ABe3C8162119b9Ef2c13864Cd1FDD72F"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
+    }
+```
+
 Generated with discovered.json: 0xc95986b969c4f635e96e7106f6ab591acc59dee0
 
 # Diff at Tue, 05 May 2026 15:18:51 GMT:

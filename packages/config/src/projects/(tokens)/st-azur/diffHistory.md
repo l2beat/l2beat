@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xb8c58f6f12a1cece05e90f67d3b0146924ed6d16
+
+# Diff at Fri, 08 May 2026 07:53:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1753693931
+- current timestamp: 1753693931
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753693931 (main branch discovery), not current.
+
+```diff
+    contract Staked $AZUR Token (eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xa9291fc66798387bc6d07d6a47cc5d1573c07d5fa0464919eba895291a9a995a"
++        "0xa244912d497886434f84aa5baa85465897bdd336624109f05fbc11c2385491f3"
+    }
+```
+
 Generated with discovered.json: 0x6ac8f67cd28bccdbaaade834fbacf02380b47313
 
 # Diff at Tue, 05 May 2026 10:24:05 GMT:

@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x969510c7d35ecccfa63bbf10cb15024432d035e0
+
+# Diff at Fri, 08 May 2026 07:51:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771280072
+- current timestamp: 1771280072
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771280072 (main branch discovery), not current.
+
+```diff
+    contract PredicatePermitter (eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E) [intmax/PredicatePermitter] {
+    +++ description: Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xa18a357397dde9746d412ff4a4546bc85d954de9f122809482a88b62eeb314be"
++        "0x49ef976d4c33533b581d80f36bca17e0994c03d215cab05ef3e60585905f0a15"
+    }
+```
+
+```diff
+    contract Exit (eth:0x41BCB335eB2f92E54F9577E7c3D6e172a5bfdD6B) [N/A] {
+    +++ description: Timelocked exit mechanism. SUBMITTER_ROLE queues withdrawal requests with a 24-hour timelock, after which anyone can execute them permissionlessly. GUARDIAN_ROLE can cancel pending requests and pause the contract.
+      sourceHashes.0:
+-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09"
++        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50"
+      sourceHashes.1:
+-        "0xea1d4e7fc9312bcb235af8d02b25007964a45ba7d95baf30406d46ae55ac744b"
++        "0x2aa3c23409b7fc58808163407c129120f55ec983790e557c69883dbfe4c503dc"
+    }
+```
+
+```diff
+    contract Contribution (eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2) [intmax/Contribution] {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
++        "0xdc8a3096905413ccc4eb2147fc2d6125f893ab86308c425d5869e086d152cc67"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 1 (eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 3 (eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract LiquidityV2 (eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3) [intmax/Liquidity] {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check. The V2 upgrade adds an exitTransfer function, gated by an EXIT_ROLE, that can transfer any token type from the contract.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xbfcd0c18579ccd70e1bdf498b14c4f017af16483f44f45015752901149ef0668"
++        "0xda028240cfd59f9aee6f15a86bd79017f7f803c87071676f95d8cd21ba73e1a6"
+    }
+```
+
+```diff
+    contract PredicateServiceManager (eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2) [eigenlayer/PredicateServiceManager] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762"
++        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f"
+      sourceHashes.1:
+-        "0x64a4c29e61f52080da22207fe5295d233b6450ecc65dbf2852a0b0383fd74f63"
++        "0xe58aa83dafa0e6dff193969939930317f9b3522d853cc539225ade1c46cbe271"
+    }
+```
+
+```diff
+    contract Rollup (scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e) [intmax/Rollup] {
+    +++ description: Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x210e1b4c7ca45694431b4a558e68cf0fc6e9c0f1444fe91538af462e050f3604"
++        "0x01e64846204b53ce78748a8251f96e296b27338062a89fee75f56dce512cf39e"
+    }
+```
+
+```diff
+    contract Claim (scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5) [intmax/Claim] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xdf0969ba7c2284c214c510f2d058375ac28bbfc0eca15673bed761979f32647e"
++        "0x2fc0520ce384d608e88ee2f8c51b51bbe47b361bed51aa7063c675e15aa02cd3"
+    }
+```
+
+```diff
+    contract Contribution (scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af) [intmax/Contribution] {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
++        "0xdc8a3096905413ccc4eb2147fc2d6125f893ab86308c425d5869e086d152cc67"
+    }
+```
+
+```diff
+    contract Withdrawal (scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449) [intmax/Withdrawal] {
+    +++ description: Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0xa0c1878c4a72a8a9f029a05bac051e29d9c4e7ee5711c74e323d1e00a8a489eb"
++        "0xf7f09471349ce65924a0b0665d661a2e4295659bda7603fc8da414d6f71b0325"
+    }
+```
+
+```diff
+    contract INTMAX Multisig 2 (scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
 Generated with discovered.json: 0x37f66e2e2d823940356bd82cfa5d2f2b9aaad582
 
 # Diff at Tue, 05 May 2026 10:22:16 GMT:

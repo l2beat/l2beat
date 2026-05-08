@@ -10,7 +10,7 @@
       "template": "opstack/Layer2/FeeDisburser",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be"
+        "0xa148110f199cc44cf63e134b936505af8e1b8912da8834107398451c5b5b888c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
@@ -63,7 +63,7 @@
       "template": "opstack/Layer2/L2CrossDomainMessenger",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"
+        "0xc976dd7891ac59d37603c7648ea8e3a566365094a242d169a646ebfed971bab8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
@@ -101,7 +101,7 @@
       "template": "opstack/Layer2/L2StandardBridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"
+        "0x4354fe0c1ae65beab0a93e37ea50f3964a7d5e51a2f4a33c98cb041a1d18d32c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
@@ -131,7 +131,7 @@
       "template": "opstack/Layer2/SequencerFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xa6e80925a541b18f301edb66231f85cc8aee7aba084674ca3e2822f55d5295d1"
+        "0x999b85df983a6440f746afe1973bc01ad232f02932cfa2ed42e2bbf7d214bdde"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
@@ -172,7 +172,7 @@
       "template": "opstack/Layer2/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0xaf8d1aec41a22039c90d3ea23d8b660cbe441037e0fe15f90b7c39c46c34d07d"
+        "0xee8e51fe818ec5a2ef914c7dfa2ca739f1197b202e9424a30c945892002ce7e8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.",
@@ -206,7 +206,7 @@
       "template": "opstack/Layer2/L1BlockNumber",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x0ac40be66f726a1d64904e03831f746ee3fd847922d5e54ba4ad0e509602ccf8"
+        "0xbbb8ccc7d5265fef9343b1084b2b73e3fa883345355a70c2c6f99bd6d7a8c138"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
@@ -232,7 +232,7 @@
       "template": "opstack/Layer2/L2ERC721Bridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x5e60fa0150197ecbd302b46ad0cc0b6f3f024342d97f052ed2f9a8c2a6ed3846"
+        "0xe7457c0a0e9e7ba45f45fb369ff94f8a3613c4bb9083999a6eb18eaf6a077cdd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.",
@@ -262,7 +262,7 @@
       "template": "opstack/Layer2/L1Block",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x1d69ab3b3edee9b7eeccc72b0980f9041777fdc5f5224f97aa5e69f0a8b68c7c"
+        "0x399e57fff478211b47d61c5acb60592a4df8ffa5716959a1a6ee2ccabc44915e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
@@ -336,7 +336,7 @@
       "template": "opstack/Layer2/L2ToL1MessagePasser",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9"
+        "0xa8bdac224f506426db48b13c4933c57cbe3d88178a3499712638d559204c5eaa"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
@@ -363,7 +363,7 @@
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x8dc81ca02eba8fc262038825d8c633ed5542af30e92e629f65787cf7161c0b69"
+        "0x889f9ffc10090c8df747b3523aa4fde7bcc0aade333f7ddabece6b3f005a2e80"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.",
@@ -490,7 +490,7 @@
       "template": "opstack/Layer2/BaseFeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x0834e3a66bf6d3446ab3f5e42dde52e5ce5072d98b3b4a7e049ca96280b9f635"
+        "0x6984953cd11a9b147f3a7fbf655a7d6046b30101f3e0893c6f6d24df3c437faa"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
@@ -530,7 +530,7 @@
       "template": "opstack/Layer2/L1FeeVault",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x2bbc4761e06b3858a304723900de8a855d85d9eb247116f2315f3714a47ad71b"
+        "0x4a4c92d8fcf0087704a0745d2ea7824a9670e30bd16ffc8cb6ef253417eb0842"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
@@ -570,7 +570,7 @@
       "template": "opstack/Layer2/SchemaRegistry",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x612d21c1676a505153f40dceb55f1251798affb5ed211cfc9c00efa2a51fcbfd"
+        "0xc94799f3b35c3dedb3578da655614d2690e56477b3e176966113bbf06888e05d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to register schemas for the Ethereum Attestation Service (EAS).",
@@ -602,7 +602,7 @@
       "template": "opstack/Layer2/EAS",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
-        "0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092"
+        "0x22dcc9bc6d8b0463159f8a96f6f2ee61c897a8ae5e1b684e38e74e2b25b48e66"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract containing the main logic for the Ethereum Attestation Service (EAS).",
@@ -885,7 +885,7 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x25bad2bdb7df4347412a48e271dea1489299460192b43b8ca52ed191b4940992"
+        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
@@ -949,7 +949,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1026,7 +1026,7 @@
       "type": "Contract",
       "template": "opstack/PreimageOracle",
       "sourceHashes": [
-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
+        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
@@ -1056,7 +1056,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -1110,7 +1110,7 @@
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
+        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
@@ -1163,7 +1163,7 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x0114d3af66179d6404d14360203dc6bcf404f23e2db4ee1b5848e923e131bc00"
+        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
@@ -1211,7 +1211,7 @@
       "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x0fdb3ea7873ad716dd0f5f9d2fdbab989f3b308066977be182ddc31d150e12f5"
+        "0x8f21dbc160582c568a2a925ddad1b2bb889a9f72bac2067c6e72d43b662ef538"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
@@ -1305,7 +1305,7 @@
       "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x3410684a7a8c16c4f87db990b834ce7c3be33136857c103791b132b824bfd951"
+        "0x7883f2d27d696b1fa6259a97c561d651493c2c1324e9646e04dba10adcfd8a21"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
@@ -1448,7 +1448,7 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x282b981348a4ab1395edfcf6b2e0eeb3e9cfa9df3decce6b4d2cdd480825613d"
+        "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
@@ -1560,7 +1560,7 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795"
+        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
@@ -1647,7 +1647,7 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xff203abbbb6edba7fff3caefb2752c4e7b786992b19c4f0f8ab568bc0a5fbf04"
+        "0x4a578c18a0b50fb7778c6a6b805dcb18427478d4002c8f7f28c2146dcfbf3a33"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
@@ -1671,7 +1671,7 @@
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
+        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
@@ -1718,7 +1718,7 @@
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
-        "0x127a5a9b6364f01a1835b317e119b9e894fc7eedf3e9a939569f741f74378a8f"
+        "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca"
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
@@ -1818,7 +1818,7 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xe6e96ed1643d7aa0bde96b58e278bd6716600479c36623c8cbca4da634304c97"
+        "0x05f19560cc64e41a40dcb3e2efd7011156ab03192fcc0bfadffccd4019c99e8e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -2001,7 +2001,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2173,7 +2173,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0xfa9c986019a03bd66efb7584a7064e708f6fb71956643a9d4daa2c0972a29c03"
+        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -2299,7 +2299,7 @@
       "template": "opstack/AnchorStateRegistry_post13",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xa1c629e3a86e4cba49482956c04d921b52551c4ee9833ddda7e44ca155bc6cab"
+        "0xfdabc8b9b4db9b7aa78227b26e936abaf24f058502b96e8d9a293d49b1e89b47"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
@@ -2381,7 +2381,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2424,7 +2424,7 @@
       "template": "lido/L1ERC20TokenBridge",
       "sourceHashes": [
         "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
-        "0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"
+        "0x40e05a5687c31241ba914eeb7831d870e410c699c2cc59094759947e8d4148fa"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
@@ -2511,7 +2511,7 @@
       "address": "eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
         "0x2eb865904d6c13775d52bc759e65f0b7601de45c32b313acd13d7c96ab7157d1"
       ],
       "proxyType": "EIP1967 proxy",
@@ -2575,7 +2575,7 @@
       "template": "opstack/SuperchainConfig_base",
       "sourceHashes": [
         "0xa4c6eec89ca5a138c3f0f983a01542174071c7f37870aaa0fba0ef9613c2f530",
-        "0x96cc0e27c01fa6d20f27d851526b1c6c638f8051e7951254dabb531bed30d6d5"
+        "0x90c9d86019dbb1478cc3800cbd0ff9e6716aa05485a870ab6624490ce3739ee8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",

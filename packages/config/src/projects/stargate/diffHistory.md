@@ -1,3 +1,282 @@
+Generated with discovered.json: 0x8a23c103bf3c4165c6dbda9a87e0fb90d4663276
+
+# Diff at Fri, 08 May 2026 07:52:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777371085
+- current timestamp: 1777371085
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777371085 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingArbitrum (arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      sourceHashes.0:
+-        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
++        "0xd9f651b21fbdf3f8293e2989b0419e91647934366b5e05824e8beeaa82bb5949"
+    }
+```
+
+```diff
+    contract StargatePoolNative (arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) [stargate/StargatePoolNative] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
++        "0xfbcde9c9dafcf8b9db441e57ced6dac63917fca33e8f9c6f2dfd991d119efbc9"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) [stargate/StargatePoolMigratable] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
++        "0x29e25cc57f27621e5c466d0de3cd808c39da8ea39e4e3f305be9d20d429aa6b9"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) [stargate/StargatePoolUSDC] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
++        "0x1ce2c4a081661fcd3bc7cbdf4b26eac41489801752b3658f4c7d5705e47f27ea"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26) [stargate/StargatePoolUSDC] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
++        "0x1ce2c4a081661fcd3bc7cbdf4b26eac41489801752b3658f4c7d5705e47f27ea"
+    }
+```
+
+```diff
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      sourceHashes.0:
+-        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
++        "0xd9f651b21fbdf3f8293e2989b0419e91647934366b5e05824e8beeaa82bb5949"
+    }
+```
+
+```diff
+    contract StargatePoolNative (base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) [stargate/StargatePoolNative] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
++        "0xfbcde9c9dafcf8b9db441e57ced6dac63917fca33e8f9c6f2dfd991d119efbc9"
+    }
+```
+
+```diff
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.
+      sourceHashes.1:
+-        "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"
++        "0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.
+      sourceHashes.0:
+-        "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
++        "0x48b52fa395fcfec46c79e54baead635a6ab7d473cd9194eb5085ae4c92dc3b56"
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) [layerzero/BlockedMessageLib] {
+    +++ description: Simple LayerZero library that blocks all messages if configured.
+      sourceHashes.0:
+-        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
++        "0x75d37f7b316a2accab28129969c0434143f38f945ef4dc05ae6e2d32a2253567"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D) [stargate/StargatePool] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
++        "0x06f33fa601634a3f9189c63dc7b8b6f0525c9ea1f488fa98344567a90b1deca0"
+    }
+```
+
+```diff
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      sourceHashes.0:
+-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
++        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
+    }
+```
+
+```diff
+    contract CreditMessaging (eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) [stargate/CreditMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.
+      sourceHashes.0:
+-        "0xb151141227bb08ead5b1a7d464402bf23feaf60625a773cb8ced48745eb66fe6"
++        "0x9cd950644580001d9beb18de858eb934cf3d3ebf4cbb0bcebfb6fb990914874e"
+    }
+```
+
+```diff
+    contract TokenMessagingEthereum (eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      sourceHashes.0:
+-        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
++        "0xd9f651b21fbdf3f8293e2989b0419e91647934366b5e05824e8beeaa82bb5949"
+    }
+```
+
+```diff
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) [layerzero/ReadLib1002] {
+    +++ description: LayerZero library used to read state from remote blockchains.
+      sourceHashes.0:
+-        "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
++        "0x63667c2b85a023336c85af02869d5f3dbf9f789566540354555921e0c204c589"
+    }
+```
+
+```diff
+    contract StargatePoolNative (eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) [stargate/StargatePoolNative] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
++        "0xfbcde9c9dafcf8b9db441e57ced6dac63917fca33e8f9c6f2dfd991d119efbc9"
+    }
+```
+
+```diff
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c) [stargate/StargatePool] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe723a77f93381425aafa246fb03a963bf9ab66f754f71d180d33f337bd65824"
++        "0x4c90d512cf724dd08c7c73b8912092172f698b3b9e7a27245e87510d10245af8"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973) [stargate/StargatePoolMigratable] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
++        "0x29e25cc57f27621e5c466d0de3cd808c39da8ea39e4e3f305be9d20d429aa6b9"
+    }
+```
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      sourceHashes.0:
+-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
++        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
+    }
+```
+
+```diff
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) [layerzero/SendUln302] {
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+      sourceHashes.0:
+-        "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
++        "0xed0d939d416a37a8dd5608191bbb9c6ae79642d6a707cbaa8ae0ed3877499037"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      sourceHashes.0:
+-        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
++        "0x412a3c42c1e7d8239049258ff828a77b62ab1822711221e5a276d4572edbfe49"
+    }
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      sourceHashes.0:
+-        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
++        "0x412a3c42c1e7d8239049258ff828a77b62ab1822711221e5a276d4572edbfe49"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7) [stargate/StargatePoolUSDC] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
++        "0x1ce2c4a081661fcd3bc7cbdf4b26eac41489801752b3658f4c7d5705e47f27ea"
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      sourceHashes.0:
+-        "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
++        "0xc8412ab2ff002dd3b40a167c6532c54e7cb46c1f0718bfaf038f211e3a333a07"
+    }
+```
+
+```diff
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3) [stargate/StargatePool] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
++        "0x06f33fa601634a3f9189c63dc7b8b6f0525c9ea1f488fa98344567a90b1deca0"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD) [stargate/StargatePoolMigratable] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
++        "0x29e25cc57f27621e5c466d0de3cd808c39da8ea39e4e3f305be9d20d429aa6b9"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) [stargate/StargatePoolUSDC] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
++        "0x1ce2c4a081661fcd3bc7cbdf4b26eac41489801752b3658f4c7d5705e47f27ea"
+    }
+```
+
+```diff
+    contract StargatePoolNative (oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) [stargate/StargatePoolNative] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
++        "0xfbcde9c9dafcf8b9db441e57ced6dac63917fca33e8f9c6f2dfd991d119efbc9"
+    }
+```
+
+```diff
+    contract TokenMessagingOptimism (oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) [stargate/TokenMessaging] {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      sourceHashes.0:
+-        "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
++        "0xd9f651b21fbdf3f8293e2989b0419e91647934366b5e05824e8beeaa82bb5949"
+    }
+```
+
 Generated with discovered.json: 0x2e57a6710cd3e7166af28b1f99cbb73103142f4d
 
 # Diff at Tue, 05 May 2026 10:23:10 GMT:
