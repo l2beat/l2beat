@@ -168,7 +168,8 @@ export const scroll: ScalingProject = {
     coingeckoPlatform: 'scroll',
     apis: [
       { type: 'rpc', url: 'https://rpc.scroll.io', callsPerMinute: 120 },
-      { type: 'etherscan', chainId },
+      { type: 'sourcify', chainId },
+      { type: 'blockscout', url: 'https://scrollscan.com/api' },
     ],
   },
   config: {
