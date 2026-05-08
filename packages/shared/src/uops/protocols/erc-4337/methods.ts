@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { decodeAbiParameters, parseAbiItem, parseAbiParameters } from 'viem'
+import { decodeAbiParameters, parseAbiItem, parseAbiParameters } from 'viem/utils'
 import type { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMethod'
 

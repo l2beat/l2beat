@@ -1,10 +1,9 @@
+import type { AbiFunction, DecodeFunctionDataReturnType } from 'viem'
 import {
-  type AbiFunction,
-  type DecodeFunctionDataReturnType,
   decodeFunctionData,
   toFunctionSelector,
   toFunctionSignature,
-} from 'viem'
+} from 'viem/utils'
 import type { Method, Operation } from '../types'
 
 export function defineMethod<T extends AbiFunction>(
