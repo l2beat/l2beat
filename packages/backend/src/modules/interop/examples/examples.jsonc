@@ -45,6 +45,40 @@
       ]
     }
   },
+  "hyperliquid-bridge": {
+    "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x033e32e918e640d530db77de75a3b87d0dba90f5293ae8feeb561bc35012f240"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfea525a89c615980ce8a77407a7cabd25e44a4b42b94f7ad01f352ff45475d11"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "hyperliquid-bridge.Deposit" },
+        { "type": "hyperliquid-bridge.FinalizedWithdrawal" }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": { "chain": "hyperliquid" }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        }
+      ]
+    }
+  },
   "avalanche": {
     "txs": [
       {

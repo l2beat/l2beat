@@ -199,6 +199,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     color: '#836EF9',
     explorerUrl: 'https://monadscan.com',
   },
+  {
+    id: 'hyperliquid',
+    name: 'Hyperliquid',
+    type: 'evm',
+    display: 'HL',
+    color: '#3CFF72',
+    explorerUrl: 'https://app.hyperliquid.xyz/explorer',
+  },
 ] as const
 
-export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const
+export const INTEROP_ONE_SIDED_CHAINS = ['solana', 'hyperliquid'] as const
