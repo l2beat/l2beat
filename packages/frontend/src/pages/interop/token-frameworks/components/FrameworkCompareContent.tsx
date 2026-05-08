@@ -16,14 +16,6 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 
-type CompareMetric = {
-  key: 'volume' | 'transfers' | 'time' | 'size'
-  label: string
-  lowerIsBetter?: boolean
-  getValue: (entry: ComparableEntry) => number | null
-  format: (value: number | null) => string
-}
-
 type ComparableEntry = {
   volume: number
   transferCount: number
@@ -31,33 +23,10 @@ type ComparableEntry = {
   averageValue: number | null
 }
 
-const METRICS: CompareMetric[] = [
-  {
-    key: 'volume',
-    label: 'Volume',
-    getValue: (e) => e.volume,
-    format: (v) => (v === null ? '$ —' : formatCurrency(v, 'usd')),
-  },
-  {
-    key: 'transfers',
-    label: 'Transfers',
-    getValue: (e) => e.transferCount,
-    format: (v) => (v === null ? '—' : formatInteger(v)),
-  },
-  {
-    key: 'time',
-    label: 'Avg. transfer time',
-    lowerIsBetter: true,
-    getValue: (e) => e.averageDurationSeconds,
-    format: (v) => (v === null ? '—' : formatSeconds(v)),
-  },
-  {
-    key: 'size',
-    label: 'Avg. transfer size',
-    getValue: (e) => e.averageValue,
-    format: (v) => (v === null ? '$ —' : formatCurrency(v, 'usd')),
-  },
-]
+type Side = {
+  framework: InteropTokenFramework
+  entry: ComparableEntry
+}
 
 export function FrameworkCompareContent({
   tokenFrameworks,
@@ -68,25 +37,18 @@ export function FrameworkCompareContent({
   frameworkDominance: TokenFrameworksData['frameworkDominance'] | undefined
   isLoading: boolean
 }) {
-  const [leftId, setLeftId] = useState<string | undefined>()
-  const [rightId, setRightId] = useState<string | undefined>()
+  const [leftId, setLeftId] = useState<string>()
+  const [rightId, setRightId] = useState<string>()
 
-  const entriesById = new Map<string, ComparableEntry>()
-  if (frameworkDominance) {
-    for (const e of frameworkDominance.volume.entries) {
-      entriesById.set(e.id, e)
-    }
+  const getSide = (id: string | undefined): Side | undefined => {
+    const framework = tokenFrameworks.find((f) => f.id === id)
+    const entry = frameworkDominance?.volume.entries.find((e) => e.id === id)
+    return framework && entry ? { framework, entry } : undefined
   }
 
-  const leftFramework = leftId
-    ? tokenFrameworks.find((f) => f.id === leftId)
-    : undefined
-  const rightFramework = rightId
-    ? tokenFrameworks.find((f) => f.id === rightId)
-    : undefined
-
-  const leftEntry = leftId ? entriesById.get(leftId) : undefined
-  const rightEntry = rightId ? entriesById.get(rightId) : undefined
+  const left = getSide(leftId)
+  const right = getSide(rightId)
+  const showSkeleton = isLoading && (!!leftId || !!rightId)
 
   return (
     <div>
@@ -112,23 +74,43 @@ export function FrameworkCompareContent({
       </div>
 
       <div className="mt-6 flex flex-col gap-5">
-        {METRICS.map((metric) => (
-          <CompareRow
-            key={metric.key}
-            metric={metric}
-            left={
-              leftFramework && leftEntry
-                ? { framework: leftFramework, entry: leftEntry }
-                : undefined
-            }
-            right={
-              rightFramework && rightEntry
-                ? { framework: rightFramework, entry: rightEntry }
-                : undefined
-            }
-            isLoading={isLoading && (!!leftId || !!rightId)}
-          />
-        ))}
+        <CompareRow
+          label="Volume"
+          left={left}
+          right={right}
+          leftValue={left?.entry.volume ?? null}
+          rightValue={right?.entry.volume ?? null}
+          format={(v) => formatCurrency(v, 'usd')}
+          isLoading={showSkeleton}
+        />
+        <CompareRow
+          label="Transfers"
+          left={left}
+          right={right}
+          leftValue={left?.entry.transferCount ?? null}
+          rightValue={right?.entry.transferCount ?? null}
+          format={formatInteger}
+          isLoading={showSkeleton}
+        />
+        <CompareRow
+          label="Avg. transfer time"
+          left={left}
+          right={right}
+          leftValue={left?.entry.averageDurationSeconds ?? null}
+          rightValue={right?.entry.averageDurationSeconds ?? null}
+          format={formatSeconds}
+          lowerIsBetter
+          isLoading={showSkeleton}
+        />
+        <CompareRow
+          label="Avg. transfer size"
+          left={left}
+          right={right}
+          leftValue={left?.entry.averageValue ?? null}
+          rightValue={right?.entry.averageValue ?? null}
+          format={(v) => formatCurrency(v, 'usd')}
+          isLoading={showSkeleton}
+        />
       </div>
     </div>
   )
@@ -145,24 +127,12 @@ function FrameworkSelect({
   onChange: (id: string) => void
   excludeId: string | undefined
 }) {
-  const selected = value ? frameworks.find((f) => f.id === value) : undefined
+  const selected = frameworks.find((f) => f.id === value)
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="h-10 flex-1 border border-divider bg-surface-primary">
         <SelectValue placeholder="Select project">
-          {selected && (
-            <span className="flex items-center gap-2">
-              <img
-                src={selected.iconUrl}
-                alt={selected.name}
-                className="size-5 rounded-full"
-              />
-              <span className="font-bold">{selected.label}</span>
-              <span className="font-medium text-secondary">
-                {selected.name}
-              </span>
-            </span>
-          )}
+          {selected && <FrameworkLabel framework={selected} />}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
@@ -172,17 +142,7 @@ function FrameworkSelect({
             value={framework.id}
             disabled={framework.id === excludeId}
           >
-            <span className="flex items-center gap-2">
-              <img
-                src={framework.iconUrl}
-                alt={framework.name}
-                className="size-5 rounded-full"
-              />
-              <span className="font-bold">{framework.label}</span>
-              <span className="font-medium text-secondary">
-                {framework.name}
-              </span>
-            </span>
+            <FrameworkLabel framework={framework} />
           </SelectItem>
         ))}
       </SelectContent>
@@ -190,62 +150,65 @@ function FrameworkSelect({
   )
 }
 
-type Side = {
-  framework: InteropTokenFramework
-  entry: ComparableEntry
+function FrameworkLabel({ framework }: { framework: InteropTokenFramework }) {
+  return (
+    <span className="flex items-center gap-2">
+      <img
+        src={framework.iconUrl}
+        alt={framework.name}
+        className="size-5 rounded-full"
+      />
+      <span className="font-bold">{framework.label}</span>
+      <span className="font-medium text-secondary">{framework.name}</span>
+    </span>
+  )
 }
 
 function CompareRow({
-  metric,
+  label,
   left,
   right,
+  leftValue,
+  rightValue,
+  format,
+  lowerIsBetter,
   isLoading,
 }: {
-  metric: CompareMetric
+  label: string
   left: Side | undefined
   right: Side | undefined
+  leftValue: number | null
+  rightValue: number | null
+  format: (v: number) => string
+  lowerIsBetter?: boolean
   isLoading: boolean
 }) {
-  const leftValue = left ? metric.getValue(left.entry) : null
-  const rightValue = right ? metric.getValue(right.entry) : null
-
-  const leader = getLeader(leftValue, rightValue, metric.lowerIsBetter)
-  const { leftFill, rightFill } = getFills(
+  const { leader, leftFill, rightFill } = compare(
     leftValue,
     rightValue,
-    metric.lowerIsBetter,
+    lowerIsBetter,
   )
-
-  const leftColor = left?.framework.color
-  const rightColor = right?.framework.color
-
-  const leadingFramework =
-    leader === 'left'
-      ? left?.framework
-      : leader === 'right'
-        ? right?.framework
-        : undefined
 
   return (
     <div className="flex flex-col gap-1.5">
       <div className="grid grid-cols-3 items-baseline gap-3">
         <span
           className={cn('font-bold text-heading-16', !left && 'text-secondary')}
-          style={leftColor ? { color: leftColor } : undefined}
+          style={{ color: left?.framework.color }}
         >
-          {metric.format(leftValue)}
+          {leftValue ? format(leftValue) : '—'}
         </span>
         <span className="text-center font-semibold text-base text-secondary leading-none">
-          {metric.label}
+          {label}
         </span>
         <span
           className={cn(
             'text-right font-bold text-heading-16',
             !right && 'text-secondary',
           )}
-          style={rightColor ? { color: rightColor } : undefined}
+          style={{ color: right?.framework.color }}
         >
-          {metric.format(rightValue)}
+          {rightValue ? format(rightValue) : '—'}
         </span>
       </div>
 
@@ -255,30 +218,20 @@ function CompareRow({
         <CompareBar
           leftFill={leftFill}
           rightFill={rightFill}
-          leftColor={leftColor}
-          rightColor={rightColor}
+          leftColor={left?.framework.color}
+          rightColor={right?.framework.color}
         />
       )}
 
       <div className="grid grid-cols-2 gap-3">
-        {leader === 'left' && leadingFramework ? (
-          <LeadsIndicator
-            label={`${leadingFramework.label} leads`}
-            color={leftColor}
-            align="left"
-          />
-        ) : (
-          <span />
-        )}
-        {leader === 'right' && leadingFramework ? (
-          <LeadsIndicator
-            label={`${leadingFramework.label} leads`}
-            color={rightColor}
-            align="right"
-          />
-        ) : (
-          <span />
-        )}
+        <LeadsIndicator
+          side={leader === 'left' ? left : undefined}
+          align="left"
+        />
+        <LeadsIndicator
+          side={leader === 'right' ? right : undefined}
+          align="right"
+        />
       </div>
     </div>
   )
@@ -300,19 +253,13 @@ function CompareBar({
       <div className="flex h-full flex-1 justify-end overflow-hidden rounded-l-full bg-surface-secondary">
         <div
           className="h-full rounded-l-full"
-          style={{
-            width: `${leftFill * 100}%`,
-            backgroundColor: leftColor,
-          }}
+          style={{ width: `${leftFill * 100}%`, backgroundColor: leftColor }}
         />
       </div>
       <div className="flex h-full flex-1 overflow-hidden rounded-r-full bg-surface-secondary">
         <div
           className="h-full rounded-r-full"
-          style={{
-            width: `${rightFill * 100}%`,
-            backgroundColor: rightColor,
-          }}
+          style={{ width: `${rightFill * 100}%`, backgroundColor: rightColor }}
         />
       </div>
     </div>
@@ -320,14 +267,14 @@ function CompareBar({
 }
 
 function LeadsIndicator({
-  label,
-  color,
+  side,
   align,
 }: {
-  label: string
-  color: string | undefined
+  side: Side | undefined
   align: 'left' | 'right'
 }) {
+  if (!side) return <span />
+  const { color, label } = side.framework
   return (
     <span
       className={cn(
@@ -337,45 +284,28 @@ function LeadsIndicator({
       style={{ color }}
     >
       <TrendArrowIcon fill={color} />
-      {label}
+      {label} leads
     </span>
   )
 }
 
-function getLeader(
-  leftValue: number | null,
-  rightValue: number | null,
+function compare(
+  left: number | null,
+  right: number | null,
   lowerIsBetter: boolean | undefined,
-): 'left' | 'right' | undefined {
-  if (leftValue === null || rightValue === null) return undefined
-  if (leftValue === rightValue) return undefined
-  const leftWins = lowerIsBetter
-    ? leftValue < rightValue
-    : leftValue > rightValue
-  return leftWins ? 'left' : 'right'
-}
-
-function getFills(
-  leftValue: number | null,
-  rightValue: number | null,
-  lowerIsBetter: boolean | undefined,
-): { leftFill: number; rightFill: number } {
-  if (leftValue === null || rightValue === null) {
-    return { leftFill: 0, rightFill: 0 }
+): {
+  leader: 'left' | 'right' | undefined
+  leftFill: number
+  rightFill: number
+} {
+  if (left === null || right === null) {
+    return { leader: undefined, leftFill: 0, rightFill: 0 }
   }
-  let leftProp: number
-  let rightProp: number
-  if (lowerIsBetter) {
-    if (leftValue <= 0 && rightValue <= 0) return { leftFill: 0, rightFill: 0 }
-    if (leftValue <= 0) return { leftFill: 1, rightFill: 0 }
-    if (rightValue <= 0) return { leftFill: 0, rightFill: 1 }
-    leftProp = 1 / leftValue
-    rightProp = 1 / rightValue
-  } else {
-    leftProp = leftValue
-    rightProp = rightValue
-  }
-  const total = leftProp + rightProp
-  if (total <= 0) return { leftFill: 0, rightFill: 0 }
-  return { leftFill: leftProp / total, rightFill: rightProp / total }
+  const total = left + right
+  let leftFill = total > 0 ? left / total : 0
+  let rightFill = total > 0 ? right / total : 0
+  if (lowerIsBetter) [leftFill, rightFill] = [rightFill, leftFill]
+  if (left === right) return { leader: undefined, leftFill, rightFill }
+  const leftWins = lowerIsBetter ? left < right : left > right
+  return { leader: leftWins ? 'left' : 'right', leftFill, rightFill }
 }
