@@ -157,8 +157,12 @@ function FrameworkRowItem({
       </div>
       <div className="grid grid-cols-3 gap-3">
         <Stat
-          label="Number of transfers"
-          value={formatInteger(entry.transferCount)}
+          label={metric === 'volume' ? 'Number of transfers' : 'Volume'}
+          value={
+            metric === 'volume'
+              ? formatInteger(entry.transferCount)
+              : formatCurrency(entry.volume, 'usd', { decimals: 2 })
+          }
         />
         <Stat
           label="Avg. transfer time"
