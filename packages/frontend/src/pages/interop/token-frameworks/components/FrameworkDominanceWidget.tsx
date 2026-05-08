@@ -8,7 +8,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
-import { FrameworkCompareContent } from './FrameworkCompareContent'
+import { FrameworkCompareContent } from './comparison/FrameworkCompareContent'
 import { FrameworkDominanceContent } from './FrameworkDominanceContent'
 
 export function FrameworkDominanceWidget({
