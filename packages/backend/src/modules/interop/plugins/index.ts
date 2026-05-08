@@ -37,6 +37,7 @@ import { HyperlaneEcoPlugin } from './hyperlane-eco'
 import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
 import { HyperlaneSimpleAppsPlugIn } from './hyperlane-simple-apps'
+import { HyperliquidBridgePlugin } from './hyperliquid-bridge'
 import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
@@ -264,6 +265,7 @@ export function createInteropPlugins(
         ],
       },
       new OneinchFusionPlusPlugin(),
+      new HyperliquidBridgePlugin(deps.oneSidedChains),
       new RelayPlugin(deps.oneSidedChains),
       new GasZipPlugin(deps.configs, deps.oneSidedChains),
       new PolygonPlugin(deps.configs),
