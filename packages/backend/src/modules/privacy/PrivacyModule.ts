@@ -60,7 +60,10 @@ export function createPrivacyModule({
         blockTimestampProvider: providers.blockTimestamp,
         configurations: [
           {
-            id: `privacy-block-timestamp-${chain}`,
+            id: PrivacyBlockTimestampIndexer.idToConfigurationId({
+              chain,
+              sinceTimestamp: minTimestamp,
+            }),
             minHeight: minTimestamp,
             maxHeight: null,
             properties: { chain, sinceTimestamp: minTimestamp },

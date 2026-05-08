@@ -1,7 +1,6 @@
 import type { PrivacyFlowSource, ProjectService } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
-import { writeFileSync } from 'fs'
 import type {
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
@@ -92,8 +91,6 @@ export async function getPrivacyConfig(
     priceId,
     sinceTimestamp,
   }))
-
-  writeFileSync('priceConfigs.json', JSON.stringify(priceConfigs, null, 2))
 
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
 

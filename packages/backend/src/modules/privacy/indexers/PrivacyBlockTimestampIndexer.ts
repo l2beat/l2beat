@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
@@ -120,6 +121,15 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
         })
       }
     }
+  }
+
+  static idToConfigurationId(
+    config: PrivacyBlockTimestampConfig,
+  ): string {
+    return createPrivacyConfigurationId([
+      'privacy-block-timestamp',
+      config.chain,
+    ])
   }
 
   private getTimestampToSync(from: number): number {
