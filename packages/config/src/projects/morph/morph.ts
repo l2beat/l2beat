@@ -182,9 +182,12 @@ export const morph: ScalingProject = {
         ' The system currently operates with at least 5 whitelisted challengers external to the team.',
       sentiment: 'warning',
       challengeDelay: challengeWindow,
+      executionDelay: 0,
       initialBond: formatEther(
         discovery.getContractValue<number>('L1Staking', 'stakingValue'),
       ),
+      permissioned: true,
+      defenderAdvantage: 'not-applicable',
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),

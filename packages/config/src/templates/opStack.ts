@@ -1320,6 +1320,8 @@ function getRiskViewStateValidation(
             'initBonds',
           )[1], // 1 is for permissioned games!
         ),
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
     case 'Permissionless': {
@@ -1334,6 +1336,11 @@ function getRiskViewStateValidation(
             'initBonds',
           )[0], // 0 is for permissionless games!
         ),
+        permissioned: false,
+        // OPFP: bonds scale by `exponentialBondsFactor` (1.09493) per depth,
+        // so the resource ratio is exactly that factor — slightly favors the
+        // attacker.
+        defenderAdvantage: { multiplier: 1 / 1.09493, shape: 'linear' },
       }
     }
     case 'Kailua':
@@ -1348,6 +1355,8 @@ function getRiskViewStateValidation(
             'participationBond',
           ),
         ),
+        permissioned: false,
+        defenderAdvantage: 'not-assessed',
       }
     }
     case 'OpSuccinct': {
@@ -1371,6 +1380,8 @@ function getRiskViewStateValidation(
             'initBondGame42',
           ),
         ),
+        permissioned: true,
+        defenderAdvantage: 'not-applicable',
       }
     }
   }

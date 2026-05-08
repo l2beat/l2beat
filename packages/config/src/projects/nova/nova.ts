@@ -248,6 +248,7 @@ export const nova: ScalingProject = orbitStackL2({
         true,
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
       initialBond: formatEther(
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),

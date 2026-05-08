@@ -11,6 +11,7 @@ import {
   RISK_VIEW,
   SOA,
   UPGRADE_MECHANISM,
+  computeBoldDefenderAdvantage,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getRollupStage } from '../../common/stages/getRollupStage'
@@ -326,9 +327,18 @@ export const arbitrum: ScalingProject = orbitStackL2({
       ...RISK_VIEW.STATE_FP_INT(
         challengeWindowSeconds,
         challengeGracePeriodSeconds,
+        'if-challenged',
       ),
       initialBond: formatEther(
         discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+      ),
+      permissioned: false,
+      defenderAdvantage: computeBoldDefenderAdvantage(
+        discovery.getContractValue<number>('RollupProxy', 'baseStake'),
+        discovery.getContractValue<number[]>(
+          'EdgeChallengeManager',
+          'stakeAmounts',
+        ),
       ),
     },
   },

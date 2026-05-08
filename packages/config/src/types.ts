@@ -536,10 +536,28 @@ export interface ProjectRiskView {
   stateValidation: TableReadyValue & {
     /** @unit seconds */
     executionDelay?: number
+    /** Whether `executionDelay` is applied on every withdrawal or only when a
+     *  challenge is raised. Treated as 'always' when omitted. */
+    executionDelayMode?: 'always' | 'if-challenged'
     /** @unit seconds */
     challengeDelay?: number
-    /** @unit ETH */
+    /** Defaults to ETH (rendered with Ξ prefix). Set when the bond is paid in
+     *  a non-ETH token; the value is then rendered as "<initialBond> <token>". */
     initialBond?: string
+    initialBondToken?: string
+    /** Whether challenging is restricted to a whitelist. When true, the bond
+     *  amount is set by the project rather than reflecting an open economic
+     *  barrier, so values across permissioned systems aren't comparable to
+     *  permissionless ones. */
+    permissioned?: boolean
+    /** Worst-case ratio of defender funds to attacker funds required to
+     *  protect the chain in a resource-exhaustion attack. See
+     *  https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a. */
+    defenderAdvantage?:
+      | { multiplier: number; shape: 'linear' }
+      | { shape: 'log' }
+      | 'not-applicable'
+      | 'not-assessed'
   }
   dataAvailability: TableReadyValue
   exitWindow: TableReadyValue

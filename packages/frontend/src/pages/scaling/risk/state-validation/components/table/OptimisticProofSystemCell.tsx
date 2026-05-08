@@ -18,6 +18,7 @@ export function OptimisticProofSystemCell({
   proofSystem,
   slug,
   zkCatalog,
+  permissioned,
 }: ScalingRiskStateValidationOptimisticEntry) {
   const hasSuccessful = zkCatalog && zkCatalog.successful.count > 0
   const hasUnsuccessful = zkCatalog && zkCatalog.unsuccessful.count > 0
@@ -28,10 +29,11 @@ export function OptimisticProofSystemCell({
     (hasUnsuccessful && hasNotVerified)
 
   return (
-    <div className="flex h-full items-center gap-4">
-      <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
-      <div className="flex items-center gap-1.5">
-        {zkCatalog && (
+    <div className="flex h-full flex-col justify-center gap-0.5">
+      <div className="flex items-center gap-4">
+        <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
+        <div className="flex items-center gap-1.5">
+          {zkCatalog && (
           <Tooltip>
             <TooltipTrigger>
               <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
@@ -102,19 +104,25 @@ export function OptimisticProofSystemCell({
             </TooltipContent>
           </Tooltip>
         )}
-        {proofSystem?.challengeProtocol && (
-          <Tooltip>
-            <TooltipTrigger>
-              <Badge type="blue" className="block h-5 md:h-6">
-                {proofSystem.challengeProtocol}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>
-              {challengeToDescription(proofSystem.challengeProtocol)}
-            </TooltipContent>
-          </Tooltip>
-        )}
+          {proofSystem?.challengeProtocol && (
+            <Tooltip>
+              <TooltipTrigger>
+                <Badge type="blue" className="block h-5 md:h-6">
+                  {proofSystem.challengeProtocol}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent>
+                {challengeToDescription(proofSystem.challengeProtocol)}
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
       </div>
+      {permissioned !== undefined && (
+        <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+          {permissioned ? 'Permissioned' : 'Permissionless'}
+        </div>
+      )}
     </div>
   )
 }

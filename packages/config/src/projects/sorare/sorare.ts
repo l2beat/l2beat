@@ -159,7 +159,10 @@ export const sorare: ScalingProject = {
     mode: DA_MODES.STATE_DIFFS,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_ZKP_ST,
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_ST,
+      executionDelay: 0,
+    },
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
