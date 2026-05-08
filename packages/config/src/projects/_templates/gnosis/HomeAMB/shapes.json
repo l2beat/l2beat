@@ -1,8 +1,7 @@
 {
   "HomeAMB.sol": {
-    "hash": "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4",
+    "hash": "0xa4d02292450841f41f670301dffedd4e067b1db31cc4bad3c863384915955ae2",
     "address": "gno:0xA033535983d1aBcc2648af730EDCb198909903D7",
-    "chain": "gnosis",
     "blockNumber": 45931894
   }
 }

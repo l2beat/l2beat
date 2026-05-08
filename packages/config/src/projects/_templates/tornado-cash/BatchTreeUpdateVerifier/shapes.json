@@ -2,7 +2,6 @@
   "BatchTreeUpdateVerifier": {
     "hash": "0xc856486a747bd2513fc7d3e40390b4cab2a3401d75bd44dd9d5750bdf33f1dd2",
     "address": "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }

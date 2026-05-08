@@ -20,7 +20,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/NitroEnclaveVerifier",
       "sourceHashes": [
-        "0x17b0e343334d9d6d39fead84d7cfc2adec7c0a43842d1ad09bd2674f4cd1c813"
+        "0xf656ce2d63c52a1771ea6f9603f0b5af9463f80b497d23d4a26cd8ed015fb107"
       ],
       "proxyType": "immutable",
       "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.",
@@ -49,8 +49,8 @@
       "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd",
+        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -194,7 +194,7 @@
       "template": "orbitstack/SequencerInbox_Celestia_Espresso",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
+        "0x7f099bc73853bb4dbfd28a6dbf92ffa40a5845cb2fa715ebb3be41b4ee20e699"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.",
@@ -325,7 +325,7 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
@@ -372,7 +372,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
+        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -604,7 +604,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
+        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -623,7 +623,7 @@
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
+        "0xe51bf51c986c2124e5af39cc6e16ee63de27ee0cfa9b73dc4b10c49a4d994d2f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
@@ -690,7 +690,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
-        "0x17cf7a67e150ce8a604a58eacd58d5a05651d1783698d5782148bdaf167b3236"
+        "0x3a2d0c56ad02170b854c91e68bf5664f91e6ffeaf6e4c03da8815afea464c874"
       ],
       "proxyType": "immutable",
       "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
@@ -719,7 +719,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -775,7 +775,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -936,7 +936,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/EspressoTEEVerifier_gateway",
       "sourceHashes": [
-        "0x6ccdd5bbf0ec94df446cc0d8fb3fc929c373c8d1dcbaced844d6e39997b294cb"
+        "0x01a9491f3fb770154d17c7bba9803dedc2c226526e22ef5f13a068811dac8b75"
       ],
       "proxyType": "immutable",
       "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.",
@@ -966,7 +966,7 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
@@ -1017,7 +1017,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo_Celestia",
       "sourceHashes": [
-        "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678"
+        "0xa7c3a1f78e84574d1701344ee35b627f4f00d0fbf73f1e7a2ae8aeaeb15007d8"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
@@ -1039,7 +1039,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
+        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -1155,7 +1155,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -1271,7 +1271,7 @@
       "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
@@ -1320,7 +1320,7 @@
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
+        "0xf536eecfe8b70bf9ba1ea603efcc5ee20c36b0413e4e5258494893cbde454898"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
@@ -1449,7 +1449,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -1487,7 +1487,7 @@
       "template": "orbitstack/Bridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
@@ -1571,7 +1571,7 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
+        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
@@ -1599,7 +1599,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/EspressoSGXTEEVerifier",
       "sourceHashes": [
-        "0xb506b0038120d7c5021a0964fa2fa3ac35c16fe8c6d8942f99102c158074d57a"
+        "0xbbe9c2cadf076bfa995abfadb25ecea15fdba6af89aefc39fca6442113844b93"
       ],
       "proxyType": "immutable",
       "description": "Verifies attestations of an Intel SGX TEE.",
@@ -1723,7 +1723,7 @@
       "type": "Contract",
       "template": "espresso/Sequencing/EspressoNitroTEEVerifier",
       "sourceHashes": [
-        "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e"
+        "0x2605440fbb12f634b4f76ca3df637bfb0ac30ae84b0c455e6dee76bd20010c2f"
       ],
       "proxyType": "immutable",
       "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",

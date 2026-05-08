@@ -1,8 +1,7 @@
 {
   "HypERC20Collateral.sol": {
-    "hash": "0x5fc3214e479761007bc3001f10a465e893e0013c39c9a3449c859efa82a1568f",
+    "hash": "0xe964d2b676f60f4c33ae29a81705da888a510fe6e4e88af5ef82f68edc2ce878",
     "address": "eth:0x36D930c7782BafE74Ff52CAb54648a1b2ecC48bE",
-    "chain": "ethereum",
     "blockNumber": 23832626
   }
 }

@@ -1,28 +1,27 @@
 {
   "GasPriceOracle_v1_3_0": {
-    "hash": "0x45505b686bf41ebd09c2ba16df3b9e0911163962d88665b8e989d6773f939eaa",
+    "hash": "0x9375ef7a639d751a305cfc9e8c233be630ae7a98410196a347b1b25175ad7810",
     "address": "oeth:0xa919894851548179A0750865e7974DA599C0Fac7",
     "blockNumber": 134041720
   },
   "GasPriceOracle_v1_3_1beta_1": {
-    "hash": "0x4e83a147801f63027c36a14774aed1c3af9fe4cd8c75395a9d0223bf3bfeb459",
+    "hash": "0x9bd589f93dfb7d78b984688f0aa6b3210ce57e85a83aaf738c4a1840b540dff5",
     "address": "ink:0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
     "blockNumber": 10183769
   },
   "GasPriceOracle_v1_4_0": {
-    "hash": "0xc5d4d2bf19122f506ce43be8395b97b65c2b1109721869f31aa0b39605c5254b",
+    "hash": "0x385789a35e0de8f3729fa43f0a9ca7dd4904401fd879f53dc54d4dc090e614fd",
     "address": "ink:0x93e57A196454CB919193fa9946f14943cf733845",
     "blockNumber": 13539010
   },
   "GasPriceOracle_v1_4_0_unichain": {
-    "hash": "0x1cb14befaee4fe093cdeeaab8c4a2d125540a0790929ca046c8193a094a88a4f",
+    "hash": "0xa24da8a5549ff2a75eddcec83e45b10f8ece6210f5f3877f9467259869904f52",
     "address": "unichain:0x93e57A196454CB919193fa9946f14943cf733845",
     "blockNumber": 16289384
   },
   "GasPriceOracle.sol": {
-    "hash": "0x3a8edff20d21cac6fe4146bd2ae47f7ec927759ff9eb35e3f32f366e91da9e15",
+    "hash": "0x2a3c7909036a30543d4aaa8e9501caab6f998a671d40cc3822f89c6239e6b8ab",
     "address": "ink:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
-    "chain": "ink",
     "blockNumber": 31862238
   }
 }

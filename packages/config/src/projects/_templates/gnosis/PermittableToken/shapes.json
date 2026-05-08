@@ -1,8 +1,7 @@
 {
   "PermittableToken.sol": {
-    "hash": "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035",
+    "hash": "0x7bcbb4de024b235710587626ded6954778c1084f861b308a92f053ee81f6d9e6",
     "address": "eth:0x7c24d0061b484B267F286aa2DCe891220Db254b3",
-    "chain": "ethereum",
     "blockNumber": 24991869
   }
 }

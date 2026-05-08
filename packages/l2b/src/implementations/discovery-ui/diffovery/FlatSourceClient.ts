@@ -3,7 +3,7 @@ import {
   AllProviders,
   asStructured,
   codeIsEOA,
-  flattenBytecodeEquivalentStartingFrom,
+  flattenStartingFrom,
   getChainConfigs,
   getChainFullName,
   getDiscoveryPaths,
@@ -82,7 +82,7 @@ export class FlatSourceClient {
       return result
     }
 
-    const flat = flattenBytecodeEquivalentStartingFrom(
+    const flat = flattenStartingFrom(
       source.name,
       source.rootFile,
       input,

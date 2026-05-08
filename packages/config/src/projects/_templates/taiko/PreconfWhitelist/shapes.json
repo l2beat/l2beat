@@ -1,8 +1,7 @@
 {
   "PreconfWhitelist.sol": {
-    "hash": "0x974afbdcc80d21c6158c6eb226d4a8b02a6041f7b8e9affd849a300ce70e21ef",
+    "hash": "0xbbc82a452c36768ecfa5ae0bddedf9ac6eab01d8818f3952da014b8dc7f365bd",
     "address": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
-    "chain": "ethereum",
     "blockNumber": 24791653
   }
 }

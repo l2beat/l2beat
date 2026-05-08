@@ -1,8 +1,7 @@
 {
   "Governance.sol": {
-    "hash": "0x108c41fbc4c83c17c0f1cade9547878fd22dbf5b378a3da7815cf2eacf863b0e",
+    "hash": "0x4818e078ed920ba17929b5ff19b2390b5af9aea3bcfd7cc47274d4c7afedc718",
     "address": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-    "chain": "ethereum",
     "blockNumber": 23834069
   }
 }

@@ -1,98 +1,97 @@
 {
   "L1ERC721Bridge_l3": {
-    "hash": "0x213ec4c2cba8ee3e5261dea43660185830da2ba624da6cd1bcd3c342732b576e",
+    "hash": "0xd0dd332a2d8a1744ff5624e4887d8066eff715d8d942a81e754ccc7dc10a59e6",
     "address": "base:0xd2227e78ee343a0d6166B4Bd5a18Ebb286c8Cc05",
     "blockNumber": 28446407
   },
   "L1ERC721Bridge_v1_0_0": {
-    "hash": "0x4a2ad213ff7b5da7d065bc134bb2392837364747089248e4083d17a39ea87fd7",
+    "hash": "0x47c0991c31a0666bf7271ba868479c71ead7c6b2eaf2c04fd6d7a3e5171750f6",
     "address": "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_1_2": {
-    "hash": "0x95c690f70db8f82a05347087d704333c180048757ff015d74a5b186c1b6b24ab",
+    "hash": "0x216152d20d8ba85df8aade7361544f4376c3557d2f4791403078ff924fafedd6",
     "address": "eth:0x132b3456300332d488f946B818eB9512931eBCAa",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_4_0": {
-    "hash": "0xf43d12b96b6c43853b7001daea5e33f38797c6847d565052a0edb0b191a665da",
+    "hash": "0xefc86ec30e2973f0ee879cbe823b635c61162205f58dd1115da3f67e46c1ba8a",
     "address": "eth:0xc4550911Df26E604aA560dee6a9b66D0CA933482",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v1_4_1": {
-    "hash": "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f",
+    "hash": "0xbf91cfbe2fd261a806ece3b6317522bc80d49e675dbc9334305279b3c521954b",
     "address": "eth:0x3B01aDF2f199144233A536b08244d63e5eb691B8",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_0_0": {
-    "hash": "0xd94510e3fe5d022d391bd48ca1c159a4ac4457403b9326aaaba5bda5d5d4b59e",
+    "hash": "0x11fdd1bac717fdd4a4af34aa4e5abb646b5c78e27fe668013479e19daa94d797",
     "address": "eth:0xf3EF9B6eE32366A625d84910c53eB20024043A70",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_0": {
-    "hash": "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3",
+    "hash": "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342",
     "address": "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_0_zircuit": {
-    "hash": "0x7328459427570e205526a415613989750227c38d95138613a718c573132fdd17",
+    "hash": "0x67f91a6b152e91661289b4cc920af10d765360f1823c4c8459154d407ff6b552",
     "address": "eth:0x3B21dC86c412aC34fF4c679497b274509D73cDcC",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta1": {
-    "hash": "0x56b8df1d0d704ad119f31879a8c1446528dbdc9130c3442ae76a2991ca1df17a",
+    "hash": "0xf2bfb7ed7dcd65fbe00aa0150c0269c1a4f5fff084ed5297594e6d445f124c54",
     "address": "eth:0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta2": {
-    "hash": "0xdc83f703bfd2d743ec97217a3d438d11b984d0107c4b0299116689bc6c38f17c",
+    "hash": "0x0164aba5fa27a9f2b7bdc36e3be619e8ae459b7fdf17c49c1f7f76a158af05cf",
     "address": "eth:0xcD8f943e7d506cD92dE582Ac5065dE718E568580",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_1_1_beta2_soon": {
-    "hash": "0x24cb1546f4d13c900c36748855b85910c515856750676e6d425b2cd42204ff9f",
+    "hash": "0xec73147ff0c60e8bedce72aa2413e771a573eaa8c0aef9c1f6300d2c7a58cfe6",
     "address": "eth:0x5ef275bed4d7d3eD69BAc22a0dEf8947f8cA1b4B",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_2_0_beta1_celo": {
-    "hash": "0x8d03a6303efd76759aaa7d52a65a151d851750f2f816678bf97961d413d4b9c0",
+    "hash": "0x2f21169268e18fb4c8daf08c3f5979516f5cd890be23f3b7f6fcd30021fb2e17",
     "address": "eth:0xad5D111e961A5E451C8172034115bcc0551b6551",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_3_1": {
-    "hash": "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c",
+    "hash": "0x827908a1ae39059a43a39fdadfae74b1165afe71814fdca6c42a1581da796446",
     "address": "eth:0x276d3730f219f7ec22274f7263180b8452B46d47",
     "blockNumber": 22188285
   },
   "L1ERC721Bridge_v2_2_0_zircuit": {
-    "hash": "0x937e394859daaa4d66de4cbe3e6770d80adf639ecc5d3394774676870cda8d62",
+    "hash": "0xeebc391f228960e573a84b61884f39e3f4d64ad3a105cb7974f641c4a737954e",
     "address": "eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb",
     "blockNumber": 22336762
   },
   "L1ERC721Bridge_v2_4_0": {
-    "hash": "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837",
+    "hash": "0x042a00d86fcb033183aa25bf84cc94b75ddcfbcd5d40f1b8845e9f4d9cf2cb73",
     "address": "eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013",
     "blockNumber": 22346130
   },
   "L1ERC721Bridge_v2.2.0_beta1": {
-    "hash": "0xe599cf570ef24a19dd222aad5c0dfd249ecd9ed9a4b33d054028512ba4b2baf3",
+    "hash": "0x43d37cdfd38469f40351cf9e323f8a8cb68627341be9c734ec192e434a248d61",
     "address": "eth:0x7eecF36F384732F229D494E072a48fF294861fC2",
     "blockNumber": 22395854
   },
   "L1ERC721Bridge_v2_7_0": {
-    "hash": "0x8ec2646e7ca57c49fef7769f200a751b7199526d590c9c43e6c7b134f43de630",
+    "hash": "0x77fe7809a8444a87be6afab50e8327f48ce94fa2bedd940fa4e7018886ed4212",
     "address": "eth:0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F",
     "blockNumber": 22995199
   },
   "L1ERC721Bridge_v2_8_0": {
-    "hash": "0xab560cdc633c64552a47cd693ebc9aaab91fe80bec99e9e89b9d13d89a994c22",
+    "hash": "0xe22ab87b389c247bfa7f37a4e2dae609f73d58f6f816fcce4b71ce73fd68e0c3",
     "address": "eth:0x7f1d12fB2911EB095278085f721e644C1f675696",
     "blockNumber": 23496267
   },
   "L1ERC721Bridge_v2_9_0.sol": {
-    "hash": "0x75cd470a9d1c1afc343b599b1c14731f55bb36fe8a4e844ddb88a0b791918795",
+    "hash": "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2",
     "address": "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9",
-    "chain": "ethereum",
     "blockNumber": 23881654
   }
 }

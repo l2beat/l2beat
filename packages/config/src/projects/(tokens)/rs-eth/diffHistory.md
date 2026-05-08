@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x563c8ad2ca94217300ebc83e06da0c85a1fd5dd7
+
+# Diff at Fri, 08 May 2026 07:53:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1752830527
+- current timestamp: 1752830527
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830527 (main branch discovery), not current.
+
+```diff
+    contract KelpDao Restaked ETH Token (base:0x1Bc71130A0e39942a7658878169764Bbd8A45993) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5b88f16117923c7f4563b4e10d6055894e730f41f9293ed95177d66b5aaa436c"
++        "0xfb3271aa76cf9869f5761c4f7216af0173e0e021fdf831e02ad05d286727d6e1"
+    }
+```
+
 Generated with discovered.json: 0x09afcfca64c9ae5dd7814d79804d805defd84dd0
 
 # Diff at Tue, 05 May 2026 10:24:05 GMT:
