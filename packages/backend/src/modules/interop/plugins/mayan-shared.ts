@@ -41,7 +41,7 @@ export const MAYAN_EVM_CHAINS = [
   // no celo
   'hyperevm',
   'monad',
-  // tempo unsupported
+  // tempo, megaeth unsupported
 ] as const
 
 // Fast MCTP and Circle contracts are not deployed on bsc or avalanche
