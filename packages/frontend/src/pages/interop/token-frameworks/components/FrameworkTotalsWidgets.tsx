@@ -20,7 +20,7 @@ export function TotalVolumeWidget() {
         data ? formatCurrency(data.frameworkDominance.volume.total, 'usd') : ''
       }
       isLoading={isLoading}
-      className="col-start-1 row-start-6"
+      className="col-start-1 row-span-2 row-start-11"
     />
   )
 }
@@ -37,7 +37,7 @@ export function TotalTransfersWidget() {
       title="Total transfers"
       value={data ? formatInteger(data.frameworkDominance.transfers.total) : ''}
       isLoading={isLoading}
-      className="col-start-2 row-start-6"
+      className="col-start-2 row-span-2 row-start-11"
     />
   )
 }

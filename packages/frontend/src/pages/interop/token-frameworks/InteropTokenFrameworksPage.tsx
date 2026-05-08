@@ -33,7 +33,7 @@ export function InteropTokenFrameworksPage({
           <div className="mt-4">
             <TokenFrameworksChainSelector allChains={interopChains} />
           </div>
-          <div className="mt-4 grid grid-cols-4 grid-rows-6 gap-4">
+          <div className="mt-4 grid grid-cols-4 grid-rows-12 gap-4">
             <FrameworkDominanceWidget tokenFrameworks={tokenFrameworks} />
             <TopTokensWidget tokenFrameworks={tokenFrameworks} />
             <TotalVolumeWidget />
