@@ -44,10 +44,6 @@ const challengeWindowBlocks = discovery.getContractValue<number>(
 )
 const finalizationDelay = finalizationDelayBlocks * L1_BLOCK_TIME
 const challengeWindow = challengeWindowBlocks * L1_BLOCK_TIME
-const timelockDelay = discovery.getContractValue<number>(
-  'FluentTimeLock',
-  'getMinDelay',
-)
 
 const ROLLUP = EthereumAddress('0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f')
 
@@ -176,7 +172,7 @@ export const fluent: ScalingProject = {
       description: `State roots are accepted on the basis of an AWS Nitro Enclave preconfirmation and a ${formatSeconds(finalizationDelay)} time delay; the SP1 ZK proof system exists in the contracts but is currently unreachable because CHALLENGER_ROLE has no holders. Effective security reduces to trust the TEE and wait the delay. See the State Validation section below for details.`,
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
