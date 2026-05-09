@@ -1213,6 +1213,7 @@ export type InteropPluginName =
   | 'hyperlane-simple-apps'
   | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
   | 'maker-bridge'

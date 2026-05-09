@@ -332,6 +332,18 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }
 
 function getVerifiers(): ChainSpecificAddress[] {
