@@ -284,6 +284,10 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       return lookup
     }
 
+    this.logger.info('Fetching block timestamps for logs without timestamps', {
+      logs: logsWithoutTimestamps.length,
+    })
+
     const timestamps = await this.$.blockProvider.getBlockTimestamps(
       logsWithoutTimestamps.map((l) => l.blockNumber),
     )
