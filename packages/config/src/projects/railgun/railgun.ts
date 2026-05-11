@@ -31,7 +31,7 @@ const TRACKED_TOKENS = [
   { address: '0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb', symbol: 'FLUID' },
 ]
 
-const railgunCore = discovery.getContract('RailgunCore')
+const railgunCore = discovery.getContract('RailgunSmartWallet')
 const stakeLocktime = discovery.getContractValue<number>(
   'Staking',
   'STAKE_LOCKTIME',
