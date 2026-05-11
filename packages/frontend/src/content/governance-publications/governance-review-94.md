@@ -1,42 +1,19 @@
 ---
 title: "Governance Review #94"
 description: "Less Guess, More Process."
-publishedOn: "2026-05-06"
+publishedOn: "2026-05-11"
 authorId: manuel-gonzalez
 ---
 
 ## **TL;DR**
 
-*In* ***Arbitrum***, *governance is focused on improving operational efficiency and revenue generation. Timeboost is moving to a dynamic pricing model designed to better adapt to market conditions and increase DAO revenue, while programs like Watchdog and Firestarters continue transitioning into their final operational phases with growing OpCo involvement.*
+*In* ***Arbitrum***, *governance is increasingly centered on operational coordination and incentive design. OpCo continues expanding its role across DAO programs and treasury-related initiatives, while updates to RAD and Watchdog reflect a broader effort to make delegate participation requirements more practical and streamline the transition of operational responsibilities.*
 
-*In* ***Optimism***, *the Grants Council continues taking a selective approach to ecosystem funding, approving only projects with strong alignment and clear impact on OP Mainnet activity, reinforcing a more disciplined allocation strategy.*
+*In* ***Optimism***, *the Grants Council continues taking a selective approach to ecosystem funding, approving only projects with strong alignment and measurable impact on OP Mainnet activity, reinforcing a more disciplined capital allocation strategy.*
 
-*In* ***ZKsync***, *governance is taking over the final operational responsibilities tied to ZKsync Lite following the shutdown of block production. Control over the claim system and remaining unclaimed funds is shifting from Matter Labs to governance, marking another step in the ecosystem’s decentralization process.*
+*In* ***ZKsync***, *governance is taking a larger role in protocol-level operations and token mechanics. Following the shutdown of ZKsync Lite block production, control over the claim system is shifting to governance, while the newly introduced Fee Flow System lays the groundwork for routing protocol fees through governance-controlled auctions and token burns.*
 
-***Elsewhere***, *Polygon is adjusting validator emissions to match faster block times while expanding its payments-focused strategy, Uniswap continues investing in developer security support, and Scroll is exploring continuous auditing systems as part of a broader push toward more proactive security practices.*
-
----
-
-## **Active votes**
-
-**Arbitrum: 2 Votes**
-
-
-
-* [Transfer 6,000 ETH and Idle Stablecoins from the Treasury to the Treasury Management Portfolio](https://www.tally.xyz/gov/arbitrum/proposal/86654545843645364200491220873325841239317939837732580673532485559601859962180?govId=eip155:42161:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) - ends on May 7 at 16:57 UTC. 
-* [Approve Release of Frozen ETH](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xb32581468bece42245fa267ea86156a621ae77f61bb866118189b5d50155b051) - ends on May 7 at 18:54 UTC.
-
-**Starknet: 2 Votes**
-
-
-* [strkBTC — Bitcoin on Starknet (SNIP-38)](https://governance.starknet.io/#/sn:0x009fedaf0d7a480d21a27683b0965c0f8ded35b3f1cac39827a25a06a8a682a4/proposal/12) - ends on May 7 at 11:00 UTC.
-* [strkBTC as a Stakable Token on Starknet (SNIP-39)](https://governance.starknet.io/#/sn:0x009fedaf0d7a480d21a27683b0965c0f8ded35b3f1cac39827a25a06a8a682a4/proposal/13) - ends on May 7 at 11:00 UTC.
-
-**Uniswap: 1 Vote**
-
-
-* [Return 12.5M Delegated Tokens to the Governance Timelock](https://snapshot.box/#/s:uniswapgovernance.eth/proposal/0xd41b2db93c0348e9061bf786dfcb610d8f35e8447f2e90b37b8f30a9b1a3091e) - ends on May 8 at 12:57 UTC.
-
+***Elsewhere***, *Polygon continues refining its validator and payments infrastructure, Uniswap expands security support for developers building on its ecosystem, and Scroll is exploring continuous auditing systems as protocols move toward more proactive security practices.*
 
 ---
 
@@ -74,6 +51,16 @@ The remaining projects include a yield and risk dashboard by Today in DeFi focus
 Entropy [shared](https://forum.arbitrum.foundation/t/watchdog-program-april-2026-update/30856) the April update for Arbitrum’s Watchdog Program, highlighting continued investigations into legacy incentive programs and the gradual transition of responsibilities to OpCo.
 
 The program received 8 new reports during April, bringing total recoveries to over 457K ARB, while most remaining investigations have now been closed. The update also confirms that reports tied to programs before 2025 will no longer be eligible after May 10, marking a shift toward focusing on newer initiatives. At the operational level, OpCo has begun onboarding into the system, while the existing reviewing committee and the Arbitrum Foundation will continue supporting the transition process.
+
+### **Arbitrum Adjusts RAD Eligibility Requirements**
+
+OpCo [shared](https://forum.arbitrum.foundation/t/rad-eligibility-requirements-update/30862) an update outlining changes to the eligibility requirements for Arbitrum’s Rewarding Active Delegates (RAD) program, following community feedback collected during previous monthly updates.
+Starting from May 2026 votes onward, the participation threshold will be reduced to 50% of proposals in most months, increasing to 75% only when there are five or more votes. In addition, delegates who fail to publish a voting rationale within five days will no longer lose their full rewards, instead receiving a 10% reduction. The changes aim to make the program more flexible while still encouraging active participation and transparency from delegates.
+
+### **OpCo Update May 2026**
+
+Frisson [shared](https://forum.arbitrum.foundation/t/opco-update-may-2026/30865) the May 2026 update for Arbitrum’s OpCo, outlining progress around hiring, DAO operations, and coordination across governance initiatives.
+The update highlights the hiring of a new Director of Finance and Treasury, ongoing recruitment for a Head of OpCo role, and expanded involvement across programs like RAD, Watchdog, and Security Council elections. OpCo also continues working alongside Entropy on treasury-related responsibilities and incentive structures, while preparing upcoming transparency reports and future OAT elections.
 
 
 ---
@@ -121,7 +108,6 @@ The proposal introduces predictable, fiat-denominated pricing for blockspace, ai
 
 ---
 
-
 ## **Scroll**
 
 
@@ -139,8 +125,6 @@ The proposal suggests testing a toolkit that runs static analysis, automated tes
 
 Some ecosystems saw no meaningful governance developments this week.
 
-
-
 * **Everclear**
 * **Wormhole**
 * **Hop**
@@ -157,16 +141,30 @@ As always, if we missed something important, feel free to reach out. We’re hap
 
 **Arbitrum**
 
+* [OpCo Operations - Office Hours](https://meet.google.com/smt-yobq-oww) - on 12.05 at 15:30 UTC.
+* [Open Discussion of Proposals Governance Call](https://meet.google.com/dfo-xora-ysp) - on 12.05 at 16:00 UTC.
+* [Arbitrum Reporting Governance Call (GRC)](https://meet.google.com/kkv-icxy-xor) - on 13.05 at 16:00 UTC.
 
-
-* [OpCo Monthly Update](https://meet.google.com/ety-prua-iei) - on 08.04 at 14:00 UTC.
 
 **Scroll**
 
+* [Weekly DAO & Governance Call](https://meet.google.com/fut-dgwp-tcn) - on 13.05 at 14:00 UTC.
+* [Scroll DAO Office Hours](https://meet.google.com/dcv-rodm-dfd) - on 15.05 at 14:00 UTC.
 
 
-* [Weekly DAO & Governance Call](https://meet.google.com/fut-dgwp-tcn) - on 06.04 at 14:00 UTC.
+**ZKsync**
 
+* [Standing ZKsync Proposal Review Call](https://meet.google.com/qvr-txgr-vja) - on 13.05 at 15:30 UTC.
+
+
+**Optimism**
+
+* [Grants Council Office Hours](https://meet.google.com/vue-azfy-ebg) - on 13.05 at 15:30 UTC.
+
+
+**Hop**
+
+* [Hop Community Call](https://discord.com/login?redirect_to=%2Fchannels%2F789310208413270078) - on 13.05 at 17:00 UTC.
 
 ---
 
