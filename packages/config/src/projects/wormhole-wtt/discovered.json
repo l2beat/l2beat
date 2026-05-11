@@ -1,7 +1,7 @@
 {
-  "name": "wormhole",
-  "timestamp": 1778499359,
-  "configHash": "0x50b45a5283822994d13cf82376e24d515a64c38343dee356136063d83ad15811",
+  "name": "wormhole-wtt",
+  "timestamp": 1778501660,
+  "configHash": "0xe5118793a6e1e23d21e1b7da72219d1554e2b61a60cdfba268efdfeb6d60b142",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -769,7 +769,7 @@
         "nativeContract": "0x069b8857feab8184fb687f634618c035dac439dc1aeb3b5598a0f00000000001",
         "owner": "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
         "symbol": "SOL",
-        "totalSupply": 313323990631150
+        "totalSupply": 313327986631150
       },
       "fieldMeta": {
         "chainId": {
@@ -1006,6 +1006,6 @@
     "wormhole/TokenBridge": "0xd15c6606803bc4afae7e428a38a2b40690d1fb4e5fd3d29b47d3e66116582d15",
     "wormhole/WormholeCore": "0xe9cd639e09731a38f64813812bd4d5dc25cd9844a52065c894c53cfa445f64da"
   },
-  "usedBlockNumbers": { "ethereum": 25071604 },
+  "usedBlockNumbers": { "ethereum": 25071794 },
   "permissionsConfigHash": "0xd61cd1130ac9a8d55e4949929e607468e5b8dea1869017ab9cb0b8da9bbd54a7"
 }
