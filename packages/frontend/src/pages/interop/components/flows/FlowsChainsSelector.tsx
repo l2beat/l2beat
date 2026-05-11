@@ -24,8 +24,12 @@ export function FlowsChainsSelector({
 }: {
   allChains: InteropChainWithIcon[]
 }) {
-  const { selectedChains, toggleChainSelection, deselectAllChains } =
-    useInteropFlows()
+  const {
+    selectedChains,
+    lockedChainIds,
+    toggleChainSelection,
+    deselectAllChains,
+  } = useInteropFlows()
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
@@ -39,6 +43,9 @@ export function FlowsChainsSelector({
 
   const isAtMax = selectedChains.length >= MAX_SELECTED_CHAINS
   const isBelowMin = selectedChains.length < MIN_SELECTED_CHAINS
+  const selectedUnlockedCount = selectedChains.filter(
+    (chainId) => !lockedChainIds.includes(chainId),
+  ).length
 
   const trigger = (
     <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
@@ -73,8 +80,14 @@ export function FlowsChainsSelector({
           chain={chain}
           isSelected={chain.isSelected}
           toggleSelected={toggleChainSelection}
-          disabled={isAtMax && !chain.isSelected}
-          disabledTooltip="Deselect a chain to select another"
+          disabled={
+            lockedChainIds.includes(chain.id) || (isAtMax && !chain.isSelected)
+          }
+          disabledTooltip={
+            lockedChainIds.includes(chain.id)
+              ? 'This chain cannot be deselected'
+              : 'Deselect a chain to select another'
+          }
         />
       ))}
     </div>
@@ -94,7 +107,7 @@ export function FlowsChainsSelector({
     <button
       type="button"
       onClick={deselectAllChains}
-      disabled={selectedChains.length === 0}
+      disabled={selectedUnlockedCount === 0}
       className="w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
     >
       Deselect all
