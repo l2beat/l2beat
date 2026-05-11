@@ -32,7 +32,7 @@ export function TopTokensWidget({
   const items = data?.topTokens[activeTab]
 
   return (
-    <PrimaryCard className="border-divider max-md:border-b lg:col-span-2 lg:row-span-5">
+    <PrimaryCard className="border-divider max-md:border-b md:col-span-2 lg:row-span-5">
       <div className="flex items-center gap-2.5">
         <h2 className="font-bold text-heading-18 md:text-heading-20">
           Top Tokens by Volume

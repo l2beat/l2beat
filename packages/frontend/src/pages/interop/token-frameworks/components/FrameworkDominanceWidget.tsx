@@ -24,7 +24,7 @@ export function FrameworkDominanceWidget({
   })
 
   return (
-    <PrimaryCard className="border-divider max-md:border-b lg:col-span-2 lg:row-span-10">
+    <PrimaryCard className="border-divider max-md:border-b md:col-span-2 lg:row-span-10">
       <Tabs
         name="tokenFrameworksMode"
         defaultValue="dominance"

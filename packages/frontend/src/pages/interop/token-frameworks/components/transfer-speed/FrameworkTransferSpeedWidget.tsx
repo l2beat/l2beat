@@ -38,7 +38,7 @@ export function FrameworkTransferSpeedWidget({
   const fastestFramework = fastest && frameworksById.get(fastest.id)
 
   return (
-    <PrimaryCard className="flex flex-col lg:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6">
+    <PrimaryCard className="flex flex-col md:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6">
       <h2 className="font-bold text-heading-18 md:text-heading-20">
         Transfer speed
       </h2>

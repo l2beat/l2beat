@@ -37,15 +37,19 @@ export function InteropTokenFrameworksPage({
           <div className="mt-4">
             <TokenFrameworksChainSelector allChains={interopChains} />
           </div>
-          <div className="mt-4 grid grid-cols-1 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
+          <div className="mt-4 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
+            <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
+              <TotalVolumeWidget mobile />
+              <TotalTransfersWidget mobile />
+            </div>
             <FrameworkDominanceWidget tokenFrameworks={tokenFrameworks} />
             <TopTokensWidget tokenFrameworks={tokenFrameworks} />
-            <TotalVolumeWidget />
-            <TotalTransfersWidget />
             <FrameworkTransferSpeedWidget
               tokenFrameworks={tokenFrameworks}
               interopChains={interopChains}
             />
+            <TotalVolumeWidget className="max-md:hidden" />
+            <TotalTransfersWidget className="max-md:hidden" />
           </div>
           <HorizontalSeparator className="my-4" />
           <FrameworkTransferSizeWidget />
