@@ -114,7 +114,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           flowEvent('a', START, 100, 'deposit', 1, 100n),
           flowEvent('a', START, 101, 'deposit', 1, 200n),
           flowEvent('a', START, 102, 'deposit', 1, 300n),
-          flowEvent('b', START, 101, 'deposit', 1, 400n),
+          flowEvent('b', START, 101, 'deposit', 1, 400n, 0, 'b'.repeat(12)),
         ]
 
         await repository.upsertMany(records)

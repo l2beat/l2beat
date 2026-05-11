@@ -6,23 +6,31 @@ import { PrivacyPriceRepository } from './PrivacyPriceRepository'
 describeDatabase(PrivacyPriceRepository.name, (db) => {
   const repository = db.privacyPrice
 
+  beforeEach(async () => {
+    await repository.deleteAll()
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
+  })
+
   describe(PrivacyPriceRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const records = [
         {
-          configurationId: 'cfg1',
+          configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(1000),
           priceUsd: 1.5,
           priceId: 'ethereum',
         },
         {
-          configurationId: 'cfg1',
+          configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(2000),
           priceUsd: 2.5,
           priceId: 'ethereum',
         },
         {
-          configurationId: 'cfg2',
+          configurationId: 'cfg2'.padEnd(12),
           timestamp: UnixTime(1000),
           priceUsd: 0.5,
           priceId: 'usd-coin',
@@ -186,19 +194,19 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
     it('deletes records by config and range', async () => {
       const records = [
         {
-          configurationId: 'cfg1',
+          configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(1000),
           priceUsd: 1.5,
           priceId: 'ethereum',
         },
         {
-          configurationId: 'cfg1',
+          configurationId: 'cfg1'.padEnd(12),
           timestamp: UnixTime(2000),
           priceUsd: 2.5,
           priceId: 'ethereum',
         },
         {
-          configurationId: 'cfg2',
+          configurationId: 'cfg2'.padEnd(12),
           timestamp: UnixTime(1000),
           priceUsd: 0.5,
           priceId: 'usd-coin',
@@ -209,7 +217,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
       const deleted = await repository.deleteByConfigs([
         {
-          configurationId: 'cfg1',
+          configurationId: 'cfg1'.padEnd(12),
           fromInclusive: UnixTime(1000),
           toInclusive: UnixTime(2000),
         },
@@ -220,7 +228,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       const remaining = await repository.getAll()
       expect(remaining).toEqualUnsorted([
         {
-          configurationId: 'cfg2',
+          configurationId: 'cfg2'.padEnd(12),
           timestamp: UnixTime(1000),
           priceUsd: 0.5,
           priceId: 'usd-coin',
