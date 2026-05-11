@@ -197,30 +197,16 @@ carry it.
 
 - The two cards on the Token UI suggestions page
   (`packages/token-ui/src/pages/tokens/TokenSuggestionsPage.tsx`).
+
+## What should be left untouchaed
+
 - The BackOffice missing-tokens action column
   (`packages/backoffice/src/pages/interop/missing-tokens/`).
 - The interactive form's autofill — the same fact-fetching code is reused;
   the form remains as the manual entry path.
 
-In place of all three: one ingestion process, one queue, one UI listing
-the queue's contents.
-
-## Slicing
-
-Lock the architecture above before writing code. Then ship one slice at a
-time.
-
-1. **Slice 1 — Path B only, where the AbstractToken already exists by
-   `coingeckoId`.** Zero AbstractToken creation. Conflicts limited to
-   "address already exists". Safest pipeline-validation work.
-2. **Slice 2 — Path A.** Reuses today's `getSuggestionsByPartialTransfers`
-   heuristic.
-3. **Slice 3 — Auto-creation of new AbstractTokens via Path B.** Requires
-   the `reviewed: false` policy.
-4. **Slice 4 — Native tokens; conflict resolution UX.**
-
-Each slice expands the policy of the same `process` function. None of
-them changes the architecture.
+Both can for now work as before, there's no need to change them as part of this
+work.
 
 ## Open questions
 
