@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CallProxy",
+  "description": "Public forwarder: anyone can call this contract and the calldata is forwarded verbatim to an immutable target contract. This shape emits TargetSet(address) on deploy so the target is recovered from the event log. Used in CCIP to let anyone trigger already-scheduled timelock operations whose execution role is held by this proxy.",
+  "category": "gov",
+  "fields": {
+    "target": {
+      "description": "Immutable target contract that every call to this proxy is forwarded to. Extracted from the TargetSet event emitted on deployment.",
+      "handler": {
+        "type": "event",
+        "select": "target",
+        "set": {
+          "event": "TargetSet"
+        }
+      }
+    }
+  }
+}

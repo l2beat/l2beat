@@ -1,3 +1,513 @@
+Generated with discovered.json: 0xe8be352edfe740d13a7d17ba40924bed10ce0a3f
+
+# Diff at Mon, 11 May 2026 12:01:47 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@16c27951daab8bc6e3065fb400714a6b714e9f73 block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      name:
+-        "ARMProxyOwnerBypasser"
++        "ARM_Multisig4"
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      receivedPermissions.1.role:
+-        ".BypasserRoleGranted"
++        ".bypasserRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":18},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":18},{"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":16},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":3,"group":21},{"addr":"eth:0x1620E85235C124303d03671b5de5ca12249a16BF","index":4,"group":13},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":5,"group":18},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":6,"group":21},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":7,"group":21},{"addr":"eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112","index":8,"group":7},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":9,"group":20},{"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":10,"group":8},{"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":11,"group":15},{"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":12,"group":10},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":13,"group":20},{"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":14,"group":6},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":15,"group":20},{"addr":"eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","index":16,"group":17},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":20},{"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":14},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":20},{"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":6},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":21},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":21},{"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":12},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":20},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":25,"group":21},{"addr":"eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695","index":26,"group":7},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":27,"group":22},{"addr":"eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","index":28,"group":4},{"addr":"eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F","index":29,"group":11},{"addr":"eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8","index":30,"group":4},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":31,"group":22},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":32,"group":22},{"addr":"eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7","index":33,"group":5},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":34,"group":21},{"addr":"eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","index":35,"group":16},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":36,"group":18},{"addr":"eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","index":37,"group":13},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":38,"group":21},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":39,"group":21},{"addr":"eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","index":40,"group":2},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":41,"group":20},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":42,"group":20},{"addr":"eth:0x9079410666ED02725ee9d148398Cee26397c2A36","index":43,"group":3},{"addr":"eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79","index":44,"group":17},{"addr":"eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D","index":45,"group":13},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":46,"group":22},{"addr":"eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF","index":47,"group":9},{"addr":"eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","index":48,"group":8},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":49,"group":18},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":50,"group":20},{"addr":"eth:0xa85936633588Fc7a120061CA973e65cE83839F87","index":51,"group":16},{"addr":"eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9","index":52,"group":3},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":53,"group":21},{"addr":"eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624","index":54,"group":8},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":55,"group":20},{"addr":"eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264","index":56,"group":8},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":57,"group":21},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":58,"group":20},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":59,"group":20},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":60,"group":20},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":61,"group":21},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":62,"group":20},{"addr":"eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7","index":63,"group":2},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":64,"group":18},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":65,"group":18},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":66,"group":22}],"groupQuorums":[3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,19,19,19,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 3-of-3, childGroups=[1,18,19] | Group 1: 3-of-16, parent=0, childGroups=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17] | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-3, parent=0, childGroups=[20,21,22] | Group 20: 2-of-14, parent=19, signers=14 | Group 21: 2-of-12, parent=19, signers=12 | Group 22: 2-of-5, parent=19, signers=5","rootQuorum":3,"signerGroups":{"root":{"quorum":3,"parent":0,"childGroups":[1,18,19],"members":[]},"group1":{"quorum":3,"parent":0,"childGroups":[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"members":[]},"group2":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"]},"group3":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x9079410666ED02725ee9d148398Cee26397c2A36","eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"]},"group4":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"]},"group5":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]},"group6":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"]},"group7":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112","eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"]},"group8":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624","eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"]},"group9":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]},"group10":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]},"group11":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"]},"group12":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]},"group13":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x1620E85235C124303d03671b5de5ca12249a16BF","eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"]},"group14":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]},"group15":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]},"group16":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","eth:0xa85936633588Fc7a120061CA973e65cE83839F87"]},"group17":{"quorum":1,"parent":1,"childGroups":[],"members":["eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"]},"group18":{"quorum":1,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]},"group19":{"quorum":2,"parent":0,"childGroups":[20,21,22],"members":[]},"group20":{"quorum":2,"parent":19,"childGroups":[],"members":["eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"]},"group21":{"quorum":2,"parent":19,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"]},"group22":{"quorum":2,"parent":19,"childGroups":[],"members":["eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0x1c6460cfe32916196f6977b5442b0F98A826D880) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract EthereumToArbitrumOnRampTokenLimitAdmin (eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x162A8E51E69D72a4bA462220aE9A2E94e44d753F","index":0,"group":1},{"addr":"eth:0x1c6460cfe32916196f6977b5442b0F98A826D880","index":1,"group":1},{"addr":"eth:0x31e16F375531F8d77E027ff935e1114eD62D797b","index":2,"group":1},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":3,"group":1},{"addr":"eth:0x5A5A8C7E8448484Cf3458d7f426876E79c529f41","index":4,"group":1},{"addr":"eth:0x7052cB84079905400ea52B635cAb6a275fDA8823","index":5,"group":1},{"addr":"eth:0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","index":6,"group":1},{"addr":"eth:0xAe735fd5e74887064DFf99C637f291caE5485A75","index":7,"group":1},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":8,"group":1}],"groupQuorums":[1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 1-of-1, childGroups=[1] | Group 1: 4-of-9, parent=0, signers=9","rootQuorum":1,"signerGroups":{"root":{"quorum":1,"parent":0,"childGroups":[1],"members":[]},"group1":{"quorum":4,"parent":0,"childGroups":[],"members":["eth:0x162A8E51E69D72a4bA462220aE9A2E94e44d753F","eth:0x1c6460cfe32916196f6977b5442b0F98A826D880","eth:0x31e16F375531F8d77E027ff935e1114eD62D797b","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x5A5A8C7E8448484Cf3458d7f426876E79c529f41","eth:0x7052cB84079905400ea52B635cAb6a275fDA8823","eth:0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","eth:0xAe735fd5e74887064DFf99C637f291caE5485A75","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0x41eAdbc688797a02bfaBE48472995833489ce69D) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.
+      name:
+-        "ARMProxyOwner"
++        "ARMTimelock"
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.1.role:
+-        ".AdminRoleGranted"
++        ".adminRoleMembers"
+      directlyReceivedPermissions.2.role:
+-        ".AdminRoleGranted"
++        ".adminRoleMembers"
+      directlyReceivedPermissions.15:
++        {"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.16:
++        {"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.17:
++        {"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      values.AdminRoleGranted:
+-        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
+      values.adminRoleMemberCount:
+-        1
+      values.BypasserRoleGranted:
+-        ["eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc"]
+      values.bypasserRoleMemberCount:
+-        1
+      values.CancellerRoleGranted:
+-        ["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]
+      values.cancellerRoleMemberCount:
+-        5
+      values.ExecutorRoleGranted:
+-        ["eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e"]
+      values.executorRoleMemberCount:
+-        1
+      values.ProposerRoleGranted:
+-        ["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]
+      values.proposerRoleMemberCount:
+-        3
+      values.RolesRevoked:
+-        [{"role":"0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1","account":"eth:0x7E5eb20ec4d57615267235e40eCFd270d55e919b","sender":"eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"},{"role":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","account":"eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99","sender":"eth:0x61E5E1ea8fF9Dc840e0A549c752FA7BDe9224e99"},{"role":"0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783","account":"eth:0xa8D5E1daA6D8B94f11D77B7E09DE846292ef69FF","sender":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]
++++ description: Full role map: per-role admin role and current members.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"ADMIN_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]},"PROPOSER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]},"EXECUTOR_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e"]},"CANCELLER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]},"BYPASSER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc"]}}
++++ description: Current accounts granted the admin role.
+      values.adminRoleMembers:
++        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
++++ description: Current accounts granted permission to bypass the timelock delay.
+      values.bypasserRoleMembers:
++        ["eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc"]
++++ description: Current accounts granted permission to cancel scheduled operations.
+      values.cancellerRoleMembers:
++        ["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]
++++ description: Current accounts granted permission to execute scheduled operations.
+      values.executorRoleMembers:
++        ["eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e"]
++++ description: Current accounts granted permission to schedule operations.
+      values.proposerRoleMembers:
++        ["eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf","eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e"]
+      fieldMeta.AdminRoleGranted:
+-        {"description":"Current accounts granted the admin role."}
+      fieldMeta.BypasserRoleGranted:
+-        {"description":"Current accounts granted permission to bypass the timelock delay."}
+      fieldMeta.CancellerRoleGranted:
+-        {"description":"Current accounts granted permission to cancel scheduled operations."}
+      fieldMeta.ExecutorRoleGranted:
+-        {"description":"Current accounts granted permission to execute scheduled operations."}
+      fieldMeta.ProposerRoleGranted:
+-        {"description":"Current accounts granted permission to schedule operations."}
+      fieldMeta.RolesRevoked:
+-        {"description":"History of role revocations."}
+      fieldMeta.accessControl:
++        {"description":"Full role map: per-role admin role and current members."}
+      fieldMeta.adminRoleMembers:
++        {"description":"Current accounts granted the admin role."}
+      fieldMeta.bypasserRoleMembers:
++        {"description":"Current accounts granted permission to bypass the timelock delay."}
+      fieldMeta.cancellerRoleMembers:
++        {"description":"Current accounts granted permission to cancel scheduled operations."}
+      fieldMeta.executorRoleMembers:
++        {"description":"Current accounts granted permission to execute scheduled operations."}
+      fieldMeta.proposerRoleMembers:
++        {"description":"Current accounts granted permission to schedule operations."}
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerExecutor (eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610) [transporter/CallProxyWithTargetSet] {
+    +++ description: Public call proxy that forwards any caller to RMNRemoteOwner, allowing anyone to execute already-scheduled RMNRemoteOwner operations after the timelock delay.
+      receivedPermissions.0.role:
+-        ".ExecutorRoleGranted"
++        ".executorRoleMembers"
++++ description: Immutable target contract that every call to this proxy is forwarded to. Extracted from the TargetSet event emitted on deployment.
+      values.target:
++        "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A"
+      template:
++        "transporter/CallProxyWithTargetSet"
+      fieldMeta:
++        {"target":{"description":"Immutable target contract that every call to this proxy is forwarded to. Extracted from the TargetSet event emitted on deployment."}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RMNTimelock (eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A) [transporter/RBACTimelock] {
+    +++ description: Timelock administering RMNRemote signer configuration and curse/blessing controls.
+      name:
+-        "RMNRemoteOwner"
++        "RMNTimelock"
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      values.AdminRoleGranted:
+-        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
+      values.adminRoleMemberCount:
+-        1
+      values.BypasserRoleGranted:
+-        ["eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F"]
+      values.bypasserRoleMemberCount:
+-        1
+      values.CancellerRoleGranted:
+-        ["eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413"]
+      values.cancellerRoleMemberCount:
+-        1
+      values.ExecutorRoleGranted:
+-        ["eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610"]
+      values.executorRoleMemberCount:
+-        1
+      values.ProposerRoleGranted:
+-        ["eth:0x79bC82F3931A7d017719146A822e4AD8152b157e"]
+      values.proposerRoleMemberCount:
+-        1
+      values.RolesRevoked:
+-        [{"role":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","account":"eth:0x062f05CD6c835677B05a8658A351969476861316","sender":"eth:0x062f05CD6c835677B05a8658A351969476861316"}]
++++ description: Full role map: per-role admin role and current members.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"ADMIN_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]},"PROPOSER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x79bC82F3931A7d017719146A822e4AD8152b157e"]},"EXECUTOR_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610"]},"CANCELLER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413"]},"BYPASSER_ROLE":{"adminRole":"ADMIN_ROLE","members":["eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F"]}}
++++ description: Current accounts granted the admin role.
+      values.adminRoleMembers:
++        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
++++ description: Current accounts granted permission to bypass the timelock delay.
+      values.bypasserRoleMembers:
++        ["eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F"]
++++ description: Current accounts granted permission to cancel scheduled operations.
+      values.cancellerRoleMembers:
++        ["eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413"]
++++ description: Current accounts granted permission to execute scheduled operations.
+      values.executorRoleMembers:
++        ["eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610"]
++++ description: Current accounts granted permission to schedule operations.
+      values.proposerRoleMembers:
++        ["eth:0x79bC82F3931A7d017719146A822e4AD8152b157e"]
+      fieldMeta.AdminRoleGranted:
+-        {"description":"Current accounts granted the admin role."}
+      fieldMeta.BypasserRoleGranted:
+-        {"description":"Current accounts granted permission to bypass the timelock delay."}
+      fieldMeta.CancellerRoleGranted:
+-        {"description":"Current accounts granted permission to cancel scheduled operations."}
+      fieldMeta.ExecutorRoleGranted:
+-        {"description":"Current accounts granted permission to execute scheduled operations."}
+      fieldMeta.ProposerRoleGranted:
+-        {"description":"Current accounts granted permission to schedule operations."}
+      fieldMeta.RolesRevoked:
+-        {"description":"History of role revocations."}
+      fieldMeta.accessControl:
++        {"description":"Full role map: per-role admin role and current members."}
+      fieldMeta.adminRoleMembers:
++        {"description":"Current accounts granted the admin role."}
+      fieldMeta.bypasserRoleMembers:
++        {"description":"Current accounts granted permission to bypass the timelock delay."}
+      fieldMeta.cancellerRoleMembers:
++        {"description":"Current accounts granted permission to cancel scheduled operations."}
+      fieldMeta.executorRoleMembers:
++        {"description":"Current accounts granted permission to execute scheduled operations."}
+      fieldMeta.proposerRoleMembers:
++        {"description":"Current accounts granted permission to schedule operations."}
+    }
+```
+
+```diff
+    EOA  (eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x7052cB84079905400ea52B635cAb6a275fDA8823) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerProposer (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      receivedPermissions.0.role:
+-        ".ProposerRoleGranted"
++        ".proposerRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":4},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":4},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":2,"group":2},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":3,"group":4},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":4,"group":2},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":5,"group":2},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":6,"group":1},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":7,"group":1},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":8,"group":1},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":9,"group":1},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":10,"group":1},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":11,"group":2},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":12,"group":2},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":13,"group":1},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":14,"group":2},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":15,"group":3},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":16,"group":3},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":17,"group":3},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":18,"group":2},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":19,"group":4},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":20,"group":2},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":21,"group":2},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":22,"group":1},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":23,"group":1},{"addr":"eth:0x8E0e08E8cbc324310550E195383b7aC200726639","index":24,"group":1},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":25,"group":3},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":26,"group":4},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":27,"group":1},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":28,"group":2},{"addr":"eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","index":29,"group":2},{"addr":"eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","index":30,"group":2},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":31,"group":1},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":32,"group":2},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":33,"group":1},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":34,"group":1},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":35,"group":1},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":36,"group":2},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":37,"group":1},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":38,"group":4},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":39,"group":4},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":40,"group":3}],"groupQuorums":[2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 2-of-4, childGroups=[1,2,3,4] | Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7","rootQuorum":2,"signerGroups":{"root":{"quorum":2,"parent":0,"childGroups":[1,2,3,4],"members":[]},"group1":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0x8E0e08E8cbc324310550E195383b7aC200726639","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"]},"group2":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"]},"group3":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]},"group4":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerCanceller (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":1},{"addr":"eth:0x04189A291cC7E497015B45D4bb046DC0A8258068","index":1,"group":18},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":2,"group":1},{"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":3,"group":17},{"addr":"eth:0x146CAe49Dbe1b1D1968fc4652814740706548952","index":4,"group":12},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":5,"group":1},{"addr":"eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","index":6,"group":3},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":7,"group":1},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":8,"group":1},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":9,"group":1},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":10,"group":1},{"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":11,"group":9},{"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":12,"group":16},{"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":13,"group":11},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":14,"group":1},{"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":15,"group":7},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":16,"group":1},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":1},{"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":15},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":1},{"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":7},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":1},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":1},{"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":13},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":1},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":25,"group":1},{"addr":"eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695","index":26,"group":8},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":27,"group":1},{"addr":"eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","index":28,"group":5},{"addr":"eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8","index":29,"group":5},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":30,"group":1},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":31,"group":1},{"addr":"eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7","index":32,"group":6},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":33,"group":1},{"addr":"eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","index":34,"group":17},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":35,"group":1},{"addr":"eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","index":36,"group":14},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":37,"group":1},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":38,"group":1},{"addr":"eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","index":39,"group":3},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":40,"group":1},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":41,"group":1},{"addr":"eth:0x8E0e08E8cbc324310550E195383b7aC200726639","index":42,"group":1},{"addr":"eth:0x9079410666ED02725ee9d148398Cee26397c2A36","index":43,"group":4},{"addr":"eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79","index":44,"group":18},{"addr":"eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D","index":45,"group":14},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":46,"group":1},{"addr":"eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF","index":47,"group":10},{"addr":"eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","index":48,"group":9},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":49,"group":1},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":50,"group":1},{"addr":"eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9","index":51,"group":4},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":52,"group":1},{"addr":"eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","index":53,"group":1},{"addr":"eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","index":54,"group":1},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":55,"group":1},{"addr":"eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264","index":56,"group":9},{"addr":"eth:0xd3E2da792E806556517124f03F12e557045951E7","index":57,"group":14},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":58,"group":1},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":59,"group":1},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":60,"group":1},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":61,"group":1},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":62,"group":1},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":63,"group":1},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":64,"group":1},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":65,"group":1},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":66,"group":1}],"groupQuorums":[1,2,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 1-of-2, childGroups=[1,2] | Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-1, parent=2, signers=1 | Group 9: 1-of-3, parent=2, signers=3 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-2, parent=2, signers=2 | Group 18: 1-of-2, parent=2, signers=2","rootQuorum":1,"signerGroups":{"root":{"quorum":1,"parent":0,"childGroups":[1,2],"members":[]},"group1":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0x8E0e08E8cbc324310550E195383b7aC200726639","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]},"group2":{"quorum":6,"parent":0,"childGroups":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"members":[]},"group3":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x180159135c9b93C59d16eA1A690e465D22c5EB67","eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374"]},"group4":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x9079410666ED02725ee9d148398Cee26397c2A36","eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"]},"group5":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"]},"group6":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]},"group7":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"]},"group8":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"]},"group9":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"]},"group10":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]},"group11":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]},"group12":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x146CAe49Dbe1b1D1968fc4652814740706548952"]},"group13":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]},"group14":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D","eth:0xd3E2da792E806556517124f03F12e557045951E7"]},"group15":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]},"group16":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]},"group17":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae"]},"group18":{"quorum":1,"parent":2,"childGroups":[],"members":["eth:0x04189A291cC7E497015B45D4bb046DC0A8258068","eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ARMProxyOwnerExecutor (eth:0x82b8A19497fA25575f250a3DcFfCD2562B575A2e) [transporter/CallProxy] {
+    +++ description: Public call proxy that forwards any caller to ARMProxyOwner, allowing anyone to execute already-scheduled ARMProxyOwner operations after the timelock delay.
+      receivedPermissions.0.role:
+-        ".ExecutorRoleGranted"
++        ".executorRoleMembers"
+      values.constructorArgs:
++        {"target":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}
++++ description: Immutable target contract that every call to this proxy is forwarded to.
+      values.target:
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+      template:
++        "transporter/CallProxy"
+      fieldMeta:
++        {"target":{"description":"Immutable target contract that every call to this proxy is forwarded to."}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RMNRemoteOwnerBypasser (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      receivedPermissions.0.role:
+-        ".BypasserRoleGranted"
++        ".bypasserRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":1},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":1},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":2,"group":4},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":3,"group":1},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":4,"group":4},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":5,"group":4},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":6,"group":3},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":7,"group":3},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":8,"group":3},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":9,"group":3},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":10,"group":3},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":11,"group":4},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":12,"group":4},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":13,"group":3},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":14,"group":4},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":15,"group":5},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":16,"group":5},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":17,"group":5},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":18,"group":1},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":19,"group":4},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":20,"group":4},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":21,"group":3},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":22,"group":3},{"addr":"eth:0x8E0e08E8cbc324310550E195383b7aC200726639","index":23,"group":3},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":24,"group":5},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":25,"group":1},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":26,"group":3},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":27,"group":4},{"addr":"eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","index":28,"group":4},{"addr":"eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","index":29,"group":4},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":30,"group":3},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":31,"group":4},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":32,"group":3},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":33,"group":3},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":34,"group":3},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":35,"group":4},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":36,"group":3},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":37,"group":1},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":38,"group":1},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":39,"group":5}],"groupQuorums":[2,1,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 2-of-2, childGroups=[1,2] | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-3, parent=0, childGroups=[3,4,5] | Group 3: 2-of-15, parent=2, signers=15 | Group 4: 2-of-13, parent=2, signers=13 | Group 5: 2-of-5, parent=2, signers=5","rootQuorum":2,"signerGroups":{"root":{"quorum":2,"parent":0,"childGroups":[1,2],"members":[]},"group1":{"quorum":1,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]},"group2":{"quorum":2,"parent":0,"childGroups":[3,4,5],"members":[]},"group3":{"quorum":2,"parent":2,"childGroups":[],"members":["eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0x8E0e08E8cbc324310550E195383b7aC200726639","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"]},"group4":{"quorum":2,"parent":2,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"]},"group5":{"quorum":2,"parent":2,"childGroups":[],"members":["eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract ARM_Multisig3 (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      name:
+-        "ARMProxyOwnerCanceller"
++        "ARM_Multisig3"
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":2},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":2},{"addr":"eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","index":2,"group":18},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":3,"group":1},{"addr":"eth:0x1620E85235C124303d03671b5de5ca12249a16BF","index":4,"group":15},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":5,"group":2},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":6,"group":1},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":7,"group":1},{"addr":"eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112","index":8,"group":9},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":9,"group":1},{"addr":"eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","index":10,"group":10},{"addr":"eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0","index":11,"group":17},{"addr":"eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6","index":12,"group":12},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":13,"group":1},{"addr":"eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","index":14,"group":8},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":15,"group":1},{"addr":"eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","index":16,"group":19},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":17,"group":1},{"addr":"eth:0x43640F208956c7D49e04F40FF95dF818643B76aA","index":18,"group":16},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":19,"group":1},{"addr":"eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628","index":20,"group":8},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":21,"group":1},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":22,"group":1},{"addr":"eth:0x4e509C60b3e916644dE441298595FeD12C4AC926","index":23,"group":14},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":24,"group":1},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":25,"group":1},{"addr":"eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695","index":26,"group":9},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":27,"group":1},{"addr":"eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","index":28,"group":6},{"addr":"eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F","index":29,"group":13},{"addr":"eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8","index":30,"group":6},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":31,"group":1},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":32,"group":1},{"addr":"eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7","index":33,"group":7},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":34,"group":1},{"addr":"eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","index":35,"group":18},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":36,"group":2},{"addr":"eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","index":37,"group":15},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":38,"group":1},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":39,"group":1},{"addr":"eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","index":40,"group":4},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":41,"group":1},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":42,"group":1},{"addr":"eth:0x9079410666ED02725ee9d148398Cee26397c2A36","index":43,"group":5},{"addr":"eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79","index":44,"group":19},{"addr":"eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D","index":45,"group":15},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":46,"group":1},{"addr":"eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF","index":47,"group":11},{"addr":"eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","index":48,"group":10},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":49,"group":2},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":50,"group":1},{"addr":"eth:0xa85936633588Fc7a120061CA973e65cE83839F87","index":51,"group":18},{"addr":"eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9","index":52,"group":5},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":53,"group":1},{"addr":"eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624","index":54,"group":10},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":55,"group":1},{"addr":"eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264","index":56,"group":10},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":57,"group":1},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":58,"group":1},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":59,"group":1},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":60,"group":1},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":61,"group":1},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":62,"group":1},{"addr":"eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7","index":63,"group":4},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":64,"group":2},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":65,"group":2},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":66,"group":1}],"groupQuorums":[1,4,2,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 1-of-3, childGroups=[1,2,3] | Group 1: 4-of-31, parent=0, signers=31 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19] | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2","rootQuorum":1,"signerGroups":{"root":{"quorum":1,"parent":0,"childGroups":[1,2,3],"members":[]},"group1":{"quorum":4,"parent":0,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]},"group2":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]},"group3":{"quorum":6,"parent":0,"childGroups":[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],"members":[]},"group4":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374","eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"]},"group5":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x9079410666ED02725ee9d148398Cee26397c2A36","eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"]},"group6":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6","eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"]},"group7":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]},"group8":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3","eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"]},"group9":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112","eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"]},"group10":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8","eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB","eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624","eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"]},"group11":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]},"group12":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]},"group13":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"]},"group14":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]},"group15":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x1620E85235C124303d03671b5de5ca12249a16BF","eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5","eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"]},"group16":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]},"group17":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]},"group18":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60","eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae","eth:0xa85936633588Fc7a120061CA973e65cE83839F87"]},"group19":{"quorum":1,"parent":3,"childGroups":[],"members":["eth:0x4189a291cC7E497015B45D4bb046dC0A82580688","eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0xAe735fd5e74887064DFf99C637f291caE5485A75) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract ARMProxyOwnerGnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      receivedPermissions.1.role:
+-        ".ProposerRoleGranted"
++        ".proposerRoleMembers"
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      name:
+-        "ARMProxyOwnerProposer"
++        "ARM_Multisig1"
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      receivedPermissions.1.role:
+-        ".ProposerRoleGranted"
++        ".proposerRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":4},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":4},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":2,"group":2},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":3,"group":4},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":4,"group":2},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":5,"group":2},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":6,"group":1},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":7,"group":1},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":8,"group":1},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":9,"group":1},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":10,"group":1},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":11,"group":2},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":12,"group":2},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":13,"group":1},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":14,"group":2},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":15,"group":3},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":16,"group":3},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":17,"group":3},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":18,"group":2},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":19,"group":4},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":20,"group":2},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":21,"group":2},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":22,"group":1},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":23,"group":1},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":24,"group":3},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":25,"group":4},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":26,"group":1},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":27,"group":2},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":28,"group":1},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":29,"group":2},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":30,"group":1},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":31,"group":1},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":32,"group":1},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":33,"group":2},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":34,"group":1},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":35,"group":4},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":36,"group":4},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":37,"group":3}],"groupQuorums":[2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 2-of-4, childGroups=[1,2,3,4] | Group 1: 2-of-14, parent=0, signers=14 | Group 2: 2-of-12, parent=0, signers=12 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7","rootQuorum":2,"signerGroups":{"root":{"quorum":2,"parent":0,"childGroups":[1,2,3,4],"members":[]},"group1":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"]},"group2":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"]},"group3":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]},"group4":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0xE062e7D123AC8dF480C56147f911144F55C10f88) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+      name:
+-        "ARMProxyOwnerProposer2"
++        "ARM_Multisig2"
+      receivedPermissions.0.role:
+-        ".CancellerRoleGranted"
++        ".cancellerRoleMembers"
+      receivedPermissions.1.role:
+-        ".ProposerRoleGranted"
++        ".proposerRoleMembers"
+      values.getConfig:
+-        {"signers":[{"addr":"eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","index":0,"group":4},{"addr":"eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","index":1,"group":4},{"addr":"eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","index":2,"group":2},{"addr":"eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","index":3,"group":4},{"addr":"eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","index":4,"group":2},{"addr":"eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","index":5,"group":2},{"addr":"eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","index":6,"group":1},{"addr":"eth:0x34e42200901133bdceb1195f2c5241cb03D06274","index":7,"group":1},{"addr":"eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","index":8,"group":1},{"addr":"eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","index":9,"group":1},{"addr":"eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","index":10,"group":1},{"addr":"eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","index":11,"group":2},{"addr":"eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","index":12,"group":2},{"addr":"eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","index":13,"group":1},{"addr":"eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","index":14,"group":2},{"addr":"eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","index":15,"group":3},{"addr":"eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","index":16,"group":3},{"addr":"eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","index":17,"group":3},{"addr":"eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","index":18,"group":2},{"addr":"eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","index":19,"group":4},{"addr":"eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","index":20,"group":2},{"addr":"eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","index":21,"group":2},{"addr":"eth:0x843742760078Df85609690D85827173A1A96D14a","index":22,"group":1},{"addr":"eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","index":23,"group":1},{"addr":"eth:0x8E0e08E8cbc324310550E195383b7aC200726639","index":24,"group":1},{"addr":"eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","index":25,"group":3},{"addr":"eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","index":26,"group":4},{"addr":"eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","index":27,"group":1},{"addr":"eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","index":28,"group":2},{"addr":"eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","index":29,"group":2},{"addr":"eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","index":30,"group":2},{"addr":"eth:0xd107276078c6605bE0CEC43D765733291B7102aF","index":31,"group":1},{"addr":"eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","index":32,"group":2},{"addr":"eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","index":33,"group":1},{"addr":"eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","index":34,"group":1},{"addr":"eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","index":35,"group":1},{"addr":"eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6","index":36,"group":2},{"addr":"eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6","index":37,"group":1},{"addr":"eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","index":38,"group":4},{"addr":"eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29","index":39,"group":4},{"addr":"eth:0xFccD1128fc823dD78e76240dc206a7A26494F271","index":40,"group":3}],"groupQuorums":[2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"groupParents":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+      values.MAX_NUM_SIGNERS:
+-        200
+      values.NUM_GROUPS:
+-        32
++++ description: Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped.
+      values.config:
++        {"summary":"Root: 2-of-4, childGroups=[1,2,3,4] | Group 1: 2-of-15, parent=0, signers=15 | Group 2: 2-of-14, parent=0, signers=14 | Group 3: 2-of-5, parent=0, signers=5 | Group 4: 2-of-7, parent=0, signers=7","rootQuorum":2,"signerGroups":{"root":{"quorum":2,"parent":0,"childGroups":[1,2,3,4],"members":[]},"group1":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845","eth:0x34e42200901133bdceb1195f2c5241cb03D06274","eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8","eth:0x41eAdbc688797a02bfaBE48472995833489ce69D","eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf","eth:0x532657dDd472E9f9061963a44955acCCeE318B1c","eth:0x843742760078Df85609690D85827173A1A96D14a","eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7","eth:0x8E0e08E8cbc324310550E195383b7aC200726639","eth:0xa53a14c85965734C875C91A6a145CFB5ff4624dD","eth:0xd107276078c6605bE0CEC43D765733291B7102aF","eth:0xE062e7D123AC8dF480C56147f911144F55C10f88","eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162","eth:0xE5e14e1FA005dB2DC05020b432942F2611279cc8","eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"]},"group2":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0","eth:0x1BD478DB8E202A887440b2f89E854927651Ce142","eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887","eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253","eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6","eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0","eth:0x6943b0B1C63d3226B44853eEe8C2Bb6360fF3226","eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6","eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2","eth:0xB89FC4d62344a77dD09159390f9283ae9e5150F2","eth:0xb8C1688807788A7F3FFc3Fb6F0c19E06889c051F","eth:0xBA778eaBa9E592B644344bC5fe9D0a89d5c24009","eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C","eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6"]},"group3":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C","eth:0x60Fead3745461393F9298228E19d6D720Db89F2e","eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee","eth:0x9B391a5179BdC59af9B3a49423Fe8F10b74aF3c6","eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"]},"group4":{"quorum":2,"parent":0,"childGroups":[],"members":["eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34","eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472","eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94","eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D","eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028","eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"]}}}
+      description:
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree."
+      fieldMeta:
++        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
 Generated with discovered.json: 0x30eee331d2405cf28886220483944dc18a02653e
 
 # Diff at Fri, 08 May 2026 07:51:11 GMT:

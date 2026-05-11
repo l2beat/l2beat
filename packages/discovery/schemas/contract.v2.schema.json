@@ -476,6 +476,15 @@
               {
                 "type": "object",
                 "properties": {
+                  "type": { "const": "manyChainMultiSig" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
                   "type": { "const": "arbitrumActors" },
                   "actorType": {
                     "anyOf": [

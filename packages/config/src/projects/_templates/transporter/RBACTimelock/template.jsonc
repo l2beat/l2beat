@@ -3,74 +3,19 @@
   "displayName": "RBACTimelock",
   "description": "Role based timelock used to administer CCIP contracts.",
   "category": "gov",
-  "ignoreRelatives": ["RolesRevoked"],
   "fields": {
-    "adminRoleMemberCount": {
+    "accessControl": {
+      "description": "Full role map: per-role admin role and current members.",
       "handler": {
-        "type": "call",
-        "method": "getRoleMemberCount",
-        "args": [
-          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775"
-        ]
+        "type": "accessControl",
+        "ignoreRelative": true
       }
     },
-    "bypasserRoleMemberCount": {
-      "handler": {
-        "type": "call",
-        "method": "getRoleMemberCount",
-        "args": [
-          "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d"
-        ]
-      }
-    },
-    "cancellerRoleMemberCount": {
-      "handler": {
-        "type": "call",
-        "method": "getRoleMemberCount",
-        "args": [
-          "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783"
-        ]
-      }
-    },
-    "executorRoleMemberCount": {
-      "handler": {
-        "type": "call",
-        "method": "getRoleMemberCount",
-        "args": [
-          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
-        ]
-      }
-    },
-    "proposerRoleMemberCount": {
-      "handler": {
-        "type": "call",
-        "method": "getRoleMemberCount",
-        "args": [
-          "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-        ]
-      }
-    },
-    "AdminRoleGranted": {
+    "adminRoleMembers": {
       "description": "Current accounts granted the admin role.",
       "handler": {
-        "type": "event",
-        "select": "account",
-        "add": {
-          "event": "RoleGranted",
-          "where": [
-            "=",
-            "#role",
-            "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775"
-          ]
-        },
-        "remove": {
-          "event": "RoleRevoked",
-          "where": [
-            "=",
-            "#role",
-            "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775"
-          ]
-        }
+        "type": "accessControl",
+        "pickRoleMembers": "ADMIN_ROLE"
       },
       "permissions": [
         {
@@ -79,27 +24,11 @@
         }
       ]
     },
-    "BypasserRoleGranted": {
+    "bypasserRoleMembers": {
       "description": "Current accounts granted permission to bypass the timelock delay.",
       "handler": {
-        "type": "event",
-        "select": "account",
-        "add": {
-          "event": "RoleGranted",
-          "where": [
-            "=",
-            "#role",
-            "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d"
-          ]
-        },
-        "remove": {
-          "event": "RoleRevoked",
-          "where": [
-            "=",
-            "#role",
-            "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d"
-          ]
-        }
+        "type": "accessControl",
+        "pickRoleMembers": "BYPASSER_ROLE"
       },
       "permissions": [
         {
@@ -108,27 +37,11 @@
         }
       ]
     },
-    "CancellerRoleGranted": {
+    "cancellerRoleMembers": {
       "description": "Current accounts granted permission to cancel scheduled operations.",
       "handler": {
-        "type": "event",
-        "select": "account",
-        "add": {
-          "event": "RoleGranted",
-          "where": [
-            "=",
-            "#role",
-            "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783"
-          ]
-        },
-        "remove": {
-          "event": "RoleRevoked",
-          "where": [
-            "=",
-            "#role",
-            "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783"
-          ]
-        }
+        "type": "accessControl",
+        "pickRoleMembers": "CANCELLER_ROLE"
       },
       "permissions": [
         {
@@ -137,27 +50,11 @@
         }
       ]
     },
-    "ExecutorRoleGranted": {
+    "executorRoleMembers": {
       "description": "Current accounts granted permission to execute scheduled operations.",
       "handler": {
-        "type": "event",
-        "select": "account",
-        "add": {
-          "event": "RoleGranted",
-          "where": [
-            "=",
-            "#role",
-            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
-          ]
-        },
-        "remove": {
-          "event": "RoleRevoked",
-          "where": [
-            "=",
-            "#role",
-            "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
-          ]
-        }
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
       },
       "permissions": [
         {
@@ -166,27 +63,11 @@
         }
       ]
     },
-    "ProposerRoleGranted": {
+    "proposerRoleMembers": {
       "description": "Current accounts granted permission to schedule operations.",
       "handler": {
-        "type": "event",
-        "select": "account",
-        "add": {
-          "event": "RoleGranted",
-          "where": [
-            "=",
-            "#role",
-            "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-          ]
-        },
-        "remove": {
-          "event": "RoleRevoked",
-          "where": [
-            "=",
-            "#role",
-            "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-          ]
-        }
+        "type": "accessControl",
+        "pickRoleMembers": "PROPOSER_ROLE"
       },
       "permissions": [
         {
@@ -194,15 +75,6 @@
           "description": "schedule operations that can be executed after the configured timelock delay."
         }
       ]
-    },
-    "RolesRevoked": {
-      "description": "History of role revocations.",
-      "handler": {
-        "type": "event",
-        "select": ["role", "account", "sender"],
-        "ignoreRelative": true,
-        "add": { "event": "RoleRevoked" }
-      }
     }
   }
 }
