@@ -2,6 +2,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import { TransferSizeChart } from '../../summary/components/charts/TransferSizeChart'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
+import { Last24HoursBadge } from './Last24HoursBadge'
 
 export function FrameworkTransferSizeWidget() {
   const { selectedChains } = useTokenFrameworksSelectedChains()
@@ -16,9 +17,7 @@ export function FrameworkTransferSizeWidget() {
         <h2 className="font-bold text-heading-20">
           Transfer size distribution
         </h2>
-        <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
-          Last 24 hours
-        </div>
+        <Last24HoursBadge />
       </div>
       <div className="min-h-0 flex-1">
         <TransferSizeChart

@@ -15,6 +15,7 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
+import { Last24HoursBadge } from './Last24HoursBadge'
 
 type Metric = 'volume' | 'transfers'
 
@@ -43,9 +44,7 @@ export function FrameworkDominanceContent({
         <h2 className="font-bold text-heading-18 md:text-heading-20">
           Framework Dominance by {metric === 'volume' ? 'Volume' : 'Transfers'}
         </h2>
-        <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
-          Last 24 hours
-        </div>
+        <Last24HoursBadge />
       </div>
 
       <Tabs

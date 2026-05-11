@@ -14,6 +14,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../getInteropTokenFrameworksData'
 import { useTokenFrameworksSelectedChains } from '../utils/TokenFrameworksSelectedChainsContext'
+import { Last24HoursBadge } from './Last24HoursBadge'
 
 export function TopTokensWidget({
   tokenFrameworks,
@@ -36,9 +37,7 @@ export function TopTokensWidget({
         <h2 className="font-bold text-heading-18 md:text-heading-20">
           Top Tokens by Volume
         </h2>
-        <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
-          Last 24 hours
-        </div>
+        <Last24HoursBadge />
       </div>
 
       <Tabs
