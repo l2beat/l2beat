@@ -104,7 +104,11 @@ function decideChange(
   if (rangesEqual(narrowed, change)) {
     return { kind: 'keep' }
   }
-  return { kind: 'narrow', original: narrowed.original, modified: narrowed.modified }
+  return {
+    kind: 'narrow',
+    original: narrowed.original,
+    modified: narrowed.modified,
+  }
 }
 
 function tokensInRange(
@@ -124,10 +128,7 @@ function tokensInRange(
   return result
 }
 
-function effectiveTokens(
-  tokens: Token[],
-  considerComments: boolean,
-): Token[] {
+function effectiveTokens(tokens: Token[], considerComments: boolean): Token[] {
   if (considerComments) {
     return tokens
   }

@@ -169,14 +169,9 @@ describe('decideChanges', () => {
       'shared',
       'old', // line 6 — narrow target
     ].join('\n')
-    const right = [
-      'a = 2',
-      'shared',
-      'b = 2',
-      'tail',
-      'shared',
-      'new',
-    ].join('\n')
+    const right = ['a = 2', 'shared', 'b = 2', 'tail', 'shared', 'new'].join(
+      '\n',
+    )
     const changes: LineRangeMapping[] = [
       { original: range(1, 2), modified: range(1, 2) },
       { original: range(3, 4), modified: range(3, 4) },
@@ -191,7 +186,10 @@ describe('decideChanges', () => {
 })
 
 describe('alignmentGaps', () => {
-  const outer: LineRangeMapping = { original: range(10, 12), modified: range(10, 13) }
+  const outer: LineRangeMapping = {
+    original: range(10, 12),
+    modified: range(10, 13),
+  }
 
   it('returns the outer mapping for a drop', () => {
     expect(alignmentGaps(outer, { kind: 'drop' })).toEqual([outer])

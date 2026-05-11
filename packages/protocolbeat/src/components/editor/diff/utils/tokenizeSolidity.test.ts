@@ -11,9 +11,7 @@ describe('tokenizeSolidity', () => {
   })
 
   it('emits identifier as a single structural token', () => {
-    expect(tokenizeSolidity('hello')).toEqual([
-      structural('hello', 1, 1),
-    ])
+    expect(tokenizeSolidity('hello')).toEqual([structural('hello', 1, 1)])
   })
 
   it('emits each punctuation char as its own token', () => {
@@ -33,10 +31,7 @@ describe('tokenizeSolidity', () => {
 
   it('line comment runs to end of line, excluding the newline', () => {
     const tokens = tokenizeSolidity('// hello\nx')
-    expect(tokens).toEqual([
-      comment('// hello', 1, 1),
-      structural('x', 2, 2),
-    ])
+    expect(tokens).toEqual([comment('// hello', 1, 1), structural('x', 2, 2)])
   })
 
   it('block comment can span multiple lines', () => {
