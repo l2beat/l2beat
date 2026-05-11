@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x4f9da5ecd51aff4a442c3d772135eab636a1d90f
+
+# Diff at Mon, 11 May 2026 15:37:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777390966
+- current timestamp: 1778513762
+
+## Description
+
+Kailua dispute-game implementation rotation:
+
+- **OptimismPortal2** (`eth:0x7f82f57F...`) — `respectedGameTypeUpdatedAt` bumped from `1762796999` to `1778245595` (the `setRespectedGameType` call refresh that triggered today's flag). `respectedGameType` unchanged at `1337` (KailuaGame).
+- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...`. The old `KailuaGame` impl is deleted from discovery.
+- **New KailuaTreasury** `0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8` templated under the existing `megaeth/KailuaTreasury` variant (criteria.json updated to include this second address; shape hash matches the previous KailuaTreasury, so no shape change needed).
+- Several additional `KailuaGame` and `KailuaTreasury` contracts now appear in discovery (`0x0a93bd69...`, `0x6973F25f...`, `0x70ce49f7...`, `0x9a12DC0F...`, `0x01853F26...`, `0x40B4cB50...`). These are reachable from the new treasury's reference graph and represent in-flight tournament games / past treasuries; not new implementation contracts.
+
+Why a megaeth-specific template variant: the generic `risc0/KailuaTreasury` template applies `FormatSeconds` to `vanguardAdvantage()`, which trips a discovery-side cast assertion on megaeth's contracts. The `megaeth/KailuaTreasury` variant drops that field.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.respectedGameTypeUpdatedAt:
+-        1762796999
++        1778245595
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9"
++        "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x0a93bd698358D7b8D67BCf4c71969Fe4f953c466) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x40B4cB50A075f6D69cdf1D5068234D2653337120) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x6973F25fa94789BA417DDaa06195fDac96cdE304) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x70ce49f76f871ab9962F08d1d326C2e7d49184D4) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8) [megaeth/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x9a12DC0F0F2F8d7BaEE7Cd9b840c2994CAFCd004) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x0a93bd698358D7b8D67BCf4c71969Fe4f953c466.sol} |   24 +-
+ ...:0x6973F25fa94789BA417DDaa06195fDac96cdE304.sol | 7563 ++++++++++++++++++++
+ ...:0x70ce49f76f871ab9962F08d1d326C2e7d49184D4.sol | 7563 ++++++++++++++++++++
+ ...:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84.sol | 7563 ++++++++++++++++++++
+ ...:0x9a12DC0F0F2F8d7BaEE7Cd9b840c2994CAFCd004.sol | 7563 ++++++++++++++++++++
+ ...:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3.sol | 7317 +++++++++++++++++++
+ ...:0x40B4cB50A075f6D69cdf1D5068234D2653337120.sol | 7317 +++++++++++++++++++
+ ...0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8.sol} |    0
+ ...:0xE4e456c64B9b0de5FE8a90d809180cA71534D623.sol | 7309 +++++++++++++++++++
+ 9 files changed, 52211 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0x6483611ae3af483c00014bcc31fbe41aea3ad958
 
 # Diff at Fri, 08 May 2026 07:51:37 GMT:
