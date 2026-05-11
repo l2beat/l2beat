@@ -53,22 +53,21 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     to: number,
     configurations: Configuration<PrivacyFlowIndexerConfig>[],
   ) {
-    const adjustedFrom = roundUpToHour(from)
-    const adjustedTo = Math.min(UnixTime.toNext(adjustedFrom, 'day'), to)
+    const adjustedTo = Math.min(UnixTime.toNext(from, 'day'), to)
     this.logger.info('Fetching privacy flow logs', {
-      from: adjustedFrom,
+      from,
       to: adjustedTo,
       configurations: configurations.length,
     })
 
     const records = await this.fetchRecordsForGroup(
       configurations,
-      adjustedFrom,
+      from,
       adjustedTo,
     )
 
     this.logger.info('Fetched privacy flow logs', {
-      from: adjustedFrom,
+      from,
       to: adjustedTo,
       records: records.length,
     })
@@ -77,7 +76,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       await this.$.db.privacyFlowEvent.upsertMany(records)
 
       this.logger.info('Saved privacy flow events into DB', {
-        from: adjustedFrom,
+        from,
         to: adjustedTo,
         records: records.length,
       })
@@ -115,27 +114,26 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   ): Promise<PrivacyFlowEventRecord[]> {
     if (configurations.length === 0) return []
 
-    const hourFrom = roundUpToHour(from)
-    const hourTo = UnixTime.toStartOf(to, 'hour')
-
+    const adjustedFrom = UnixTime.toStartOf(from, 'hour')
+    const adjustedTo = UnixTime.toEndOf(to, 'hour')
     const blockFrom =
       await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
         this.$.chain,
-        hourFrom,
+        adjustedFrom,
       )
     const blockTo =
       await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
         this.$.chain,
-        hourTo,
+        adjustedTo,
       )
 
     assert(
       blockFrom !== undefined,
-      `Missing block timestamp mapping for ${this.$.chain}: from=${hourFrom}`,
+      `Missing block timestamp mapping for ${this.$.chain}: from=${adjustedFrom}`,
     )
     assert(
       blockTo !== undefined,
-      `Missing block timestamp mapping for ${this.$.chain}: to=${hourTo}`,
+      `Missing block timestamp mapping for ${this.$.chain}: to=${adjustedTo}`,
     )
 
     const { addresses, events } = buildLogFilter(configurations)
@@ -371,11 +369,6 @@ function buildConfigMap(
 function stringifyParams(params: Record<string, unknown>): string {
   const keys = Object.keys(params).sort()
   return keys.map((k) => `${k}=${String(params[k])}`).join(',')
-}
-
-function roundUpToHour(timestamp: number): number {
-  const hourStart = UnixTime.toStartOf(timestamp, 'hour')
-  return hourStart < timestamp ? hourStart + UnixTime.HOUR : hourStart
 }
 
 // Splits the bigint into whole/fractional parts before casting to Number to

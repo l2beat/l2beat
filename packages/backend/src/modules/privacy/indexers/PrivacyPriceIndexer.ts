@@ -68,7 +68,7 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
               const prices =
                 await this.$.priceProvider.getUsdPriceHistoryHourly(
                   CoingeckoId(priceId),
-                  UnixTime(from),
+                  from,
                   adjustedTo,
                 )
 

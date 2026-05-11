@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -29,7 +30,7 @@ export function createPrivacyModule({
       indexerService,
       configurations: config.privacy.priceConfigs.map((priceConfig) => ({
         id: PrivacyPriceIndexer.idToConfigurationId(priceConfig),
-        minHeight: priceConfig.sinceTimestamp,
+        minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
         maxHeight: null,
         properties: priceConfig,
       })),
@@ -51,7 +52,10 @@ export function createPrivacyModule({
   }
 
   for (const [chain, flowConfigs] of flowConfigsByChain) {
-    const minTimestamp = Math.min(...flowConfigs.map((c) => c.sinceTimestamp))
+    const sinceTimestamp = UnixTime.toStartOf(
+      Math.min(...flowConfigs.map((c) => c.sinceTimestamp)),
+      'hour',
+    )
 
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
@@ -62,11 +66,11 @@ export function createPrivacyModule({
           {
             id: PrivacyBlockTimestampIndexer.idToConfigurationId({
               chain,
-              sinceTimestamp: minTimestamp,
+              sinceTimestamp,
             }),
-            minHeight: minTimestamp,
+            minHeight: sinceTimestamp,
             maxHeight: null,
-            properties: { chain, sinceTimestamp: minTimestamp },
+            properties: { chain, sinceTimestamp },
           },
         ],
         db,
