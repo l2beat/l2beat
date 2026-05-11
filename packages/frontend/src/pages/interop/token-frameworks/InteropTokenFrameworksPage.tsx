@@ -10,6 +10,7 @@ import {
   TotalVolumeWidget,
 } from './components/FrameworkTotalsWidgets'
 import { FrameworkTransferSizeWidget } from './components/FrameworkTransferSizeWidget'
+import { FrameworksTable } from './components/frameworks-table/FrameworksTable'
 import { TokenFrameworksChainSelector } from './components/TokenFrameworksChainSelector'
 import { TopTokensWidget } from './components/TopTokensWidget'
 import { FrameworkTransferSpeedWidget } from './components/transfer-speed/FrameworkTransferSpeedWidget'
@@ -48,6 +49,8 @@ export function InteropTokenFrameworksPage({
           </div>
           <HorizontalSeparator className="my-4" />
           <FrameworkTransferSizeWidget />
+          <HorizontalSeparator className="my-4" />
+          <FrameworksTable tokenFrameworks={tokenFrameworks} />
         </SideNavLayout>
       </TokenFrameworksSelectedChainsProvider>
     </AppLayout>

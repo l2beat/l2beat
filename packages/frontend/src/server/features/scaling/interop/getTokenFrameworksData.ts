@@ -1,9 +1,14 @@
 import type { Project } from '@l2beat/config'
-import { unique } from '@l2beat/shared-pure'
+import {
+  getInteropTransferValue,
+  type InteropBridgeType,
+  unique,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sumBy from 'lodash/sumBy'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import type {
   AggregatedInteropTransferWithTokens,
   InteropSelectionInput,
@@ -17,6 +22,7 @@ import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { getInteropChains } from './utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import {
   getProtocolsDataMap,
@@ -64,12 +70,33 @@ export type FrameworkTransferSizeDataPoint = TransferSizeDataPoint & {
   frameworkLabel: string | undefined
 }
 
+export type FrameworkChainPathItem = {
+  src: { id: string; iconUrl: string | undefined }
+  dst: { id: string; iconUrl: string | undefined }
+  volume: number
+  transferCount: number
+}
+
+export type FrameworkBridgingTypeItem = {
+  type: InteropBridgeType
+  volume: number
+  transferCount: number
+}
+
+export type FrameworkTableEntry = {
+  id: string
+  tokens: TopTokenItem[]
+  chainPaths: FrameworkChainPathItem[]
+  bridgingTypeBreakdown: FrameworkBridgingTypeItem[]
+}
+
 export type TokenFrameworksData = {
   frameworkDominance: {
     transfers: FrameworkDominanceMetric
     volume: FrameworkDominanceMetric
   }
   topTokens: Record<string, TopTokenItem[]>
+  frameworkTable: FrameworkTableEntry[]
   transferSizeChartData: FrameworkTransferSizeDataPoint[] | undefined
 }
 
@@ -110,12 +137,23 @@ export async function getTokenFrameworksData(
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   const topTokens: Record<string, TopTokenItem[]> = {
-    all: buildTopTokens(records, tokensDetailsMap),
+    all: buildTopTokens(records, tokensDetailsMap, TOP_TOKENS_LIMIT),
   }
   const recordsByFramework = groupBy(records, (record) => record.id)
+  const frameworkTable: FrameworkTableEntry[] = []
   for (const framework of TOKEN_FRAMEWORKS) {
     const frameworkRecords = recordsByFramework[framework.projectId] || []
-    topTokens[framework.id] = buildTopTokens(frameworkRecords, tokensDetailsMap)
+    topTokens[framework.id] = buildTopTokens(
+      frameworkRecords,
+      tokensDetailsMap,
+      TOP_TOKENS_LIMIT,
+    )
+    frameworkTable.push({
+      id: framework.id,
+      tokens: buildTopTokens(frameworkRecords, tokensDetailsMap),
+      chainPaths: buildChainPaths(frameworkRecords),
+      bridgingTypeBreakdown: buildBridgingTypeBreakdown(frameworkRecords),
+    })
   }
 
   const projectNameToFrameworkLabel = new Map<string, string>()
@@ -145,6 +183,7 @@ export async function getTokenFrameworksData(
       },
     },
     topTokens,
+    frameworkTable,
     transferSizeChartData,
   }
 }
@@ -188,14 +227,16 @@ function getSingleAverageDurationSeconds(
 function buildTopTokens(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
+  limit?: number,
 ): TopTokenItem[] {
   const tokenDataMap = buildTokensDataMap(records)
-  const ranked = [...tokenDataMap.entries()]
-    .sort(([, a], [, b]) => b.volume - a.volume)
-    .slice(0, TOP_TOKENS_LIMIT)
+  const ranked = [...tokenDataMap.entries()].sort(
+    ([, a], [, b]) => b.volume - a.volume,
+  )
+  const sliced = limit !== undefined ? ranked.slice(0, limit) : ranked
 
   const items: TopTokenItem[] = []
-  for (const [abstractTokenId, data] of ranked) {
+  for (const [abstractTokenId, data] of sliced) {
     const details = tokensDetailsMap.get(abstractTokenId)
     if (!details) continue
     items.push({
@@ -208,6 +249,63 @@ function buildTopTokens(
     })
   }
   return items
+}
+
+const chainIconMap = new Map(
+  getInteropChains().map((chain) => [
+    chain.id,
+    manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+  ]),
+)
+
+function buildChainPaths(
+  records: AggregatedInteropTransferWithTokens[],
+): FrameworkChainPathItem[] {
+  const map = new Map<string, FrameworkChainPathItem>()
+  for (const record of records) {
+    const key = `${record.srcChain}->${record.dstChain}`
+    const volume = getInteropTransferValue(record) ?? 0
+    const current = map.get(key)
+    if (current) {
+      current.volume += volume
+      current.transferCount += record.transferCount ?? 0
+    } else {
+      map.set(key, {
+        src: {
+          id: record.srcChain,
+          iconUrl: chainIconMap.get(record.srcChain),
+        },
+        dst: {
+          id: record.dstChain,
+          iconUrl: chainIconMap.get(record.dstChain),
+        },
+        volume,
+        transferCount: record.transferCount ?? 0,
+      })
+    }
+  }
+  return [...map.values()].sort((a, b) => b.volume - a.volume)
+}
+
+function buildBridgingTypeBreakdown(
+  records: AggregatedInteropTransferWithTokens[],
+): FrameworkBridgingTypeItem[] {
+  const map = new Map<InteropBridgeType, FrameworkBridgingTypeItem>()
+  for (const record of records) {
+    const volume = getInteropTransferValue(record) ?? 0
+    const current = map.get(record.bridgeType)
+    if (current) {
+      current.volume += volume
+      current.transferCount += record.transferCount ?? 0
+    } else {
+      map.set(record.bridgeType, {
+        type: record.bridgeType,
+        volume,
+        transferCount: record.transferCount ?? 0,
+      })
+    }
+  }
+  return [...map.values()].sort((a, b) => b.volume - a.volume)
 }
 
 function getTopRoute(data: TokenInteropData): TopTokenChainRoute | undefined {
@@ -323,6 +421,81 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     topTokens[framework.id] = mockTokens
   }
 
+  const extendedTokens: TopTokenItem[] = []
+  for (let i = 0; i < 14; i++) {
+    const base = mockTokens[i % mockTokens.length]
+    if (!base) continue
+    extendedTokens.push({
+      ...base,
+      id: `${base.id}-extra-${i}`,
+      volume: base.volume * (1 - i * 0.05),
+      transferCount: Math.max(
+        1,
+        Math.floor(base.transferCount * (1 - i * 0.07)),
+      ),
+    })
+  }
+
+  const mockChainPaths: FrameworkChainPathItem[] = [
+    {
+      src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      dst: { id: 'arbitrum', iconUrl: '/icons/arbitrum.png' },
+      volume: 45_000_000,
+      transferCount: 820,
+    },
+    {
+      src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      dst: { id: 'base', iconUrl: '/icons/base.png' },
+      volume: 28_000_000,
+      transferCount: 540,
+    },
+    {
+      src: { id: 'arbitrum', iconUrl: '/icons/arbitrum.png' },
+      dst: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      volume: 22_000_000,
+      transferCount: 410,
+    },
+    {
+      src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      dst: { id: 'optimism', iconUrl: '/icons/optimism.png' },
+      volume: 17_500_000,
+      transferCount: 320,
+    },
+    {
+      src: { id: 'base', iconUrl: '/icons/base.png' },
+      dst: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      volume: 12_000_000,
+      transferCount: 220,
+    },
+    {
+      src: { id: 'optimism', iconUrl: '/icons/optimism.png' },
+      dst: { id: 'base', iconUrl: '/icons/base.png' },
+      volume: 8_500_000,
+      transferCount: 150,
+    },
+    {
+      src: { id: 'polygon', iconUrl: '/icons/polygon.png' },
+      dst: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
+      volume: 4_300_000,
+      transferCount: 80,
+    },
+  ]
+
+  const mockBridgingTypeBreakdown: FrameworkBridgingTypeItem[] = [
+    { type: 'lockAndMint', volume: 60_000_000, transferCount: 1200 },
+    { type: 'burnAndMint', volume: 35_000_000, transferCount: 800 },
+    { type: 'nonMinting', volume: 18_000_000, transferCount: 400 },
+  ]
+
+  const frameworkTable: FrameworkTableEntry[] = TOKEN_FRAMEWORKS.map(
+    (framework) => ({
+      id: framework.id,
+      tokens: [...mockTokens, ...extendedTokens],
+      chainPaths: mockChainPaths,
+      bridgingTypeBreakdown: mockBridgingTypeBreakdown,
+    }),
+  )
+
   return {
     frameworkDominance: {
       transfers: {
@@ -335,6 +508,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
       },
     },
     topTokens,
+    frameworkTable,
     transferSizeChartData,
   }
 }
