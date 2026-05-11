@@ -1,9 +1,10 @@
+import type { Env } from '@l2beat/backend-tools'
 import type {
   ProjectPrivacyBucket,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
   PrivacyConfig,
@@ -14,8 +15,11 @@ import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getPrivacyConfig(
   ps: ProjectService,
+  env: Env,
   flags: FeatureFlags,
 ): Promise<PrivacyConfig | false> {
+  const minTimestamp = env.integer('PRIVACY_MIN_TIMESTAMP', 0)
+
   const projectsWithPrivacy = await ps.getProjects({
     select: ['privacyInfo'],
   })
@@ -36,8 +40,20 @@ export async function getPrivacyConfig(
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
         flowConfigs.push(
-          toFlowConfig(project.projectId, bucket, 'deposit', token.token),
-          toFlowConfig(project.projectId, bucket, 'withdrawal', token.token),
+          toFlowConfig(
+            project.projectId,
+            bucket,
+            'deposit',
+            token.token,
+            minTimestamp,
+          ),
+          toFlowConfig(
+            project.projectId,
+            bucket,
+            'withdrawal',
+            token.token,
+            minTimestamp,
+          ),
         )
       }
     }
@@ -50,12 +66,11 @@ export async function getPrivacyConfig(
       const sinceTimestamp = token.token.sinceTimestamp
       if (!priceId || !sinceTimestamp) continue
 
+      const clamped = Math.max(sinceTimestamp, minTimestamp)
       const current = priceIdMap.get(priceId)
       priceIdMap.set(
         priceId,
-        current === undefined
-          ? sinceTimestamp
-          : UnixTime(Math.min(current, sinceTimestamp)),
+        current === undefined ? clamped : Math.min(current, clamped),
       )
     }
   }
@@ -86,6 +101,7 @@ function toFlowConfig(
   bucket: ProjectPrivacyBucket,
   direction: 'deposit' | 'withdrawal',
   token: ProjectPrivacyToken['token'],
+  minTimestamp: UnixTime,
 ): PrivacyFlowIndexerConfig {
   const source = bucket[direction]
   return {
@@ -94,7 +110,7 @@ function toFlowConfig(
     direction,
     chain: ChainSpecificAddress.longChain(bucket.address),
     address: ChainSpecificAddress.address(bucket.address),
-    sinceTimestamp: bucket.sinceTimestamp,
+    sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
     priceId: token.priceId,
     decimals: token.decimals,
     ...source,

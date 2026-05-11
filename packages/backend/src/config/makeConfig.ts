@@ -160,7 +160,8 @@ export async function makeConfig(
       chains,
       activeChains,
     ),
-    privacy: flags.isEnabled('privacy') && (await getPrivacyConfig(ps, flags)),
+    privacy:
+      flags.isEnabled('privacy') && (await getPrivacyConfig(ps, env, flags)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
