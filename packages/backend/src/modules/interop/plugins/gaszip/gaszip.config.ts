@@ -169,7 +169,7 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     chainId: 4326,
   }),
   gasZipNetwork({
-    chain: 'world',
+    chain: 'worldchain',
     gaszipId: 269,
     chainId: 480,
   }),
