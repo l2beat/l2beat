@@ -21,7 +21,7 @@ export function FrameworkSelect({
   const selected = frameworks.find((f) => f.id === value)
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="h-10 flex-1 border border-divider bg-surface-primary">
+      <SelectTrigger className="flex h-10 min-w-0 flex-1 items-center border border-divider bg-surface-primary">
         <SelectValue placeholder="Select project">
           {selected && <FrameworkLabel framework={selected} />}
         </SelectValue>
@@ -43,14 +43,16 @@ export function FrameworkSelect({
 
 function FrameworkLabel({ framework }: { framework: InteropTokenFramework }) {
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex w-full min-w-0 items-center gap-2">
       <img
         src={framework.iconUrl}
         alt={framework.name}
-        className="size-5 rounded-full"
+        className="size-5 shrink-0 rounded-full"
       />
-      <span className="font-bold">{framework.label}</span>
-      <span className="font-medium text-secondary">{framework.name}</span>
+      <span className="shrink-0 font-bold">{framework.label}</span>
+      <span className="min-w-0 truncate font-medium text-secondary">
+        {framework.name}
+      </span>
     </span>
   )
 }

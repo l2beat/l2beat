@@ -38,7 +38,7 @@ export function FrameworkTransferSpeedWidget({
   const fastestFramework = fastest && frameworksById.get(fastest.id)
 
   return (
-    <PrimaryCard className="col-span-2 col-start-3 row-span-7 row-start-6 flex flex-col">
+    <PrimaryCard className="flex flex-col lg:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6">
       <h2 className="font-bold text-heading-20">Transfer speed</h2>
       <p className="mt-1 font-medium text-paragraph-14 text-secondary">
         Select two chains to compare cross-chain transfer speed.
