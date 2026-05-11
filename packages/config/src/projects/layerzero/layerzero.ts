@@ -1,5 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CONTRACTS } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import type { BaseProject } from '../../types'
+
+const discovery = new ProjectDiscovery('layerzero')
 
 export const layerzero: BaseProject = {
   id: ProjectId('layerzero'),
@@ -36,5 +44,10 @@ LayerZero provides a [block explorer](https://layerzeroscan.com/) which is mostl
       },
     ],
     type: 'multichain',
+  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }
