@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xe54ad1b936ded9630a5b1a8291a0102f0d433ad5
+
+# Diff at Mon, 11 May 2026 14:39:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1773320760
+- current timestamp: 1778510295
+
+## Description
+
+Discovery run only.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF"
++        "eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C) [risc0/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@1773320760/KailuaGame.sol => /dev/null   | 7564 --------------------
+ .../KailuaTreasury.sol => /dev/null                | 7318 -------------------
+ .../dev/null                                       | 1780 -----
+ .../dev/null                                       | 1780 -----
+ .../RiscZeroSetVerifier.sol => /dev/null           |  900 ---
+ .../dev/null                                       |  366 -
+ .../dev/null                                       |  366 -
+ .../dev/null                                       |  366 -
+ .../RiscZeroVerifierRouter.sol => /dev/null        |  282 -
+ .../TimelockController.sol => /dev/null            | 1111 ---
+ 10 files changed, 21833 deletions(-)
+```
+
 Generated with discovered.json: 0x4061049f25662896532596c9725ba5fa0e5d136e
 
 # Diff at Fri, 08 May 2026 07:51:09 GMT:

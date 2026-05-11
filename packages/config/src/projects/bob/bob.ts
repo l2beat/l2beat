@@ -102,28 +102,9 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  nonTemplateZkVerifiers: getVerifiers(),
+  // RiscZeroVerifierRouter + emergency-stop wrappers were removed from the
+  // deployment on 2026-05-11 alongside the game1337 implementation swap to
+  // an unverified contract (0xD37b0BEd...). nonTemplateZkVerifiers left
+  // empty until the new proof system is identified and re-wired.
+  nonTemplateZkVerifiers: [],
 })
-
-function getVerifiers(): ChainSpecificAddress[] {
-  const verifierNames = [
-    'verifier5Manual',
-    'verifier6Manual',
-    // 'verifier7Manual', // this is set verifier, not an actual RiscZero verifier smart contract
-  ]
-  const result: ChainSpecificAddress[] = []
-  for (const verifierName of verifierNames) {
-    const emergencyStopContract =
-      discovery.getContractValue<ChainSpecificAddress>(
-        'RiscZeroVerifierRouter',
-        verifierName,
-      )
-    result.push(
-      discovery.getContractValue<ChainSpecificAddress>(
-        emergencyStopContract,
-        'verifier',
-      ),
-    )
-  }
-  return result
-}
