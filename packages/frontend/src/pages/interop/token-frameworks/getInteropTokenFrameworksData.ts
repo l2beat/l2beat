@@ -1,3 +1,4 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
@@ -5,6 +6,7 @@ import { TOKEN_FRAMEWORKS } from '~/server/features/scaling/interop/utils/tokenF
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 
@@ -20,6 +22,7 @@ export type InteropTokenFramework = {
 export async function getInteropTokenFrameworksData(
   req: Request,
   manifest: Manifest,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, tokenFrameworks] = await Promise.all([
     getAppLayoutProps(),
@@ -33,6 +36,22 @@ export async function getInteropTokenFrameworksData(
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     }))
+
+  const initialChainIds = interopChainsWithIcons.map((chain) => chain.id)
+
+  const { queryState } = await cache.get(
+    {
+      key: [
+        'interop',
+        'tokenFrameworks',
+        'prefetch',
+        initialChainIds.join(','),
+      ],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    async () => getCachedData(initialChainIds),
+  )
 
   return {
     head: {
@@ -53,9 +72,21 @@ export async function getInteropTokenFrameworksData(
         ...appLayoutProps,
         tokenFrameworks,
         interopChains: interopChainsWithIcons,
+        queryState,
       },
     },
   }
+}
+
+async function getCachedData(initialChainIds: string[]) {
+  const helpers = getSsrHelpers()
+  if (initialChainIds.length > 0) {
+    await helpers.interop.tokenFrameworks.prefetch({
+      from: initialChainIds,
+      to: initialChainIds,
+    })
+  }
+  return { queryState: helpers.dehydrate() }
 }
 
 async function getTokenFrameworks(

@@ -89,7 +89,7 @@ export function createInteropRouter(
   )
 
   router.get('/interop/token-frameworks', async (req, res) => {
-    const data = await getInteropTokenFrameworksData(req, manifest)
+    const data = await getInteropTokenFrameworksData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
