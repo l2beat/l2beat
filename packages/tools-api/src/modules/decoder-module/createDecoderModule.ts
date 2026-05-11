@@ -50,6 +50,7 @@ export function createDecoderModule(
     addressService,
     alchemyClient,
     config.chains,
+    config.hashes,
   )
   const router = createDecoderRouter(config.chains, controller)
 

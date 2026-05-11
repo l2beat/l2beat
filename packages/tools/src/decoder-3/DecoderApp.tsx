@@ -200,7 +200,7 @@ function APIChecker() {
 
   const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
   const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
-  // const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
+  const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
 
   useEffect(() => {
     const selectorsToFetch: string[] = []
@@ -244,12 +244,26 @@ function APIChecker() {
     }
   }, [requestedAddresses, ref, store.addSignatures, store.setName])
 
+  useEffect(() => {
+    const preimagesToFetch: string[] = []
+    for (const hash in requestedPreimages) {
+      if (!ref.current[hash]) {
+        preimagesToFetch.push(hash)
+        ref.current[hash] = true
+      }
+    }
+    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then((res) => {
+      for (const { hash, preimage } of res) {
+        store.setPreimage(hash, preimage)
+      }
+    })
+  }, [requestedPreimages, ref, store.setPreimage])
+
   return null
 }
 
 function DecodedView({ value }: { value: DecodedValue }) {
   const store = useStore()
-  const [moreBytes, setMoreBytes] = useState(false)
   const [lessMembers, setLessMembers] = useState(false)
   const [decoded, setDecoded] = useState(value)
 
@@ -344,55 +358,10 @@ function DecodedView({ value }: { value: DecodedValue }) {
   }
 
   if (decoded.type === 'bytes') {
-    if (decoded.bytes.length <= 66) {
-      return (
-        <div>
-          {nameElement}
-          <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
-            <span className="font-mono">{decoded.bytes}</span>
-          </ValueWithTooltip>
-        </div>
-      )
-    }
-
-    if (!moreBytes) {
-      return (
-        <div>
-          {nameElement}
-          <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
-            <span className="font-mono">{decoded.bytes.slice(0, 66)}…</span>
-          </ValueWithTooltip>
-          <button
-            className="ml-2 cursor-pointer text-zinc-500"
-            onClick={() => setMoreBytes(true)}
-          >
-            [+ {decoded.bytes.length / 2 - 1} B]
-          </button>
-        </div>
-      )
-    }
-    const isCallLike = (decoded.bytes.length - 10) % 64 === 0
     return (
       <div>
         {nameElement}
-        <button
-          className="cursor-pointer text-zinc-500"
-          onClick={() => setMoreBytes(false)}
-        >
-          [-]
-        </button>
-        <div className="pl-4">
-          <span
-            className={clsx(
-              'block break-all font-mono',
-              isCallLike
-                ? 'max-w-[74ch] pl-[10ch] indent-[-10ch]'
-                : 'max-w-[66ch] pl-[2ch] indent-[-2ch]',
-            )}
-          >
-            {decoded.bytes}
-          </span>
-        </div>
+        <DisplayBytes bytes={decoded.bytes} />
       </div>
     )
   }
@@ -442,6 +411,64 @@ function DecodedView({ value }: { value: DecodedValue }) {
       </div>
     )
   }
+}
+
+function DisplayBytes(props: { bytes: `0x${string}` }) {
+  const store = useStore()
+  const [moreBytes, setMoreBytes] = useState(false)
+
+  useEffect(() => {
+    if (props.bytes.length === 66) {
+      store.requestPreimage(props.bytes)
+    }
+  }, [props.bytes, store.requestPreimage])
+
+  if (props.bytes.length <= 66) {
+    return (
+      <ValueWithTooltip items={[{ name: 'Copy', copy: props.bytes }]}>
+        <span className="font-mono">{props.bytes}</span>
+      </ValueWithTooltip>
+    )
+  }
+
+  if (!moreBytes) {
+    return (
+      <>
+        <ValueWithTooltip items={[{ name: 'Copy', copy: props.bytes }]}>
+          <span className="font-mono">{props.bytes.slice(0, 66)}…</span>
+        </ValueWithTooltip>
+        <button
+          className="ml-2 cursor-pointer text-zinc-500"
+          onClick={() => setMoreBytes(true)}
+        >
+          [+ {props.bytes.length / 2 - 1} B]
+        </button>
+      </>
+    )
+  }
+  const isCallLike = (props.bytes.length - 10) % 64 === 0
+  return (
+    <>
+      <button
+        className="cursor-pointer text-zinc-500"
+        onClick={() => setMoreBytes(false)}
+      >
+        [-]
+      </button>
+      <div className="pl-4">
+        <span
+          className={clsx(
+            'block break-all font-mono',
+            isCallLike
+              ? 'max-w-[74ch] pl-[10ch] indent-[-10ch]'
+              : 'max-w-[66ch] pl-[2ch] indent-[-2ch]',
+          )}
+        >
+          {props.bytes}
+        </span>
+      </div>
+    </>
+  )
 }
 
 function DisplayNumber(props: {

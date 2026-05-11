@@ -2,6 +2,7 @@ import type {
   AddressResult,
   Chain,
   LookupQuery,
+  PreimageResult,
   SignatureResult,
   TransactionQuery,
   TransactionResult,
@@ -58,6 +59,20 @@ export async function lookupAddress(chainId: number, address: `0x${string}`) {
     })
     const json = await res.json()
     return json as AddressResult
+  })
+}
+
+export async function lookupPreimages(hashes: `0x${string}`[]) {
+  hashes = hashes.filter((x) => /0x[\da-f]{64}/.test(x))
+  if (hashes.length === 0) return []
+  return await retry(async () => {
+    const res = await fetch(`${baseUrl}/api/lookup-preimages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(hashes),
+    })
+    const json = await res.json()
+    return json as PreimageResult[]
   })
 }
 

@@ -37,6 +37,12 @@ export function createDecoderRouter(
     res.json(result)
   })
 
+  router.post('/api/lookup-preimages', express.json(), (req, res) => {
+    const query = PreimageRequest.parse(req.body)
+    const result = controller.lookupPreimages(query)
+    res.json(result)
+  })
+
   router.post('/api/lookup-tx', express.json(), async (req, res) => {
     const query = TransactionRequest.parse(req.body)
     const result = await controller.getTx(query)
@@ -65,6 +71,10 @@ const AddressRequest = z.object({
     .string()
     .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
 })
+
+const PreimageRequest = z.array(
+  z.string().check((v): v is `0x${string}` => /^0x[a-f\d]{64}$/.test(v)),
+)
 
 const DecodeQuery = z.object({
   hash: z

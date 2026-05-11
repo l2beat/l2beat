@@ -3,6 +3,7 @@ export type {
   AddressResult,
   ApiQuery,
   LookupQuery,
+  PreimageResult,
   SignatureResult,
   TransactionQuery,
   TransactionResult,
