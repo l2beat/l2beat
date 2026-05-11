@@ -176,6 +176,13 @@ export const EVMLog = z.object({
   transactionHash: z.string(),
   data: z.string(),
   logIndex: Quantity.decode.transform((n) => Number(n)),
+  // non-standard optimisation, number in sonic
+  // although this is included in reth, geth and Nethermind since late 2025
+  // see: https://github.com/ethereum/execution-apis/issues/295
+  blockTimestamp: z
+    .union([Quantity.decode, z.number().transform(BigInt)])
+    .transform((n) => Number(n))
+    .optional(),
 })
 
 export type EVMLogsResponse = z.infer<typeof EVMLogsResponse>

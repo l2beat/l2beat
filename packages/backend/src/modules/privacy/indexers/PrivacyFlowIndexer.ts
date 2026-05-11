@@ -25,11 +25,7 @@ interface PrivacyFlowIndexerDeps
   db: Database
 }
 
-const BLOCK_TIMESTAMP_CACHE_MAX_SIZE = 100_000
-
 export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerConfig> {
-  private readonly blockTimestampCache = new Map<number, UnixTime>()
-
   constructor(
     private readonly $: PrivacyFlowIndexerDeps,
     logger: Logger,
@@ -116,16 +112,16 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
 
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = UnixTime.toEndOf(to, 'hour')
-    const blockFrom =
-      await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
+    const [blockFrom, blockTo] = await Promise.all([
+      this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
         this.$.chain,
         adjustedFrom,
-      )
-    const blockTo =
-      await this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
+      ),
+      this.$.db.privacyBlockTimestamp.findBlockNumberByChainAndTimestamp(
         this.$.chain,
         adjustedTo,
-      )
+      ),
+    ])
 
     assert(
       blockFrom !== undefined,
@@ -144,10 +140,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       events,
     )
 
-    const blockNumbers = new Set<number>(logs.map((l) => l.blockNumber))
-    const blockTimestampLookup = await this.buildBlockTimestampLookup(
-      Array.from(blockNumbers),
-    )
+    const blockTimestampLookup = await this.buildBlockTimestampLookup(logs)
 
     const configMap = buildConfigMap(configurations)
     const rawRecords = this.extractRawRecords(
@@ -276,40 +269,29 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   }
 
   private async buildBlockTimestampLookup(
-    blockNumbers: number[],
+    logs: Log[],
   ): Promise<Map<number, UnixTime>> {
-    const lookup = new Map<number, UnixTime>()
-    const missing: number[] = []
+    const logsWithoutTimestamps = logs.filter(
+      (l) => l.blockTimestamp === undefined,
+    )
+    const logsWithTimestamps = logs
+      .map((l) => [l.blockNumber, l.blockTimestamp])
+      .filter((l): l is [number, number] => l[1] !== undefined)
 
-    for (const blockNumber of blockNumbers) {
-      const cached = this.blockTimestampCache.get(blockNumber)
-      if (cached !== undefined) {
-        lookup.set(blockNumber, cached)
-      } else {
-        missing.push(blockNumber)
-      }
+    const lookup = new Map<number, UnixTime>(logsWithTimestamps)
+
+    if (logsWithoutTimestamps.length === 0) {
+      return lookup
     }
 
-    if (missing.length > 0) {
-      const timestamps = await this.$.blockProvider.getBlockTimestamps(missing)
-      for (const [blockNumber, timestamp] of timestamps) {
-        this.cacheBlockTimestamp(blockNumber, timestamp)
-        lookup.set(blockNumber, timestamp)
-      }
+    const timestamps = await this.$.blockProvider.getBlockTimestamps(
+      logsWithoutTimestamps.map((l) => l.blockNumber),
+    )
+    for (const [blockNumber, timestamp] of timestamps) {
+      lookup.set(blockNumber, timestamp)
     }
 
     return lookup
-  }
-
-  private cacheBlockTimestamp(blockNumber: number, timestamp: UnixTime): void {
-    // FIFO eviction: Map preserves insertion order, so the first key is oldest.
-    if (this.blockTimestampCache.size >= BLOCK_TIMESTAMP_CACHE_MAX_SIZE) {
-      const oldest = this.blockTimestampCache.keys().next().value
-      if (oldest !== undefined) {
-        this.blockTimestampCache.delete(oldest)
-      }
-    }
-    this.blockTimestampCache.set(blockNumber, timestamp)
   }
 
   static idToConfigurationId(config: PrivacyFlowIndexerConfig): string {

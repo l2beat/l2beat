@@ -56,7 +56,7 @@ export const privacyPools: BaseProject = {
   },
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),
-    chain: 'ethereum',
+    chain: ChainSpecificAddress.longChain(bucket.address),
     sinceTimestamp: bucket.sinceTimestamp,
     tokens: [bucket.tokenInfo.symbol],
   })),

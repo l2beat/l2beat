@@ -128,7 +128,7 @@ export const railgun: BaseProject = {
   },
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),
-    chain: 'ethereum',
+    chain: ChainSpecificAddress.longChain(railgunCore.address),
     sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
     tokens: [token.symbol],
   })),
