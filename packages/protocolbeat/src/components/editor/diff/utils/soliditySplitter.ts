@@ -1,9 +1,24 @@
+import { tokenizeSolidity } from './tokenizeSolidity'
+
 export function splitCode(
   left: Record<string, string>,
   right: Record<string, string>,
   removeSameDeclarations = false,
+  considerComments = true,
 ): [string, string] {
-  const matched = matchUp(left, right, removeSameDeclarations)
+  // For the "are these declarations effectively the same?" comparison, use a
+  // comment-stripped view when comments are being ignored downstream by the
+  // diff filter. Without this, a declaration whose only difference is a
+  // comment edit stays visible in the "unchanged removed" view because the
+  // raw strings differ, but its line changes are then filtered out — leaving
+  // a large block of identical-looking content.
+  const leftForMatch = considerComments ? left : stripCommentsFromAll(left)
+  const rightForMatch = considerComments ? right : stripCommentsFromAll(right)
+  const matched = matchUp(
+    leftForMatch,
+    rightForMatch,
+    removeSameDeclarations,
+  )
 
   let smallerLeft = ''
   let smallerRight = ''
@@ -28,6 +43,19 @@ export function splitCode(
 
 function wrapRegion(name: string, content: string): string {
   return `\n// #region ${name}\n${content}// #endregion ${name}\n`
+}
+
+function stripCommentsFromAll(
+  code: Record<string, string>,
+): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const [key, value] of Object.entries(code)) {
+    result[key] = tokenizeSolidity(value)
+      .filter((t) => t.type !== 'comment')
+      .map((t) => t.content)
+      .join(' ')
+  }
+  return result
 }
 
 type Pair = [string, string]

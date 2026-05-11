@@ -36,6 +36,7 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
       props.leftAddress,
       props.rightAddress,
       removeUnchanged,
+      considerComments,
       swapped,
     )
 

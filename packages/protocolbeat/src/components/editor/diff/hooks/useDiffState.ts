@@ -8,6 +8,7 @@ export function useDiffState(
   leftAddress: string,
   rightAddress: string,
   removeUnchanged: boolean,
+  considerComments: boolean,
   swapped: boolean,
 ) {
   const [diff, setDiff] = useState<Diff | undefined>(undefined)
@@ -21,8 +22,13 @@ export function useDiffState(
     : [leftCode, rightCode]
 
   const [splitLeft, splitRight] = useMemo(() => {
-    return splitCode(actualLeftCode, actualRightCode, removeUnchanged)
-  }, [actualLeftCode, actualRightCode, removeUnchanged])
+    return splitCode(
+      actualLeftCode,
+      actualRightCode,
+      removeUnchanged,
+      considerComments,
+    )
+  }, [actualLeftCode, actualRightCode, removeUnchanged, considerComments])
 
   return {
     diff,
