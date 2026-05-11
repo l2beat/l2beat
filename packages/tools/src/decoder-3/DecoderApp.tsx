@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { clsx } from 'clsx'
-import React, {
+import {
   createContext,
   Fragment,
   type ReactNode,
@@ -39,7 +39,7 @@ export function DecoderApp() {
 
   return (
     <ChainsContextProvider>
-      <SelectorChecker />
+      <APIChecker />
       {showForm && <Form onSubmit={setValues} />}
       {showFetch && <FetchTx values={values} setValues={setValues} />}
       {showDecoded && (
@@ -67,7 +67,7 @@ export function FetchTx(props: {
 }) {
   const query = useQuery({
     queryFn: () =>
-      API.getTransaction({
+      API.lookupTx({
         hash: props.values.hash as `0x${string}`,
         chainId: props.values.chainId || undefined,
       }),
@@ -116,40 +116,71 @@ interface Signature {
 }
 
 interface State {
-  selectors: Record<`0x${string}`, Signature[]>
-  registered: Record<`0x${string}`, boolean>
+  signatures: Record<`0x${string}`, Signature[]>
+  requestedSignatures: Record<`0x${string}`, boolean>
+  names: Record<`${number}:0x${string}`, string>
+  requestedAddresses: Record<`${number}:0x${string}`, boolean>
+  preimages: Record<`0x${string}`, string>
+  requestedPreimages: Record<`0x${string}`, boolean>
   tooltipId: string
 }
 
 interface Actions {
-  registerSelector(selector: `0x${string}`): void
+  requestSignature(selector: `0x${string}`): void
   addSignatures(signatures: Signature[]): void
+  requestAddress(chainId: number, address: `0x${string}`): void
+  setName(chainId: number, address: `0x${string}`, name: string): void
+  requestPreimage(hash: `0x${string}`): void
+  setPreimage(hash: `0x${string}`, preimage: string): void
   showTooltip(id: string): void
 }
 
 const useStore = create<State & Actions>((set) => ({
-  selectors: {},
-  registered: {},
+  signatures: {},
+  requestedSignatures: {},
+  names: {},
+  requestedAddresses: {},
+  preimages: {},
+  requestedPreimages: {},
   tooltipId: '',
-  registerSelector: (selector) =>
+  requestSignature: (selector) =>
     set((state) => {
-      if (state.selectors[selector] || state.registered[selector]) {
-        return {}
-      }
+      if (state.requestedSignatures[selector]) return {}
       return {
-        registered: { ...state.registered, [selector]: true },
+        requestedSignatures: { ...state.requestedSignatures, [selector]: true },
       }
     }),
-  addSignatures: (signatures) =>
+  addSignatures: (newSignatures) =>
     set((state) => {
-      const selectors = { ...state.selectors }
-      for (const signature of signatures) {
-        const array = selectors[signature.selector] ?? []
+      const signatures = { ...state.signatures }
+      for (const signature of newSignatures) {
+        const array = signatures[signature.selector] ?? []
         if (array.find((x) => x.signature === signature.signature)) continue
-        selectors[signature.selector] = [...array, signature]
+        signatures[signature.selector] = [...array, signature]
       }
-      return { selectors }
+      return { signatures }
     }),
+  requestAddress: (chainId, address) =>
+    set((state) => {
+      const prefixed: `${number}:0x${string}` = `${chainId}:${address}`
+      if (state.requestedAddresses[prefixed]) return {}
+      return {
+        requestedAddresses: { ...state.requestedAddresses, [prefixed]: true },
+      }
+    }),
+  setName: (chainId, address, name) =>
+    set((state) => ({
+      names: { ...state.names, [`${chainId}:${address}`]: name },
+    })),
+  requestPreimage: (hash) =>
+    set((state) => {
+      if (state.requestedPreimages[hash]) return {}
+      return {
+        requestedPreimages: { ...state.requestedPreimages, [hash]: true },
+      }
+    }),
+  setPreimage: (hash, preimage) =>
+    set((state) => ({ preimages: { ...state.preimages, [hash]: preimage } })),
   showTooltip: (id) =>
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
 }))
@@ -163,28 +194,55 @@ function useDebouncedValue<T>(value: T, delay: number): T {
   return debounced
 }
 
-function SelectorChecker() {
+function APIChecker() {
   const store = useStore()
-  const pendingSelectors = useDebouncedValue(store.registered, 100)
-  const ref = useRef<Record<`0x${string}`, boolean>>({})
+  const ref = useRef<Record<string, boolean>>({})
+
+  const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
+  const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
+  // const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
 
   useEffect(() => {
-    const toFetch: `0x${string}`[] = []
-    for (const s in pendingSelectors) {
-      const selector = s as `0x${string}`
+    const selectorsToFetch: string[] = []
+    for (const selector in requestedSignatures) {
       if (!ref.current[selector]) {
-        toFetch.push(selector)
+        selectorsToFetch.push(selector)
+        ref.current[selector] = true
       }
     }
-    for (const selector of toFetch) {
-      ref.current[selector] = true
+    if (selectorsToFetch.length === 0) return
+    API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
+      store.addSignatures(res),
+    )
+  }, [requestedSignatures, ref, store.addSignatures])
+
+  useEffect(() => {
+    const addressesToFetch: string[] = []
+    for (const address in requestedAddresses) {
+      if (!ref.current[address]) {
+        addressesToFetch.push(address)
+        ref.current[address] = true
+      }
     }
-    if (toFetch.length > 0) {
-      API.lookup({ selectors: toFetch, addresses: [] }).then((res) =>
-        store.addSignatures(res),
-      )
+    for (const prefixed of addressesToFetch) {
+      const [left, right] = prefixed.split(':')
+      const chainId = Number(left)
+      const address = right as `0x${string}`
+      API.lookupAddress(chainId, address).then((res) => {
+        if (res.name) store.setName(chainId, address, res.name)
+        if (res.abi.length > 0) {
+          store.addSignatures(
+            res.abi.map((x) => ({
+              selector: x.selector,
+              signature: x.signature,
+              address,
+              chainId,
+            })),
+          )
+        }
+      })
     }
-  }, [pendingSelectors, ref, store.addSignatures])
+  }, [requestedAddresses, ref, store.addSignatures, store.setName])
 
   return null
 }
@@ -202,9 +260,9 @@ function DecodedView({ value }: { value: DecodedValue }) {
   useEffect(() => {
     if (decoded.type === 'bytes') {
       const selector = decoded.bytes.slice(0, 10) as `0x${string}`
-      store.registerSelector(selector)
+      store.requestSignature(selector)
       const signatures =
-        store.selectors[selector]?.map((x) => x.signature) ?? []
+        store.signatures[selector]?.map((x) => x.signature) ?? []
       const newDecoded = decode(
         decoded.bytes,
         signatures,
@@ -213,7 +271,7 @@ function DecodedView({ value }: { value: DecodedValue }) {
       )
       if (newDecoded) setDecoded(newDecoded)
     }
-  }, [decoded, store.registerSelector, store.selectors])
+  }, [decoded, store.requestSignature, store.signatures])
 
   if (!decoded) return null
 
@@ -291,7 +349,7 @@ function DecodedView({ value }: { value: DecodedValue }) {
         <div>
           {nameElement}
           <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
-          <span className='font-mono'>{decoded.bytes}</span>
+            <span className="font-mono">{decoded.bytes}</span>
           </ValueWithTooltip>
         </div>
       )
@@ -302,7 +360,7 @@ function DecodedView({ value }: { value: DecodedValue }) {
         <div>
           {nameElement}
           <ValueWithTooltip items={[{ name: 'Copy', copy: decoded.bytes }]}>
-          <span className='font-mono'>{decoded.bytes.slice(0, 66)}…</span>
+            <span className="font-mono">{decoded.bytes.slice(0, 66)}…</span>
           </ValueWithTooltip>
           <button
             className="ml-2 cursor-pointer text-zinc-500"
@@ -425,10 +483,22 @@ function DisplayAddress(props: {
   chainId: number | undefined
   short?: boolean
 }) {
+  const store = useStore()
+  const name =
+    props.chainId && props.address
+      ? store.names[`${props.chainId}:${props.address}`]
+      : undefined
+
   const chains = useContext(ChainsContext)
   const chain = chains.find((x) => x.chainId === props.chainId)
   const explorer = chain?.explorerUrl || 'https://etherscan.io'
   if (!props.address) return <span>?</span>
+
+  useEffect(() => {
+    if (props.address && props.chainId) {
+      store.requestAddress(props.chainId, props.address)
+    }
+  }, [props.address, props.chainId, store.requestAddress])
 
   return (
     <ValueWithTooltip
@@ -443,7 +513,12 @@ function DisplayAddress(props: {
           props.address === ADDRESS_ZERO ? 'text-zinc-500' : 'text-blue-400',
         )}
       >
-        {props.short ? <>{props.address.slice(0, 6)}</> : props.address}
+        {props.short && (name ? name : props.address.slice(0, 6))}
+        {!props.short && (
+          <>
+            {name} {props.address}
+          </>
+        )}
       </span>
     </ValueWithTooltip>
   )
@@ -466,36 +541,38 @@ function ValueWithTooltip(props: ValueWithTooltipProps) {
     <span className="relative" onClick={() => state.showTooltip(tooltipId)}>
       {state.tooltipId === tooltipId && (
         <div className="-top-8 absolute left-[50%] flex translate-x-[-50%] whitespace-nowrap rounded-md bg-zinc-800 font-sans text-zinc-300">
-          {props.items.filter(x => x.onClick || x.copy || x.href).map((item, i) => (
-            <Fragment key={i}>
-              {i !== 0 && (
-                <span aria-hidden="true" className="text-zinc-500">
-                  |
-                </span>
-              )}
-              {(item.onClick || item.copy) && (
-                <button
-                  className="cusor-pointer rounded-md px-1.5 py-px hover:bg-zinc-700"
-                  onClick={
-                    item.onClick ??
-                    (() => navigator.clipboard.writeText(item.copy ?? ''))
-                  }
-                >
-                  {item.name}
-                </button>
-              )}
-              {item.href && (
-                <a
-                  className="rounded-md px-1.5 py-px hover:bg-zinc-700"
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.name}
-                </a>
-              )}
-            </Fragment>
-          ))}
+          {props.items
+            .filter((x) => x.onClick || x.copy || x.href)
+            .map((item, i) => (
+              <Fragment key={i}>
+                {i !== 0 && (
+                  <span aria-hidden="true" className="text-zinc-500">
+                    |
+                  </span>
+                )}
+                {(item.onClick || item.copy) && (
+                  <button
+                    className="cusor-pointer rounded-md px-1.5 py-px hover:bg-zinc-700"
+                    onClick={
+                      item.onClick ??
+                      (() => navigator.clipboard.writeText(item.copy ?? ''))
+                    }
+                  >
+                    {item.name}
+                  </button>
+                )}
+                {item.href && (
+                  <a
+                    className="rounded-md px-1.5 py-px hover:bg-zinc-700"
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </Fragment>
+            ))}
         </div>
       )}
       <span className="cursor-pointer hover:bg-zinc-800">{props.children}</span>

@@ -25,13 +25,19 @@ export function createDecoderRouter(
     },
   )
 
-  router.post('/api/lookup', express.json(), async (req, res) => {
+  router.post('/api/lookup-signatures', express.json(), async (req, res) => {
     const queries = LookupRequest.parse(req.body)
-    const result = await controller.lookup(queries)
+    const result = await controller.lookupSignatures(queries)
     res.json(result)
   })
 
-  router.post('/api/tx', express.json(), async (req, res) => {
+  router.post('/api/lookup-address', express.json(), async (req, res) => {
+    const query = AddressRequest.parse(req.body)
+    const result = await controller.lookupAddress(query.chainId, query.address)
+    res.json(result)
+  })
+
+  router.post('/api/lookup-tx', express.json(), async (req, res) => {
     const query = TransactionRequest.parse(req.body)
     const result = await controller.getTx(query)
     res.json(result)
@@ -50,22 +56,15 @@ const TransactionRequest = z.object({
 })
 
 const LookupRequest = z.array(
-  z.union([
-    z.object({
-      type: z.literal('address'),
-      chainId: z.number(),
-      address: z
-        .string()
-        .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
-    }),
-    z.object({
-      type: z.literal('selector'),
-      selector: z
-        .string()
-        .check((v): v is `0x${string}` => /^0x[a-f\d]{8}$/.test(v)),
-    }),
-  ]),
+  z.string().check((v): v is `0x${string}` => /^0x[a-f\d]{8}$/.test(v)),
 )
+
+const AddressRequest = z.object({
+  chainId: z.number(),
+  address: z
+    .string()
+    .check((v): v is `0x${string}` => /^0x[a-f\d]{40}$/.test(v)),
+})
 
 const DecodeQuery = z.object({
   hash: z

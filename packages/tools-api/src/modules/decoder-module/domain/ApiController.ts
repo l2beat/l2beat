@@ -16,11 +16,16 @@ export type LookupQuery =
   | { type: 'address'; chainId: number; address: `0x${string}` }
   | { type: 'selector'; selector: `0x${string}` }
 
-export interface LookupResult {
+export interface SignatureResult {
   signature: string
   selector: `0x${string}`
-  chainId?: number
-  address?: `0x${string}`
+}
+
+export interface AddressResult {
+  chainId: number
+  address: `0x${string}`
+  name?: string
+  abi: SignatureResult[]
 }
 
 export interface TransactionQuery {
@@ -44,38 +49,38 @@ export class ApiController {
     private chains: Chain[],
   ) {}
 
-  async lookup(queries: LookupQuery[]): Promise<LookupResult[]> {
+  async lookupSignatures(
+    selectors: `0x${string}`[],
+  ): Promise<SignatureResult[]> {
     const results = await Promise.all(
-      queries.map(async (q) => {
-        if (q.type === 'selector') {
-          const entries = await this.signatureService.lookup(q.selector)
-          return entries.map(
-            (signature): LookupResult => ({
-              signature: signature,
-              selector: q.selector,
-            }),
-          )
-        }
-        if (q.type === 'address') {
-          const chain = this.chains.find((x) => x.chainId === q.chainId)
-          if (!chain) return []
-          const result = await this.addressService
-            .lookup(`${chain.shortName}:${q.address}`)
-            .catch(() => undefined)
-          if (!result) return []
-          return result.abi.map(
-            (v): LookupResult => ({
-              signature: v.signature,
-              selector: v.selector,
-              address: q.address,
-              chainId: q.chainId,
-            }),
-          )
-        }
-        return []
+      selectors.map(async (selector) => {
+        const entries = await this.signatureService.lookup(selector)
+        return entries.map(
+          (signature): SignatureResult => ({
+            signature: signature,
+            selector: selector,
+          }),
+        )
       }),
     )
     return results.flat()
+  }
+
+  async lookupAddress(
+    chainId: number,
+    address: `0x${string}`,
+  ): Promise<AddressResult> {
+    const chain = this.chains.find((x) => x.chainId === chainId)
+    if (!chain) return { chainId, address, abi: [] }
+    const result = await this.addressService.lookup(
+      `${chain.shortName}:${address}`,
+    )
+    return {
+      chainId,
+      address,
+      name: result.name,
+      abi: result.abi,
+    }
   }
 
   async getTx(query: TransactionQuery): Promise<TransactionResult | null> {

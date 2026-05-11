@@ -1,22 +1,29 @@
 import type {
+  AddressResult,
   Chain,
   LookupQuery,
-  LookupResult,
+  SignatureResult,
   TransactionQuery,
   TransactionResult,
 } from '@l2beat/tools-api/types'
 
-export { TransactionQuery, TransactionResult, LookupQuery, LookupResult, Chain }
+export {
+  TransactionQuery,
+  TransactionResult,
+  LookupQuery,
+  SignatureResult,
+  Chain,
+}
 
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://tools-api.l2beat.com'
     : 'http://localhost:3000'
 
-export async function getTransaction(
+export async function lookupTx(
   query: TransactionQuery,
 ): Promise<TransactionResult | null> {
-  const res = await fetch(`${baseUrl}/api/tx`, {
+  const res = await fetch(`${baseUrl}/api/lookup-tx`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(query),
@@ -25,35 +32,49 @@ export async function getTransaction(
   return json as TransactionResult | null
 }
 
-export async function lookup(query: {
-  selectors: `0x${string}`[]
-  addresses: { chainId: number; address: `0x${string}` }[]
-}) {
-  const selectorQueries = query.selectors.map(
-    (selector): LookupQuery => ({
-      type: 'selector',
-      selector,
-    }),
-  )
-  const addressQueries = query.addresses.map(
-    ({ chainId, address }): LookupQuery => ({
-      type: 'address',
-      chainId,
-      address,
-    }),
-  )
-  const queries: LookupQuery[] = [...selectorQueries, ...addressQueries]
-  const res = await fetch(`${baseUrl}/api/lookup`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(queries),
+export async function lookupSignatures(selectors: `0x${string}`[]) {
+  selectors = selectors.filter((x) => /0x[\da-f]{8}/.test(x))
+  if (selectors.length === 0) return []
+  return await retry(async () => {
+    const res = await fetch(`${baseUrl}/api/lookup-signatures`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(selectors),
+    })
+    const json = await res.json()
+    return json as SignatureResult[]
   })
-  const json = await res.json()
-  return json as LookupResult[]
+}
+
+export async function lookupAddress(chainId: number, address: `0x${string}`) {
+  return await retry(async () => {
+    const res = await fetch(`${baseUrl}/api/lookup-address`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chainId: Number(chainId),
+        address: address as `0x${string}`,
+      }),
+    })
+    const json = await res.json()
+    return json as AddressResult
+  })
 }
 
 export async function getChains() {
   const res = await fetch(`${baseUrl}/api/chains`)
   const json = await res.json()
   return json as Chain[]
+}
+
+export async function retry<T>(fn: () => Promise<T>) {
+  let timeout = 10
+  while (true) {
+    try {
+      return await fn()
+    } catch {
+      await new Promise((r) => setTimeout(r, timeout))
+      timeout *= 2
+    }
+  }
 }

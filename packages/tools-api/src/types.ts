@@ -1,8 +1,9 @@
 export type { Chain } from './config/types'
 export type {
+  AddressResult,
   ApiQuery,
   LookupQuery,
-  LookupResult,
+  SignatureResult,
   TransactionQuery,
   TransactionResult,
 } from './modules/decoder-module/domain/ApiController'

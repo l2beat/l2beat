@@ -133,7 +133,7 @@ function create2FactoryPlugin(
     bytecode: bytecode,
     from: CREATE2_DEPLOYER,
     salt,
-  })
+  }).toLowerCase() as `0x${string}`
   return {
     type: 'call',
     address,
