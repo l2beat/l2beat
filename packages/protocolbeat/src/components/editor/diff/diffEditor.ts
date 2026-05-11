@@ -189,10 +189,12 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
         if (delta <= 0) {
           continue
         }
+        const domNode = document.createElement('div')
+        domNode.className = 'diagonal-fill'
         const id = accessor.addZone({
           afterLineNumber: here.endLineNumberExclusive - 1,
           heightInLines: delta,
-          domNode: document.createElement('div'),
+          domNode,
           showInHiddenAreas: true,
           suppressMouseDown: true,
         })
