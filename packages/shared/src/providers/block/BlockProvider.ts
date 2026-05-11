@@ -55,6 +55,7 @@ export class BlockProvider {
         for (const [n, ts] of timestamps) {
           out.set(n, UnixTime(ts))
         }
+        assert(out.size === blockNumbers.length, 'Missing block timestamps')
         return out
       } catch (error) {
         if (index === this.clients.length - 1) throw error
