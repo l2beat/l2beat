@@ -116,6 +116,10 @@ const websiteItems = [
         title: 'Tracked txs',
         url: '/website/status/tracked-txs',
       },
+      {
+        title: 'DA tracking',
+        url: '/website/status/da-tracking',
+      },
     ],
   },
 ]

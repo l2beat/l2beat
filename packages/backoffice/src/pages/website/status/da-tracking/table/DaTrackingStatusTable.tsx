@@ -1,22 +1,22 @@
 import type { Row } from '@tanstack/react-table'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
-import type { TrackedTxsStatusRow } from '../types'
-import { trackedTxsStatusColumns } from './columns'
+import type { DaTrackingStatusRow } from '../types'
+import { daTrackingStatusColumns } from './columns'
 
-interface TrackedTxsStatusTableProps {
-  data: TrackedTxsStatusRow[]
+interface DaTrackingStatusTableProps {
+  data: DaTrackingStatusRow[]
   enableCsvExport?: boolean
   className?: string
   scrollViewportClassName?: string
 }
 
-export function TrackedTxsStatusTable({
+export function DaTrackingStatusTable({
   data,
   enableCsvExport = false,
   className,
   scrollViewportClassName,
-}: TrackedTxsStatusTableProps) {
+}: DaTrackingStatusTableProps) {
   const {
     filteredRowsCount,
     isSearchEnabled,
@@ -30,18 +30,21 @@ export function TrackedTxsStatusTable({
     totalRowsCount,
   } = useTanStackTable({
     data,
-    columns: trackedTxsStatusColumns,
+    columns: daTrackingStatusColumns,
     initialSorting: [
       { id: 'status', desc: false },
       { id: 'latestTimestamp', desc: false },
       { id: 'projectId', desc: false },
-      { id: 'feature', desc: false },
+      { id: 'daLayer', desc: false },
+      { id: 'type', desc: false },
       { id: 'configId', desc: false },
     ],
-    initialColumnFilters: [{ id: 'status', value: ['stale', 'fresh'] }],
+    initialColumnFilters: [
+      { id: 'status', value: ['stale', 'missing', 'fresh'] },
+    ],
     initialPageSizeOption: 'all',
     getRowId: (row) => row.configId,
-    searchPlaceholder: 'Search projects, config IDs, features, and formulas',
+    searchPlaceholder: 'Search projects, config IDs, DA layers, and details',
   })
 
   return (
@@ -49,12 +52,12 @@ export function TrackedTxsStatusTable({
       table={table}
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
-      emptyMessage="No active tracked tx configs found."
+      emptyMessage="No active DA tracking configs found."
       className={className}
       scrollViewportClassName={scrollViewportClassName}
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
-        `tracked-txs-status-${new Date().toISOString()}.csv`
+        `da-tracking-status-${new Date().toISOString()}.csv`
       }
       rowClassName={getRowClassName}
       totalRowsCount={totalRowsCount}
@@ -67,7 +70,7 @@ export function TrackedTxsStatusTable({
   )
 }
 
-function getRowClassName(row: Row<TrackedTxsStatusRow>) {
+function getRowClassName(row: Row<DaTrackingStatusRow>) {
   if (row.original.status === 'fresh') {
     return undefined
   }
