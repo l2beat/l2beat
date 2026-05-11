@@ -34,12 +34,7 @@ export function tokenizeSolidity(source: string): Token[] {
       while (i < len && source[i] !== '\n') {
         i++
       }
-      tokens.push({
-        type: 'comment',
-        content: source.slice(start, i),
-        startLine,
-        endLine: line,
-      })
+      tokens.push(comment(source.slice(start, i), startLine, line))
       continue
     }
 
@@ -57,12 +52,7 @@ export function tokenizeSolidity(source: string): Token[] {
         }
         i++
       }
-      tokens.push({
-        type: 'comment',
-        content: source.slice(start, i),
-        startLine,
-        endLine: line,
-      })
+      tokens.push(comment(source.slice(start, i), startLine, line))
       continue
     }
 
@@ -89,12 +79,8 @@ export function tokenizeSolidity(source: string): Token[] {
         }
         i++
       }
-      tokens.push({
-        type: 'structural',
-        content: source.slice(start, i),
-        startLine,
-        endLine: line,
-      })
+
+      tokens.push(structural(source.slice(start, i), startLine, line))
       continue
     }
 
@@ -104,25 +90,24 @@ export function tokenizeSolidity(source: string): Token[] {
       while (i < len && isIdentChar(source[i] as string)) {
         i++
       }
-      tokens.push({
-        type: 'structural',
-        content: source.slice(start, i),
-        startLine,
-        endLine: startLine,
-      })
+
+      tokens.push(structural(source.slice(start, i), startLine, startLine))
       continue
     }
 
-    tokens.push({
-      type: 'structural',
-      content: c,
-      startLine: line,
-      endLine: line,
-    })
+    tokens.push(structural(c, line, line))
     i++
   }
 
   return tokens
+}
+
+function comment(content: string, start: number, end: number): Token {
+  return { type: 'comment', content, startLine: start, endLine: end }
+}
+
+function structural(content: string, start: number, end: number): Token {
+  return { type: 'structural', content, startLine: start, endLine: end }
 }
 
 function isIdentChar(c: string): boolean {
