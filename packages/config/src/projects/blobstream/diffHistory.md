@@ -12,7 +12,7 @@ SP1Blobstream `blobstreamProgramVkey` rotation across both deployments:
 
 - **ArbitrumBlobstream** (`arb1:0xA83ca777...`) and **BaseBlobstream** (`base:0xA83ca777...`): vkey `0x00de39c1...` → `0x00b451fc...`.
 
-Added the new vkey to `programHashes.ts` as a Celestia Blobstream DA bridge program (sp1hypercube prover, `notVerified` — same metadata as the old entry).
+Added the new vkey to `programHashes.ts` as a Celestia Blobstream DA bridge program. Prover system identified by decoding the SP1 proof selector from a recent `commitHeaderRange` call: the first 4 bytes of the proof are `0x5a093a2f`, which routes through `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 (`sp1hypercube`) deployment. `verificationStatus` left as `notVerified` since the program source hasn't been recompiled and the vkey reproduced.
 
 ## Watched changes
 
