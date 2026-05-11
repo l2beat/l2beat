@@ -2533,6 +2533,15 @@
       {
         "chain": "unichain",
         "tx": "0xc6ae8abbfdb4b01f4cae51e52748c86186ac0dfe6568585b5479d7df5f1ad6b9"
+      },
+      // megaeth related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x6fa097e8c75bda7f784014655957cff35817e05534a6c6c19464508b1363eb3f"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x4d9b09120db5c4f129b6963ca5fb605baca8f07a2be96eef7203dd67f8370aa0"
       }
     ],
     "events": [
