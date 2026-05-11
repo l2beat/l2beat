@@ -1,16 +1,8 @@
 export function splitCode(
-  incomingLeft: Record<string, string>,
-  incomingRight: Record<string, string>,
+  left: Record<string, string>,
+  right: Record<string, string>,
   removeSameDeclarations = false,
-  removeComments = false,
 ): [string, string] {
-  const left = removeComments
-    ? removeCommentsFromCode(incomingLeft)
-    : incomingLeft
-  const right = removeComments
-    ? removeCommentsFromCode(incomingRight)
-    : incomingRight
-
   const matched = matchUp(left, right, removeSameDeclarations)
 
   let smallerLeft = ''
@@ -32,89 +24,6 @@ export function splitCode(
   }
 
   return [smallerLeft.trim(), smallerRight.trim()]
-}
-
-function removeCommentsFromCode(
-  code: Record<string, string>,
-): Record<string, string> {
-  const result: Record<string, string> = {}
-  for (const [key, value] of Object.entries(code)) {
-    result[key] = removeComments(value)
-  }
-  return result
-}
-
-function removeComments(source: string): string {
-  let result = ''
-  let i = 0
-
-  while (i < source.length - 1) {
-    let lineContent = ''
-    let hasNonWhitespace = false
-    let hasComment = false
-
-    while (i < source.length - 1 && source[i] !== '\n') {
-      if (source[i] === '/' && source[i + 1] === '/') {
-        hasComment = true
-        while (i < source.length && source[i] !== '\n') {
-          i++
-        }
-        break
-      }
-      if (source[i] === '/' && source[i + 1] === '*') {
-        hasComment = true
-        i += 2
-        while (i < source.length - 1) {
-          if (source[i] === '*' && source[i + 1] === '/') {
-            i += 2
-            break
-          }
-          if (source[i] === '\n') {
-            if (hasNonWhitespace) {
-              result += lineContent + '\n'
-            }
-            i++
-            lineContent = ''
-            hasNonWhitespace = false
-            hasComment = true
-            continue
-          }
-          i++
-        }
-        if (i >= source.length) {
-          break
-        }
-      } else {
-        if (source[i] !== ' ' && source[i] !== '\t') {
-          hasNonWhitespace = true
-        }
-        lineContent += source[i]
-        i++
-      }
-    }
-
-    if (hasNonWhitespace || !hasComment) {
-      result += lineContent
-    }
-
-    if (i < source.length && source[i] === '\n') {
-      if (hasNonWhitespace || !hasComment) {
-        result += '\n'
-      }
-      i++
-    }
-  }
-
-  const lastChar = source[source.length - 1]
-  if (lastChar !== undefined && !isWhitespace(lastChar)) {
-    result += lastChar
-  }
-
-  return result
-}
-
-function isWhitespace(char: string): boolean {
-  return char === ' ' || char === '\n' || char === '\t'
 }
 
 function wrapRegion(name: string, content: string): string {

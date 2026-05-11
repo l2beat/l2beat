@@ -14,12 +14,9 @@ import {
 
 export type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
-const state = {
-  considerComments: false,
-}
+const EMPTY_DROPPED: readonly LineRangeMapping[] = Object.freeze([])
 
-const liveProviders = new Set<CustomDiffProvider>()
-
+let considerComments = false
 let singleton: CustomDiffProvider | null = null
 
 export function getSharedDiffProvider(): CustomDiffProvider {
@@ -30,38 +27,30 @@ export function getSharedDiffProvider(): CustomDiffProvider {
 }
 
 export function setConsiderComments(value: boolean): void {
-  if (state.considerComments === value) {
+  if (considerComments === value) {
     return
   }
-  state.considerComments = value
-  for (const provider of liveProviders) {
-    provider.fireChange()
-  }
+  considerComments = value
+  singleton?.fireChange()
 }
 
 export class CustomDiffProvider {
   private readonly _onDidChange = new monaco.Emitter<void>()
   readonly onDidChange = this._onDidChange.event
-  private readonly droppedByPair = new Map<string, LineRangeMapping[]>()
-
-  constructor() {
-    liveProviders.add(this)
-  }
+  // Keyed by the modified model so entries get GC'd when the model is disposed.
+  private readonly droppedByModified = new WeakMap<
+    monaco.editor.ITextModel,
+    LineRangeMapping[]
+  >()
 
   fireChange(): void {
     this._onDidChange.fire()
   }
 
-  dispose(): void {
-    liveProviders.delete(this)
-    this._onDidChange.dispose()
-  }
-
   getDroppedChanges(
-    original: monaco.editor.ITextModel,
     modified: monaco.editor.ITextModel,
-  ): LineRangeMapping[] {
-    return this.droppedByPair.get(pairKey(original, modified)) ?? []
+  ): readonly LineRangeMapping[] {
+    return this.droppedByModified.get(modified) ?? EMPTY_DROPPED
   }
 
   computeDiff(
@@ -85,10 +74,10 @@ export class CustomDiffProvider {
       result.changes,
       originalLines.join('\n'),
       modifiedLines.join('\n'),
-      state.considerComments,
+      considerComments,
     )
 
-    this.droppedByPair.set(pairKey(original, modified), dropped)
+    this.droppedByModified.set(modified, dropped)
 
     return Promise.resolve({
       identical: changes.length === 0,
@@ -97,13 +86,6 @@ export class CustomDiffProvider {
       moves: result.moves,
     })
   }
-}
-
-function pairKey(
-  original: monaco.editor.ITextModel,
-  modified: monaco.editor.ITextModel,
-): string {
-  return `${original.id}|${modified.id}`
 }
 
 function applyDecisions(

@@ -5,7 +5,11 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { cyrb64 } from '../hashes/cyrb-hash'
 import { EditorPluginStore } from '../pluginStore'
-import { getSharedDiffProvider } from './customDiffProvider'
+import {
+  getSharedDiffProvider,
+  type LineRange,
+  type LineRangeMapping,
+} from './customDiffProvider'
 
 export interface Change {
   readonly left: [number, number]
@@ -50,10 +54,10 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   }
 
   private shadowGetWhitespaces(
-    editor: monaco.editor.ICodeEditor,
+    innerEditor: monaco.editor.ICodeEditor,
     ourIds: Set<string>,
   ) {
-    const target = editor as unknown as {
+    const target = innerEditor as unknown as {
       getWhitespaces: () => {
         id: string
         afterLineNumber: number
@@ -145,71 +149,54 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
       return
     }
 
-    const dropped = getSharedDiffProvider().getDroppedChanges(
-      model.original,
-      model.modified,
+    const dropped = getSharedDiffProvider().getDroppedChanges(model.modified)
+
+    this.padShorterSide(
+      this.editor.getOriginalEditor(),
+      this.originalAlignmentZoneIds,
+      dropped,
+      (d) => d.original,
+      (d) => d.modified,
     )
+    this.padShorterSide(
+      this.editor.getModifiedEditor(),
+      this.modifiedAlignmentZoneIds,
+      dropped,
+      (d) => d.modified,
+      (d) => d.original,
+    )
+  }
 
-    const originalEditor = this.editor.getOriginalEditor()
-    const modifiedEditor = this.editor.getModifiedEditor()
-
-    originalEditor.changeViewZones((accessor) => {
-      for (const id of this.originalAlignmentZoneIds) {
+  private padShorterSide(
+    innerEditor: monaco.editor.ICodeEditor,
+    ourIds: Set<string>,
+    dropped: readonly LineRangeMapping[],
+    hereSide: (d: LineRangeMapping) => LineRange,
+    otherSide: (d: LineRangeMapping) => LineRange,
+  ) {
+    innerEditor.changeViewZones((accessor) => {
+      for (const id of ourIds) {
         accessor.removeZone(id)
       }
-      this.originalAlignmentZoneIds.clear()
+      ourIds.clear()
       for (const drop of dropped) {
-        const origLines =
-          drop.original.endLineNumberExclusive - drop.original.startLineNumber
-        const modLines =
-          drop.modified.endLineNumberExclusive - drop.modified.startLineNumber
-        const delta = modLines - origLines
+        const here = hereSide(drop)
+        const other = otherSide(drop)
+        const delta =
+          other.endLineNumberExclusive -
+          other.startLineNumber -
+          (here.endLineNumberExclusive - here.startLineNumber)
         if (delta <= 0) {
           continue
         }
-        const afterLineNumber =
-          Math.min(
-            drop.original.endLineNumberExclusive,
-            drop.modified.endLineNumberExclusive,
-          ) - 1
         const id = accessor.addZone({
-          afterLineNumber,
+          afterLineNumber: here.endLineNumberExclusive - 1,
           heightInLines: delta,
-          domNode: createAlignmentDomNode(),
+          domNode: document.createElement('div'),
           showInHiddenAreas: true,
           suppressMouseDown: true,
         })
-        this.originalAlignmentZoneIds.add(id)
-      }
-    })
-
-    modifiedEditor.changeViewZones((accessor) => {
-      for (const id of this.modifiedAlignmentZoneIds) {
-        accessor.removeZone(id)
-      }
-      this.modifiedAlignmentZoneIds.clear()
-      for (const drop of dropped) {
-        const origLines =
-          drop.original.endLineNumberExclusive - drop.original.startLineNumber
-        const modLines =
-          drop.modified.endLineNumberExclusive - drop.modified.startLineNumber
-        const delta = origLines - modLines
-        if (delta <= 0) {
-          continue
-        }
-        const afterLineNumber =
-          Math.max(
-            drop.original.endLineNumberExclusive,
-            drop.modified.endLineNumberExclusive,
-          ) - 1
-        const id = accessor.addZone({
-          afterLineNumber,
-          heightInLines: delta,
-          domNode: createAlignmentDomNode(),
-          showInHiddenAreas: true,
-          suppressMouseDown: true,
-        })
-        this.modifiedAlignmentZoneIds.add(id)
+        ourIds.add(id)
       }
     })
   }
@@ -234,10 +221,4 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.disposePlugins()
     this.editor.dispose()
   }
-}
-
-function createAlignmentDomNode(): HTMLDivElement {
-  const node = document.createElement('div')
-  node.className = 'diagonal-fill'
-  return node
 }

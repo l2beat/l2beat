@@ -67,7 +67,7 @@ function decideChange(
   return { kind: 'narrow', original: narrowed.original, modified: narrowed.modified }
 }
 
-export function tokensInRange(
+function tokensInRange(
   tokens: Token[],
   startLine: number,
   endLineExclusive: number,
@@ -84,7 +84,7 @@ export function tokensInRange(
   return result
 }
 
-export function effectiveTokens(
+function effectiveTokens(
   tokens: Token[],
   considerComments: boolean,
 ): Token[] {
@@ -94,7 +94,7 @@ export function effectiveTokens(
   return tokens.filter((t) => t.type !== 'comment')
 }
 
-export function narrowChange(
+function narrowChange(
   change: LineRangeMapping,
   left: Token[],
   right: Token[],
@@ -137,7 +137,7 @@ function tokenMatches(a: Token | undefined, b: Token | undefined): boolean {
   return a.type === b.type && a.content === b.content
 }
 
-export function projectRange(
+function projectRange(
   survivors: Token[],
   all: Token[],
   prefix: number,
