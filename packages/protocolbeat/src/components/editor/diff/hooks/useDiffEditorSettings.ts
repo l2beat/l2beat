@@ -44,8 +44,8 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
       removeUnchanged:
         queryParams.removeUnchanged ??
         !codeIsTheSame(props.leftCode, props.rightCode),
-      considerComments: queryParams.considerComments,
-      fold: queryParams.fold,
+      considerComments: queryParams.considerComments ?? false,
+      fold: queryParams.fold ?? false,
     })
   }, [
     queryParams.removeUnchanged,
