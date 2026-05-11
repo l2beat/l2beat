@@ -257,13 +257,36 @@
         "0xa7ca079fc79b02b1bf21099f18108afd2619a15b9576f07826fd3d40323c362d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A signer list for registering agents, similar to a Multisig.",
+      "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+          "role": ".multisigSettings"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+          "role": ".multisigSettings"
+        }
+      ],
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
       "values": {
         "$admin": "eth:0x0000000000000000000000000000000000000000",
         "$implementation": "eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070",
+        "$members": [
+          "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
+          "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
+          "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
+          "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
+          "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
+          "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
+          "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
+          "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+          "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E"
+        ],
         "$pastUpgrades": [
           [
             "2025-05-01T15:01:47.000Z",
@@ -271,10 +294,10 @@
             ["eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070"]
           ]
         ],
+        "$threshold": 7,
         "$upgradeCount": 1,
         "addresslistLength": 9,
-        "dao": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
-        "getEncryptionAgents": [
+        "agents": [
           "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
           "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
           "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8",
@@ -285,10 +308,17 @@
           "eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556",
           "eth:0xc4414B079bC4A013916B3dc241555F6f505c1619"
         ],
+        "dao": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
         "settings": {
           "encryptionRegistry": "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1",
           "minSignerListLength": 8
         }
+      },
+      "fieldMeta": {
+        "$threshold": {
+          "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract."
+        },
+        "settings": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2": "ERC1967Proxy",
@@ -576,7 +606,12 @@
       },
       "fieldMeta": {
         "proposalCount": {
-          "description": "The total count of encrypted emergency proposals created."
+          "severity": "HIGH",
+          "description": "total count of encrypted emergency proposals created."
+        },
+        "multisigSettings": {
+          "severity": "HIGH",
+          "description": "the threshold in the SignerList needs to be changed manually if it changes here"
         }
       },
       "implementationNames": {
@@ -2045,6 +2080,197 @@
         "daoURI": "",
         "EXECUTE_PERMISSION_ID": "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
         "getTrustedForwarder": "eth:0x0000000000000000000000000000000000000000",
+        "permsGranted": {
+          "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF": [
+            {
+              "permissionId": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xf796b89427c6552c1ac705d833bfb7909f8eb5ce502c1db97f85fabc6ad83548",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ],
+          "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261": [
+            {
+              "permissionId": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xfaf505be9907aa6951c2ebe5b0312f4980e14f21912ed355372103cc8bd683bc",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x2CBe2F0907F99B5d0bECF8Be9fF623B7214389C2",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x03Bfac9c11702ac9c239610a45ED58b80E82DA0b",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xa0885006fe6672eeafd1deca6c67bcdc6dd79cfe2b157a98539ddf73cd8c04ea",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x05960136abD6a3E87C67860C71859e91070735D1",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x3dc194e23158bc1a3f2c26e18c8c910b557388bad663356cd4fc49c11477a4a4",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            },
+            {
+              "permissionId": "0x09591533596d094e638b438de2d180bcb3143eb02f7e9dbf65d7115116212eeb",
+              "here": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "where": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+              "who": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ],
+          "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f": [
+            {
+              "permissionId": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ],
+          "eth:0x989E348275b659d36f8751ea1c10D146211650BE": [
+            {
+              "permissionId": "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ],
+          "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321": [
+            {
+              "permissionId": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+              "who": "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ],
+          "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd": [
+            {
+              "permissionId": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
+              "here": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "where": "eth:0x989E348275b659d36f8751ea1c10D146211650BE",
+              "who": "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+              "condition": "eth:0x0000000000000000000000000000000000000002"
+            }
+          ]
+        },
+        "permsRevoked": {
+          "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF": [
+            {
+              "permissionId": "0x557340e1da86f1ece7405a684dc2616fd8730fa7e5a4e14f744c7f79be93d409",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"
+            },
+            {
+              "permissionId": "0xf796b89427c6552c1ac705d833bfb7909f8eb5ce502c1db97f85fabc6ad83548",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"
+            },
+            {
+              "permissionId": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF"
+            }
+          ],
+          "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f": [
+            {
+              "permissionId": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
+              "here": "eth:0xEa53A99A2bb11a11c03Ef2A1CeD336c9B03908FF",
+              "where": "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+              "who": "eth:0xE978942c691e43f65c1B7c7F8f1dc8cDF061B13f"
+            }
+          ]
+        },
         "protocolVersion": [1, 3, 0],
         "REGISTER_STANDARD_CALLBACK_PERMISSION_ID": "0xfaf505be9907aa6951c2ebe5b0312f4980e14f21912ed355372103cc8bd683bc",
         "ROOT_PERMISSION_ID": "0x815fe80e4b37c8582a3b773d1d7071f983eacfd56b5965db654f3087c25ada33",
@@ -2053,6 +2279,14 @@
         "SET_TRUSTED_FORWARDER_PERMISSION_ID": "0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c",
         "signatureValidator": "eth:0x0000000000000000000000000000000000000000",
         "UPGRADE_DAO_PERMISSION_ID": "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc"
+      },
+      "fieldMeta": {
+        "permsGranted": {
+          "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change."
+        },
+        "permsRevoked": {
+          "description": "Revoked permissions in the DAO. Need to be manually compared to the granted ones."
+        }
       },
       "implementationNames": {
         "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261": "ERC1967Proxy",
@@ -2586,6 +2820,13 @@
         "proposalCount": 19,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
+      },
+      "fieldMeta": {
+        "multisigSettings": { "severity": "HIGH" },
+        "proposalCount": {
+          "severity": "HIGH",
+          "description": "total standard proposal count."
+        }
       },
       "implementationNames": {
         "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321": "ERC1967Proxy",
@@ -5260,15 +5501,14 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "taiko/Anchor": "0x846b092485323a96eb4e542c68883b005342e7a3a62dc78eb4357da58f2d2d21",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
-    "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
-    "taiko/EncryptionRegistry": "0x6e1f93fb50489c81ab2040ecb707c6e04171660edc52b35d0f255365e2c6da84",
+    "taiko/DAO": "0x56443fba04d9316d3b33e326de503e371fc91520717f1cbfe32887cdf4df1526",
+    "taiko/EmergencyMultisig": "0xec96d8d88423d3b08c4574854f08cffb206da7204ff6476cf97cad7ec85dbe8a",
     "taiko/L1SharedAddressManager": "0x53e383d79bc5a05364962d3a986723394e3f04e839085710857c1b3a050bef18",
     "taiko/L2AddressManager": "0x5533ac608c033768586f5ca8b97411e964866cfc7b52b48ffe5b89768761840b",
     "taiko/L2Bridge": "0xc2dc1d358fbc1ae1bf71b9f4eff9ff6831387f28b39a3699baca69a1f6b11666",
     "taiko/MainnetInbox": "0x6a4d893b48c0d55e9095068167987cc4ddb72fa261c5606105bd2f128e19179e",
     "taiko/MainnetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
+    "taiko/Multisig": "0xec96d8d88423d3b08c4574854f08cffb206da7204ff6476cf97cad7ec85dbe8a",
     "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/PreconfWhitelist": "0xf0a0e014007ca81f8a4666b575941eae0ed422153adf6702d84f4899db262c08",
@@ -5279,7 +5519,7 @@
     "taiko/SgxVerifier": "0xd42ec836c8b504381d98c03e28d09de32afa1e9589d105971b14fc840af60f77",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/SignalService": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
-    "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
+    "taiko/SignerList": "0xe0ffe1713b14004537bf3e1c7882d6c8441403113903ae56a4878ec48c1dd250",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",

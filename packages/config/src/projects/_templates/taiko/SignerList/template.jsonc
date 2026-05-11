@@ -1,5 +1,29 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A signer list for registering agents, similar to a Multisig.",
-  "ignoreMethods": ["addresslistLengthAtBlock"]
+  "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list.",
+  "ignoreMethods": ["addresslistLengthAtBlock", "getEncryptionAgents"],
+  "fields": {
+    "$members": {
+      "handler": {
+        "type": "event",
+        "select": "signers",
+        "flatten": true,
+        "add": { "event": "SignersAdded" },
+        "remove": { "event": "SignersRemoved" }
+      }
+    },
+    "agents": {
+      "handler": {
+        "type": "call",
+        "method": "function getEncryptionAgents() view returns (address[] result)",
+        "args": []
+      }
+    },
+    "$threshold": {
+      "description": "hardcoded emergency multisg threshold, must be manually changed here if it changes in the EmergencyMultisig contract.",
+      "handler": { "type": "hardcoded", "value": 7 }
+    },
+    "settings": { "severity": "HIGH" }
+  },
+  "ignoreRelatives": ["settings"]
 }

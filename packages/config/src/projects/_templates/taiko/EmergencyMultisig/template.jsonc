@@ -4,34 +4,17 @@
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
     "proposalCount": {
-      "description": "The total count of encrypted emergency proposals created."
+      "description": "total count of encrypted emergency proposals created.",
+      "severity": "HIGH"
+    },
+    "multisigSettings": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "act" // this object has the signerList, which should inherit perms
+        }
+      ],
+      "description": "the threshold in the SignerList needs to be changed manually if it changes here"
     }
-    // "getProposal": {
-    //   "handler": {
-    //     "type": "array",
-    //     "maxLength": 20
-    //   },
-    //   "description": "encrypted emergency proposals",
-    //   "edit": [
-    //     "map",
-    //     [
-    //       "shape",
-    //       "executed",
-    //       "approvals",
-    //       "parameters",
-    //       "encryptedPayloadURI",
-    //       "publicMetadataUriHash",
-    //       "destinationActionsHash",
-    //       "destinationPlugin"
-    //     ]
-    //   ]
-    // }
-    // TODO: set severity high as soon as gov is live
-    // "multisigSettings":{
-    //     "severity": "HIGH"
-    // },
-    // "proposalCount":{
-    //     "severity": "HIGH"
-    // }
   }
 }

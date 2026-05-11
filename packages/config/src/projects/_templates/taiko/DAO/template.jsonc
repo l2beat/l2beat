@@ -3,5 +3,24 @@
   "name": "TaikoDAO",
   "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
   "category": "gov",
-  "ignoreMethods": ["proxiableUUID"]
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreRelatives": ["permsGranted", "permsRevoked"],
+  "fields": {
+    "permsGranted": {
+      "handler": {
+        "type": "event",
+        "groupBy": "who",
+        "add": { "event": "Granted" }
+      },
+      "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change."
+    },
+    "permsRevoked": {
+      "handler": {
+        "type": "event",
+        "groupBy": "who",
+        "add": { "event": "Revoked" }
+      },
+      "description": "Revoked permissions in the DAO. Need to be manually compared to the granted ones."
+    }
+  }
 }
