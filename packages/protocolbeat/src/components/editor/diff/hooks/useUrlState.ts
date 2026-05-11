@@ -9,7 +9,7 @@ import { LineSelector } from '../plugins/lineSelector'
 const SEARCH_PARAMS = {
   lines: 'lines',
   removeUnchanged: 'removeUnchanged',
-  removeComments: 'removeComments',
+  considerComments: 'considerComments',
   fold: 'fold',
 }
 
@@ -18,8 +18,8 @@ export function useUrlState() {
   const removeUnchangedParam = useFlagFromQueryParam(
     SEARCH_PARAMS.removeUnchanged,
   )
-  const removeCommentsParam = useFlagFromQueryParam(
-    SEARCH_PARAMS.removeComments,
+  const considerCommentsParam = useFlagFromQueryParam(
+    SEARCH_PARAMS.considerComments,
   )
   const linesParam = useQueryParam(SEARCH_PARAMS.lines)
 
@@ -29,7 +29,7 @@ export function useUrlState() {
     (
       selection: LineSelection | null,
       removeUnchanged: boolean,
-      removeComments: boolean,
+      considerComments: boolean,
       fold: boolean,
     ) => {
       if (!selection) {
@@ -49,8 +49,8 @@ export function useUrlState() {
         url.searchParams.set(SEARCH_PARAMS.removeUnchanged, 'true')
       }
 
-      if (removeComments) {
-        url.searchParams.set(SEARCH_PARAMS.removeComments, 'true')
+      if (considerComments) {
+        url.searchParams.set(SEARCH_PARAMS.considerComments, 'true')
       }
 
       if (fold) {
@@ -76,7 +76,7 @@ export function useUrlState() {
   return {
     queryParams: {
       removeUnchanged: removeUnchangedParam,
-      removeComments: removeCommentsParam,
+      considerComments: considerCommentsParam,
       lines: linesParam,
       fold: foldParam,
     },

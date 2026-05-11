@@ -5,6 +5,7 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { cyrb64 } from '../hashes/cyrb-hash'
 import { EditorPluginStore } from '../pluginStore'
+import { getSharedDiffProvider } from './customDiffProvider'
 
 export interface Change {
   readonly left: [number, number]
@@ -22,9 +23,45 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
   private callbacks: monaco.IDisposable[] = []
   private currentCodeHash = ''
+  private originalAlignmentZoneIds = new Set<string>()
+  private modifiedAlignmentZoneIds = new Set<string>()
 
   constructor(element: HTMLElement) {
     super(element, 'diff')
+    // Hide our alignment zones from Monaco's diff-alignment computation.
+    // `getAdditionalLineHeights` (diffEditorViewZones.js:500) walks the
+    // inner editor's getWhitespaces() and treats anything not in its
+    // private ignore-set as content needing compensation on the other
+    // side. Since the public ignore-set isn't reachable, we filter our
+    // IDs out at the API boundary instead. The inner editor's own
+    // rendering/layout uses viewLayout.getWhitespaces() directly
+    // (codeEditorWidget.js:388) and is unaffected.
+    this.shadowGetWhitespaces(
+      this.editor.getOriginalEditor(),
+      this.originalAlignmentZoneIds,
+    )
+    this.shadowGetWhitespaces(
+      this.editor.getModifiedEditor(),
+      this.modifiedAlignmentZoneIds,
+    )
+    this.callbacks.push(
+      this.editor.onDidUpdateDiff(() => this.syncAlignmentZones()),
+    )
+  }
+
+  private shadowGetWhitespaces(
+    editor: monaco.editor.ICodeEditor,
+    ourIds: Set<string>,
+  ) {
+    const target = editor as unknown as {
+      getWhitespaces: () => {
+        id: string
+        afterLineNumber: number
+        height: number
+      }[]
+    }
+    const original = target.getWhitespaces.bind(target)
+    target.getWhitespaces = () => original().filter((w) => !ourIds.has(w.id))
   }
 
   setDiff(codeLeft: string, codeRight: string) {
@@ -96,6 +133,87 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.editor.goToDiff('previous')
   }
 
+  // For each change we filtered out of the diff result, add a view zone on
+  // the side with fewer lines so Monaco's alignment for the kept changes
+  // still lines up. Without these, dropping a whitespace-only change with
+  // unequal line counts causes cumulative drift below it. Monaco listens to
+  // onDidChangeViewZones and re-runs its alignment pass when our zones land
+  // (diffEditorViewZones.js:64-69).
+  private syncAlignmentZones() {
+    const model = this.editor.getModel()
+    if (!model) {
+      return
+    }
+
+    const dropped = getSharedDiffProvider().getDroppedChanges(
+      model.original,
+      model.modified,
+    )
+
+    const originalEditor = this.editor.getOriginalEditor()
+    const modifiedEditor = this.editor.getModifiedEditor()
+
+    originalEditor.changeViewZones((accessor) => {
+      for (const id of this.originalAlignmentZoneIds) {
+        accessor.removeZone(id)
+      }
+      this.originalAlignmentZoneIds.clear()
+      for (const drop of dropped) {
+        const origLines =
+          drop.original.endLineNumberExclusive - drop.original.startLineNumber
+        const modLines =
+          drop.modified.endLineNumberExclusive - drop.modified.startLineNumber
+        const delta = modLines - origLines
+        if (delta <= 0) {
+          continue
+        }
+        const afterLineNumber =
+          Math.min(
+            drop.original.endLineNumberExclusive,
+            drop.modified.endLineNumberExclusive,
+          ) - 1
+        const id = accessor.addZone({
+          afterLineNumber,
+          heightInLines: delta,
+          domNode: createAlignmentDomNode(),
+          showInHiddenAreas: true,
+          suppressMouseDown: true,
+        })
+        this.originalAlignmentZoneIds.add(id)
+      }
+    })
+
+    modifiedEditor.changeViewZones((accessor) => {
+      for (const id of this.modifiedAlignmentZoneIds) {
+        accessor.removeZone(id)
+      }
+      this.modifiedAlignmentZoneIds.clear()
+      for (const drop of dropped) {
+        const origLines =
+          drop.original.endLineNumberExclusive - drop.original.startLineNumber
+        const modLines =
+          drop.modified.endLineNumberExclusive - drop.modified.startLineNumber
+        const delta = origLines - modLines
+        if (delta <= 0) {
+          continue
+        }
+        const afterLineNumber =
+          Math.max(
+            drop.original.endLineNumberExclusive,
+            drop.modified.endLineNumberExclusive,
+          ) - 1
+        const id = accessor.addZone({
+          afterLineNumber,
+          heightInLines: delta,
+          domNode: createAlignmentDomNode(),
+          showInHiddenAreas: true,
+          suppressMouseDown: true,
+        })
+        this.modifiedAlignmentZoneIds.add(id)
+      }
+    })
+  }
+
   private disposeCallbacks() {
     for (const callback of this.callbacks) {
       callback.dispose()
@@ -116,4 +234,10 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.disposePlugins()
     this.editor.dispose()
   }
+}
+
+function createAlignmentDomNode(): HTMLDivElement {
+  const node = document.createElement('div')
+  node.className = 'diagonal-fill'
+  return node
 }

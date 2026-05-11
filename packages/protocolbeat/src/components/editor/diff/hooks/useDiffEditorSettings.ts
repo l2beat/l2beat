@@ -16,11 +16,11 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
   const {
     fold,
     removeUnchanged,
-    removeComments,
+    considerComments,
     swapped,
     toggleFold,
     toggleRemoveUnchanged,
-    toggleRemoveComments,
+    toggleConsiderComments,
     toggleSwapped,
     setSettings,
   } = useDiffSettingsStore()
@@ -36,7 +36,6 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
       props.leftAddress,
       props.rightAddress,
       removeUnchanged,
-      removeComments,
       swapped,
     )
 
@@ -45,20 +44,20 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
       removeUnchanged:
         queryParams.removeUnchanged ??
         !codeIsTheSame(props.leftCode, props.rightCode),
-      removeComments: queryParams.removeComments ?? false,
-      fold: queryParams.fold ?? false,
+      considerComments: queryParams.considerComments,
+      fold: queryParams.fold,
     })
   }, [
     queryParams.removeUnchanged,
-    queryParams.removeComments,
+    queryParams.considerComments,
     props.leftCode,
     props.rightCode,
     setSettings,
   ])
 
   useEffect(() => {
-    buildShareableUrl(selection, removeUnchanged, removeComments, fold)
-  }, [selection, removeUnchanged, removeComments, fold, buildShareableUrl])
+    buildShareableUrl(selection, removeUnchanged, considerComments, fold)
+  }, [selection, removeUnchanged, considerComments, fold, buildShareableUrl])
 
   const wrappedToggleFold = useCallback(() => {
     toggleFold()
@@ -70,10 +69,10 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
     clearSelection()
   }, [toggleRemoveUnchanged, clearSelection])
 
-  const wrappedToggleRemoveComments = useCallback(() => {
-    toggleRemoveComments()
+  const wrappedToggleConsiderComments = useCallback(() => {
+    toggleConsiderComments()
     clearSelection()
-  }, [toggleRemoveComments, clearSelection])
+  }, [toggleConsiderComments, clearSelection])
 
   const swapSides = useCallback(() => {
     swapAddresses(leftAddress, rightAddress)
@@ -85,13 +84,13 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
     initialSelection,
     fold,
     removeUnchanged,
-    removeComments,
+    considerComments,
     diff,
     url: shareableUrl,
     setSelection,
     toggleFold: wrappedToggleFold,
     toggleRemoveUnchanged: wrappedToggleRemoveUnchanged,
-    toggleRemoveComments: wrappedToggleRemoveComments,
+    toggleConsiderComments: wrappedToggleConsiderComments,
     setDiff,
     swapSides,
     leftAddress,
