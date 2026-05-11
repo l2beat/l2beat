@@ -180,6 +180,27 @@ export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
     ),
   },
   {
+    chain: 'megaeth',
+    l2ToL1MessagePasser: ChainSpecificAddress(
+      'megaeth:0x4200000000000000000000000000000000000016',
+    ),
+    l2CrossDomainMessenger: ChainSpecificAddress(
+      'megaeth:0x4200000000000000000000000000000000000007',
+    ),
+    l2StandardBridge: ChainSpecificAddress(
+      'megaeth:0x4200000000000000000000000000000000000010',
+    ),
+    optimismPortal: ChainSpecificAddress(
+      'eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8',
+    ),
+    l1CrossDomainMessenger: ChainSpecificAddress(
+      'eth:0x6C7198250087B29A8040eC63903Bc130f4831Cc9',
+    ),
+    l1StandardBridge: ChainSpecificAddress(
+      'eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75',
+    ),
+  },
+  {
     chain: 'celo',
     l2ToL1MessagePasser: ChainSpecificAddress(
       'celo:0x4200000000000000000000000000000000000016',
