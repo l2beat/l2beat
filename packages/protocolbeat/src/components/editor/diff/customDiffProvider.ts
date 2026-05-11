@@ -15,7 +15,7 @@ import {
 
 export type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
-const EMPTY_DROPPED: readonly LineRangeMapping[] = Object.freeze([])
+const EMPTY_ALIGNMENT_GAPS: readonly LineRangeMapping[] = Object.freeze([])
 
 let considerComments = false
 let singleton: CustomDiffProvider | null = null
@@ -39,7 +39,7 @@ export class CustomDiffProvider {
   private readonly _onDidChange = new monaco.Emitter<void>()
   readonly onDidChange = this._onDidChange.event
   // Keyed by the modified model so entries get GC'd when the model is disposed.
-  private readonly droppedByModified = new WeakMap<
+  private readonly alignmentGapsByModified = new WeakMap<
     monaco.editor.ITextModel,
     LineRangeMapping[]
   >()
@@ -48,10 +48,10 @@ export class CustomDiffProvider {
     this._onDidChange.fire()
   }
 
-  getDroppedChanges(
+  getAlignmentGaps(
     modified: monaco.editor.ITextModel,
   ): readonly LineRangeMapping[] {
-    return this.droppedByModified.get(modified) ?? EMPTY_DROPPED
+    return this.alignmentGapsByModified.get(modified) ?? EMPTY_ALIGNMENT_GAPS
   }
 
   computeDiff(
@@ -71,14 +71,14 @@ export class CustomDiffProvider {
       .getDefault()
       .computeDiff(originalLines, modifiedLines, options)
 
-    const { changes, dropped } = applyDecisions(
+    const { changes, alignmentGaps } = applyDecisions(
       result.changes,
       originalLines.join('\n'),
       modifiedLines.join('\n'),
       considerComments,
     )
 
-    this.droppedByModified.set(modified, dropped)
+    this.alignmentGapsByModified.set(modified, alignmentGaps)
 
     return Promise.resolve({
       identical: changes.length === 0,
@@ -94,7 +94,7 @@ function applyDecisions(
   originalSource: string,
   modifiedSource: string,
   considerComments: boolean,
-): { changes: LineRangeMapping[]; dropped: LineRangeMapping[] } {
+): { changes: LineRangeMapping[]; alignmentGaps: LineRangeMapping[] } {
   let decisions: ChangeDecision[]
   try {
     decisions = decideChanges(
@@ -108,11 +108,11 @@ function applyDecisions(
       '[customDiffProvider] decideChanges failed; falling back to raw diff',
       error,
     )
-    return { changes: monacoChanges, dropped: [] }
+    return { changes: monacoChanges, alignmentGaps: [] }
   }
 
   const kept: LineRangeMapping[] = []
-  const dropped: LineRangeMapping[] = []
+  const gaps: LineRangeMapping[] = []
   for (let i = 0; i < monacoChanges.length; i++) {
     const decision = decisions[i] as ChangeDecision
     const outer = monacoChanges[i] as LineRangeMapping
@@ -121,9 +121,9 @@ function applyDecisions(
     } else if (decision.kind === 'narrow') {
       kept.push(buildMonacoMapping(decision.original, decision.modified))
     }
-    dropped.push(...alignmentGaps(outer, decision))
+    gaps.push(...alignmentGaps(outer, decision))
   }
-  return { changes: kept, dropped }
+  return { changes: kept, alignmentGaps: gaps }
 }
 
 function buildMonacoMapping(

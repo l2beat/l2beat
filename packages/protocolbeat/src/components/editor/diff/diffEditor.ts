@@ -137,31 +137,32 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
     this.editor.goToDiff('previous')
   }
 
-  // For each change we filtered out of the diff result, add a view zone on
-  // the side with fewer lines so Monaco's alignment for the kept changes
-  // still lines up. Without these, dropping a whitespace-only change with
-  // unequal line counts causes cumulative drift below it. Monaco listens to
-  // onDidChangeViewZones and re-runs its alignment pass when our zones land
-  // (diffEditorViewZones.js:64-69).
+  // For each filtered range, add a view zone on the side with fewer lines
+  // so Monaco's alignment for the kept changes still lines up. This covers
+  // fully dropped changes and the lead/trail slices around a narrowed change.
+  // Monaco listens to onDidChangeViewZones and re-runs its alignment pass
+  // when our zones land (diffEditorViewZones.js:64-69).
   private syncAlignmentZones() {
     const model = this.editor.getModel()
     if (!model) {
       return
     }
 
-    const dropped = getSharedDiffProvider().getDroppedChanges(model.modified)
+    const alignmentGaps = getSharedDiffProvider().getAlignmentGaps(
+      model.modified,
+    )
 
     this.padShorterSide(
       this.editor.getOriginalEditor(),
       this.originalAlignmentZoneIds,
-      dropped,
+      alignmentGaps,
       (d) => d.original,
       (d) => d.modified,
     )
     this.padShorterSide(
       this.editor.getModifiedEditor(),
       this.modifiedAlignmentZoneIds,
-      dropped,
+      alignmentGaps,
       (d) => d.modified,
       (d) => d.original,
     )
@@ -170,7 +171,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   private padShorterSide(
     innerEditor: monaco.editor.ICodeEditor,
     ourIds: Set<string>,
-    dropped: readonly LineRangeMapping[],
+    gaps: readonly LineRangeMapping[],
     hereSide: (d: LineRangeMapping) => LineRange,
     otherSide: (d: LineRangeMapping) => LineRange,
   ) {
@@ -179,9 +180,9 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
         accessor.removeZone(id)
       }
       ourIds.clear()
-      for (const drop of dropped) {
-        const here = hereSide(drop)
-        const other = otherSide(drop)
+      for (const gap of gaps) {
+        const here = hereSide(gap)
+        const other = otherSide(gap)
         const delta =
           other.endLineNumberExclusive -
           other.startLineNumber -
