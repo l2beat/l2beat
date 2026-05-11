@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
@@ -123,6 +124,7 @@ export interface ProjectScalingEntry {
       uopsWeeklyChange: number
     }
     gasTokens?: string[]
+    interop?: ProjectScalingInteropData['summary']
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
@@ -130,6 +132,109 @@ export interface ProjectScalingEntry {
   hostChainName: string
   stageConfig: ProjectScalingStage
   discoUiHref: string | undefined
+}
+
+interface ProjectScalingInteropData {
+  chainId: string
+  interopChains: InteropChainWithIcon[]
+  protocols: {
+    id: string
+    name: string
+    iconUrl: string
+  }[]
+  defaultSelectedChains: string[]
+  summary: {
+    protocols: {
+      items: {
+        id: string
+        name: string
+        iconUrl: string
+        volume: number
+      }[]
+      remainingCount: number
+    }
+    tokens: {
+      items: {
+        id: string
+        symbol: string
+        iconUrl: string
+        volume: number
+      }[]
+      remainingCount: number
+    }
+  }
+}
+
+async function getProjectScalingInteropData(
+  projectId: ProjectId,
+  interopProjects: Project<'interopConfig'>[],
+  helpers: SsrHelpers,
+): Promise<ProjectScalingInteropData | undefined> {
+  const interopChains = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }))
+
+  const currentInteropChain = interopChains.find(
+    (chain) => chain.id === projectId,
+  )
+  if (!currentInteropChain) return undefined
+
+  const orderedInteropChains = [
+    currentInteropChain,
+    ...interopChains.filter((chain) => chain.id !== currentInteropChain.id),
+  ]
+  const defaultSelectedChains = orderedInteropChains
+    .map((chain) => chain.id)
+    .slice(0, MAX_SELECTED_CHAINS)
+  const protocols = interopProjects.map((protocol) => ({
+    id: protocol.id,
+    name: protocol.interopConfig.name ?? protocol.name,
+    iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
+  }))
+  const interopFlows = await helpers.interop.flows.fetch({
+    chains: defaultSelectedChains,
+    protocolIds: protocols.map((protocol) => protocol.id),
+  })
+  const currentChainData = interopFlows.chainData.find(
+    (chain) => chain.chainId === currentInteropChain.id,
+  )
+  if (!currentChainData) return undefined
+
+  return {
+    chainId: currentInteropChain.id,
+    interopChains: orderedInteropChains,
+    protocols,
+    defaultSelectedChains,
+    summary: {
+      protocols: {
+        items: currentChainData.topProtocols.map((protocol) => ({
+          id: protocol.id,
+          name: protocol.name,
+          iconUrl: protocol.iconUrl,
+          volume: protocol.volume,
+        })),
+        remainingCount: Math.max(
+          currentChainData.protocolCount - currentChainData.topProtocols.length,
+          0,
+        ),
+      },
+      tokens: {
+        items: currentChainData.topTokens.map((token) => ({
+          id: token.id,
+          symbol: token.symbol,
+          iconUrl: token.iconUrl,
+          volume: token.volume,
+        })),
+        remainingCount: Math.max(
+          currentChainData.tokenCount - currentChainData.topTokens.length,
+          0,
+        ),
+      },
+    },
+  }
 }
 
 export async function getScalingProjectEntry(
@@ -212,6 +317,11 @@ export async function getScalingProjectEntry(
   )
 
   const tvsProjectStats = tvsStats.projects[project.id]
+  const interopData = await getProjectScalingInteropData(
+    project.id,
+    interopProjects,
+    helpers,
+  )
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
@@ -265,6 +375,7 @@ export async function getScalingProjectEntry(
       .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
+    interop: interopData?.summary,
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
@@ -387,42 +498,16 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const interopChains = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => ({
-      ...chain,
-      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    }))
-
-  const currentInteropChain = interopChains.find(
-    (chain) => chain.id === project.id,
-  )
-
-  if (currentInteropChain) {
-    const orderedInteropChains = [
-      currentInteropChain,
-      ...interopChains.filter((chain) => chain.id !== currentInteropChain.id),
-    ]
-    const defaultSelectedChains = [
-      currentInteropChain.id,
-      ...orderedInteropChains
-        .filter((chain) => chain.id !== currentInteropChain.id)
-        .map((chain) => chain.id),
-    ].slice(0, MAX_SELECTED_CHAINS)
-
+  if (interopData) {
     sections.push({
       type: 'InteropFlowsSection',
       props: {
         id: 'interop-flows',
         title: 'Volume and flows',
-        interopChains: orderedInteropChains,
-        protocols: interopProjects.map((protocol) => ({
-          id: protocol.id,
-          name: protocol.interopConfig.name ?? protocol.name,
-          iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
-        })),
-        defaultSelectedChains,
-        defaultStatsChainId: currentInteropChain.id,
+        interopChains: interopData.interopChains,
+        protocols: interopData.protocols,
+        defaultSelectedChains: interopData.defaultSelectedChains,
+        defaultStatsChainId: interopData.chainId,
       },
     })
   }

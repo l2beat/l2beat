@@ -13,6 +13,7 @@ import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
 
 export interface FlowToken {
+  id: string
   symbol: string
   iconUrl: string
   volume: number
@@ -47,6 +48,8 @@ export interface ChainData {
   transfersIn: number
   transfersOut: number
   connectedChains: number
+  tokenCount: number
+  protocolCount: number
   topTokens: FlowToken[]
   topProtocols: FlowProtocol[]
 }
@@ -127,6 +130,8 @@ export async function getInteropFlows(
     chainPairTopTokens,
     chainTopProtocols,
     chainPairTopProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
     topToken: topTokenEntry,
     topProtocol: topProtocolEntry,
     tokenIds,
@@ -159,6 +164,7 @@ export async function getInteropFlows(
     const details = detailsMap.get(entry.id)
     if (!details) return undefined
     return {
+      id: entry.id,
       symbol: details.symbol,
       iconUrl: details.iconUrl,
       volume: entry.volume,
@@ -218,6 +224,8 @@ export async function getInteropFlows(
     params.chains,
     resolvedChainTokens,
     resolvedChainProtocols,
+    chainTokenCounts,
+    chainProtocolCounts,
   )
 
   const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
@@ -265,6 +273,8 @@ function computeChainsData(
   chainIds: string[],
   chainTopTokens: Map<string, FlowToken[]>,
   chainTopProtocols: Map<string, FlowProtocol[]>,
+  chainTokenCounts: Map<string, number>,
+  chainProtocolCounts: Map<string, number>,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -317,6 +327,8 @@ function computeChainsData(
       transfersIn: data?.transfersIn ?? 0,
       transfersOut: data?.transfersOut ?? 0,
       connectedChains: data?.connected.size ?? 0,
+      tokenCount: chainTokenCounts.get(chainId) ?? 0,
+      protocolCount: chainProtocolCounts.get(chainId) ?? 0,
       topTokens: chainTopTokens.get(chainId) ?? [],
       topProtocols: chainTopProtocols.get(chainId) ?? [],
     }
@@ -334,7 +346,14 @@ function getMockInteropFlows(): InteropFlowsData {
     }
   }
 
-  const chainData = computeChainsData(flows, chainIds, new Map(), new Map())
+  const chainData = computeChainsData(
+    flows,
+    chainIds,
+    new Map(),
+    new Map(),
+    new Map(),
+    new Map(),
+  )
 
   return {
     flows,
@@ -390,6 +409,7 @@ function getMockInteropFlows(): InteropFlowsData {
           }
         : undefined,
       topToken: {
+        id: 'eth',
         symbol: 'ETH',
         iconUrl: '/icons/tokens/ether.png',
         volume: 1_000_000,
