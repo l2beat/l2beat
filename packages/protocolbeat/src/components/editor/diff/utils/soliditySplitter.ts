@@ -14,11 +14,7 @@ export function splitCode(
   // a large block of identical-looking content.
   const leftForMatch = considerComments ? left : stripCommentsFromAll(left)
   const rightForMatch = considerComments ? right : stripCommentsFromAll(right)
-  const matched = matchUp(
-    leftForMatch,
-    rightForMatch,
-    removeSameDeclarations,
-  )
+  const matched = matchUp(leftForMatch, rightForMatch, removeSameDeclarations)
 
   let smallerLeft = ''
   let smallerRight = ''
