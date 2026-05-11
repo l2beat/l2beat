@@ -93,7 +93,7 @@ export function createInteropRouter(
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getInteropProtocolPageData(req, manifest)
+      const data = await getInteropProtocolPageData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return

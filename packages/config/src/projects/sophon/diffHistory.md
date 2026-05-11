@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x0f02beac58d4a3eab7dac7af63ed017aabc4652c
+
+# Diff at Fri, 08 May 2026 07:52:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771251793
+- current timestamp: 1771251793
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771251793 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) [shared-zk-stack/AvailL1DAValidator] {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      sourceHashes.0:
+-        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
++        "0x1802475d9a91441cffe558d63a993380d7817f22de139c9282edd95cdc2df473"
+    }
+```
+
+```diff
+    contract SophonTransactionFilterer (eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063) [shared-zk-stack/TransactionFilterer] {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      sourceHashes.0:
+-        "0xc7bbe9c9ee49eec61389ef4e98f941d20a8a9eaf994a9a010b793c4dc4587052"
++        "0x08cd75dea5c240e0976d0cd36d8fd8c48b2e3a15e47c8c920e35283f6b25ef62"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      sourceHashes.0:
+-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
++        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract L1USDCBridge (eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) [shared-zk-stack/L1USDCBridge] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xab9a40a5f27251ca4b4884dedef5a2b49a8928796a1fd0c6655f1623be961602"
++        "0xed3ae20cf58c6035b0e9fce756c07e2f087a8044a1f78fb4fbedea5d7846df80"
+    }
+```
+
 Generated with discovered.json: 0xe1ef011e9a654dd1c9c4a7ac9e3617ed6187bdd1
 
 # Diff at Tue, 05 May 2026 10:23:09 GMT:

@@ -130,6 +130,7 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '59144', chain: 'linea' },
   { chainId: '999', chain: 'hyperevm' },
   { chainId: '143', chain: 'monad' },
+  { chainId: '4326', chain: 'megaeth' },
   // tempo unsupported
 ])
 

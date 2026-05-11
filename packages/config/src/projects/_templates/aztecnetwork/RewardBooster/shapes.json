@@ -1,14 +1,12 @@
 {
   "RewardBooster.sol": {
-    "hash": "0x1e32c9c7fbb3685db3ea805b96aa1ac4fd140ce14d08ef809e105ebeefb097ce",
+    "hash": "0x3e95cef0abe9b45d0a4870f63f29d32703b7ab0d5b2c1926b7dcd18cad0e989d",
     "address": "eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4",
-    "chain": "ethereum",
     "blockNumber": 23834069
   },
   "RewardBooster_alpha.sol": {
-    "hash": "0x7e3d88822760fe6d4eef2faf9c6e14ae481b4ce38a65abe838a87511e128b9f0",
+    "hash": "0xd88e52f8a67390118e6ca6308dcaa66116e76b793e891200be19354d545d0562",
     "address": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
-    "chain": "ethereum",
     "blockNumber": 24590324
   }
 }

@@ -87,13 +87,43 @@ export const InteropProtocolParams = v.object({
 })
 
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
-export const InteropTopItemsParams = v.object({
+export const InteropTopItemsSort = v.object({
+  id: v.enum([
+    'symbol',
+    'pair',
+    'topProtocol',
+    'volume',
+    'transferCount',
+    'avgDuration',
+    'avgValue',
+    'flows',
+    'netMintedValue',
+  ]),
+  desc: v.boolean(),
+})
+export type InteropTopItemsSort = v.infer<typeof InteropTopItemsSort>
+export const InteropTopItemsSorting = v.array(InteropTopItemsSort)
+export type InteropTopItemsSorting = v.infer<typeof InteropTopItemsSorting>
+
+const InteropTopItemsParamsShape = {
   id: v.union([
     v.string().transform((value) => ProjectId(value)),
     v.undefined(),
   ]),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  protocolIds: v.array(v.string()).optional(),
+}
+export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
+
+export type InteropTopItemsInfiniteParams = v.infer<
+  typeof InteropTopItemsInfiniteParams
+>
+export const InteropTopItemsInfiniteParams = v.object({
+  ...InteropTopItemsParamsShape,
+  cursor: v.number().optional(),
+  limit: v.number().optional(),
+  sort: InteropTopItemsSorting.optional(),
 })
 
 export type InteropProtocolTransfersParams = v.infer<
@@ -195,6 +225,11 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
+export type InteropTokensResponse = {
+  items: TokenData[]
+  nextCursor: number | undefined
+}
+
 export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
@@ -208,6 +243,11 @@ export type TokensPairData = {
   maxTransferValueUsd: number | undefined
   netMintedValue: number | undefined
   flows: TokenFlowData[]
+}
+
+export type InteropTokensPairsResponse = {
+  items: TokensPairData[]
+  nextCursor: number | undefined
 }
 
 export type ChainData = {

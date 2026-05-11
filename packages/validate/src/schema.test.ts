@@ -149,12 +149,12 @@ describe('toJsonSchema', () => {
   it('union with metadata', () => {
     const input = v
       .union([v.string(), v.null()])
-      .meta({ description: 'Optional ID', dupa: '123123' })
+      .meta({ description: 'Optional ID', prop: '123123' })
     expect(toJsonSchema(input)).toEqual({
       $schema: SCHEMA_VERSION,
       anyOf: [{ type: 'string' }, { type: 'null' }],
       description: 'Optional ID',
-      dupa: '123123',
+      prop: '123123',
     })
   })
 

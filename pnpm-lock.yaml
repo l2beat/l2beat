@@ -208,9 +208,6 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       supertest:
         specifier: ^6.2.3
         version: 6.3.4
@@ -412,15 +409,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
-      p-limit:
-        specifier: ^6.1.0
-        version: 6.1.0
 
   packages/database:
     dependencies:
@@ -442,9 +433,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      nanoid:
-        specifier: ^3.3.7
-        version: 3.3.7
       pg:
         specifier: ^8.8.0
         version: 8.13.1
@@ -500,9 +488,6 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      jsonc-parser:
-        specifier: ^3.2.0
-        version: 3.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -805,9 +790,6 @@ importers:
       express:
         specifier: ^4.21.1
         version: 4.21.1
-      graphviz-wasm:
-        specifier: ^3.0.2
-        version: 3.0.2
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5291,9 +5273,6 @@ packages:
   decimal.js-light@2.5.1:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
 
-  decode-base64@3.0.1:
-    resolution: {integrity: sha512-IWgiXlMAdm9c4RrOnvkFxYpfZRlOys4Wxnc/QT72hVLUZKCr7RPkfamgn2GXysCo06Zd4TGZyKaPHO4soBgSAg==}
-
   decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
@@ -5776,9 +5755,6 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  function-once@3.0.0:
-    resolution: {integrity: sha512-WEhgu9PE55sHFf+SBg3lI8+CWpsqReLcsp3g12XhwSJJgnodpSpHk6StvpeVcKuHAFCAdttLrslJRFDSdLDf4g==}
-
   fuzzysort@3.1.0:
     resolution: {integrity: sha512-sR9BNCjBg6LNgwvxlBd0sBABvQitkLzoVY9MYYROQVX/FvfJ4Mai9LsGhDgd8qYdds0bY77VzYd5iuB+v5rwQQ==}
 
@@ -5853,9 +5829,6 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
-
-  graphviz-wasm@3.0.2:
-    resolution: {integrity: sha512-aaO9dxQ7LTk9zvelCajRRSdSB+ZLniL5DNSkuLXAfIAbVvYCqlLmxz4zWC2LBbNNT+w6vp8Du8SvAVxH1bSVBQ==}
 
   gray-matter@4.0.3:
     resolution: {integrity: sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==}
@@ -6216,9 +6189,6 @@ packages:
 
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
-
-  jsonc-parser@3.3.1:
-    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
@@ -6732,9 +6702,6 @@ packages:
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
 
-  node-buffer-encoding@1.0.2:
-    resolution: {integrity: sha512-v2QFjf04xWb5Q7cyzbi8qEwe2vw2xJBXT7+pMOLA02+KJZlcJ/6syFYiH96ClXKfOG/kyBeysAuewJ7zfAUYKQ==}
-
   node-cron@4.2.1:
     resolution: {integrity: sha512-lgimEHPE/QDgFlywTd8yTR61ptugX3Qer29efeyWw2rv259HtGBNn1vZVmp8lB9uo9wC0t/AT4iGqXxia+CJFg==}
     engines: {node: '>=6.0.0'}
@@ -6907,10 +6874,6 @@ packages:
   p-limit@3.1.0:
     resolution: {integrity: sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==}
     engines: {node: '>=10'}
-
-  p-limit@6.1.0:
-    resolution: {integrity: sha512-H0jc0q1vOzlEk0TqAKXKZxdl7kX3OFUzCnNVUnq5Pc3DGo0kpeaMuPqxQn235HibwBEb0/pm9dgKTjXy66fBkg==}
-    engines: {node: '>=18'}
 
   p-locate@4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
@@ -8463,10 +8426,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  yocto-queue@1.1.1:
-    resolution: {integrity: sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==}
-    engines: {node: '>=12.20'}
 
   yoga-wasm-web@0.3.3:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
@@ -12479,10 +12438,6 @@ snapshots:
 
   decimal.js-light@2.5.1: {}
 
-  decode-base64@3.0.1:
-    dependencies:
-      node-buffer-encoding: 1.0.2
-
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
@@ -13220,8 +13175,6 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  function-once@3.0.0: {}
-
   fuzzysort@3.1.0: {}
 
   gauge@4.0.4:
@@ -13318,11 +13271,6 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
-
-  graphviz-wasm@3.0.2:
-    dependencies:
-      decode-base64: 3.0.1
-      function-once: 3.0.0
 
   gray-matter@4.0.3:
     dependencies:
@@ -13659,8 +13607,6 @@ snapshots:
   json-parse-even-better-errors@2.3.1: {}
 
   json-stringify-safe@5.0.1: {}
-
-  jsonc-parser@3.3.1: {}
 
   jsonfile@4.0.0:
     optionalDependencies:
@@ -14155,8 +14101,6 @@ snapshots:
 
   node-addon-api@7.1.1: {}
 
-  node-buffer-encoding@1.0.2: {}
-
   node-cron@4.2.1: {}
 
   node-domexception@1.0.0: {}
@@ -14328,10 +14272,6 @@ snapshots:
   p-limit@3.1.0:
     dependencies:
       yocto-queue: 0.1.0
-
-  p-limit@6.1.0:
-    dependencies:
-      yocto-queue: 1.1.1
 
   p-locate@4.1.0:
     dependencies:
@@ -16049,8 +15989,6 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
-
-  yocto-queue@1.1.1: {}
 
   yoga-wasm-web@0.3.3: {}
 

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "eigenda-v2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [],
+  "sharedModules": ["eigenda", "shared-eigenlayer"]
+}

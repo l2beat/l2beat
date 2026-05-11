@@ -1,8 +1,7 @@
 {
   "LayerZeroReporter.sol": {
-    "hash": "0x0e7d2e1e33610c83b21dc833813267f01fc57f23563ee910c54e98baf36e4c8a",
+    "hash": "0x20bf1cdcc1ce873c54048220b6d2d92c4b96c03d622a43b20a6af57c0fa44a26",
     "address": "gno:0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B",
-    "chain": "gnosis",
     "blockNumber": 45931894
   }
 }

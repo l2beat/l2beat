@@ -1,8 +1,7 @@
 {
   "Treasury": {
-    "hash": "0x1e581c91de9e0c3cd50906d9d30663d1b8fe037db6a5a80caf0c20e961d7eb41",
-    "address": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-    "chain": "ethereum",
+    "hash": "0x38e90021f1f1c6b5378b5a32d25769119a4c3c07b14c2f813eb2b7a6264172cd",
+    "address": "eth:0xA092c7577354EA82a6c7e55B423c3DD80f0dF255",
     "blockNumber": 15138802
   }
 }

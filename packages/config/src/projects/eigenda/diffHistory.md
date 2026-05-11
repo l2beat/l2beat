@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xe82b7a74fcaf05a374da520c9e37e89f41573d09
+
+# Diff at Fri, 08 May 2026 07:51:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1775212321
+- current timestamp: 1775212321
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775212321 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) [eigenlayer/StakeRegistry] {
+    +++ description: Keeps track of the total stake of each operator.
+      sourceHashes.1:
+-        "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
++        "0x2164f0da2cf46f7b500efb558c3a6a0afe65e67d6534370fadf7dce65389b81f"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) [eigenlayer/BLSApkRegistry] {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      sourceHashes.1:
+-        "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
++        "0x913bc45c379cd6b9d480abbe939324e96f3330645202dd152a4c6532f69ad73e"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) [eigenlayer/RegistryCoordinator] {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      sourceHashes.1:
+-        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
++        "0x7bc3d6a892a6e8c6ec410ff8d531b91cca1a03c0c06abc1963b402fd63287f38"
+    }
+```
+
+```diff
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) [eigenlayer/EjectionManager] {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      sourceHashes.1:
+-        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
++        "0x479a55e20f8ffd16dffa5952f97f6abd15293e57871ef06140a12860676d5327"
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12) [eigenda/EigenDACertVerifierRouter] {
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+      sourceHashes.1:
+-        "0x74e8ba69f5e8defb4c133681950b646f84ffb58fd5e7173c13c1e10e020f7fea"
++        "0xc393791ca2cf5f681a53492e15aa1827f685403a9bfffaac231b0894a2faf47e"
+    }
+```
+
+```diff
+    contract EigenDA Multisig (eth:0x338477FfaF63c04AC06048787f910671eC914B34) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EigenDACertVerifier (eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846) [eigenda/EigenDACertVerifier] {
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+      sourceHashes.0:
+-        "0x5461af9788e297da9de7651464e440e49400a3448477acba821ff196c83d3c0e"
++        "0x44d0d26833c653bbf6f5d9304cb111e6bb07e35b899f0e2085a564a67a9738e3"
+    }
+```
+
+```diff
+    contract EigenDACertVerifier (eth:0x61692e93b6B045c444e942A91EcD1527F23A3FB7) [eigenda/EigenDACertVerifier] {
+    +++ description: A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.
+      sourceHashes.0:
+-        "0x89110242a58d5638684fdfe8778df04acaea95a903f7261783575fcef2b61fcd"
++        "0xdd2a64b937040e5d01e5a02cd2483d912df075a701f57bd580bd010f683e23d8"
+    }
+```
+
+```diff
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) [eigenlayer/EigenDADisperserRegistry] {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      sourceHashes.1:
+-        "0x8d337ccea9456dccbcd3d6b82ca9d61509d3a9343487e057438b300efe5484c6"
++        "0xd6d45d6bf7a42c401e94bff9aa98b523d14e47e6c91ec9e5aef48ddea6e75a78"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) [eigenlayer/EigenDAServiceManager] {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      sourceHashes.1:
+-        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
++        "0x5446a295966c1f9d773b7b50883f2d7b4890b72f6a5dd66926209ab6ac919a59"
+    }
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) [eigenlayer/PaymentVault] {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      sourceHashes.1:
+-        "0xf39de15799feffaa8711b3b5e9ff8fb4c66ef1cbac1fe00cc984f957663d73d1"
++        "0x198f5fd7944b62838fac91becbbf3cdb3aadaa098b9d64c37eccbabf33318378"
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) [eigenlayer/EigenDARelayRegistry] {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      sourceHashes.1:
+-        "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007"
++        "0x04415dba9be0ddc638a871b192f3a780b709a0841a143c08085a9f4ac1372040"
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) [eigenlayer/EigenDAThresholdRegistry] {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      sourceHashes.1:
+-        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
++        "0x77e829aa26d5459004c4d89d84d90fcc1876ecabc83130235db2c3a71f56b66f"
+    }
+```
+
+```diff
+    contract EigenDACertVerifier (eth:0xE1Ae45810A738F13e70Ac8966354d7D0feCF7BD6) [eigenda/EigenDACertVerifier_Legacy] {
+    +++ description: A legacy DACert verifier contract. It is used to verify v2 DA certificates. New verifiers should use the new verifier router contract.
+      sourceHashes.0:
+-        "0x3f32e0b975cf311b07f50d7af9a8c48fb99b5968c12a2d151b2433216d62994b"
++        "0xa1011ba58792b7a420e423a460df317432b7f1f0d3af4f543286f4c714cd7652"
+    }
+```
+
 Generated with discovered.json: 0xac4d88d6b4fa1bba89f7e398256c328be38d934c
 
 # Diff at Tue, 05 May 2026 10:22:08 GMT:

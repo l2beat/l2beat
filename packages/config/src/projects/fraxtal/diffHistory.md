@@ -1,3 +1,183 @@
+Generated with discovered.json: 0x0ea7d69c0b62f45491a69010e69190f7516a363a
+
+# Diff at Fri, 08 May 2026 07:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1758702279
+- current timestamp: 1758702279
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758702279 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0xa4526e33eb750144164c05badf980525f867cae82e7db6e108b17aeb61b99924"
++        "0x0aa60010b4e757abc3d2a8c5092ae466f97d6297d82a54e7911c8a1ace4be76a"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xd5047c4d0e194d60832d6fcddd0cfba77cc45a190d31800813ba676c19a7e751"
++        "0xa3098b297d5dadc6e01858656afe8c1b64d643afbd4f26cbafa58822cedd6a1d"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) [global/ProxyAdmin] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730"
++        "0xf455a6281c19d76a61ffb9a10247b781b9b6dc5ce83f91c4f7e048dee71bd1f2"
+    }
+```
+
+```diff
+    contract Frax (prev. FXS) Token (eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x46418240c78eee35508e54bfa7570ca98727fdec1af5b37ff5dd635233a0fb66"
++        "0xa98ce7966890735f472b27867bbf5515d6a023efa98190d03efd2f13084027e3"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xd2fb7800c8a63e6663a1b5d55f47921d7ef7cdf159f0ad8310ae401e97fa6b05"
++        "0x5e6aa203b89c7f38d9de389bcc555e33e79c9ba02a7494ea349cc0fbef770b34"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x29726460095cbabf67e02a68905ff301cb85d6b1652b230c0a4036f346dd6ebf"
++        "0xbffbe4ff6d3251a0172424a3351f5175a9e791763b7e2690ef1f1600fd21aeab"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) [fraxtal/OptimismPortalCGT] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x62a12fbc7ebd0b204991e4c3447170732d2acfab390458caa08cc96bd6417ece"
++        "0xfa0a5f211c201e60015669952dc4f16017ea7ec932a5d56809db995272ffa72b"
+    }
+```
+
+```diff
+    contract EtherRouter (eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C) [fraxtal/EtherRouter] {
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+      sourceHashes.0:
+-        "0x9e03a8813acf697f471971579204060db51665091a061d90320d055fcf64d4f5"
++        "0x52f45c097c48afefd4b35db27b4d9b840542db072586cf00bb5af0d5fdd0dcfd"
+    }
+```
+
+```diff
+    contract Frax Ether Token (eth:0x5E8422345238F34275888049021821E8E08CAa1f) [fraxtal/frxETH] {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      sourceHashes.0:
+-        "0x35d2793b796cde40be8f1ddaa988ae1c8fd2ad9f55b4b4d74946d35832703efa"
++        "0xe424a978313b8f62e2d435cb340764438f5072e2016c9eb719013edb0a415025"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x6de38b49bc1a04f15ed8bf666e32170c813f9e69b7c213c6e3fdb961091ec37e"
+    }
+```
+
+```diff
+    contract frxETH Minter (eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3) [fraxtal/FraxEtherMinter] {
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+      sourceHashes.0:
+-        "0x69f04bb460f0627fa685c48813134972ea72a339b1add8185fdde04f92a6e1f3"
++        "0xce7ff407b8b89a8e75ab4175c49d9e9d379d814b58985f926cc7434ab43d30eb"
+    }
+```
+
+```diff
+    contract Frax Multisig  (eth:0x8306300ffd616049FD7e4b0354a64Da835c1A81C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837"
++        "0x042a00d86fcb033183aa25bf84cc94b75ddcfbcd5d40f1b8845e9f4d9cf2cb73"
+    }
+```
+
+```diff
+    contract Staked Frax Ether Token (eth:0xac3E018457B222d93114458476f3E3416Abbe38F) [fraxtal/sfrxETH] {
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+      sourceHashes.0:
+-        "0xfe65651a8179606cdf20c60070a93224cb7b8fd4e89fb0d668b795503e8da33c"
++        "0xcd23df667cddb1663df94d178a78c98f37371f812c149c283138287261c07f88"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 2 (eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract frxETH Minter (eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138) [fraxtal/FrxEthMinter] {
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+      sourceHashes.0:
+-        "0xeb2d3e06200c7350a7bcb0c3b1b64c466c15459f1119fb068ae8a69483c30d55"
++        "0x94d2d09a090fe117ea57c2f8c3a4ffb7386b5f7c897518749ae0df3d53817a87"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 1 (eth:0xe0d7755252873c4eF5788f7f45764E0e17610508) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0x9143ab937dfbacc263de35dd4ea06fced1b0e1c1
 
 # Diff at Tue, 05 May 2026 10:22:11 GMT:

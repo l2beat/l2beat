@@ -2,7 +2,6 @@ import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { api } from '~/trpc/React'
 import type { InteropSelection } from '../../utils/types'
 import { InteropTopItems } from '../top-items/TopItems'
 import { TokensDialog } from './TokensDialog'
@@ -28,7 +27,6 @@ export function TopTokensCell({
   showNetMintedValueColumn?: boolean
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const utils = api.useUtils()
 
   return (
     <>
@@ -40,27 +38,15 @@ export function TopTokensCell({
           })),
           remainingCount: topItems.remainingCount,
         }}
-        onMouseEnter={
-          hideDialog
-            ? undefined
-            : () =>
-                utils.interop.tokens.prefetch({
-                  ...apiSelection,
-                  id: protocol.id,
-                  type,
-                })
-        }
         type="cell"
         setIsOpen={setIsOpen}
         hideDialog={hideDialog}
       />
       {!hideDialog && (
         <TokensDialog
-          id={protocol.id}
-          type={type}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          apiSelection={apiSelection}
+          queryInput={{ ...apiSelection, id: protocol.id, type }}
           title={
             <>
               <span>Top tokens & pairs by volume for </span>

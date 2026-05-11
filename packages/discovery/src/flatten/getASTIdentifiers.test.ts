@@ -45,7 +45,6 @@ describe(getASTIdentifiers.name, () => {
       [
         'DefinedLibrary1',
         'Buffer',
-        'bytes',
         'data',
         'buf',
         'UsedLibrary1',
@@ -65,6 +64,25 @@ describe(getASTIdentifiers.name, () => {
         'Library1',
         'Library2',
       ].sort(),
+    )
+  })
+
+  it('handles file-level constants', () => {
+    const source = `pragma solidity ^0.8.0;
+
+uint256 constant MAX_VALUE = 100;
+SomeLib.SomeType constant TYPED_CONST = SomeLib.compute();
+
+contract C {
+    function f() public pure returns (uint256) {
+        return MAX_VALUE;
+    }
+}`
+    const ast = parse(source)
+    const idents = ast.children.flatMap((c) => getASTIdentifiers(c))
+    const result = new Set(idents)
+    expect([...result].sort()).toEqual(
+      ['MAX_VALUE', 'TYPED_CONST', 'SomeLib.SomeType', 'SomeLib', 'C'].sort(),
     )
   })
 })

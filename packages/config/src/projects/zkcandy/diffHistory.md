@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x5f4dd63a7c5ad86ab0636fcf625f4d7b65a03338
+
+# Diff at Fri, 08 May 2026 07:52:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1773228424
+- current timestamp: 1773228424
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773228424 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract zkCandyZkEvmAdmin (eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196 act through it.
+      sourceHashes.0:
+-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
++        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
+    }
+```
+
+```diff
+    contract zkCandy Multisig (eth:0x8eb156588D2FAD21dE0066BAA5BfDcd940695196) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xF2704433d11842d15aa76BBF0E00407267a99C92) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
 Generated with discovered.json: 0x43e99efeddaed63def2490e4e5d75d11cebdebbf
 
 # Diff at Tue, 05 May 2026 10:23:58 GMT:

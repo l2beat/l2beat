@@ -1,7 +1,7 @@
+import { parseJsonc } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { Type } from 'cmd-ts'
 import { readFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
 import { join } from 'path'
 import type {
   InteropEvent,
@@ -92,14 +92,7 @@ export const Example = v
 
 function readJsonc(path: string): JSON {
   const contents = readFileSync(path, 'utf-8')
-  const errors: ParseError[] = []
-  const parsed = parse(contents, errors, {
-    allowTrailingComma: true,
-  }) as JSON
-  if (errors.length !== 0) {
-    throw new Error(`Cannot parse file ${path}`)
-  }
-  return parsed
+  return parseJsonc<JSON>(contents)
 }
 
 export function readExamples(): Record<string, Example> {

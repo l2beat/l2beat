@@ -116,7 +116,7 @@
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
-        "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
+        "0x5e0e881a698c9b45cde9f411e7a6bd51140bfc24fef11ead24a6d565f7eb8160"
       ],
       "proxyType": "immutable",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.",
@@ -182,7 +182,7 @@
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
+        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
       ],
       "proxyType": "immutable",
       "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).",
@@ -239,7 +239,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -296,8 +296,8 @@
       "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
-        "0x945d79fba7fe6f3e3e40f582b69b67983dbd63977e2fce47328aa12e16175fd7",
-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
+        "0xc5f57a922733a74b99146d3702f466aaffd6150b739c70a54551b7060653f0c4",
+        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",

@@ -1,5 +1,4 @@
 import { RefreshCwIcon } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
@@ -22,14 +21,13 @@ export function AnomaliesPage() {
 
   const response: AnomaliesSummaryResponse | undefined = data
   const rows: AggregatedAnomalyRow[] = response?.aggregatedItems ?? []
-  const aggregateValueDiffAlertThresholdPercent =
-    response?.aggregateValueDiffAlertThresholdPercent ?? 5
-  const idsWithInterpretation = rows.filter(
-    (row) => row.interpretation.length > 0,
-  ).length
   const idsWithSrcDstMismatch = rows.filter(
-    (row) => row.srcDstDiff.isHigh,
+    (row) => row.srcDstDiff.isSideMismatch,
   ).length
+  const aggregateSideMismatchDiffPercent =
+    response?.aggregateSideMismatchDiffPercent ?? 30
+  const aggregateSideMismatchMinVolumeUsd =
+    response?.aggregateSideMismatchMinVolumeUsd ?? 1_000_000
 
   return (
     <AppLayout>
@@ -39,16 +37,11 @@ export function AnomaliesPage() {
             <div className="space-y-1">
               <CardTitle>Anomalies</CardTitle>
               <CardDescription>
-                Aggregate anomaly summary migrated from the legacy interop
-                dashboard.
+                Aggregate alerts with readable explanations. Only aggregates
+                with active signals are shown.
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
-              <Button asChild variant="outline" size="sm">
-                <Link to="/interop/insights/anomalies/explorer">
-                  Open graph explorer
-                </Link>
-              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -61,18 +54,17 @@ export function AnomaliesPage() {
             </div>
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{rows.length} aggregate IDs</Badge>
-            <Badge variant="secondary">
-              {idsWithInterpretation} interpreted anomalies
-            </Badge>
+            <Badge variant="secondary">{rows.length} flagged aggregates</Badge>
             <Badge
               variant={idsWithSrcDstMismatch > 0 ? 'destructive' : 'secondary'}
             >
-              {idsWithSrcDstMismatch} src/dst mismatches
+              {idsWithSrcDstMismatch} side mismatches
             </Badge>
             <Badge variant="secondary">
-              {'>'} {aggregateValueDiffAlertThresholdPercent.toFixed(2)}%
-              src/dst diff alert
+              Side mismatch: larger side {'>='} $
+              {Math.round(aggregateSideMismatchMinVolumeUsd).toLocaleString()},
+              both sides {'>'} $0, and diff {'>='}{' '}
+              {aggregateSideMismatchDiffPercent.toFixed(0)}%
             </Badge>
           </CardContent>
         </Card>
@@ -84,13 +76,7 @@ export function AnomaliesPage() {
               <ErrorState className="m-6" cause={error.message} />
             ) : null}
             {!isLoading && !isError ? (
-              <AggregatedTransferAnomaliesTable
-                data={rows}
-                aggregateValueDiffAlertThresholdPercent={
-                  aggregateValueDiffAlertThresholdPercent
-                }
-                enableCsvExport
-              />
+              <AggregatedTransferAnomaliesTable data={rows} enableCsvExport />
             ) : null}
           </CardContent>
         </Card>

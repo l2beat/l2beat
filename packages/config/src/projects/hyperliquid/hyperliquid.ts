@@ -160,4 +160,16 @@ export const hyperliquid: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  interopConfig: {
+    description:
+      'Canonical USDC bridge between Arbitrum and Hyperliquid L1, validated by a permissioned set of Hyperliquid validators.',
+    plugins: [
+      {
+        plugin: 'hyperliquid-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }

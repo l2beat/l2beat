@@ -68,7 +68,11 @@ export async function getInteropFeatureConfig(
       ),
     },
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-    oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
+    oneSidedChains: [
+      ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>
+        flags.isEnabled('interop', 'oneSidedChain', chain),
+      ),
+    ],
   }
 }
 

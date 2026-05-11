@@ -84,7 +84,7 @@ export function getInteropFlowAggregates(
     chainPairTopProtocols: pairProtocols.topByGroup(3),
     topToken,
     topProtocol,
-    tokenIds: collectTopTokenIds(chainTopTokens, chainPairTopTokens, topToken),
+    tokenIds: [...globalTokens.keys()],
   }
 }
 
@@ -134,20 +134,4 @@ function chainPairKey(chainA: string, chainB: string) {
   return chainA < chainB
     ? `${chainA}${INTEROP_PAIR_SEPARATOR}${chainB}`
     : `${chainB}${INTEROP_PAIR_SEPARATOR}${chainA}`
-}
-
-function collectTopTokenIds(
-  chainTopTokens: Map<string, TopEntry[]>,
-  pairTopTokens: Map<string, TopEntry[]>,
-  topToken: TopEntry | undefined,
-): string[] {
-  const ids = new Set<string>()
-  for (const entries of chainTopTokens.values()) {
-    for (const e of entries) ids.add(e.id)
-  }
-  for (const entries of pairTopTokens.values()) {
-    for (const e of entries) ids.add(e.id)
-  }
-  if (topToken) ids.add(topToken.id)
-  return [...ids]
 }

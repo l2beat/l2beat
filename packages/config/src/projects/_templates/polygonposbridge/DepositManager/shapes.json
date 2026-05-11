@@ -1,11 +1,11 @@
 {
   "DepositManager_polygonpos": {
-    "hash": "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9",
+    "hash": "0x2a37aadf262f095a201912294cdccc6e935e1728d64f5e59a4367abca39f66e8",
     "address": "eth:0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc",
     "blockNumber": 22231805
   },
   "DepositManager_shibarium": {
-    "hash": "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c",
+    "hash": "0x1665f22aa8d67d519ab1fd8019a1d2e32034555c0c5debd24c850f166616a992",
     "address": "eth:0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
     "blockNumber": 22231805
   }
