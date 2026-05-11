@@ -510,6 +510,13 @@ fn main() {
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
+  '0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745': {
+    title: 'Celestia Blobstream DA bridge program',
+    description:
+      'ZK-friendly implementation of Celestia Blobstream DA bridge that proves that enough Celestia validators have confirmed a given data root.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'notVerified',
+  },
   '0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1': {
     title: 'Avail VectorX DA bridge program',
     description:
