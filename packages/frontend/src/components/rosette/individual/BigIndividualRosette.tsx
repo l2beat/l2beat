@@ -122,14 +122,28 @@ function RosetteTooltipContent() {
           vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
-          {content.outer.value}
+          {content.outer.regular
+            ? `Emergency: ${content.outer.value}`
+            : content.outer.value}
         </SentimentText>
-        {content.outer.warning && (
+        {content.outer.regular && (
+          <SentimentText
+            sentiment={content.outer.regular.sentiment ?? 'neutral'}
+            vibrant={true}
+            className="font-medium"
+          >
+            {`Regular: ${content.outer.regular.value}`}
+          </SentimentText>
+        )}
+        {content.outer.warning && !content.outer.regular && (
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.outer.warning.value}
             color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
           />
+        )}
+        {content.outer.warning && content.outer.regular && (
+          <span className="text-xs">{content.outer.warning.value}</span>
         )}
         <span className="text-xs">{content.outer.description}</span>
       </div>
@@ -142,14 +156,28 @@ function RosetteTooltipContent() {
           vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
-          {content.inner.value}
+          {content.inner.regular
+            ? `Emergency: ${content.inner.value}`
+            : content.inner.value}
         </SentimentText>
-        {content.inner.warning && (
+        {content.inner.regular && (
+          <SentimentText
+            sentiment={content.inner.regular.sentiment ?? 'neutral'}
+            vibrant={true}
+            className="font-medium"
+          >
+            {`Regular: ${content.inner.regular.value}`}
+          </SentimentText>
+        )}
+        {content.inner.warning && !content.inner.regular && (
           <WarningBar
             icon={RoundedWarningIcon}
             text={content.inner.warning.value}
             color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
           />
+        )}
+        {content.inner.warning && content.inner.regular && (
+          <span className="text-xs">{content.inner.warning.value}</span>
         )}
 
         <span className="text-xs">{content.inner.description}</span>

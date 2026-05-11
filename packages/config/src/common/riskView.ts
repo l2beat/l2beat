@@ -687,15 +687,17 @@ export function EXIT_WINDOW(
 }
 
 export function EXIT_WINDOW_ZKSTACK(upgradeDelay: number): ExitWindowRisk {
-  const description =
+  const regular =
     upgradeDelay > 0
-      ? `Non-emergency upgrades go through a ${formatSeconds(upgradeDelay)} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
+      ? ({ value: formatSeconds(upgradeDelay), sentiment: 'warning' } as const)
+      : undefined
+  const description =
+    regular !== undefined
+      ? `Non-emergency upgrades go through a ${regular.value} delay, but the central operator can still censor withdrawal transactions by implementing a TransactionFilterer with no delay.`
       : 'The central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay.'
   return {
     ...EXIT_WINDOW(0, 0),
-    ...(upgradeDelay > 0 && {
-      regular: { value: formatSeconds(upgradeDelay), sentiment: 'warning' },
-    }),
+    ...(regular && { regular }),
     warning: {
       value: description,
       sentiment: 'warning',
@@ -711,13 +713,13 @@ export function EXIT_WINDOW_NITRO(
   l1TimelockDelay: number,
   isPostBoLD: boolean,
 ): ExitWindowRisk {
+  const emergency = EXIT_WINDOW(0, selfSequencingDelay)
+  const regular = EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay)
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(
     l2TimelockDelay,
   )} delay. Since there is a ${formatSeconds(
     selfSequencingDelay,
-  )} delay to force a tx (forcing the inclusion in the following state update), users have only ${formatSeconds(
-    l2TimelockDelay - selfSequencingDelay,
-  )} to exit.
+  )} delay to force a tx (forcing the inclusion in the following state update), users have only ${regular.value} to exit.
 
   If users post a tx after that time, they would only be able to self propose a state root ${formatSeconds(
     isPostBoLD ? validatorAfkTime : challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
@@ -727,10 +729,7 @@ export function EXIT_WINDOW_NITRO(
     challengeWindowSeconds,
   )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
   return {
-    ...withRegularExitWindow(
-      EXIT_WINDOW(0, selfSequencingDelay),
-      EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
-    ),
+    ...withRegularExitWindow(emergency, regular),
     warning: {
       value: description,
       sentiment: 'warning',
@@ -743,12 +742,14 @@ export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
   selfSequencingDelay: number,
   l1TimelockDelay: number,
 ): ExitWindowRisk {
-  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
+  const emergency = EXIT_WINDOW(0, selfSequencingDelay)
+  const regular = EXIT_WINDOW(
+    l2TimelockDelay + l1TimelockDelay,
+    selfSequencingDelay,
+  )
+  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${regular.value} to exit.`
   return {
-    ...withRegularExitWindow(
-      EXIT_WINDOW(0, selfSequencingDelay),
-      EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
-    ),
+    ...withRegularExitWindow(emergency, regular),
     warning: {
       value: description,
       sentiment: 'warning',
@@ -774,12 +775,11 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
 
 export function EXIT_WINDOW_STARKNET(upgradeDelay: number): ExitWindowRisk {
   const scReactionTime = 60 * 60 * 24 * 1 // time needed for the sc minority to be alerted and prove/propose a new state root
-  const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${formatSeconds(upgradeDelay - scReactionTime)} to exit.`
+  const emergency = EXIT_WINDOW(0, scReactionTime)
+  const regular = EXIT_WINDOW(upgradeDelay, scReactionTime)
+  const description = `Non-emergency upgrades are initiated on L1 and go through a ${formatSeconds(upgradeDelay)} delay. In case users are censored, the Security Council minority can be alerted to enforce censorship resistance by submitting a new state root. This process is assumed to take ${formatSeconds(scReactionTime)}, leaving users ${regular.value} to exit.`
   return {
-    ...withRegularExitWindow(
-      EXIT_WINDOW(0, scReactionTime),
-      EXIT_WINDOW(upgradeDelay, scReactionTime),
-    ),
+    ...withRegularExitWindow(emergency, regular),
     warning: {
       value: description,
       sentiment: 'warning',

@@ -115,9 +115,20 @@ function RosetteTooltipContent() {
         vibrant={true}
         className="mb-2 flex items-center gap-1 font-medium text-heading-18"
       >
-        {selectedRisk.value}
+        {selectedRisk.regular
+          ? `Emergency: ${selectedRisk.value}`
+          : selectedRisk.value}
       </SentimentText>
-      {selectedRisk.warning && (
+      {selectedRisk.regular && (
+        <SentimentText
+          sentiment={selectedRisk.regular.sentiment ?? 'neutral'}
+          vibrant={true}
+          className="mb-2 block font-medium text-heading-18"
+        >
+          {`Regular: ${selectedRisk.regular.value}`}
+        </SentimentText>
+      )}
+      {selectedRisk.warning && !selectedRisk.regular && (
         <WarningBar
           className="mb-2 px-3 py-2"
           icon={RoundedWarningIcon}
@@ -125,6 +136,9 @@ function RosetteTooltipContent() {
           color={sentimentToWarningBarColor(selectedRisk.warning.sentiment)}
           ignoreMarkdown
         />
+      )}
+      {selectedRisk.warning && selectedRisk.regular && (
+        <p className="mb-2">{selectedRisk.warning.value}</p>
       )}
       <span>{selectedRisk.description}</span>
     </TooltipContent>
