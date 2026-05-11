@@ -16,8 +16,6 @@ Kailua dispute-game rotation. MegaETH deployed a new KailuaGame implementation a
 - **megaeth.ts** rewired to resolve the active game/treasury dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → its `KAILUA_TREASURY`, instead of name-based `getContract('KailuaGame'/'KailuaTreasury')` lookups (which broke once the upgrade made multiple Kailua instances discoverable).
 - **risc0/KailuaGame** shapes.json extended to cover the new `0x8c0Ed8Dd...` impl so its `ignoreMethods: ["getChallengerDuration"]` applies and the `ignoreRelatives` settings prevent discovery from cascading into tournament-game instances.
 
-Pre-existing Nov-2025 treasury chain (`0xE4e456c64B...` root, `0x8b28c0Ba...` anchor) and the in-flight tournament games created by the new treasury are no longer pulled into discovery — the operational treasury template's `ignoreRelatives: ["children", "parentGame", "lastResolved"]` cuts off the chain.
-
 ## Watched changes
 
 ```diff
