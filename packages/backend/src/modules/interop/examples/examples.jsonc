@@ -2966,6 +2966,46 @@
       "opstack-standardbridge.L2ToL1Transfer"
     ]
   },
+  "opstack-standardbridge-megaeth-eth": {
+    "tags": ["opstack"],
+    "description": "megaeth <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: ~0.186 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xf37b0a88752ee08a388f06979aaa5f2784621b54bcb95e584a7fa193b843ba75"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x22a00319a061b24cad8efcc4f86ed56ecbb5c5e3c869a8671ada250a94ac5298"
+      },
+      // L2 -> L1: ~53.4 ETH withdrawal
+      {
+        "chain": "megaeth",
+        "tx": "0xd19d0e90e5e4d490106f58c9920caa16014c1c4b2860bd7a4e7ca26d40641dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x14b48eb64ca4f2c0e0aae70f9e6bed464ad1827458c823cdcfa6664b7f9fbf51"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 0.186125 } }
+        },
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 53.407822 } }
+        }
+      ]
+    }
+  },
   "opstack-standardbridge-ink-eth": {
     "tags": ["opstack"],
     "description": "ink <-> ethereum (eth)",
