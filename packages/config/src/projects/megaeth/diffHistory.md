@@ -11,7 +11,7 @@ Generated with discovered.json: 0x4f9da5ecd51aff4a442c3d772135eab636a1d90f
 Kailua dispute-game implementation rotation:
 
 - **OptimismPortal2** (`eth:0x7f82f57F...`) — `respectedGameTypeUpdatedAt` bumped from `1762796999` to `1778245595` (the `setRespectedGameType` call refresh that triggered today's flag). `respectedGameType` unchanged at `1337` (KailuaGame).
-- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...`. The old `KailuaGame` impl is deleted from discovery.
+- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...`. The old `KailuaGame` impl is deleted from discovery. KailuaGame: [diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84).
 - **New KailuaTreasury** `0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8` templated under the existing `megaeth/KailuaTreasury` variant (criteria.json updated to include this second address; shape hash matches the previous KailuaTreasury, so no shape change needed).
 - Several additional `KailuaGame` and `KailuaTreasury` contracts now appear in discovery (`0x0a93bd69...`, `0x6973F25f...`, `0x70ce49f7...`, `0x9a12DC0F...`, `0x01853F26...`, `0x40B4cB50...`). These are reachable from the new treasury's reference graph and represent in-flight tournament games / past treasuries; not new implementation contracts.
 
