@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { Badge } from '~/components/core/Badge'
 import {
@@ -5,7 +6,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
-import { formatAge } from '~/utils/formatAge'
 import { formatTimestamp } from '~/utils/formatTimestamp'
 import { statusRank } from '~/utils/statusRank'
 import type { DaTrackingStatusRow } from '../types'
@@ -103,12 +103,21 @@ export const daTrackingStatusColumns: TableOptions<DaTrackingStatusRow>['columns
     }),
     columnHelper.accessor('ageSeconds', {
       header: 'Age',
-      cell: ({ getValue }) => (
-        <span className="font-mono text-xs">{formatAge(getValue())}</span>
-      ),
+      cell: ({ getValue }) => {
+        const value = getValue()
+
+        return (
+          <span className="font-mono text-xs">
+            {value === undefined ? 'n/a' : formatSeconds(value)}
+          </span>
+        )
+      },
       meta: {
         csvHeader: 'Age',
-        getCsvValue: ({ row }) => formatAge(row.original.ageSeconds),
+        getCsvValue: ({ row }) =>
+          row.original.ageSeconds === undefined
+            ? 'n/a'
+            : formatSeconds(row.original.ageSeconds),
       },
     }),
     columnHelper.accessor('since', {
