@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1777994290,
+  "timestamp": 1778232940,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -39,7 +39,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 5253,
+        "batchCount": 5319,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -408,7 +408,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0xf06b16794adf2bb7e51e6e57bf9a293749225e76538648c2d7ec5b89b94d288e",
+        "latestConfirmed": "0x275b655b30827b0af85a09992126ea0000910f65a58c3d8f4fce301493c5652c",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -624,7 +624,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 132,
+        "nonce": 133,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -901,8 +901,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 5253,
-        "sequencerReportedSubMessageCount": 4489824
+        "sequencerMessageCount": 5319,
+        "sequencerReportedSubMessageCount": 4521628
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1062,16 +1062,18 @@
         "$immutable": false,
         "$implementation": "ethereal:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
+          "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9",
+          "ethereal:0x9D2178879e0387B1820168463670c43889536042",
           "ethereal:0x4320A9290720462F0cd5dfB0F0B9bD4D4A74A8D3",
           "ethereal:0xF3D11F9829Fdb9F61a7d987CCAa858054E80Eb33",
           "ethereal:0xb6349012024331A6989cdc4cfDf480C40cfAE058"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xc5df4fce396ae873e7589f3a4ee4615f56051cdd8fd8145d56ffbb508facc808",
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 2,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1179,7 +1181,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 91,
+        "nonce": 97,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1318,6 +1320,11 @@
     },
     {
       "address": "ethereal:0x99682F56F4ccCF61BD7e449924f2f62D395e1E45",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "ethereal:0x9D2178879e0387B1820168463670c43889536042",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1494,6 +1501,11 @@
       "implementationNames": {
         "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37": "PerpEngine"
       }
+    },
+    {
+      "address": "ethereal:0xcE7a6c96B0a351081a6053e6C95FA616555f3fb9",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "ethereal:0xE3F95F2e1aDEC092337FB5D93C1fE87558658b11",
@@ -2833,6 +2845,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 459677506, "ethereal": 4490193 },
-  "permissionsConfigHash": "0x297f81d31afbcd629304fdaf8a2b8e16989f98f0b96ad4640b847e973600c210"
+  "usedBlockNumbers": { "arbitrum": 460628939, "ethereal": 4521955 },
+  "permissionsConfigHash": "0xb87ef75c0e5b313a9b7987f1d6a3ad0909b9c27d7722b21470c032563cdd7b77"
 }

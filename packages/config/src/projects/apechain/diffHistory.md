@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x9317fa6b16cb7668a68d6370a3b5f94c2756f026
+
+# Diff at Fri, 08 May 2026 09:36:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1770822607
+- current timestamp: 1778232906
+
+## Description
+
+Shared SafeL2 (`0x6Dc61D9E...`) — signer `0x5582a8A4` removed. Threshold unchanged at 2; total signers 4 → 3 (50% → 67%). Same shared multisig change observed on `appchain` (same address on Ethereum), `molten`, `rari`.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "arb1:0x5582a8A4f2B04341697cEA4Cf4289a01814C26e6"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xa8b57a45cfe7ec3992b7ebac478e654f0bae81eb
 
 # Diff at Fri, 08 May 2026 07:51:03 GMT:

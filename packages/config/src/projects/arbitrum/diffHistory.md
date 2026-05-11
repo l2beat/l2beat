@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xaf1bba088d3fea7d73abe2cb22e1958e75a86ed0
+Generated with discovered.json: 0xe2935e3b323985ad7325fb01cacb76be2d60e55e
 
 # Diff at Fri, 08 May 2026 07:51:04 GMT:
 
@@ -26861,7 +26861,7 @@ Generated with discovered.json: 0xe996eeb6cd08d695db9b13369e8aded556ec9bb2
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Discovery-side fix only (no on-chain change): **SequencerInbox** (`eth:0x1c479675...`) `sequencerVersion` previously read as a handler error (`Processing error occurred.`) — the latest discovery package resolves it cleanly to `0x00`. The error entry is dropped from the contract's `errors` map.
 
 ## Watched changes
 

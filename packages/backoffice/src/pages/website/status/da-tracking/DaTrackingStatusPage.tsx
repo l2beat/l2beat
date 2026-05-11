@@ -12,16 +12,16 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
-import { TrackedTxsStatusTable } from './table/TrackedTxsStatusTable'
-import type { TrackedTxsStatusRow } from './types'
+import { DaTrackingStatusTable } from './table/DaTrackingStatusTable'
+import type { DaTrackingStatusRow } from './types'
 
-export function TrackedTxsStatusPage() {
+export function DaTrackingStatusPage() {
   const { data, error, isError, isLoading, isFetching, refetch } =
-    api.trackedTxs.status.configs.useQuery(undefined, {
+    api.dataAvailability.status.configs.useQuery(undefined, {
       refetchInterval: 3600_000,
     })
 
-  const rows: TrackedTxsStatusRow[] = data ?? []
+  const rows: DaTrackingStatusRow[] = data ?? []
   const missingCount = rows.filter((row) => row.status === 'missing').length
   const staleCount = rows.filter((row) => row.status === 'stale').length
   const freshCount = rows.filter((row) => row.status === 'fresh').length
@@ -34,7 +34,7 @@ export function TrackedTxsStatusPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0 flex-1 space-y-2">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <CardTitle>Tracked txs status</CardTitle>
+                  <CardTitle>DA tracking status</CardTitle>
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary">{rows.length} rows</Badge>
                     <Badge
@@ -56,8 +56,8 @@ export function TrackedTxsStatusPage() {
                   </div>
                 </div>
                 <CardDescription>
-                  Active tracked transaction configs and their latest indexed
-                  data point.
+                  Active DA tracking configs and their latest indexed data
+                  point.
                 </CardDescription>
               </div>
               <Button
@@ -81,7 +81,7 @@ export function TrackedTxsStatusPage() {
               <ErrorState className="m-6" cause={error.message} />
             ) : null}
             {!isLoading && !isError ? (
-              <TrackedTxsStatusTable
+              <DaTrackingStatusTable
                 data={rows}
                 className="min-h-0 flex-1"
                 scrollViewportClassName="min-h-0 flex-1 max-h-none"

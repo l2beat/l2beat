@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xe007b4f5bbb8b5e8114df6745aa86e9139c1756e
+
+# Diff at Fri, 08 May 2026 09:37:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1770824014
+- current timestamp: 1778232986
+
+## Description
+
+Conduit Multisig 3 (`base:0x7dCe2FEE...`) — signer `0x381624F7` removed. Threshold unchanged at 4; total signers 13 → 12 (31% → 33%). Same Conduit-managed signer rotation seen across many Conduit-operated chains in recent dailies (the Conduit Multisig 1 on Ethereum had the same change).
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "base:0x381624F7912BddD83dc67c6C53Ef6FE61B87Cf07"
+      values.multisigThreshold:
+-        "4 of 13 (31%)"
++        "4 of 12 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x966a2875355446e5edce1861680d57dd8291d265
 
 # Diff at Fri, 08 May 2026 07:51:43 GMT:
