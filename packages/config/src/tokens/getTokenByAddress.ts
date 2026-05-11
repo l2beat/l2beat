@@ -26,7 +26,10 @@ for (const raw of generated.tokens) {
   }
 
   if (token.address) {
-    TOKEN_BY_ADDRESS.set(token.address.toLowerCase(), token)
+    TOKEN_BY_ADDRESS.set(
+      `${token.chainId}:${token.address.toLowerCase()}`,
+      token,
+    )
   }
 
   const existing = TOKENS_BY_SYMBOL.get(token.symbol) ?? []
@@ -43,8 +46,7 @@ export function getTokenByAddress(
   if (address.toLowerCase() === ETH_SENTINEL) {
     return getTokenBySymbol('ETH')
   }
-  const token = TOKEN_BY_ADDRESS.get(address.toLowerCase())
-  if (!token || token.chainId !== chainId) return undefined
+  const token = TOKEN_BY_ADDRESS.get(`${chainId}:${address.toLowerCase()}`)
   return token
 }
 

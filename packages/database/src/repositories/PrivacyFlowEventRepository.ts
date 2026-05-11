@@ -145,6 +145,20 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigInTimeRange(
+    configurationId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('PrivacyFlowEvent')
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async getAll(): Promise<PrivacyFlowEventRecord[]> {
     const rows = await this.db
       .selectFrom('PrivacyFlowEvent')

@@ -133,6 +133,42 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     },
   )
 
+  describe(
+    PrivacyFlowEventRepository.prototype.deleteByConfigInTimeRange.name,
+    () => {
+      it('deletes records in timestamp range', async () => {
+        const records = [
+          flowEvent('a', START, 100, 'deposit', 1, 100n),
+          flowEvent('a', UnixTime(START + 1), 101, 'deposit', 1, 200n),
+          flowEvent('a', UnixTime(START + 2), 102, 'deposit', 1, 300n),
+          flowEvent(
+            'b',
+            UnixTime(START + 1),
+            103,
+            'deposit',
+            1,
+            400n,
+            0,
+            'b'.repeat(12),
+          ),
+        ]
+
+        await repository.upsertMany(records)
+
+        const deleted = await repository.deleteByConfigInTimeRange(
+          'a'.repeat(12),
+          START,
+          UnixTime(START + 1),
+        )
+
+        expect(deleted).toEqual(2)
+
+        const result = await repository.getAll()
+        expect(result).toEqualUnsorted([records[2]!, records[3]!])
+      })
+    },
+  )
+
   describe(PrivacyFlowEventRepository.prototype.deleteAll.name, () => {
     it('deletes all rows', async () => {
       await repository.upsertMany([
@@ -157,10 +193,12 @@ function flowEvent(
   direction: 'deposit' | 'withdrawal',
   count: number,
   amount: bigint,
-  valueUsd: number | null = null,
+  valueUsd = 0,
+  configurationId = 'a'.repeat(12),
+  logIndex?: number,
 ): PrivacyFlowEventRecord {
   return {
-    configurationId: 'a'.repeat(12),
+    configurationId,
     projectId,
     bucketId: 'bucket',
     chain: 'ethereum',
@@ -168,7 +206,7 @@ function flowEvent(
     timestamp,
     blockNumber,
     txHash: `0x${blockNumber.toString(16).padStart(64, '0')}`,
-    logIndex: blockNumber,
+    logIndex: logIndex ?? blockNumber,
     count,
     amount,
     priceId: 'ethereum',

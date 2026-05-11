@@ -309,6 +309,7 @@ model PrivacyFlowEvent {
   @@index([projectId, timestamp])
   @@index([projectId, bucketId, timestamp])
   @@index([configurationId, blockNumber])
+  @@index([configurationId, timestamp])
 }
 
 model UpdateDiff {

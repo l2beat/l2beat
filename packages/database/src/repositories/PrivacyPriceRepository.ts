@@ -79,6 +79,25 @@ export class PrivacyPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getPricesByPriceIdsInRange(
+    priceIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<PrivacyPriceRecord[]> {
+    if (priceIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('PrivacyPrice')
+      .selectAll()
+      .where('priceId', 'in', priceIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigs(
     configs: {
       configurationId: string

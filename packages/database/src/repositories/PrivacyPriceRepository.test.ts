@@ -113,6 +113,75 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
     },
   )
 
+  describe(
+    PrivacyPriceRepository.prototype.getPricesByPriceIdsInRange.name,
+    () => {
+      it('returns prices for all matching priceIds in range', async () => {
+        const records = [
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 1.5,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(2000),
+            priceUsd: 2.5,
+            priceId: 'ethereum',
+          },
+          {
+            configurationId: 'cfg2'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 0.5,
+            priceId: 'usd-coin',
+          },
+          {
+            configurationId: 'cfg3'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 100,
+            priceId: 'bitcoin',
+          },
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(3000),
+            priceUsd: 3.5,
+            priceId: 'ethereum',
+          },
+        ]
+
+        await repository.upsertMany(records)
+
+        const result = await repository.getPricesByPriceIdsInRange(
+          ['ethereum', 'usd-coin'],
+          UnixTime(1000),
+          UnixTime(2000),
+        )
+
+        expect(result).toEqualUnsorted([records[0]!, records[1]!, records[2]!])
+      })
+
+      it('returns empty array when priceIds is empty', async () => {
+        await repository.upsertMany([
+          {
+            configurationId: 'cfg1'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 1.5,
+            priceId: 'ethereum',
+          },
+        ])
+
+        const result = await repository.getPricesByPriceIdsInRange(
+          [],
+          UnixTime(1000),
+          UnixTime(2000),
+        )
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
   describe(PrivacyPriceRepository.prototype.deleteByConfigs.name, () => {
     it('deletes records by config and range', async () => {
       const records = [

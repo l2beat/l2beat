@@ -49,44 +49,56 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
       configurations: configurations.length,
     })
 
+    const configsByPriceId = new Map<
+      string,
+      Configuration<PrivacyPriceIndexerConfig>[]
+    >()
+    for (const configuration of configurations) {
+      const priceId = configuration.properties.priceId
+      const existing = configsByPriceId.get(priceId) ?? []
+      existing.push(configuration)
+      configsByPriceId.set(priceId, existing)
+    }
+
     const records = (
       await Promise.all(
-        configurations.map(async (configuration) => {
-          try {
-            const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-              CoingeckoId(configuration.properties.priceId),
-              UnixTime(from),
-              adjustedTo,
-            )
+        Array.from(configsByPriceId.entries()).map(
+          async ([priceId, configs]) => {
+            try {
+              const prices =
+                await this.$.priceProvider.getUsdPriceHistoryHourly(
+                  CoingeckoId(priceId),
+                  UnixTime(from),
+                  adjustedTo,
+                )
 
-            const configurationRecords: PrivacyPriceRecord[] = prices.map(
-              (p) => ({
-                configurationId: configuration.id,
-                timestamp: p.timestamp,
-                priceUsd: p.value,
-                priceId: configuration.properties.priceId,
-              }),
-            )
+              const configurationRecords: PrivacyPriceRecord[] =
+                configs.flatMap((configuration) =>
+                  prices.map((p) => ({
+                    configurationId: configuration.id,
+                    timestamp: p.timestamp,
+                    priceUsd: p.value,
+                    priceId,
+                  })),
+                )
 
-            return configurationRecords
-          } catch (error) {
-            if (
-              error instanceof Error &&
-              error.message.startsWith('Insufficient data in response')
-            ) {
-              this.logger.warn(
-                `Failed to fetch prices for ${configuration.properties.priceId}`,
-                {
-                  priceId: configuration.properties.priceId,
+              return configurationRecords
+            } catch (error) {
+              if (
+                error instanceof Error &&
+                error.message.startsWith('Insufficient data in response')
+              ) {
+                this.logger.warn(`Failed to fetch prices for ${priceId}`, {
+                  priceId,
                   error,
-                },
-              )
-              return []
-            }
+                })
+                return []
+              }
 
-            throw error
-          }
-        }),
+              throw error
+            }
+          },
+        ),
       )
     ).flat()
 

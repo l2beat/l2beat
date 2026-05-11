@@ -25,6 +25,8 @@ interface PrivacyFlowIndexerDeps
   db: Database
 }
 
+const BLOCK_TIMESTAMP_CACHE_MAX_SIZE = 100_000
+
 export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerConfig> {
   private readonly blockTimestampCache = new Map<number, UnixTime>()
 
@@ -51,11 +53,8 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     to: number,
     configurations: Configuration<PrivacyFlowIndexerConfig>[],
   ) {
-    const adjustedFrom =
-      UnixTime.toStartOf(from, 'hour') < from
-        ? UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
-        : UnixTime.toStartOf(from, 'hour')
-    const adjustedTo = Math.min(UnixTime.toEndOf(adjustedFrom, 'day'), to)
+    const adjustedFrom = roundUpToHour(from)
+    const adjustedTo = Math.min(UnixTime.toNext(adjustedFrom, 'day'), to)
     this.logger.info('Fetching privacy flow logs', {
       from: adjustedFrom,
       to: adjustedTo,
@@ -92,7 +91,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   ): Promise<void> {
     for (const configuration of configurations) {
       const deletedRecords =
-        await this.$.db.privacyFlowEvent.deleteByConfigInBlockRange(
+        await this.$.db.privacyFlowEvent.deleteByConfigInTimeRange(
           configuration.id,
           configuration.from,
           configuration.to,
@@ -116,10 +115,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   ): Promise<PrivacyFlowEventRecord[]> {
     if (configurations.length === 0) return []
 
-    const hourFrom =
-      UnixTime.toStartOf(from, 'hour') < from
-        ? UnixTime.toStartOf(from, 'hour') + UnixTime.HOUR
-        : UnixTime.toStartOf(from, 'hour')
+    const hourFrom = roundUpToHour(from)
     const hourTo = UnixTime.toStartOf(to, 'hour')
 
     const blockFrom =
@@ -229,7 +225,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
         price !== undefined,
         `Missing price for ${config.priceId} at ${hourTimestamp}`,
       )
-      const valueUsd = (Number(raw.amount) * price) / 10 ** config.decimals
+      const valueUsd = bigintToFloat(raw.amount, config.decimals) * price
 
       return {
         configurationId: raw.configuration.id,
@@ -255,27 +251,27 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       timestamp: UnixTime
     }[],
   ): Promise<Map<string, number>> {
-    const priceIds = new Set(
-      rawRecords.map((r) => r.configuration.properties.priceId),
+    const priceIds = Array.from(
+      new Set(rawRecords.map((r) => r.configuration.properties.priceId)),
     )
-    const timestamps = rawRecords.map((r) => r.timestamp)
-    const minTimestamp = UnixTime.toStartOf(Math.min(...timestamps), 'hour')
-    const maxTimestamp = UnixTime.toStartOf(Math.max(...timestamps), 'hour')
+    let minRaw = rawRecords[0].timestamp
+    let maxRaw = rawRecords[0].timestamp
+    for (const r of rawRecords) {
+      if (r.timestamp < minRaw) minRaw = r.timestamp
+      if (r.timestamp > maxRaw) maxRaw = r.timestamp
+    }
+    const minTimestamp = UnixTime.toStartOf(minRaw, 'hour')
+    const maxTimestamp = UnixTime.toStartOf(maxRaw, 'hour')
+
+    const prices = await this.$.db.privacyPrice.getPricesByPriceIdsInRange(
+      priceIds,
+      minTimestamp,
+      maxTimestamp,
+    )
 
     const lookup = new Map<string, number>()
-
-    const priceResults = await Promise.all(
-      Array.from(priceIds).map((priceId) =>
-        this.$.db.privacyPrice
-          .getPricesByPriceIdInRange(priceId, minTimestamp, maxTimestamp)
-          .then((prices) => ({ priceId, prices })),
-      ),
-    )
-
-    for (const { priceId, prices } of priceResults) {
-      for (const price of prices) {
-        lookup.set(`${priceId}:${price.timestamp}`, price.priceUsd)
-      }
+    for (const price of prices) {
+      lookup.set(`${price.priceId}:${price.timestamp}`, price.priceUsd)
     }
 
     return lookup
@@ -299,12 +295,23 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     if (missing.length > 0) {
       const timestamps = await this.$.blockProvider.getBlockTimestamps(missing)
       for (const [blockNumber, timestamp] of timestamps) {
-        this.blockTimestampCache.set(blockNumber, timestamp)
+        this.cacheBlockTimestamp(blockNumber, timestamp)
         lookup.set(blockNumber, timestamp)
       }
     }
 
     return lookup
+  }
+
+  private cacheBlockTimestamp(blockNumber: number, timestamp: UnixTime): void {
+    // FIFO eviction: Map preserves insertion order, so the first key is oldest.
+    if (this.blockTimestampCache.size >= BLOCK_TIMESTAMP_CACHE_MAX_SIZE) {
+      const oldest = this.blockTimestampCache.keys().next().value
+      if (oldest !== undefined) {
+        this.blockTimestampCache.delete(oldest)
+      }
+    }
+    this.blockTimestampCache.set(blockNumber, timestamp)
   }
 
   static idToConfigurationId(config: PrivacyFlowIndexerConfig): string {
@@ -364,4 +371,18 @@ function buildConfigMap(
 function stringifyParams(params: Record<string, unknown>): string {
   const keys = Object.keys(params).sort()
   return keys.map((k) => `${k}=${String(params[k])}`).join(',')
+}
+
+function roundUpToHour(timestamp: number): number {
+  const hourStart = UnixTime.toStartOf(timestamp, 'hour')
+  return hourStart < timestamp ? hourStart + UnixTime.HOUR : hourStart
+}
+
+// Splits the bigint into whole/fractional parts before casting to Number to
+// avoid precision loss for large raw amounts (e.g. 18-decimal tokens).
+function bigintToFloat(amount: bigint, decimals: number): number {
+  const divisor = 10n ** BigInt(decimals)
+  const whole = amount / divisor
+  const frac = amount % divisor
+  return Number(whole) + Number(frac) / Number(divisor)
 }
