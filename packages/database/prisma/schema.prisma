@@ -468,6 +468,18 @@ model DeployedToken {
   @@index([abstractTokenId])
 }
 
+model TokenIngestionQueueEntry {
+  chain     String   @db.VarChar(32)
+  address   String   @db.VarChar(255)
+  state     String   @default("pending") @db.VarChar(32)
+  message   String?  @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@id([chain, address])
+  @@index([state, updatedAt])
+}
+
 model TokenConnection {
   tokenFromChain   String  @db.VarChar(32)
   tokenFromAddress String  @db.VarChar(255)

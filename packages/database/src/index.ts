@@ -85,6 +85,11 @@ export type {
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
+export type {
+  TokenIngestionQueueAddress,
+  TokenIngestionQueueRecord,
+  TokenIngestionQueueState,
+} from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
