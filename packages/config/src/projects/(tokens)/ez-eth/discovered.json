@@ -9,7 +9,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
-        "0xa8e9f180ef81d5b199440aa49bc0e39c74dd551d29934400210f55f5ec3c10f6"
+        "0x65f88721e4038d8f63b8dd0fcc560d6f1cbe8548ae351ac5ce9b84c97343e20b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],

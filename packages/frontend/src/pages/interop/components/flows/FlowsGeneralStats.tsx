@@ -1,24 +1,34 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { env } from '~/env'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { TokensDialog } from '../tokens/TokensDialog'
+import { InteropTopItems } from '../top-items/TopItems'
 import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats() {
+  const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
   const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
 
-  const { data, isLoading } = api.interop.flows.useQuery({
+  const queryInput = {
     chains: selectedChains,
     protocolIds: selectedProtocols,
-  })
+  }
+  const tokensQueryInput = {
+    from: selectedChains,
+    to: selectedChains,
+    protocolIds: selectedProtocols,
+    id: undefined,
+  }
+
+  const { data, isLoading } = api.interop.flows.useQuery(queryInput)
 
   const { dollarsPerParticle } = useScaledParticleCounts(
     selectedChains,
@@ -67,6 +77,19 @@ export function FlowsGeneralStats() {
             title="Transfers"
             value={formatInteger(data?.stats.totalTransferCount ?? 0)}
             isLoading={isLoading}
+          />
+          <Card
+            title="Unique tokens"
+            value={formatInteger(data?.stats.tokenCount ?? 0)}
+            isLoading={isLoading}
+            footer={
+              <UniqueTokensFooter
+                isLoading={isLoading}
+                tokenCount={data?.stats.tokenCount}
+                topTokens={data?.stats.topTokens}
+                setIsOpen={setIsTokensDialogOpen}
+              />
+            }
           />
         </div>
         <HorizontalSeparator className="my-4" />
@@ -122,16 +145,12 @@ export function FlowsGeneralStats() {
             value={
               topProtocol ? (
                 <div className="flex flex-col items-center gap-0.5 text-heading-18">
-                  {env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
-                    <a
-                      href={`/interop/protocols/${topProtocol.slug}`}
-                      className="text-brand"
-                    >
-                      {topProtocol.name}
-                    </a>
-                  ) : (
-                    <span className="text-brand">{topProtocol.name}</span>
-                  )}
+                  <a
+                    href={`/interop/protocols/${topProtocol.slug}`}
+                    className="text-brand"
+                  >
+                    {topProtocol.name}
+                  </a>
                   <span className="text-center font-medium text-label-value-13 text-secondary leading-tight">
                     {formatCurrency(topProtocol.volume, 'usd')}
                   </span>
@@ -192,7 +211,75 @@ export function FlowsGeneralStats() {
           </>
         )}
       </div>
+      <TokensDialog
+        isOpen={isTokensDialogOpen}
+        setIsOpen={setIsTokensDialogOpen}
+        queryInput={tokensQueryInput}
+        title="All tokens & pairs by volume"
+        showFlowsColumn={false}
+      />
     </div>
+  )
+}
+
+function UniqueTokensFooter({
+  isLoading,
+  tokenCount,
+  topTokens,
+  setIsOpen,
+}: {
+  isLoading: boolean
+  tokenCount: number | undefined
+  topTokens:
+    | {
+        items: {
+          id: string
+          symbol: string
+          issuer: string | null
+          iconUrl: string
+          volume: number | null
+        }[]
+        remainingCount: number
+      }
+    | undefined
+  setIsOpen: (isOpen: boolean) => void
+}) {
+  const hasTokens =
+    (tokenCount ?? 0) > 0 && !!topTokens && topTokens.items.length > 0
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center">
+        {[0, 1, 2].map((index) => (
+          <Skeleton
+            key={index}
+            className="-mr-1.5 size-5 rounded-full last:mr-0"
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (!hasTokens || !topTokens) {
+    return null
+  }
+
+  return (
+    <InteropTopItems
+      topItems={{
+        items: topTokens.items.map((token) => ({
+          id: token.id,
+          displayName: token.symbol,
+          issuer: token.issuer,
+          iconUrl: token.iconUrl,
+          volume: token.volume,
+        })),
+        remainingCount: topTokens.remainingCount,
+      }}
+      className="mt-0.5"
+      type="cell"
+      setIsOpen={setIsOpen}
+    />
   )
 }
 
@@ -201,11 +288,13 @@ function Card({
   value,
   isLoading,
   className,
+  footer,
 }: {
   title: string
   value: ReactNode
   isLoading: boolean
   className?: string
+  footer?: ReactNode
 }) {
   return (
     <div
@@ -222,6 +311,7 @@ function Card({
       ) : (
         <div className="font-bold text-heading-20">{value}</div>
       )}
+      {footer}
     </div>
   )
 }

@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "IntervalPayouts",
+  "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due. It has no admin, but the treasury's TRANSFER_ROLE assignment allows it to execute the programmed payout schedule.",
+  "category": "gov",
+  "canActIndependently": false,
+  "ignoreMethods": ["nextInterval", "ready"],
+  "fields": {
+    "treasury": {
+      "description": "Treasury contract that this payout stream can draw funds from.",
+      "severity": "HIGH"
+    },
+    "beneficiary": {
+      "description": "Fixed recipient that receives each interval payout.",
+      "severity": "HIGH"
+    },
+    "token": {
+      "description": "Asset paid out by this stream.",
+      "severity": "HIGH",
+      "type": "EXTERNAL"
+    },
+    "amount": {
+      "description": "Amount transferred on each successful payout.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "intervalLength": {
+      "description": "Minimum delay between payout intervals, in seconds.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "totalPayouts": {
+      "description": "Maximum number of payouts that this stream can execute.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "startTime": {
+      "description": "Timestamp after which the first payout interval becomes eligible."
+    }
+  }
+}

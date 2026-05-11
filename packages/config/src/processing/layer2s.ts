@@ -68,6 +68,7 @@ import { genlayer } from '../projects/genlayer/genlayer'
 import { giwa } from '../projects/giwa/giwa'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
+import { gnosis } from '../projects/gnosis/gnosis'
 import { gpt } from '../projects/gpt/gpt'
 import { grvt } from '../projects/grvt/grvt'
 import { gwyneth } from '../projects/gwyneth/gwyneth'
@@ -305,6 +306,7 @@ export const layer2s: ScalingProject[] = [
   giwa,
   gluon,
   gmnetwork,
+  gnosis,
   gpt,
   grvt,
   gwyneth,

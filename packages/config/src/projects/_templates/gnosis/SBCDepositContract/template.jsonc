@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Gnosis Beacon Chain deposit contract escrowing all validator-staked GNO. Differs from the similar contract on Ethereum by being upgradable, allowing critical permissioned function access and using the non-gastoken GNO as its staking token.",
+  "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
+  "fields": {
+    "$admin": {
+      "permissions": [
+        { "type": "upgrade" },
+        {
+          "type": "interact",
+          "description": "pause or unpause beacon chain deposits, execute system withdrawals manually if required, and recover accidentally sent non-stake tokens."
+        }
+      ]
+    }
+  }
+}

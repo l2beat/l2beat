@@ -15,8 +15,8 @@
       "type": "Contract",
       "template": "facet/FacetEtherBridge",
       "sourceHashes": [
-        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2",
-        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
+        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5",
+        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
@@ -55,7 +55,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -105,7 +105,7 @@
       "type": "Contract",
       "template": "facet/L1ETHBridge",
       "sourceHashes": [
-        "0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867"
+        "0x99096204d217f8cbae9eafc6fc9668dd2a6b8ce373e7a4bdc1b7f4e710be8e4f"
       ],
       "proxyType": "immutable",
       "description": "L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
@@ -133,7 +133,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -168,7 +168,7 @@
       "type": "Contract",
       "template": "facet/Rollup",
       "sourceHashes": [
-        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
+        "0x18a889e730255386b3ecf5a44ea1cdcc2a4ecbd02908aa838976646eb02a9681"
       ],
       "proxyType": "immutable",
       "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
@@ -223,7 +223,7 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
@@ -283,7 +283,7 @@
       "template": "opstack/L1StandardBridge_facet",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
+        "0xeca66935543c04d116a438354d91852c6523107a304469f9e5d88dbcad8643a1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
@@ -311,7 +311,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -384,7 +384,7 @@
       "type": "Contract",
       "template": "facet/L2ERC20Bridge",
       "sourceHashes": [
-        "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5"
+        "0x421f4fa282bab7812077918e0a2469a81dc1f6998cd5d4bd31955dcba0cd4472"
       ],
       "proxyType": "immutable",
       "description": "L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
@@ -414,7 +414,7 @@
       "template": "facet/L2ToL1MessagePasser",
       "sourceHashes": [
         "0x702c17f55cd06de3274ea8306900257e19dc09f5ffeb15cd67a6efb43a2354b6",
-        "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
+        "0x5989564a862a8e6c46c5ccf513d8403018f00399884c6a7faf126b49f909676d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.",

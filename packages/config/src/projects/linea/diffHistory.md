@@ -1,3 +1,237 @@
+Generated with discovered.json: 0x83436472d2882246848bca17f2eb1140b43b3551
+
+# Diff at Fri, 08 May 2026 07:51:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891456
+- current timestamp: 1777891456
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891456 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      sourceHashes.1:
+-        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
++        "0x9980be97cab8f3dd79332a9be0ed66420c1170262dff641eabaf803f137140b1"
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x9b55def99da5eeaf99eb27a930f5bf9d2b6ed2a2922160dc86392354d74186a6"
++        "0x180040d76cf1ef0b9c2587fabd541095ee5b3ff72a334bd4c25e818ffa85d80a"
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x7ab788a440162efc35a7039c3e15ea987e376bbf99d4f58bba72caf376914e99"
++        "0x691eadb19ab093ff1d8d4aaba79c0c056580ed53b4f399896da767a43907d2a0"
+    }
+```
+
+```diff
+    contract BridgedToken (eth:0x36f274C1C197F277EA3C57859729398FCc8a3763) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      sourceHashes.0:
+-        "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
++        "0x19cff41e35081bc695b8c401d8e37e9efb9cf310df4afda87f5054b2a4f42077"
+    }
+```
+
+```diff
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3) [linea/LidoStakingVaultYieldProvider] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x7ee148e011c8bede6032fd936b398fc91310895ff79d18c8da7c538e1dd75140"
++        "0x2175bed044eb0a1c87005be4bea72f81fdbca7c576d10074b7bec17cf3c2756a"
+    }
+```
+
+```diff
+    contract L1USDCBridge (eth:0x504A330327A089d8364C4ab3811Ee26976d388ce) [linea/L1USDCBridge] {
+    +++ description: L1 side of the old and now unused USDC bridge.
+      sourceHashes.1:
+-        "0xf678573abd85e88b327027262fe80c5008f18138d6f2a4b3558ccf78d535c94f"
++        "0x673a81c99ead8d79104152557dcada94e507d46f1dffa85cf2ea9ab55d1aecfd"
+    }
+```
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) [gnosisSafeModules/ZodiacDelay] {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      sourceHashes.0:
+-        "0x6fa89ecef1d104e0b7fd7adc29f3bbfbd1a0fb71fe67422181d1201980ec2d56"
++        "0x82210f5bd49b39905e4835b6f5c65d3c4d3bcee3e32908336aaa936dd0cf4190"
+    }
+```
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      sourceHashes.0:
+-        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
++        "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_NativeYield_v7_1] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      sourceHashes.1:
+-        "0xc79888514ff3b0780c3947bdc52c7fb27664029407ec70360023b494f725f7b3"
++        "0x61e0da7291b49dc345bdfe09390ff5f67c0d1ad182602ba2b4c238eb023dda50"
+    }
+```
+
+```diff
+    contract Safe (eth:0xD6481cC92eD746EbC679788654723Ce49D45EbeA) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Timelock (eth:0xd6B95c960779c72B8C6752119849318E5d550574) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      sourceHashes.0:
+-        "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
++        "0x3f348a2aad587f26daad2b7e934dd869eb41fc1c07fc27a5c11d4c0ce80c18f7"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      sourceHashes.1:
+-        "0xc3427bd2db97b44ddfb965b33a9835e0a46de0edee605a4400e662e0e099e9f8"
++        "0xc1b68783dd333a6fd0c6fd3dedc61e2e561eda412bd31cf5c85d144bc50da857"
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      sourceHashes.1:
+-        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
++        "0x9980be97cab8f3dd79332a9be0ed66420c1170262dff641eabaf803f137140b1"
+    }
+```
+
+```diff
+    contract L2Roles (linea:0x3886a948eA7b4053312c3aE31a13776144aA6239) [linea/L2Roles] {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      sourceHashes.0:
+-        "0xd525e4c8c7b277954ecc3d7968759765db786739ef557a1e96711e5829dfc907"
++        "0x194f2bead2718a73472e2c0ab16dd358c890893f490ffeed84433f7a05b92c6a"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6239c25539f3ab00e89f637a6f0c8c125ada5ac83bb623a815236dfa315e293c"
++        "0x56a0fcd479f6728490feadda405a466779d6640c892dbf6e6120f159015b07a9"
+    }
+```
+
+```diff
+    contract L2USDCBridge (linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A) [linea/OldL2USDCBridge] {
+    +++ description: L2 side of the old and now unused USDC bridge.
+      sourceHashes.1:
+-        "0xada2bd06bab20673a23b4757fbbceab4ffc5b705f52244de79d7b7442916fe4d"
++        "0xaa510e8f499f8381646bf3323377e5110d00f9b5481678fb070807d398212aaa"
+    }
+```
+
+```diff
+    contract Linea Multisig 4 (linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract L2Timelock (linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      sourceHashes.0:
+-        "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
++        "0x3f348a2aad587f26daad2b7e934dd869eb41fc1c07fc27a5c11d4c0ce80c18f7"
+    }
+```
+
+```diff
+    contract LineaVoyageXP (linea:0xd83af4fbD77f3AB65C3B1Dc4B38D7e67AEcf599A) [linea/LineaVoyageXP] {
+    +++ description: Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem.
+      sourceHashes.0:
+-        "0x27c154755b817aa7f568ee6f2c163f981b6af18c0c3a1708d6a79932467ff12c"
++        "0xbfb28171d4e8e4c64903b1346a9b3c975d6f9828af32a529b01cbadf28a8556d"
+    }
+```
+
+```diff
+    contract BridgedToken (linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      sourceHashes.0:
+-        "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
++        "0x19cff41e35081bc695b8c401d8e37e9efb9cf310df4afda87f5054b2a4f42077"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      sourceHashes.0:
+-        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
++        "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
 Generated with discovered.json: 0x3f70be671f4e4b30b6e4af44fbe4e9abb23e0f90
 
 # Diff at Tue, 05 May 2026 10:22:22 GMT:

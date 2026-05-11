@@ -3,6 +3,7 @@ import type { ChainConfig } from '@l2beat/config'
 import {
   ConfigReader,
   type DiscoveryChainConfig,
+  type ExplorerConfig,
   getDiscoveryPaths,
   getMulticall3Config,
 } from '@l2beat/discovery'
@@ -93,15 +94,48 @@ function getChainDiscoveryConfig(
       )
     : undefined
 
-  const explorerApi = chainConfig.apis.find(
-    (x) =>
-      x.type === 'etherscan' ||
-      x.type === 'routescan' ||
-      x.type === 'blockscout' ||
-      x.type === 'sourcify',
-  )
+  const explorer: ExplorerConfig[] = []
 
-  if (!explorerApi) {
+  for (const api of chainConfig.apis) {
+    switch (api.type) {
+      case 'blockscout':
+      case 'routescan':
+        explorer.push({
+          type: api.type,
+          url: api.url,
+          unsupported: {
+            getContractCreation: api.contractCreationUnsupported,
+          },
+        })
+        break
+      case 'sourcify':
+        explorer.push({
+          type: api.type,
+          chainId: api.chainId,
+        })
+        break
+      case 'etherscan':
+        explorer.push({
+          type: api.type,
+          url: api.customUrl ?? env.string('ETHERSCAN_API_URL'),
+          apiKey: api.customUrl
+            ? ''
+            : env.string([
+                'ETHERSCAN_API_KEY_FOR_DISCOVERY',
+                'ETHERSCAN_API_KEY',
+              ]),
+          chainId: api.chainId,
+          unsupported: {
+            getContractCreation: api.contractCreationUnsupported,
+          },
+        })
+        break
+      default:
+        break
+    }
+  }
+
+  if (explorer.length === 0) {
     throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
@@ -132,34 +166,6 @@ function getChainDiscoveryConfig(
       'COINGECKO_API_KEY',
     ]),
     multicall: multicallConfig,
-    explorer:
-      explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'
-        ? [
-            {
-              type: explorerApi.type,
-              url: explorerApi.url,
-              unsupported: {
-                getContractCreation: explorerApi.contractCreationUnsupported,
-              },
-            },
-          ]
-        : explorerApi.type === 'sourcify'
-          ? [
-              {
-                type: explorerApi.type,
-                chainId: explorerApi.chainId,
-              },
-            ]
-          : [
-              {
-                type: explorerApi.type,
-                url: explorerApi.customUrl ?? env.string('ETHERSCAN_API_URL'),
-                apiKey: explorerApi.customUrl
-                  ? ''
-                  : env.string('ETHERSCAN_API_KEY'),
-                // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
-                chainId: chainConfig.chainId!,
-              },
-            ],
+    explorer,
   }
 }

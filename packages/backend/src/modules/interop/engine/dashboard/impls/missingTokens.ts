@@ -71,6 +71,15 @@ export async function getMissingTokenStatuses(
       continue
     }
 
+    const isChainActivelyCaptured = deps.chains.find(
+      (c) => c.id === token.chain,
+    )
+
+    if (!isChainActivelyCaptured) {
+      statuses.set(key, 'unsupported')
+      continue
+    }
+
     const deployedTokenId = toDeployedId(
       deps.chains,
       token.chain,

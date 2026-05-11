@@ -115,11 +115,11 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     scalingRisks: {
       self: getProcessedRiskView(p.riskView),
       host:
-        p.type === 'layer3' && hostChain
+        p.type === 'layer3' && hostChain && !p.isUpcoming
           ? getProcessedRiskView(hostChain.riskView)
           : undefined,
       stacked:
-        p.type === 'layer3' && p.stackedRiskView
+        p.type === 'layer3' && p.stackedRiskView && !p.isUpcoming
           ? getProcessedRiskView(p.stackedRiskView)
           : undefined,
     },

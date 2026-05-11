@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -240,7 +240,7 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -333,7 +333,7 @@ export const base: ScalingProject = opStackL2({
     exitWindow: {
       value: 'None',
       description:
-        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
+        'There is no window for users to exit in case of an unwanted upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },

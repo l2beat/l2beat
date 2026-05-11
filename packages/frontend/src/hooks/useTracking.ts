@@ -44,7 +44,6 @@ type OpenPanelTrack = {
 
 export function useTracking(): { track: OpenPanelTrack } {
   const track: OpenPanelTrack = useCallback((event, ...args) => {
-    window.plausible?.(event, args[0] ? { props: args[0] } : undefined)
     window.op?.('track', event, ...args)
   }, [])
 

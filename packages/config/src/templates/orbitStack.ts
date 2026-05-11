@@ -23,6 +23,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -31,7 +32,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -754,7 +755,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(
+        stackExitWindowRisk(
           common.riskView.exitWindow,
           baseChain.riskView.exitWindow,
         ),
@@ -1394,7 +1395,7 @@ function computedStage(
     'RollupProxy',
     'wasmModuleRoot',
   )
-  return getStage(
+  return getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

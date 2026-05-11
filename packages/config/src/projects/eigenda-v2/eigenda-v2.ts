@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
@@ -6,14 +6,26 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPermissions } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
+
+const EIGENUpgradeDelay = discovery.getContractValue<number>(
+  'TimelockControllerOwning',
+  'getMinDelay',
+)
 
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'RegistryCoordinator',
   'registeredOperators',
 ).length
+
+const eigenDaAddresses = new Set(
+  discovery.configReader
+    .readDiscovery('eigenda')
+    .entries.filter((e) => e.type !== 'Reference')
+    .map((e) => e.address.toString()),
+)
 
 export const eigendaV2: BaseProject = {
   id: ProjectId('eigenda-v2'),
@@ -137,4 +149,70 @@ This architecture provides improved throughput and eliminates single points of f
       relayerFailure: DaRelayerFailureRisk.SelfPropose,
     },
   },
+  contracts: {
+    addresses: filterToEigenDaOnly(discovery.getDiscoveredContracts()),
+    risks: [
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDACertVerifier or EigenDACertVerifierRouter contracts receive a malicious code upgrade and accept invalid certificates. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDAServiceManager (BLS signature verifier) contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the EigenDA middleware contracts (StakeRegistry, BLSApkRegistry, RegistryCoordinator) receive a malicious code upgrade and report incorrect stake or keys to the cert verifier. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `the EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the churn approver or ejectors act maliciously and eject EigenDA operators from a quorum without cause.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a sequencer posts an incorrect or malicious DA certificate that is accepted by the verifier contract.',
+      },
+    ],
+  },
+  permissions: filterPermissionsToEigenDaOnly(
+    discovery.getDiscoveredPermissions(),
+  ),
+}
+
+function filterToEigenDaOnly<T extends { address: { toString(): string } }>(
+  contracts: Record<string, T[]>,
+): Record<string, T[]> {
+  return Object.fromEntries(
+    Object.entries(contracts).map(([chain, list]) => [
+      chain,
+      list.filter((c) => eigenDaAddresses.has(c.address.toString())),
+    ]),
+  )
+}
+
+function filterPermissionsToEigenDaOnly(
+  permissions: Record<string, ProjectPermissions>,
+): Record<string, ProjectPermissions> {
+  return Object.fromEntries(
+    Object.entries(permissions).map(([chain, p]) => [
+      chain,
+      {
+        roles: p.roles?.map((role) => ({
+          ...role,
+          accounts: role.accounts.filter((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        })),
+        actors: p.actors?.filter((actor) =>
+          actor.accounts.some((a) =>
+            eigenDaAddresses.has(a.address.toString()),
+          ),
+        ),
+      },
+    ]),
+  )
 }

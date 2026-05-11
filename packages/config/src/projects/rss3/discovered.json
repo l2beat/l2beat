@@ -84,7 +84,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xc8499f9201a44a50616e551c4310400af4a2e940806a884e8ebefd8d26446dca"
+        "0xc8321f6a3634901d0fd0ba0f6703f261ab470d0eae3f77b0ed5ea5509f2505a8"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "eth:0x0161BCBa0c9a1EA3aF0833ccc714D64ad6142541",
@@ -117,7 +117,7 @@
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x65dcaf0bdde7cc90f916020b1615321a4b086bfd802f2c27f6ed226fc486b65d"
+        "0x8aa9dc344ef454068c4a504d25159b2b6b30ea2eb8754695afd9b5d12fe65453"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
@@ -158,7 +158,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x4940bd1f0459679a56c4724a92058ea37f085b3bd72df87063c6c3f5b4381f5d"
+        "0xd2ec70529195035ccc974be0be22572b0ae72209a50f6b048cb921f0f12d5552"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain. RSS3 is retiring VSL: this fork of the L1StandardBridge adds an operator-only sweep(token, to, amount) that transfers any ERC-20 held by the bridge to an arbitrary address, with no withdrawal proof or delay.",
@@ -191,7 +191,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x84fc56b8558ed12594b26997990b30e8da2a496417a7d467aa0e31e5281f9168"
+        "0xc7ea367475b1d1e52b5f8ced3996d24621b83af99a22e89cd6fb7e6aa4384a9d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",
@@ -298,7 +298,7 @@
       "template": "opstack/SystemConfig_rss3",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x23906eab59a5d34b78a6e0c14f84da0cf651dab8b02049d1dd24c9ca2ed38d25"
+        "0x4b4de7f80942fd5fbbc948041122b1ce2ef51ff8155f92e6a5e66faf903a43c0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
@@ -364,7 +364,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0xa5412b02e8b3af8383f1867f3324f5951f12edb80be357efdbc8b1c9df0aca59"
+        "0xd9939b0b82806c9d07de312d6fe5374f2f47f9d731d2b3f0ae181100d29c23aa"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
@@ -415,7 +415,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -540,7 +540,7 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xd94510e3fe5d022d391bd48ca1c159a4ac4457403b9326aaaba5bda5d5d4b59e"
+        "0x11fdd1bac717fdd4a4af34aa4e5abb646b5c78e27fe668013479e19daa94d797"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
@@ -643,7 +643,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -688,7 +688,7 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xdbe40da010f1cfaa643259f5ca1e966b3c7ecdae7b0af2d8aa07a6181a307831"
+        "0x89abb31f2436fc57f5e92bd1cdd3e982db88fd9f634302f0a0a25057e22ce876"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",

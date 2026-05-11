@@ -20,7 +20,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -457,7 +457,7 @@ export const linea: ScalingProject = {
         ' Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs.',
     },
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

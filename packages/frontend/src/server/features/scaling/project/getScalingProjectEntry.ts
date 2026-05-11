@@ -541,7 +541,7 @@ export async function getScalingProjectEntry(
       type: 'StageSection',
       props: {
         id: 'stage',
-        title: 'Rollup stage',
+        title: 'Stage',
         stageConfig: project.scalingStage,
         name: project.name,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),

@@ -15,7 +15,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -186,7 +186,7 @@ export const lighter: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
+  stage: getRollupStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
@@ -332,6 +332,18 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }
 
 function getVerifiers(): ChainSpecificAddress[] {

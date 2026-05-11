@@ -1,18 +1,17 @@
 {
   "L1NativeTokenVault": {
-    "hash": "0xcd61d013f1b30811a4dab3d32b43daa9f826ed31663857c1e349c7986cdf2497",
+    "hash": "0x7c71b8f7c85e12fa55b687e668aa31abc73b0d5322a5feb3cbd7a218d8b31ef0",
     "address": "eth:0x40B1060a114380f40faC6869c5B383f47e61530c",
     "blockNumber": 22188285
   },
   "L1NativeTokenVault_v27": {
-    "hash": "0xb5c84cdd8085d4ad38124e19b8be87360c9401f9621534284de4ed5fa69c3b63",
+    "hash": "0x24e6f0744dc55f40116debb6c11e8bdd7821fdb1869630b1f31918c8420b7423",
     "address": "eth:0xDf3a3E51aEABB5da548F854B608E3C9De1ae2947",
     "blockNumber": 22374168
   },
   "L1NativeTokenVault_v27_ADI": {
-    "hash": "0x33a60acada6f0e7dd9d8bfa6dee951983bb48b9797519edccef844be75627251",
+    "hash": "0xeac1b0724c69c33183ce8e24a8f3ac28eb5adb9925dff647396c8d165f0ecae9",
     "address": "eth:0x2FC2a2dB562046C732d3aB0f4e1c1F62C3eE8e3E",
-    "chain": "ethereum",
     "blockNumber": 24038982
   }
 }

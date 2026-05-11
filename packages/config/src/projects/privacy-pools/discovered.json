@@ -1,38 +1,61 @@
 {
   "name": "privacy-pools",
-  "timestamp": 1775744016,
-  "configHash": "0xa8ba95ef6b79e105fe136a8e53f49a84842d7fe1ebb231e02437e7ea4a0a2fad",
+  "timestamp": 1777567242,
+  "configHash": "0xf9192766dd26296bfd503dde39bf8c324db0c13e83768307818333d189865a4b",
   "entries": [
     {
       "name": "WithdrawalVerifier",
       "address": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d",
       "type": "Contract",
+      "template": "privacy-pools/WithdrawalVerifier",
       "sourceHashes": [
         "0x07cd5a627237e701cfe28108fb25dba3f03b259350b88d0e07401568e8ac8dcd"
       ],
       "proxyType": "immutable",
+      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify withdrawal proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265199,
       "sinceBlock": 22153709,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": "WithdrawalVerifier"
+      },
+      "category": {
+        "name": "Shared Infrastructure",
+        "priority": 4
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolUSDS",
       "address": "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752503003,
       "sinceBlock": 22917987,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
         "currentRoot": "15245540048584026650305232901945805699249551100965313934107320460107121576710",
         "currentRootIndex": 22,
         "currentTreeDepth": 5,
@@ -44,89 +67,123 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "10083421949316970946867916491567109470259179563818386567305777802830033294482",
-        "totalDeposits": 14,
-        "totalRagequits": 8,
-        "totalWithdrawals": 8,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolWstETH",
       "address": "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753975583,
       "sinceBlock": 23039970,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "currentRoot": "1530706626914083861070684207088632649609337256501997879844633513345341141259",
-        "currentRootIndex": 57,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633",
+          "minimumDepositAmount": "10000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "20313281170578484609491745691274966010719374879987535209602757660344034743032",
+        "currentRootIndex": 63,
         "currentTreeDepth": 6,
-        "currentTreeSize": 57,
+        "currentTreeSize": 63,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 31,
+        "nonce": 33,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "472674026048933344947929992064610492276304547390666782210980269768303717449",
-        "totalDeposits": 31,
-        "totalRagequits": 8,
-        "totalWithdrawals": 26,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolDAI",
       "address": "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752848471,
       "sinceBlock": 22946646,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257",
+          "minimumDepositAmount": "250000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 500
+        },
         "currentRoot": "12140430097765516419321368237679155790561103524724264688598668206353497742608",
         "currentRootIndex": 7,
         "currentTreeDepth": 3,
@@ -138,28 +195,32 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15036211945525489305347805074288289358577232744970551616130812771908439733411",
-        "totalDeposits": 5,
-        "totalRagequits": 0,
-        "totalWithdrawals": 2,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
+      "name": "PrivacyPoolsASPPostman",
       "address": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "type": "EOA",
       "proxyType": "EOA",
@@ -167,8 +228,8 @@
         {
           "permission": "interact",
           "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "control the whitelisted deposit/withdrawal list (update the association set).",
-          "role": ".AspPostman"
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
+          "role": ".aspPostmen"
         }
       ]
     },
@@ -183,15 +244,20 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Entrypoint",
+      "name": "PrivacyPoolsEntrypoint",
       "address": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
       "type": "Contract",
       "template": "privacy-pools/Entrypoint",
       "sourceHashes": [
-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
-        "0x2a185e630005e18ddf039fbf7c694eaa05c51c5497249d11744f1146a8ac64df"
+        "0xf66f390c3291bc5b8725bf8fa36d64494b91e8cfb2b717b52e85adcc68dcdd50",
+        "0xc0803a56928ed2a65accbfc22d51bd281c0eb4a0e377078e13b26d12153628ec"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals.",
+      "ignoreInWatchMode": [
+        "latestRoot"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265247,
       "sinceBlock": 22153713,
       "values": {
@@ -201,165 +267,126 @@
           [
             "2025-03-29T16:20:47.000Z",
             "0x4987385c58c49c9e3117244180094c5b7c5a0566c8547d13880df5e19076776c",
-            ["eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"]
+            [
+              "eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"
+            ]
           ],
           [
             "2025-05-22T20:30:23.000Z",
             "0xde1c41f546e3b6064433e0db1309d8ca5a3ac78a8fc626f934b13d05ee67578f",
-            ["eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"]
+            [
+              "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"
+            ]
           ]
         ],
         "$upgradeCount": 2,
         "accessControl": {
-          "DEFAULT_ADMIN_ROLE": { "adminRole": "_OWNER_ROLE", "members": [] },
-          "_OWNER_ROLE": {
-            "adminRole": "_OWNER_ROLE",
-            "members": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"]
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": []
           },
-          "_ASP_POSTMAN": {
-            "adminRole": "_OWNER_ROLE",
+          "OWNER_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": [
+              "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"
+            ]
+          },
+          "ASP_POSTMAN": {
+            "adminRole": "OWNER_ROLE",
             "members": [
               "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
               "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
             ]
           }
         },
-        "AspPostman": [
+        "aspPostmen": [
           "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "OwnerRole": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
-        "pools": {
-          "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": [
-            {
-              "_pool": "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
-              "_scope": "4916574638117198869413701114161172350986437430914933850166949084132905299523"
-            }
-          ],
-          "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": [
-            {
-              "_pool": "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
-              "_scope": "10083421949316970946867916491567109470259179563818386567305777802830033294482"
-            }
-          ],
-          "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c": [
-            {
-              "_pool": "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
-              "_scope": "2712591485699559808625639968151776585195565171751537345918418329806863214557"
-            }
-          ],
-          "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257": [
-            {
-              "_pool": "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257",
-              "_scope": "15036211945525489305347805074288289358577232744970551616130812771908439733411"
-            }
-          ],
-          "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": [
-            {
-              "_pool": "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572",
-              "_scope": "15021418340692283880916004685565940332387258944710606800522765380598358159605"
-            }
-          ],
-          "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": [
-            {
-              "_pool": "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86",
-              "_scope": "16452108168275993030962142353354044100680963945240756716593099151407051066232"
-            }
-          ],
-          "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633": [
-            {
-              "_pool": "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633",
-              "_scope": "472674026048933344947929992064610492276304547390666782210980269768303717449"
-            }
-          ],
-          "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": [
-            {
-              "_pool": "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
-              "_scope": "9583811136054309663087994285053104517603064138421869930481915957893514499997"
-            }
-          ],
-          "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc": [
-            {
-              "_pool": "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc",
-              "_scope": "14948241600724488898497604617894553378727680542246736212613234875544074387056"
-            }
-          ],
-          "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98": [
-            {
-              "_pool": "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
-              "_scope": "2226641097145324517602489545296816163847340455393839014355318716099039951794"
-            }
-          ],
-          "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84": [
-            {
-              "_pool": "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
-              "_scope": "6204545812131907406091007816562088763876564430686560668923081212690640630114"
-            }
-          ],
-          "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE": [
-            {
-              "_pool": "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
-              "_scope": "16898919049235900033552063077301976558571004961846668515709160815006981236808"
-            }
-          ],
-          "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": [
-            {
-              "_pool": "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56",
-              "_scope": "18721688563067625530889443380856806549268759616049984113232683385397425859801"
-            }
-          ],
-          "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E": [
-            {
-              "_pool": "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E",
-              "_scope": "12594345321156708920712766274402096360984745412708601457862140420990105325804"
-            }
-          ]
-        },
-        "tokens": [
-          "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-          "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-          "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-          "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-          "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-          "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-          "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
-          "eth:0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
-          "eth:0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
-          "eth:0x085780639CC2cACd35E474e71f4d000e2405d8f6",
-          "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D"
+        "latestRoot": "12251761450139241298987886334382639136527285160047904414009832340685225700382",
+        "ownerRoleMembers": [
+          "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"
+        ],
+        "registeredPools": [
+          "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
+          "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
+          "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
+          "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257",
+          "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572",
+          "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86",
+          "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633",
+          "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
+          "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc",
+          "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
+          "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
+          "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
+          "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56",
+          "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E"
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
-        "pools": { "description": "All currently registered privacy pools" },
-        "tokens": {
-          "description": "All tokens that were ever registered for pools"
+        "accessControl": {
+          "description": "Current role membership map for the Entrypoint's owner and postman roles."
+        },
+        "associationSets": {
+          "description": "History of association-set roots and IPFS CIDs published by ASP_POSTMAN. Withdrawals must validate against the latest root from this list.",
+          "type": "EXTERNAL"
+        },
+        "registeredPools": {
+          "severity": "HIGH",
+          "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events."
+        },
+        "ownerRoleMembers": {
+          "severity": "HIGH",
+          "description": "Addresses with OWNER_ROLE.",
+          "type": "PERMISSION"
+        },
+        "aspPostmen": {
+          "severity": "HIGH",
+          "description": "Addresses with ASP_POSTMAN.",
+          "type": "PERMISSION"
         }
       },
       "implementationNames": {
         "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": "ERC1967Proxy",
         "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": "Entrypoint"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolWOETH",
       "address": "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1756377743,
       "sinceBlock": 23239091,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE",
+          "minimumDepositAmount": "10000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
         "currentRoot": "18047676727160865685986079375008671838394229208062714153783095814579802586696",
         "currentRootIndex": 6,
         "currentTreeDepth": 3,
@@ -371,73 +398,100 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16898919049235900033552063077301976558571004961846668515709160815006981236808",
-        "totalDeposits": 4,
-        "totalRagequits": 1,
-        "totalWithdrawals": 2,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "CommitmentVerifier",
+      "name": "RagequitVerifier",
       "address": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
       "type": "Contract",
+      "template": "privacy-pools/CommitmentVerifier",
       "sourceHashes": [
         "0x68c7357a788298156bf6491b7f63e41b5ce2cb6863646cb5f6f031011abede4e"
       ],
       "proxyType": "immutable",
+      "description": "Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs. The verification key is hardcoded in the contract and there are no privileged roles or mutable configuration.",
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265211,
       "sinceBlock": 22153710,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": "CommitmentVerifier"
+      },
+      "category": {
+        "name": "Shared Infrastructure",
+        "priority": 4
       }
     },
     {
-      "name": "Safe",
+      "name": "PrivacyPoolsAdminSafe",
       "address": "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "control the whitelisted deposit/withdrawal list (update the association set).",
-          "role": ".AspPostman"
+          "description": "authorize UUPS upgrades to the Entrypoint implementation.",
+          "role": ".ownerRoleMembers"
         },
         {
           "permission": "interact",
           "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "register new pools or wind down (disable deposits) existing ones.",
-          "role": ".OwnerRole"
+          "description": "grant and revoke OWNER_ROLE and ASP_POSTMAN.",
+          "role": ".ownerRoleMembers"
         },
         {
           "permission": "interact",
           "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "upgrade the system.",
-          "role": ".OwnerRole"
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
+          "role": ".aspPostmen"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "register and remove pools, update per-asset minimum deposits and fee caps, and wind down pools.",
+          "role": ".ownerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "withdraw fees held in the Entrypoint.",
+          "role": ".ownerRoleMembers"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
       "sinceTimestamp": 1742919851,
       "sinceBlock": 22125088,
       "values": {
@@ -468,114 +522,162 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolUSDC",
       "address": "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753353035,
       "sinceBlock": 22988431,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "currentRoot": "5773417751060092232347338544074429597569664092287126615560342320165156460492",
-        "currentRootIndex": 11,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86",
+          "minimumDepositAmount": 25000000,
+          "vettingFeeBPS": 50,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "9570414265497737917933695872321540686802279577865531126368539012745245956122",
+        "currentRootIndex": 8,
         "currentTreeDepth": 11,
-        "currentTreeSize": 1163,
+        "currentTreeSize": 1288,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 413,
+        "nonce": 454,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16452108168275993030962142353354044100680963945240756716593099151407051066232",
-        "totalDeposits": 413,
-        "totalRagequits": 20,
-        "totalWithdrawals": 750,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolBOLD",
       "address": "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1770806867,
       "sinceBlock": 24433029,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-        "currentRoot": "1902148662970707104029903538137599911638717565518236953323631629877318908178",
-        "currentRootIndex": 41,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 50,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "10368640358757238446710581155604743137931037519125301998558197959456707859641",
+        "currentRootIndex": 44,
         "currentTreeDepth": 6,
-        "currentTreeSize": 41,
+        "currentTreeSize": 44,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 18,
+        "nonce": 20,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "12594345321156708920712766274402096360984745412708601457862140420990105325804",
-        "totalDeposits": 18,
-        "totalRagequits": 4,
-        "totalWithdrawals": 23,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolSUSDS",
       "address": "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1752782999,
       "sinceBlock": 22941225,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
         "currentRoot": "14923162097976413656141538852569900802069206221215374470392045224756579975786",
         "currentRootIndex": 15,
         "currentTreeDepth": 4,
@@ -587,42 +689,59 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "2712591485699559808625639968151776585195565171751537345918418329806863214557",
-        "totalDeposits": 11,
-        "totalRagequits": 6,
-        "totalWithdrawals": 4,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolUSD1",
       "address": "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583179,
       "sinceBlock": 23090298,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98",
+          "minimumDepositAmount": "250000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 500
+        },
         "currentRoot": "1938958159603283255431077364784051774988555246897545236528266932543254414887",
         "currentRootIndex": 5,
         "currentTreeDepth": 3,
@@ -634,46 +753,63 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "2226641097145324517602489545296816163847340455393839014355318716099039951794",
-        "totalDeposits": 4,
-        "totalRagequits": 0,
-        "totalWithdrawals": 1,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolFrxUSD",
       "address": "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583623,
       "sinceBlock": 23090335,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
-        "currentRoot": "510047656223255110181434179226838992269969447460359187470326170417545827373",
-        "currentRootIndex": 14,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "8038354128615658575230928700840627267242993266222318672099070343043965417107",
+        "currentRootIndex": 15,
         "currentTreeDepth": 4,
-        "currentTreeSize": 14,
+        "currentTreeSize": 15,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
@@ -681,79 +817,99 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "6204545812131907406091007816562088763876564430686560668923081212690640630114",
-        "totalDeposits": 9,
-        "totalRagequits": 2,
-        "totalWithdrawals": 5,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolFxUSD",
       "address": "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1765446455,
       "sinceBlock": 23988640,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x085780639CC2cACd35E474e71f4d000e2405d8f6",
-        "currentRoot": "9182190818247501156177349986435825224105493001160991218464670942297981133564",
-        "currentRootIndex": 43,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "12096975949212207450070401589339638667810631285985938409654204376943985158213",
+        "currentRootIndex": 53,
         "currentTreeDepth": 8,
-        "currentTreeSize": 171,
+        "currentTreeSize": 181,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 72,
+        "nonce": 76,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "18721688563067625530889443380856806549268759616049984113232683385397425859801",
-        "totalDeposits": 72,
-        "totalRagequits": 11,
-        "totalWithdrawals": 99,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
       "type": "EOA",
       "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -779,20 +935,34 @@
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolUSDe",
       "address": "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1754583083,
       "sinceBlock": 23090290,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc",
+          "minimumDepositAmount": "25000000000000000000",
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
         "currentRoot": "20711318340887618080224779203573554591248127916696083141786045987803184375231",
         "currentRootIndex": 2,
         "currentTreeDepth": 1,
@@ -804,139 +974,187 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "14948241600724488898497604617894553378727680542246736212613234875544074387056",
-        "totalDeposits": 1,
-        "totalRagequits": 0,
-        "totalWithdrawals": 1,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolUSDT",
       "address": "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753352915,
       "sinceBlock": 22988421,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "currentRoot": "17813261064837611947932665308392440794264560645533588473086875144898652390941",
-        "currentRootIndex": 19,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572",
+          "minimumDepositAmount": 25000000,
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "13447251225897205379274201930902604803667805163752197013539680606266189643914",
+        "currentRootIndex": 37,
         "currentTreeDepth": 8,
-        "currentTreeSize": 211,
+        "currentTreeSize": 229,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 86,
+        "nonce": 94,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15021418340692283880916004685565940332387258944710606800522765380598358159605",
-        "totalDeposits": 86,
-        "totalRagequits": 17,
-        "totalWithdrawals": 125,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolSimple",
+      "name": "PrivacyPoolETH",
       "address": "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolSimple",
       "sourceHashes": [
-        "0x6cd03829f963a4753b1197064a6fc568184d89cdc380b934148ff6c8941f7ae9"
+        "0x3252809f9d07f7ff3537481cd733b81f8455c6ecfde29a27f9ed7e3094998f44"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "Native-asset Privacy Pool that escrows ETH commitments for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265259,
       "sinceBlock": 22153714,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "currentRoot": "19335623755234133777283130152889783897439974324256153426117440435286330815340",
-        "currentRootIndex": 27,
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
+          "minimumDepositAmount": "10000000000000000",
+          "vettingFeeBPS": 50,
+          "maxRelayFeeBPS": 1000
+        },
+        "currentRoot": "12071268616164404005308248364603715888922396838030974883258120506746873007472",
+        "currentRootIndex": 7,
         "currentTreeDepth": 13,
-        "currentTreeSize": 7451,
+        "currentTreeSize": 7751,
         "dead": false,
         "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
         "MAX_TREE_DEPTH": 32,
-        "nonce": 3847,
+        "nonce": 3945,
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
-        "totalDeposits": 3848,
-        "totalRagequits": 237,
-        "totalWithdrawals": 3604,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "currentTreeSize": {
-          "description": "Total number of deposits in the pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
-        },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": "PrivacyPoolSimple"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     },
     {
-      "name": "PrivacyPoolComplex",
+      "name": "PrivacyPoolWBTC",
       "address": "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
       "type": "Contract",
       "template": "privacy-pools/PrivacyPoolComplex",
       "sourceHashes": [
-        "0x4e93d0394e34565e473aa7d2e6e2a287cd82e14e394f2a49aed18efa47660b69"
+        "0x0982e14be7366721a39385a079861484c3a543b272dc298a8d1ba4f3fb30e8cc"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+      "description": "ERC20 Privacy Pool that escrows one asset for one scope. Only the Entrypoint can create deposits or wind the pool down. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
+      "ignoreInWatchMode": [
+        "currentRoot",
+        "currentRootIndex",
+        "currentTreeDepth",
+        "currentTreeSize",
+        "nonce"
+      ],
+      "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1753975703,
       "sinceBlock": 23039980,
       "values": {
         "$immutable": true,
         "ASSET": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "assetConfigFromEntrypoint": {
+          "pool": "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32",
+          "minimumDepositAmount": 50000,
+          "vettingFeeBPS": 0,
+          "maxRelayFeeBPS": 1000
+        },
         "currentRoot": "11842532075422257344216191867832257174154502193586103933584042589438953749263",
         "currentRootIndex": 10,
         "currentTreeDepth": 4,
@@ -948,25 +1166,28 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "9583811136054309663087994285053104517603064138421869930481915957893514499997",
-        "totalDeposits": 4,
-        "totalRagequits": 0,
-        "totalWithdrawals": 6,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
-        "dead": { "severity": "HIGH" },
-        "totalDeposits": {
-          "description": "Total number of deposits made to this pool."
+        "SCOPE": {
+          "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
-        "totalRagequits": {
-          "description": "Total number of ragequits from this pool."
+        "dead": {
+          "severity": "HIGH",
+          "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits."
         },
-        "totalWithdrawals": {
-          "description": "Total number of withdrawals from this pool."
+        "assetConfigFromEntrypoint": {
+          "severity": "LOW",
+          "description": "Current per-asset configuration read from the Entrypoint: registered pool, minimum deposit amount, vetting fee BPS, and maximum relay fee BPS.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": "PrivacyPoolComplex"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
       }
     }
   ],
@@ -1864,10 +2085,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "privacy-pools/Entrypoint": "0xaa9a6819484b4c77e3f5356a283925f0c3200343be09fc9ae91baa828db3c266",
-    "privacy-pools/PrivacyPoolComplex": "0x6a74fcab770d30e2e1f1de1e32b7a6f38d36d93acc092bc69116258b6ad23894",
-    "privacy-pools/PrivacyPoolSimple": "0xa5d0366f01ec76ae19d35ca1ecc644f8976bbb2c65573dc3ad431863d374c083"
+    "privacy-pools/CommitmentVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "privacy-pools/Entrypoint": "0x73ace37ad5a6f13a98c7c375f4b9c77352b90b6b85ab19f58913ee9324939a61",
+    "privacy-pools/PrivacyPoolComplex": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
+    "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
+    "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24842683 },
-  "permissionsConfigHash": "0xd543dbf5f3eb33d975d355f48846a30c8eba5ae9832a81ed3a019f4450c5c5bc"
+  "usedBlockNumbers": {
+    "ethereum": 24994181
+  },
+  "permissionsConfigHash": "0x32e24e73ac93e35e0d94d98aca02b8ed60c8a91a9d288f517f5436f0b7a25deb"
 }

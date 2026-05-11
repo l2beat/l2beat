@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xedc2aebba1a3e15ef16fd610ca2516b04d91dcde
+
+# Diff at Fri, 08 May 2026 07:51:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.1:
+-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
++        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
+    }
+```
+
+```diff
+    contract GatewayTransactionFilterer (eth:0x5540DE94485dB078025318428F813C5d88215823) [shared-zk-stack/GatewayTransactionFilterer] {
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
+      sourceHashes.1:
+-        "0xddf32cb09a89624e3afcd665003e3a8f81d87a3408a0cf844ec4238889f8c850"
++        "0x25d72c2ef1e6a1841fd9ab5e28eba4bdb10044b24219f2df3633ab39de69e64f"
+    }
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      sourceHashes.1:
+-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
++        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
+    }
+```
+
+```diff
+    contract Safe (eth:0xd972d03C8A45eF3c7937a279d998E4AeCCc2b63D) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      sourceHashes.0:
+-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
++        "0x3071b29c9d3c65c02f422ab100df2d586db80b598bf89958951c8dffea457c52"
+    }
+```
+
+```diff
+    contract L1Messenger (gateway:0x0000000000000000000000000000000000008008) [shared-zk-stack/L1Messenger] {
+    +++ description: System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge.
+      sourceHashes.0:
+-        "0x2c4e54d52c2919d3fc227e2a04b26b5e9daee5ef7031fb0e076ac5ed9f2cc7a5"
++        "0x55ee82706e9d484c0a6eab3f809b16ad202747dda686c4f90b39842162e47e00"
+    }
+```
+
 Generated with discovered.json: 0xab4729f9a4eef4d19dc7498ed7dfa039d84ee283
 
 # Diff at Tue, 05 May 2026 10:22:13 GMT:

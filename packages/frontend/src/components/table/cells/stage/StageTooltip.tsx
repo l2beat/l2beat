@@ -156,7 +156,7 @@ export function StageTooltip({
       )}
       <Callout
         color="blue"
-        body="Please mind, stages do not reflect rollup security"
+        body="Please mind, stages do not reflect project security"
         icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
         className={cn(
           'gap-1! px-3 py-2',
