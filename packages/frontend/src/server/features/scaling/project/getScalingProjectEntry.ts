@@ -201,7 +201,6 @@ async function getProjectScalingInteropData(
   const currentChainData = interopFlows.chainData.find(
     (chain) => chain.chainId === currentInteropChain.id,
   )
-  if (!currentChainData) return undefined
 
   return {
     chainId: currentInteropChain.id,
@@ -210,26 +209,28 @@ async function getProjectScalingInteropData(
     defaultSelectedChains,
     summary: {
       protocols: {
-        items: currentChainData.topProtocols.map((protocol) => ({
+        items: (currentChainData?.topProtocols ?? []).map((protocol) => ({
           id: protocol.id,
           name: protocol.name,
           iconUrl: protocol.iconUrl,
           volume: protocol.volume,
         })),
         remainingCount: Math.max(
-          currentChainData.protocolCount - currentChainData.topProtocols.length,
+          (currentChainData?.protocolCount ?? 0) -
+            (currentChainData?.topProtocols.length ?? 0),
           0,
         ),
       },
       tokens: {
-        items: currentChainData.topTokens.map((token) => ({
+        items: (currentChainData?.topTokens ?? []).map((token) => ({
           id: token.id,
           symbol: token.symbol,
           iconUrl: token.iconUrl,
           volume: token.volume,
         })),
         remainingCount: Math.max(
-          currentChainData.tokenCount - currentChainData.topTokens.length,
+          (currentChainData?.tokenCount ?? 0) -
+            (currentChainData?.topTokens.length ?? 0),
           0,
         ),
       },
