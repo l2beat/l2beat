@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xa3ffd9fec26b238c8dfc59cd9e604b102fd60cc2
+
+# Diff at Fri, 08 May 2026 09:36:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1772656918
+- current timestamp: 1778232933
+
+## Description
+
+OrbitERC20OFTAdapter (`base:0xDb8E7598...`) — `owner` changed from `0xa79c47C3...` → `0x490a9D8A...`. This contract is the LayerZero-side adapter that, as a designated allowed outbox, can pull funds from the Degen L3 canonical bridge escrow; the new owner inherits that bridge-escrow access.
+
+## Watched changes
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) [N/A] {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      values.owner:
+-        "base:0xa79c47C35017d2CD657eb000CC0D0a0c2E385615"
++        "base:0x490a9D8A26d2444537c577F61BF4f13F02312dF7"
+    }
+```
+
 Generated with discovered.json: 0xa185535cc69f7a5ad37acae3bdbffdb877df40e2
 
 # Diff at Fri, 08 May 2026 07:51:14 GMT:

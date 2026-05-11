@@ -1,3 +1,100 @@
+Generated with discovered.json: 0xc25fc0b706be0be82ea70acf0de322592f687627
+
+# Diff at Fri, 08 May 2026 09:37:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1777390984
+- current timestamp: 1778232956
+
+## Description
+
+**Everclear Hub L3 halt and ownership transfer.** Chain stopped producing blocks on 2026-05-01.
+
+L1 changes (Ethereum):
+- **RollupProxy** (`eth:0xc6CAd31D...`) — `paused: false → true`.
+- `stakerCount` 2 → 0; `setValidatorCount` 4 → 5; new validator `0xA7275dd1...` added; zombie validators `0xA7275dd1` and `0xe778F5Bf` appear with `latestStakedNode` 324 and 1198.
+- `totalWithdrawableFunds` 0 → 0.1 ETH (bond withdrawal in progress).
+- **Gelato Multisig** (`eth:0xBeA2Bc85...`) deleted; UpgradeExecutor `EXECUTOR_ROLE` member 0 reassigned to a new **SafeL2** at `0x1e0Ef0eb...`.
+
+L3 (chainId 25327):
+- Last block 4779858 at 2026-05-01 21:13 UTC; `transactions_today: 0`. Historical block time ~10 min — current gap is ~80x normal cadence.
+
+Public statements: no shutdown announcement on `everclear.org/blog`, `docs.everclear.org`, or in indexed `@EverclearOrg` X posts at time of writing. The Everclear clearing-layer protocol (CLEAR token, supported L2s) remains operational; the halt is specific to the Hub L3.
+
+Project file updated: `archivedAt` set to the L3 halt timestamp, `chainConfig.untilTimestamp` set to the same, `redWarning` added describing the halt and ownership transfer, and an incident milestone recorded for 2026-05-01.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"
+      values.executors.0:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.paused:
+-        false
++        true
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        4
++        5
+      values.stakerCount:
+-        2
++        0
+      values.totalWithdrawableFunds:
+-        0
++        "100000000000000000"
+      values.validators.3:
++        "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      values.zombieAddress.0:
++        "eth:0xA7275dd18Fe2BFd9A85c8BCd197ea3dE9a6cA6AA"
+      values.zombieAddress.1:
++        "eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
+      values.zombieCount:
+-        0
++        2
+      values.zombieLatestStakedNode.0:
++        324
+      values.zombieLatestStakedNode.1:
++        1198
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x1e0Ef0ebC026142cC5EFAE90534F438aD79c313A) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 848 +++++++++++++--------
+ .../Safe/SafeProxy.p.sol}                          |  18 +-
+ 2 files changed, 530 insertions(+), 336 deletions(-)
+```
+
 Generated with discovered.json: 0xb2aac575d1781747fe831bc706ae36d9c0adee5b
 
 # Diff at Fri, 08 May 2026 07:51:19 GMT:
