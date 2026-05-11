@@ -6,6 +6,7 @@ import { linesDiffComputers } from 'monaco-editor/esm/vs/editor/common/diff/line
 import { DetailedLineRangeMapping as MonacoDetailedLineRangeMapping } from 'monaco-editor/esm/vs/editor/common/diff/rangeMapping'
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import {
+  alignmentGaps,
   type ChangeDecision,
   decideChanges,
   type LineRange,
@@ -114,14 +115,13 @@ function applyDecisions(
   const dropped: LineRangeMapping[] = []
   for (let i = 0; i < monacoChanges.length; i++) {
     const decision = decisions[i] as ChangeDecision
-    const original = monacoChanges[i] as LineRangeMapping
-    if (decision.kind === 'drop') {
-      dropped.push(original)
-    } else if (decision.kind === 'keep') {
-      kept.push(original)
-    } else {
+    const outer = monacoChanges[i] as LineRangeMapping
+    if (decision.kind === 'keep') {
+      kept.push(outer)
+    } else if (decision.kind === 'narrow') {
       kept.push(buildMonacoMapping(decision.original, decision.modified))
     }
+    dropped.push(...alignmentGaps(outer, decision))
   }
   return { changes: kept, dropped }
 }

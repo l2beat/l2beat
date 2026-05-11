@@ -16,6 +16,46 @@ export type ChangeDecision =
   | { kind: 'drop' }
   | { kind: 'narrow'; original: LineRange; modified: LineRange }
 
+// For each Monaco change we drop or narrow, return the line-range slices
+// that the diff editor must still pad with view zones so unequal line counts
+// on the two sides don't cause cumulative drift below the change.
+//   drop   → the whole outer mapping (Monaco won't render it any more).
+//   keep   → nothing (Monaco aligns the change itself).
+//   narrow → the lead and trail slices outside the kept narrow region.
+export function alignmentGaps(
+  outer: LineRangeMapping,
+  decision: ChangeDecision,
+): LineRangeMapping[] {
+  if (decision.kind === 'drop') {
+    return [outer]
+  }
+  if (decision.kind === 'keep') {
+    return []
+  }
+  return [
+    {
+      original: {
+        startLineNumber: outer.original.startLineNumber,
+        endLineNumberExclusive: decision.original.startLineNumber,
+      },
+      modified: {
+        startLineNumber: outer.modified.startLineNumber,
+        endLineNumberExclusive: decision.modified.startLineNumber,
+      },
+    },
+    {
+      original: {
+        startLineNumber: decision.original.endLineNumberExclusive,
+        endLineNumberExclusive: outer.original.endLineNumberExclusive,
+      },
+      modified: {
+        startLineNumber: decision.modified.endLineNumberExclusive,
+        endLineNumberExclusive: outer.modified.endLineNumberExclusive,
+      },
+    },
+  ]
+}
+
 export function decideChanges(
   changes: LineRangeMapping[],
   originalSource: string,
@@ -117,6 +157,28 @@ function narrowChange(
     suffix++
   }
 
+  // Back the trim off any intra-line boundary: if the last matched token
+  // and the first unmatched token share a line on either side, the line
+  // still visually changed (e.g. a trailing comma was removed leaving the
+  // rest unchanged) and excluding it would hide the diff.
+  while (
+    prefix > 0 &&
+    (sharesLine(left[prefix - 1], left[prefix]) ||
+      sharesLine(right[prefix - 1], right[prefix]))
+  ) {
+    prefix--
+  }
+  while (
+    suffix > 0 &&
+    (sharesLine(left[left.length - suffix - 1], left[left.length - suffix]) ||
+      sharesLine(
+        right[right.length - suffix - 1],
+        right[right.length - suffix],
+      ))
+  ) {
+    suffix--
+  }
+
   const leftSurvivors = left.slice(prefix, left.length - suffix)
   const rightSurvivors = right.slice(prefix, right.length - suffix)
 
@@ -128,6 +190,10 @@ function narrowChange(
     original: projectRange(leftSurvivors, left, prefix, change.original),
     modified: projectRange(rightSurvivors, right, prefix, change.modified),
   }
+}
+
+function sharesLine(a: Token | undefined, b: Token | undefined): boolean {
+  return a !== undefined && b !== undefined && a.endLine === b.startLine
 }
 
 function tokenMatches(a: Token | undefined, b: Token | undefined): boolean {

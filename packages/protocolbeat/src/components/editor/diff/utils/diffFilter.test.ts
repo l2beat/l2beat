@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  alignmentGaps,
   type ChangeDecision,
   decideChanges,
   type LineRange,
@@ -134,6 +135,31 @@ describe('decideChanges', () => {
     ).toEqual([{ kind: 'keep' }])
   })
 
+  it('keeps the comma-bearing line highlighted on the modified side when a trailing parameter is removed', () => {
+    // Removing the last parameter in a multi-line argument list also strips
+    // the trailing comma from the line above. The remaining tokens on the
+    // modified side are a strict prefix of the original line, so the token
+    // filter narrows modified to a zero-width range *between* lines 3 and 4
+    // — hiding the visual change on line 3 where the user expects to see
+    // the comma removed.
+    const left = [
+      'function initialize(',
+      '    ISystemConfig _systemConfig,',
+      '    IAnchorStateRegistry _anchorStateRegistry,',
+      '    IETHLockbox _ethLockbox',
+      ')',
+    ].join('\n')
+    const right = [
+      'function initialize(',
+      '    ISystemConfig _systemConfig,',
+      '    IAnchorStateRegistry _anchorStateRegistry',
+      ')',
+    ].join('\n')
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+      { kind: 'narrow', original: range(3, 5), modified: range(3, 4) },
+    ])
+  })
+
   it('handles multiple changes with a mix of drop, keep, and narrow decisions', () => {
     const left = [
       'a = 1', // line 1 — code-only diff (keep)
@@ -160,6 +186,35 @@ describe('decideChanges', () => {
       { kind: 'keep' },
       { kind: 'drop' },
       { kind: 'narrow', original: range(6, 7), modified: range(6, 7) },
+    ])
+  })
+})
+
+describe('alignmentGaps', () => {
+  const outer: LineRangeMapping = { original: range(10, 12), modified: range(10, 13) }
+
+  it('returns the outer mapping for a drop', () => {
+    expect(alignmentGaps(outer, { kind: 'drop' })).toEqual([outer])
+  })
+
+  it('returns nothing for a keep', () => {
+    expect(alignmentGaps(outer, { kind: 'keep' })).toEqual([])
+  })
+
+  it('returns the lead and trail slices for a narrow', () => {
+    // A comment-block-plus-code change where the filter drops the comments
+    // and narrows to just the code line. The leading comment region has 1
+    // line on original and 2 on modified — without these gap mappings, the
+    // diff editor would skip padding and everything below would drift by 1.
+    expect(
+      alignmentGaps(outer, {
+        kind: 'narrow',
+        original: range(11, 12),
+        modified: range(12, 13),
+      }),
+    ).toEqual([
+      { original: range(10, 11), modified: range(10, 12) },
+      { original: range(12, 12), modified: range(13, 13) },
     ])
   })
 })
