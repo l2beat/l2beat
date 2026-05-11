@@ -81,9 +81,13 @@ export function InteropFlowsProvider({
 
   const selectedChains = useMemo(() => {
     const parsed = parseIdsParam(chainsParam, allChainIds)
-    return allChainIds
-      .filter((id) => lockedChainIds.includes(id) || parsed.includes(id))
-      .slice(0, MAX_SELECTED_CHAINS)
+    const unlockedSelectedChains = allChainIds.filter(
+      (id) => !lockedChainIds.includes(id) && parsed.includes(id),
+    )
+    return [...lockedChainIds, ...unlockedSelectedChains].slice(
+      0,
+      MAX_SELECTED_CHAINS,
+    )
   }, [chainsParam, allChainIds, lockedChainIds])
   const selectedProtocols = useMemo(
     () => parseIdsParam(protocolsParam, allProtocolIds),
@@ -97,8 +101,12 @@ export function InteropFlowsProvider({
   const setSelectedChains = useCallback(
     (next: string[]) => {
       // Keep canonical order so that a selection equal to the default serializes identically and gets removed from the URL
-      const canonical = allChainIds.filter(
-        (id) => lockedChainIds.includes(id) || next.includes(id),
+      const unlockedSelectedChains = allChainIds.filter(
+        (id) => !lockedChainIds.includes(id) && next.includes(id),
+      )
+      const canonical = [...lockedChainIds, ...unlockedSelectedChains].slice(
+        0,
+        MAX_SELECTED_CHAINS,
       )
       setChainsParam(canonical.join(','))
     },
