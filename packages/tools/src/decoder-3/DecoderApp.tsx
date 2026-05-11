@@ -8,7 +8,6 @@ import {
   useEffect,
   useId,
   useMemo,
-  useRef,
   useState,
 } from 'react'
 import { create } from 'zustand'
@@ -194,9 +193,10 @@ function useDebouncedValue<T>(value: T, delay: number): T {
   return debounced
 }
 
+const apiRequested = new Set<string>()
+
 function APIChecker() {
   const store = useStore()
-  const ref = useRef<Record<string, boolean>>({})
 
   const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
   const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
@@ -205,23 +205,23 @@ function APIChecker() {
   useEffect(() => {
     const selectorsToFetch: string[] = []
     for (const selector in requestedSignatures) {
-      if (!ref.current[selector]) {
+      if (!apiRequested.has(selector)) {
         selectorsToFetch.push(selector)
-        ref.current[selector] = true
+        apiRequested.add(selector)
       }
     }
     if (selectorsToFetch.length === 0) return
     API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
       store.addSignatures(res),
     )
-  }, [requestedSignatures, ref, store.addSignatures])
+  }, [requestedSignatures, store.addSignatures])
 
   useEffect(() => {
     const addressesToFetch: string[] = []
     for (const address in requestedAddresses) {
-      if (!ref.current[address]) {
+      if (!apiRequested.has(address)) {
         addressesToFetch.push(address)
-        ref.current[address] = true
+        apiRequested.add(address)
       }
     }
     for (const prefixed of addressesToFetch) {
@@ -242,14 +242,14 @@ function APIChecker() {
         }
       })
     }
-  }, [requestedAddresses, ref, store.addSignatures, store.setName])
+  }, [requestedAddresses, store.addSignatures, store.setName])
 
   useEffect(() => {
     const preimagesToFetch: string[] = []
     for (const hash in requestedPreimages) {
-      if (!ref.current[hash]) {
+      if (!apiRequested.has(hash)) {
         preimagesToFetch.push(hash)
-        ref.current[hash] = true
+        apiRequested.add(hash)
       }
     }
     API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then((res) => {
@@ -257,7 +257,7 @@ function APIChecker() {
         store.setPreimage(hash, preimage)
       }
     })
-  }, [requestedPreimages, ref, store.setPreimage])
+  }, [requestedPreimages, store.setPreimage])
 
   return null
 }
