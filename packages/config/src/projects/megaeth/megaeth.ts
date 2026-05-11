@@ -20,6 +20,19 @@ const discovery = new ProjectDiscovery('megaeth', undefined, {
   },
 })
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
@@ -37,7 +50,7 @@ export const megaeth: ScalingProject = opStackL2({
   },
   nonTemplateProgramHashes: [
     PROGRAM_HASHES(
-      discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
+      discovery.getContractValue<string>(activeKailuaGame, 'FPVM_IMAGE_ID'),
     ),
   ],
 
@@ -114,12 +127,12 @@ export const megaeth: ScalingProject = opStackL2({
         'disputeGameFinalityDelaySeconds',
       ),
       challengeDelay: discovery.getContractValue<number>(
-        'KailuaGame',
+        activeKailuaGame,
         'MAX_CLOCK_DURATION',
       ),
       initialBond: formatEther(
         discovery.getContractValue<number>(
-          'KailuaTreasury',
+          activeKailuaTreasury,
           'participationBond',
         ),
       ),

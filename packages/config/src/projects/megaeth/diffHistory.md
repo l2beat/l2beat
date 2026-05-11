@@ -1,23 +1,35 @@
-Generated with discovered.json: 0x4f9da5ecd51aff4a442c3d772135eab636a1d90f
+Generated with discovered.json: 0xd6fb873eb77a64098e57a7eecd575d5b753f84fc
 
-# Diff at Mon, 11 May 2026 15:37:55 GMT:
+# Diff at Mon, 11 May 2026 21:39:47 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1777390966
-- current timestamp: 1778513762
+- current timestamp: 1778535511
 
 ## Description
 
-Kailua dispute-game implementation rotation:
+Kailua dispute-game rotation. MegaETH deployed a new KailuaGame implementation and a new operational treasury, then called `setRespectedGameType(1337, ...)` on `OptimismPortal2` to re-point the bridge at the new impl.
 
-- **OptimismPortal2** (`eth:0x7f82f57F...`) — `respectedGameTypeUpdatedAt` bumped from `1762796999` to `1778245595` (the `setRespectedGameType` call refresh that triggered today's flag). `respectedGameType` unchanged at `1337` (KailuaGame).
-- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...`. The old `KailuaGame` impl is deleted from discovery. KailuaGame: [diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84).
-- **New KailuaTreasury** `0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8` templated under the existing `megaeth/KailuaTreasury` variant (criteria.json updated to include this second address; shape hash matches the previous KailuaTreasury, so no shape change needed).
-- Several additional `KailuaGame` and `KailuaTreasury` contracts now appear in discovery (`0x0a93bd69...`, `0x6973F25f...`, `0x70ce49f7...`, `0x9a12DC0F...`, `0x01853F26...`, `0x40B4cB50...`). These are reachable from the new treasury's reference graph and represent in-flight tournament games / past treasuries; not new implementation contracts.
+- **OptimismPortal2** (`eth:0x7f82f57F...`) — `respectedGameTypeUpdatedAt` bumped from `1762796999` (2025-11-10, original deploy) to `1778245595` (2026-05-08, the `setRespectedGameType` call). `respectedGameType` unchanged at `1337` (still KailuaGame).
+- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...` (deployed 2026-05-07). KailuaGame impl [diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84).
+- **New active KailuaTreasury** `0x01853F26...` (deployed 2026-05-07) — this is the operational treasury the new game impl points to via `KAILUA_TREASURY`. Templated under `megaeth/KailuaTreasury` (shape added; existing variant exists because the generic `risc0/KailuaTreasury` template applies `FormatSeconds` to `vanguardAdvantage()`, which trips a cast assertion on megaeth's contracts).
+- **megaeth.ts** rewired to resolve the active game/treasury dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → its `KAILUA_TREASURY`, instead of name-based `getContract('KailuaGame'/'KailuaTreasury')` lookups (which broke once the upgrade made multiple Kailua instances discoverable).
+- **risc0/KailuaGame** shapes.json extended to cover the new `0x8c0Ed8Dd...` impl so its `ignoreMethods: ["getChallengerDuration"]` applies and the `ignoreRelatives` settings prevent discovery from cascading into tournament-game instances.
 
-Why a megaeth-specific template variant: the generic `risc0/KailuaTreasury` template applies `FormatSeconds` to `vanguardAdvantage()`, which trips a discovery-side cast assertion on megaeth's contracts. The `megaeth/KailuaTreasury` variant drops that field.
+Pre-existing Nov-2025 treasury chain (`0xE4e456c64B...` root, `0x8b28c0Ba...` anchor) and the in-flight tournament games created by the new treasury are no longer pulled into discovery — the operational treasury template's `ignoreRelatives: ["children", "parentGame", "lastResolved"]` cuts off the chain.
 
 ## Watched changes
+
+```diff
+    contract Safe (eth:0x63eCafD27E0B86B37903c8aA64beD47244Ad909A) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xEd71403a0cC46ED68E57997A225a9620b5Cf0872"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 5 (20%)"
+    }
+```
 
 ```diff
 -   Status: DELETED
@@ -45,66 +57,29 @@ Why a megaeth-specific template variant: the generic `risc0/KailuaTreasury` temp
 ```
 
 ```diff
-+   Status: CREATED
-    contract KailuaTreasury (eth:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3) [N/A]
-    +++ description: None
+-   Status: DELETED
+    contract KailuaTreasury (eth:0xE4e456c64B9b0de5FE8a90d809180cA71534D623) [megaeth/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
 ```
 
 ```diff
 +   Status: CREATED
-    contract KailuaGame (eth:0x0a93bd698358D7b8D67BCf4c71969Fe4f953c466) [N/A]
-    +++ description: None
+    contract KailuaTreasury (eth:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3) [megaeth/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
 ```
 
 ```diff
 +   Status: CREATED
-    contract KailuaTreasury (eth:0x40B4cB50A075f6D69cdf1D5068234D2653337120) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaGame (eth:0x6973F25fa94789BA417DDaa06195fDac96cdE304) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaGame (eth:0x70ce49f76f871ab9962F08d1d326C2e7d49184D4) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaTreasury (eth:0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8) [megaeth/KailuaTreasury]
-    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaGame (eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84) [N/A]
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaGame (eth:0x9a12DC0F0F2F8d7BaEE7Cd9b840c2994CAFCd004) [N/A]
-    +++ description: None
+    contract KailuaGame (eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
 ```
 
 ## Source code changes
 
 ```diff
-...0x0a93bd698358D7b8D67BCf4c71969Fe4f953c466.sol} |   24 +-
- ...:0x6973F25fa94789BA417DDaa06195fDac96cdE304.sol | 7563 ++++++++++++++++++++
- ...:0x70ce49f76f871ab9962F08d1d326C2e7d49184D4.sol | 7563 ++++++++++++++++++++
- ...:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84.sol | 7563 ++++++++++++++++++++
- ...:0x9a12DC0F0F2F8d7BaEE7Cd9b840c2994CAFCd004.sol | 7563 ++++++++++++++++++++
- ...:0x01853F268B170D4A15D0c3AE905757b5Ec8375f3.sol | 7317 +++++++++++++++++++
- ...:0x40B4cB50A075f6D69cdf1D5068234D2653337120.sol | 7317 +++++++++++++++++++
- ...0x8b28c0BaF572cF1ff134fda5CC2fa141D1CFBCF8.sol} |    0
- ...:0xE4e456c64B9b0de5FE8a90d809180cA71534D623.sol | 7309 +++++++++++++++++++
- 9 files changed, 52211 insertions(+), 8 deletions(-)
+.../{.flat@1777390966 => .flat}/KailuaGame.sol     | 24 ++++++++++++++--------
+ .../{.flat@1777390966 => .flat}/KailuaTreasury.sol | 24 ++++++++++++++--------
+ 2 files changed, 32 insertions(+), 16 deletions(-)
 ```
 
 Generated with discovered.json: 0x6483611ae3af483c00014bcc31fbe41aea3ad958
