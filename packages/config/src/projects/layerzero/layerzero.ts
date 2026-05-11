@@ -44,10 +44,10 @@ LayerZero provides a [block explorer](https://layerzeroscan.com/) which is mostl
       },
     ],
     type: 'multichain',
-  },
-  permissions: generateDiscoveryDrivenPermissions([discovery]),
-  contracts: {
-    addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    permissions: generateDiscoveryDrivenPermissions([discovery]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([discovery]),
+      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    },
   },
 }

@@ -31,10 +31,10 @@ export const wormholeNtt: BaseProject = {
       },
     ],
     type: 'multichain',
-  },
-  permissions: generateDiscoveryDrivenPermissions([discovery]),
-  contracts: {
-    addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    permissions: generateDiscoveryDrivenPermissions([discovery]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([discovery]),
+      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    },
   },
 }
