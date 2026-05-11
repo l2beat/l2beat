@@ -31,9 +31,11 @@ export function TopTokensWidget({
   const items = data?.topTokens[activeTab]
 
   return (
-    <PrimaryCard className="lg:col-span-2 lg:row-span-5">
+    <PrimaryCard className="border-divider max-md:border-b lg:col-span-2 lg:row-span-5">
       <div className="flex items-center gap-2.5">
-        <h2 className="font-bold text-heading-20">Top Tokens by Volume</h2>
+        <h2 className="font-bold text-heading-18 md:text-heading-20">
+          Top Tokens by Volume
+        </h2>
         <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
           Last 24 hours
         </div>
@@ -112,10 +114,10 @@ function TokenRow({ token }: { token: TopTokenItem }) {
         )}
       </div>
       <div className="flex items-baseline gap-2 whitespace-nowrap">
-        <span className="font-bold text-label-value-16">
+        <span className="font-bold text-label-value-15 md:text-label-value-16">
           {formatCurrency(token.volume, 'usd', { decimals: 2 })}
         </span>
-        <span className="font-medium text-paragraph-16 text-secondary">
+        <span className="font-medium text-paragraph-14 text-secondary md:text-paragraph-16">
           {formatInteger(token.transferCount)} txs
         </span>
       </div>

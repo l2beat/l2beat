@@ -40,7 +40,7 @@ export function FrameworkDominanceContent({
   return (
     <div>
       <div className="flex items-center gap-2.5">
-        <h2 className="font-bold text-heading-20">
+        <h2 className="font-bold text-heading-18 md:text-heading-20">
           Framework Dominance by {metric === 'volume' ? 'Volume' : 'Transfers'}
         </h2>
         <div className="rounded bg-n-blue-700 px-1.5 py-[3px] font-bold text-sm text-white leading-[1.15]">
@@ -69,7 +69,7 @@ export function FrameworkDominanceContent({
             Transfers
           </TabsTrigger>
         </TabsList>
-        <TabsContent value={metric} className="mt-4">
+        <TabsContent value={metric} className="mt-1.5 md:mt-4">
           {isLoading ? (
             <RowsSkeleton />
           ) : !metricData || metricData.entries.length === 0 ? (
@@ -112,7 +112,7 @@ function FrameworkRowItem({
   const share = total > 0 ? (value / total) * 100 : 0
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <img
@@ -120,14 +120,14 @@ function FrameworkRowItem({
             alt={framework.name}
             className="size-6 rounded-full"
           />
-          <span className="font-bold text-label-value-16">
-            {framework.label}
-          </span>
-          {framework.label !== framework.name && (
-            <span className="font-medium text-label-value-15 text-secondary">
-              {framework.name}
-            </span>
-          )}
+          <div className="flex items-center gap-1">
+            <span className="font-bold text-heading-16">{framework.label}</span>
+            {framework.label !== framework.name && (
+              <span className="font-medium text-label-value-16 text-secondary">
+                {framework.name}
+              </span>
+            )}
+          </div>
         </div>
         <div className="flex items-baseline gap-2">
           <span className="font-bold text-label-value-16">
@@ -137,7 +137,7 @@ function FrameworkRowItem({
           </span>
         </div>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-secondary">
+      <div className="mt-0.5 h-1.5 w-full overflow-hidden rounded-full bg-surface-secondary">
         <div
           className="h-full rounded-full"
           style={{
@@ -190,7 +190,9 @@ function Stat({
     <div
       className={cn('flex flex-col gap-0.5', align === 'right' && 'items-end')}
     >
-      <span className="font-medium text-2xs text-secondary">{label}</span>
+      <span className="font-medium text-[13px] text-secondary leading-none">
+        {label}
+      </span>
       <span className="font-medium text-label-value-15">{value}</span>
     </div>
   )

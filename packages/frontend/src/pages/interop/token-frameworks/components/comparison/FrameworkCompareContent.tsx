@@ -33,7 +33,9 @@ export function FrameworkCompareContent({
 
   return (
     <div>
-      <h2 className="font-bold text-heading-20">Frameworks Head-to-Head</h2>
+      <h2 className="font-bold text-heading-18 md:text-heading-20">
+        Frameworks Head-to-Head
+      </h2>
       <p className="mt-1 font-medium text-secondary text-xs leading-[1.2]">
         Select two frameworks & view head-to-head comparison
       </p>

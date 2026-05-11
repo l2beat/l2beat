@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import { Skeleton } from '~/components/core/Skeleton'
 import type { FrameworkDominanceEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
@@ -6,29 +7,52 @@ import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 export function FastestProtocol({
   framework,
   entry,
+  isLoading,
 }: {
-  framework: InteropTokenFramework
-  entry: FrameworkDominanceEntry
+  framework: InteropTokenFramework | undefined
+  entry: FrameworkDominanceEntry | undefined
+  isLoading: boolean
 }) {
   return (
-    <div className="mt-2 flex items-center gap-3">
-      <img src={framework.iconUrl} alt="" className="size-10 rounded-lg" />
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <span className="font-bold text-heading-18 leading-none">
-          {framework.label}
-        </span>
-        <span className="truncate font-medium text-label-value-14 text-secondary leading-none">
-          {framework.name}
-        </span>
-      </div>
-      <Stat
-        label="Transfer time"
-        value={formatSeconds(entry.averageDurationSeconds ?? 0)}
-      />
-      <Stat
-        label="Transaction count"
-        value={`${formatInteger(entry.transferCount)} txs`}
-      />
+    <div className="mt-3 flex flex-col rounded-lg bg-surface-secondary px-4 py-3 md:px-6 md:py-4">
+      <span className="font-medium text-paragraph-13 text-secondary leading-none">
+        Fastest protocol
+      </span>
+      {isLoading ? (
+        <Skeleton className="mt-0.5 h-12 w-full" />
+      ) : entry && framework ? (
+        <div className="flex items-end justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <img
+              src={framework.iconUrl}
+              alt=""
+              className="size-10 rounded-lg"
+            />
+            <div className="flex flex-col">
+              <span className="font-bold text-heading-18 leading-none">
+                {framework.label}
+              </span>
+              <span className="truncate font-medium text-label-value-14 text-secondary leading-none">
+                {framework.name}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <Stat
+              label="Transfer time"
+              value={formatSeconds(entry.averageDurationSeconds ?? 0)}
+            />
+            <Stat
+              label="Transaction count"
+              value={`${formatInteger(entry.transferCount)} txs`}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex h-10 items-center font-medium text-paragraph-16 text-secondary">
+          No transfers in the selected direction.
+        </div>
+      )}
     </div>
   )
 }
@@ -36,7 +60,7 @@ export function FastestProtocol({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col items-center gap-1.5 rounded-md bg-surface-primary px-4 py-2">
-      <span className="font-medium text-paragraph-13 text-secondary leading-none">
+      <span className="whitespace-nowrap font-medium text-paragraph-13 text-secondary leading-none">
         {label}
       </span>
       <span className="font-bold text-heading-16 leading-none">{value}</span>

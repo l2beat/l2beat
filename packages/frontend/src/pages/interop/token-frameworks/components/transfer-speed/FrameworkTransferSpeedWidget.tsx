@@ -39,7 +39,9 @@ export function FrameworkTransferSpeedWidget({
 
   return (
     <PrimaryCard className="flex flex-col lg:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6">
-      <h2 className="font-bold text-heading-20">Transfer speed</h2>
+      <h2 className="font-bold text-heading-18 md:text-heading-20">
+        Transfer speed
+      </h2>
       <p className="mt-1 font-medium text-paragraph-14 text-secondary">
         Select two chains to compare cross-chain transfer speed.
       </p>
@@ -70,20 +72,11 @@ export function FrameworkTransferSpeedWidget({
         />
       </div>
 
-      <div className="mt-3 rounded-lg bg-surface-secondary px-4 py-3">
-        <span className="font-medium text-paragraph-13 text-secondary leading-none">
-          Fastest protocol
-        </span>
-        {isLoading ? (
-          <Skeleton className="mt-2 h-12 w-full" />
-        ) : fastest && fastestFramework ? (
-          <FastestProtocol framework={fastestFramework} entry={fastest} />
-        ) : (
-          <div className="flex h-12 items-center font-medium text-paragraph-14 text-secondary">
-            No transfers in the selected direction.
-          </div>
-        )}
-      </div>
+      <FastestProtocol
+        framework={fastestFramework}
+        entry={fastest}
+        isLoading={isLoading}
+      />
 
       <h3 className="mt-5 font-medium text-label-value-13 text-secondary">
         All Frameworks
