@@ -19,6 +19,7 @@ export interface PrivacySummaryEntry {
   totalValueLockedUsd: number
   poolsTracked: number
   totalDeposits: number
+  totalValueDeposited30dUsd: number
   attributes: PrivacySummaryAttribute[]
   isUnderReview: boolean
   trustedSetup: TrustedSetup
@@ -155,6 +156,7 @@ export async function getPrivacySummaryData(
     totalValueLockedUsd: project.summary.totalValueSecuredUsd,
     poolsTracked: project.summary.bucketCount,
     totalDeposits: project.summary.deposits.total,
+    totalValueDeposited30dUsd: project.summary.depositedValueUsd.last30d ?? 0,
     attributes: PRIVACY_ATTRIBUTES_BY_PROJECT[project.slug] ?? [],
     isUnderReview: !!project.statuses.reviewStatus,
     trustedSetup: project.trustedSetup,

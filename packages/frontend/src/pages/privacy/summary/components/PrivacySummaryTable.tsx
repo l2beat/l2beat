@@ -1,3 +1,4 @@
+import { pluralize } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -12,6 +13,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { cn } from '~/utils/cn'
@@ -91,14 +93,36 @@ const columns = [
   columnHelper.accessor('totalDeposits', {
     header: 'Total deposits',
     cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue())}
-      </span>
+      <TwoRowCell className="text-right">
+        <TwoRowCell.First>
+          <span className="font-medium text-base">
+            {formatInteger(ctx.getValue())}
+          </span>
+        </TwoRowCell.First>
+        <TwoRowCell.Second>
+          {formatInteger(ctx.row.original.poolsTracked)}{' '}
+          {pluralize(ctx.row.original.poolsTracked, 'pool')}
+        </TwoRowCell.Second>
+      </TwoRowCell>
     ),
     meta: {
       align: 'right',
       tooltip:
         'Total deposit count aggregated across all tracked tokens and buckets.',
+    },
+  }),
+  columnHelper.accessor('totalValueDeposited30dUsd', {
+    id: 'totalValueDeposited30dUsd',
+    header: '30D volume',
+    cell: (ctx) => (
+      <span className="font-medium text-base">
+        {formatCurrency(ctx.getValue(), 'usd')}
+      </span>
+    ),
+    meta: {
+      align: 'right',
+      tooltip:
+        'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
   columnHelper.accessor('attributes', {
@@ -109,19 +133,6 @@ const columns = [
       tooltip:
         'Protocol-level privacy, compliance, upgradeability, and usage attributes.',
       cellClassName: 'pr-1!',
-    },
-  }),
-  columnHelper.accessor('poolsTracked', {
-    header: 'Pools tracked',
-    cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue())}
-      </span>
-    ),
-    meta: {
-      align: 'right',
-      tooltip:
-        'The total number of tracked buckets for the protocol, including pools and denominations.',
     },
   }),
 ]
