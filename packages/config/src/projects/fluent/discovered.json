@@ -1,6 +1,6 @@
 {
   "name": "fluent",
-  "timestamp": 1778223577,
+  "timestamp": 1778589577,
   "configHash": "0x246ec42237c390d9e498ca94e11d79bde502c343b82b13324808346af86ec677",
   "entries": [
     {
@@ -18,9 +18,10 @@
       "address": "eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090",
       "type": "Contract",
       "sourceHashes": [
-        "0x6d4647498757a956296d641ef2f1e818a7f7c4a79386cabb6dab6a82c363318c"
+        "0x4ec9454168d51eb47a4df924d9294993a741a554ed7a961d9cb51848cbcfd480"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "sinceTimestamp": 1776358655,
       "sinceBlock": 24893730,
       "values": {
@@ -42,10 +43,11 @@
       "address": "eth:0x05C5d46a5e6f92fB9CdA9A8b03E4440A175D1484",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xc08f6b8acfc59ef25dbcd1b48ddb59c0718293045c84cc87a8a1820a94a4c668"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xa43264a6842dcf230bfa2a603229898b482e1545b252b0130ba401990ac6449c"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "sinceTimestamp": 1776720923,
       "sinceBlock": 24923839,
       "values": {
@@ -79,11 +81,12 @@
       "type": "Contract",
       "template": "fluent/FluentRollup",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xb3f86a4222a8071a49ac30b3f8d68e9d0542029a668fa3127a1a0e479417f464"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xa8e382a12a1a34693fa021e8b1debea5ec1a1cdf8cdd3472763b4c3f567aea76"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Core Fluent rollup contract. Sequencers commit batch roots and EIP-4844 blob hashes; an AWS Nitro Enclave preconfirms each batch via a signature whose key is bound to a PCR0 measurement verified by SP1; participants holding CHALLENGER_ROLE can dispute and the prover resolves disputes with SP1 ZK proofs; batches finalize after a block-count delay or immediately once all blocks are proven.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1776356639,
       "sinceBlock": 24893562,
       "values": {
@@ -168,14 +171,14 @@
         "finalizationDelay": 14400,
         "incentiveFee": "10000000000000000",
         "isRollupCorrupted": false,
-        "lastFinalizedBatchIndex": 1682,
+        "lastFinalizedBatchIndex": 2039,
         "MAX_GAS_LEFT": 30000000,
         "MAX_INCENTIVE_FEE": "100000000000000000000",
         "MIN_CHALLENGE_DEPOSIT_AMOUNT": 1000000000000000,
         "MIN_CHALLENGE_RESOLUTION_WINDOW": 3600,
         "MIN_CHALLENGE_WINDOW": 3600,
         "MIN_PRECONFIRMATION_WINDOW": 3600,
-        "nextBatchIndex": 1852,
+        "nextBatchIndex": 2210,
         "nitroVerifiers": [
           "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
           "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F"
@@ -210,10 +213,11 @@
       "type": "Contract",
       "template": "fluent/NitroVerifier",
       "sourceHashes": [
-        "0x26f37fd978a3156ce091bb4a7007821396e449417b01ab9cac834c3244cd310d"
+        "0x17ebba808188277d149acdefb76c655cee8c640b959efd8d89269297a96fafdf"
       ],
       "proxyType": "immutable",
       "description": "Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1776356615,
       "sinceBlock": 24893560,
       "values": {
@@ -238,7 +242,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -304,6 +308,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "sinceTimestamp": 1776097223,
       "sinceBlock": 24872008,
       "values": {
@@ -335,10 +340,11 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1730486951,
       "sinceBlock": 21094694,
       "values": {
@@ -399,11 +405,12 @@
       "type": "Contract",
       "template": "fluent/FastWithdrawalList",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x0d648e14b0261d1affaa43c434b8c552769b24ff9ae61d55651963766a41bc91"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x556ae146aa7625bfa65562d45b2776e30fff29770f6d4dff3590b3221d0d1d81"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Per-token rate-limit registry for the optimistic (preconfirmed) fast-withdrawal path. Enforces hourly and daily caps using rolling windows keyed by block timestamp; related tokens (e.g. ETH and WETH) can be aliased to a shared bucket to prevent cap evasion.",
+      "deployerAddress": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "sinceTimestamp": 1776720647,
       "sinceBlock": 24923816,
       "values": {
@@ -446,10 +453,11 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550083,
       "sinceBlock": 22590749,
       "values": {
@@ -482,10 +490,11 @@
       "type": "Contract",
       "template": "fluent/FluentTimeLock",
       "sourceHashes": [
-        "0x3fef1c4a983f63a29992b7e676b0d55ce04c37a3707ccfef382158d2c5ab086b"
+        "0xd525bc7f9bdd823607d96e4957c412aeaf388afb22d1e93d037047db1b64cbfb"
       ],
       "proxyType": "immutable",
       "description": "OpenZeppelin TimelockController used to delay privileged operations. PROPOSER_ROLE schedules calls; the configured minimum delay must elapse before EXECUTOR_ROLE can execute them; CANCELLER_ROLE can drop scheduled calls.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1776356651,
       "sinceBlock": 24893563,
       "values": {
@@ -528,11 +537,12 @@
       "type": "Contract",
       "template": "fluent/NativeGateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x802ef7965e777c3cf4389c3eb0f20795195f40ebef5e949db8ab946041fa5f31"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0xd1c8a73dbbbde1972f9876ae74115745137e4bb9cb35d484e38d5910b443425f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L1 entry point for ETH deposits into Fluent. Forwards ETH to L1FluentBridge for actual escrow custody and emits the corresponding bridge message. UUPS-upgradeable; upgrades are gated by the contract owner.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739563,
       "sinceBlock": 24842312,
       "values": {
@@ -583,9 +593,10 @@
       "address": "eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508",
       "type": "Contract",
       "sourceHashes": [
-        "0xcca4d36e37f515e2219c7200a12f16c80feffef240a98d42decb5fbffa9e3637"
+        "0x42f46686613948c377586d511d315e6d67b9fd747a18225cce7c4cf32d14c7be"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1771375907,
       "sinceBlock": 24480252,
       "values": {
@@ -604,11 +615,12 @@
       "type": "Contract",
       "template": "fluent/L1FluentBridge",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xec81f591c04dd9827c66265a102a26673c6e1ae81b2e4067338363477edab936"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x7bda96bf482f46806c7ec01435c28a85aa1cac36fddebecc38ed1b28e23ebc12"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge core for Fluent. Routes deposits from L1 gateways into a FIFO queue consumed by the sequencer, and lets relayers process L2->L1 messages with two Merkle proofs against the latest preconfirmed or finalized batch root. Custodies bridged ETH on L1 (gateways forward ETH here on deposit). UUPS-upgradeable; upgrades and gateway-whitelist / oracle / pause changes are gated by DEFAULT_ADMIN_ROLE.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739227,
       "sinceBlock": 24842284,
       "values": {
@@ -668,14 +680,14 @@
         "getExecuteGasLimit": 5000,
         "getFeeTreasury": "eth:0x0000000000000000000000000000000000000000",
         "getNativeSender": "eth:0x0000000000000000000000000000000000000000",
-        "getNonce": 977,
+        "getNonce": 1023,
         "getOtherBridge": "eth:0x9CAcf613fC29015893728563f423fD26dCdB8Ddc",
-        "getReceivedNonce": 469,
+        "getReceivedNonce": 485,
         "getReceiveMessageDeadline": 7200,
         "getRollup": "eth:0x1cF53Fd9CD0b713be29F2b41cA17A943f138727f",
-        "getSentMessageCursor": 976,
+        "getSentMessageCursor": 1023,
         "getSentMessageFee": 0,
-        "getSentMessageQueueSize": 1,
+        "getSentMessageQueueSize": 0,
         "isCurrentBatchPreconfirmed": false,
         "isOldestUnconsumedExpired": false,
         "MAX_DEPOSIT_PROCESSING_WINDOW": 50400,
@@ -723,9 +735,10 @@
       "address": "eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2",
       "type": "Contract",
       "sourceHashes": [
-        "0x0509c11dfd5a89988c6e18cbee2c8220e7000e1a14f36ac557b6301855765d6f"
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172379,
       "sinceBlock": 24878255,
       "values": {
@@ -764,7 +777,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -776,6 +789,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1724204135,
       "sinceBlock": 20573748,
       "values": {
@@ -804,9 +818,10 @@
       "address": "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B",
       "type": "Contract",
       "sourceHashes": [
-        "0x5217226f6d0d771ac4dec680c53cb340e7e91c54b6b442d0b2509d249701210a"
+        "0x5cf3d26d4fcd1958dd8077785a9ff2adda45e0c7ca89b651ba85610102eadb3b"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739251,
       "sinceBlock": 24842286,
       "values": {
@@ -837,10 +852,11 @@
       "address": "eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x5b6e843ef85437a1b5fac4e418978f02b10381aa3d796b70e88e43894916a9ba"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x45b490e7750475c1972ebf94ceb72dc1ba853862cfeb57ccdca8c329c87e29d2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739251,
       "sinceBlock": 24842286,
       "values": {
@@ -877,11 +893,12 @@
       "type": "Contract",
       "template": "fluent/ERC20Gateway",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x119832e21a9e5258b103fff2f6c57ee642225ea66e2664aa2b0db162d381e92d"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x75765e6ca5a359f6ea9c2c65faa01bb0fd2d6e5c3c171b1b016161b01542ea27"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L1 entry point for ERC-20 deposits into Fluent. Custodies ERC-20 tokens directly on L1 and emits the corresponding bridge message; on the L2 side the canonical pegged token is minted via the ERC20TokenFactory. UUPS-upgradeable; upgrades are gated by the contract owner.",
+      "deployerAddress": "eth:0x482582979C9125abAb5a06F0E196E8F4015bF77A",
       "sinceTimestamp": 1775739563,
       "sinceBlock": 24842312,
       "values": {
@@ -950,10 +967,11 @@
       "type": "Contract",
       "template": "fluent/NitroVerifier",
       "sourceHashes": [
-        "0x45105074c2c908ae7bcbeff007893e4cb25b6b6986ebf920e622604e4f4802fb"
+        "0x789c3ae8ee0cf8c915b3c37d1ed740e83c870d3a7339705387234d47d2f3768b"
       ],
       "proxyType": "immutable",
       "description": "Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.",
+      "deployerAddress": "eth:0x9ec3f0d76A6d3847d86374c791C6E170CAd9518D",
       "sinceTimestamp": 1776596135,
       "sinceBlock": 24913471,
       "values": {
@@ -2005,6 +2023,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25048699 },
+  "usedBlockNumbers": { "ethereum": 25079092 },
   "permissionsConfigHash": "0x5d20d4e96de79968356dcb52be71fa60e5683db4dbf60f44bf47346abace7965"
 }
