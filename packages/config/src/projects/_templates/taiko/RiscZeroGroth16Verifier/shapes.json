@@ -1,39 +1,37 @@
 {
   "RiscZeroGroth16Verifier_v2_0_0": {
-    "hash": "0x22a4c48ce03a19c9b31c30608fd0808cfe2c85b5c722e1173aafd22872fd1881",
+    "hash": "0x0300b7e2e267c702a9b4a4303d7bbdd644bc1a0314cfc88766db91d87eca47f9",
     "address": "eth:0x48E32eFbe22e180A3FFe617f4955cD83B983dd98",
     "blockNumber": 22468063
   },
   "RiscZeroGroth16Verifier_v2_1_0": {
-    "hash": "0xe1597b3a05a2f083910b7e1c6e81e56d4eff97191b25307544c7f2164d824d51",
+    "hash": "0x6475af1035b20d1752bd9d4627ca44baf73add549e25f00e7253657bb9342a2d",
     "address": "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a",
     "blockNumber": 22694475
   },
   "RiscZeroGroth16Verifier_v2_2_0": {
-    "hash": "0x0ec6714f2eae54d69f7eb8da9f402541927894bca21763405f3a4083e9c1c93a",
+    "hash": "0x3bc7088771e0885ea308b56e1dd5ff9818b17e6ad8856232189a849e5db10cac",
     "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
     "blockNumber": 22975539
   },
   "RiscZeroGroth16Verifier_Taiko_v2_2_0": {
-    "hash": "0x02a47f0ba956127adc6a8d871b4444f762209c2d6f916b87162fcea4f9b9482b",
+    "hash": "0x2b72a677b8c941c0f09c4b4b3fe365a515d0dffb27f7bab2d006a8339413cb40",
     "address": "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c",
     "blockNumber": 23023802
   },
   "RiscZeroGroth16Verifier_v3": {
-    "hash": "0xb44ee6b08f1771b57cb0eaac00eb8ac68c0b86d1f4cbd25e8b80debe791ad2eb",
+    "hash": "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b",
     "address": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D",
     "blockNumber": 23282448
   },
   "RiscZeroGroth16Verifier_251204.sol": {
-    "hash": "0x5bdef1c5dee5066841fc386ed4f744a9763e0f18392a2398958f1a96718f7730",
+    "hash": "0x95b360b0ff8dda5224201d8c43cd95aa82642a4eda83252fcd0d99b435fbc6bb",
     "address": "eth:0x7CCA385bdC790c25924333F5ADb7F4967F5d1599",
-    "chain": "ethereum",
     "blockNumber": 23938931
   },
   "RiscZeroGroth16Verifier.sol_v2_0_0_rc3_megaeth": {
-    "hash": "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb",
+    "hash": "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6",
     "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
-    "chain": "ethereum",
     "blockNumber": 24067663
   }
 }

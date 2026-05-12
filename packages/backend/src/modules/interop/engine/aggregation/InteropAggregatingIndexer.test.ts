@@ -178,6 +178,7 @@ describe(InteropAggregatingIndexer.name, () => {
       )
 
       const result = await indexer.update(from, to)
+      const retentionCutoff = to - 14 * UnixTime.DAY
 
       expect(result).toEqual(to)
       expect(interopTransfer.getByRange).toHaveBeenCalledWith(from, to)
@@ -189,7 +190,7 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(transaction).toHaveBeenCalledTimes(1)
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
+      ).toHaveBeenCalledWith(retentionCutoff)
       expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
         to,
       )
@@ -201,14 +202,14 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
+      ).toHaveBeenCalledWith(retentionCutoff)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
       expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith(
         aggregatedTokensPairs,
       )
       expect(
         aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
+      ).toHaveBeenCalledWith(retentionCutoff)
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(to)

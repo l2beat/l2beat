@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x07897bed0def416a6d73bd2829fa1632de4854bc
+
+# Diff at Fri, 08 May 2026 07:52:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771584033
+- current timestamp: 1771584033
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771584033 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 3 (eth:0x2bf43034b9559643e986A2fE3cE015a18247b904) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Diamond (eth:0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
++        "0xfe92fc5881d0e7d5cabb9edf0344e4bf0f6bf6de5a51f9ce5b9a03d32c1338bc"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0x86F4487949Ac2fb0d5735870f1731e879e1d9680) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2bf43034b9559643e986A2fE3cE015a18247b904 act through it.
+      sourceHashes.0:
+-        "0x52d297ca518abe8d71a6d8911487860414e682b1d0d1e7169c4151b619d55832"
++        "0x3071b29c9d3c65c02f422ab100df2d586db80b598bf89958951c8dffea457c52"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
++        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) [shared-zk-stack/AvailL1DAValidator] {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      sourceHashes.0:
+-        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
++        "0x1802475d9a91441cffe558d63a993380d7817f22de139c9282edd95cdc2df473"
+    }
+```
+
 Generated with discovered.json: 0x223ed1867b78133ef19ae4af44d3d93afaf9c93f
 
 # Diff at Tue, 05 May 2026 10:23:13 GMT:

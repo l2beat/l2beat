@@ -1,16 +1,16 @@
 {
   "AVSDirectory": {
-    "hash": "0xda5855140fd893c11984d2ce3e5c9833d7024c104ca1eaf0a5b756f81e55087c",
+    "hash": "0xb918d03fafd407751fbbc8ca7f5876a304aedf54591f25a8e66b6c05b3cb7c31",
     "address": "eth:0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7",
     "blockNumber": 22188285
   },
   "AVSDirectory.sol": {
-    "hash": "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143",
+    "hash": "0xb21efaef0442e42aa668995df6e86c5d892bec9c3ba2cb5d8e86cf79a509b287",
     "address": "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2",
     "blockNumber": 22375190
   },
   "AVSDirectory_v1.9.0": {
-    "hash": "0x2e898060c596c2058f1140538534ecf4a6c7aeea4f1db17d15eddf3487f5a1fc",
+    "hash": "0xc2346a42502220ff86a519abb898d6c25a1544f9a840e6cc1d0baeb4868dc71d",
     "address": "eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b",
     "blockNumber": 24350294
   }

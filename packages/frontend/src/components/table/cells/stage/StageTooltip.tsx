@@ -140,7 +140,15 @@ export function StageTooltip({
                 {missing?.map((requirement, i) => (
                   <li className="flex gap-1.5" key={i}>
                     <MissingIcon className="relative top-0.5 inline-block shrink-0" />
-                    {requirement}
+                    <div>
+                      {requirement}
+                      {stageConfig.missing?.principle === requirement &&
+                        stageConfig.stage1PrincipleDescription && (
+                          <p className="mt-2">
+                            {stageConfig.stage1PrincipleDescription}
+                          </p>
+                        )}
+                    </div>
                   </li>
                 ))}
               </ul>

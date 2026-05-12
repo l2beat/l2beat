@@ -1,8 +1,7 @@
 {
   "EscapeHatch.sol": {
-    "hash": "0x075ee4b441a07410b5aa3c5fc868789251bc02707bc5ba28a174648dafad785d",
+    "hash": "0xaf030f696223208ac572e052a593e9c1e8b5c533c49e60529c37b01a1466f564",
     "address": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-    "chain": "ethereum",
     "blockNumber": 24590324
   }
 }

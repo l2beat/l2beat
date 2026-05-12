@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xbcddc22c7c7a964c7e735cdc8058429133443c3c
+
+# Diff at Fri, 08 May 2026 07:52:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891517
+- current timestamp: 1777891517
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891517 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (eth:0x879cD57975d596004863D30c59d579ef78BBbe32) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      sourceHashes.0:
+-        "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380"
++        "0x5e0e881a698c9b45cde9f411e7a6bd51140bfc24fef11ead24a6d565f7eb8160"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0xF5C9F957705bea56a7e806943f98F7777B995826) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x945d79fba7fe6f3e3e40f582b69b67983dbd63977e2fce47328aa12e16175fd7"
++        "0xc5f57a922733a74b99146d3702f466aaffd6150b739c70a54551b7060653f0c4"
+      sourceHashes.1:
+-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
++        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
+    }
+```
+
 Generated with discovered.json: 0xec583901d00644255b7e25a1e8268ce1aeaf8cbd
 
 # Diff at Tue, 05 May 2026 10:23:09 GMT:

@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x38694fb23df050c8ce78bdbafbbccae690d2e509
+
+# Diff at Fri, 08 May 2026 07:52:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777964358
+- current timestamp: 1777964358
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777964358 (main branch discovery), not current.
+
+```diff
+    contract TokenImplementation (eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) [wormhole/BridgeToken] {
+    +++ description: Wormhole wrapped ERC20 token implementation. When initialized as a wrapped asset, the Token Bridge is the token owner and can mint, burn, and update metadata after accepting valid Token Bridge VAAs.
+      sourceHashes.0:
+-        "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
++        "0xd7cffa0a386a077d44c802d0eafaccade2143c4107df332754f818aa80343d1b"
+    }
+```
+
+```diff
+    contract TokenBridge (eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585) [wormhole/TokenBridge] {
+    +++ description: Wormhole Token Bridge on Ethereum. It escrows Ethereum-native tokens and mints or burns wrapped assets such as WSOL after Wormhole Core verifies Guardian-signed VAAs. WSOL has no Ethereum-side escrow because it is a wrapped asset on Ethereum.
+      sourceHashes.1:
+-        "0x06093cab28394b5790c0a8281474cd818235258958a294ecad796fb89e7d017c"
++        "0x694d7e12e343544cde20da708d139637b87150808347040bf2ca863629f1bb19"
+    }
+```
+
+```diff
+    contract WormholeCore (eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) [wormhole/WormholeCore] {
+    +++ description: Wormhole Core Bridge on Ethereum. It verifies VAAs signed by the active Wormhole Guardian set and is the security root for Wormhole application contracts on Ethereum, including the Token Bridge.
+      sourceHashes.1:
+-        "0xb51bdb80364d69b22f5cafd3aee42a605a60f5fc3116509bea8352fbfa04c532"
++        "0xc760112d439be8b9c1d00a313efccd01b1c3179af200cabde3f02cd59a235a42"
+    }
+```
+
+```diff
+    contract WSOL (eth:0xD31a59c85aE9D8edEFeC411D448f90841571b89c) [wormhole/BridgeToken] {
+    +++ description: WSOL is the Wormhole-wrapped ERC20 representation of native SOL on Ethereum. The Token Bridge owns this token and mints or burns it after accepting valid Token Bridge VAAs for the Solana route. The native SOL backing is escrowed on Solana, not Ethereum.
+      sourceHashes.1:
+-        "0xbc51a6f7503c2dccc97bd5b0fe777fa354d9c7f8a017bffcdb16119f293f0619"
++        "0xd7cffa0a386a077d44c802d0eafaccade2143c4107df332754f818aa80343d1b"
+    }
+```
+
 Generated with discovered.json: 0xc943d354561759b6a886f15d4417047eda9a84e7
 
 # Diff at Tue, 05 May 2026 10:23:23 GMT:

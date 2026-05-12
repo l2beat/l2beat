@@ -662,6 +662,45 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     },
   )
 
+  describe(
+    DataAvailabilityRepository.prototype.getLatestTimestampsByConfigId.name,
+    () => {
+      it('returns latest timestamp for each configuration ID', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-a',
+            'config-id-1',
+            START + 1 * UnixTime.DAY,
+            200n,
+          ),
+          record('project-b', 'layer-a', 'config-id-2', START, 300n),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-2',
+            START + 2 * UnixTime.DAY,
+            400n,
+          ),
+        ])
+
+        const results = await repository.getLatestTimestampsByConfigId()
+
+        expect(results).toEqualUnsorted([
+          {
+            configurationId: 'config-id-1',
+            latestTimestamp: START + 1 * UnixTime.DAY,
+          },
+          {
+            configurationId: 'config-id-2',
+            latestTimestamp: START + 2 * UnixTime.DAY,
+          },
+        ])
+      })
+    },
+  )
+
   describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([

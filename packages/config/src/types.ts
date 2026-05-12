@@ -41,6 +41,10 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface ExitWindowRisk extends TableReadyValue {
+  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
@@ -542,7 +546,7 @@ export interface ProjectRiskView {
     initialBond?: string
   }
   dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
+  exitWindow: ExitWindowRisk
   sequencerFailure: TableReadyValue
   proposerFailure: TableReadyValue
 }
@@ -1207,7 +1211,9 @@ export type InteropPluginName =
   | 'hyperlane-hwr'
   | 'hyperlane-merkly-tokenbridge'
   | 'hyperlane-simple-apps'
+  | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
   | 'maker-bridge'

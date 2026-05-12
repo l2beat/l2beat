@@ -19,6 +19,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -603,7 +604,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
       common.riskView.dataAvailability,
       baseChain.riskView.dataAvailability,
     ),
-    exitWindow: pickWorseRisk(
+    exitWindow: stackExitWindowRisk(
       common.riskView.exitWindow,
       baseChain.riskView.exitWindow,
     ),
@@ -1384,7 +1385,7 @@ function getRiskViewExitWindow(
     return {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+        'There is no exit window for users to exit in case of unwanted upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
       orderHint: -finalizationPeriod,
     }

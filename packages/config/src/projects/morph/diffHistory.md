@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x622b2d29666e475f0c99f890d167b838ba742e4f
+
+# Diff at Fri, 08 May 2026 07:51:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1775810477
+- current timestamp: 1775810477
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775810477 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      sourceHashes.0:
+-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
++        "0x3feac8c491dc7917dcb42f0d997881f23a455a9a1867e01a6952c86179f13192"
+    }
+```
+
+```diff
+    contract ZkEvmVerifierV1 (eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63) [morph/ZkEvmVerifierV1] {
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+      sourceHashes.0:
+-        "0xe768d966c7b9e6eba422736e59046849ce9b3236ab36b790ec7b87cadfa383b8"
++        "0xf39ce0e3dee7adb6cac97682bd2c0404b9b5ff3404e76be3a52cee40371f8c32"
+    }
+```
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      sourceHashes.1:
+-        "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
++        "0x0e1d68199446451f14f2a7ef0da1b4b74fb6b05a9f004eb41d199417b1985a34"
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) [morph/L1ETHGateway] {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      sourceHashes.1:
+-        "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
++        "0xe92fa45dcb3b7f6f6a441a9da9924129cd8184c78382da028ad13d2e098ee90a"
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) [morph/L1MessageQueueWithGasPriceOracle] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
++        "0x50d6f9c37241492993e369b6496118b33438cd7d17915003ca6a471686fa5229"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) [morph/L1StandardERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      sourceHashes.1:
+-        "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
++        "0xd9fd1d2027fa84e5c617578022ac0b91eb03a0d519100e7b2a48aaac4ad3194c"
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      sourceHashes.0:
+-        "0x5553c4f2dc9ebb4f397dabef70540cedb6c655c68ac950596144f4f8c6cbf9e8"
++        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc"
+      sourceHashes.1:
+-        "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713"
++        "0x201f99073fc761fc50bdc6a6f101584c6fe16793fc83bfd0ce67103f30eea656"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      sourceHashes.0:
+-        "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
++        "0x3ad3420c0deb4101b654b109a060c171a56f87935a0cd82300a897e9e5085764"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) [morph/L1GatewayRouter] {
+    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
+      sourceHashes.1:
+-        "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
++        "0xdce116224c949553c8a2b628566e670c07759d121439f2ee728ab3a4cd2eb98f"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      sourceHashes.1:
+-        "0x4ae0d375d97899b0fd3cb34e7aa502f2b652e417b27b23df262734b951560256"
++        "0x744e3febdbddacbc25d9934fa259bfb08b24e38cb1325cdce9e9740b9b6f192b"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) [morph/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.
+      sourceHashes.1:
+-        "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
++        "0x294706d7e04e66317dc12b73ccc3cca5f90ce931686626f7694fecdce0d11f0c"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) [morph/L1CrossDomainMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sourceHashes.1:
+-        "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
++        "0xa9970d78ff281a8a07d08c5be88cdd0c2ec926c46e6f34509a67a27df762ffdf"
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) [morph/Whitelist] {
+    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
+      sourceHashes.0:
+-        "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
++        "0x806904d83b6e7278ee4649059b9c635b05161b0c8707ba085718168c3669bd48"
+    }
+```
+
 Generated with discovered.json: 0x126b345cc35787ad57fbe9de909b6525b1d68e0f
 
 # Diff at Tue, 05 May 2026 10:22:29 GMT:

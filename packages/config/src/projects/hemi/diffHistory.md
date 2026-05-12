@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x138f42d6fc7d53b0d724243e66561a9c53092d1e
+
+# Diff at Fri, 08 May 2026 07:51:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1767717347
+- current timestamp: 1767717347
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767717347 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x0262fEDC4A98f94dDB90CeF0E058644d8409342C) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x2d6eed673d2bab5d76faa0267fc22e2e2bc709d60036b7a47290ed08a484a8d8"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x15144FB8621cB3c4ED3DB223c173ffb58C8D2aB8) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x834fe6e18d4d5cf60a1c6924a1d6a88208e8381fe449791d043bd5911e404b5b"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xe35fb7bc0433439337b3eadda3d6fb7991918162f62a337a695e8c7f948cdd35"
++        "0x031598b0829eb9faac545348e21492db93e743727481662e352da3ebb01c7510"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5ae68684D9179A8053883f1Df599Ea7Fb35303c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752"
++        "0x0ac0fae0ed2876181efd8e1d628f619f4723b088e8afe466f00e008d69b13375"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e) [opstack/L1StandardBridge_usdc_recovery] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This version includes a guardian function to recover USDC that was incorrectly sent to the L2 Stargate USDC address.
+      sourceHashes.1:
+-        "0x68476feae49f34aef031656b4a4308f88e5d9c916368f096009669ac6759bbdf"
++        "0x8fc80c6a98df133602e3ff9aa3c7a38c9f2571457928f726d8abef08a955d469"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x6daF3a3497D8abdFE12915aDD9829f83A79C0d51) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x025c187b0231be4785898f25f98d749f953f5d06781772aef242812e2ecf52e3"
++        "0x6de38b49bc1a04f15ed8bf666e32170c813f9e69b7c213c6e3fdb961091ec37e"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x8434dc705e4B729405Dd66C94DfC62bc3825Ea69) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xa446331bD28cbe0186A983a27C528f566B6bedE0) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0xe038348a5096e5fabd6264cc71bf88fecdd70c4a0e6c891d657ad0ce2e952342"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xF005dFb08377faD44588Af68d0884D272A6fb050) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0xb5cdeba050b0d5fed747efec2a9d555a5ed7bb2ec4261d47d68083a1bbe20e11"
+    }
+```
+
 Generated with discovered.json: 0xe40a5aba0ed177f305f0df2714784539ceb217ed
 
 # Diff at Tue, 05 May 2026 10:22:14 GMT:

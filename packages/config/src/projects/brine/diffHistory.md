@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xd61bd421f4d643e5e506f104149a92688b6bbc3d
+
+# Diff at Fri, 08 May 2026 07:51:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891418
+- current timestamp: 1777891418
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891418 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (eth:0x1390f521A79BaBE99b69B37154D63D431da27A07) [starkex/StarkExchange] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918"
++        "0xa2b51d5024b872eb502c2abfec88397c41c32d42494dd19905514a69d38abfec"
+      sourceHashes.1:
+-        "0xfb3c0545e8c9aeebaa6547f71087a1ad7d93e3344e0dfdb1051e1a18fd44a18b"
++        "0x9b28596a715350d61f719241f35d6ee159c111c93c05da1d4804157142ee790c"
+    }
+```
+
+```diff
+    contract DACommittee (eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446) [starkex/Committee] {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+      sourceHashes.0:
+-        "0xb7173602faa329abf6af13a2dca4512d58504df7a9a3beace2a8a0470b416b02"
++        "0x3d6dc38f062f4e182e3747ac0f40d99d53cc28b9da249e406ca3f44f77154b29"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143) [starkex/GpsFactRegistryAdapter] {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+      sourceHashes.0:
+-        "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
++        "0x1bb1677263f0cad4764f3620f45cf353df37fb489e3404889126f7897afcdffd"
+    }
+```
+
 Generated with discovered.json: 0xe6d07ef9eaeb0a5f0ccc1c0d20a1676ba926b77a
 
 # Diff at Tue, 05 May 2026 10:22:01 GMT:

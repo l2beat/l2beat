@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x18fcb835776367439b1d910a5668f30cbe7e2ba2
+
+# Diff at Fri, 08 May 2026 07:51:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    contract daiBridge (eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) [N/A] {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
++        "0x3e1eb9c378df411293f28164505df385291041842a50abbc26aa95a3a734383f"
+    }
+```
+
+```diff
+    contract usdcBridge (eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) [N/A] {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
++        "0x707bbdde9ad813be34b64219e23d4bc72ecbbb2925c535fa79b0c0c899a60fd6"
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) [N/A] {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      sourceHashes.1:
+-        "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
++        "0x621302f1683070cb9e1d962df0633d808576501e2096fc636fa24f609ae1665b"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0x48d88a18e6bd3c8820b360189672dfd9f992bfbb
 
 # Diff at Tue, 05 May 2026 10:22:36 GMT:

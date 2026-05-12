@@ -11,7 +11,8 @@ import {
 import {
   explore,
   interpret,
-  VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
+  SIDE_MISMATCH_DIFF_PERCENT,
+  SIDE_MISMATCH_MIN_VOLUME_USD,
 } from '../../stats'
 
 export interface SuspiciousTransferDto {
@@ -115,14 +116,16 @@ export function createAnomaliesRouter() {
       const aggregatedRows =
         await ctx.db.aggregatedInteropTransfer.getDailySeries()
 
-      const aggregatedItems = explore(aggregatedRows).map((row) => ({
-        ...row,
-        interpretation: interpret(row),
-      }))
+      const aggregatedItems = explore(aggregatedRows)
+        .map((row) => ({
+          ...row,
+          interpretation: interpret(row),
+        }))
+        .filter((row) => row.interpretation.length > 0)
 
       return {
-        aggregateValueDiffAlertThresholdPercent:
-          VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
+        aggregateSideMismatchDiffPercent: SIDE_MISMATCH_DIFF_PERCENT,
+        aggregateSideMismatchMinVolumeUsd: SIDE_MISMATCH_MIN_VOLUME_USD,
         aggregatedItems,
       }
     }),
