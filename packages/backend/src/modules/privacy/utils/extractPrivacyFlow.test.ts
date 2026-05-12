@@ -23,6 +23,7 @@ const OTHER_TOKEN_ADDRESS = EthereumAddress(
 )
 
 const baseFlowConfig = {
+  id: 'test-id',
   projectId: 'test',
   bucketId: 'test-bucket',
   direction: 'deposit' as const,

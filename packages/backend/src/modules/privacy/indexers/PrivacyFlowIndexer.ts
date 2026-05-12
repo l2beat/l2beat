@@ -298,7 +298,9 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     return lookup
   }
 
-  static idToConfigurationId(config: PrivacyFlowIndexerConfig): string {
+  static idToConfigurationId(
+    config: Omit<PrivacyFlowIndexerConfig, 'id'>,
+  ): string {
     return createPrivacyConfigurationId([
       'privacy-flow',
       config.projectId,

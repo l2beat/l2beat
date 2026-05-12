@@ -6,6 +6,7 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
+import type { PrivacyFlowIndexerConfig } from './types'
 
 export function createPrivacyModule({
   config,
@@ -29,7 +30,7 @@ export function createPrivacyModule({
       parents: [hourlyIndexer],
       indexerService,
       configurations: config.privacy.priceConfigs.map((priceConfig) => ({
-        id: PrivacyPriceIndexer.idToConfigurationId(priceConfig),
+        id: priceConfig.id,
         minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
         maxHeight: null,
         properties: priceConfig,
@@ -40,10 +41,7 @@ export function createPrivacyModule({
     logger,
   )
 
-  const flowConfigsByChain = new Map<
-    string,
-    typeof config.privacy.flowConfigs
-  >()
+  const flowConfigsByChain = new Map<string, PrivacyFlowIndexerConfig[]>()
   for (const flowConfig of config.privacy.flowConfigs) {
     flowConfigsByChain.set(flowConfig.chain, [
       ...(flowConfigsByChain.get(flowConfig.chain) ?? []),
@@ -51,11 +49,12 @@ export function createPrivacyModule({
     ])
   }
 
-  for (const [chain, flowConfigs] of flowConfigsByChain) {
+  for (const blockTimestampConfig of config.privacy.blockTimestampConfigs) {
     const sinceTimestamp = UnixTime.toStartOf(
-      Math.min(...flowConfigs.map((c) => c.sinceTimestamp)),
+      blockTimestampConfig.sinceTimestamp,
       'hour',
     )
+    const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
 
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
@@ -64,13 +63,10 @@ export function createPrivacyModule({
         blockTimestampProvider: providers.blockTimestamp,
         configurations: [
           {
-            id: PrivacyBlockTimestampIndexer.idToConfigurationId({
-              chain,
-              sinceTimestamp,
-            }),
+            id: blockTimestampConfig.id,
             minHeight: sinceTimestamp,
             maxHeight: null,
-            properties: { chain, sinceTimestamp },
+            properties: { ...blockTimestampConfig, sinceTimestamp },
           },
         ],
         db,
@@ -80,13 +76,17 @@ export function createPrivacyModule({
 
     const flowIndexer = new PrivacyFlowIndexer(
       {
-        chain,
+        chain: blockTimestampConfig.chain,
         parents: [priceIndexer, blockTimestampIndexer],
         indexerService,
-        blockProvider: providers.block.getBlockProvider(chain),
-        logsProvider: providers.logs.getLogsProvider(chain),
+        blockProvider: providers.block.getBlockProvider(
+          blockTimestampConfig.chain,
+        ),
+        logsProvider: providers.logs.getLogsProvider(
+          blockTimestampConfig.chain,
+        ),
         configurations: flowConfigs.map((flowConfig) => ({
-          id: PrivacyFlowIndexer.idToConfigurationId(flowConfig),
+          id: flowConfig.id,
           minHeight: flowConfig.sinceTimestamp,
           maxHeight: null,
           properties: flowConfig,

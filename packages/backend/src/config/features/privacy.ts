@@ -6,7 +6,11 @@ import type {
 } from '@l2beat/config'
 import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
+import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
+import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
+import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import type {
+  PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyPriceIndexerConfig,
@@ -77,17 +81,36 @@ export async function getPrivacyConfig(
 
   const priceConfigs: PrivacyPriceIndexerConfig[] = Array.from(
     priceIdMap.entries(),
-  ).map(([priceId, sinceTimestamp]) => ({
-    priceId,
-    sinceTimestamp,
-  }))
+  ).map(([priceId, sinceTimestamp]) => {
+    const config = { priceId, sinceTimestamp }
+    return {
+      id: PrivacyPriceIndexer.idToConfigurationId(config),
+      ...config,
+    }
+  })
 
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
+
+  const blockTimestampConfigs: PrivacyBlockTimestampConfig[] = chains.map(
+    (chain) => {
+      const sinceTimestamp = Math.min(
+        ...flowConfigs
+          .filter((c) => c.chain === chain)
+          .map((c) => c.sinceTimestamp),
+      )
+      const config = { chain, sinceTimestamp }
+      return {
+        id: PrivacyBlockTimestampIndexer.idToConfigurationId(config),
+        ...config,
+      }
+    },
+  )
 
   return {
     projects,
     flowConfigs,
     priceConfigs,
+    blockTimestampConfigs,
     chains,
   }
 }
@@ -104,7 +127,7 @@ function toFlowConfig(
   minTimestamp: UnixTime,
 ): PrivacyFlowIndexerConfig {
   const source = bucket[direction]
-  return {
+  const base = {
     projectId,
     bucketId: bucket.id,
     direction,
@@ -114,5 +137,9 @@ function toFlowConfig(
     priceId: token.priceId,
     decimals: token.decimals,
     ...source,
+  }
+  return {
+    id: PrivacyFlowIndexer.idToConfigurationId(base),
+    ...base,
   }
 }

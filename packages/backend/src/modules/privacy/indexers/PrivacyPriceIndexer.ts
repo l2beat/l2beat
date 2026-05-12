@@ -141,7 +141,9 @@ export class PrivacyPriceIndexer extends ManagedMultiIndexer<PrivacyPriceIndexer
     }
   }
 
-  static idToConfigurationId(config: PrivacyPriceIndexerConfig): string {
+  static idToConfigurationId(
+    config: Omit<PrivacyPriceIndexerConfig, 'id'>,
+  ): string {
     return createPrivacyConfigurationId(['privacy-price', config.priceId])
   }
 }

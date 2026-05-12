@@ -123,7 +123,9 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
     }
   }
 
-  static idToConfigurationId(config: PrivacyBlockTimestampConfig): string {
+  static idToConfigurationId(
+    config: Omit<PrivacyBlockTimestampConfig, 'id'>,
+  ): string {
     return createPrivacyConfigurationId([
       'privacy-block-timestamp',
       config.chain,

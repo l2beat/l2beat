@@ -13,10 +13,12 @@ export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
+  blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
 }
 
 export type PrivacyFlowIndexerConfig = {
+  id: string
   projectId: string
   bucketId: string
   direction: 'deposit' | 'withdrawal'
@@ -29,11 +31,13 @@ export type PrivacyFlowIndexerConfig = {
 } & PrivacyFlowExtractorConfig
 
 export interface PrivacyBlockTimestampConfig {
+  id: string
   chain: string
   sinceTimestamp: UnixTime
 }
 
 export interface PrivacyPriceIndexerConfig {
+  id: string
   priceId: string
   sinceTimestamp: UnixTime
 }
