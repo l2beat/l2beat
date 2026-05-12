@@ -22,13 +22,13 @@ export function FastestProtocol({
         <Skeleton className="mt-0.5 h-12 w-full" />
       ) : entry && framework ? (
         <div className="flex items-center justify-between gap-2 md:items-end">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <img
               src={framework.iconUrl}
               alt=""
               className="size-10 rounded-lg"
             />
-            <div className="flex flex-col">
+            <div className="flex min-w-0 flex-col">
               <span className="font-bold text-heading-18 leading-none">
                 {framework.label}
               </span>
