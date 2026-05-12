@@ -41,3 +41,48 @@ export function getFullQueryUrl(queryParams: string): URLSearchParams {
   queryParams = queryParams.replace('0xLOCALSTORAGE', data ?? '0x')
   return new URLSearchParams(queryParams)
 }
+
+function hexToBytes(hex: string): Uint8Array {
+  const cleanHex = hex.startsWith('0x') ? hex.slice(2) : hex
+
+  const bytes = new Uint8Array(cleanHex.length / 2)
+  for (let i = 0; i < cleanHex.length; i += 2) {
+    bytes[i / 2] = Number.parseInt(cleanHex.substring(i, i + 2), 16)
+  }
+  return bytes
+}
+
+function urlSafeBase64Encode(bytes: Uint8Array): string {
+  return btoa(String.fromCharCode(...bytes))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '')
+}
+
+export async function encodeCalldata(calldata: string): Promise<string> {
+  if (typeof CompressionStream === 'undefined') {
+    throw new Error('CompressionStream is not supported in this environment')
+  }
+
+  try {
+    const bytes = hexToBytes(calldata)
+
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(bytes)
+        controller.close()
+      },
+    })
+
+    const compressedStream = stream.pipeThrough(
+      new CompressionStream('deflate-raw'),
+    )
+    const response = new Response(compressedStream)
+    const compressedBytes = new Uint8Array(await response.arrayBuffer())
+    return urlSafeBase64Encode(compressedBytes)
+  } catch (error) {
+    throw new Error(
+      `Compression failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    )
+  }
+}
