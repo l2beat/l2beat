@@ -32,6 +32,7 @@ import chalk from 'chalk'
 import { command, number, option, restPositionals } from 'cmd-ts'
 import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
+import { formatOpcodeDiff } from '../implementations/common/disassemble'
 import { ChainSpecificAddressValue } from './types'
 
 const statusTable: Record<VerificationResult['type'], string> = {
@@ -357,6 +358,7 @@ function matchesRuntimeBytecode(
   const matches = got.equals(want)
   if (!matches) {
     console.log(`Failed to match, got ${got.length} want ${want.length}`)
+    console.log(formatOpcodeDiff(got, want))
   }
 
   return matches
