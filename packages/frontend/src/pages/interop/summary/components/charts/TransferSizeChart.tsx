@@ -31,10 +31,8 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
-type ChartItem = TransferSizeDataPoint & { frameworkLabel?: string }
-
 interface Props {
-  data: ChartItem[]
+  data: TransferSizeDataPoint[]
   isLoading: boolean
   horizontal?: boolean
 }
@@ -152,7 +150,7 @@ export function TransferSizeChart({
               axisLine={false}
               tickLine={false}
               interval={0}
-              width={130}
+              width={70}
               tick={(props) => <CategoryYAxisTick {...props} data={data} />}
             />
           ) : (
@@ -190,7 +188,7 @@ function CategoryXAxisTick({
   payload,
   data,
 }: XAxisTickContentProps & {
-  data: ChartItem[]
+  data: TransferSizeDataPoint[]
 }) {
   const item = data.find((item) => item.name === payload.value)
   assert(item, 'Item not found')
@@ -212,31 +210,22 @@ function CategoryYAxisTick({
   payload,
   data,
 }: YAxisTickContentProps & {
-  data: ChartItem[]
+  data: TransferSizeDataPoint[]
 }) {
   const item = data.find((item) => item.name === payload.value)
   assert(item, 'Item not found')
   return (
     <g transform={`translate(${x ?? 0},${y ?? 0})`}>
-      <foreignObject x={-126} y={-9} width={122} height={18} overflow="visible">
-        <div className="flex h-full items-center gap-1">
-          <img
-            src={item.iconUrl}
-            alt={item.name}
-            className="size-3.5 shrink-0 rounded-full"
-          />
-          {item.frameworkLabel ? (
-            <span className="truncate text-secondary text-subtitle-11">
-              <span className="font-bold">{item.frameworkLabel}</span>{' '}
-              <span className="font-medium">{item.name}</span>
-            </span>
-          ) : (
-            <span className="truncate font-bold text-secondary text-subtitle-11">
-              {item.name}
-            </span>
-          )}
-        </div>
-      </foreignObject>
+      <image x={-66} y={-7} width={14} height={14} href={item.iconUrl}>
+        <title>{item.name}</title>
+      </image>
+      <text
+        x={-48}
+        dy="0.32em"
+        className="fill-primary font-bold text-subtitle-14"
+      >
+        {item.name}
+      </text>
     </g>
   )
 }
@@ -260,7 +249,7 @@ function CustomTooltip({
   const { meta } = useChart()
   if (!payload || typeof label !== 'string' || !payload[0]) return null
 
-  const data = payload[0].payload as ChartItem
+  const data = payload[0].payload as TransferSizeDataPoint
 
   const totalTransfers =
     data.countUnder100 +
@@ -272,15 +261,10 @@ function CustomTooltip({
   // Vertical bars stack bottom-to-top; reverse to match visual order.
   const orderedPayload = horizontal ? payload : [...payload].reverse()
 
-  const title =
-    horizontal && data.frameworkLabel
-      ? `${data.frameworkLabel} ${label}`
-      : label
-
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {title}
+        {label}
       </div>
 
       <HorizontalSeparator className="my-1.5" />

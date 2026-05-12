@@ -70,10 +70,6 @@ export type TopTokenItem = {
   topRoute: TopTokenChainRoute | undefined
 }
 
-export type FrameworkTransferSizeDataPoint = TransferSizeDataPoint & {
-  frameworkLabel: string | undefined
-}
-
 export type FrameworkChainPathItem = {
   src: { id: string; iconUrl: string | undefined }
   dst: { id: string; iconUrl: string | undefined }
@@ -101,7 +97,7 @@ export type TokenFrameworksData = {
   }
   topTokens: Record<string, TopTokenItem[]>
   frameworkTable: FrameworkTableEntry[]
-  transferSizeChartData: FrameworkTransferSizeDataPoint[] | undefined
+  transferSizeChartData: TransferSizeDataPoint[] | undefined
 }
 
 export async function getTokenFrameworksData(
@@ -182,7 +178,7 @@ export async function getTokenFrameworksData(
     interopProjects,
   )?.map((entry) => ({
     ...entry,
-    frameworkLabel: projectNameToFrameworkLabel.get(entry.name),
+    name: projectNameToFrameworkLabel.get(entry.name) ?? entry.name,
   }))
 
   return {
@@ -408,10 +404,9 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
     }),
   )
 
-  const transferSizeChartData: FrameworkTransferSizeDataPoint[] =
-    TOKEN_FRAMEWORKS.map((framework, i) => ({
-      name: framework.projectId.toString(),
-      frameworkLabel: framework.label,
+  const transferSizeChartData: TransferSizeDataPoint[] = TOKEN_FRAMEWORKS.map(
+    (framework, i) => ({
+      name: framework.label,
       iconUrl: `/icons/${framework.projectId.toString()}.png`,
       countUnder100: 50 - i * 5,
       percentageUnder100: 50 - i * 5,
