@@ -68,12 +68,12 @@ function multiSendPlugin(
   while (!reader.isAtEnd()) {
     const callMembers: DecodedValue[] = []
 
-    const operation = reader.read(1) // operation: call or delegatecall, ignored
+    const operation = reader.read(1)
     callMembers.push({
-      type: 'number',
+      type: 'string',
       name: 'operation',
       bytes: operation,
-      value: Number(operation).toString(),
+      value: Number(operation) === 0 ? 'call' : 'delegatecall',
       chainId,
     })
 

@@ -17,7 +17,8 @@ export function getFormatHint(name: string): string {
     /seconds/i.test(name) ||
     /duration/i.test(name) ||
     /delay/i.test(name) ||
-    /wait/i.test(name)
+    /wait/i.test(name) ||
+    /period/i.test(name)
   ) {
     return 'seconds'
   }
