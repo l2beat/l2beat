@@ -25,10 +25,10 @@ export function PrivacyProjectStats({
         title="Total Value Locked"
         value={
           <div className="flex flex-col md:gap-1">
-            <span>{formatCurrency(totalValueSecuredUsd, 'usd')}</span>
+            <span>{formatCurrency(totalValueSecuredUsd ?? 0, 'usd')}</span>
             <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-              across {formatInteger(assetsCount)} assets and{' '}
-              {formatInteger(bucketsCount)} buckets
+              across {formatInteger(assetsCount ?? 0)} assets and{' '}
+              {formatInteger(bucketsCount ?? 0)} buckets
             </span>
           </div>
         }
@@ -36,17 +36,17 @@ export function PrivacyProjectStats({
       />
       <ProjectSummaryStat
         title="Deposits 7D"
-        value={formatInteger(deposits.last7d)}
+        value={formatInteger(deposits.last7d ?? 0)}
         valueClassName="text-heading-28"
       />
       <ProjectSummaryStat
         title="Deposits 30D"
-        value={formatInteger(deposits.last30d)}
+        value={formatInteger(deposits.last30d ?? 0)}
         valueClassName="text-heading-28"
       />
       <ProjectSummaryStat
         title="Deposits Total"
-        value={formatInteger(deposits.total)}
+        value={formatInteger(deposits.total ?? 0)}
         valueClassName="text-heading-28"
       />
     </div>

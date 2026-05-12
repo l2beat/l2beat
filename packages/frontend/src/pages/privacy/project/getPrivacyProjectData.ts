@@ -179,8 +179,12 @@ export async function getPrivacyProjectData(
     permissionsSection,
     contractsSection,
     summary: {
-      totalValueSecuredUsd: project.summary.totalValueSecuredUsd,
-      deposits: project.summary.deposits,
+      totalValueSecuredUsd: project.summary.totalValueSecuredUsd ?? 0,
+      deposits: {
+        total: project.summary.deposits.total ?? 0,
+        last7d: project.summary.deposits.last7d ?? 0,
+        last30d: project.summary.deposits.last30d ?? 0,
+      },
     },
     unpricedAssets: project.unpricedAssets,
     isUnderReview: !!project.statuses.reviewStatus,

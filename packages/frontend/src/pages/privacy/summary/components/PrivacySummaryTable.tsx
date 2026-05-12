@@ -58,7 +58,7 @@ const columns = [
     header: 'Total value locked',
     cell: (ctx) => (
       <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue(), 'usd')}
+        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
       </span>
     ),
     meta: {
@@ -71,7 +71,7 @@ const columns = [
     header: 'Total deposits',
     cell: (ctx) => (
       <span className="font-medium text-base">
-        {formatInteger(ctx.getValue())}
+        {formatInteger(ctx.getValue() ?? 0)}
       </span>
     ),
     meta: {
@@ -85,7 +85,7 @@ const columns = [
     header: 'Total value deposited 30D',
     cell: (ctx) => (
       <span className="font-medium text-base">
-        {formatCurrency(ctx.getValue(), 'usd')}
+        {formatCurrency(ctx.getValue() ?? 0, 'usd')}
       </span>
     ),
     meta: {
@@ -98,7 +98,7 @@ const columns = [
     header: 'Total deposits 30D',
     cell: (ctx) => (
       <span className="font-medium text-base">
-        {formatInteger(ctx.getValue())}
+        {formatInteger(ctx.getValue() ?? 0)}
       </span>
     ),
     meta: {
@@ -111,7 +111,7 @@ const columns = [
     header: 'Pools tracked',
     cell: (ctx) => (
       <span className="font-medium text-base">
-        {formatInteger(ctx.getValue())}
+        {formatInteger(ctx.getValue() ?? 0)}
       </span>
     ),
     meta: {
