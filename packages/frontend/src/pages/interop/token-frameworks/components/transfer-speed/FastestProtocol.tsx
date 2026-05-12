@@ -21,7 +21,7 @@ export function FastestProtocol({
       {isLoading ? (
         <Skeleton className="mt-0.5 h-12 w-full" />
       ) : entry && framework ? (
-        <div className="flex items-end justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 md:items-end">
           <div className="flex items-center gap-2">
             <img
               src={framework.iconUrl}
@@ -37,7 +37,7 @@ export function FastestProtocol({
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-3">
             <Stat
               label="Transfer time"
               value={formatSeconds(entry.averageDurationSeconds ?? 0)}
@@ -59,7 +59,7 @@ export function FastestProtocol({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col items-center gap-1.5 rounded-md bg-surface-primary px-4 py-2">
+    <div className="flex flex-col items-center gap-1.5 rounded-md bg-surface-primary px-3 py-1 md:px-4 md:py-2">
       <span className="whitespace-nowrap font-medium text-paragraph-13 text-secondary leading-none">
         {label}
       </span>
