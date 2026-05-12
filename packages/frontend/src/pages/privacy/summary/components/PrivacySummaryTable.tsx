@@ -45,20 +45,28 @@ const columns = [
     header: 'Project',
     cell: (ctx) => (
       <TableLink href={ctx.row.original.href}>
-        <ProjectNameCell
-          project={{
-            name: ctx.row.original.name,
-            shortName: ctx.row.original.shortName,
-            icon: ctx.row.original.icon,
-            backgroundColor: undefined,
-            description: ctx.row.original.description,
-            statuses: {
-              underReview: ctx.row.original.isUnderReview
-                ? 'config'
-                : undefined,
-            },
-          }}
-        />
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <ProjectNameCell
+              project={{
+                name: ctx.row.original.name,
+                shortName: ctx.row.original.shortName,
+                icon: ctx.row.original.icon,
+                backgroundColor: undefined,
+                description: ctx.row.original.description,
+                statuses: {
+                  underReview: ctx.row.original.isUnderReview
+                    ? 'config'
+                    : undefined,
+                },
+              }}
+            />
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {formatInteger(ctx.row.original.poolsTracked)}{' '}
+            {pluralize(ctx.row.original.poolsTracked, 'pool')}
+          </TwoRowCell.Second>
+        </TwoRowCell>
       </TableLink>
     ),
     enableSorting: false,
@@ -93,17 +101,9 @@ const columns = [
   columnHelper.accessor('totalDeposits', {
     header: 'Total deposits',
     cell: (ctx) => (
-      <TwoRowCell className="text-right">
-        <TwoRowCell.First>
-          <span className="font-medium text-base">
-            {formatInteger(ctx.getValue())}
-          </span>
-        </TwoRowCell.First>
-        <TwoRowCell.Second>
-          {formatInteger(ctx.row.original.poolsTracked)}{' '}
-          {pluralize(ctx.row.original.poolsTracked, 'pool')}
-        </TwoRowCell.Second>
-      </TwoRowCell>
+      <span className="font-medium text-base">
+        {formatInteger(ctx.getValue())}
+      </span>
     ),
     meta: {
       align: 'right',
