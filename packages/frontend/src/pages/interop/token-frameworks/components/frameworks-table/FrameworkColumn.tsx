@@ -34,7 +34,7 @@ export function FrameworkColumn({
       </div>
 
       <div className="mt-5 space-y-8">
-        <Section title="Top Tokens by Volume">
+        <Section title="Tokens by Volume">
           <ScrollList>
             {isLoading ? (
               <RowsSkeleton />
@@ -48,7 +48,7 @@ export function FrameworkColumn({
           </ScrollList>
         </Section>
 
-        <Section title="Top Chain Paths by Volume">
+        <Section title="Chain Paths by Volume">
           <ScrollList>
             {isLoading ? (
               <RowsSkeleton />
