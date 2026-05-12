@@ -25,8 +25,10 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { command, number, option } from 'cmd-ts'
+import { command, number, option, restPositionals } from 'cmd-ts'
 import { dirname, join } from 'path'
+import { ChainSpecificAddressValue } from './types'
+import { intersection } from 'lodash'
 
 const statusTable: Record<VerificationResult['type'], string> = {
   success: chalk.bgGreen(' OK '),
@@ -46,8 +48,13 @@ export const FlattenerValidator = command({
       defaultValue: () => 4,
       defaultValueIsSerializable: true,
     }),
+    filterAddresses: restPositionals({
+      type: ChainSpecificAddressValue,
+      displayName: 'filterAddresses',
+      description: 'Addresses that will be checked',
+    }),
   },
-  handler: async ({ concurrency }) => {
+  handler: async ({ concurrency, filterAddresses }) => {
     assertPositiveInteger(concurrency, 'concurrency')
 
     const paths = getDiscoveryPaths()
@@ -55,7 +62,11 @@ export const FlattenerValidator = command({
     const allProviders = getProviders(paths)
 
     const now = UnixTime(1778573466)
-    const contracts = getAllContractAddresses(configReader)
+    let contracts = getAllContractAddresses(configReader)
+    if (filterAddresses.length > 0) {
+      contracts = intersection(contracts, filterAddresses)
+    }
+
     const maxLength = Math.floor(Math.log10(contracts.length)) + 1
     let completed = 0
 
@@ -78,8 +89,6 @@ export const FlattenerValidator = command({
         `${progress}/${contracts.length.toString().padStart(maxLength)}: ${statusTable[status.type]} <- ${contract}`,
       )
     })
-
-    console.log(`Got ${contracts.length} addresses`)
   },
 })
 
