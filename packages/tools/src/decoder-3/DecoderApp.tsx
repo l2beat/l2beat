@@ -58,7 +58,7 @@ const ChainsContext = createContext<API.Chain[]>([])
 function ChainsContextProvider({ children }: { children: ReactNode }) {
   const query = useQuery({
     queryFn: () => API.getChains(),
-    queryKey: [],
+    queryKey: ['chains'],
   })
   return <ChainsContext value={query.data ?? []} children={children} />
 }
@@ -85,7 +85,7 @@ export function FetchTx(props: {
         hash: query.data.hash,
       })
     }
-  }, [query.data])
+  }, [query.data, props.setValues])
 
   if (query.error) {
     return (
@@ -174,7 +174,16 @@ const useStore = create<State & Actions>((set) => ({
       const signatures = { ...state.signatures }
       for (const signature of newSignatures) {
         const array = signatures[signature.selector] ?? []
-        if (array.find((x) => x.signature === signature.signature)) continue
+        if (
+          array.find(
+            (x) =>
+              x.signature === signature.signature &&
+              x.chainId === signature.chainId &&
+              x.address === signature.address &&
+              x.isLocal === signature.isLocal,
+          )
+        )
+          continue
         signatures[signature.selector] = [...array, signature].sort(
           compareSignatures,
         )
@@ -187,8 +196,12 @@ const useStore = create<State & Actions>((set) => ({
       let array = signatures[signature.selector] ?? []
       array = array.filter(
         (x) =>
-          x.isLocal !== signature.isLocal ||
-          x.signature !== signature.signature,
+          !(
+            x.signature === signature.signature &&
+            x.chainId === signature.chainId &&
+            x.address === signature.address &&
+            x.isLocal === signature.isLocal
+          ),
       )
       signatures[signature.selector] = array
       return { signatures }
@@ -320,6 +333,7 @@ function AbiManager() {
   }, [])
 
   function addAbi(abi: LocalAbi) {
+    if (localAbis.some((x) => x.signature === abi.signature)) return
     const newAbis = [...localAbis, abi]
     localStorage.setItem('l2beat.decoder.abis', JSON.stringify(newAbis))
     setLocalAbis(newAbis)
@@ -658,13 +672,14 @@ function DisplayAddress(props: {
   const chains = useContext(ChainsContext)
   const chain = chains.find((x) => x.chainId === props.chainId)
   const explorer = chain?.explorerUrl || 'https://etherscan.io'
-  if (!props.address) return <span>?</span>
 
   useEffect(() => {
     if (props.address && props.chainId) {
       store.requestAddress(props.chainId, props.address)
     }
   }, [props.address, props.chainId, store.requestAddress])
+
+  if (!props.address) return <span>?</span>
 
   return (
     <ValueWithTooltip
@@ -718,7 +733,7 @@ function ValueWithTooltip(props: ValueWithTooltipProps) {
                 )}
                 {(item.onClick || item.copy) && (
                   <button
-                    className="cusor-pointer rounded-md px-1.5 py-px hover:bg-zinc-700"
+                    className="cursor-pointer rounded-md px-1.5 py-px hover:bg-zinc-700"
                     onClick={
                       item.onClick ??
                       (() => navigator.clipboard.writeText(item.copy ?? ''))
