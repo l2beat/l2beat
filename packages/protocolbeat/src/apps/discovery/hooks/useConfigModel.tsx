@@ -125,6 +125,14 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldHandlerString(selectedAddress, fieldName)
   }
 
+  const getFieldEdit = (fieldName: string) => {
+    return configModel.getFieldEdit(selectedAddress, fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return configModel.getFieldEditString(selectedAddress, fieldName)
+  }
+
   const configString = useMemo(() => {
     return configModel.toString()
   }, [configModel])
@@ -180,6 +188,8 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 

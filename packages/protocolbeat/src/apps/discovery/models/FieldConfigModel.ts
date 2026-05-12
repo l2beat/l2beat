@@ -63,4 +63,8 @@ export class FieldConfigModel {
   get handler() {
     return this.config.handler
   }
+
+  get edit() {
+    return this.config.edit
+  }
 }

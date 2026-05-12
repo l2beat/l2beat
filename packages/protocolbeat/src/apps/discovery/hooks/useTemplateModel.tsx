@@ -113,6 +113,14 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldHandlerString(fieldName)
   }
 
+  const getFieldEdit = (fieldName: string) => {
+    return templateModel.getFieldEdit(fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return templateModel.getFieldEditString(fieldName)
+  }
+
   const saveMutation = useMutation({
     mutationFn: async (content?: string) => {
       if (!templateId) {
@@ -172,6 +180,8 @@ export function useTemplateModel({ templateId, files }: Props) {
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 
