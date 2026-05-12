@@ -86,6 +86,12 @@ export const InteropProtocolParams = v.object({
   ...InteropSelectionInputShape,
 })
 
+export type InteropTokenParams = v.infer<typeof InteropTokenParams>
+export const InteropTokenParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+})
+
 export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
 export const InteropTopItemsSort = v.object({
   id: v.enum([
@@ -145,10 +151,22 @@ export const InteropProtocolTransfersParams = v.object({
   cursor: InteropProtocolTransfersCursor.optional(),
 })
 
+export type InteropTokenTransfersParams = v.infer<
+  typeof InteropTokenTransfersParams
+>
+export const InteropTokenTransfersParams = v.object({
+  tokenId: v.string(),
+  ...InteropSelectionInputShape,
+  snapshotTimestamp: v.number(),
+  limit: v.number().optional(),
+  cursor: InteropProtocolTransfersCursor.optional(),
+})
+
 export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
 export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
   protocolIds: v.array(v.string()),
+  tokenId: v.string().optional(),
 })
 
 export type InteropProtocolTransferDetailsItem = {

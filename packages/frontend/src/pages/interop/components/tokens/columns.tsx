@@ -19,6 +19,8 @@ import type {
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
+import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
@@ -219,10 +221,12 @@ export const getTopTokensColumns = ({
   showNetMintedValueColumn,
   showTopProtocolColumn,
   showFlowsColumn,
+  selectedChains,
 }: {
   showNetMintedValueColumn?: boolean
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
 } = {}) =>
   compact([
     tokenColumnHelper.display({
@@ -244,19 +248,36 @@ export const getTopTokensColumns = ({
     }),
     tokenColumnHelper.accessor('symbol', {
       header: 'Symbol',
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First className="font-bold leading-none!">
-            {ctx.row.original.symbol}
-          </TwoRowCell.First>
-          {ctx.row.original.issuer && (
-            <TwoRowCell.Second>
-              Issued by{' '}
-              <span className="capitalize">{ctx.row.original.issuer}</span>
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      ),
+      cell: (ctx) => {
+        const content = (
+          <>
+            <TwoRowCell.First className="font-bold leading-none!">
+              {ctx.row.original.symbol}
+            </TwoRowCell.First>
+            {ctx.row.original.issuer && (
+              <TwoRowCell.Second>
+                Issued by{' '}
+                <span className="capitalize">{ctx.row.original.issuer}</span>
+              </TwoRowCell.Second>
+            )}
+          </>
+        )
+
+        return (
+          <TwoRowCell>
+            {selectedChains && ctx.row.original.id !== 'unknown' ? (
+              <a
+                href={getInteropTokenUrl(ctx.row.original, selectedChains)}
+                className="hover:underline"
+              >
+                {content}
+              </a>
+            ) : (
+              content
+            )}
+          </TwoRowCell>
+        )
+      },
       meta: {
         headClassName: 'pl-0!',
         cellClassName: 'pl-0!',

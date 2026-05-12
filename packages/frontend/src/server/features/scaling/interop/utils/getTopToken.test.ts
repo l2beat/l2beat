@@ -39,7 +39,9 @@ describe(getTopToken.name, () => {
     })
 
     expect(result).toEqual({
+      id: 'eth',
       symbol: 'ETH',
+      issuer: null,
       iconUrl: '/eth.png',
       volume: 340,
       transferCount: 19,
@@ -76,7 +78,9 @@ describe(getTopToken.name, () => {
     })
 
     expect(result).toEqual({
+      id: 'usdc',
       symbol: 'USDC',
+      issuer: null,
       iconUrl: '/usdc.png',
       volume: 100,
       transferCount: 10,
