@@ -35,7 +35,7 @@ export function InteropTokenFrameworksPage({
       <HydrationBoundary state={queryState}>
         <TokenFrameworksSelectedChainsProvider interopChains={interopChains}>
           <SideNavLayout>
-            <MainPageHeader description="Comparing five major multichain token frameworks covered in LI.FI's analysis. Data is sourced from L2BEAT's interop tracking infrastructure. Claims from the original article">
+            <MainPageHeader description="This dashboard provides a comprehensive overview of the major token frameworks - multichain standards that can be used for token creation. The page uses cross-chain transfers data to provide insights on volume, transfers, tokens and speed across different chains.">
               Token frameworks
             </MainPageHeader>
             <div className="mt-4">
