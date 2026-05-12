@@ -2,11 +2,13 @@ import type { Project } from '@l2beat/config'
 import {
   getInteropTransferValue,
   type InteropBridgeType,
+  UnixTime,
   unique,
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sumBy from 'lodash/sumBy'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import type {
@@ -43,6 +45,8 @@ export type FrameworkDominanceEntry = {
   id: string
   volume: number
   transferCount: number
+  previousVolume: number | null
+  previousTransferCount: number | null
   averageDurationSeconds: number | null
   averageValue: number | null
 }
@@ -109,7 +113,7 @@ export async function getTokenFrameworksData(
 
   const frameworkProjectIds = TOKEN_FRAMEWORKS.map((f) => f.projectId)
 
-  const [interopProjects, { records }] = await Promise.all([
+  const [interopProjects, { records, snapshotTimestamp }] = await Promise.all([
     ps.getProjects({ select: ['interopConfig'] }),
     getLatestAggregatedInteropTransferWithTokens(
       params,
@@ -117,6 +121,12 @@ export async function getTokenFrameworksData(
       frameworkProjectIds,
     ),
   ])
+
+  const previousProtocolData = await getPreviousProtocolData(
+    snapshotTimestamp,
+    params,
+    frameworkProjectIds,
+  )
 
   const protocolsDataMap = getProtocolsDataMap(records)
   const projectsById = new Map(interopProjects.map((p) => [p.id, p]))
@@ -126,6 +136,7 @@ export async function getTokenFrameworksData(
       framework,
       protocolsDataMap.get(framework.projectId),
       projectsById.get(framework.projectId),
+      previousProtocolData.get(framework.projectId),
     ),
   )
 
@@ -192,12 +203,15 @@ function buildFrameworkEntry(
   framework: TokenFrameworkDefinition,
   data: ProtocolData | undefined,
   project: Project<'interopConfig'> | undefined,
+  previous: { volume: number; transferCount: number } | undefined,
 ): FrameworkDominanceEntry {
   if (!data) {
     return {
       id: framework.id,
       volume: 0,
       transferCount: 0,
+      previousVolume: previous?.volume ?? null,
+      previousTransferCount: previous?.transferCount ?? null,
       averageDurationSeconds: null,
       averageValue: null,
     }
@@ -207,12 +221,42 @@ function buildFrameworkEntry(
     id: framework.id,
     volume: data.volume,
     transferCount: data.transferCount,
+    previousVolume: previous?.volume ?? null,
+    previousTransferCount: previous?.transferCount ?? null,
     averageDurationSeconds: getSingleAverageDurationSeconds(data, project),
     averageValue:
       data.identifiedTransferCount > 0
         ? data.volume / data.identifiedTransferCount
         : null,
   }
+}
+
+async function getPreviousProtocolData(
+  snapshotTimestamp: UnixTime | undefined,
+  params: InteropSelectionInput,
+  frameworkProjectIds: string[],
+): Promise<Map<string, { volume: number; transferCount: number }>> {
+  const result = new Map<string, { volume: number; transferCount: number }>()
+  if (!snapshotTimestamp) return result
+  const db = getDb()
+
+  const previousTimestamp = snapshotTimestamp - UnixTime.DAY
+  const previousRecords =
+    await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
+      previousTimestamp,
+      params.from,
+      params.to,
+      ['lockAndMint', 'burnAndMint'],
+      frameworkProjectIds,
+    )
+
+  for (const record of previousRecords) {
+    const current = result.get(record.id) ?? { volume: 0, transferCount: 0 }
+    current.volume += getInteropTransferValue(record) ?? 0
+    current.transferCount += record.transferCount ?? 0
+    result.set(record.id, current)
+  }
+  return result
 }
 
 function getSingleAverageDurationSeconds(
@@ -328,6 +372,8 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
       id: framework.id,
       volume: 20_000_000 - i * 3_000_000,
       transferCount: 5000 - i * 800,
+      previousVolume: 18_000_000 - i * 2_500_000,
+      previousTransferCount: 4500 - i * 750,
       averageDurationSeconds: 100_000 - i * 10_000,
       averageValue: 4000 - i * 500,
     }),

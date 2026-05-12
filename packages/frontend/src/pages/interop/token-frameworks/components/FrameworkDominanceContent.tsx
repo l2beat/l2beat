@@ -7,10 +7,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import { PercentChange } from '~/components/PercentChange'
 import type {
   FrameworkDominanceEntry,
   TokenFrameworksData,
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -119,7 +121,13 @@ function FrameworkRowItem({
   total: number
 }) {
   const value = metric === 'volume' ? entry.volume : entry.transferCount
+  const previousValue =
+    metric === 'volume' ? entry.previousVolume : entry.previousTransferCount
   const share = total > 0 ? (value / total) * 100 : 0
+  const percentChange =
+    previousValue !== null && previousValue > 0
+      ? calculatePercentageChange(value, previousValue)
+      : null
 
   return (
     <div className="flex flex-col gap-1">
@@ -147,6 +155,12 @@ function FrameworkRowItem({
               ? formatCurrency(value, 'usd', { decimals: 2 })
               : formatInteger(value)}
           </span>
+          {percentChange !== null && (
+            <PercentChange
+              className="font-medium text-label-value-16"
+              value={percentChange}
+            />
+          )}
         </div>
       </div>
       <div className="mt-0.5 h-1.5 w-full overflow-hidden rounded-full bg-surface-secondary">
@@ -254,6 +268,14 @@ function buildOthersItem(entries: FrameworkDominanceEntry[]): DisplayItem {
   const volume = entries.reduce((sum, e) => sum + e.volume, 0)
   const transferCount = entries.reduce((sum, e) => sum + e.transferCount, 0)
 
+  const previousVolume = entries.reduce(
+    (sum, e) => sum + (e.previousVolume ?? 0),
+    0,
+  )
+  const previousTransferCount = entries.reduce(
+    (sum, e) => sum + (e.previousTransferCount ?? 0),
+    0,
+  )
   const durationWeightedSum = entries.reduce(
     (s, e) => s + (e.averageDurationSeconds ?? 0) * e.transferCount,
     0,
@@ -268,6 +290,8 @@ function buildOthersItem(entries: FrameworkDominanceEntry[]): DisplayItem {
       id: '__others__',
       volume,
       transferCount,
+      previousVolume,
+      previousTransferCount,
       averageDurationSeconds,
       averageValue,
     },
