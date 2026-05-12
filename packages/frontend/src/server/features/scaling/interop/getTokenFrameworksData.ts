@@ -123,7 +123,7 @@ export async function getTokenFrameworksData(
       ),
     ])
 
-  const records = keepFrameworkTokenInLockAndMint(rawRecords)
+  const records = dropCanonicalSideInLockAndMint(rawRecords)
 
   const previousProtocolData = await getPreviousProtocolData(
     snapshotTimestamp,
@@ -213,7 +213,7 @@ export async function getTokenFrameworksData(
 // burned (reverse direction), so it always has mintedValueUsd > 0 or
 // burnedValueUsd > 0. The canonical side is only locked/unlocked and has both
 // at 0.
-function keepFrameworkTokenInLockAndMint(
+function dropCanonicalSideInLockAndMint(
   records: AggregatedInteropTransferWithTokens[],
 ): AggregatedInteropTransferWithTokens[] {
   return records.map((record) => {
