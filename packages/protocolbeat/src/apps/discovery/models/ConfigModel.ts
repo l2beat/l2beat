@@ -102,6 +102,10 @@ export class ConfigModel {
     return this.overrides[id]?.getFieldDescription(fieldName)
   }
 
+  getFieldPermissions(id: string, fieldName: string) {
+    return this.overrides[id]?.getFieldPermissions(fieldName)
+  }
+
   setFieldHandler(
     id: string,
     fieldName: string,
