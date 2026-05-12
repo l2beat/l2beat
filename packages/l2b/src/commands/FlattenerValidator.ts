@@ -337,23 +337,8 @@ function matchesRuntimeBytecode(
     return false
   }
 
-  const normalizedCompiled = stripAuxdata(
-    Bytes.fromHex(`0x${compiledBytecode}`),
-  )
-  const normalizedDeployed = stripAuxdata(deployedBytecode)
-
-  const got = maskSolidityAuxdata(
-    maskImmutableReferences(
-      normalizedCompiled,
-      contract.evm.deployedBytecode.immutableReferences ?? {},
-    ),
-  )
-  const want = maskSolidityAuxdata(
-    maskImmutableReferences(
-      normalizedDeployed,
-      contract.evm.deployedBytecode.immutableReferences ?? {},
-    ),
-  )
+  const got = applyTransforms(contract, Bytes.fromHex(`0x${compiledBytecode}`))
+  const want = applyTransforms(contract, deployedBytecode)
 
   const matches = got.equals(want)
   if (!matches) {
@@ -364,14 +349,42 @@ function matchesRuntimeBytecode(
   return matches
 }
 
-function stripAuxdata(bytecode: Bytes): Bytes {
+type Transform = (contract: SolidityOutputContract, input: Bytes) => Bytes
+
+function applyTransforms(
+  contract: SolidityOutputContract,
+  bytecode: Bytes,
+): Bytes {
+  const transforms: Transform[] = [
+    maskCallProtection,
+    stripAuxdata,
+    maskImmutableReferences,
+    maskSolidityAuxdata,
+  ]
+
+  return transforms.reduce((acc, xform) => xform(contract, acc), bytecode)
+}
+
+function maskCallProtection(_: SolidityOutputContract, bytecode: Bytes): Bytes {
+  const push20 = Bytes.fromHex('0x73')
+  if (!bytecode.slice(0, 1).equals(push20)) {
+    return bytecode
+  }
+  const zero20 = Bytes.fromHex('0x' + '00'.repeat(20))
+  return push20.concat(zero20).concat(bytecode.slice(21, bytecode.length))
+}
+
+function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(
     splitAuxdata(bytecode.toString(), AuxdataStyle.SOLIDITY)[0],
   )
 }
 
 // TODO(radomski): This needs to be improved
-function maskSolidityAuxdata(bytecode: Bytes): Bytes {
+function maskSolidityAuxdata(
+  _: SolidityOutputContract,
+  bytecode: Bytes,
+): Bytes {
   const hex = bytecode.toString().slice(2)
   const result = hex.split('')
 
@@ -407,9 +420,10 @@ function isSolidityAuxdata(auxdata: string): boolean {
 }
 
 function maskImmutableReferences(
+  contract: SolidityOutputContract,
   bytecode: Bytes,
-  references: SolidityOutputContract['evm']['deployedBytecode']['immutableReferences'],
 ): Bytes {
+  const references = contract.evm.deployedBytecode.immutableReferences ?? {}
   let result = bytecode
   for (const entries of Object.values(references ?? {})) {
     for (const entry of entries) {
