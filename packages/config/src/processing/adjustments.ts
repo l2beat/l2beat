@@ -68,6 +68,14 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       ),
     )
   }
+  for (const escrow of project.escrows ?? []) {
+    const chain = chains.find((x) => x.name === escrow.chain)
+    assert(chain, `Missing chain: ${escrow.chain}`)
+    escrow.chainId = chain?.chainId
+    if (escrow.contract) {
+      escrow.contract.url = `${chain.explorerUrl}/address/${escrow.address}#code`
+    }
+  }
   adjustContracts(project, chains)
 }
 
