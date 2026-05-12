@@ -663,7 +663,7 @@ function DisplayNumber(props: {
       <span className="font-mono">
         {formatNumber(props.value, format)}
         {format.startsWith('e') && format !== 'e0' && (
-          <span className="text-zinc-500">{format}</span>
+          <span className="text-zinc-500 select-none">{format}</span>
         )}
       </span>
     </ValueWithTooltip>
