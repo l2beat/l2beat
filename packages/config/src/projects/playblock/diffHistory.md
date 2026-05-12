@@ -8,10 +8,8 @@ Generated with discovered.json: 0xe740c87d2a389a8ef46b645f64d123407e40092b
 
 ## Description
 
-Operational rotation on playblock's Arbitrum Nova infra:
-
-- **RollupProxy** (`arb-nova:0x04ea347c...`) — validator `0xB246421622FB931BdAc20B4a26816F881771Db1e` swapped for `0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc`; `setValidatorCount` 3 → 5 (set rises by 2 even though validators[0] is just a replace; suggests additional validators added that aren't in the truncated diff above).
-- **UpgradeExecutor** (`arb-nova:0x0611b78A...`) — EXECUTOR_ROLE member 0 swapped from `0x10Fe3cb8...` to `0x04b47Ba4...`. Upgrade authority transferred to a new address.
+- **RollupProxy** (`arb-nova:0x04ea347c...`): two sequential `setValidator()` calls — `setValidator([0x8273A6b1...], [true])` at block 84931832, then `setValidator([0xB2464216...], [false])` at block 84931833. Net effect: validator swap. `setValidatorCount` counts events.
+- **UpgradeExecutor** (`arb-nova:0x0611b78A...`): EXECUTOR_ROLE member rotated `0x10Fe3cb8...` → `0x04b47Ba4...` (a new Safe, created in this diff).
 
 ## Watched changes
 
