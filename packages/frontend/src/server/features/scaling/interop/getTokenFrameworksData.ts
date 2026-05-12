@@ -113,14 +113,17 @@ export async function getTokenFrameworksData(
 
   const frameworkProjectIds = TOKEN_FRAMEWORKS.map((f) => f.projectId)
 
-  const [interopProjects, { records, snapshotTimestamp }] = await Promise.all([
-    ps.getProjects({ select: ['interopConfig'] }),
-    getLatestAggregatedInteropTransferWithTokens(
-      params,
-      ['lockAndMint', 'burnAndMint'],
-      frameworkProjectIds,
-    ),
-  ])
+  const [interopProjects, { records: rawRecords, snapshotTimestamp }] =
+    await Promise.all([
+      ps.getProjects({ select: ['interopConfig'] }),
+      getLatestAggregatedInteropTransferWithTokens(
+        params,
+        ['lockAndMint', 'burnAndMint'],
+        frameworkProjectIds,
+      ),
+    ])
+
+  const records = keepFrameworkTokenInLockAndMint(rawRecords)
 
   const previousProtocolData = await getPreviousProtocolData(
     snapshotTimestamp,
@@ -197,6 +200,32 @@ export async function getTokenFrameworksData(
     frameworkTable,
     transferSizeChartData,
   }
+}
+
+// In a lockAndMint record both the canonical underlying token (e.g. USDT) and
+// the framework-issued token (e.g. USDT0 for OFT, the wrapped token for CCT /
+// NTT / Warp / ITS) show up as separate entries in `record.tokens`. For the
+// token-frameworks page we only want the framework-issued side counted in top
+// tokens and per-framework tables — otherwise the underlying canonical token
+// appears alongside its wrapped counterpart and inflates the ranking.
+//
+// The framework-issued side is the one that is minted (forward direction) or
+// burned (reverse direction), so it always has mintedValueUsd > 0 or
+// burnedValueUsd > 0. The canonical side is only locked/unlocked and has both
+// at 0.
+function keepFrameworkTokenInLockAndMint(
+  records: AggregatedInteropTransferWithTokens[],
+): AggregatedInteropTransferWithTokens[] {
+  return records.map((record) => {
+    if (record.bridgeType !== 'lockAndMint') {
+      return record
+    }
+    const frameworkTokens = record.tokens.filter(
+      (token) =>
+        (token.mintedValueUsd ?? 0) > 0 || (token.burnedValueUsd ?? 0) > 0,
+    )
+    return { ...record, tokens: frameworkTokens }
+  })
 }
 
 function buildFrameworkEntry(
