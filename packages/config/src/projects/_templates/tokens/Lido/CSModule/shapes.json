@@ -1,11 +1,11 @@
 {
   "CSModule": {
-    "hash": "0xf761c7555657701beab5f35f2637465a03482c146dd8566d2fe486a66b790f82",
+    "hash": "0x3a2493771e87c034acff964b1f238f790eac57fef12d02d2d3e3195ff3b9d5ec",
     "address": "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B",
     "blockNumber": 22188285
   },
   "CSModule_v2": {
-    "hash": "0xde753d771c3a4dc27e58e529b2dfd70871547d49e71ecd3478353ec02e995aa8",
+    "hash": "0x4b8eaaad7448f56079390c14b2f7e2ee8285fd0f55208880a2e5d95a9c1715f1",
     "address": "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665",
     "blockNumber": 23519375
   }

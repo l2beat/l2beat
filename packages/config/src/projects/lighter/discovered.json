@@ -37,8 +37,8 @@
       "type": "Contract",
       "template": "lighter/ZkLighterWithSpot",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0xc3634a3489804f8dab544a9e3a5e4dd76fd81bfe5bbe3f69c88caf99c672e30f"
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x9569dcd94342470829bda3bb0fd36074a965e17d37bedd39697db12f774365e1"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
@@ -303,7 +303,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -391,7 +391,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -436,7 +436,7 @@
       "type": "Contract",
       "template": "lighter/UpgradeGatekeeper",
       "sourceHashes": [
-        "0xf2bfc82ef31f512666c7b406fef29855df438601bbba758fb91bef2837a76c26"
+        "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
       "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
@@ -495,7 +495,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -581,7 +581,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -617,8 +617,8 @@
       "type": "Contract",
       "template": "lighter/Governance",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
-        "0xf6cff14a43f325bcc62514ffd204ebdd7d556d2b7d8111003a5d5809859f2223"
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
+        "0x0033a032557a6a464645acc1901ac15e72d841e4d56cc8b94c64a55cae92b122"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
@@ -666,7 +666,7 @@
       "type": "Contract",
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
-        "0xc3b09aa3d8c5332715cea375895325cd01f6a04b61f1a1c885d73502955c6460",
+        "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
         "0x5bee4c4522233c699516029292bf16813f3dea03e484fe718e479ac2ace77653"
       ],
       "proxyType": "EIP1967 proxy",

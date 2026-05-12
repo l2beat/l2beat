@@ -1,13 +1,12 @@
 {
   "ExchangeGateway.sol": {
-    "hash": "0x4e74883670a055318a8d4bdb7d266c2d62a87f06d7ebac1e09659053810ddd70",
+    "hash": "0x6f95a5bc437c11ddb4ce4e512df3bfd3a013ed4e2800f4cacc797a65e5ba20ba",
     "address": "ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d",
     "blockNumber": 38804
   },
   "ExchangeGateway_v2.sol": {
-    "hash": "0x86b45155220c874371724e1491434de1633d3c9ec81f0e45455e5621da661872",
+    "hash": "0xb5045a4ff694fdc0973c7f5b6a61bc6178a601b89c90fc21faff429e9867bbfd",
     "address": "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db",
-    "chain": "ethereal",
     "blockNumber": 4259455
   }
 }

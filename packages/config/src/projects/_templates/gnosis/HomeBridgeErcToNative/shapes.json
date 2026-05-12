@@ -1,8 +1,7 @@
 {
   "HomeBridgeErcToNative.sol": {
-    "hash": "0xc326acd9113b3ffcddf749fa75e1bb239c6efaf18aa8f4af6bd562480bcda7fb",
+    "hash": "0xc6732ce9143f3b29426d3e80e97ccb759b73579050ac9f2a75f11e8d3e0fe570",
     "address": "gno:0xe6998b0C03D3cb9ee8C04f266e573c7Fa8782846",
-    "chain": "gnosis",
     "blockNumber": 45931894
   }
 }

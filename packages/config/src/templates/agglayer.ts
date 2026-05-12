@@ -404,12 +404,17 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
   const upgradeDelayString = formatSeconds(upgradeDelaySeconds)
   const exitWindowRisk: ScalingProject['riskView']['exitWindow'] = {
     value: 'None',
-    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+    description:
+      'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
     orderHint: -1,
+    regular: {
+      value: upgradeDelayString,
+      sentiment: 'warning',
+    },
     warning: {
-      value: 'The Security Council can remove the delay on upgrades.',
-      sentiment: 'bad',
+      value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+      sentiment: 'warning',
     },
   }
 

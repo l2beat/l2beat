@@ -1,3 +1,609 @@
+Generated with discovered.json: 0x2bf139624266472ad9b58462ab976a9c24265f67
+
+# Diff at Fri, 08 May 2026 07:51:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1774953745
+- current timestamp: 1774953745
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774953745 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (eth:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract Scroll Security Council (eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (eth:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      sourceHashes.0:
+-        "0x6e45af76d6f6e2d8cc55ec530468293a0af33a8ab5e385883527a3330ff21ed6"
++        "0x68ef4e9fec5e32121dc21eb0a83b381d885515e0002848af86de620f62f32d5a"
+    }
+```
+
+```diff
+    contract L1MessageQueueV2 (eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) [scroll/L1MessageQueue] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+      sourceHashes.1:
+-        "0x92b35ff3d05522053ea72bc1d79ad52bc1aa4f5fb8afeea039c1f7d26a18b59c"
++        "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (eth:0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) [scroll/L1ERC721Gateway] {
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+      sourceHashes.1:
+-        "0x8a8d5a6804c708dac3077a6dc3205f8c0ef2f6afab6f82c622a4b7e4b1cdda5d"
++        "0x15e06267d2bf8d5f8e127b7aaa929dd7b9da9a1b37f3cdeed859ed3400787678"
+    }
+```
+
+```diff
+    contract wstETHescrowLido (eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x255712204c1736d1d147513fc6d0ded282eb2cd0cff359e7710a06463935c260"
++        "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55"
+    }
+```
+
+```diff
+    contract DaiEscrow (eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x5d09a2c78d20d4e9f61774a32aa4da8e74be21a247188625d5eeffdac11e5eb4"
++        "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) [scroll/L1ScrollMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      sourceHashes.1:
+-        "0x1b2015473e07e2c05d22065439354cd227773c699f24fd62a8c67b381a9e970d"
++        "0x6bec1db10c626a5dec51592412891e6f9e23f8bce071ef7ba6c0ca3f0fa73e9d"
+    }
+```
+
+```diff
+    contract Safe (eth:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) [scroll/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      sourceHashes.1:
+-        "0x7e017c785ff8a5c9fce815594b0d7e7ced85dbc125ae000cd7babf1cfaefabf9"
++        "0xe46a3fa8be0381dcbcd431fc95ac83ab432a31e94045d7d2d6037b4760c2a5ee"
+    }
+```
+
+```diff
+    contract ScrollOwner (eth:0x798576400F7D662961BA15C6b3F3d813447a26a6) [scroll/ScrollOwner] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      sourceHashes.0:
+-        "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"
++        "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa"
+    }
+```
+
+```diff
+    contract L1WETHGateway (eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) [scroll/L1WETHGateway] {
+    +++ description: Contract used to bridge WETH from L1 to L2.
+      sourceHashes.1:
+-        "0x85541d2f37f32a3d9fe2cd14f01e794d21a323e3f67041c89a7293f790f85668"
++        "0x97068890c4d53e5d4e52c2707341a0614267bb8e4ced97e5a1305dff33150eaf"
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) [scroll/L1ETHGateway] {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      sourceHashes.1:
+-        "0x09dcca0374ada70701a459984dc3deae5816e1b6db9dd9596007c28ce5b389e2"
++        "0xcec827564def7e6158f8e730388b3bc0cf1ef0fc4ce5402825941d12fc969370"
+    }
+```
+
+```diff
+    contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract Safe (eth:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (eth:0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Safe (eth:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      sourceHashes.1:
+-        "0xe564c04903b37a6ee36ca18aeb567c15ce70fe0a8022621e7c93c833bc2fbbf3"
++        "0x66c27813079fd2347a15e6ccff5c0801341969437e08f0070782345cfdd93fb7"
+    }
+```
+
+```diff
+    contract ScrollChain (eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556) [scroll/ScrollChain] {
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+      sourceHashes.1:
+-        "0xdccc4e7f3d13677c2f3cb12f608b3aa0a8bacb59c54feb3dc21fc3f42c4d4e25"
++        "0xbae3ab76c19b4b822cc30bcc4bc5965592e0bdd388d7a86780960e54eab0c327"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff) [scroll/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      sourceHashes.1:
+-        "0x5d802344cb0c2d20f6e366ef83eee38cb2d561b6ad26ed596111f84a4cf3aa80"
++        "0xa4062ee0605bb59576bcc34aca508e90f3bf7ed7e33e40eaaa00b2ad7cfbe764"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (eth:0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) [scroll/L1ERC1155Gateway] {
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+      sourceHashes.1:
+-        "0x3e82df6b3c4997362507d8f73c6fff945dedcee0aeaf99f8369b433dc82c0bca"
++        "0x466121c468e24b126cff46f03258b1a2592900d32ef1fb72ff2ccf44396e28bc"
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8a47e80cb18f724607630b6b5e3c4cd2082f7f3e218c8bbf5985ec3bb171237b"
++        "0x2e9da55640a68f408f8fcf0e9118234aa07af3f55b24b41c3a114449105c9c1d"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Safe (eth:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) [scroll/L1StandardERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      sourceHashes.1:
+-        "0x13d0dc38cdff2a957bfc9939cc28d16112c2052a699bc3bc9231879a79ff81e2"
++        "0x225810cbe5057d2f1117e745ae4ff27fa647febbe5339dacb1ce56d82b190392"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) [scroll/L1USDCGateway] {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      sourceHashes.1:
+-        "0x390ebeb0e223ceead94e94a21c34b8bc5bde0351a7c29ca6b8abb4776ce58524"
++        "0xcb1c41c6d2ba11186ca799e856035fa982533f5ecf4884c0939338afe2737b34"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) [scroll/L1GatewayRouter] {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      sourceHashes.1:
+-        "0x3257fd4336e925899e6352562238124ef46e51d144d4a4d12526837be49a062f"
++        "0xf3c6e738fea3021407f38297a88f51d2062b1da961a817e31ad014ae28758fad"
+    }
+```
+
+```diff
+    contract Scroll USDC (scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4) [N/A] {
+    +++ description: Contract of the USDC token on Scroll.
+      sourceHashes.1:
+-        "0x11a20425a99e50b61ba8470548b4f5f028df884961288990f908a911b4c045ab"
++        "0x8570016182dd546b62a3a178f087bae88f5ae29c798fb3cc62b79d58349d964e"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract ScrollOwner (scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) [scroll/ScrollOwnerL2] {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      sourceHashes.0:
+-        "0x92fd37cca83c3ecf2b4b1343a3287484d39591016bdd853e572e12c286c0d952"
++        "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa"
+    }
+```
+
+```diff
+    contract Scroll Security Council (scr:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (scr:0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract AgoraGovernor (scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) [N/A] {
+    +++ description: Used to propose and manage onchain governance proposals.
+      sourceHashes.1:
+-        "0x6108d43504cfee60bd8b71cf09d034577fe56b049f1941f96520bb29d1472d77"
++        "0xec3918b9f59acd5f530b36d85c73e84480c09441e255c2d9a4be4d5baed89ff5"
+    }
+```
+
+```diff
+    contract L2USDCGateway (scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x95d0a93e505de37e492898ac79ac01f5cef9385f3a6777ecd7d22d02974b05f2"
++        "0x5f197ec2fda9a452c1f68f2749032b674f98af1fbf0d9136bc50540a76088dd4"
+    }
+```
+
+```diff
+    contract Scroll Security Council Minority (scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79) [N/A] {
+    +++ description: Counterpart to the L1GatewayRouter contract.
+      sourceHashes.1:
+-        "0xf9f92757babe175ac20766767b8ff31b5b782ef94aa9ae3214cd84a051e0627e"
++        "0x8918c634c4441698a77679724c8288f7c4e2523efb2931a4fca3454f18aa4f80"
+    }
+```
+
+```diff
+    contract L2MessageQueue (scr:0x5300000000000000000000000000000000000000) [N/A] {
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+      sourceHashes.0:
+-        "0x9a0991633019cdf15962771846da5b818f134ecfef5534a00c6156c9a7fffd44"
++        "0x755ce295f0611911ed7df8e8a677a795a1e9c35dc8912dd62e4463b4ab78bf41"
+    }
+```
+
+```diff
+    contract L2ERC1155Gateway (scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc) [N/A] {
+    +++ description: Counterpart to the L1ERC1155Gateway contract.
+      sourceHashes.1:
+-        "0xf44559039bd718b6564360f72f4797c61c6d4043242f2ee6eae60176e0497142"
++        "0x661fb0aef4b8738e6a2e0031f0c7c3148037a37f5320e2fa967e7f793e3fadf1"
+    }
+```
+
+```diff
+    contract L2CustomERC20Gateway (scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988) [N/A] {
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+      sourceHashes.1:
+-        "0x7638262038cf2be282a35c8b3647292683021380bf2eb62b65f63f4ebb13aaca"
++        "0xcdf60fbcf4e923b7cb9ba677dbc687c165216e542c9276f5f927b35621b06c2b"
+    }
+```
+
+```diff
+    contract ScrollStandardERC20Factory (scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484) [N/A] {
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+      sourceHashes.0:
+-        "0xfce2240ed4c163030a1ad81059d3977aaf6d7bc7f8672c7c26ca24cdf1341b7d"
++        "0xc71c2435c3fcc9b7bbd482bbc4d8aa2db112781cd6052d72fde93c3d467e535f"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract L2ETHGateway (scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0) [N/A] {
+    +++ description: Contract of the L2ScrollMessenger contract.
+      sourceHashes.1:
+-        "0x82c01497e7ecb390a04fc655e5ae9ac7fc1ba20614b7ce0223c0c6b73a453294"
++        "0xeab542ebeba38657db5f234780b7b7412ee9672a6cf0e0c5d993693ae79cb197"
+    }
+```
+
+```diff
+    contract L2WETHGateway (scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x63855826f13b683ca4730e3b6e9fbdd89bb5f95af7eba4f5464dea8f6ad59a4e"
++        "0x33c052cc2c4fdf215b0121eb60241fe83cdfde96380fee6740cef22af87011c9"
+    }
+```
+
+```diff
+    contract L2ScrollMessenger (scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC) [N/A] {
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+      sourceHashes.1:
+-        "0x3eb8457a146e96ae38941a7b8e0ee4740516f8d7c253c4d32ed838b75c2705d1"
++        "0x2dc08fa47debf534adef51960e1d01c3437432ef894912ab80c7d520274b6e79"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1cf2a567f0dfcae3ac31fabbc74c453ddb5a347a26f76dbc26fc2171094a9153"
++        "0xb473930cd81ee45e44828aef3a7301db4dd1ddb5aa55cb97b0310cb2d07293b0"
+    }
+```
+
+```diff
+    contract L2ERC721Gateway (scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582) [N/A] {
+    +++ description: Counterpart to the L1ERC721Gateway contract.
+      sourceHashes.1:
+-        "0xc4bcc917df859ed5a19bba09f882f5a58e9cd8266098e274237eebaaf4f255fc"
++        "0x534b23065891dc04d65552572da1c445d3c9d0c4511234759003872d9762f462"
+    }
+```
+
+```diff
+    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3866d5cca89c55c7c54c690ea7b1ad3012848a806644c91ed30da987e2de27a8"
++        "0x1583f70e60e1903788d02e56c91360735b7f78376c4239c9be9b448e0180e84a"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x8edC4EADEE120d4C51923c515e7C3241c815C2BC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0x9479ABfebefEea3c846163012a472b44F305b3d7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) [scroll/L1Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      sourceHashes.0:
+-        "0x9dd794c91c0c92b8b8129a7c4d61c361b75602f161dc7b58f5908edafb920049"
++        "0x86f2f8f0a8a0a5a9e5a84434ceaea660fc1d7e495ef1df1e392d8fafd20c4b09"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SafeL2 (scr:0xC3eA7C657884BB380B66D79C36aDCb5658b01896) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract ScrollStandardERC20 (scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) [N/A] {
+    +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
+      sourceHashes.0:
+-        "0x6eb5f7cd46e2afaed66e46e624453cbb8f5a6db34d01569bfcb168c3359a695f"
++        "0x7c676d76524bea5cadcf0f480960751308e7f56a1062ba7e37e8574c3a237185"
+    }
+```
+
+```diff
+    contract SCRToken (scr:0xd29687c813D741E2F938F4aC377128810E217b1b) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0x04d776ff58fa371ab516a53f4b7a12f5f0f1dd00f20206aea3906014017297ba"
++        "0x82f655ed5b736c2c40fc07c72bee354ee5f31dd0df43e6fe365525014d53e9a4"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) [N/A] {
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+      sourceHashes.1:
+-        "0xfd93bf42abb7575e182aa47be035c4d95f9faf1089ec3c8f0c68f69de13561f4"
++        "0x2b6c427392f1dfad60226a4c9a82db50b48c4b7890017aade81a80d9c85c2031"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0x2af99f503ee792ffdb0a8630ad898cc421159631
 
 # Diff at Tue, 05 May 2026 10:22:44 GMT:

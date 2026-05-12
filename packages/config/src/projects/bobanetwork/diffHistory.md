@@ -1,3 +1,191 @@
+Generated with discovered.json: 0xb6958a9cdaa6fa76af114c88d14892a10e0fb818
+
+# Diff at Fri, 08 May 2026 07:51:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1778001698
+- current timestamp: 1778001698
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778001698 (main branch discovery), not current.
+
+```diff
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      sourceHashes.0:
+-        "0xbb4d6f68705092044f28ad3a6bd721dfca9c2ba8a561025495d950aca06b10ee"
++        "0xa45ad382a1d6d1f412bc4d29b10dab422d6febb530bc164c2d2b3f836c1482bf"
+      deployerAddress:
++        "eth:0x03C256F7Ae7518D0fe489F257ab4b928D37CBE16"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9"
++        "0x2fe946108f24ddfa96c7feaf21d4c6dd66c8b3f7c4cbb23e9344ea06e73e8ad5"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      sourceHashes.0:
+-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
++        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
+      deployerAddress:
++        "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x38073f4D9100908e35Ca6D85595d78c4EAC3a4B1) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
++        "0xf808a203af41f7932eb8e39985e56a7c75c940a260fb17d76d1003a3793281b5"
+      deployerAddress:
++        "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0x496F1ed169cdb9226200A2A75A7ECD186611832a) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      sourceHashes.0:
+-        "0x78ef988441111e9471e72a55f764cd7f35a0f81de503ac5d7ea03765b043da3b"
++        "0x2f8e29af46c5650ed34a70b265e91860df0089aa76df54c49770ae0a0fd7c919"
+      deployerAddress:
++        "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
++        "0x38811adfaa2c3c1a79fd731951dfcb607841950cdc119cd765fadcc62bc8e61d"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract Boba Multisig (eth:0x56121a8612474C3eB65D69a3b871f284705b9bC4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x6D4528d192dB72E282265D6092F4B872f9Dff69e) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x12cf78bcfa479caaee8133c0f935dcdcc333cdc116805f6b81bd80f6ba52128c"
++        "0x41241fec96b435c5be890fb46cf7083bcdea2929a2319776b2b4c345157cca83"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9"
++        "0x9914d3a9740b6c5148ddd6fe3fd05b3002a6b198b95c29a083d156590756cc50"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x7e021d19C9949109919DCb522df6BaeC1D6638a6) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0x6ad951c662b7a889a64dd91252b0b8bc9694fd4df15a08bdec6693673a44dda1"
++        "0xee6bf3279fe5b849ed7e945391e2f05982b56336bdd0c0764e365d9efe3a70b9"
+      deployerAddress:
++        "eth:0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x996ffD627901f10C80A7d4B72A12316D2e77c076) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      sourceHashes.1:
+-        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
++        "0x4b6112b20005468606b7ad8a57a804691831c75294e9c4285fb4ec919dc97adb"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xab560cdc633c64552a47cd693ebc9aaab91fe80bec99e9e89b9d13d89a994c22"
++        "0xe22ab87b389c247bfa7f37a4e2dae609f73d58f6f816fcce4b71ce73fd68e0c3"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x29b630d028d2dfddff75dc128b41ae51836c874dcd31a62c9d7313599e6261fb"
++        "0x7f3570779a89b4af4e8b7ffada16c3089994f35ea1fea21b2163861908749e88"
+      deployerAddress:
++        "eth:0x1f2414D0af8741Bc822dBc2f88069c2b2907a840"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689"
++        "0xdfa3b1f4fa753fd7160333c8075b29324bfc8f7c0764ca98384afe6e33790856"
+      deployerAddress:
++        "eth:0x1c788Ec62A67805C3276Bd4754904455431FC4f6"
+    }
+```
+
 Generated with discovered.json: 0x7e990a358405ee53288f9b59277f973905af6dae
 
 # Diff at Tue, 05 May 2026 17:22:44 GMT:

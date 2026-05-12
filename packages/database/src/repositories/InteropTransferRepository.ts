@@ -583,13 +583,19 @@ export class InteropTransferRepository extends BaseRepository {
   ): Promise<InteropTransferRecord[]> {
     if (items.length === 0) return []
 
-    const srcHashes = items.map((x) => x.srcTxHash.toLowerCase())
-    const dstHashes = items.map((x) => x.dstTxHash.toLowerCase())
     const rows = await this.db
       .selectFrom('InteropTransfer')
       .selectAll()
-      .where('srcTxHash', 'in', srcHashes)
-      .where('dstTxHash', 'in', dstHashes)
+      .where((eb) =>
+        eb.or(
+          items.map((item) =>
+            eb.and([
+              eb('srcTxHash', '=', item.srcTxHash.toLowerCase()),
+              eb('dstTxHash', '=', item.dstTxHash.toLowerCase()),
+            ]),
+          ),
+        ),
+      )
       .execute()
     return rows.map(toRecord)
   }

@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x8eb2880a3d96e15647bcda41708871e229e13c35
+
+# Diff at Fri, 08 May 2026 07:51:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1755157592
+- current timestamp: 1755157592
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755157592 (main branch discovery), not current.
+
+```diff
+    contract ExchangeV3 (eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7e59ed579f658f2c8c645a1794f79626a3d8578e8700d19bbd866122f9dd9b8e"
++        "0x3905bcba44c20ed32e392737f7ef97fd5a9a6cacf6ad39bd81ae701eded88bee"
+    }
+```
+
+```diff
+    contract LoopringIOExchangeOwner (eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x854356c3464284cf48c4c2a41fbf7ed907ee1d2c43c5458f8600e8a002947277"
++        "0xb3132f13ca0770242139b232cfe1768478e3171156e79accefb0f4c3689e8f2c"
+    }
+```
+
+```diff
+    contract AgentRegistry (eth:0x39B9bf169a7e225ba037C443A40460c77438ea14) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf3a59d4207b07dcef7f7b28021c025bdf4aed5f887d551dd04964981d8fb14a6"
++        "0xdc1fb562ec7c935d3ddd1b938e02e7b8bf5ab5df2ffff60b1eacfcaf45cb9fca"
+    }
+```
+
+```diff
+    contract ProtocolFeeVault (eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x1fccaeadbe094a36ba3c786c5a1a767db2b6f5a5a5c29354d11af915f72d3174"
++        "0xf9b0a0ec69f2bd65e2a99574251c6f2208ae8660b5cdeb69a521385bfcdb5536"
+    }
+```
+
+```diff
+    contract ForcedWithdrawalAgent (eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470) [N/A] {
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+      sourceHashes.0:
+-        "0xa8b1d474b6c7b4007833dea307178402243d15952eb22c992be9b107651cbc2f"
++        "0x6c8e2bb3ce125d35a6f1dfc0514de76945547e43da1a55ad215c3e8ce67ae6a4"
+    }
+```
+
+```diff
+    contract BlockVerifier (eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x96312ffe5cf6781390d5f01454bb7545a2fc23abcb9e660842c19382a140f812"
++        "0x7cc3adf9917e5471de38ed3b1c9a9150200a6fd495d7f552b83fe1b20cbcb70e"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x39433073646a8004de25a709c09d4ccff1dd95a2a125f6065c8cc6cb44c6c7b9"
++        "0x3e52dc780346a738080b8fccc53074f13df51f7a3bbddac524ba256be2a13e06"
+    }
+```
+
+```diff
+    contract LoopringCoin V2 Token (eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4ffbbfe62c887a44eead8dc5c421a3021e88d97eafe47ba5e4ac69fee9b0421a"
++        "0x9e03730f3f2c49dc21ce9dfd2b061a32fb15691c3728cda5848fc98c57f78385"
+    }
+```
+
+```diff
+    contract LoopringMultisig (eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract LoopringV3 (eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf4fab34f6089e2323fbf6d585fe758509ffff5bfc8f1152a393b5a170cf28929"
++        "0xee28217dd06a88f1dfeddfdbac9242218d20dec5c1832df4cbb6edaf83f82d7a"
+    }
+```
+
+```diff
+    contract FastWithdrawalAgent (eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x404f9c5448f8dc0d3026c67724fad6dadb0ce98afcb11ac23be4f3159db1e40a"
++        "0x406b23d6133687c65635f50683ebe57caab60f9d6f222a7f8f71f1ae07273ddd"
+    }
+```
+
+```diff
+    contract UserStakingPool (eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x99d65209b6a37a5338021e870cb30cc131cd3d701c0b30fa072bbe3615d2c71f"
++        "0x791f97d8d5842a1cc1fd2a2d7a81e8db0f028b3b3533d85ae03bc96390431d20"
+    }
+```
+
 Generated with discovered.json: 0x0b8f157742045df1494b2fe2a4d93ebecc8e756c
 
 # Diff at Tue, 05 May 2026 10:22:23 GMT:

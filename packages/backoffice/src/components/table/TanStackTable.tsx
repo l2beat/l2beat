@@ -40,6 +40,8 @@ interface TanStackTableProps<TData extends RowData> {
   pageSizeOption: PageSizeOption
   onPageSizeOptionChange: (value: PageSizeOption) => void
   emptyMessage: string
+  className?: string
+  scrollViewportClassName?: string
   enableVirtualization?: boolean
   enableCsvExport?: boolean
   getCsvFilename?: () => string
@@ -53,8 +55,6 @@ interface TanStackTableProps<TData extends RowData> {
   searchPlaceholder?: string
   isSearchPending?: boolean
   fillHeight?: boolean
-  className?: string
-  scrollViewportClassName?: string
 }
 
 export function TanStackTable<TData extends RowData>({
@@ -62,6 +62,8 @@ export function TanStackTable<TData extends RowData>({
   pageSizeOption,
   onPageSizeOptionChange,
   emptyMessage,
+  className,
+  scrollViewportClassName,
   enableVirtualization = true,
   enableCsvExport = false,
   getCsvFilename,
@@ -75,8 +77,6 @@ export function TanStackTable<TData extends RowData>({
   searchPlaceholder = 'Search',
   isSearchPending = false,
   fillHeight = false,
-  className,
-  scrollViewportClassName,
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex

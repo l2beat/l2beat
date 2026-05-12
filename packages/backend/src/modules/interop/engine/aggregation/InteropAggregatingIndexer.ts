@@ -46,6 +46,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     }
 
     const from = to - UnixTime.DAY
+    const retentionCutoff = to - 14 * UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
@@ -55,13 +56,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore(
-        from,
+        retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)

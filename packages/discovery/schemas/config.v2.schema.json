@@ -303,6 +303,7 @@
                             "groupBy": { "type": "string" },
                             "ignoreRelative": { "type": "boolean" },
                             "set": {},
+                            "flatten": { "type": "boolean" },
                             "add": {
                               "anyOf": [
                                 {

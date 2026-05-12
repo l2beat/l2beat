@@ -160,6 +160,16 @@ describe(renameIdentifiers.name, () => {
     )
   })
 
+  it('renames a function call in a state variable initializer (length mismatch)', () => {
+    const src = 'contract Foo { uint256 x = test(); }'
+    expect(renameIdentifiers(src, [{ from: 'test', to: 'X' }])).toEqual(
+      'contract Foo { uint256 x = X(); }',
+    )
+    expect(renameIdentifiers(src, [{ from: 'test', to: 'XXXXXX' }])).toEqual(
+      'contract Foo { uint256 x = XXXXXX(); }',
+    )
+  })
+
   describe('with leading comments', () => {
     it('renames correctly with a leading single-line comment', () => {
       const src =

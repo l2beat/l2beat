@@ -10,7 +10,7 @@
       "template": "linea/L1TokenBridge_v1_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
+        "0x9980be97cab8f3dd79332a9be0ed66420c1170262dff641eabaf803f137140b1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
@@ -220,7 +220,7 @@
       "address": "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb",
       "type": "Contract",
       "sourceHashes": [
-        "0x9b55def99da5eeaf99eb27a930f5bf9d2b6ed2a2922160dc86392354d74186a6"
+        "0x180040d76cf1ef0b9c2587fabd541095ee5b3ff72a334bd4c25e818ffa85d80a"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
@@ -249,7 +249,7 @@
       "address": "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc",
       "type": "Contract",
       "sourceHashes": [
-        "0x7ab788a440162efc35a7039c3e15ea987e376bbf99d4f58bba72caf376914e99"
+        "0x691eadb19ab093ff1d8d4aaba79c0c056580ed53b4f399896da767a43907d2a0"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
@@ -317,7 +317,7 @@
       "type": "Contract",
       "template": "linea/BridgedToken",
       "sourceHashes": [
-        "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
+        "0x19cff41e35081bc695b8c401d8e37e9efb9cf310df4afda87f5054b2a4f42077"
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
@@ -397,7 +397,7 @@
       "type": "Contract",
       "template": "linea/LidoStakingVaultYieldProvider",
       "sourceHashes": [
-        "0x7ee148e011c8bede6032fd936b398fc91310895ff79d18c8da7c538e1dd75140"
+        "0x2175bed044eb0a1c87005be4bea72f81fdbca7c576d10074b7bec17cf3c2756a"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
@@ -426,7 +426,7 @@
       "template": "linea/L1USDCBridge",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xf678573abd85e88b327027262fe80c5008f18138d6f2a4b3558ccf78d535c94f"
+        "0x673a81c99ead8d79104152557dcada94e507d46f1dffa85cf2ea9ab55d1aecfd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L1 side of the old and now unused USDC bridge.",
@@ -497,7 +497,7 @@
       "type": "Contract",
       "template": "gnosisSafeModules/ZodiacDelay",
       "sourceHashes": [
-        "0x6fa89ecef1d104e0b7fd7adc29f3bbfbd1a0fb71fe67422181d1201980ec2d56"
+        "0x82210f5bd49b39905e4835b6f5c65d3c4d3bcee3e32908336aaa936dd0cf4190"
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.",
@@ -547,7 +547,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -853,7 +853,7 @@
       "type": "Contract",
       "template": "global/UpgradeableBeacon",
       "sourceHashes": [
-        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
+        "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.",
@@ -896,7 +896,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -996,7 +996,7 @@
       "template": "linea/LineaRollup_NativeYield_v7_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xc79888514ff3b0780c3947bdc52c7fb27664029407ec70360023b494f725f7b3"
+        "0x61e0da7291b49dc345bdfe09390ff5f67c0d1ad182602ba2b4c238eb023dda50"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
@@ -1324,7 +1324,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -1359,7 +1359,7 @@
       "type": "Contract",
       "template": "global/Timelock",
       "sourceHashes": [
-        "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
+        "0x3f348a2aad587f26daad2b7e934dd869eb41fc1c07fc27a5c11d4c0ce80c18f7"
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
@@ -1437,7 +1437,7 @@
       "template": "linea/YieldManager",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xc3427bd2db97b44ddfb965b33a9835e0a46de0edee605a4400e662e0e099e9f8"
+        "0xc1b68783dd333a6fd0c6fd3dedc61e2e561eda412bd31cf5c85d144bc50da857"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
@@ -1758,7 +1758,7 @@
       "template": "linea/L1TokenBridge_v1_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
+        "0x9980be97cab8f3dd79332a9be0ed66420c1170262dff641eabaf803f137140b1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
@@ -1964,7 +1964,7 @@
       "type": "Contract",
       "template": "linea/L2Roles",
       "sourceHashes": [
-        "0xd525e4c8c7b277954ecc3d7968759765db786739ef557a1e96711e5829dfc907"
+        "0x194f2bead2718a73472e2c0ab16dd358c890893f490ffeed84433f7a05b92c6a"
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
@@ -2106,7 +2106,7 @@
       "template": "linea/L2MessageService_v1_0",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x6239c25539f3ab00e89f637a6f0c8c125ada5ac83bb623a815236dfa315e293c"
+        "0x56a0fcd479f6728490feadda405a466779d6640c892dbf6e6120f159015b07a9"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -2329,7 +2329,7 @@
       "template": "linea/OldL2USDCBridge",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xada2bd06bab20673a23b4757fbbceab4ffc5b705f52244de79d7b7442916fe4d"
+        "0xaa510e8f499f8381646bf3323377e5110d00f9b5481678fb070807d398212aaa"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 side of the old and now unused USDC bridge.",
@@ -2387,7 +2387,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2454,7 +2454,7 @@
       "type": "Contract",
       "template": "global/Timelock",
       "sourceHashes": [
-        "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
+        "0x3f348a2aad587f26daad2b7e934dd869eb41fc1c07fc27a5c11d4c0ce80c18f7"
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
@@ -2563,7 +2563,7 @@
       "type": "Contract",
       "template": "linea/LineaVoyageXP",
       "sourceHashes": [
-        "0x27c154755b817aa7f568ee6f2c163f981b6af18c0c3a1708d6a79932467ff12c"
+        "0xbfb28171d4e8e4c64903b1346a9b3c975d6f9828af32a529b01cbadf28a8556d"
       ],
       "proxyType": "immutable",
       "description": "Voyage XP tokens are non-transferrable, soulbound tokens that are distributed to recognize the community’s contribution toward the growth of the Linea ecosystem.",
@@ -2589,7 +2589,7 @@
       "type": "Contract",
       "template": "linea/BridgedToken",
       "sourceHashes": [
-        "0x8a6c3f5b047664111c8f981a4cb5d8a79c5652771665343ffdd15ae64fa253bf"
+        "0x19cff41e35081bc695b8c401d8e37e9efb9cf310df4afda87f5054b2a4f42077"
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
@@ -2625,7 +2625,7 @@
       "type": "Contract",
       "template": "global/UpgradeableBeacon",
       "sourceHashes": [
-        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
+        "0xd9cf0eec93e95085d5fac84bb3d87285b88caaf45ae89a67943a17d1f76cc73a"
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.",
@@ -2648,7 +2648,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [

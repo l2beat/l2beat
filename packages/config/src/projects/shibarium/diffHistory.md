@@ -1,3 +1,201 @@
+Generated with discovered.json: 0x1474c483b37982e6c923a283ce85d2500c284f1d
+
+# Diff at Fri, 08 May 2026 07:52:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772615972
+- current timestamp: 1772615972
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772615972 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd4be21971e93432f8a4269386f5c2dfa288dff859600b0a3c8d8f17fdfd895e6"
++        "0x84df19fc70189e52a6b9abb51deea95810e9d50db67af9db1820e2ec214a5ee7"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e"
++        "0x4de77467566a14c793a7bca0af81e918e20243968002febe717ff1f21830a907"
+    }
+```
+
+```diff
+    contract RootChainManager (eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82) [polygonposbridge/RootChainManager] {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      sourceHashes.1:
+-        "0x8e1112329013d39a3a696d494a2238f100b58f447fef589f88c6ad0cf0f90fee"
++        "0xcd889fd14e5179e2b6d3dabcbe104f028f164f0788a2ba61714fe397ee08c4c3"
+    }
+```
+
+```diff
+    contract StakeManagerExtension (eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e) [polygonposbridge/StakeManagerExtension_shibarium] {
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+      sourceHashes.0:
+-        "0x6c5643dd27ff09baeb85b5fb025f64da4c191a2c42e30f5b72c33b0b8d74dbf4"
++        "0x9bdaeb8e515c332cee3b8e70fe11a27c691138bb07c09f194265c4c7e7523292"
+    }
+```
+
+```diff
+    contract StateSender (eth:0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C) [polygonposbridge/StateSender] {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      sourceHashes.0:
+-        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
++        "0x8122ee5d6f35571649314df7645c999b72a6e3e9cd4c3d1c5959b8dc6b4e625e"
+    }
+```
+
+```diff
+    contract StakingNFT (eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0) [polygonposbridge/StakingNFT] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
++        "0x2f8aae1745ceefd7a79c9084c0f5e89a6b621a77d901454f54a62f56fdc147c6"
+    }
+```
+
+```diff
+    contract StakingInfo (eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE) [polygonposbridge/StakingInfo] {
+    +++ description: Contains logging and getter functions about staking.
+      sourceHashes.0:
+-        "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
++        "0xea1573aa122981cf085a3aaaabcb1f9813d1d6ba6001cb885c34eb170e66b6d4"
+    }
+```
+
+```diff
+    contract WithdrawalManager (eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) [shibarium/WithdrawManager] {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager. It has blacklisting support.
+      sourceHashes.0:
+-        "0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0"
++        "0x7d9cc2eae010b1f498918d01b2eb8b9e4fcc606442dd88a19c886eb87305bc33"
+      sourceHashes.1:
+-        "0xcdde166e8888dfe4fae172f6008fe3fbc0bcb1db2e5be1ca6519f3eff028ba7b"
++        "0x883c701a7230f42f3ad022a67f3b51bd010115e6457062c888ae73a372697cb6"
+    }
+```
+
+```diff
+    contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) [polygonposbridge/StakeManager_shibarium] {
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06.
+      sourceHashes.1:
+-        "0xe2522e34d47444e7e217e066534ccc56536e24f4f582f8585897230965360291"
++        "0x8d135820d68f1d401fbda02ade8912687d304e46108e8045eb923c5e3a208a49"
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2"
++        "0x1aeec81d1a7fc1dd5a972199d7c93530a87696b5811daaf2412e90d588798951"
+    }
+```
+
+```diff
+    contract ExitNFT (eth:0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307) [polygonposbridge/ExitNFT] {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      sourceHashes.0:
+-        "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
++        "0x79ca55a0bab6b9581de67f17b6e3027ed214d46de02ad0ed742bbb843be00cfc"
+    }
+```
+
+```diff
+    contract DepositManager (eth:0x885fcE983b6a01633f764325B8c3c5D31032C995) [polygonposbridge/DepositManager] {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      sourceHashes.0:
+-        "0x5a03169cc01515b7d5ddd8f76da3641dcf8ffd451fc1d8edede0459191021835"
++        "0x19534e37270df38e4dd1fc53dbecd7cb23bee20aaea9f3b5182e828143c16e48"
+      sourceHashes.1:
+-        "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c"
++        "0x1665f22aa8d67d519ab1fd8019a1d2e32034555c0c5debd24c850f166616a992"
+    }
+```
+
+```diff
+    contract SlashingManager (eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce) [polygonposbridge/SlashingManager] {
+    +++ description: Contract that allows the consensus supermajority to slash validators.
+      sourceHashes.0:
+-        "0x64d3fd0840fb5d9eedf5977cce8c443d31adfc2323458db3d2d9461d889ea994"
++        "0xb1f4fd0152227e756814840696dd4c53ec9ebb14dd1fd31b7185376ceaa2aa7c"
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x98C831cFB18852f7deB3E3a970e907475b49730f) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x4731842b5a3a9367e3a748bcccb6280c89c1e5428139b7cca48ed566ed74709a"
++        "0x5be5014eac44b4ee39f1fc952058fa3eda671630dca68f9f60e762ba457052f7"
+    }
+```
+
+```diff
+    contract ERC721Predicate (eth:0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xd28d2832fa5e35e810073b99fcec18faf119bfc95223abc05bfb353a1f90dfd3"
++        "0xa4f6708edf44f0bd8496c3844b3cfc77d2c6860509ea95e13456e55936ca5aae"
+    }
+```
+
+```diff
+    contract EtherPredicate (eth:0xc3897302aB4B42931cB4857050Fa60f53B775870) [polygonposbridge/predicate] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb"
++        "0xb1fe0a5b7da9e556c98bcc8646ae2e8430131c3fdc5a5322b2a775ffcc034ea9"
+    }
+```
+
+```diff
+    contract Governance (eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06) [polygonposbridge/Governance] {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      sourceHashes.1:
+-        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
++        "0xc574edf94d4eba85f85272edeca4466cf7e76f8b74a96462bcc5f165d91fa30a"
+    }
+```
+
+```diff
+    contract RootChain (eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9) [polygonposbridge/RootChain] {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      sourceHashes.0:
+-        "0x561d13767c8364feca3a6af598f52c824a2ce67ac37855df5d2f678e5fa13410"
++        "0x107a4a302c3d873b2be09f4f39cf685d001c79e4afb787ef542b1747c78cf686"
+      sourceHashes.1:
+-        "0x53df93798909c51b914d7f286a3fb02bd08bbc999d189bb089c2a7bb6f273426"
++        "0x1d7673ce565b6c666b6c06891c8e2b8febcdee3a3bf0da6312de698e5af809ad"
+    }
+```
+
+```diff
+    contract ERC20Predicate (eth:0xdaF14950155DF895E9D0fd2521D05477d26F462c) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbcd7eec85265625afbc2eb9dda85d5f9134b5a206a965d8f040be01a92d12299"
++        "0x0add99f8a97a4574486143c004fb187c7914819c2ab0d242704a6009e292294a"
+    }
+```
+
 Generated with discovered.json: 0x3e7e8bf6a5d141cb7df1028b6bf5b6b03f549f2d
 
 # Diff at Tue, 05 May 2026 10:23:06 GMT:

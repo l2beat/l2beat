@@ -62,7 +62,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -230,8 +230,8 @@
       "type": "Contract",
       "template": "gnosis/XDaiForeignBridge",
       "sourceHashes": [
-        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
-        "0x31707ec58aa0ebd43328575885a3495f21a2d3e21890280fafe5cbaf1ab5938b"
+        "0x8c8e7e1f0584b0d66d934c9cb1155b205081e23d0315127d26e084b35382399d",
+        "0x4d35ade1cd3e7a3519e2ead3392d96056066b101769013782fa16ab64f7d6588"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Ethereum-side ERC20-to-native bridge used to lock DAI or USDS on Ethereum and authorize xDAI minting on Gnosis. Message execution is validated by a dedicated validator set and can additionally be gated by Hashi.",
@@ -361,7 +361,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -395,8 +395,8 @@
       "type": "Contract",
       "template": "gnosis/ForeignAMB",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x5d956ab2f7704c419737b2e96845631d87156578b49801dde52cc9e56eaa182f"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0xbdd78252ae04cc1c12520151a5ecd55bc7e622db1a9d2ea3f0c47a880e17b52f"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Ethereum-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Gnosis. Hashi can be enabled as an additional verification layer.",
@@ -562,7 +562,7 @@
       "type": "Contract",
       "template": "gnosis/TokenFactory",
       "sourceHashes": [
-        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+        "0x60bb65b10b7cad53b123e6278ee460cd2bd751fc2e2076318c43c658b6332258"
       ],
       "proxyType": "immutable",
       "description": "Factory used by Omnibridge to deploy wrapped tokens representing assets native to the other chain.",
@@ -595,7 +595,7 @@
       "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
       "type": "EOA",
       "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "values": {
@@ -626,8 +626,8 @@
       "type": "Contract",
       "template": "gnosis/ForeignOmnibridge",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0xb84afd7276ac99834f5104f7c4f890572ffc31fadd9629aabd82017025e7ada2"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0xc060a0a5c4d0b4fe874127fc0b42bad2697100539e62436edd051320ac798925"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Ethereum-side Omnibridge mediator used for arbitrary token transfers between Ethereum and Gnosis via the AMB bridge.",
@@ -731,7 +731,7 @@
       "type": "Contract",
       "template": "gnosis/BridgeRouter",
       "sourceHashes": [
-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
+        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
         "0x37d8700c46ff24301a79f113be414a05ece6295f8b9fa0679df63f815cff396b"
       ],
       "proxyType": "EIP1967 proxy",
@@ -798,7 +798,7 @@
       "type": "Contract",
       "template": "gnosis/WETHOmnibridgeRouter",
       "sourceHashes": [
-        "0x18759236610feb6952e897ade6b43506d161d78d8954c89f9e8a74a88bd0fcde"
+        "0x3ece097c6b632e3fd79f6e3bc21188ea4dd12f318a71911f5453c56163b807f5"
       ],
       "proxyType": "immutable",
       "description": "Router that wraps native ETH into WETH before sending it through Omnibridge and unwraps it again on Gnosis when bridge messages are executed.",
@@ -945,8 +945,8 @@
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
       "sourceHashes": [
-        "0x781decea1d7b5174464b57449f32ada83d1c1b7e12bdfa47eb9d00a41a36c839",
-        "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
+        "0x8c8e7e1f0584b0d66d934c9cb1155b205081e23d0315127d26e084b35382399d",
+        "0x425e20a71323a60c28ce5fea6f556782ea2574976374aee9901d34cb73397522"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
@@ -1010,8 +1010,8 @@
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0x9b17703651dbd73e46247e560c9c9dc2fafb5d61642ba7115598a4b62e48cbdd"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
@@ -1087,7 +1087,7 @@
       "template": "gnosis/SBCDepositContract",
       "sourceHashes": [
         "0x91ee7f17620851e78dd7d4756c1092392843316b21dfe9b939bf840efe30d291",
-        "0x8ed126164e79f30a4d20b9c831af078f671bfcdd195e47adecadd2164648f504"
+        "0x02b12849b490e3162584af627ba87de774106be25cb87726a24085ac42a0226e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Gnosis Beacon Chain deposit contract escrowing all validator-staked GNO. Differs from the similar contract on Ethereum by being upgradable, allowing critical permissioned function access and using the non-gastoken GNO as its staking token.",
@@ -1217,7 +1217,7 @@
       "type": "Contract",
       "template": "gnosis/OmnibridgeFeeManager",
       "sourceHashes": [
-        "0xdcb8211bc83ab560c19e3bc532a958bc0582fa7a02d0c53df72f3cf293f598d5"
+        "0x7c890d02973ae2cad3d3b0ce2ee5dbeded007b18f67b37013a6869d93159619f"
       ],
       "proxyType": "immutable",
       "description": "Fee manager used by HomeOmnibridge to calculate and distribute bridge fees to a configured reward address list.",
@@ -1320,8 +1320,8 @@
       "type": "Contract",
       "template": "gnosis/HomeAMB",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x4e50aa13a908fda155f0aef44f6f0e2c003038cb4ba9731fc7fb16b70c3b7de4"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0xa4d02292450841f41f670301dffedd4e067b1db31cc4bad3c863384915955ae2"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Arbitrary Message Bridge endpoint that verifies validator signatures before relaying cross-chain calls to Ethereum. Hashi can be enabled as an additional verification layer.",
@@ -1423,7 +1423,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "description": "Safe that currently receives Omnibridge fees distributed by the HomeOmnibridge fee manager.",
@@ -1467,7 +1467,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x9b0ecd140aaf0aae0a7462b8544de7cf8757a2fc51620bb127d5d164ce3cfb9e",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1612,7 +1612,7 @@
       "template": "gnosis/PermittableToken",
       "sourceHashes": [
         "0x61136b0b2e94ba325b5a3ffe47f7adaed12bd5bbe47bdc2ea87b7088e8389adf",
-        "0xd9a3b7f2158f4a5eea989005a42d2423bb609fe9ace98844568d2df9ac271035"
+        "0x7bcbb4de024b235710587626ded6954778c1084f861b308a92f053ee81f6d9e6"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Immutable GNO token smart contract contract, administered from the Ethereum side by the Gnosis Bridge contract.",
@@ -1670,8 +1670,8 @@
       "type": "Contract",
       "template": "gnosis/BridgeValidators",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x0ff53e04cc715e56805825c7eb45af72110792ad606dbfd4a97db98dfb75e6f7"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0x9b17703651dbd73e46247e560c9c9dc2fafb5d61642ba7115598a4b62e48cbdd"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Validator set contract used by the bridge to require threshold signatures before cross-chain messages can be executed.",
@@ -1864,7 +1864,7 @@
       "type": "Contract",
       "template": "gnosis/TokenFactory",
       "sourceHashes": [
-        "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
+        "0x60bb65b10b7cad53b123e6278ee460cd2bd751fc2e2076318c43c658b6332258"
       ],
       "proxyType": "immutable",
       "description": "Factory used by Omnibridge to deploy wrapped tokens representing assets native to the other chain.",
@@ -1895,7 +1895,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -1934,8 +1934,8 @@
       "type": "Contract",
       "template": "gnosis/HomeOmnibridge",
       "sourceHashes": [
-        "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
-        "0x054fd17b3f8e15a00d9fd1d8e96c3b2769ae32765e5babae32ca4fd2deae564b"
+        "0x1bce2739b3c38c35dc0576c71db959a8c047bbb163f8d7abb959175a4890fd0e",
+        "0x05465c43ed7dcf2c37a59c4f582e92c8b61550c4af8026ec0d66ae6958bd4cef"
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Gnosis-side Omnibridge mediator used for arbitrary token transfers between Gnosis and Ethereum via the AMB bridge.",

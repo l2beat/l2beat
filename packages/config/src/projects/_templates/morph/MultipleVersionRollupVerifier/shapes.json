@@ -1,8 +1,7 @@
 {
   "MultipleVersionRollupVerifier.sol": {
-    "hash": "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7",
+    "hash": "0x3ad3420c0deb4101b654b109a060c171a56f87935a0cd82300a897e9e5085764",
     "address": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
-    "chain": "ethereum",
     "blockNumber": 24147273
   }
 }
