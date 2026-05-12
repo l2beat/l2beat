@@ -19,6 +19,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -27,7 +28,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import type {
@@ -569,7 +570,13 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
     },
-    interopConfig: templateVars.interopConfig,
+    interopConfig: templateVars.interopConfig
+      ? {
+          description:
+            'The canonical or trust-minimized bridge: Each OP stack chain uses the state validation mechanism of the underlying chain for its canonical bridge.',
+          ...templateVars.interopConfig,
+        }
+      : undefined,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -597,7 +604,7 @@ export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
       common.riskView.dataAvailability,
       baseChain.riskView.dataAvailability,
     ),
-    exitWindow: pickWorseRisk(
+    exitWindow: stackExitWindowRisk(
       common.riskView.exitWindow,
       baseChain.riskView.exitWindow,
     ),
@@ -1378,7 +1385,7 @@ function getRiskViewExitWindow(
     return {
       value: 'None',
       description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+        'There is no exit window for users to exit in case of unwanted upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
       orderHint: -finalizationPeriod,
     }
@@ -1446,7 +1453,7 @@ function computedStage(
     OpSuccinctFDP: null,
   }
 
-  return getStage(
+  return getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

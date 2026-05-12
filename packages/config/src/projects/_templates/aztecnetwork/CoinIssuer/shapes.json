@@ -1,8 +1,7 @@
 {
   "CoinIssuer.sol": {
-    "hash": "0xa4f3bbaa9fb563fd7e37fc9a04d3c9f85603ad6dc3c53ee6e21fc0b91583cf51",
+    "hash": "0x1d15ddcef143af4f3d374008011da56260376d0e551fb224430d1fc6cceba8bb",
     "address": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-    "chain": "ethereum",
     "blockNumber": 23834069
   }
 }

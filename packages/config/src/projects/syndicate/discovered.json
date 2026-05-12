@@ -16,7 +16,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -129,6 +129,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "sinceTimestamp": 1744215143,
       "sinceBlock": 22232462,
       "values": {
@@ -160,10 +161,11 @@
       "template": "eigenlayer/StakeRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
+        "0x2164f0da2cf46f7b500efb558c3a6a0afe65e67d6534370fadf7dce65389b81f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the total stake of each operator.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -224,10 +226,11 @@
       "template": "eigenlayer/BLSApkRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
+        "0x913bc45c379cd6b9d480abbe939324e96f3330645202dd152a4c6532f69ad73e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -266,11 +269,12 @@
       "template": "eigenlayer/RegistryCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
+        "0x7bc3d6a892a6e8c6ec410ff8d531b91cca1a03c0c06abc1963b402fd63287f38"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "ignoreInWatchMode": ["registeredOperators"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -476,6 +480,7 @@
           "role": ".pauserRegistry"
         }
       ],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -499,10 +504,11 @@
       "unverified": true,
       "sourceHashes": [
         null,
-        "0x8b058ac51e60b9b13d66835c5cd304f78a34f7b576808d2f641873a98ea21a87"
+        "0xbf8202d6cf3f8f8ecd1f365ee6bc948c2354d11ccfc8538f4ca670380f789b54"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -556,10 +562,11 @@
       "template": "eigenlayer/EjectionManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
+        "0x479a55e20f8ffd16dffa5952f97f6abd15293e57871ef06140a12860676d5327"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1715347895,
       "sinceBlock": 19839949,
       "values": {
@@ -627,7 +634,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -639,6 +646,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "sinceTimestamp": 1721762183,
       "sinceBlock": 20371264,
       "values": {
@@ -678,10 +686,11 @@
       "address": "eth:0x1bAB804803159aD84b8854581AA53AC72455614E",
       "type": "Contract",
       "sourceHashes": [
-        "0x01e7227f08c10c20c7ac43ead2586d4a8fcaeeb008094f59bf2df8a3f1de84e8"
+        "0x3fd5da8591cf0e9400bf9a2d09758a9b9659709af9292b8c8e165ae71e6e9fe8"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["clock", "getCurrentTotalSupply", "totalSupply"],
+      "deployerAddress": "eth:0x2455166e3aed0cc3A9D1C3774Bf1B24A31554025",
       "sinceTimestamp": 1752159095,
       "sinceBlock": 22889493,
       "values": {
@@ -729,10 +738,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
+        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098471,
       "sinceBlock": 22139908,
       "values": { "$immutable": true },
@@ -746,10 +756,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
+        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098519,
       "sinceBlock": 22139912,
       "values": { "$immutable": true },
@@ -764,7 +775,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -776,6 +787,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "sinceTimestamp": 1732035611,
       "sinceBlock": 21223132,
       "values": {
@@ -835,13 +847,14 @@
       "unverified": true,
       "sourceHashes": [
         null,
-        "0xeb6629eb5b0255b6d37e8514ff21605e477c00ea6f9347398ae6f4d58401d763"
+        "0x81676303b84a5540985e44d8d99c950b1846a525f79914c75e45000eb9a0d62b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -896,6 +909,7 @@
         "latestNodeCreated",
         "lastStakeBlock"
       ],
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -1023,6 +1037,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": { "$immutable": true },
@@ -1049,10 +1064,11 @@
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
+        "0xf536eecfe8b70bf9ba1ea603efcc5ee20c36b0413e4e5258494893cbde454898"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753824383,
       "sinceBlock": 23027465,
       "values": {
@@ -1112,6 +1128,7 @@
         "0x20ad72ba1402c7715031bdbe60a9bf87718c4a9444c65a68650a7a2c662f43e2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1733339723,
       "sinceBlock": 21331160,
       "values": {
@@ -1159,10 +1176,11 @@
       "template": "orbitstack/Inbox",
       "sourceHashes": [
         null,
-        "0x82dad78abdf27e168de1ae177b8055db4167106d71273d9a3264e9898a6055e4"
+        "0x03939c3cbd6c108ea9a077f61bb7ec6c3254fe21911bf5dfdb3c0efcb636e796"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -1201,10 +1219,11 @@
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
+        "0xe51bf51c986c2124e5af39cc6e16ee63de27ee0cfa9b73dc4b10c49a4d994d2f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753824383,
       "sinceBlock": 23027465,
       "values": {
@@ -1236,9 +1255,10 @@
       "address": "eth:0x6D25E739016f42B70885E63629C7356C2E29a2D7",
       "type": "Contract",
       "sourceHashes": [
-        "0xa96d268716db422885c219b57cd6f4999103426af695737627f4e8f151a02296"
+        "0x90744f5ef4ff8b3eef422b08ec15bbdb0aefe2599d0d0cd4010c7f35b05ef145"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098615,
       "sinceBlock": 22139920,
       "values": { "$immutable": true },
@@ -1252,10 +1272,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
+        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098567,
       "sinceBlock": 22139916,
       "values": { "$immutable": true },
@@ -1268,9 +1289,10 @@
       "address": "eth:0x787c88E70900f6AE10E7B9D18024482895EBD1eb",
       "type": "Contract",
       "sourceHashes": [
-        "0x300b2bdf5252acff068ab2be85908f10cfd2b12b81b54cf600004b42c93a1ca0"
+        "0xde47e9312f2945cd5055472f18bc58ea27c5fa575460d4841b2fcfd8a6345ed7"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
       "sinceTimestamp": 1743099311,
       "sinceBlock": 22139978,
       "values": {
@@ -1301,10 +1323,11 @@
       "template": "eigenlayer/EigenDADisperserRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x8d337ccea9456dccbcd3d6b82ca9d61509d3a9343487e057438b300efe5484c6"
+        "0xd6d45d6bf7a42c401e94bff9aa98b523d14e47e6c91ec9e5aef48ddea6e75a78"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -1346,6 +1369,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
       "sinceTimestamp": 1743099275,
       "sinceBlock": 22139975,
       "values": {
@@ -1422,6 +1446,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1444,6 +1469,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -1507,11 +1533,12 @@
       "template": "eigenlayer/EigenDAServiceManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
+        "0x5446a295966c1f9d773b7b50883f2d7b4890b72f6a5dd66926209ab6ac919a59"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "ignoreInWatchMode": ["batchId", "taskNumber"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1710,7 +1737,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1731,6 +1758,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
       "sinceTimestamp": 1719432803,
       "sinceBlock": 20178171,
       "values": {
@@ -1765,10 +1793,11 @@
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
+        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098663,
       "sinceBlock": 22139924,
       "values": {
@@ -1788,10 +1817,11 @@
       "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
+        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
       ],
       "proxyType": "immutable",
       "description": "This contract implements view only utilities for validators.",
+      "deployerAddress": "eth:0x5a4aB7307C4480d64eF06F49d65666d9EFe99BC9",
       "sinceTimestamp": 1743098831,
       "sinceBlock": 22139938,
       "values": { "$immutable": true },
@@ -1806,10 +1836,11 @@
       "template": "eigenlayer/EigenDAThresholdRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
+        "0x77e829aa26d5459004c4d89d84d90fcc1876ecabc83130235db2c3a71f56b66f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "deployerAddress": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c",
       "sinceTimestamp": 1743099299,
       "sinceBlock": 22139977,
       "values": {
@@ -1857,10 +1888,11 @@
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
         null,
-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -1898,10 +1930,11 @@
       "template": "eigenlayer/PaymentVault",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xf39de15799feffaa8711b3b5e9ff8fb4c66ef1cbac1fe00cc984f957663d73d1"
+        "0x198f5fd7944b62838fac91becbbf3cdb3aadaa098b9d64c37eccbabf33318378"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint for making reservations and on demand payments for EigenDA.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -1954,6 +1987,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A registry contract that keeps track of an ordered list of operators for each quorum.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -2005,10 +2039,11 @@
       "template": "eigenlayer/EigenDARelayRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007"
+        "0x04415dba9be0ddc638a871b192f3a780b709a0841a143c08085a9f4ac1372040"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA relay keys, maps key to address.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750223,
       "sinceBlock": 22276879,
       "values": {
@@ -2065,10 +2100,11 @@
       "template": "eigenlayer/EigenDAThresholdRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
+        "0x77e829aa26d5459004c4d89d84d90fcc1876ecabc83130235db2c3a71f56b66f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750211,
       "sinceBlock": 22276878,
       "values": {
@@ -2158,10 +2194,11 @@
       "template": "orbitstack/Outbox",
       "sourceHashes": [
         null,
-        "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04"
+        "0xb9f7bc73978fab23b0df754fac230d706fee0d774d97b8533b62b3014d5561a8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {
@@ -2200,7 +2237,7 @@
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
         null,
-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
@@ -2211,6 +2248,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,
       "sinceBlock": 23026187,
       "values": {

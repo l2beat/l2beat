@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x2a57cd4340a8cda37116255e1381d0967e96b483
+
+# Diff at Fri, 08 May 2026 07:51:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      sourceHashes.0:
+-        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
++        "0x18a889e730255386b3ecf5a44ea1cdcc2a4ecbd02908aa838976646eb02a9681"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001) [N/A] {
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
+      sourceHashes.1:
+-        "0x0645ac658c841359389c047ca68b72e620b5caf18e80d9fdca1667bdfe888ab7"
++        "0xa8b17b862d2dbb402cd77e2e521f3123cf85d3a56daa10322741ff651dc95853"
+    }
+```
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) [N/A] {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      sourceHashes.1:
+-        "0xa20aefed1e9e4886d8048e954bbc525daabd6ee73cb68eb22485144f5b7e64e0"
++        "0x76a32ddc625f2eb76f3d54283fb9ef50040eb2d1e8799a9af8ef75a496c9089d"
+    }
+```
+
+Generated with discovered.json: 0xfeb95a23d53cc831c07d8943f13a9467c63cc93a
+
+# Diff at Tue, 05 May 2026 10:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      deployerAddress:
++        "eth:0x6976bD97EE6dc7517c5C288251d9305A77Db2e26"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97"
+    }
+```
+
+```diff
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001) {
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (ethscr:0x4200000000000000000000000000000000000016) {
+    +++ description: L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Proxy (ethscr:0x4200000000000000000000000000000000000018) {
+    +++ description: ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.
+      deployerAddress:
++        "ethscr:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x4f394ef95bd6a8faed461ed4253206245cd70025
 
 # Diff at Wed, 28 Jan 2026 11:58:54 GMT:

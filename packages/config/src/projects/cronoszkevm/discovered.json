@@ -16,7 +16,7 @@
       "template": "shared-zk-stack/ValidatorTimelock_post29",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1331a809e6d864cad7a57d9b2e1ae6cc5dcc4b3fd344e9cbe0551ce2b879c01d"
+        "0x5afea1019ac418e639ce9df65b9653bf0ca88ed81fb0abe0447e87328e39f10c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
@@ -28,6 +28,7 @@
           "role": ".validators"
         }
       ],
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758289595,
       "sinceBlock": 23397515,
       "values": {
@@ -80,7 +81,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -102,6 +103,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb",
       "sinceTimestamp": 1723609295,
       "sinceBlock": 20524449,
       "values": {
@@ -135,6 +137,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758718847,
       "sinceBlock": 23433058,
       "values": {
@@ -162,7 +165,7 @@
       "address": "eth:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
       "type": "Contract",
       "sourceHashes": [
-        "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
+        "0x68a4eaa232ccd85c72b3fc57f0777278acae07f3019914c3fd1ff7a87e0bd8e7"
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
@@ -173,6 +176,7 @@
           "role": ".getAdmin"
         }
       ],
+      "deployerAddress": "eth:0x143524d0ac8D7f35a2133b6B0a7567e0E3393137",
       "sinceTimestamp": 1726967543,
       "sinceBlock": 20802749,
       "values": {
@@ -236,7 +240,7 @@
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0xc7513302e4e09efc907df5e645d9f8037b1d02409f9a9089f61061c8951ef1ff"
+        "0xee0eeb13b78cdf1b9227960a31b35310c9e00441cd082d6a975f5225946b5693"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -255,6 +259,7 @@
         "baseTokenGasPriceMultiplierDenominator",
         "baseTokenGasPriceMultiplierNominator"
       ],
+      "deployerAddress": "eth:0xC301f8B2a2C08958E6e7a286AB49A986c1f7ef6A",
       "sinceTimestamp": 1722357035,
       "sinceBlock": 20420571,
       "values": {
@@ -572,6 +577,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+      "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
@@ -585,7 +591,7 @@
       "address": "eth:0xA8998F231a660Eca365B382943c71ad9b7619139",
       "type": "Contract",
       "sourceHashes": [
-        "0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"
+        "0x436d68e0f82eae7917204ebc32727c61c717f4794bdbf2805c978d715690e75b"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -596,6 +602,7 @@
           "role": ".getTransactionFilterer"
         }
       ],
+      "deployerAddress": "eth:0x143524d0ac8D7f35a2133b6B0a7567e0E3393137",
       "sinceTimestamp": 1722304883,
       "sinceBlock": 20416268,
       "values": {
@@ -633,7 +640,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -661,6 +668,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xE9A03EB4C2262A7d01981cAD1f2c1FFa05CB64Fb",
       "sinceTimestamp": 1722375731,
       "sinceBlock": 20422122,
       "values": {
@@ -701,6 +709,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758718835,
       "sinceBlock": 23433057,
       "values": {
@@ -727,6 +736,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x3AcEB2E5a1e46d491a72783Acc7EE64E904a787a",
       "sinceTimestamp": 1758616787,
       "sinceBlock": 23424592,
       "values": {

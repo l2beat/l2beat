@@ -7,6 +7,7 @@ import type {
   ApiConfigSyncStatusResponse,
   ApiCreateConfigFileResponse,
   ApiCreateShapeResponse,
+  ApiDiffHistoryResponse,
   ApiGlobalConfigSyncStatusResponse,
   ApiHandlersResponse,
   ApiListTemplatesResponse,
@@ -25,8 +26,16 @@ export async function getProjects(): Promise<ApiProjectsResponse> {
   return data as ApiProjectsResponse
 }
 
-export async function getProject(project: string): Promise<ApiProjectResponse> {
-  const res = await fetch(`/api/projects/${project}`)
+export async function getProject(
+  project: string,
+  maxDepth?: number,
+): Promise<ApiProjectResponse> {
+  const params = new URLSearchParams()
+  if (maxDepth !== undefined) {
+    params.set('maxDepth', String(maxDepth))
+  }
+  const qs = params.toString()
+  const res = await fetch(`/api/projects/${project}${qs ? `?${qs}` : ''}`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }
@@ -147,6 +156,23 @@ export async function readConfigFile(
   const data = await res.json()
 
   return data as ApiConfigFileResponse
+}
+
+export async function getDiffHistory(
+  project: string,
+  offset: number,
+  limit: number,
+): Promise<ApiDiffHistoryResponse> {
+  const params = new URLSearchParams({
+    offset: String(offset),
+    limit: String(limit),
+  })
+  const res = await fetch(`/api/projects/${project}/diff-history?${params}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiDiffHistoryResponse
 }
 
 export async function getConfigSyncStatus(

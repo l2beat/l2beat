@@ -33,10 +33,11 @@
       "type": "Contract",
       "template": "hyperliquid/HyperliquidBridge",
       "sourceHashes": [
-        "0x8c22d9d0e8dc4b87b77a97aca8a01a2050b5c416ff894e2b0c18daf22c76b122"
+        "0xffdc2cba00d9b1b339bee72dcf34ee34d38d62d6fecc073ff82c7d79bf1ff8af"
       ],
       "proxyType": "immutable",
       "description": "Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.",
+      "deployerAddress": "arb1:0x1D4c01E15A637cB3cbaF86fFbb02E5A260D01fbc",
       "sinceTimestamp": 1701389130,
       "sinceBlock": 155689071,
       "values": {

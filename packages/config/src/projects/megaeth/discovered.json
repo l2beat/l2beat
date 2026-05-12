@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1776158984,
+  "timestamp": 1777390966,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -16,7 +16,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -129,6 +129,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "sinceTimestamp": 1744215143,
       "sinceBlock": 22232462,
       "values": {
@@ -160,10 +161,11 @@
       "template": "eigenlayer/StakeRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
+        "0x2164f0da2cf46f7b500efb558c3a6a0afe65e67d6534370fadf7dce65389b81f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the total stake of each operator.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -229,10 +231,11 @@
       "template": "eigenlayer/BLSApkRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
+        "0x913bc45c379cd6b9d480abbe939324e96f3330645202dd152a4c6532f69ad73e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -266,10 +269,11 @@
       "template": "megaeth/BunnyInbox",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x32a8e1247fe1f5c0ed413c7604ceca4e87e5cb186cde24b165fa9f833e486b32"
+        "0x8a8af834073f90d499e71ee2ac0377f29feac9574963b35bdc66e7d55decec58"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Onchain EigenDA certificate verification inbox. Receives batch data, strips 4-byte prefix, RLP-decodes EigenDACertV3 and calls the EigenDACertVerifier to validate the certificate. Used as the batch inbox for EigenDA-based data availability.",
+      "deployerAddress": "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a",
       "sinceTimestamp": 1770465023,
       "sinceBlock": 24404755,
       "values": {
@@ -325,11 +329,12 @@
       "template": "eigenlayer/RegistryCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
+        "0x7bc3d6a892a6e8c6ec410ff8d531b91cca1a03c0c06abc1963b402fd63287f38"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "ignoreInWatchMode": ["registeredOperators"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -423,7 +428,6 @@
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -534,6 +538,7 @@
           "role": ".pauserRegistry"
         }
       ],
+      "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
       "values": {
@@ -557,10 +562,11 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x4e15d99844dc5a4304c2396a66c95ec41218ea311c8e524b118fad7beed0bb53"
+        "0xb47cce1142fbb589ee2917f47d81c1cb8d51462f9802c4339d4f6c33cd45c790"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -594,16 +600,22 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EjectionManager",
       "address": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "type": "Contract",
       "template": "eigenlayer/EjectionManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
+        "0x479a55e20f8ffd16dffa5952f97f6abd15293e57871ef06140a12860676d5327"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1715347895,
       "sinceBlock": 19839949,
       "values": {
@@ -727,6 +739,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -746,7 +759,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -758,6 +771,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "sinceTimestamp": 1721762183,
       "sinceBlock": 20371264,
       "values": {
@@ -794,11 +808,12 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x18ecfc662e320a3cf78978511db8f7d6f3819d32a52e70d74cc636c9a43335e8"
+        "0x7a19ef244a49e018047d7e5d215aad1651e469d215364b8f16e0e59e0a9db43c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -894,10 +909,11 @@
       "type": "Contract",
       "template": "opstack/PreimageOracle",
       "sourceHashes": [
-        "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47"
+        "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615"
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
       "values": {
@@ -922,7 +938,7 @@
       "type": "Contract",
       "template": "megaeth/MegaPreDepositVaultRefund",
       "sourceHashes": [
-        "0xe6bb739bb7cfc220d4d5e58d21a77f3058747d738a06f639274a99b04a76d0f4"
+        "0x3315b069a79c1600ec032c883d42fe18cc74d2a99ac67f4bfddfad47b7f01b00"
       ],
       "proxyType": "immutable",
       "description": "Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.",
@@ -932,6 +948,7 @@
         "lastProcessedAmount",
         "getBalance"
       ],
+      "deployerAddress": "eth:0x7ffeef52BECC931A844B647baE73c3764F3A5bF0",
       "sinceTimestamp": 1764664223,
       "sinceBlock": 23924599,
       "values": {
@@ -1006,7 +1023,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1018,6 +1035,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "sinceTimestamp": 1732035611,
       "sinceBlock": 21223132,
       "values": {
@@ -1072,10 +1090,11 @@
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x28669b49da3effd51f0f9424ca9cdd455c5b9327c09a40c65fc06f114a6eb837"
+        "0x042a00d86fcb033183aa25bf84cc94b75ddcfbcd5d40f1b8845e9f4d9cf2cb73"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1114,10 +1133,11 @@
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
-        "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb"
+        "0x19c3fbedf93ee852d83096519dd22f26409f70fc13f7843307acaecb508981d6"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954207,
       "sinceBlock": 23865991,
       "values": {
@@ -1156,11 +1176,12 @@
       "type": "Contract",
       "template": "megaeth/MegaUSDmPreDeposit",
       "sourceHashes": [
-        "0x1e4dc0cf0e125ad726bb101917363d1e5b16e3ce1049250a5c16a6c5591083e4"
+        "0x2a0d96af92e69ce41c4939c1e38d1adf85fe7cf22ac8724456163421281b0160"
       ],
       "proxyType": "immutable",
       "description": "Predeposit Escrow, not connected to an L2: Users can deposit USDC. The system uses off-chain permit signatures to ensure only KYC'd users can deposit. Withdrawals can only be made by eth:0xCB264DEf50D166d4aE7cF60188eC0038819fb719 to eth:0x22cfa62eD71922781984aA2AcffEfA9a82593071.",
       "ignoreInWatchMode": ["getTimeUntilEnd"],
+      "deployerAddress": "eth:0xe46A884CfF5653f9EbFC58EEe431a036f95FAc0d",
       "sinceTimestamp": 1764062435,
       "sinceBlock": 23874891,
       "values": {
@@ -1224,6 +1245,7 @@
         "0x20ad72ba1402c7715031bdbe60a9bf87718c4a9444c65a68650a7a2c662f43e2"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1733339723,
       "sinceBlock": 21331160,
       "values": {
@@ -1265,10 +1287,11 @@
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0xcfa8bfbe522f3a85a5385ccb76753907d2f839d7bc257f742c9781269d7cce4d"
+        "0x1b8936912a4352f2e7a7f9a42a1af66fd9bc6c6ea1315c98b4524608d502f809"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796855,
       "sinceBlock": 23770445,
       "values": {
@@ -1313,16 +1336,18 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8",
       "sinceTimestamp": 1768825163,
       "sinceBlock": 24268775,
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x12130aF2fd6E23Cb4EFD396146bE064e893Fc694",
           "eth:0xeCf89ebA03B54ab9C606d436b32875B6947C68E8",
           "eth:0xa4C9190ca82c4056FF9CDe6a070424E563BF1D95",
           "eth:0xa4BB3AdFA1bDc0f609eCae7A39eC58e9b2A373e0"
@@ -1331,8 +1356,8 @@
         "domainSeparator": "0x8b6e17ec93cff6d892ec0adb63fd447402dd4d283487d0058fd2f8f64fd781db",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 1,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1357,11 +1382,12 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0x03bcdc719cb7bd0a1377c01bb50b30a6122b308f673b7d7b15a3bb8628e6bd8c"
+        "0xa9d49d43c1f2cd8b840b38486dff4d5c39da96d00bb42dbc0a57bb7bb2a56d0f"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1379,7 +1405,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664985",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292665441",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1411,10 +1437,11 @@
       "template": "eigenlayer/EigenDADisperserRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x8d337ccea9456dccbcd3d6b82ca9d61509d3a9343487e057438b300efe5484c6"
+        "0xd6d45d6bf7a42c401e94bff9aa98b523d14e47e6c91ec9e5aef48ddea6e75a78"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -1446,10 +1473,11 @@
       "type": "Contract",
       "template": "risc0/KailuaGame",
       "sourceHashes": [
-        "0x8ccbc2dc7979e60f1522fe9a1da1a05647b47340b54f536bc9f43aa54c2d6a01"
+        "0xe68c69640ff19f4def25b2ef5fc28feb0701c3827729149b394af66b728cfad9"
       ],
       "proxyType": "immutable",
       "description": "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954447,
       "sinceBlock": 23866011,
       "values": {
@@ -1510,11 +1538,12 @@
       "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x2cb05d8405b381db83cf08312454b15a474ae2344ca5b34a2c69b3e2f3c1c87e"
+        "0xe51e34b4f5c2e2600b64518ea6efc5d49b6143fd13ed6ba3f178f8d85e461278"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.",
       "ignoreInWatchMode": ["params", "balance"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1539,8 +1568,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 514422,
-          "prevBlockNum": 24877010
+          "prevBoughtGas": 333101,
+          "prevBlockNum": 24979370
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1640,6 +1669,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1657,11 +1687,12 @@
       "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
+        "0xfbbe43e439b6631cf110db5ab40bb632fbb1e89cc43125e59a52305d4307e429"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "ignoreInWatchMode": ["gameCount", "permissionedGameArgs"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1679,7 +1710,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3712,
+        "gameCount": 4054,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -1722,11 +1753,12 @@
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a"
+        "0xab80c8a5584b65d2ff6b730e9d93b954abfd1eb823ef737f3a3a2cb2be0cf07e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -1774,11 +1806,12 @@
       "template": "eigenlayer/EigenDAServiceManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
+        "0x5446a295966c1f9d773b7b50883f2d7b4890b72f6a5dd66926209ab6ac919a59"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "ignoreInWatchMode": ["batchId", "taskNumber"],
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
       "values": {
@@ -1924,10 +1957,11 @@
       "type": "Contract",
       "template": "risc0/RiscZeroVerifierRouter",
       "sourceHashes": [
-        "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364"
+        "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a"
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).",
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954183,
       "sinceBlock": 23865989,
       "values": {
@@ -1947,7 +1981,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2072,6 +2106,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1765176719,
       "sinceBlock": 23966421,
       "values": {
@@ -2117,6 +2152,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2159,10 +2195,11 @@
       "type": "Contract",
       "template": "eigenda/EigenDACertVerifier",
       "sourceHashes": [
-        "0x2246a40167c418ed7a92ae3a5068e397e2ea4035bac8d4728a20c82364fa5f14"
+        "0xea2c1984b5e295622dc9ac6b7a3cd6f47faf6554fe916ecd14513f73f22be476"
       ],
       "proxyType": "immutable",
       "description": "A DA verifier contract for EigenDA V2 certificates. The verifier is used to verify the certificate against operator signatures and stake thresholds.",
+      "deployerAddress": "eth:0x61D4daFf34EA0E8267CB238B8d599Bd2EA157B1a",
       "sinceTimestamp": 1770460847,
       "sinceBlock": 24404410,
       "values": {
@@ -2203,6 +2240,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796855,
       "sinceBlock": 23770445,
       "values": {
@@ -2222,7 +2260,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
@@ -2233,6 +2271,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1765178051,
       "sinceBlock": 23966531,
       "values": {
@@ -2258,10 +2297,11 @@
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
-        "0x0a442058af95748cc6199d889a46c775f9f6f4d29a61df5124ceb93ff631074d"
+        "0x0865e7c3caf7894a1b91d8420844e95bfde27db825f297d0aab90aa1d46fd5d9"
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2358,10 +2398,11 @@
       "template": "eigenlayer/PaymentVault",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xf39de15799feffaa8711b3b5e9ff8fb4c66ef1cbac1fe00cc984f957663d73d1"
+        "0x198f5fd7944b62838fac91becbbf3cdb3aadaa098b9d64c37eccbabf33318378"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entrypoint for making reservations and on demand payments for EigenDA.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750295,
       "sinceBlock": 22276885,
       "values": {
@@ -2413,6 +2454,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A registry contract that keeps track of an ordered list of operators for each quorum.",
+      "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353799,
       "sinceBlock": 19592323,
       "values": {
@@ -2459,7 +2501,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "directlyReceivedPermissions": [
@@ -2471,6 +2513,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
       "sinceTimestamp": 1761268271,
       "sinceBlock": 23643971,
       "values": {
@@ -2504,10 +2547,11 @@
       "template": "eigenlayer/EigenDARelayRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007"
+        "0x04415dba9be0ddc638a871b192f3a780b709a0841a143c08085a9f4ac1372040"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry for EigenDA relay keys, maps key to address.",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750223,
       "sinceBlock": 22276879,
       "values": {
@@ -2559,10 +2603,11 @@
       "template": "eigenlayer/EigenDAThresholdRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
+        "0x77e829aa26d5459004c4d89d84d90fcc1876ecabc83130235db2c3a71f56b66f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "deployerAddress": "eth:0xDF291ebfe90eF9187c3f45609603E366a21a16Ea",
       "sinceTimestamp": 1744750211,
       "sinceBlock": 22276878,
       "values": {
@@ -2621,11 +2666,12 @@
       "type": "Contract",
       "template": "megaeth/KailuaTreasury",
       "sourceHashes": [
-        "0x114d2fa4777cda59fdbe4bbaa3e319588066e3d66bff66ae8dc4b96589ac1d4b"
+        "0xda724e59049862aec67c8e164b7c54b1943194e1d17baa1576e7e73bb8c99da6"
       ],
       "proxyType": "immutable",
       "description": "Entrypoint for state root proposals. Manages bonds (currently 0.00001 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
       "ignoreInWatchMode": ["lastResolved"],
+      "deployerAddress": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
       "sinceTimestamp": 1763954387,
       "sinceBlock": 23866006,
       "values": {
@@ -2653,7 +2699,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xc76b1ed33201be3Dedcc16f745AB922E8cB462e3",
+        "lastResolved": "eth:0xF856e91A51944a5A8fF5adCB138D5931A648B44c",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -2692,7 +2738,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2710,6 +2756,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xfa9Ad1bE10BB02FD70634ccEC3264Da9bf43DE79",
       "sinceTimestamp": 1764596615,
       "sinceBlock": 23919004,
       "values": {
@@ -2760,11 +2807,12 @@
       "template": "opstack/AnchorStateRegistry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x5d50c259a38eef46641553e8ec1910a443c1b25062ea558d0b3e0bc7218adae1"
+        "0x5994cf601fe1082877a6b5e5c804511df86a7e532b6a509236b8707a2393517a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -2800,10 +2848,11 @@
       "type": "Contract",
       "template": "opstack/MIPS",
       "sourceHashes": [
-        "0xd693f0cc376e99425037555be4a61adb70c597ad1485e838c475743c79a41fa0"
+        "0x984283956aec5af79f6c8c370e8e233022bf503d14c995b142f29bcc564e24e7"
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1741217219,
       "sinceBlock": 21983963,
       "values": {
@@ -2834,10 +2883,11 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
+        "0x38811adfaa2c3c1a79fd731951dfcb607841950cdc119cd765fadcc62bc8e61d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "deployerAddress": "eth:0x8B21106E95634B69433CB96dA93fc703D5bDba64",
       "sinceTimestamp": 1762796999,
       "sinceBlock": 23770457,
       "values": {
@@ -4501,6 +4551,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24877142 },
-  "permissionsConfigHash": "0x4075f117b9d9fe9eedef8dac8fa1bc6aa1b6d6c70dd0e044e3933205ebb195a4"
+  "usedBlockNumbers": { "ethereum": 24979528 },
+  "permissionsConfigHash": "0x2f4eda41b086ff47e479ef3c008f31e5d3e708bddc921a8e34c369b0d5169373"
 }

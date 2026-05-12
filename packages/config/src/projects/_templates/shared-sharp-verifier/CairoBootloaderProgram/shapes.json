@@ -17,7 +17,6 @@
   "CairoBootloaderProgram_Dec25": {
     "hash": "0x42d3a15726c4bd738b1226f33f49c774be8d9cfb84489033d992c4b6c22f4037",
     "address": "eth:0xdf0B63653E86995556079cbc09594BCD88D1D917",
-    "chain": "ethereum",
     "blockNumber": 23968827
   }
 }

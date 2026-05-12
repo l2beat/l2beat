@@ -7,12 +7,14 @@ import type {
   AggregatedInteropTransferWithTokens,
   ByBridgeTypeData,
   InteropSelectionInput,
+  ProtocolDisplayable,
   ProtocolEntry,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration, getDurationSplit } from './getAverageDuration'
 import { getChainsData } from './getChainsData'
 import { flowsMapToSorted } from './getFlows'
+import { getNetMintedValueUsd } from './getNetMintedValueUsd'
 import {
   getProtocolsDataMap,
   getProtocolsDataMapByBridgeType,
@@ -34,13 +36,13 @@ export function getProtocolEntries(
   selection: InteropSelectionInput,
 ): {
   entries: ProtocolEntry[]
-  zeroTransferProtocols: { name: string; iconUrl: string }[]
+  zeroTransferProtocols: ProtocolDisplayable[]
 } {
   const protocolsDataMap = getProtocolsDataMap(records)
   const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
 
   const entries: ProtocolEntry[] = []
-  const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
+  const zeroTransferProtocols: ProtocolDisplayable[] = []
 
   for (const project of interopProjects) {
     const data = protocolsDataMap.get(project.id)
@@ -65,6 +67,7 @@ export function getProtocolEntries(
     if (!data && (!type || bridgeTypes.includes(type))) {
       zeroTransferProtocols.push({
         name: project.interopConfig.name ?? project.name,
+        slug: project.slug,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       })
       continue
@@ -127,10 +130,7 @@ export function getProtocolEntries(
       maxTransferValueUsd: data.maxTransferValueUsd,
       averageDuration,
       averageValueInFlight: data.averageValueInFlight,
-      netMintedValue:
-        data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
-          ? data.mintedValueUsd - data.burnedValueUsd
-          : undefined,
+      netMintedValue: getNetMintedValueUsd(data),
       snapshotTimestamp,
     })
   }
@@ -175,12 +175,7 @@ function getByBridgeTypeData(
             TOP_ITEMS_LIMIT,
           ),
           flows: flowsMapToSorted(data.lockAndMint.flows, selection),
-          netMintedValue:
-            data.lockAndMint.mintedValueUsd !== undefined &&
-            data.lockAndMint.burnedValueUsd !== undefined
-              ? data.lockAndMint.mintedValueUsd -
-                data.lockAndMint.burnedValueUsd
-              : undefined,
+          netMintedValue: getNetMintedValueUsd(data.lockAndMint),
         }
       : undefined,
     nonMinting: data.nonMinting

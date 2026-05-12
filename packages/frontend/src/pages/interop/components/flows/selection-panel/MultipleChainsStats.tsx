@@ -12,10 +12,14 @@ export function MultipleChainsStats({
   chainIdA,
   chainIdB,
   selectedChains,
+  linkTopProtocols,
+  hideTopProtocols,
 }: {
   chainIdA: string
   chainIdB: string
   selectedChains: string[]
+  linkTopProtocols?: boolean
+  hideTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -56,12 +60,13 @@ export function MultipleChainsStats({
           }))}
         />
       )}
-      {pairData && (
+      {pairData && !hideTopProtocols && (
         <TopItemsList
           label="TOP BRIDGES"
           items={pairData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
+            href: linkTopProtocols ? `/interop/protocols/${p.slug}` : undefined,
           }))}
         />
       )}

@@ -1,3 +1,370 @@
+Generated with discovered.json: 0x037947290dce4fd67d2e27b45452f68da58fc4d7
+
+# Diff at Fri, 08 May 2026 07:51:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1776865911
+- current timestamp: 1776865911
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776865911 (main branch discovery), not current.
+
+```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) [aztecnetwork/CoinIssuer] {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      sourceHashes.0:
+-        "0xa4f3bbaa9fb563fd7e37fc9a04d3c9f85603ad6dc3c53ee6e21fc0b91583cf51"
++        "0x1d15ddcef143af4f3d374008011da56260376d0e551fb224430d1fc6cceba8bb"
+    }
+```
+
+```diff
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) [aztecnetwork/GovernanceProposer] {
+    +++ description: Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.
+      sourceHashes.0:
+-        "0xf5d24826d1f40e6e4796bdde6cee8f8b3fa9bc6f2a859fdb79c591cd8c6bbfb6"
++        "0x822a0467a3c36f3ad5006f5b0a0921686eff01e6adf5204dcc5f235263dadfc3"
+    }
+```
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      sourceHashes.0:
+-        "0x108c41fbc4c83c17c0f1cade9547878fd22dbf5b378a3da7815cf2eacf863b0e"
++        "0x4818e078ed920ba17929b5ff19b2390b5af9aea3bcfd7cc47274d4c7afedc718"
+    }
+```
+
+```diff
+    contract RewardBooster (eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80) [aztecnetwork/RewardBooster] {
+    +++ description: Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.
+      sourceHashes.0:
+-        "0x7e3d88822760fe6d4eef2faf9c6e14ae481b4ce38a65abe838a87511e128b9f0"
++        "0xd88e52f8a67390118e6ca6308dcaa66116e76b793e891200be19354d545d0562"
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617) [aztecnetwork/FeeJuicePortal] {
+    +++ description: One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.
+      sourceHashes.0:
+-        "0xffe7fdf0f7de8b1be186c7c37b6553238928c1f70255d06d9c8abf22082ec4b0"
++        "0xefcc58eb6e18ab3015db23e7b5ca1f48f5332955771faa13269730f8f16b5a21"
+    }
+```
+
+```diff
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) [aztecnetwork/Registry] {
+    +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
+      sourceHashes.0:
+-        "0x2668189921df08d463ad0d3e7381bb520057ff2a687d45bed1ec160de02a6c87"
++        "0xd4419feb9d3fbefcecfeb3fb93d1f7963d68289fd55800ee46df9ea1cec59a9f"
+    }
+```
+
+```diff
+    contract RewardDistributor (eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0) [aztecnetwork/RewardDistributor] {
+    +++ description: Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.
+      sourceHashes.0:
+-        "0x2f431ac339a6130443de9108067868e7bdd0c6f33644cb46128b9fb1c4c39fcc"
++        "0x6070cf13583054dcdcdff5ca9834c0822f5b19bbc4cc3dcbbed27f849c768cff"
+    }
+```
+
+```diff
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) [aztecnetwork/ProtocolTreasury] {
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+      sourceHashes.0:
+-        "0x7b8550d2aa8397c59330dca1f180e102e8bbbab775c39cbcd9c48d35358530db"
++        "0x47a6b396b5e4531818f04a9d4657c9e92c2bc02e75647fe06a0221dd4dc5bfd8"
+    }
+```
+
+```diff
+    contract HonkVerifier (eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348) [aztecnetwork/HonkVerifier] {
+    +++ description: ZK proof verification contract.
+      sourceHashes.0:
+-        "0x8ccbd9969496e6e190b97c2988df87d248cdf18d3173a7f4bf1184de23202e78"
++        "0xbb00c1d733934fe4f475e43a86fa9af450fba4c9a5d956e53c2a9540cc0802b5"
+    }
+```
+
+```diff
+    contract EscapeHatch (eth:0x8c189ead28D5987A48e522162f9225124D50AD1B) [aztecnetwork/EscapeHatch] {
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
+      sourceHashes.0:
+-        "0x075ee4b441a07410b5aa3c5fc868789251bc02707bc5ba28a174648dafad785d"
++        "0xaf030f696223208ac572e052a593e9c1e8b5c533c49e60529c37b01a1466f564"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578) [aztecnetwork/Inbox] {
+    +++ description: Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.
+      sourceHashes.0:
+-        "0x77499f55b21f6d83387db70ed134f13e8b7b19d731a747016064f81465e2aac5"
++        "0xbb549e7279a308b9cc7d57b1b4496cd0ee0fffc107deea34dce5514db6b376c9"
+    }
+```
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) [aztecnetwork/Aztec] {
+    +++ description: AZTEC token contract
+      sourceHashes.0:
+-        "0xd5b487c2f69097daa1e35d596189814c087e6c52d35f2808b8c2f542821105b5"
++        "0x6018c4d73b9151449ab94fa44cb69a1f9d6eaa71dbf36cbf9f262a54b77e20da"
+    }
+```
+
+```diff
+    contract TallySlashingProposer (eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958) [aztecnetwork/TallySlashingProposer] {
+    +++ description: Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.
+      sourceHashes.0:
+-        "0x0b4f1c707812b207e031a78710120f6962597aca1d9bfa47b0aa4c940fadbbdb"
++        "0x36a4a21da5b9c1b8650619998b8c14d14dd3ae6198357d2c1de03db66141ff39"
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) [aztecnetwork/GSE] {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
+      sourceHashes.0:
+-        "0x547457f5ff4ac8ea3f42813204d953274a213c147ab1709fdcfd4973a9e98c37"
++        "0x86c38f8c5576e356aa3f79d2f0e0d9cfd2d02cc4d36583627fea6d16cbc3adb2"
+    }
+```
+
+```diff
+    contract SlashPayloadCloneable (eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445) [aztecnetwork/SlashPayloadCloneable] {
+    +++ description: A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.
+      sourceHashes.0:
+-        "0xfbadea8713d96309e9bd97fddd93c7a26deaa423e3bc6380fea3583b1479c3ef"
++        "0x675553ce11773dc33f90165a629cf5899125e69c4272a3cf7b62b1cdcc0bc67b"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) [aztecnetwork/Rollup] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      sourceHashes.0:
+-        "0x21cee9d37dad194e69c515e0f50b13b0dcc334145b92dc9e962db46eb134cac3"
++        "0x2d136d48b42c226a0e64b451623ffc9b66f62ad5f2f628f73ee276005826c283"
+    }
+```
+
+```diff
+    contract SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract Outbox (eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0) [aztecnetwork/Outbox] {
+    +++ description: Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.
+      sourceHashes.0:
+-        "0x268c3927e6d7e9e7e84f7cb8d1557c6a593638888c766837b2aac1a0e4c3e64c"
++        "0xd49b9c80dbe4876e76020713ee3920aad9a1b60c16428b900cd104e3190cfac4"
+    }
+```
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked.
+      sourceHashes.0:
+-        "0x5bec86caaab8c1c4f3acc5289ed1e63204996e1060b8cc0b3659805297f969f5"
++        "0x6b4881b4d3b0b5aaa49b8a1e3784bd49053169584e8b661678a44b65a5b15db1"
+    }
+```
+
+Generated with discovered.json: 0x3951fcc1c3887ff312b94eae3ab02b78c3a3816e
+
+# Diff at Tue, 05 May 2026 10:21:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1776865911
+- current timestamp: 1776865911
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776865911 (main branch discovery), not current.
+
+```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) {
+    +++ description: Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract RewardBooster (eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80) {
+    +++ description: Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617) {
+    +++ description: One-way gas bridge: Escrows the fee asset (AZTEC) used to pay for L2 mana (gas). Users deposit tokens here, which are minted on L2 via the Inbox. The Rollup contract holds exclusive rights to withdraw tokens from this portal to distribute them as rewards to L1 sequencers and provers. Apart from that, this escrow does NOT afford a way to withdraw tokens.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) {
+    +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract RewardDistributor (eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0) {
+    +++ description: Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract Slasher (eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb) {
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) {
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract HonkVerifier (eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348) {
+    +++ description: ZK proof verification contract.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract EscapeHatch (eth:0x8c189ead28D5987A48e522162f9225124D50AD1B) {
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578) {
+    +++ description: Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) {
+    +++ description: AZTEC token contract
+      deployerAddress:
++        "eth:0xCbE23F4EBd9150e3A9d3A80442d145FAD624751d"
+    }
+```
+
+```diff
+    contract TallySlashingProposer (eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958) {
+    +++ description: Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract GSE (eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f) {
+    +++ description: Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.
+      deployerAddress:
++        "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3"
+    }
+```
+
+```diff
+    contract SlashPayloadCloneable (eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445) {
+    +++ description: A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
+    }
+```
+
+```diff
+    contract Outbox (eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0) {
+    +++ description: Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.
+      deployerAddress:
++        "eth:0xA8aA9eb611709454601425CEc7B8C9B142781560"
+    }
+```
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) {
+    +++ description: Used to set the time at which AZTEC tokens owned by the ProtocolTreasury are unlocked.
+      deployerAddress:
++        "eth:0xA8085a1e881c7c0F32ea69cf41A3C21b67ed5f1D"
+    }
+```
+
 Generated with discovered.json: 0x4f701faaf630d166ba07c681058fb6a8db703e6f
 
 # Diff at Wed, 22 Apr 2026 13:53:02 GMT:

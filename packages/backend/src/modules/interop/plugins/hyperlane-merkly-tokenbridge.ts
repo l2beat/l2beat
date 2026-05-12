@@ -81,6 +81,11 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
     },
     // monad, tempo unsupported
+    {
+      chain: 'worldchain',
+      chainId: 480,
+      address: EthereumAddress('0x6E55472109E6aBE4054a8E8b8d9EdFfCb31032C5'),
+    },
   ],
 )
 

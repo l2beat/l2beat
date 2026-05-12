@@ -9,6 +9,7 @@ export const sp1turbo: BaseProject = {
   slug: 'sp1turbo',
   name: 'SP1 Turbo',
   shortName: undefined,
+  aliases: ['Succinct'],
   addedAt: UnixTime.fromDate(new Date('2025-07-08')),
   statuses: {
     yellowWarning: undefined,

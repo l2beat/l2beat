@@ -188,6 +188,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
                           'Deployed token with given address and chain already exists',
                       },
                       data: undefined,
+                      warnings: [],
                     }
                   : undefined,
                 loading: deployedTokenExistsLoading,

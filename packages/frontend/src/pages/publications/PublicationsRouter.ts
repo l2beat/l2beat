@@ -8,6 +8,7 @@ import type { Manifest } from '../../utils/Manifest'
 import { getPublicationsData } from './getPublicationsData'
 import { getGovernancePublicationData } from './governance/getGovernancePublicationData'
 import { getMonthlyUpdateData } from './monthly-updates/getMonthlyUpdateData'
+import { getOtherPublicationData } from './other-publications/getOtherPublicationData'
 
 export function createPublicationsRouter(
   manifest: Manifest,
@@ -37,6 +38,10 @@ export function createPublicationsRouter(
         'governance-publications',
         req.params.id,
       )
+      const otherPublication = getCollectionEntry(
+        'other-publications',
+        req.params.id,
+      )
 
       const monthlyUpdate = getCollectionEntry('monthly-updates', req.params.id)
 
@@ -45,6 +50,13 @@ export function createPublicationsRouter(
         data = await getGovernancePublicationData(
           manifest,
           governancePublication,
+          req.originalUrl,
+        )
+      }
+      if (otherPublication) {
+        data = await getOtherPublicationData(
+          manifest,
+          otherPublication,
           req.originalUrl,
         )
       }

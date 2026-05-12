@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x39ce6754ad7c71c45e5c0dc82dc17f5899e6d7fe
+
+# Diff at Fri, 08 May 2026 07:52:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772790410
+- current timestamp: 1772790410
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772790410 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
++        "0x2919f09e96963a1117f2435e978e38f3e30b1fba712966d6fcc4025ab0b35c3b"
+    }
+```
+
+Generated with discovered.json: 0x6d1ee9ff8dfb9584e38536383ee3c492d8ad0d12
+
+# Diff at Tue, 05 May 2026 10:24:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772790410
+- current timestamp: 1772790410
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772790410 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78"
+    }
+```
+
 Generated with discovered.json: 0x957e41dff52803113e586d7170bd21b734f09a74
 
 # Diff at Fri, 06 Mar 2026 09:47:54 GMT:

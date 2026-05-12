@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
+import { addInteropRoutes } from './routes/interop/routes'
 import { addProjectsRoutes } from './routes/projects/routes'
 import { addTvsRoutes } from './routes/tvs/routes'
 import { createLogger } from './utils/logger/createLogger'
@@ -24,7 +25,7 @@ function main() {
 
   const app = express()
   const openapi = new OpenApi(app, {
-    openapi: '3.0.0',
+    openapi: '3.1.0',
     info: {
       title: 'L2BEAT API',
       version: '1.0.0',
@@ -43,6 +44,10 @@ function main() {
       {
         name: 'activity',
         description: 'Endpoints for retrieving activity data',
+      },
+      {
+        name: 'interop',
+        description: 'Endpoints for retrieving interoperability data',
       },
     ],
     externalDocs: {
@@ -118,6 +123,7 @@ function main() {
   addProjectsRoutes(openapi, ps, db, cache)
   addTvsRoutes(openapi, ps, db, cache)
   addActivityRoutes(openapi, ps, db, cache)
+  addInteropRoutes(openapi, ps, db, cache)
 
   app.use(errorHandler(logger))
 

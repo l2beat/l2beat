@@ -31,6 +31,7 @@ export const layer2financezk: ScalingProject = {
   archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'L2.Finance-zk',
+    aliases: ['Celer'],
     slug: 'layer2financezk',
     warning:
       'Layer2.finance-ZK has been shut down, users are encouraged to use optimistic rollup version.',

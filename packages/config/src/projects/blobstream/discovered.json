@@ -51,7 +51,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -68,6 +68,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "arb1:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C",
       "sinceTimestamp": 1710506484,
       "sinceBlock": 190629615,
       "values": {
@@ -123,12 +124,13 @@
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "arb1:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1710651080,
       "sinceBlock": 191198934,
       "values": {
@@ -245,7 +247,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -262,6 +264,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "base:0x87AEb10Fcf8a1E646Fb09deF89e93eFC9ec77B4C",
       "sinceTimestamp": 1710507013,
       "sinceBlock": 11858833,
       "values": {
@@ -317,12 +320,13 @@
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "base:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1710651207,
       "sinceBlock": 11930930,
       "values": {
@@ -443,12 +447,13 @@
       "type": "Contract",
       "template": "succinct/SP1Blobstream",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x34cb26aa383177d58a2f4f1984ad3fbcd3fdb946a53633f98bdd79a2300de340"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "deployerAddress": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "sinceTimestamp": 1717615307,
       "sinceBlock": 20027685,
       "values": {
@@ -520,7 +525,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -537,6 +542,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x32d45a5105FE6B497936018542cD5af6960d42a0",
       "sinceTimestamp": 1717613015,
       "sinceBlock": 20027494,
       "values": {

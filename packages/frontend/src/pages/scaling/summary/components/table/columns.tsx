@@ -161,7 +161,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
   opts?: ScalingSummaryColumnsOpts,
 ) {
   return [
-    ...getScalingSummaryColumns().slice(0, 5),
+    ...getScalingSummaryColumns(opts).slice(0, 6),
     columnHelper.display({
       header: 'DA Layer',
       cell: (ctx) => {
@@ -238,7 +238,7 @@ export function getScalingSummaryOthersColumns(
         )
       },
     }),
-    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(5),
+    ...getScalingSummaryValidiumAndOptimiumsColumns(opts).slice(6),
   ]
 }
 

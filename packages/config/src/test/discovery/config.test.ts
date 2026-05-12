@@ -41,6 +41,9 @@ export const onChainProjects: string[] = [
   'layerzero',
   'ccip',
   'wormhole',
+  'privacy-pools',
+  'railgun',
+  'tornado-cash',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
@@ -119,7 +122,7 @@ describe('discovery config.jsonc', () => {
   })
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
-    for (const c of configs) {
+    for (const c of configs.filter((c) => !c.archived)) {
       const discovery = configReader.readDiscovery(c.name)
       const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
@@ -198,7 +201,7 @@ describe('discovery config.jsonc', () => {
       const mismatches: TemplateMatchMismatch[] = []
       const allShapes = templateService.getAllShapes()
 
-      for (const c of configs) {
+      for (const c of configs.filter((c) => !c.archived)) {
         const discovery = configReader.readDiscovery(c.name)
 
         for (const contract of discovery.entries) {

@@ -15,6 +15,7 @@ export function getTopProtocolDisplay(
 
   return {
     name: protocolProject.interopConfig.name ?? protocolProject.name,
+    slug: protocolProject.slug,
     iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
   }
 }

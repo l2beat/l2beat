@@ -22,6 +22,7 @@ export const soneium = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Soneium',
+    aliases: ['Sony'],
     slug: 'soneium',
     stateValidationImage: 'opfp',
     description:

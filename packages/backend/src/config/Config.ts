@@ -17,6 +17,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
+import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -59,7 +60,10 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
+
+  readonly backoffice: BackofficeFeatureConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -242,7 +246,6 @@ export interface InteropFeatureConfig {
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
-    auth: InteropDashboardAuthConfig | false
   }
   compare: {
     enabled: boolean
@@ -261,7 +264,16 @@ export interface InteropFeatureConfig {
   oneSidedChains: string[]
 }
 
-export interface InteropDashboardAuthConfig {
+export interface BackofficeFeatureConfig {
+  auth: BackofficeAuthConfig | false
+}
+
+export interface BackofficeAuthConfig {
+  zeroTrust: BackofficeZeroTrustAuthConfig
+  authToken?: string
+}
+
+export interface BackofficeZeroTrustAuthConfig {
   JWKS: ReturnType<typeof createRemoteJWKSet>
   aud: string
   teamDomain: string

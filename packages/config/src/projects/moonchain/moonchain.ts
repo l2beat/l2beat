@@ -10,6 +10,7 @@ export const moonchain: ScalingProject = underReviewL3({
   display: {
     name: 'MXCzkEVM Moonchain',
     shortName: 'Moonchain',
+    aliases: ['MXC zkEVM'],
     slug: 'moonchain',
     stacks: ['Taiko'],
     description:

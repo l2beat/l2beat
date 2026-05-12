@@ -4,12 +4,14 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
+import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -46,18 +48,41 @@ export class Application {
       blockProcessors: [],
     }
 
+    // Modules with TRPC
+    const interopModule = createInteropModule(deps)
+    const trackedTxsModule = createTrackedTxsModule(deps)
+    const dataAvailabilityModule = initDataAvailabilityModule(deps)
+
+    const modulesWithTrpc = [
+      interopModule,
+      trackedTxsModule,
+      dataAvailabilityModule,
+    ]
+
+    const trpcContributions = modulesWithTrpc.flatMap((module) =>
+      module?.trpc ? [module.trpc] : [],
+    )
+    const backofficeModule = createBackofficeModule({
+      ...deps,
+      trpcContributions,
+    })
+
+    // All-modules entrypoint
     const modules: (ApplicationModule | undefined)[] = [
       initActivityModule(deps),
-      initDataAvailabilityModule(deps),
+      dataAvailabilityModule,
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
-      createTrackedTxsModule(deps),
+      trackedTxsModule,
       initTvsModule(deps),
+      createPrivacyModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),
-      createInteropModule(deps),
       createBlockSyncModule(deps),
+
+      interopModule,
+      backofficeModule,
     ]
 
     const apiServer = new ApiServer(

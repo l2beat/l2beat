@@ -1,8 +1,7 @@
 {
   "RsETHOFTAdapter": {
-    "hash": "0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a",
+    "hash": "0x8e747ea537f6ad5dadfeed406255d8ac95c47880198374a17bd470328a673974",
     "address": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
-    "chain": "ethereum",
     "blockNumber": 24970797
   }
 }

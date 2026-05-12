@@ -46,7 +46,7 @@
       "template": "mantapacific/L2OutputOracle_FinalityProvider",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xdd40fbb2ff24f7f8cd28e462753c0953064c62d6fe0615fdae6724cc4d3ab04d"
+        "0x3437a7a092d08f59ae124806ebb927c551003d6c2b04bdcc21079332bb6d30c8"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots. The challenge period can be reduced by the FinalityRelayerManager contract.",
@@ -56,6 +56,7 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224883,
       "sinceBlock": 18095727,
       "values": {
@@ -124,6 +125,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224835,
       "sinceBlock": 18095723,
       "values": {
@@ -142,10 +144,11 @@
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e"
+        "0x319de0f895a7da439846a4ecc59c44b03e3e05ef7a5a094d73dcf1c8c00783d3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224907,
       "sinceBlock": 18095729,
       "values": {
@@ -172,7 +175,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -235,6 +238,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
       "sinceTimestamp": 1695706187,
       "sinceBlock": 18217879,
       "values": {
@@ -292,11 +296,12 @@
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x20a2eb4d3677fc8a15e944f7b1843acd01b2e92acdc4c7a7f7a35b07b891149b",
-        "0xebfb36a18bcaa176678925149b43fdc5f9f943d98a6405ae1cbc26f4c168ff88"
+        "0xa338e47de7913022d970f6e0b88b4d9ab4c8da92f7b3af6eb3b0b503e5caca6b"
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224919,
       "sinceBlock": 18095730,
       "values": {
@@ -369,11 +374,12 @@
       "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2"
+        "0x49e02cd90b424c2058925071a8f3b775aeb9b341a032ce3791e363b78dde9d8b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "ignoreInWatchMode": ["scalar", "overhead"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224895,
       "sinceBlock": 18095728,
       "values": {
@@ -433,8 +439,8 @@
       "type": "Contract",
       "template": "mantapacific/FinalityRelayerManager",
       "sourceHashes": [
-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
-        "0x4d7370021f41be1d1a0890e911cd51f00ace129e2104a5dfe9d0e6c5a89a13b9"
+        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
+        "0xf4b0d7300f63b350ddc70a59fec3661591133598298907d15d5790fed519ac97"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing challenge period reductions based on whitelisted signer and staked amounts. No threshold is currently enforced and no validation is done on the staked amounts. The current challenge period is set to 3d, the manta quorum can reduce it by a maximum of 1d, the bitcoin quorum can reduce it by a maximum of 1d, and the minimum challenge period allowed is set to 12h.",
@@ -447,6 +453,7 @@
         }
       ],
       "ignoreInWatchMode": ["confirmBatchId"],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": {
@@ -496,11 +503,12 @@
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xec062613f3e0e9ba555b2c11164c199a0137d5b4e9021710092037355d8ed513"
+        "0x764f7af7c65f5c5f8a363a2881d5a44a9d28dee7708a64676237c9188901e12f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "ignoreInWatchMode": ["params"],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224871,
       "sinceBlock": 18095726,
       "values": {
@@ -585,6 +593,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x01b6F1dCed133B22b4021f0666567F2EE8a7C57A",
       "sinceTimestamp": 1694224847,
       "sinceBlock": 18095724,
       "values": {
@@ -615,11 +624,12 @@
       "type": "Contract",
       "template": "mantapacific/BLSApkRegistry",
       "sourceHashes": [
-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
-        "0x7acd12d53d6f1aa87d9d9348a7a72118d7e4a4d4fbc3f4640f1c0ba014ec5456"
+        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
+        "0xd7da580b86df23301f4afc8f5869185d1b3750b0a43e22599680a58211fd5db3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to register BLS keys and verify aggregated signatures. No specific threshold is enforced here, as all addresses to exclude from the signature check are provided as an input.",
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": {
@@ -682,6 +692,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": { "$immutable": true },
@@ -722,6 +733,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01",
       "sinceTimestamp": 1756743095,
       "sinceBlock": 23269394,
       "values": { "$immutable": true },

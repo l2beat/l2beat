@@ -8,11 +8,12 @@
       "address": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
-        "0x5813b4364023f4b0049743347095f3b700e4229cbf14e0cec0178cf7acb1a8e7",
-        "0xae7747ba69b9cd64276b32152e64b4e68fc64d4530f73c5984f57132fa2a01bb"
+        "0xcc6abfb3e9d0cd4a99e52474d1f5f95511e27d61f36ff588b9caec75c926a309",
+        "0xcf94117e0d47cadb108d70860b42f8589c4a00423168997576f8aad1567ea945"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "arb1:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95",
       "sinceTimestamp": 1713221460,
       "sinceBlock": 201421053,
       "values": {
@@ -86,11 +87,12 @@
       "address": "base:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
-        "0x5813b4364023f4b0049743347095f3b700e4229cbf14e0cec0178cf7acb1a8e7",
-        "0xae7747ba69b9cd64276b32152e64b4e68fc64d4530f73c5984f57132fa2a01bb"
+        "0xcc6abfb3e9d0cd4a99e52474d1f5f95511e27d61f36ff588b9caec75c926a309",
+        "0xcf94117e0d47cadb108d70860b42f8589c4a00423168997576f8aad1567ea945"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "base:0x42f9d42b0Ad323be203A56618d5053329Cb2fB95",
       "sinceTimestamp": 1713221517,
       "sinceBlock": 13216085,
       "values": {

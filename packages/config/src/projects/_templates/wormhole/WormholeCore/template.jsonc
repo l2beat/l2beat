@@ -2,5 +2,80 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "WormholeCore",
   "description": "Wormhole Core Bridge verifies VAAs signed by the active Guardian set and executes Guardian governance messages for the local Wormhole deployment.",
-  "ignoreRelatives": ["$admin"]
+  "ignoreMethods": ["quorum"],
+  "fields": {
+    "guardianSet": {
+      "description": "The active Wormhole Guardian set. A 2/3+1 quorum of these addresses signs VAAs accepted by this Core Bridge. The old signer set stays valid for 24h by default if the set is changed. Changes of the stored guardian sets are invisible until the set is selected. Change the hardcoded set size if this changes!", // could be brute forced over all indexes (uint32) or watched upstream
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getGuardianSet(uint32 index) view returns (tuple(address[] keys, uint32 expirationTime))",
+        "args": ["{{ getCurrentGuardianSetIndex }}"]
+      }
+    },
+    "$members": {
+      "copy": "guardianSet",
+      "edit": ["get", "keys"],
+      "permissions": [
+        {
+          "type": "upgrade",
+          "condition": "if the quorum of {{$threshold}}/{{currentSizeHardcoded}} guardian signers is met."
+        },
+        {
+          "type": "interact",
+          "description": "validate incoming crosschain messages, rotate the guardian set, change and withdraw fees.",
+          "condition": "if the quorum of {{$threshold}}/{{currentSizeHardcoded}} guardian signers is met."
+        }
+      ]
+    },
+    "quorum": {
+      "description": "Number of Guardian signatures required for each Guardian set size up to 30.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "array",
+        "method": "quorum",
+        "length": 30
+      }
+    },
+    "currentSizeHardcoded": {
+      "handler": {
+        "type": "hardcoded",
+        "value": 19
+      }
+    },
+    "$threshold": {
+      "handler": {
+        "type": "call",
+        "method": "function quorum(uint256 numGuardians) pure returns (uint256 numSignaturesRequiredForQuorum)",
+        "args": ["{{currentSizeHardcoded}}"]
+      }
+    },
+    "getCurrentGuardianSetIndex": {
+      "description": "Index of the Guardian set currently used to validate VAAs.",
+      "type": "RISK_PARAMETER"
+    },
+    "getGuardianSetExpiry": {
+      "description": "Expiry delay applied to old Guardian sets after a rotation.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "governanceChainId": {
+      "description": "Wormhole chain id from which Core governance messages are accepted.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "governanceContract": {
+      "description": "Emitter address authorized to send Core governance messages.",
+      "severity": "HIGH",
+      "type": "PERMISSION"
+    },
+    "messageFee": {
+      "description": "Fee required to publish a Wormhole message on the local chain.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  },
+  "category": "core",
+  "ignoreInWatchMode": ["guardianSet", "getCurrentGuardianSetIndex"]
 }

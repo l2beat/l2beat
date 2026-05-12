@@ -9,10 +9,11 @@
       "type": "Contract",
       "sourceHashes": [
         "0x9c3f55931bf03c46f6a9bde3a662dc24117676cc7e49c8e0af2365e511b8b92b",
-        "0x43a5711ce2edb57c1a757db5b3ca553200f976c92f71bde014acdb5c74b0bdfb"
+        "0x4d24b65d88da7c5861dffcedcd833315d9a85f790d3309cf5c41cf11b4128522"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "deployerAddress": "arb1:0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e",
       "sinceTimestamp": 1723057357,
       "sinceBlock": 240467591,
       "values": {

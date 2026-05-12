@@ -17,7 +17,7 @@ import {
   BlockNumberResponse,
   type CallParameters,
   EVMBalanceResponse,
-  type EVMBlock,
+  EVMBlock,
   EVMBlockResponse,
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
@@ -340,6 +340,26 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
   }
 
+  async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const paramsBatch = blockNumbers.map((n) => [
+      Quantity.encode(BigInt(n)),
+      false,
+    ])
+
+    const responses = await this.batchQuery('eth_getBlockByNumber', paramsBatch)
+
+    const out = new Map<number, number>()
+    for (let i = 0; i < blockNumbers.length; i++) {
+      const parsed = EVMBlock.safeParse(responses[i]?.result)
+      assert(parsed.success, `Failed to parse block ${blockNumbers[i]}`)
+      out.set(blockNumbers[i], parsed.data.timestamp)
+    }
+
+    return out
+  }
+
   // TODO: add multi-method support
   async batchQuery(method: string, paramsBatch: Param[][]) {
     const queries = paramsBatch.map((params) => ({
@@ -413,7 +433,7 @@ function encodeBlockNumber(blockNumber: number | 'latest'): string {
 function buildCallObject(callParams: CallParameters): Record<string, string> {
   return {
     to: callParams.to.toString(),
-    data: callParams.data.toString(),
+    input: callParams.input.toString(),
   }
 }
 

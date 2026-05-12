@@ -1,0 +1,93 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RailgunSmartWallet",
+  "description": "Upgradeable privacy pool contract that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree. If you trust this contract, you trust its owner to change fees, treasury routing, token compatibility, and SNARK safety vectors, and its proxy admin to pause or upgrade the logic.",
+  "category": "core",
+  "ignoreMethods": [
+    "getInsertionTreeNumberAndStartingIndex",
+    "lastEventBlock",
+    "merkleRoot",
+    "nextLeafIndex",
+    "snarkSafetyVector",
+    "treeNumber",
+    "zeros"
+  ],
+  "fields": {
+    "$admin": {
+      "description": "Proxy admin that can pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet proxy.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current Railgun smart wallet implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "owner": {
+      "description": "Governance-controlled owner of the smart wallet logic.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the treasury that receives protocol fees."
+        },
+        {
+          "type": "interact",
+          "description": "change the shield, unshield, and NFT fee schedule."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove tokens from the shielding blocklist."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove allowed SNARK safety vectors."
+        }
+      ]
+    },
+    "treasury": {
+      "description": "Treasury contract that receives shield and unshield fees.",
+      "severity": "HIGH"
+    },
+    "shieldFee": {
+      "description": "Basis-point fee charged on shield operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "unshieldFee": {
+      "description": "Basis-point fee charged on unshield operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "nftFee": {
+      "description": "Flat fee placeholder for NFT flows. The source notes that NFT fee logic is not currently implemented.",
+      "severity": "LOW",
+      "type": "RISK_PARAMETER"
+    },
+    "tokenBlocklist": {
+      "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
+      "severity": "HIGH",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "event",
+        "select": "token",
+        "ignoreRelative": true,
+        "add": { "event": "AddToBlocklist" },
+        "remove": { "event": "RemoveFromBlocklist" }
+      }
+    },
+    "ZERO_VALUE": {
+      "description": "Base zero value used to seed the commitment-tree zero hash chain."
+    },
+    "zeros": {
+      "description": "Precomputed zero hashes for the 16-level commitment tree."
+    }
+  }
+}

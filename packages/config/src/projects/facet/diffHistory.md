@@ -1,3 +1,228 @@
+Generated with discovered.json: 0x5392f3850848b9dc1478829f1d6e41686ab14c2b
+
+# Diff at Fri, 08 May 2026 07:51:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1769601687
+- current timestamp: 1769601687
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601687 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) [facet/FacetEtherBridge] {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      sourceHashes.0:
+-        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
++        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
+      sourceHashes.1:
+-        "0xa8b34ebf808e75f97d6309614717af3f10929ff9f0824ab86cb5501f257a32a2"
++        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
++        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
+    }
+```
+
+```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) [facet/L1ETHBridge] {
+    +++ description: L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      sourceHashes.0:
+-        "0x2428a7345462c1359eba9d5cf1d2749c05cb9419787b7e2914c411bb0c244867"
++        "0x99096204d217f8cbae9eafc6fc9668dd2a6b8ce373e7a4bdc1b7f4e710be8e4f"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      sourceHashes.0:
+-        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
++        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      sourceHashes.0:
+-        "0xd5ecfadcad80a6370fcf20fd9285959bf3452352c79ba06748998ea55cad3732"
++        "0x18a889e730255386b3ecf5a44ea1cdcc2a4ecbd02908aa838976646eb02a9681"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      sourceHashes.0:
+-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
++        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [opstack/L1StandardBridge_facet] {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      sourceHashes.1:
+-        "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
++        "0xeca66935543c04d116a438354d91852c6523107a304469f9e5d88dbcad8643a1"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) [facet/L2ERC20Bridge] {
+    +++ description: L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      sourceHashes.0:
+-        "0x414ac7953be12604a6d533900a5bdffa100737e6f29bd553d88d5631817d37b5"
++        "0x421f4fa282bab7812077918e0a2469a81dc1f6998cd5d4bd31955dcba0cd4472"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) [facet/L2ToL1MessagePasser] {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      sourceHashes.1:
+-        "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
++        "0x5989564a862a8e6c46c5ccf513d8403018f00399884c6a7faf126b49f909676d"
+    }
+```
+
+Generated with discovered.json: 0xf3f69f817289709e81ec7e4bc3dd22f78e070b7f
+
+# Diff at Tue, 05 May 2026 10:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1769601687
+- current timestamp: 1769601687
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601687 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
+      deployerAddress:
++        "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract FacetSafeModule (eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) {
+    +++ description: L1Bridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      deployerAddress:
++        "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97"
+    }
+```
+
+```diff
+    contract FacetSafeProxy (eth:0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25) {
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+      deployerAddress:
++        "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) {
+    +++ description: L2Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      deployerAddress:
++        "facet:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (facet:0x4200000000000000000000000000000000000016) {
+    +++ description: L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.
+      deployerAddress:
++        "facet:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x2e49a358ceac669737803c14c9c48c60a0ca71bc
 
 # Diff at Wed, 28 Jan 2026 12:02:52 GMT:

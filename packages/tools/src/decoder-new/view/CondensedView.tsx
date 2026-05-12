@@ -1,5 +1,5 @@
 import type { DecodedResult, Value } from '@l2beat/tools-api/types'
-import { formatDecimals, formatNumber } from './ExpandedView'
+import { formatDecimals, formatNumber } from '../../decoder-3/format'
 
 interface CondensedViewProps {
   decoded: DecodedResult

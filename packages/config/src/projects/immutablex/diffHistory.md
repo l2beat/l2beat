@@ -1,3 +1,211 @@
+Generated with discovered.json: 0x311c64dfb872334df2e059da3c5d11ddea5c3332
+
+# Diff at Fri, 08 May 2026 07:51:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772785651
+- current timestamp: 1772785651
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772785651 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xffdc4806ed0369d49b542adf6eb3b3572e0f76d44bda8f0a093467ebcbe225df"
++        "0x95c8f32b71b3ba2e4e4c48e52b11aa494dbb8156eb0e215e8798e7553d908443"
+    }
+```
+
+```diff
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"
++        "0x59e958a0783ea169acb1f9451299a6eeecdfa1db1257cafe5c948a919117c2fc"
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"
++        "0xe498a176e6620285eb1bc16ee6ba312e3b318fa19456b75c7ca16b7ad8c5831e"
+    }
+```
+
+```diff
+    contract StarkExchangeMigration (eth:0x58b5484F489f7858DC83a5a677338074b57de806) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2e7cc0661a38ee126a3b09ecb461b7b1d7e0301c2f7b4245c5334553d16f9848"
++        "0xb71805b4d4f8f1e27f622cf275932a3b69fce577df37460525fce8b64adb1d00"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc527211f14e6fa12809b6b7ec28c6757daa907478cefeb1b8835ee7d47139bf7"
++        "0x9df58caddb10d2d51a580ba113b2c0309e74321ee24b87442720de1822d20823"
+      sourceHashes.1:
+-        "0x2e7cc0661a38ee126a3b09ecb461b7b1d7e0301c2f7b4245c5334553d16f9848"
++        "0xb71805b4d4f8f1e27f622cf275932a3b69fce577df37460525fce8b64adb1d00"
+    }
+```
+
+```diff
+    contract Operators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa898c8df7706ef8117978fb0d8653aea9d509fa5e96475894390689c93b28187"
++        "0xb7a1d1b798ea06589c7172be7ba35a47d4e64bf669512f8c830aeddc93c27eae"
+    }
+```
+
+```diff
+    contract ChildERC20 (eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"
++        "0x1ed7a6c9cd91cbe088228ad6f80aeef0cff6e6e6e5fa1755de007712dd18dc2d"
+    }
+```
+
+```diff
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe3da0044c1cc2966f6a45573c47d38d8a1b647879b25570db9b2b8c6efe43e45"
++        "0x8006c5cd43a5c9e33abab127731da890af58bc4dc1e9c8281bc6b4b033ab44c1"
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+Generated with discovered.json: 0x9356bbf60dde268deb79209a0d3d3a4df626503c
+
+# Diff at Tue, 05 May 2026 10:22:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1772785651
+- current timestamp: 1772785651
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772785651 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      deployerAddress:
++        "eth:0xA57ADCE1d2fE72949E4308867D894CD7E7DE0ef2"
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract StarkExchangeMigration (eth:0x58b5484F489f7858DC83a5a677338074b57de806) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2E9EE2Df8037dE744C0b4D1b9A3aeE4E88816915"
+    }
+```
+
+```diff
+    contract StarkExchange (eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+    }
+```
+
+```diff
+    contract Operators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract ChildERC20 (eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract VaultRootSenderAdapter (eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x2E9EE2Df8037dE744C0b4D1b9A3aeE4E88816915"
+    }
+```
+
+```diff
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
 Generated with discovered.json: 0xaa71388163d734a1da4ef7a00d8542edd278e016
 
 # Diff at Fri, 06 Mar 2026 08:30:35 GMT:

@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xdd3b72397434a4970ad9ecf8785865ba89d238cb
+
+# Diff at Fri, 08 May 2026 07:53:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1752830555
+- current timestamp: 1752830555
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830555 (main branch discovery), not current.
+
+```diff
+    contract USDS Stablecoin Token (eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+    }
+```
+
+Generated with discovered.json: 0x7d680bf378ad0411b349bbf56db35cbff22ac554
+
+# Diff at Tue, 05 May 2026 10:24:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1752830555
+- current timestamp: 1752830555
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830555 (main branch discovery), not current.
+
+```diff
+    contract USDS Stablecoin Token (eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x4Ec216c476175a236BD70026b984D4adECa0cfb8"
+    }
+```
+
 Generated with discovered.json: 0xb3caa7efcc53ef22f59fadb98c466c5b4fbd3cc3
 
 # Diff at Wed, 10 Sep 2025 16:42:56 GMT:

@@ -108,7 +108,7 @@ export function ChainSelectorButton({
           align="start"
           side="bottom"
         >
-          <div className="mt-2.5 flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}

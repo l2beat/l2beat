@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x98eabd1ff65066c166c26da29c084e816f782c94
+
+# Diff at Fri, 08 May 2026 07:53:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1765784407
+- current timestamp: 1765784407
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765784407 (main branch discovery), not current.
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) [tokens/RenzoRestakedLST] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413"
+      sourceHashes.1:
+-        "0xdf0f0eb6be5581f33b6bdf19907308ff38c72febf850dcb99646c05ab48746d9"
++        "0x655a6ec2a610a3cc0129d8d018b1a550a3966924c1f3bbab36d2cbcbbdf7cc98"
+    }
+```
+
+Generated with discovered.json: 0xdc140147663a8475fd8303d476184b1317abd8f1
+
+# Diff at Tue, 05 May 2026 10:24:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1765784407
+- current timestamp: 1765784407
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765784407 (main branch discovery), not current.
+
+```diff
+    contract Renzo Restaked LST  Token (eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x188858AC61a74350116d1CB6958fBc509FD6afA1"
+    }
+```
+
 Generated with discovered.json: 0x793c45adeabd6e9266c0d6d7466678d064da7747
 
 # Diff at Mon, 15 Dec 2025 07:41:13 GMT:

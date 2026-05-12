@@ -8,8 +8,8 @@
       "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x2919f09e96963a1117f2435e978e38f3e30b1fba712966d6fcc4025ab0b35c3b"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -18,6 +18,7 @@
         "totalSupply",
         "getWalletAt"
       ],
+      "deployerAddress": "arb1:0xd69FefE5Df62373DCBdE3e1F9625Cf334a2Dae78",
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {

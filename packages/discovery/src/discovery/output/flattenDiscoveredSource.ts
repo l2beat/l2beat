@@ -2,8 +2,8 @@ import type { Logger } from '@l2beat/backend-tools'
 import { timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { posix } from 'path'
-import { flattenStartingFrom } from '../../flatten-external/flatten'
-import type { FileContent } from '../../flatten-external/ParsedFilesManager'
+import { flattenStartingFrom } from '../../flatten/flatten'
+import type { FileContent } from '../../flatten/ParsedFilesManager'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 
 export function flattenDiscoveredSources(
@@ -60,6 +60,7 @@ export function flattenDiscoveredSources(
         const result = timed(() => {
           const output = flattenStartingFrom(
             bundle.name,
+            bundle.source.rootFile,
             input,
             bundle.source.remappings,
             { includeAll: true },

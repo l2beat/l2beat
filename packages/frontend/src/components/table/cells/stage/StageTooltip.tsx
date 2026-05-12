@@ -140,7 +140,15 @@ export function StageTooltip({
                 {missing?.map((requirement, i) => (
                   <li className="flex gap-1.5" key={i}>
                     <MissingIcon className="relative top-0.5 inline-block shrink-0" />
-                    {requirement}
+                    <div>
+                      {requirement}
+                      {stageConfig.missing?.principle === requirement &&
+                        stageConfig.stage1PrincipleDescription && (
+                          <p className="mt-2">
+                            {stageConfig.stage1PrincipleDescription}
+                          </p>
+                        )}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -156,7 +164,7 @@ export function StageTooltip({
       )}
       <Callout
         color="blue"
-        body="Please mind, stages do not reflect rollup security"
+        body="Please mind, stages do not reflect project security"
         icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
         className={cn(
           'gap-1! px-3 py-2',

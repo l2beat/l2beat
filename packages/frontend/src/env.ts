@@ -21,8 +21,6 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
-  CLIENT_SIDE_INTEROP_DETAILED_PAGES: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
@@ -66,7 +64,7 @@ const SERVER_CONFIG = {
     .unknown()
     .transform((v) => Number(v))
     .optional(),
-  INTEROP_DISABLED_CHAINS: stringArray.optional(),
+  INTEROP_CHAINS: stringArray.optional(),
   INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE: z
     .string()
     .transform((v) => UnixTime(Number(v)))
@@ -132,7 +130,7 @@ function getRawEnv(): Record<
     ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
-    INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
+    INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE:
       process.env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
@@ -140,9 +138,6 @@ function getRawEnv(): Record<
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
-    CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
-    CLIENT_SIDE_INTEROP_DETAILED_PAGES:
-      process.env.CLIENT_SIDE_INTEROP_DETAILED_PAGES,
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
   }

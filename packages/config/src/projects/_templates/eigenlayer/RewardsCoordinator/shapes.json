@@ -1,16 +1,16 @@
 {
   "RewardsCoordinator": {
-    "hash": "0xe548a802866b09c90c208e0f77018c9cdafa34ab07c071eac1e68c0a46d384b9",
+    "hash": "0x6bcf157b3ce18065106ff7b062cef058028ab4046ccb47a2319eda94e08a784d",
     "address": "eth:0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2",
     "blockNumber": 22188285
   },
   "RewardsCoordinator.sol": {
-    "hash": "0x834e9e144a27f28147a1d93de8045120205831ebea6457dc3748a624877591df",
+    "hash": "0xf8a8a1915318d72a0ca9ce06325dbadb51d550aab6553473e1832bc2e53c53fc",
     "address": "eth:0xa505c0116aD65071F0130061F94745b7853220aB",
     "blockNumber": 22424645
   },
   "RewardsCoordinator_v1.9.0": {
-    "hash": "0x2135e8c40a0b65d08749af76920904312a37014b94d2b676ecabaa844b63cbd2",
+    "hash": "0xc12ea0d92007e77c83dbfcc9d809f0082e6d9363d0b8328afebd7cbd1c5f04b3",
     "address": "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF",
     "blockNumber": 24350294
   }

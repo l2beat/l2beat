@@ -6,8 +6,11 @@ export const relay: BaseProject = {
   slug: 'relay',
   name: 'Relay',
   shortName: undefined,
+  aliases: ['Reservoir'],
   addedAt: UnixTime(1769070497),
   interopConfig: {
+    description:
+      'Intent-based centralized EOA bridge optimised for speed, multichain and multiasset support.',
     plugins: [
       {
         plugin: 'relay',

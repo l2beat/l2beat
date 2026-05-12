@@ -9,8 +9,8 @@
       "type": "Contract",
       "template": "tokens/RenzoRestakedLST",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xdf0f0eb6be5581f33b6bdf19907308ff38c72febf850dcb99646c05ab48746d9"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0x655a6ec2a610a3cc0129d8d018b1a550a3966924c1f3bbab36d2cbcbbdf7cc98"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -19,6 +19,7 @@
         "totalSupply",
         "totalAssets"
       ],
+      "deployerAddress": "eth:0x188858AC61a74350116d1CB6958fBc509FD6afA1",
       "sinceTimestamp": 1719403475,
       "sinceBlock": 20175746,
       "values": {

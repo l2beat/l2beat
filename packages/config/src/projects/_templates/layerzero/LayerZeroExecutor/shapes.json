@@ -1,8 +1,7 @@
 {
   "LayerZero Executor.sol": {
-    "hash": "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf",
+    "hash": "0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b",
     "address": "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805",
-    "chain": "ethereum",
     "blockNumber": 24539253
   }
 }

@@ -1,5 +1,5 @@
-import { protectedProcedure } from '../procedures'
-import { router } from '../trpc'
+import { router } from '../../../../../../trpc/init'
+import { protectedProcedure } from '../../../../../../trpc/procedures'
 
 export function createKnownAppsRouter() {
   return router({

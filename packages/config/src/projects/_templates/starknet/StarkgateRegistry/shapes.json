@@ -1,11 +1,11 @@
 {
   "StarkgateRegistry_v2_0_1": {
-    "hash": "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b",
+    "hash": "0xc2326f142b15d536ff2dfe8c64d5e0064e6bc6d44e37df843cebc2ef50f38beb",
     "address": "eth:0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
     "blockNumber": 22188285
   },
   "StarkgateRegistry_v2_0_6": {
-    "hash": "0x90444355cfe353ba90f2050035caf7c6ae157bfb6e54bf74a4117580f568bf95",
+    "hash": "0x49b696a50718ac322e3bcefc4377b3fdbb9cbb1c8c282aad76b481910491824b",
     "address": "eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC",
     "blockNumber": 22188285
   }

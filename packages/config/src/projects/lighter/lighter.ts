@@ -15,7 +15,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -186,7 +186,7 @@ export const lighter: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(priorityExpiration),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage({
+  stage: getRollupStage({
     stage0: {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
@@ -292,7 +292,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xD76E5C5507C56D721BB9cE6601DCd379d09AFaD2#code#F1#L54',
+            url: 'https://etherscan.io/address/0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
@@ -332,6 +332,18 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+  interopConfig: {
+    description:
+      'Canonical bridge between Ethereum and the Lighter perp DEX (zkSync-style priority queue), used by traders to deposit collateral and claim withdrawals.',
+    plugins: [
+      {
+        plugin: 'lighter-bridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+    transfersTimeMode: 'unknown',
+  },
 }
 
 function getVerifiers(): ChainSpecificAddress[] {

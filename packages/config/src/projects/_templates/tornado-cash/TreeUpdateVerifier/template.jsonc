@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TreeUpdateVerifier",
+  "description": "Verifier contract for Tornado mining account-tree update proofs."
+}

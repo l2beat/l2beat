@@ -52,6 +52,7 @@ const schema = {
   zkCatalogInfo: 'TEXT',
 
   interopConfig: 'TEXT',
+  privacyInfo: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',

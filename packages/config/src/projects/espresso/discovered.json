@@ -8,9 +8,10 @@
       "address": "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c",
       "type": "Contract",
       "sourceHashes": [
-        "0xc852aaf012ec426ab5adb8c1e35617f1181de9fc529b6a1dfec99620c24d0dc4"
+        "0xde5547f8d2d989cfd605989512f0e12ca10235b799ffba0df7fd48bc757572a1"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xB22167f12C232e825D26ffbb3780E024c506664E",
       "sinceTimestamp": 1772484815,
       "sinceBlock": 24572275,
       "values": {
@@ -45,7 +46,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -63,6 +64,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
       "sinceTimestamp": 1727935367,
       "sinceBlock": 20883069,
       "values": {
@@ -118,7 +120,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -191,6 +193,7 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608",
       "sinceTimestamp": 1769188523,
       "sinceBlock": 24298911,
       "values": {
@@ -222,7 +225,7 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0x4a9800f2ac03b7f5b2603826eaf3ef1bc41bd1d62eb5470a2b60eba4a9575e8f"
+        "0x2f718e8f9028fd6ca3bfa90dbf6f309f933824cd21d199579903acd45da577f5"
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 2d.",
@@ -245,6 +248,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x4905147341FB390F0A3F4F01178a040Bc27d8A04",
       "sinceTimestamp": 1769784107,
       "sinceBlock": 24348349,
       "values": {
@@ -320,8 +324,8 @@
       "address": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
       "type": "Contract",
       "sourceHashes": [
-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0xcd6859a33f4bb591c2c5303ca74047fbdd842f543c98e518219c727c33d864ba"
+        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156",
+        "0x2894babb69a12d3a50e4d9789b7015c9c9a392220726cd8d27cb6537aa6c4947"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
@@ -334,6 +338,7 @@
         "currentEpoch",
         "votingStakeTableState"
       ],
+      "deployerAddress": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "sinceTimestamp": 1730830835,
       "sinceBlock": 21123201,
       "values": {
@@ -412,9 +417,10 @@
       "address": "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb",
       "type": "Contract",
       "sourceHashes": [
-        "0xe27cd7251355953a27d4b5d1ac9b631394c1c3590034e725819f23037642d915"
+        "0x3831178dbcd7b495ac7d31c15a78f1f1d165473e6529204e034565a03e0d3cda"
       ],
       "proxyType": "immutable",
+      "deployerAddress": "eth:0xce2B7bbFE257D910711EEA510176e0fb21cf1761",
       "sinceTimestamp": 1713568631,
       "sinceBlock": 19692700,
       "values": {

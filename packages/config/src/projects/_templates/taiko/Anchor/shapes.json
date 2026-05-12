@@ -1,8 +1,7 @@
 {
   "Anchor.sol": {
-    "hash": "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1",
+    "hash": "0xb7363f9eb2b04eaac9917a7afc61fd33b89e7c7f5140743865a89e1d3e367c25",
     "address": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
-    "chain": "taiko",
     "blockNumber": 5279322
   }
 }

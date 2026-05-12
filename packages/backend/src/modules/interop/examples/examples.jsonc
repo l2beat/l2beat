@@ -45,6 +45,289 @@
       ]
     }
   },
+  "lighter-bridge": {
+    "description": "Ethereum <> Lighter perp DEX bridge (one-sided)",
+    "txs": [
+      // USDC deposit (assetIndex=3, route=0/Perps) via aggregator
+      {
+        "chain": "ethereum",
+        "tx": "0x456433eb2b783b3e36b5261f282e74d5a8cafb3fe2af595eeb28fc9d6c71cf6c"
+      },
+      // Batched USDC deposits (two Deposit events, single ERC20 Transfer)
+      {
+        "chain": "ethereum",
+        "tx": "0xf3ee6ec05e48d40c0a1f77bc5d53e6f71fc83d046334822e00323ad22d025aba"
+      },
+      // Large `_deposit` batch: 14 USDC recipients, single ERC20 Transfer.
+      // Stresses proportional split across many siblings.
+      {
+        "chain": "ethereum",
+        "tx": "0x939588633a08f0f457358c5dae4b40c0cdadfe82b0b491d63ea3832048448b7b"
+      },
+      // ETH deposit (assetIndex=1/NATIVE) via 4337 + WETH-unwrap router
+      {
+        "chain": "ethereum",
+        "tx": "0xf08ca05ec6030f14df61661656e5e0037f44db0a2a7b14941b629fea160c7fe3"
+      },
+      // LIT deposit (assetIndex=2) directly to bridge
+      {
+        "chain": "ethereum",
+        "tx": "0xaed77e1e9d75abfb01da29900c2b73fa460a4a75ccb6edc3865a815ae541c284"
+      },
+      // AZTEC deposit (assetIndex=10) directly to bridge
+      {
+        "chain": "ethereum",
+        "tx": "0x81d070278cb1cacbafd01516e38ae8cfd49c1af88b579295300e027cc9f8e6d4"
+      },
+      // UNI deposit (assetIndex=6) — exercises dynamic token discovery
+      {
+        "chain": "ethereum",
+        "tx": "0x63211374188a4838fd2213abb912734ada334719d1c49fcee5c8ed2118bf8b65"
+      },
+      // SKY deposit (assetIndex=8)
+      {
+        "chain": "ethereum",
+        "tx": "0x2d2090eb8bfb3d5d63ab358c84c739b0ad9c814eef0fc1228354ac81d4dd7a69"
+      },
+      // LDO deposit (assetIndex=9)
+      {
+        "chain": "ethereum",
+        "tx": "0x95b6f7d05b41a0d826c6a08021cfae294938c411b6a28b9475077fd9b4644de8"
+      },
+      // USDC single claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x165c147da580aa73c4e51d15ba4f264a0ca4e7a24a89cdbcb1a1ff69a756f6b4"
+      },
+      // USDC multi-claim batch via relayer (multiple WithdrawPending in one tx)
+      {
+        "chain": "ethereum",
+        "tx": "0xac86141d45479b4d2a6047fe3620be4a765620b38ce741bb1c28072ce71db343"
+      },
+      // ETH withdrawal claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x106752950deaae7d705d1612c5ff574522b70066f8d8ce51486db4e3832ffbaf"
+      },
+      // LIT withdrawal claim direct by user
+      {
+        "chain": "ethereum",
+        "tx": "0x7878a9a0bc560bc254a2c9dd3425a7beb8f087b3df470c5b9d6ac56bd5375531"
+      },
+      // AZTEC withdrawal claim via relayer
+      {
+        "chain": "ethereum",
+        "tx": "0x72cb0e46661bc9c217f25db7a7ec0b7ee196ffd9c33b935338751f03fae96c06"
+      },
+      // LDO + ETH (NATIVE) multi-claim — NATIVE WP at WP-1 of an ERC20 WP.
+      // Stresses the NATIVE branch isolation: if the position-based check
+      // were applied without the NATIVE_ASSET_INDEX short-circuit, it could
+      // misattribute the LDO Transfer at idx=501 to the ETH WP at idx=503.
+      {
+        "chain": "ethereum",
+        "tx": "0x48759217270d61f8f16e5b67226d1ef1f2455296d2bd8e400841cab4c9546419"
+      },
+      // 4-claim batch via relayer: LIT + LDO + LDO + USDC. Tests that
+      // each WP correctly pairs with its own preceding Transfer even when
+      // the same owner has multiple claims for the same asset.
+      {
+        "chain": "ethereum",
+        "tx": "0xe920c1d178a0f83be0b5bc612ae837d7dfc699d7e273d41e1471e18ebc8b1e11"
+      },
+      // AAVE (assetIndex=7) + UNI multi-claim. Adds AAVE as a tested asset
+      // and exercises the relayer-batch case for two distinct ERC20s.
+      {
+        "chain": "ethereum",
+        "tx": "0x2265b0afe073fe2d09a3ac285c3f44e3081f08d9c8d223760cb578f045a7fc13"
+      },
+      // Very large LIT deposit (~147,915 LIT, baseAmount=14.79e12).
+      // Tests big-number arithmetic in the proportional split.
+      {
+        "chain": "ethereum",
+        "tx": "0x968b8b9fbc828728349427b64764e687c22f69f0d5798e368b0a9b8f310ce568"
+      },
+      // 10M USDC single deposit (largest USDC seen). Big-number sanity.
+      {
+        "chain": "ethereum",
+        "tx": "0x9fc393a771246e78594732011143a3948ba351c20460e284f4be3297ff3740a6"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // ETH deposit — exercises NATIVE branch (baseAmount × NATIVE_TICK_SIZE)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "4260000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // USDC 2-recipient `_deposit` batch split (single Transfer, two Deposits)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "10178217" },
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "11670116" },
+          "dst": { "chain": "lighter" }
+        },
+        // 14-recipient `_deposit` batch — the unique large slice (~1.2k USDC)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1199930118" },
+          "dst": { "chain": "lighter" }
+        },
+        // Diverse ERC20 deposits — verify dynamic token+amount discovery
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "129664227690000000000" }, // LIT
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1898600000000000000000" }, // AZTEC
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "61544335080000000000" }, // UNI
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "13937811412820000000000" }, // SKY
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "1000000000000000000000" }, // LDO
+          "dst": { "chain": "lighter" }
+        },
+        // ETH withdrawal — NATIVE branch
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "2707100000000000000" }
+        },
+        // LIT withdrawal — direct user claim
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "32870000000000000000000" }
+        },
+        // AZTEC withdrawal — via relayer
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "879584000000000000000000" }
+        },
+        // USDC withdrawal — single claim via relayer
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "12000000000" }
+        },
+        // ETH withdrawal claim immediately after an LDO claim in the same
+        // tx (validates NATIVE_ASSET_INDEX short-circuit; otherwise WP-1
+        // would point to the LDO WP, not a real Transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "100000000000000000" }
+        },
+        // 4-claim batch: LIT slice
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "54630000000000000000" }
+        },
+        // 4-claim batch: first LDO slice
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "1403000000000000000000" }
+        },
+        // 4-claim batch: second LDO slice (same owner, same asset, distinct
+        // claim — verifies each WP pairs with its own Transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "6615000000000000000000" }
+        },
+        // AAVE withdrawal (asset 7, first time we exercise this token)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "92700000000000000000" }
+        },
+        // UNI withdrawal slice (in the AAVE+UNI relayer batch)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "chain": "lighter" },
+          "dst": { "tokenAmount": "245200000000000000000" }
+        },
+        // Massive LIT deposit (~147,915 LIT) — big-number proportional split
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "147915844136000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // 10M USDC deposit (10e12 in 6-decimal units)
+        {
+          "type": "lighter-bridge.Transfer",
+          "src": { "tokenAmount": "10000000000000" },
+          "dst": { "chain": "lighter" }
+        },
+        // Generic catch-alls (consume any remaining ethereum<->lighter transfer)
+        {
+          "type": "lighter-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "lighter" }
+        },
+        {
+          "type": "lighter-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "lighter" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
+  "hyperliquid-bridge": {
+    "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x033e32e918e640d530db77de75a3b87d0dba90f5293ae8feeb561bc35012f240"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xfea525a89c615980ce8a77407a7cabd25e44a4b42b94f7ad01f352ff45475d11"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "hyperliquid-bridge.Deposit" },
+        { "type": "hyperliquid-bridge.FinalizedWithdrawal" }
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": { "chain": "hyperliquid" }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        }
+      ]
+    }
+  },
   "avalanche": {
     "txs": [
       {
@@ -1934,6 +2217,22 @@
       {
         "chain": "base",
         "tx": "0x17f436a6f262fdd29d104a761e98e7da668551f8e28b9ca6df4f6da4d2c29b4c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x26b4242f22f2c2a88050fdba0925d90113f8c9e6b37a3ef19b0ac707abb349a1"
+      },
+      {
+        "chain": "tempo",
+        "tx": "0xc6c98c0d81ad70cd092f22a00d6b5fc89727d428ea8d9baf4d4e48c398919d74"
+      },
+      {
+        "chain": "base",
+        "tx": "0x23683caaf0e43304018963d356747d9a9cb95f88b54504e80d5dfa9339cb4835"
+      },
+      {
+        "chain": "tempo",
+        "tx": "0x80785eb69351806002570afd71eed6176c6c8c5974b7bf448099719db2e6af46"
       }
     ]
   },
@@ -2234,6 +2533,15 @@
       {
         "chain": "unichain",
         "tx": "0xc6ae8abbfdb4b01f4cae51e52748c86186ac0dfe6568585b5479d7df5f1ad6b9"
+      },
+      // megaeth related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x6fa097e8c75bda7f784014655957cff35817e05534a6c6c19464508b1363eb3f"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x4d9b09120db5c4f129b6963ca5fb605baca8f07a2be96eef7203dd67f8370aa0"
       }
     ],
     "events": [
@@ -2666,6 +2974,65 @@
       "opstack-standardbridge.L1ToL2Transfer",
       "opstack-standardbridge.L2ToL1Transfer"
     ]
+  },
+  "opstack-standardbridge-megaeth-eth": {
+    "tags": ["opstack"],
+    "description": "megaeth <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: ~0.186 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xf37b0a88752ee08a388f06979aaa5f2784621b54bcb95e584a7fa193b843ba75"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x22a00319a061b24cad8efcc4f86ed56ecbb5c5e3c869a8671ada250a94ac5298"
+      },
+      // L2 -> L1: ~53.4 ETH withdrawal
+      {
+        "chain": "megaeth",
+        "tx": "0xd19d0e90e5e4d490106f58c9920caa16014c1c4b2860bd7a4e7ca26d40641dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x14b48eb64ca4f2c0e0aae70f9e6bed464ad1827458c823cdcfa6664b7f9fbf51"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 0.186125 } }
+        },
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 53.407822 } }
+        }
+      ]
+    }
+  },
+  "opstack-standardbridge-megaeth-erc20": {
+    "tags": ["opstack"],
+    "description": "megaeth <- ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: 2,000,000 snMUSDC deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x9cc30700cbffd4a14a82d0ca9d36f4782090f5137c17378dbcef4e82b7495ac1"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x5aab3cf99e59fb8cb84a3b2d6eb0def991c7f6114a79f044f638fd1b5e516d85"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-ink-eth": {
     "tags": ["opstack"],

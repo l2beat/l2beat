@@ -50,6 +50,7 @@ import type {
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
   ProjectScalingScopeOfAssessment,
+  ProjectScalingStage,
   ProjectScalingStateDerivation,
   ProjectScalingStateValidation,
   ProjectTechnologyChoice,
@@ -99,6 +100,7 @@ interface AgglayerBaseConfig {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   upgradesAndGovernance?: string
+  stage?: ProjectScalingStage
   stateValidation?: ProjectScalingStateValidation
   associatedTokens?: string[]
   additionalBadges?: Badge[]
@@ -307,7 +309,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
     },
     dataAvailability: variantSections.dataAvailability,
     riskView: variantSections.riskView,
-    stage: { stage: 'NotApplicable' },
+    stage: config.stage ?? { stage: 'NotApplicable' },
     technology: variantSections.technology,
     stateDerivation: variantSections.stateDerivation,
     stateValidation: variantSections.stateValidation,
@@ -402,12 +404,17 @@ function buildSharedContext(config: AgglayerConfig): SharedContext {
   const upgradeDelayString = formatSeconds(upgradeDelaySeconds)
   const exitWindowRisk: ScalingProject['riskView']['exitWindow'] = {
     value: 'None',
-    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+    description:
+      'There is no window for users to exit in case of an unwanted upgrade since the Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
     orderHint: -1,
+    regular: {
+      value: upgradeDelayString,
+      sentiment: 'warning',
+    },
     warning: {
-      value: 'The Security Council can remove the delay on upgrades.',
-      sentiment: 'bad',
+      value: `Even though there is a ${upgradeDelayString} Timelock for non-emergency upgrades, there are no forced transactions and thus no way to exit during operator censorship or downtime.`,
+      sentiment: 'warning',
     },
   }
 

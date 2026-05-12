@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xf73f32358cce607e890efcbf37e989e8a31557fb
+
+# Diff at Fri, 08 May 2026 07:53:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1761551264
+- current timestamp: 1761551264
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761551264 (main branch discovery), not current.
+
+```diff
+    contract Mog Coin Token (base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71) [tokens/OptimismMintableERC20] {
+    +++ description: Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.
+      sourceHashes.0:
+-        "0x7fb0fa7ed8efe5a3d2ff23b35029a32e2f7426f5f27bd5eef52ec128bb07a0e1"
++        "0x81119e0e54afb3ab8b52fbb7996c388a24dfacd6106d697e6cee144d3d9e6739"
+    }
+```
+
+```diff
+    contract Mog Coin Token (eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x4555f9c967edaed432d4b63f21fa90662252eb8abdcb6ac5a5771bf07b10a655"
++        "0xea98ac00b0e6c1af8267eb00c666f02ecf9ba8fc7d6ad6f2f69cccfc0d605f89"
+    }
+```
+
+Generated with discovered.json: 0x14e0a3fab4abce33a1c3cc68eaf1f73e38872d34
+
+# Diff at Tue, 05 May 2026 10:24:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1761551264
+- current timestamp: 1761551264
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761551264 (main branch discovery), not current.
+
+```diff
+    contract Mog Coin Token (base:0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71) {
+    +++ description: Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.
+      deployerAddress:
++        "base:0x20E12a9a5c738E265EC81D6F2a8E77785B6Aa8B8"
+    }
+```
+
+```diff
+    contract Mog Coin Token (eth:0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x20E12a9a5c738E265EC81D6F2a8E77785B6Aa8B8"
+    }
+```
+
 Generated with discovered.json: 0x3ad79e7e6367d994dab4d83548d685d7161db364
 
 # Diff at Mon, 27 Oct 2025 07:50:57 GMT:

@@ -240,13 +240,17 @@ Verify:
     ...OP_SUCCINCT_FDP_AGG_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c': {
     ...OP_SUCCINCT_FDP_RANGE_EIGENDA(''), // idk which version this is exactly, but not 2.0.0
     // programUrl:
     //   'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'As shared by the Celo team, this program fixes a security issue and because of that it is not yet public. Program hash could not be regenerated.',
   },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
@@ -627,6 +631,16 @@ Verify:
 2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
   `,
+  },
+  '0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'notVerified',
+  },
+  '0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'notVerified',
   },
   '0x08666bcf03c2240b14b399040abdc4aa2fe934535315fd3c158f010926d1e4a5': {
     ...OP_SUCCINCT_RANGE_BLOBS,
@@ -1164,7 +1178,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1208,7 +1222,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn2
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1252,7 +1266,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1296,7 +1310,7 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn2
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1581,7 +1595,7 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
     proverSystemProject: ProjectId('risc0'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1625,7 +1639,7 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
     proverSystemProject: ProjectId('risc0'),
     programUrl:
       'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 1. Install docker.
 2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
@@ -1720,6 +1734,11 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
     },
+  '3442855748187296636739564186904728563385971901122957091055928358173521721079':
+    {
+      ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),
+      verificationStatus: 'notVerified',
+    },
   '37889379279861089970868356983774360253508326951064758033885675883862334778':
     {
       ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_12'),
@@ -1786,6 +1805,11 @@ git checkout v0.13.5
 5. Copy [this hash_bootloaders.py script](/files/starkware_proghash_artifacts/v0.13.5/hash_bootloaders.py) that computes bootloader hashes into \`cairo-lang/src/starkware/cairo/bootloaders/\`.
 6. Execute the script above by \`USE_BAZEL_VERSION=7.4.1 bazel run //src/starkware/cairo/bootloaders:cairo_hash_bootloaders_exe\`. The output of the script should contain the correct hash.
       `,
+    },
+  '2358844945297786488640123814540854423585455959362109345448922524567546993330':
+    {
+      ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2026_13'),
+      verificationStatus: 'notVerified',
     },
   '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
@@ -2583,7 +2607,9 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-aggregator',
     description:
       'Verifies correctness of several aggregated TEE attestations for correctly running Arbitrum Nitro within a trusted enclave.',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
   '0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322': {
     title: 'Nitro TEE Verifer',
@@ -2592,7 +2618,9 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
       'https://github.com/automata-network/aws-nitro-enclave-attestation/tree/f6f9410227adc63ff5117ce3f6f7e0f155083389/crates/sp1-methods/sp1-verifier',
     description:
       'Verifies correctness of a single TEE attestation for correctly running Arbitrum Nitro within a trusted enclave.',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
   '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
     title: 'Fluent Nitro TEE verifier',

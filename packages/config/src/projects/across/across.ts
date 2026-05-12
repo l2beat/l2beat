@@ -11,6 +11,8 @@ export const across: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1712746402),
   interopConfig: {
+    description:
+      'Intent framework specialised on popular chains and assets, speed and security.',
     plugins: [
       {
         plugin: 'across',

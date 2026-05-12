@@ -237,7 +237,7 @@ export class RpcClientCompat implements IRpcClient {
     const result = await this.ethRpcClient.call(
       {
         to: callParams.to,
-        input: callParams.data.toString(),
+        input: callParams.input.toString(),
       },
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )
@@ -295,6 +295,8 @@ export function toEVMLog(log: RpcLog): EVMLog {
     logIndex: Number(log.logIndex ?? -1),
     topics: log.topics,
     transactionHash: log.transactionHash ?? '',
+    blockTimestamp:
+      log.blockTimestamp !== undefined ? Number(log.blockTimestamp) : undefined,
   }
 }
 

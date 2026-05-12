@@ -21,6 +21,26 @@ export function hideUnknowns(state: State): Partial<State> {
   }
 }
 
+export function hideUnreachable(state: State): Partial<State> {
+  const unreachableNodes = state.nodes.filter((node) => !node.isReachable)
+
+  return {
+    hidden: [
+      ...new Set([...state.hidden, ...unreachableNodes.map((node) => node.id)]),
+    ],
+  }
+}
+
+export function showUnreachable(state: State): Partial<State> {
+  const unreachableIds = new Set(
+    state.nodes.filter((node) => !node.isReachable).map((node) => node.id),
+  )
+
+  return {
+    hidden: state.hidden.filter((id) => !unreachableIds.has(id)),
+  }
+}
+
 export function setPreferences(
   state: State,
   preferences: Partial<State['userPreferences']>,

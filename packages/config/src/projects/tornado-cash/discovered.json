@@ -1,0 +1,3974 @@
+{
+  "name": "tornado-cash",
+  "timestamp": 1777548282,
+  "configHash": "0x1ad3915cb82859eb5d6ab2c73bf936897df73f72b596a72bfd5169a79623d3c1",
+  "entries": [
+    {
+      "name": "cTornado",
+      "address": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+      "type": "Contract",
+      "template": "tornado-cash/cTornado",
+      "sourceHashes": [
+        "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "deployerAddress": "eth:0x2Ab13b86b8c56F97995B0b7b54dDC7Fc30403A0B",
+      "sinceTimestamp": 1616155055,
+      "sinceBlock": 12069037,
+      "values": {
+        "$immutable": true,
+        "comp": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "currentRootIndex": 28,
+        "denomination": 5000000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x15d3d1d30de13ba53da140ef7120f92c7f2b7952a336d34d9db51097dc44bfc8",
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 118,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed cToken amount accepted by this pool."
+        },
+        "token": {
+          "description": "cToken accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        },
+        "comp": {
+          "description": "COMP token accrued by the cToken position and claimable to governance."
+        },
+        "governance": {
+          "description": "Recipient of claimed COMP rewards from this pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": "cTornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "ERC20Tornado",
+      "address": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+      "type": "Contract",
+      "template": "tornado-cash/ERC20Tornado",
+      "sourceHashes": [
+        "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "deployerAddress": "eth:0x645D7F28eC6E41B6f6f6A42b49fAe503762B9551",
+      "sinceTimestamp": 1616114822,
+      "sinceBlock": 12066007,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 26,
+        "denomination": "10000000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x13502d71f434efc05c3367839b8aec987b8f8a9acca1a786c9712182ad8d9daf",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 3386,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed deposit amount accepted by this pool."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": "ERC20Tornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577298985,
+      "sinceBlock": 9162012,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 88,
+        "denomination": 1000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x0b22ba735d8989e613fc05aaf1d861e7607155424d6bf943450d300918dcbcb9",
+        "levels": 20,
+        "nextIndex": 1788,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "WithdrawVerifier",
+      "address": "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E",
+      "type": "Contract",
+      "template": "tornado-cash/WithdrawVerifier",
+      "sourceHashes": [
+        "0x471af6734a7255a9302685bbf915dec3f3ad10ec2babece6ccfb102241e03af9"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for Tornado anonymity-mining withdrawal proofs.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608261940,
+      "sinceBlock": 11474705,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E": "WithdrawVerifier"
+      }
+    },
+    {
+      "name": "TornadoCash_Eth_01",
+      "address": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_Eth_01",
+      "sourceHashes": [
+        "0x91a886957e3ef7c9535bebca9bb03c531cad68939e97b09ba97127e311ea5b4e"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ETH mixer for 0.1 ETH deposits. This older pool generation keeps an operator role that can replace the withdrawal verifier and, for this instance, perform a one-time state migration.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1576523323,
+      "sinceBlock": 9116966,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 54,
+        "denomination": "100000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x219de8be6b7b82c0a2185eb5b7424a4fe255d29a696dc7ef6e198ad683976938",
+        "isMigrated": true,
+        "levels": 20,
+        "nextIndex": 53710,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed ETH amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "isMigrated": {
+          "severity": "LOW",
+          "description": "Whether the one-time legacy state migration path has already been used."
+        }
+      },
+      "implementationNames": {
+        "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": "TornadoCash_Eth_01"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577298900,
+      "sinceBlock": 9162005,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 0,
+        "denomination": 100000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x20f05fa45d06f881e617699611e355a9569bccbafe22505afe05c7e5fadcbd0a",
+        "levels": 20,
+        "nextIndex": 800,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "ERC20Tornado",
+      "address": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+      "type": "Contract",
+      "template": "tornado-cash/ERC20Tornado",
+      "sourceHashes": [
+        "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
+      "sinceTimestamp": 1616134868,
+      "sinceBlock": 12067529,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 4,
+        "denomination": 10000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x08b3290f28b0b3457c1fef5dd1678d25a947ceee8742d7a85621ad6539514422",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 154,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed deposit amount accepted by this pool."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": "ERC20Tornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577297782,
+      "sinceBlock": 9161938,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 5,
+        "denomination": 500000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1914db314988e5bb85c7cf3b44215cc279c77b4c844c354de94661b583098927",
+        "levels": 20,
+        "nextIndex": 5,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "ERC20Tornado",
+      "address": "eth:0x23773E65ed146A459791799d01336DB287f25334",
+      "type": "Contract",
+      "template": "tornado-cash/ERC20Tornado",
+      "sourceHashes": [
+        "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "deployerAddress": "eth:0xA66510177b4aF4e00F2908dfe1317166Deca1853",
+      "sinceTimestamp": 1616115387,
+      "sinceBlock": 12066048,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 5,
+        "denomination": "100000000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x21dae583c90427cb65456a880e24892fea6992f8a3f1f0e282bfdfa83959350f",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 4025,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed deposit amount accepted by this pool."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x23773E65ed146A459791799d01336DB287f25334": "ERC20Tornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "cTornado",
+      "address": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+      "type": "Contract",
+      "template": "tornado-cash/cTornado",
+      "sourceHashes": [
+        "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
+      "sinceTimestamp": 1616135923,
+      "sinceBlock": 12067606,
+      "values": {
+        "$immutable": true,
+        "comp": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "currentRootIndex": 27,
+        "denomination": 50000000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x239887259201b795fba75bfbf3575c5a84d35b426c1bd890881406d6aa65021d",
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 87,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed cToken amount accepted by this pool."
+        },
+        "token": {
+          "description": "cToken accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        },
+        "comp": {
+          "description": "COMP token accrued by the cToken position and claimable to governance."
+        },
+        "governance": {
+          "description": "Recipient of claimed COMP rewards from this pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": "cTornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoVault",
+      "address": "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoVault",
+      "sourceHashes": [
+        "0x2c4d82f1db9eb433527603a82e8324dd2aa08001c5eb7974967ef1e11c0e09f1"
+      ],
+      "proxyType": "immutable",
+      "description": "Vault that escrows locked TORN on behalf of governance users and serves withdrawals initiated by the governance contract.",
+      "deployerAddress": "eth:0x9923bb2390Ab5bf92CD440c1f61e45aF44a68d1b",
+      "sinceTimestamp": 1634397582,
+      "sinceBlock": 13429786,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185": "TornadoVault"
+      }
+    },
+    {
+      "name": "TornadoTreesV1",
+      "address": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoTreesV1",
+      "sourceHashes": [
+        "0xa851eda83278615e06c3388fec789807ce7ae088627181e0cb8c9bd92bf5ea68"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy Tornado Trees contract that records deposit and withdrawal leaves from TornadoProxyV1 and maintains the roots later consumed by migration and mining logic.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262112,
+      "sinceBlock": 11474714,
+      "values": {
+        "$immutable": true,
+        "blockNumber": 24992607,
+        "depositRoot": "0x1f4316c2ae0e374ddda53ccea8d6ba623a99aec06e805f20daa5e7a9914fb1bd",
+        "depositTree": "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226",
+        "hasher": "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2",
+        "lastProcessedDepositLeaf": 6144,
+        "lastProcessedWithdrawalLeaf": 5632,
+        "tornadoProxy": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+        "withdrawalRoot": "0x03e0f40772e1d8a3972de5434e0987db86b409e16f61cf995ef6f290ac935022",
+        "withdrawalTree": "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd"
+      },
+      "fieldMeta": {
+        "depositTree": {
+          "description": "Legacy merkle tree instance storing deposit leaves."
+        },
+        "withdrawalTree": {
+          "description": "Legacy merkle tree instance storing withdrawal leaves."
+        },
+        "hasher": {
+          "description": "Hasher used by the legacy deposit and withdrawal trees."
+        },
+        "tornadoProxy": {
+          "severity": "HIGH",
+          "description": "Only this proxy is allowed to register deposits and withdrawals into the legacy trees."
+        }
+      },
+      "implementationNames": {
+        "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417": "TornadoTrees"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577298155,
+      "sinceBlock": 9161965,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 54,
+        "denomination": 1000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1d8869ed6758f6b36f147af59c4f6e6bb361b08f7bdec1b9529e057781d0da50",
+        "levels": 20,
+        "nextIndex": 854,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_eth",
+      "address": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth",
+      "sourceHashes": [
+        "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1576534673,
+      "sinceBlock": 9117609,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 28,
+        "denomination": "1000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x15f41e84d37c4ed4aa2cce48fa94928d4eb822b9b353332c25d9551d2f1e2e23",
+        "levels": 20,
+        "nextIndex": 82528,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed ETH amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": "TornadoCash_eth"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "Proposal",
+      "address": "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5",
+      "type": "Contract",
+      "template": "tornado-cash/Proposal",
+      "sourceHashes": [
+        "0xdc8f034743e60e596fcdb7e3e2c904582718c8a12e0470e689e7b0a2344890c9"
+      ],
+      "proxyType": "immutable",
+      "description": "One-off governance proposal payload that deployed the newer Tornado Trees and proxy wiring, migrated legacy tree state, and disabled old mineable instances on the legacy proxy.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1616689228,
+      "sinceBlock": 12109112,
+      "values": {
+        "$immutable": true,
+        "getInstances": [
+          {
+            "addr": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 2
+            }
+          },
+          {
+            "addr": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 2
+            }
+          },
+          {
+            "addr": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 2
+            }
+          },
+          {
+            "addr": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 2
+            }
+          },
+          {
+            "addr": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x23773E65ed146A459791799d01336DB287f25334",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1
+            }
+          },
+          {
+            "addr": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1
+            }
+          }
+        ],
+        "getSearchParams": {
+          "depositsFrom": 21378,
+          "depositsStep": 32,
+          "withdrawalsFrom": 13687,
+          "withdrawalsStep": 25
+        },
+        "miner": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+        "tornadoProxyV1": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+        "tornadoTreesV1": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417",
+        "verifier": "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6"
+      },
+      "fieldMeta": {
+        "getInstances": {
+          "severity": "LOW",
+          "description": "List of pool instances and their target enabled/disabled state used during the migration."
+        },
+        "getSearchParams": {
+          "severity": "LOW",
+          "description": "Search parameters used to reconstruct the lengths of the legacy deposit and withdrawal arrays during migration."
+        },
+        "miner": {
+          "description": "Miner contract rewired to the newly deployed Tornado Trees."
+        },
+        "tornadoProxyV1": {
+          "description": "Legacy proxy that this proposal disables selected old mineable instances on."
+        },
+        "tornadoTreesV1": {
+          "description": "Legacy tree manager whose state is imported into the new tree contract."
+        },
+        "verifier": {
+          "description": "Batch tree update verifier passed into the newly deployed Tornado Trees contract."
+        }
+      },
+      "implementationNames": {
+        "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5": "Proposal"
+      },
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
+    },
+    {
+      "name": "TornadoTreesV2",
+      "address": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoTreesV2",
+      "sourceHashes": [
+        "0x1e3486c370a604a8ed587cb9d7de07fe6b61d86dc110d1c99d7ab71575d2f6d0",
+        "0xc49b0b5aa0f02540b54e6e3708b03edf46fee78ec46d9a1a5b10d2119a82dbbe"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
+      "deployerAddress": "eth:0x21C30d17D9e61Ce139DFd2A3d167C5752246b938",
+      "sinceTimestamp": 1617148388,
+      "sinceBlock": 12143762,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "blockNumber": 24992607,
+        "BYTES_SIZE": 14404,
+        "CHUNK_SIZE": 256,
+        "CHUNK_TREE_HEIGHT": 8,
+        "depositRoot": "0x16576daa2795f1f48ae74552c11b77195eabf1c7be13c354b413eecf8e72fb50",
+        "depositsLength": 92895,
+        "depositsV1Length": 22008,
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "ITEM_SIZE": 56,
+        "lastProcessedDepositLeaf": 70656,
+        "lastProcessedWithdrawalLeaf": 74752,
+        "previousDepositRoot": "0x0f2d466d9e5e8acf38922d168e7a1dcd8eee6c7d20bd5bc669d41174c8a02317",
+        "previousWithdrawalRoot": "0x2816b4a8a53e47c41b5899c40936cef5af3d4362a5d955848646a642c2f499b1",
+        "SNARK_FIELD": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "tornadoProxy": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+        "tornadoTreesV1": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417",
+        "treeUpdateVerifier": "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6",
+        "withdrawalRoot": "0x0648b4bb8eebcf794b0d5ac32d209967d456b8521702d0b829c9aebd8f48a6ff",
+        "withdrawalsLength": 85961,
+        "withdrawalsV1Length": 14884
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the Tornado Trees implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current Tornado Trees implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling the upgraded tree manager."
+        },
+        "depositRoot": {
+          "severity": "LOW",
+          "description": "Current accepted deposit tree root."
+        },
+        "withdrawalRoot": {
+          "severity": "LOW",
+          "description": "Current accepted withdrawal tree root."
+        },
+        "tornadoProxy": {
+          "severity": "HIGH",
+          "description": "Only this proxy is allowed to enqueue deposit and withdrawal leaves into the upgraded trees."
+        },
+        "tornadoTreesV1": {
+          "description": "Legacy tree manager whose historical leaves and roots are reused during migration."
+        },
+        "treeUpdateVerifier": {
+          "severity": "HIGH",
+          "description": "Verifier used to prove batched deposit and withdrawal tree updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce": "AdminUpgradeableProxy",
+        "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E": "TornadoTrees"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "RelayerRegistry",
+      "address": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+      "type": "Contract",
+      "template": "tornado-cash/RelayerRegistry",
+      "sourceHashes": [
+        "0x3b489161115ce0aeaabd078087b53a85d9383e7b51a76a0a241d38cf965b96e3",
+        "0x3b83e58df28ddb8b3c8ec82a36cdb845f53b946878e15d2772fc52ac728f6796"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable registry that tracks registered relayers, their worker addresses, and their staked TORN balances used to service withdrawals.",
+      "ignoreInWatchMode": [
+        "registeredRelayers"
+      ],
+      "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
+      "sinceTimestamp": 1644426412,
+      "sinceBlock": 14173129,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0x84b0c75c1F6211450FEC7289c32D717AdaDD702A",
+        "$pastUpgrades": [
+          [
+            "2023-06-04T13:50:11.000Z",
+            "0x98125b78ef0dc7fd040764f37ee24e40ae5352b8551ba671aa7bd8e8320dcef9",
+            [
+              "eth:0xe27B91724C55E950F68b394f33FA3B86693179C0"
+            ]
+          ],
+          [
+            "2023-11-02T13:58:11.000Z",
+            "0x3d11319e48b756e50c873bebe3a34d2e8f536436d70f99bfd6da03e4ea5642e4",
+            [
+              "eth:0xA3b821A2C6C9a52533178a1f2B9Ff4AedbA880e6"
+            ]
+          ],
+          [
+            "2023-11-18T14:09:59.000Z",
+            "0x9b8cc0ca7bf2019b408eead6d2db8046957134183dd882007be41822082ab319",
+            [
+              "eth:0x84b0c75c1F6211450FEC7289c32D717AdaDD702A"
+            ]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "ens": "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "feeManager": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "minStakeAmount": "5000000000000000000000",
+        "registeredRelayers": [
+          "eth:0x20BB3095a4852F4c97d7A188E9f7183C85AcfC49",
+          "eth:0x47b03dF2145CC9Eed6d8819E02D25590F297C603",
+          "eth:0xBe4d1e137A24af091be80Ae58d652279665e3A27",
+          "eth:0x49136693081f2c18E2cF14428dD78cd90A22dC1f",
+          "eth:0xA0F0287683E820FF4211e67C03cf46a87431f4E1",
+          "eth:0xD6187b4a0f51355A36764558D39b2C21aC12393D",
+          "eth:0x2ca1a9D6c79367EA1eA481FC0A5e8C5BD6C62d25",
+          "eth:0x9f9f98e28456EEEFC4Af1c990a170e2B0D2d6027",
+          "eth:0xb326d1F0837E14Ad265397800eF3Bf7a538335E4",
+          "eth:0xB5cD48dD89C063B5a3Fe1BCC325364be62fc0f00",
+          "eth:0x0F75C6BFAF436Eba0cB977Dcdfb0F30b57ff9D05",
+          "eth:0x6a2D058890ccA15BEaEe5050caaAd56B2aB54DD4",
+          "eth:0x62E142F218585827436f59997C301F7040396AD4",
+          "eth:0x85972458dfBf9269567b2a27C4ffC958A4f24761",
+          "eth:0x078AD5DB2151083Ec16eCA1b26e2C98f79034DA8",
+          "eth:0x3514Cfd42E4DDe9E65e283EbdBfa2888117823A6",
+          "eth:0x550c9288310482F593602dD3e426603ae00BC352",
+          "eth:0x3884e9b1E2b0f8D00666c9767B5602B709EeEE06",
+          "eth:0xc6C86Aa348Eaa0ef1b6F8Da90C279b670e67A55D",
+          "eth:0x9f340Bf3791809293DC50321Bd7F4c19120a98B6",
+          "eth:0xF6CB46F9c2E34cD4B7f374D225e0aE5F474DdB32",
+          "eth:0x076D4E32C6A5D888fC4658281539c94E778C796d",
+          "eth:0x28907F21F43B419F34226d6f10aCbCf1832b1D4d",
+          "eth:0x6289C8a70EE2Ed6914834CaEa431F9a82c7eAf70",
+          "eth:0xE6B23CBae6a62f4b52A021B76E7811522eb82055",
+          "eth:0xAF02873D7dF5f3e6D5fF42F622F4e138A68208e7",
+          "eth:0xb9C612760dC5456e5979393Cfe4AB1fF270AE9e5",
+          "eth:0xa56963fe9F46C758B2D0616A754346A8F9eba30b",
+          "eth:0x56be1F8196cC4AefCe3348E679a2008496D14473",
+          "eth:0x63606C4011e97a73BCd844Cde6a38D45a728BC0E",
+          "eth:0xE939c61Acd8bD30366435C6B1033251117851b03",
+          "eth:0x3e9979106DA74AFB64b866218AeB47F224A312bb",
+          "eth:0x28f1a9b8e3941C0909059eB84E5834154A99E0fC",
+          "eth:0x9c8C81f3F5C19DFfeE7257Dd7477b8ef6E405e82",
+          "eth:0x644D4f3b293a7fc86eB4EFB6Bd2439f7603C991D",
+          "eth:0x25De357c61c9f2711A605b66E83887BA5Fd22ac1",
+          "eth:0x78c88fF43cd503316e8A15B6d92b2EBFa73802B2",
+          "eth:0x2C42550Ff1Bdc139b54C5042a9a86A56398E9d83",
+          "eth:0xf18673Ab6Eb72937607aA8388b8f7aa0AC3a0D32",
+          "eth:0x3a1d526D09b7E59Fd88De4726f68A8246dDC2742",
+          "eth:0x7Ba6781620c91676B070D319E7E894BFd4A9eC81",
+          "eth:0x9Ffbd3f9eE795A4fDa880ED553A2A4BD6D45CE5B",
+          "eth:0xe6184DA55174Cc0263a17eA2fc24E48511766505",
+          "eth:0x08657a1f4C1F06d657F31767831421EE7FaDf549",
+          "eth:0x42FecB4137aFF76E0E85702ff4F339DbFe6D859E",
+          "eth:0xc6e531CF18afE3a64bE19e40ac410f39FC9738da",
+          "eth:0x9Ee26a4bFd731E8e742B65bF955814EADdd7F151",
+          "eth:0x7E3893725d4e238B4c8c83375bBAd024a66Ffa42",
+          "eth:0x465403d43f48Dfaa3F9385B60F0fEa36c360C18A",
+          "eth:0xc7285e85a6D11C762A7D9C57aC38E31A671E9777",
+          "eth:0x74b6ea6B2EeFd3eF4da5E8c4C0480776035029c2",
+          "eth:0xdc957b6a3F630bEf2E6104C1a22dAeF9650b5349",
+          "eth:0x1247749d7E28D357B4279110af0802603AC526cE",
+          "eth:0x1036AF02bCDb2e3A4db2d3D40b29e5054EDc79BA",
+          "eth:0x0B45840cCEE39aeEfFDF621633d24AA8930B834c",
+          "eth:0xcBD78860218160F4b463612f30806807Fe6E804C",
+          "eth:0xb578603D3fB9216158c29488c1A902Dd0300c115",
+          "eth:0x7b81b8680b1abd1e2E983a1589DeB5468B50A544",
+          "eth:0x0D13F55BA1509352F9e36190d948D7c45B854Be2",
+          "eth:0x4803c6ec3E61cD1bb1735bBDdB21732100AA13cc",
+          "eth:0x1ee815AD4a914c2C2f4650b3ED34978F8Fe2fcC4",
+          "eth:0x04843E2C74018c8d94f1834a7ccB94c16691E451",
+          "eth:0x5a0cB6505B3b99dD4035bb1Ac43cC51202d4e29F",
+          "eth:0x7171717171866B60cc1A76A058ae20C8F703AE05",
+          "eth:0xC0F12799B8D3FA8810DfE1616095170C72117F8F",
+          "eth:0x000000Cd6521Ed1a65FAe0678eA15aF4EEAD74fe",
+          "eth:0x15980A3Bd6ed317f42d2eD0DCf3d3D730b6Bc0C5",
+          "eth:0x97096F56B09F6aaA4230eec3BA33249995690B0E",
+          "eth:0x5555555731006f71f121144534Ca7C8799F66AA3",
+          "eth:0xCEdac436cEA98E93F471331eCC693fF41D730921",
+          "eth:0x94596B6A626392F5D972D6CC4D929a42c2f0008c",
+          "eth:0xe7c490986FC34248F77b813eD6C8971e76e0384C",
+          "eth:0xB399aa4c2F1678f72529Cd125F82cEA2c2a823eD",
+          "eth:0xaB1723831396351f759d0C8787E5ddaa18F5424c",
+          "eth:0x2Ee39Ff05643bC7cc9ed31B71e142429044A425C",
+          "eth:0xd04e9f0945DEA8373D882C730e2c93a74B591796",
+          "eth:0x180c58B7305152357142b33Eea94cBB152058B61",
+          "eth:0xFfDf1Dd461e3Ce4A78685D2DC0641d95B71b9F53",
+          "eth:0xb0Cdc0AB2D454F2360d4629d519819E13DBE816A",
+          "eth:0xe5A4c70113b90566BC5f80a3866935d0d52F990E",
+          "eth:0x4750BCfcC340AA4B31be7e71fa072716d28c29C5",
+          "eth:0xa0109274F53609f6Be97ec5f3052C659AB80f012",
+          "eth:0xC49415493eB3Ec64a0F13D8AA5056f1CfC4ce35c",
+          "eth:0x85E935750Cfc01ce89b9cb631B1720F7Dda1709b",
+          "eth:0xF1F4F76c9969eFbFB5C9A90a6E44c0E3696D3EF8",
+          "eth:0x187541D7D312F742040f270d0221B4Fe577934B0",
+          "eth:0x0e9D9a828247F5eed7f6D31D213A39805De52441",
+          "eth:0xc6398b4e8B60720051ed33f5C5a692f9785f5580",
+          "eth:0xda0b76cc92e94a6f972Ed29C104BBe8d73c2f753",
+          "eth:0xf0bf3C1D67afA6c48b9B5d1BC7E3F0B87F2B80Dd",
+          "eth:0x2BcE45670cba81658E45C132f0B4EaBa97a7FBBa",
+          "eth:0x7d2A66f05d2BB0ff4DC856Eb317196C59Ac3e932",
+          "eth:0x0381DeeE9BBCD701D022b47c81F5b0079F48d38C",
+          "eth:0x69cE09aB548FFB0b46978FdABB44BEB2344608d5",
+          "eth:0x213Cfeb89529efC2eAE2a502D4a8253Fe4Ae76eF",
+          "eth:0x9EDde74078Fba110c22922a925f653BCF1F60121",
+          "eth:0xAAAAA27EA9ffab81F4735e6B766af985d0c88C61",
+          "eth:0x0A5B2bF3cCfB44C1D22F07Eed9553eCba752D4aD",
+          "eth:0xEE4C45Cc5eAa535CB8a8ffdc92f2839A601fe226",
+          "eth:0x16CB924b5b7ef604139bE95F8762ed817852Db92"
+        ],
+        "staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+        "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+        "tornadoRouter": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the relayer registry implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current relayer registry implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling relayer system parameters."
+        },
+        "ens": {
+          "description": "ENS registry used to verify ownership of relayer names during registration."
+        },
+        "feeManager": {
+          "description": "Fee manager used to determine how much relayer stake is burned per withdrawal."
+        },
+        "registeredRelayers": {
+          "description": "Current set of registered relayer addresses, derived from relayer registration and unregistration events."
+        },
+        "minStakeAmount": {
+          "severity": "LOW",
+          "description": "Minimum TORN stake required for relayer registration."
+        },
+        "staking": {
+          "description": "Staking contract that escrows relayer stake and receives burned-stake rewards."
+        },
+        "torn": {
+          "description": "TORN token used as relayer stake collateral."
+        },
+        "tornadoRouter": {
+          "severity": "HIGH",
+          "description": "Only this router is allowed to burn relayer stake during withdrawals."
+        }
+      },
+      "implementationNames": {
+        "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2": "AdminUpgradeableProxy",
+        "eth:0x84b0c75c1F6211450FEC7289c32D717AdaDD702A": "RelayerRegistry"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoStakingRewards",
+      "address": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoStakingRewards",
+      "sourceHashes": [
+        "0x76b81bc5580c88e23e9d3d1236d6ff8553b1c5869b3557468a685d73d23d68d4",
+        "0xeb3520419e6cf8d6df8e6f4374eb73fe72bd07e2300b7d5968153f7721f641e8"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable staking rewards contract that holds relayer stake, distributes burn-derived rewards to locked TORN holders, and lets governance recover TORN from the contract.",
+      "deployerAddress": "eth:0x9Ff3C1Bea9ffB56a78824FE29f457F066257DD58",
+      "sinceTimestamp": 1685278127,
+      "sinceBlock": 17357618,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0x9c97be37840f0e754bb7aDB1b16fD0954A2BA248",
+        "$pastUpgrades": [
+          [
+            "2023-06-24T01:32:23.000Z",
+            "0xf89acb4c80df2c46d8907bcd4152fb044ae0ffb398fc13a6213b49b3135047eb",
+            [
+              "eth:0x9c97be37840f0e754bb7aDB1b16fD0954A2BA248"
+            ]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accumulatedRewardPerTorn": "11550937357781978189369086",
+        "Governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "ratioConstant": "9999997526814999108992673",
+        "relayerRegistry": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+        "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the staking rewards implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current staking rewards implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "Governance": {
+          "severity": "HIGH",
+          "description": "Governance contract controlling staking reward accounting and token recovery."
+        },
+        "relayerRegistry": {
+          "description": "Relayer registry that is also authorized to add burn-derived rewards into the staking system."
+        },
+        "torn": {
+          "description": "TORN token held as relayer stake and distributed as staking rewards."
+        },
+        "accumulatedRewardPerTorn": {
+          "severity": "LOW",
+          "description": "Global reward-per-TORN accumulator used to distribute burned relayer stake."
+        },
+        "ratioConstant": {
+          "severity": "LOW",
+          "description": "Scaling factor based on total TORN supply used in reward calculations."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29": "AdminUpgradeableProxy",
+        "eth:0x9c97be37840f0e754bb7aDB1b16fD0954A2BA248": "TornadoStakingRewards"
+      },
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
+    },
+    {
+      "name": "RewardSwap",
+      "address": "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A",
+      "type": "Contract",
+      "template": "tornado-cash/RewardSwap",
+      "sourceHashes": [
+        "0x6cf43bdf6d325f58e50aa37428a9912539a19a6f759cae8f9f62654a06fb7758"
+      ],
+      "proxyType": "immutable",
+      "description": "Liquidity schedule that pays out TORN rewards for anonymity mining. Only the Miner contract can draw from it or adjust the reward weight.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262063,
+      "sinceBlock": 11474710,
+      "values": {
+        "$immutable": true,
+        "DURATION": 31536000,
+        "getTimestamp": 1777548275,
+        "initialLiquidity": "25000000000000000000000",
+        "liquidity": "975000000000000000000000",
+        "miner": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+        "poolWeight": 100000000000,
+        "startTimestamp": 1608262063,
+        "tokensSold": "993324935403149847608447",
+        "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+        "tornVirtualBalance": "6675064596850152391553"
+      },
+      "fieldMeta": {
+        "miner": {
+          "severity": "HIGH",
+          "description": "Only this contract can distribute TORN rewards from the swap pool and adjust the pool weight."
+        },
+        "torn": {
+          "description": "TORN token dispensed as mining rewards."
+        },
+        "poolWeight": {
+          "severity": "LOW",
+          "description": "Weight parameter controlling how many TORN rewards are distributed through the swap curve."
+        },
+        "initialLiquidity": {
+          "severity": "LOW",
+          "description": "Virtual TORN liquidity available at the start of the reward schedule."
+        },
+        "liquidity": {
+          "severity": "LOW",
+          "description": "Maximum additional TORN liquidity that linearly unlocks over the reward schedule."
+        },
+        "DURATION": {
+          "severity": "LOW",
+          "description": "Length of the linear reward-unlock schedule."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A": "RewardSwap"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "GovernanceProposalStateUpgrade",
+      "address": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+      "type": "Contract",
+      "template": "tornado-cash/GovernanceProposalStateUpgrade",
+      "sourceHashes": [
+        "0x6eb2fe7af187494527d90de82da8d5fc5f36917204155801b0f6734ef63823cb",
+        "0xbd18ba6b0b295473e460c55cee9046ee1bdca5d9c135224970efdb4c3ab5f8e8"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "replace the proxy allowed to enqueue deposit and withdrawal leaves.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "replace the verifier used for batched tree updates.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "change the router address allowed to burn relayer stake during withdrawals.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "nullify a registered relayer's staked balance.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "set the minimum TORN stake required to become a relayer.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "update user reward accounting when locked balances change.",
+          "role": ".Governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "withdraw TORN held by the staking rewards contract.",
+          "role": ".Governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change how long cached per-instance fees remain valid before they must be recomputed.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change the TWAP lookback period used to price Tornado instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change the Uniswap fee tier used for the TORN price source.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "add or update supported pool instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "replace the connected Tornado Trees contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "rescue tokens sent to the proxy.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "change the reward-swap pool weight used when distributing TORN rewards.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "replace the connected Tornado Trees contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "replace the reward, withdrawal, and tree-update verifiers.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "set mining reward rates.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "manage the allowlist of addresses that can transfer while TORN is paused.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "pause or unpause TORN transfers after the initial pause period expires.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "rescue arbitrary tokens held by the TORN contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+          "description": "enable or disable supported pool instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+          "description": "rescue tokens sent to the proxy.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "add or update supported Tornado instances and their enabled/disabled state.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "change the router contract allowed to interact with registered instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "remove supported instances from the registry.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "set per-instance protocol fees charged to relayers.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b",
+          "description": "rescue tokens sent to the router.",
+          "role": ".governance"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "upgrade the Tornado Trees implementation, changing how deposit and withdrawal roots are maintained.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "upgrade the relayer registry implementation, changing relayer registration and slashing logic.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "upgrade the staking rewards implementation, changing custody and reward-accounting logic for relayer stake.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+          "description": "upgrade the governance implementation, changing proposal execution and treasury-control logic.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "upgrade the fee manager implementation, changing how relayer burn fees are computed.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "upgrade the registry implementation, changing how supported pool instances are tracked.",
+          "role": ".$admin"
+        }
+      ],
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608261835,
+      "sinceBlock": 11474695,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0xbf46f2222c0712cAF2f13B8590732DbD964ce395",
+        "$pastUpgrades": [
+          [
+            "2021-10-16T15:19:42.000Z",
+            "0x4352f025c33a4552ecda2007c5732d548a8f53c3da3e21138e4717bce8dd7f42",
+            [
+              "eth:0x454d870a72e29d5E5697f635128D18077BD04C60"
+            ]
+          ],
+          [
+            "2022-02-21T09:59:58.000Z",
+            "0x9f53afcd3c4a8d0c2c79a977aa0dc45f5ade3bc17c21e8f5067b9b345cf2bd76",
+            [
+              "eth:0xA9689eD4A82a288E267b11Ae8fe137Fb4CB2177E"
+            ]
+          ],
+          [
+            "2023-06-04T13:50:11.000Z",
+            "0x98125b78ef0dc7fd040764f37ee24e40ae5352b8551ba671aa7bd8e8320dcef9",
+            [
+              "eth:0xBa178126C28F50Ee60322a82f5EbCd6b3711e101"
+            ]
+          ],
+          [
+            "2024-02-07T20:53:23.000Z",
+            "0xa45f693eb0c1a36426729d955766474e75ae7f321009ff6ad722bd24c9881128",
+            [
+              "eth:0xbf46f2222c0712cAF2f13B8590732DbD964ce395"
+            ]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "CLOSING_PERIOD": 3600,
+        "EXECUTION_DELAY": 172800,
+        "EXECUTION_EXPIRATION": 259200,
+        "gasCompensationVault": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
+        "PROPOSAL_THRESHOLD": "1000000000000000000000",
+        "proposalCount": 66,
+        "QUORUM_VOTES": "100000000000000000000000",
+        "returnMultisigAddress": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
+        "Staking": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+        "state": [
+          5,
+          2,
+          2,
+          5
+        ],
+        "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+        "userVault": "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185",
+        "version": "5.proposal-state-patch",
+        "VOTE_EXTEND_TIME": 21600,
+        "VOTING_DELAY": 75,
+        "VOTING_PERIOD": 432000
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the governance implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current governance implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "EXECUTION_DELAY": {
+          "severity": "HIGH",
+          "description": "Delay between a proposal succeeding and becoming executable."
+        },
+        "EXECUTION_EXPIRATION": {
+          "severity": "LOW",
+          "description": "Window after the execution delay during which a successful proposal can still be executed."
+        },
+        "QUORUM_VOTES": {
+          "severity": "LOW",
+          "description": "Minimum combined votes required for a proposal to reach quorum."
+        },
+        "PROPOSAL_THRESHOLD": {
+          "severity": "LOW",
+          "description": "Minimum voting power required to create a proposal."
+        },
+        "VOTING_DELAY": {
+          "severity": "LOW",
+          "description": "Delay between proposal creation and the start of voting."
+        },
+        "VOTING_PERIOD": {
+          "severity": "LOW",
+          "description": "Length of the voting window for proposals."
+        },
+        "CLOSING_PERIOD": {
+          "severity": "LOW",
+          "description": "Additional period used while closing proposals in the patched governance logic."
+        },
+        "VOTE_EXTEND_TIME": {
+          "severity": "LOW",
+          "description": "Extra lock time applied to voting positions around proposal participation."
+        },
+        "gasCompensationVault": {
+          "severity": "HIGH",
+          "description": "Vault that funds gas reimbursements for governance actions."
+        },
+        "returnMultisigAddress": {
+          "severity": "HIGH",
+          "description": "Multisig hardcoded into the upgrade path for specific return flows in governance."
+        },
+        "Staking": {
+          "description": "Staking rewards contract notified when governance lock balances change."
+        },
+        "torn": {
+          "description": "Governance token used for proposal creation, voting, and locking."
+        },
+        "userVault": {
+          "severity": "HIGH",
+          "description": "Vault that escrows users' locked TORN and serves governance withdrawals."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": "LoopbackProxy",
+        "eth:0xbf46f2222c0712cAF2f13B8590732DbD964ce395": "GovernanceProposalStateUpgrade"
+      },
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
+    },
+    {
+      "name": "FeeManager",
+      "address": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+      "type": "Contract",
+      "template": "tornado-cash/FeeManager",
+      "sourceHashes": [
+        "0x3b489161115ce0aeaabd078087b53a85d9383e7b51a76a0a241d38cf965b96e3",
+        "0xb966b4be6179012fdeee8c3f6969e28316fba385f6cbc7b19d661d547c2311b4"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable fee manager that derives relayer burn fees for each Tornado instance from registry settings and Uniswap TWAP data.",
+      "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
+      "sinceTimestamp": 1644426401,
+      "sinceBlock": 14173128,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0xf4B067dD14e95Bab89Be928c07Cb22E3c94E0DAA",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "feeDeviations": [
+          {
+            "instance": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+            "deviation": -2
+          },
+          {
+            "instance": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+            "deviation": -6
+          },
+          {
+            "instance": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+            "deviation": -4
+          },
+          {
+            "instance": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+            "deviation": -7
+          },
+          {
+            "instance": "eth:0x23773E65ed146A459791799d01336DB287f25334",
+            "deviation": -7
+          },
+          {
+            "instance": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+            "deviation": 0
+          },
+          {
+            "instance": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+            "deviation": -154
+          },
+          {
+            "instance": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+            "deviation": -155
+          },
+          {
+            "instance": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+            "deviation": 804
+          }
+        ],
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "PROTOCOL_FEE_DIVIDER": 10000,
+        "registry": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+        "torn": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+        "uniswapTimePeriod": 5400,
+        "uniswapTornPoolSwappingFee": 10000,
+        "updateFeeTimeLimit": 172800
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the fee manager implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current fee manager implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling fee parameters."
+        },
+        "registry": {
+          "severity": "HIGH",
+          "description": "Instance registry whose per-pool settings are used to derive relayer burn fees."
+        },
+        "feeDeviations": {
+          "severity": "LOW",
+          "description": "Per-instance deviation between currently cached fees and freshly computed market fees."
+        },
+        "PROTOCOL_FEE_DIVIDER": {
+          "severity": "LOW",
+          "description": "Divider used when converting per-instance protocol fee percentages into relayer burn fees."
+        },
+        "uniswapTimePeriod": {
+          "severity": "LOW",
+          "description": "TWAP lookback period used when pricing TORN against pool assets."
+        },
+        "uniswapTornPoolSwappingFee": {
+          "severity": "LOW",
+          "description": "Uniswap V3 fee tier used for the TORN price oracle path."
+        },
+        "updateFeeTimeLimit": {
+          "severity": "LOW",
+          "description": "Maximum age of cached instance fees before they are recomputed on use."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7": "AdminUpgradeableProxy",
+        "eth:0xf4B067dD14e95Bab89Be928c07Cb22E3c94E0DAA": "FeeManager"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "ERC20Tornado",
+      "address": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+      "type": "Contract",
+      "template": "tornado-cash/ERC20Tornado",
+      "sourceHashes": [
+        "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "deployerAddress": "eth:0x463a35BF59618E6e7EE0696E6c274896a3e6a3Ff",
+      "sinceTimestamp": 1616123193,
+      "sinceBlock": 12066652,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 22,
+        "denomination": 100000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x0bd2327363009cd53d43a50ce4ede8731749ae7decb38ef8405d01a6783b4af0",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 1042,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed deposit amount accepted by this pool."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": "ERC20Tornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "DepositTree",
+      "address": "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262112,
+      "sinceBlock": 11474714,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": ""
+      }
+    },
+    {
+      "name": "TreeUpdateVerifier",
+      "address": "eth:0x653477c392c16b0765603074f157314Cc4f40c32",
+      "type": "Contract",
+      "template": "tornado-cash/TreeUpdateVerifier",
+      "sourceHashes": [
+        "0x25283a09ac43a485a1b24118f5bc17cf0866e4ff70044655eaaadde560412f3d"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for Tornado mining account-tree update proofs.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608261963,
+      "sinceBlock": 11474706,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x653477c392c16b0765603074f157314Cc4f40c32": "TreeUpdateVerifier"
+      }
+    },
+    {
+      "name": "TornadoProxyV2",
+      "address": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoProxyV2",
+      "sourceHashes": [
+        "0x94c0d6f1b0684e653aa34db54a42ff01a22e669c6f0cdf51b8ad4adf2890eac1"
+      ],
+      "proxyType": "immutable",
+      "description": "Newer immutable Tornado proxy that routes deposits and withdrawals to supported pool instances and records them in the upgraded Tornado Trees contract.",
+      "deployerAddress": "eth:0x21C30d17D9e61Ce139DFd2A3d167C5752246b938",
+      "sinceTimestamp": 1617148388,
+      "sinceBlock": 12143762,
+      "values": {
+        "$immutable": true,
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "tornadoTrees": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce"
+      },
+      "fieldMeta": {
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling the newer proxy."
+        },
+        "tornadoTrees": {
+          "severity": "HIGH",
+          "description": "Upgraded tree manager that records deposits and withdrawals from this proxy."
+        }
+      },
+      "implementationNames": {
+        "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967": "TornadoProxy"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "Miner",
+      "address": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+      "type": "Contract",
+      "template": "tornado-cash/Miner",
+      "sourceHashes": [
+        "0xa087c1bc5ea33b7ecefcd706e2a2fe0d817bbd7cca015119dbeb0f5f5bc799a4"
+      ],
+      "proxyType": "immutable",
+      "description": "Mining and reward-distribution contract for Tornado anonymity mining. It verifies reward and withdrawal proofs, maintains account roots, and routes TORN rewards through the swap contract.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262157,
+      "sinceBlock": 11474718,
+      "values": {
+        "$immutable": true,
+        "ACCOUNT_ROOT_HISTORY_SIZE": 100,
+        "accountCount": 28083,
+        "getLastAccountRoot": "0x19287a466177b24833ac1db9c5dd9b763cfabb3b5986ef1aa61887f23750ec69",
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "rewardSwap": "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A",
+        "rewardVerifier": "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307",
+        "tornadoTrees": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+        "treeUpdateVerifier": "eth:0x653477c392c16b0765603074f157314Cc4f40c32",
+        "withdrawVerifier": "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E"
+      },
+      "fieldMeta": {
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling reward parameters and verifier wiring."
+        },
+        "rewardSwap": {
+          "severity": "HIGH",
+          "description": "Reward swap contract that dispenses TORN rewards earned through anonymity mining."
+        },
+        "rewardVerifier": {
+          "severity": "HIGH",
+          "description": "Verifier used for reward-claim proofs."
+        },
+        "withdrawVerifier": {
+          "severity": "HIGH",
+          "description": "Verifier used for mining withdrawal proofs."
+        },
+        "treeUpdateVerifier": {
+          "severity": "HIGH",
+          "description": "Verifier used for account tree update proofs."
+        },
+        "tornadoTrees": {
+          "severity": "HIGH",
+          "description": "Tornado Trees contract whose deposit and withdrawal roots are consumed by mining proofs."
+        }
+      },
+      "implementationNames": {
+        "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9": "Miner"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TORN",
+      "address": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+      "type": "Contract",
+      "template": "tornado-cash/TORN",
+      "sourceHashes": [
+        "0x0c4d2305ea3a745091b143e495823cead81d4cb3c02f40ad942a3919fd5e41f3"
+      ],
+      "proxyType": "immutable",
+      "description": "TORN governance token contract. Transfers start paused and can later be toggled by governance, which also controls the paused-transfer allowlist and token rescue functions.",
+      "deployerAddress": "eth:0x37341cbb14c5F128A70B149726ad8B2CE6F4C793",
+      "sinceTimestamp": 1608260437,
+      "sinceBlock": 11474599,
+      "values": {
+        "$immutable": true,
+        "blockTimestamp": 1777548275,
+        "canUnpauseAfter": 1612148437,
+        "chainID": 1,
+        "decimals": 18,
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "name": "TornadoCash",
+        "paused": false,
+        "symbol": "TORN",
+        "totalSupply": "9999997246814999108992673"
+      },
+      "fieldMeta": {
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling token transferability."
+        },
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether ordinary TORN transfers are currently paused."
+        },
+        "canUnpauseAfter": {
+          "severity": "LOW",
+          "description": "Earliest timestamp after which governance may change the paused state."
+        }
+      },
+      "implementationNames": {
+        "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C": "TORN"
+      },
+      "category": {
+        "name": "Governance",
+        "priority": 3
+      }
+    },
+    {
+      "name": "MiMCHasher",
+      "address": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1576523275,
+      "sinceBlock": 9116962,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": ""
+      }
+    },
+    {
+      "name": "RewardVerifier",
+      "address": "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307",
+      "type": "Contract",
+      "template": "tornado-cash/RewardVerifier",
+      "sourceHashes": [
+        "0x83e039b0306c52cc1c22fdb814b34b0711c46affb6ec74c060db08918a1935f2"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for Tornado anonymity-mining reward proofs.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608261918,
+      "sinceBlock": 11474704,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307": "RewardVerifier"
+      }
+    },
+    {
+      "name": "TornadoProxyV1",
+      "address": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoProxyV1",
+      "sourceHashes": [
+        "0x302bb18483135d35894b2721a9b27704994889737e7f251923a1e255d5851e47"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy immutable Tornado proxy that routes deposits and withdrawals to pool instances and records them in the legacy Tornado Trees contract.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262097,
+      "sinceBlock": 11474712,
+      "values": {
+        "$immutable": true,
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "tornadoTrees": "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417"
+      },
+      "fieldMeta": {
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling the legacy proxy."
+        },
+        "tornadoTrees": {
+          "severity": "HIGH",
+          "description": "Legacy tree manager that records deposits and withdrawals from this proxy."
+        }
+      },
+      "implementationNames": {
+        "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601": "TornadoProxy"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_eth",
+      "address": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth",
+      "sourceHashes": [
+        "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1576536415,
+      "sinceBlock": 9117720,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 33,
+        "denomination": "10000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x069c527f490bcbe4a207748ce9eac9a4871341262d33d157aba0a826efa60e14",
+        "levels": 20,
+        "nextIndex": 70733,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed ETH amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": "TornadoCash_eth"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_eth",
+      "address": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_eth",
+      "sourceHashes": [
+        "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ETH mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577296976,
+      "sinceBlock": 9161895,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 1,
+        "denomination": "100000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1e3be8fb5549e9e0edd2cecba424d8daa8446ac8f562f907baa34fda8268f910",
+        "levels": 20,
+        "nextIndex": 45601,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed ETH amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": "TornadoCash_eth"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xf42960f0c75309d8d7eeb913a74aa31fbb2e07cfa48c7ebad54152a7194d2425"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
+      "deployerAddress": "eth:0xd26BaA5F41CC7839CEdb020b6d98E1C6e1642D75",
+      "sinceTimestamp": 1622227820,
+      "sinceBlock": 12524506,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$members": [
+          "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x6a099f0299dd8f1f4f845f9cbb6f384c8e1a7286db4f6a4377ae579eaf2e8181",
+        "getModules": [],
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "NAME": "Gnosis Safe",
+        "nonce": 67,
+        "VERSION": "1.1.1"
+      },
+      "implementationNames": {
+        "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4": "Proxy",
+        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+      }
+    },
+    {
+      "name": "InstanceRegistry",
+      "address": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+      "type": "Contract",
+      "template": "tornado-cash/InstanceRegistry",
+      "sourceHashes": [
+        "0x3b489161115ce0aeaabd078087b53a85d9383e7b51a76a0a241d38cf965b96e3",
+        "0x3ab14a19399ef461b6c704df27fd1bca497d55f0927be48ec8d30e65ee54f24d"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Upgradeable registry of supported Tornado Cash pool instances and their mutable per-instance fee and routing configuration.",
+      "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
+      "sinceTimestamp": 1644430098,
+      "sinceBlock": 14173395,
+      "values": {
+        "$admin": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "$implementation": "eth:0x2573BAc39EBe2901B4389CD468F2872cF7767FAF",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "getAllInstanceAddresses": [
+          "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+          "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+          "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+          "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+          "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+          "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+          "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+          "eth:0x23773E65ed146A459791799d01336DB287f25334",
+          "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+          "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+          "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+          "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+          "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+          "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+          "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+          "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+          "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+          "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+          "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498"
+        ],
+        "getAllInstances": [
+          {
+            "addr": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 1,
+              "uniswapPoolSwappingFee": 0,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 1,
+              "uniswapPoolSwappingFee": 0,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 1,
+              "uniswapPoolSwappingFee": 0,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291",
+            "instance": {
+              "isERC20": false,
+              "token": "eth:0x0000000000000000000000000000000000000000",
+              "state": 1,
+              "uniswapPoolSwappingFee": 0,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0x23773E65ed146A459791799d01336DB287f25334",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x03893a7c7463AE47D46bc7f091665f1893656003",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "state": 1,
+              "uniswapPoolSwappingFee": 500,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "state": 1,
+              "uniswapPoolSwappingFee": 500,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "state": 1,
+              "uniswapPoolSwappingFee": 500,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "state": 1,
+              "uniswapPoolSwappingFee": 500,
+              "protocolFeePercentage": 0
+            }
+          },
+          {
+            "addr": "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 30
+            }
+          },
+          {
+            "addr": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+            "instance": {
+              "isERC20": true,
+              "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+              "state": 1,
+              "uniswapPoolSwappingFee": 3000,
+              "protocolFeePercentage": 30
+            }
+          }
+        ],
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "router": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Can upgrade the instance registry implementation."
+        },
+        "$implementation": {
+          "severity": "HIGH",
+          "description": "Current instance registry implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address controlling supported instances and per-instance settings."
+        },
+        "router": {
+          "severity": "HIGH",
+          "description": "Router contract authorized to interact with registered instances and hold ERC20 allowances for them."
+        },
+        "getAllInstances": {
+          "severity": "LOW",
+          "description": "Lists every supported instance together with its token type, enabled state, Uniswap fee tier, and protocol fee percentage."
+        }
+      },
+      "implementationNames": {
+        "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911": "AdminUpgradeableProxy",
+        "eth:0x2573BAc39EBe2901B4389CD468F2872cF7767FAF": "InstanceRegistry"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "ERC20Tornado",
+      "address": "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498",
+      "type": "Contract",
+      "template": "tornado-cash/ERC20Tornado",
+      "sourceHashes": [
+        "0x12c6ad9449010bcc6706bf48e4e7ff827c6af9cd2a4ecf2723d9c7ebd79271da"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+      "deployerAddress": "eth:0x6D03A79fe92e6F0378025BBFe81Cfc27caF67F6c",
+      "sinceTimestamp": 1616135758,
+      "sinceBlock": 12067591,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 2,
+        "denomination": 1000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x0f026940e17e4011500fab9c056c260f851dd1c533b05b410413d605b7cd7661",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 1202,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed deposit amount accepted by this pool."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        }
+      },
+      "implementationNames": {
+        "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": "ERC20Tornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "WithdrawalTree",
+      "address": "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Unverified merkle tree instance that stores legacy Tornado withdrawal leaves for TornadoTreesV1.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262112,
+      "sinceBlock": 11474714,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": ""
+      }
+    },
+    {
+      "name": "Verifier",
+      "address": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+      "type": "Contract",
+      "template": "tornado-cash/Verifier",
+      "sourceHashes": [
+        "0x1dffb25bccfe38aa825fa7a4413a34a8d34b7e1614b2950afbb06a0aed7a215d"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1589278208,
+      "sinceBlock": 10050743,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": "Verifier"
+      }
+    },
+    {
+      "name": "cTornado",
+      "address": "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af",
+      "type": "Contract",
+      "template": "tornado-cash/cTornado",
+      "sourceHashes": [
+        "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
+      ],
+      "proxyType": "immutable",
+      "description": "Fixed-denomination cToken-based mixer pool. Anyone can sweep accrued COMP rewards, but the claimed COMP is always sent to the governance address.",
+      "deployerAddress": "eth:0xA66510177b4aF4e00F2908dfe1317166Deca1853",
+      "sinceTimestamp": 1616115450,
+      "sinceBlock": 12066053,
+      "values": {
+        "$immutable": true,
+        "comp": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "currentRootIndex": 24,
+        "denomination": 500000000000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1041650e746c914d6a694527beaf074e38d7a1aa4f3d5819171c7785b3b54592",
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "hasher": "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe",
+        "levels": 20,
+        "nextIndex": 114,
+        "ROOT_HISTORY_SIZE": 30,
+        "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed cToken amount accepted by this pool."
+        },
+        "token": {
+          "description": "cToken accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        },
+        "hasher": {
+          "description": "Merkle-tree hasher used for commitments and root updates."
+        },
+        "comp": {
+          "description": "COMP token accrued by the cToken position and claimable to governance."
+        },
+        "governance": {
+          "description": "Recipient of claimed COMP rewards from this pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": "cTornado"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1576534688,
+      "sinceBlock": 9117612,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 89,
+        "denomination": "100000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x0b04af3bb8066704d061c81d0750c9b0d650b256ac8b3b4e5ac58a3d57c6fdd9",
+        "levels": 20,
+        "nextIndex": 389,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "PoseidonHasher",
+      "address": "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees.",
+      "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
+      "sinceTimestamp": 1608262097,
+      "sinceBlock": 11474712,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": ""
+      }
+    },
+    {
+      "name": "TornadoRouter",
+      "address": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoRouter",
+      "sourceHashes": [
+        "0xa2b7bf6932c052821b9c3de74b314b12e6e78893edfeb967c72493a31e46f3f2"
+      ],
+      "proxyType": "immutable",
+      "description": "Router contract that validates supported instances, forwards deposits and withdrawals, and burns relayer stake through the relayer registry during withdrawals.",
+      "deployerAddress": "eth:0x48dd5eAFCaeB05854D4cDFE365719Aac83E4754F",
+      "sinceTimestamp": 1644426390,
+      "sinceBlock": 14173127,
+      "values": {
+        "$immutable": true,
+        "governance": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+        "instanceRegistry": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+        "relayerRegistry": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2"
+      },
+      "fieldMeta": {
+        "governance": {
+          "severity": "HIGH",
+          "description": "Governance address for router administration."
+        },
+        "instanceRegistry": {
+          "severity": "HIGH",
+          "description": "Registry consulted to determine whether a pool instance is enabled and how to handle its asset type."
+        },
+        "relayerRegistry": {
+          "severity": "HIGH",
+          "description": "Registry used to burn relayer stake during withdrawals."
+        }
+      },
+      "implementationNames": {
+        "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b": "TornadoRouter"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577298068,
+      "sinceBlock": 9161958,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 34,
+        "denomination": 100000000,
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x1443229685977945314a75c18791a419f11f4fe5b6b80397c476b97fbeab9d11",
+        "levels": 20,
+        "nextIndex": 334,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    },
+    {
+      "name": "BatchTreeUpdateVerifier",
+      "address": "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6",
+      "type": "Contract",
+      "template": "tornado-cash/BatchTreeUpdateVerifier",
+      "sourceHashes": [
+        "0xc856486a747bd2513fc7d3e40390b4cab2a3401d75bd44dd9d5750bdf33f1dd2"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for batched Tornado Trees root updates.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1616688852,
+      "sinceBlock": 12109083,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6": "BatchTreeUpdateVerifier"
+      }
+    },
+    {
+      "name": "GasCompensationVault",
+      "address": "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef",
+      "type": "Contract",
+      "template": "tornado-cash/GasCompensationVault",
+      "sourceHashes": [
+        "0xabc0a896c211941058cb90aa8fdf4cfc36bc0eb6416a410b0368e266c17abcf9"
+      ],
+      "proxyType": "immutable",
+      "description": "Vault that escrows ETH for governance gas-compensation payouts and can return unused funds to governance.",
+      "deployerAddress": "eth:0x7073FEd8D0374D475B4581f4fE0225946Ad6cf3d",
+      "sinceTimestamp": 1633680217,
+      "sinceBlock": 13377012,
+      "values": {
+        "$immutable": true
+      },
+      "implementationNames": {
+        "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef": "GasCompensationVault"
+      }
+    },
+    {
+      "name": "TornadoCash_erc20",
+      "address": "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144",
+      "type": "Contract",
+      "template": "tornado-cash/TornadoCash_erc20",
+      "sourceHashes": [
+        "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy fixed-denomination ERC20 mixer from the original Tornado Cash pool generation. It retains an operator role that can replace the withdrawal verifier until renounced.",
+      "deployerAddress": "eth:0x8589427373D6D84E98730D7795D8f6f8731FDA16",
+      "sinceTimestamp": 1577297383,
+      "sinceBlock": 9161917,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 6,
+        "denomination": "1000000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "getLastRoot": "0x2fecb781eb267bba03a21d2f112b7dec5137bb07e181304616f715623315c154",
+        "levels": 20,
+        "nextIndex": 1306,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "denomination": {
+          "severity": "LOW",
+          "description": "Fixed token amount accepted by this pool."
+        },
+        "operator": {
+          "severity": "HIGH",
+          "description": "Legacy operator role retained from the trusted-setup phase."
+        },
+        "token": {
+          "description": "ERC20 token accepted by this mixer instance."
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "zkSNARK verifier used to authorize withdrawals from the pool."
+        }
+      },
+      "implementationNames": {
+        "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": "TornadoCash_erc20"
+      },
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": [
+      "constructor(address _comp, address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function claimComp()",
+      "function commitments(bytes32) view returns (bool)",
+      "function comp() view returns (address)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function governance() view returns (address)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x09193888b3f38C82dEdfda55259A82C0E7De875E": [
+      "function verifyProof(bytes proof, uint256[7] input) view returns (bool)"
+    ],
+    "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function initializeTreeForMigration(bytes32[] _filledSubtrees, bytes32 _root)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function finishMigration() payable",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function migrateState(bytes32[] _commitments, bytes32[] _nullifierHashes)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function isMigrated() view returns (bool)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x200a79068d8141924B511bC78CB55Dca89cF5C2E": [
+      "constructor(address _governance, address _tornadoTreesV1, tuple(uint256 depositsFrom, uint256 depositsStep, uint256 withdrawalsFrom, uint256 withdrawalsStep) _searchParams)",
+      "event DepositData(address instance, bytes32 indexed hash, uint256 block, uint256 index)",
+      "event ProxyUpdated(address newProxy)",
+      "event VerifierUpdated(address newVerifier)",
+      "event WithdrawalData(address instance, bytes32 indexed hash, uint256 block, uint256 index)",
+      "function BYTES_SIZE() view returns (uint256)",
+      "function CHUNK_SIZE() view returns (uint256)",
+      "function CHUNK_TREE_HEIGHT() view returns (uint256)",
+      "function ITEM_SIZE() view returns (uint256)",
+      "function SNARK_FIELD() view returns (uint256)",
+      "function blockNumber() view returns (uint256)",
+      "function depositRoot() view returns (bytes32)",
+      "function deposits(uint256) view returns (bytes32)",
+      "function depositsLength() view returns (uint256)",
+      "function depositsV1Length() view returns (uint256)",
+      "function elementExists(address _tornadoTreesV1, string _type, uint256 index) view returns (bool success)",
+      "function governance() view returns (address)",
+      "function initialize(address _tornadoProxy, address _treeUpdateVerifier)",
+      "function lastProcessedDepositLeaf() view returns (uint256)",
+      "function lastProcessedWithdrawalLeaf() view returns (uint256)",
+      "function previousDepositRoot() view returns (bytes32)",
+      "function previousWithdrawalRoot() view returns (bytes32)",
+      "function registerDeposit(address _instance, bytes32 _commitment)",
+      "function registerWithdrawal(address _instance, bytes32 _nullifierHash)",
+      "function setTornadoProxyContract(address _tornadoProxy)",
+      "function setVerifierContract(address _treeUpdateVerifier)",
+      "function tornadoProxy() view returns (address)",
+      "function tornadoTreesV1() view returns (address)",
+      "function treeUpdateVerifier() view returns (address)",
+      "function updateDepositTree(bytes _proof, bytes32 _argsHash, bytes32 _currentRoot, bytes32 _newRoot, uint32 _pathIndices, tuple(bytes32 hash, address instance, uint32 block)[256] _events)",
+      "function updateWithdrawalTree(bytes _proof, bytes32 _argsHash, bytes32 _currentRoot, bytes32 _newRoot, uint32 _pathIndices, tuple(bytes32 hash, address instance, uint32 block)[256] _events)",
+      "function validateRoots(bytes32 _depositRoot, bytes32 _withdrawalRoot) view",
+      "function withdrawalRoot() view returns (bytes32)",
+      "function withdrawals(uint256) view returns (bytes32)",
+      "function withdrawalsLength() view returns (uint256)",
+      "function withdrawalsV1Length() view returns (uint256)"
+    ],
+    "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x23773E65ed146A459791799d01336DB287f25334": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x2573BAc39EBe2901B4389CD468F2872cF7767FAF": [
+      "constructor(address _governance)",
+      "event InstanceStateUpdated(address indexed instance, uint8 state)",
+      "event RouterRegistered(address tornadoRouter)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function getAllInstanceAddresses() view returns (address[] result)",
+      "function getAllInstances() view returns (tuple(address addr, tuple(bool isERC20, address token, uint8 state, uint24 uniswapPoolSwappingFee, uint32 protocolFeePercentage) instance)[] result)",
+      "function getPoolToken(address instance) view returns (address)",
+      "function governance() view returns (address)",
+      "function initialize(tuple(address addr, tuple(bool isERC20, address token, uint8 state, uint24 uniswapPoolSwappingFee, uint32 protocolFeePercentage) instance)[] _instances, bytes32 _router)",
+      "function instanceIds(uint256) view returns (address)",
+      "function instances(address) view returns (bool isERC20, address token, uint8 state, uint24 uniswapPoolSwappingFee, uint32 protocolFeePercentage)",
+      "function removeInstance(uint256 _instanceId)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function router() view returns (address)",
+      "function setProtocolFee(address instance, uint32 newFee)",
+      "function setTornadoRouter(address routerAddress)",
+      "function updateInstance(tuple(address addr, tuple(bool isERC20, address token, uint8 state, uint24 uniswapPoolSwappingFee, uint32 protocolFeePercentage) instance) _tornado)"
+    ],
+    "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": [
+      "constructor(address _comp, address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function claimComp()",
+      "function commitments(bytes32) view returns (bool)",
+      "function comp() view returns (address)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function governance() view returns (address)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185": [
+      "function withdrawTorn(address recipient, uint256 amount)"
+    ],
+    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedMasterCopy(address masterCopy)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeMasterCopy(address _masterCopy)",
+      "function changeThreshold(uint256 _threshold)",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getMessageHash(bytes message) view returns (bytes32)",
+      "function getModules() view returns (address[])",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isOwner(address owner) view returns (bool)",
+      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signMessage(bytes _data)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x43a3bE4Ae954d9869836702AFd10393D3a7Ea417": [
+      "constructor(bytes32 _tornadoProxy, bytes32 _hasher2, bytes32 _hasher3, uint32 _levels)",
+      "event DepositData(address instance, bytes32 indexed hash, uint256 block, uint256 index)",
+      "event WithdrawalData(address instance, bytes32 indexed hash, uint256 block, uint256 index)",
+      "function blockNumber() view returns (uint256)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function depositRoot() view returns (bytes32)",
+      "function depositTree() view returns (address)",
+      "function deposits(uint256) view returns (bytes32)",
+      "function getRegisteredDeposits() view returns (bytes32[] _deposits)",
+      "function getRegisteredWithdrawals() view returns (bytes32[] _withdrawals)",
+      "function hasher() view returns (address)",
+      "function lastProcessedDepositLeaf() view returns (uint256)",
+      "function lastProcessedWithdrawalLeaf() view returns (uint256)",
+      "function registerDeposit(address _instance, bytes32 _commitment)",
+      "function registerWithdrawal(address _instance, bytes32 _nullifier)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function tornadoProxy() view returns (address)",
+      "function updateDepositTree(tuple(address instance, bytes32 hash, uint256 block)[] _deposits)",
+      "function updateRoots(tuple(address instance, bytes32 hash, uint256 block)[] _deposits, tuple(address instance, bytes32 hash, uint256 block)[] _withdrawals)",
+      "function updateWithdrawalTree(tuple(address instance, bytes32 hash, uint256 block)[] _withdrawals)",
+      "function validateRoots(bytes32 _depositRoot, bytes32 _withdrawalRoot) view",
+      "function withdrawalRoot() view returns (bytes32)",
+      "function withdrawalTree() view returns (address)",
+      "function withdrawals(uint256) view returns (bytes32)"
+    ],
+    "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5": [
+      "constructor(address _verifier, uint256 _depositsFrom, uint256 _depositsStep, uint256 _withdrawalsFrom, uint256 _withdrawalsStep)",
+      "event DeploymentOf(string name, address addr)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function executeProposal()",
+      "function getInstances() view returns (tuple(address addr, tuple(bool isERC20, address token, uint8 state) instance)[] instances)",
+      "function getSearchParams() view returns (tuple(uint256 depositsFrom, uint256 depositsStep, uint256 withdrawalsFrom, uint256 withdrawalsStep))",
+      "function miner() view returns (address)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function tornadoProxyV1() view returns (address)",
+      "function tornadoTreesV1() view returns (address)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A": [
+      "constructor(bytes32 _torn, bytes32 _miner, uint256 _miningCap, uint256 _initialLiquidity, uint256 _poolWeight)",
+      "event PoolWeightUpdated(uint256 newWeight)",
+      "event Swap(address indexed recipient, uint256 pTORN, uint256 TORN)",
+      "function DURATION() view returns (uint256)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function getExpectedReturn(uint256 _amount) view returns (uint256)",
+      "function getTimestamp() view returns (uint256)",
+      "function initialLiquidity() view returns (uint256)",
+      "function liquidity() view returns (uint256)",
+      "function miner() view returns (address)",
+      "function poolWeight() view returns (uint256)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function setPoolWeight(uint256 _newWeight)",
+      "function startTimestamp() view returns (uint256)",
+      "function swap(address _recipient, uint256 _amount) returns (uint256)",
+      "function tokensSold() view returns (uint256)",
+      "function torn() view returns (address)",
+      "function tornVirtualBalance() view returns (uint256)"
+    ],
+    "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": [
+      "constructor(bytes32 _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0x653477c392c16b0765603074f157314Cc4f40c32": [
+      "function verifyProof(bytes proof, uint256[4] input) view returns (bool)"
+    ],
+    "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967": [
+      "constructor(address _tornadoTrees, address _governance, tuple(address addr, tuple(bool isERC20, address token, uint8 state) instance)[] _instances)",
+      "event EncryptedNote(address indexed sender, bytes encryptedNote)",
+      "event InstanceStateUpdated(address indexed instance, uint8 state)",
+      "event TornadoTreesUpdated(address addr)",
+      "function backupNotes(bytes[] _encryptedNotes)",
+      "function deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote) payable",
+      "function governance() view returns (address)",
+      "function instances(address) view returns (bool isERC20, address token, uint8 state)",
+      "function rescueTokens(address _token, address _to, uint256 _amount)",
+      "function setTornadoTreesContract(address _tornadoTrees)",
+      "function tornadoTrees() view returns (address)",
+      "function updateInstance(tuple(address addr, tuple(bool isERC20, address token, uint8 state) instance) _tornado)",
+      "function withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable"
+    ],
+    "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9": [
+      "constructor(bytes32 _rewardSwap, bytes32 _governance, bytes32 _tornadoTrees, bytes32[3] _verifiers, bytes32 _accountRoot, tuple(bytes32 instance, uint256 value)[] _rates)",
+      "event NewAccount(bytes32 commitment, bytes32 nullifier, bytes encryptedAccount, uint256 index)",
+      "event RateChanged(address instance, uint256 value)",
+      "event VerifiersUpdated(address reward, address withdraw, address treeUpdate)",
+      "function ACCOUNT_ROOT_HISTORY_SIZE() view returns (uint256)",
+      "function accountCount() view returns (uint256)",
+      "function accountNullifiers(bytes32) view returns (bool)",
+      "function accountRoots(uint256) view returns (bytes32)",
+      "function batchReward(bytes[] _rewardArgs)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function getLastAccountRoot() view returns (bytes32)",
+      "function governance() view returns (address)",
+      "function isKnownAccountRoot(bytes32 _root, uint256 _index) view returns (bool)",
+      "function rates(address) view returns (uint256)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function reward(bytes _proof, tuple(uint256 rate, uint256 fee, address instance, bytes32 rewardNullifier, bytes32 extDataHash, bytes32 depositRoot, bytes32 withdrawalRoot, tuple(address relayer, bytes encryptedAccount) extData, tuple(bytes32 inputRoot, bytes32 inputNullifierHash, bytes32 outputRoot, uint256 outputPathIndices, bytes32 outputCommitment) account) _args, bytes _treeUpdateProof, tuple(bytes32 oldRoot, bytes32 newRoot, bytes32 leaf, uint256 pathIndices) _treeUpdateArgs)",
+      "function reward(bytes _proof, tuple(uint256 rate, uint256 fee, address instance, bytes32 rewardNullifier, bytes32 extDataHash, bytes32 depositRoot, bytes32 withdrawalRoot, tuple(address relayer, bytes encryptedAccount) extData, tuple(bytes32 inputRoot, bytes32 inputNullifierHash, bytes32 outputRoot, uint256 outputPathIndices, bytes32 outputCommitment) account) _args)",
+      "function rewardNullifiers(bytes32) view returns (bool)",
+      "function rewardSwap() view returns (address)",
+      "function rewardVerifier() view returns (address)",
+      "function setPoolWeight(uint256 _newWeight)",
+      "function setRates(tuple(bytes32 instance, uint256 value)[] _rates)",
+      "function setTornadoTreesContract(address _tornadoTrees)",
+      "function setVerifiers(address[3] _verifiers)",
+      "function tornadoTrees() view returns (address)",
+      "function treeUpdateVerifier() view returns (address)",
+      "function withdraw(bytes _proof, tuple(uint256 amount, bytes32 extDataHash, tuple(uint256 fee, address recipient, address relayer, bytes encryptedAccount) extData, tuple(bytes32 inputRoot, bytes32 inputNullifierHash, bytes32 outputRoot, uint256 outputPathIndices, bytes32 outputCommitment) account) _args)",
+      "function withdraw(bytes _proof, tuple(uint256 amount, bytes32 extDataHash, tuple(uint256 fee, address recipient, address relayer, bytes encryptedAccount) extData, tuple(bytes32 inputRoot, bytes32 inputNullifierHash, bytes32 outputRoot, uint256 outputPathIndices, bytes32 outputCommitment) account) _args, bytes _treeUpdateProof, tuple(bytes32 oldRoot, bytes32 newRoot, bytes32 leaf, uint256 pathIndices) _treeUpdateArgs)",
+      "function withdrawVerifier() view returns (address)"
+    ],
+    "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C": [
+      "constructor(bytes32 _governance, uint256 _pausePeriod, tuple(bytes32 to, uint256 amount)[] _vestings)",
+      "event Allowed(address target)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Disallowed(address target)",
+      "event Paused(address account)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function addToAllowedList(address[] target)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function allowedTransferee(address) view returns (bool)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blockTimestamp() view returns (uint256)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function canUnpauseAfter() view returns (uint256)",
+      "function chainID() view returns (uint256 _chainID)",
+      "function changeTransferability(bool decision)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function governance() view returns (address)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function paused() view returns (bool)",
+      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function removeFromAllowedList(address[] target)",
+      "function rescueTokens(address _token, address _to, uint256 _balance)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "eth:0x84b0c75c1F6211450FEC7289c32D717AdaDD702A": [
+      "constructor(address _torn, address _governance, address _ens, address _staking, address _feeManager)",
+      "event MinimumStakeAmount(uint256 minStakeAmount)",
+      "event RelayerBalanceNullified(address relayer)",
+      "event RelayerRegistered(bytes32 relayer, string ensName, address relayerAddress, uint256 stakedAmount)",
+      "event RelayerUnregistered(address relayer)",
+      "event RouterRegistered(address tornadoRouter)",
+      "event StakeAddedToRelayer(address relayer, uint256 amountStakeAdded)",
+      "event StakeBurned(address relayer, uint256 amountBurned)",
+      "event WorkerRegistered(address relayer, address worker)",
+      "event WorkerUnregistered(address relayer, address worker)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function burn(address sender, address relayer, address pool)",
+      "function ens() view returns (address)",
+      "function feeManager() view returns (address)",
+      "function getRelayerBalance(address relayer) view returns (uint256)",
+      "function getRelayerEnsHash(address relayer) view returns (bytes32)",
+      "function governance() view returns (address)",
+      "function initialize(bytes32 _tornadoRouter)",
+      "function isRelayer(address toResolve) view returns (bool)",
+      "function isRelayerRegistered(address relayer, address toResolve) view returns (bool)",
+      "function minStakeAmount() view returns (uint256)",
+      "function nullifyBalance(address relayer)",
+      "function register(string ensName, uint256 stake, address[] workersToRegister)",
+      "function registerPermit(string ensName, uint256 stake, address[] workersToRegister, address relayer, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function registerRelayerAdmin(address relayer, string ensName, uint256 stake)",
+      "function registerWorker(address relayer, address worker)",
+      "function relayers(address) view returns (uint256 balance, bytes32 ensHash)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function setMinStakeAmount(uint256 minAmount)",
+      "function setTornadoRouter(address tornadoRouterAddress)",
+      "function stakeToRelayer(address relayer, uint256 stake)",
+      "function stakeToRelayerPermit(address relayer, uint256 stake, address staker, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function staking() view returns (address)",
+      "function torn() view returns (address)",
+      "function tornadoRouter() view returns (address)",
+      "function unregisterRelayer(address relayer)",
+      "function unregisterWorker(address worker)",
+      "function workers(address) view returns (address)"
+    ],
+    "eth:0x88fd245fEdeC4A936e700f9173454D1931B4C307": [
+      "function verifyProof(bytes proof, uint256[12] input) view returns (bool)"
+    ],
+    "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601": [
+      "constructor(bytes32 _tornadoTrees, bytes32 _governance, bytes32[] _instances)",
+      "event EncryptedNote(address indexed sender, bytes encryptedNote)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote) payable",
+      "function governance() view returns (address)",
+      "function instances(address) view returns (bool)",
+      "function rescueTokens(address _token, address _to, uint256 _balance)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function tornadoTrees() view returns (address)",
+      "function updateInstance(address _instance, bool _update)",
+      "function withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable"
+    ],
+    "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x9c97be37840f0e754bb7aDB1b16fD0954A2BA248": [
+      "constructor(address governanceAddress, address tornAddress, address _relayerRegistry)",
+      "event RewardsClaimed(address indexed account, uint256 rewardsClaimed)",
+      "event RewardsUpdated(address indexed account, uint256 rewards)",
+      "function Governance() view returns (address)",
+      "function accumulatedRewardPerTorn() view returns (uint256)",
+      "function accumulatedRewardRateOnLastUpdate(address) view returns (uint256)",
+      "function accumulatedRewards(address) view returns (uint256)",
+      "function addBurnRewards(uint256 amount)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function checkReward(address account) view returns (uint256 rewards)",
+      "function getReward()",
+      "function ratioConstant() view returns (uint256)",
+      "function relayerRegistry() view returns (address)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function setReward(address account, uint256 amount)",
+      "function torn() view returns (address)",
+      "function updateRewardsOnLockedBalanceChange(address account, uint256 amountLockedBeforehand)",
+      "function withdrawTorn(uint256 amount)"
+    ],
+    "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0xb04E030140b30C27bcdfaafFFA98C57d80eDa7B4": [
+      "constructor(address _masterCopy)"
+    ],
+    "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911": [
+      "constructor(address _logic, address _admin, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": [
+      "constructor(address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function commitments(bytes32) view returns (bool)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0xbf46f2222c0712cAF2f13B8590732DbD964ce395": [
+      "constructor(address stakingRewardsAddress, address gasCompLogic, address userVaultAddress)",
+      "event Delegated(address indexed account, address indexed to)",
+      "event ProposalCreated(uint256 indexed id, address indexed proposer, address target, uint256 startTime, uint256 endTime, string description)",
+      "event ProposalExecuted(uint256 indexed proposalId)",
+      "event RewardUpdateFailed(address indexed account, bytes indexed errorData)",
+      "event RewardUpdateSuccessful(address indexed account)",
+      "event Undelegated(address indexed account, address indexed from)",
+      "event Voted(uint256 indexed proposalId, address indexed voter, bool indexed support, uint256 votes)",
+      "function CLOSING_PERIOD() view returns (uint256)",
+      "function EXECUTION_DELAY() view returns (uint256)",
+      "function EXECUTION_EXPIRATION() view returns (uint256)",
+      "function PROPOSAL_THRESHOLD() view returns (uint256)",
+      "function QUORUM_VOTES() view returns (uint256)",
+      "function Staking() view returns (address)",
+      "function VOTE_EXTEND_TIME() view returns (uint256)",
+      "function VOTING_DELAY() view returns (uint256)",
+      "function VOTING_PERIOD() view returns (uint256)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function canWithdrawAfter(address) view returns (uint256)",
+      "function castDelegatedVote(address[] from, uint256 proposalId, bool support)",
+      "function castVote(uint256 proposalId, bool support)",
+      "function checkIfQuorumReached(uint256 proposalId) view returns (bool)",
+      "function delegate(address to)",
+      "function delegatedTo(address) view returns (address)",
+      "function execute(uint256 proposalId) payable",
+      "function gasCompensationVault() view returns (address)",
+      "function getReceipt(uint256 proposalId, address voter) view returns (tuple(bool hasVoted, bool support, uint256 votes))",
+      "function hasAccountVoted(uint256 proposalId, address account) view returns (bool)",
+      "function initialize(bytes32 _torn)",
+      "function latestProposalIds(address) view returns (uint256)",
+      "function lock(address owner, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function lockWithApproval(uint256 amount)",
+      "function lockedBalance(address) view returns (uint256)",
+      "function proposalCodehashes(uint256) view returns (bytes32)",
+      "function proposalCount() view returns (uint256)",
+      "function proposals(uint256) view returns (address proposer, address target, uint256 startTime, uint256 endTime, uint256 forVotes, uint256 againstVotes, bool executed, bool extended)",
+      "function propose(address target, string description) returns (uint256)",
+      "function proposeByDelegate(address from, address target, string description) returns (uint256)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function returnMultisigAddress() pure returns (address)",
+      "function setClosingPeriod(uint256 closingPeriod)",
+      "function setExecutionDelay(uint256 executionDelay)",
+      "function setExecutionExpiration(uint256 executionExpiration)",
+      "function setGasCompensations(uint256 gasCompensationsLimit)",
+      "function setProposalThreshold(uint256 proposalThreshold)",
+      "function setQuorumVotes(uint256 quorumVotes)",
+      "function setVoteExtendTime(uint256 voteExtendTime)",
+      "function setVotingDelay(uint256 votingDelay)",
+      "function setVotingPeriod(uint256 votingPeriod)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function torn() view returns (address)",
+      "function undelegate()",
+      "function unlock(uint256 amount)",
+      "function userVault() view returns (address)",
+      "function version() pure returns (string)",
+      "function withdrawFromHelper(uint256 amount)"
+    ],
+    "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": [
+      "function verifyProof(bytes proof, uint256[6] input) view returns (bool)"
+    ],
+    "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": [
+      "constructor(address _comp, address _verifier, address _hasher, uint256 _denomination, uint32 _merkleTreeHeight, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function claimComp()",
+      "function commitments(bytes32) view returns (bool)",
+      "function comp() view returns (address)",
+      "function currentRootIndex() view returns (uint32)",
+      "function denomination() view returns (uint256)",
+      "function deposit(bytes32 _commitment) payable",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function getLastRoot() view returns (bytes32)",
+      "function governance() view returns (address)",
+      "function hashLeftRight(address _hasher, bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function hasher() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function levels() view returns (uint32)",
+      "function nextIndex() view returns (uint32)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function roots(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function verifier() view returns (address)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function zeros(uint256 i) pure returns (bytes32)"
+    ],
+    "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b": [
+      "constructor(address _governance, bytes32 _instanceRegistry, bytes32 _relayerRegistry)",
+      "event EncryptedNote(address indexed sender, bytes encryptedNote)",
+      "function approveExactToken(address _token, address _spender, uint256 _amount)",
+      "function backupNotes(bytes[] _encryptedNotes)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function deposit(address _tornado, bytes32 _commitment, bytes _encryptedNote) payable",
+      "function governance() view returns (address)",
+      "function instanceRegistry() view returns (address)",
+      "function relayerRegistry() view returns (address)",
+      "function rescueTokens(address _token, address _to, uint256 _amount)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function withdraw(address _tornado, bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable"
+    ],
+    "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0xEd3B00B651c4c7AF77c2fDdce4a388de84b507C6": [
+      "function verifyProof(bytes proof, uint256[1] input) view returns (bool)"
+    ],
+    "eth:0xf4B067dD14e95Bab89Be928c07Cb22E3c94E0DAA": [
+      "constructor(address _torn, address _governance, bytes32 _registry)",
+      "event FeeUpdated(address indexed instance, uint256 newFee)",
+      "event UniswapTornPoolSwappingFeeChanged(uint24 newFee)",
+      "function PROTOCOL_FEE_DIVIDER() view returns (uint256)",
+      "function bulkResolve(bytes32[] domains) view returns (address[] result)",
+      "function calculatePoolFee(address _instance) view returns (uint160)",
+      "function feeDeviations() view returns (tuple(address instance, int256 deviation)[] results)",
+      "function governance() view returns (address)",
+      "function instanceFee(address) view returns (uint160)",
+      "function instanceFeeUpdated(address) view returns (uint256)",
+      "function instanceFeeWithUpdate(address _instance) returns (uint160)",
+      "function registry() view returns (address)",
+      "function resolve(bytes32 node) view returns (address)",
+      "function setPeriodForTWAPOracle(uint32 newPeriod)",
+      "function setUniswapTornPoolSwappingFee(uint24 _uniswapTornPoolSwappingFee)",
+      "function setUpdateFeeTimeLimit(uint24 newLimit)",
+      "function torn() view returns (address)",
+      "function uniswapTimePeriod() view returns (uint32)",
+      "function uniswapTornPoolSwappingFee() view returns (uint24)",
+      "function updateAllFees()",
+      "function updateFee(address _instance)",
+      "function updateFeeTimeLimit() view returns (uint24)",
+      "function updateFees(address[] _instances)"
+    ],
+    "eth:0xFA4C1f3f7D5dd7c12a9Adb82Cd7dDA542E3d59ef": [
+      "function compensateGas(address recipient, uint256 gasAmount)",
+      "function withdrawToGovernance(uint256 amount)"
+    ],
+    "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function token() view returns (address)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator, address _token)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "tornado-cash/BatchTreeUpdateVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/cTornado": "0x1f6b7c7a9b4dc99aea0b0cfeb2b93fadfdb947d1dd6acdf18489069ae856e019",
+    "tornado-cash/ERC20Tornado": "0x84f168e2b3442b8acd48e2c8ce67129ec126fdf8edc534403e156a7a544207ad",
+    "tornado-cash/FeeManager": "0x8832fe5219d03f729db76b430cae79ac8c644c00a3769a83927d9c7df28e9863",
+    "tornado-cash/GasCompensationVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/GovernanceProposalStateUpgrade": "0x5ef7d5bcb5b1f194dce583d85f696e249f44e85360486fbb3ede97ded1f604ce",
+    "tornado-cash/InstanceRegistry": "0xe4adfe1b395d68b67ff6c83a2964386a9813cf4c8739d2b6e65f5c1f5756a160",
+    "tornado-cash/Miner": "0xe77c3ae97ad6368c8457e5442f79fefa5211b0e0528233a22f9f9710750b957d",
+    "tornado-cash/Proposal": "0x21857196f327a8eadf42591631adb24d788318246f12110fe95bbc8b3821338f",
+    "tornado-cash/RelayerRegistry": "0xc40b94bab076de47092f25dac3d0d5fef608fbb1fd70b70212a58f6d0bd54c70",
+    "tornado-cash/RewardSwap": "0xef14fcf3380d21fb0c028bd057958dbd309eea212e07a42ce8ebe94273eec0b9",
+    "tornado-cash/RewardVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/TORN": "0x7fb503c9789227b3607d28cb75e676283471c8c460bf34369cb8eb84aed1b2d1",
+    "tornado-cash/TornadoCash_erc20": "0x90fe98dec7e77b41131d04b0e25df078c4009dd3128fe3476c9a593043863ca2",
+    "tornado-cash/TornadoCash_eth": "0x4f0dd6c85d7b32e1dbdaec78a17c2e76905d5e5d419cd3580e6bd7f1c8accf06",
+    "tornado-cash/TornadoCash_Eth_01": "0x0a2f81e6d552b5f4695d5a8d46d2525ce8a18f4e960305350ee4cae6dce7833f",
+    "tornado-cash/TornadoProxyV1": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
+    "tornado-cash/TornadoProxyV2": "0x0f148b32f12372e1a61b14e5dd4d7bd7acbf68cfa07316c9b7378ec2d77639e4",
+    "tornado-cash/TornadoRouter": "0xbd7ca9f14700f43719f103ce5e04ecf9d73d4310646eca040b347d637aa16006",
+    "tornado-cash/TornadoStakingRewards": "0x0e7c6583397b78fc4adae61ae1f6faad2f831a8724b467e3fee31c171c8263f1",
+    "tornado-cash/TornadoTreesV1": "0x9e672e6b9efac15b5a1edbb99c536048b2dabf9e7a9acaa1ae69b6f0e8c9bd20",
+    "tornado-cash/TornadoTreesV2": "0xc06b8a648e22777cc0e6c7aed7c1a08793f0a4e535fe20c8f53ebf5237dcf98b",
+    "tornado-cash/TornadoVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/TreeUpdateVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": {
+    "ethereum": 24992607
+  },
+  "permissionsConfigHash": "0xc057faed93482a1c52189bc8a84d38418edb267728820050734023716d27acc5"
+}

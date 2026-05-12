@@ -99,6 +99,7 @@ const OVERRIDES_V2 = [
   { chain: 'sei', domain: 16 },
   { chain: 'xdc', domain: 18 },
   { chain: 'monad', domain: 15 }, // hyperevm removed bc it is auto fetched
+  { chain: 'worldchain', domain: 14 },
 ]
 
 export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
@@ -167,7 +168,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         const result = await rpc.call(
           {
             to: V2_MESSAGE_TRANSMITTER,
-            data: Bytes.fromHex(calldata),
+            input: Bytes.fromHex(calldata),
           },
           'latest',
         )

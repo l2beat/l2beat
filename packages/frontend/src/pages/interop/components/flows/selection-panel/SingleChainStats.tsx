@@ -12,9 +12,13 @@ import { TopItemsList } from './TopItemsList'
 export function SingleChainStats({
   chainId,
   selectedChains,
+  linkTopProtocols,
+  hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  linkTopProtocols?: boolean
+  hideTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -41,12 +45,13 @@ export function SingleChainStats({
           }))}
         />
       )}
-      {chainData && (
+      {chainData && !hideTopProtocols && (
         <TopItemsList
           label="Top bridges"
           items={chainData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
+            href: linkTopProtocols ? `/interop/protocols/${p.slug}` : undefined,
           }))}
         />
       )}
@@ -81,6 +86,11 @@ function Stats({
       </div>
       <div className="space-y-1.5">
         <StatRow
+          label="Total volume"
+          value={formatCurrency(chainData.totalVolume, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
           label="Volume in"
           value={formatCurrency(chainData.inflow, 'usd')}
           isLoading={isLoading}
@@ -93,6 +103,11 @@ function Stats({
         <StatRow
           label="Net flow"
           value={formatCurrency(chainData.netFlow, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Total transfers"
+          value={formatInteger(totalTransfers)}
           isLoading={isLoading}
         />
         <StatRow

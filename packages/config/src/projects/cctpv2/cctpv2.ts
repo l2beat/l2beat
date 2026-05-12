@@ -6,8 +6,11 @@ export const cctpv2: BaseProject = {
   slug: 'cctpv2',
   name: 'CCTP v2',
   shortName: undefined,
+  aliases: ['Circle', 'Cross-Chain Transfer Protocol'],
   addedAt: UnixTime(1769070497),
   interopConfig: {
+    description:
+      'This is the cross-chain transfer protocol by Circle in its second version. Mainly used for USDC burn-mint transfers, it coexists with the v1 protocol but improves on its transfer speed.',
     plugins: [
       {
         plugin: 'cctp-v2',

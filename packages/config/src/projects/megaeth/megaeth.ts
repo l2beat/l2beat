@@ -43,6 +43,40 @@ export const megaeth: ScalingProject = opStackL2({
 
   architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
+  interopConfig: {
+    name: 'MegaETH Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'megaeth',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'megaeth',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   display: {
     name: 'MegaETH',
     slug: 'megaeth',
@@ -50,9 +84,15 @@ export const megaeth: ScalingProject = opStackL2({
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
     links: {
       websites: ['https://megaeth.com/'],
-      bridges: ['https://docs.megaeth.com/frontier#using-the-canonical-bridge'],
+      bridges: [
+        'https://bridge.megaeth.com/',
+        'https://rabbithole.megaeth.com/bridge',
+      ],
       documentation: ['https://docs.megaeth.com/'],
-      explorers: ['https://megaeth.blockscout.com/'],
+      explorers: [
+        'https://mega.etherscan.io/',
+        'https://megaeth.blockscout.com/',
+      ],
       repositories: ['https://github.com/megaeth-labs'],
       socialMedia: [
         'https://x.com/megaeth',

@@ -1,6 +1,7 @@
 import type { TokenDbClient } from '@l2beat/token-backend'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { InteropAggregationConfig } from '../../../../../config/features/interop'
+import { router } from '../../../../../trpc/init'
 import type { PluginSyncStatus } from '../../sync/InteropSyncersManager'
 import type { ProcessorStatus } from '../impls/processors'
 import { createAggregatesRouter } from './routers/aggregates'
@@ -14,7 +15,6 @@ import { createMessagesRouter } from './routers/messages'
 import { createMissingTokensRouter } from './routers/missingTokens'
 import { createStatusRouter } from './routers/status'
 import { createTransfersRouter } from './routers/transfers'
-import { router } from './trpc'
 
 export interface InteropTrpcRouterDeps {
   aggregationConfigs: InteropAggregationConfig[]

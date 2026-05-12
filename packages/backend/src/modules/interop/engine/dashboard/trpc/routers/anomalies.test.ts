@@ -1,7 +1,7 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
+import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAnomaliesRouter } from './anomalies'
 
 describe(createAnomaliesRouter.name, () => {
@@ -33,9 +33,12 @@ describe(createAnomaliesRouter.name, () => {
     expect(result.aggregatedItems).toHaveLength(1)
     expect(result.aggregatedItems[0]?.id).toEqual('across')
     expect(
-      result.aggregatedItems[0]?.interpretation.includes('Flat line'),
+      result.aggregatedItems[0]?.interpretation.includes(
+        'Transfer count was flat',
+      ),
     ).toEqual(true)
-    expect(result.aggregateValueDiffAlertThresholdPercent).toEqual(5)
+    expect(result.aggregateSideMismatchDiffPercent).toEqual(30)
+    expect(result.aggregateSideMismatchMinVolumeUsd).toEqual(1_000_000)
   })
 
   it('returns aggregate details for a selected id', async () => {

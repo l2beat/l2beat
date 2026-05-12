@@ -33,6 +33,7 @@ export function getProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   project: string,
+  maxDepth?: number,
 ): ApiProjectResponse {
   const discoveries = configReader.readDiscoveryWithReferences(project)
   const discovery = discoveries[0]
@@ -46,6 +47,7 @@ export function getProject(
       .flatMap((x) => x.discovery.entries)
       .filter((e) => e.type !== 'Reference'),
     discovery.entries.map((e) => e.address),
+    maxDepth,
   ).map((x) => x.address)
 
   const response: ApiProjectResponse = { entries: [] }

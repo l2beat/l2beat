@@ -1,14 +1,12 @@
 {
   "VaultHub.sol": {
-    "hash": "0x1dd4ca17f1d07d16fc3bc5c4f5373e5ce36f59220db6cb3f08e93e90300455ad",
+    "hash": "0xe93fdb98f28dc5f33bd2497ad33719b9c0021e808559d1df5658070ba22a2e21",
     "address": "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50",
-    "chain": "ethereum",
     "blockNumber": 24231160
   },
   "VaultHub_new": {
-    "hash": "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5",
+    "hash": "0x6bcf34d4a5b8a1bbe9daa335f1f67871309c33f2bf9fb1f50c339cacb0d21561",
     "address": "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70",
-    "chain": "ethereum",
     "blockNumber": 24935917
   }
 }

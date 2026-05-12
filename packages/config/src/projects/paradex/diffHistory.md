@@ -1,3 +1,153 @@
+Generated with discovered.json: 0xa7d30caa5e2e96eee9329e8541083017461cb72a
+
+# Diff at Fri, 08 May 2026 07:51:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1771848139
+- current timestamp: 1771848139
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771848139 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) [starknet/StarkgateManager] {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      sourceHashes.0:
+-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c"
++        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f"
+      sourceHashes.1:
+-        "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
++        "0x11ce7cbe180d6e08e3dabf78d67f1da5bc6ae76675467c1821a812f067c0c0e4"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) [starknet/StarkgateRegistry] {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      sourceHashes.0:
+-        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c"
++        "0x35c2aeccc337bb8f47cd27706cd04cc387ba9b5effa2228c9e9fb6762888e77f"
+      sourceHashes.1:
+-        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
++        "0xc2326f142b15d536ff2dfe8c64d5e0064e6bc6d44e37df843cebc2ef50f38beb"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      sourceHashes.0:
+-        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2"
++        "0xf53fa59a32c4a031ce88a109b01439d6e82cf8a3c883d9c7b91e6ad2e7fc256c"
+      sourceHashes.1:
+-        "0xecdc47d2045525d1d373fdecc6478959fa5b2d2595713c2187c41ed98baa4738"
++        "0xfdbdbe8ea7830d252ab9fcc5434af053fb43e8c93023330630d8a3e5964a62e1"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.0:
+-        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3"
++        "0x4c21fb0aff75ac1755959abe5aace71b3d70cd508a697c0a16ffbd2f81b5420a"
+      sourceHashes.1:
+-        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
++        "0xfee7303d7ae61327a9f6516d410a6efbe76c07d2ca3406be62e5bb3baa5532c9"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+Generated with discovered.json: 0x3b524a87ea23f4c17f953b2df725f53ea0143130
+
+# Diff at Tue, 05 May 2026 10:22:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b6437082b3ea8fb0d97f4474b1c3452a1ce271b0 block: 1771848139
+- current timestamp: 1771848139
+
+## Description
+
+Include deployer address
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771848139 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+    }
+```
+
+```diff
+    contract StarkgateManager (eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      deployerAddress:
++        "eth:0x40060493a280915e2df7b46f8A9f251156080C39"
+    }
+```
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      deployerAddress:
++        "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      deployerAddress:
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      deployerAddress:
++        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+    }
+```
+
 Generated with discovered.json: 0x6732546087fd05bff935a6f034735319c1c5d639
 
 # Diff at Mon, 23 Feb 2026 12:19:28 GMT:

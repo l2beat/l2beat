@@ -8,10 +8,11 @@
       "address": "eth:0x03ACc35286bAAE6D73d99a9f14Ef13752208C8dC",
       "type": "Contract",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0x84da8be39a916ec799c2d515f4c612a387cb3378d34916337722b367a019b8c6"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0x22efa027adf30a6de805e24a32630537908b234296e3592e46c020d3ee39adc1"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811503,
       "sinceBlock": 22364925,
       "values": {
@@ -50,10 +51,11 @@
       "type": "Contract",
       "template": "yieldfi/Administrator",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0xfeef795150202675eb781deeb753733de1bb9769ae0762cbb3f5a354690ae5e7"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0x136a7ccc775b7afd3eeae698134121ce9a327c4eb5557c8a04eb30afbd789773"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812331,
       "sinceBlock": 22364994,
       "values": {
@@ -125,8 +127,8 @@
       "type": "Contract",
       "template": "yieldfi/yToken",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0xc584cf0791972d811cbb10b6ed2caf5e040fbcdd5219bf8386cdf9654fa19585"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0x02e2d72c26c65b2a55f4610dbda4ffe375173552e486e4a592c2bad05d5a1067"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -139,6 +141,7 @@
         "totAssets",
         "vestingAmount"
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811527,
       "sinceBlock": 22364927,
       "values": {
@@ -201,6 +204,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811503,
       "sinceBlock": 22364925,
       "values": {
@@ -218,8 +222,8 @@
       "type": "Contract",
       "template": "yieldfi/yToken",
       "sourceHashes": [
-        "0x986346836d4dfb3ec6cb62cd668e6d746f8be0a370a352172dd7f7e0a7fe1320",
-        "0xe0d5f5bf90b1a9a74c7ac96f5bcbbf52030da73aa7927629913cc14c0d2a2264"
+        "0x3335d1c5141feebb2c3729ab3dc2810d3d9196ee836d49c75be1c2b800a77d81",
+        "0x36cb174eeefe4e520517d17b4eb874a87fa1ad98228902c93b7a37e24760c607"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -232,6 +236,7 @@
         "totAssets",
         "vestingAmount"
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1749298559,
       "sinceBlock": 22652648,
       "values": {
@@ -285,10 +290,11 @@
       "address": "eth:0x392017161a9507F19644E8886A237C58809212B5",
       "type": "Contract",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0xd39f986b40a87be666a70c453f29c7d0f0d267c79bb9ffe83efaa218827874a6"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0xc3f87c18a2da01f51bb6ebc75b476cc46ce896a68d0a4da706e085e7489c1796"
       ],
       "proxyType": "EIP1967 proxy",
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812439,
       "sinceBlock": 22365003,
       "values": {
@@ -341,6 +347,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1749298559,
       "sinceBlock": 22652648,
       "values": {
@@ -368,6 +375,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812439,
       "sinceBlock": 22365003,
       "values": {
@@ -385,7 +393,7 @@
       "type": "Contract",
       "template": "yieldfi/TimelockController",
       "sourceHashes": [
-        "0x706812f226bec5d959f6b4977145ce734718d676eaee8707aa2bff14e59eba77"
+        "0xf65f8f13e98380ad7c41bf83adb8837cfec3492f905f8b84867aad9a59c7a6ac"
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
@@ -457,6 +465,7 @@
           "role": ".owner"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1747415891,
       "sinceBlock": 22497060,
       "values": {
@@ -495,11 +504,12 @@
       "type": "Contract",
       "template": "yieldfi/RequestReceipt",
       "sourceHashes": [
-        "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
-        "0x96fa98ebc2c01b61141dbd8871e1532a6ef100fce0a94d64e6a42ecf3ce69550"
+        "0xbda0929be0223e0b4c8c6cdb89dbe1fd3ef62e3aee028519d4c97c5dbab66e7f",
+        "0x86b9680dedb75717cb529915288125a7d00471c49f34ec8a5e11b52cdd4cfe2f"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["counter", "totalSupply"],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812367,
       "sinceBlock": 22364997,
       "values": {
@@ -531,7 +541,7 @@
       "address": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "type": "EOA",
       "sourceHashes": [
-        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+        "0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"
       ],
       "proxyType": "EIP7702 EOA",
       "receivedPermissions": [
@@ -594,6 +604,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812331,
       "sinceBlock": 22364994,
       "values": {
@@ -621,6 +632,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745812367,
       "sinceBlock": 22364997,
       "values": {
@@ -653,6 +665,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x944416e5dF03eE4c14EC44C01495005564e6b07E",
       "sinceTimestamp": 1745811527,
       "sinceBlock": 22364927,
       "values": {

@@ -8,8 +8,8 @@
       "address": "eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
       "type": "Contract",
       "sourceHashes": [
-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
-        "0xa9291fc66798387bc6d07d6a47cc5d1573c07d5fa0464919eba895291a9a995a"
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0xa244912d497886434f84aa5baa85465897bdd336624109f05fbc11c2385491f3"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -20,6 +20,7 @@
         "nextWithdrawalRequestId",
         "exchangeRate"
       ],
+      "deployerAddress": "eth:0x4CDbDf63ae2215eDD6B673F9DABFf789A13D4270",
       "sinceTimestamp": 1723579643,
       "sinceBlock": 20521985,
       "values": {

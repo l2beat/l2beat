@@ -1,8 +1,7 @@
 {
   "StakingRegistry.sol": {
-    "hash": "0xd915c209abd51e3940ba3ab54a18e1fd0247291bd07429a2361dd6594e0350a9",
+    "hash": "0xa4acff18858bb6206c7931c143d298fae2364ee699bba4843ed11dfaf9077e1e",
     "address": "eth:0x042dF8f42790d6943F41C25C2132400fd727f452",
-    "chain": "ethereum",
     "blockNumber": 23867964
   }
 }

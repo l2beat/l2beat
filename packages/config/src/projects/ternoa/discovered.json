@@ -78,11 +78,12 @@
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+        "0x5684ac32eb941b26475b5792fd1549caa9c2a7b9da3c5163c16ca5cd4eb4b4a5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.",
       "ignoreInWatchMode": ["lastAccInputHash"],
+      "deployerAddress": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
       "sinceTimestamp": 1735650935,
       "sinceBlock": 21522690,
       "values": {
@@ -151,6 +152,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
+      "deployerAddress": "eth:0x082cCe3072A26a3871D3e5D40afB425fF5038Cf6",
       "sinceTimestamp": 1729157663,
       "sinceBlock": 20984421,
       "values": { "$immutable": true },
@@ -178,10 +180,11 @@
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
+        "0x104785224960bd811f19412b23435d0d80fa4eb4d05a7d50a857009b583bafa5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).",
+      "deployerAddress": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
       "sinceTimestamp": 1735824851,
       "sinceBlock": 21537112,
       "values": {
@@ -229,6 +232,7 @@
           "role": "admin"
         }
       ],
+      "deployerAddress": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
       "sinceTimestamp": 1735824839,
       "sinceBlock": 21537111,
       "values": {

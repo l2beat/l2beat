@@ -4,6 +4,7 @@ import { IS_READONLY } from '../../../../config/readonly'
 import { useIsomorphicKeys } from '../../hooks/useIsomorphicKeys'
 import { useDiscoveryCommand } from '../../panel-terminal/useDiscoveryCommand'
 import { useSearchStore } from '../../search/store'
+import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import { useMultiViewStore } from '../store'
 import { Keys } from './Keys'
 import { StatusRibbon } from './StatusRibbon'
@@ -18,6 +19,9 @@ export function BottomBar() {
   const { discover, killCommand } = useDiscoveryCommand()
   const { altKey } = useIsomorphicKeys()
   const setOpen = useSearchStore((state) => state.setOpen)
+  const maxReachableDepth = useGlobalSettingsStore((s) => s.maxReachableDepth)
+
+  const depthSpecified = maxReachableDepth !== null
 
   // By default when using bottom bar
   const useDevMode = true
@@ -76,6 +80,11 @@ export function BottomBar() {
         )}
       </div>
       <div className="flex gap-4">
+        {depthSpecified && (
+          <div className="flex items-center justify-center border border-aux-green px-1.5 py-0.5 text-aux-green text-xs">
+            Depth: {maxReachableDepth}
+          </div>
+        )}
         <StatusRibbon />
         <div className="flex gap-2">
           <button onClick={() => setHintOpen((open) => !open)}>

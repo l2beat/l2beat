@@ -41,6 +41,10 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface ExitWindowRisk extends TableReadyValue {
+  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+}
+
 export interface ProjectTechnologyChoice {
   name: string
   description: string
@@ -112,6 +116,9 @@ export interface BaseProject {
 
   // interop data
   interopConfig?: InteropConfig
+
+  // privacy data
+  privacyInfo?: ProjectPrivacyInfo
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -542,7 +549,7 @@ export interface ProjectRiskView {
     initialBond?: string
   }
   dataAvailability: TableReadyValue
-  exitWindow: TableReadyValue
+  exitWindow: ExitWindowRisk
   sequencerFailure: TableReadyValue
   proposerFailure: TableReadyValue
 }
@@ -837,6 +844,70 @@ export interface TrustedSetup {
   shortDescription: string
   longDescription: string
 }
+
+// #endregion
+
+// #region privacy data
+
+export interface ProjectPrivacyInfo {
+  trustedSetup: TrustedSetup
+  tokens: ProjectPrivacyToken[]
+  riskSummary?: string
+  upgradesAndGovernance?: string
+}
+
+export interface ProjectPrivacyToken {
+  token: {
+    address: EthereumAddress
+    symbol: string
+    decimals: number
+    priceId: string
+    sinceTimestamp: UnixTime
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  denomination?: string
+  deposit: PrivacyFlowSource
+  withdrawal: PrivacyFlowSource
+}
+
+export type PrivacyFlowSource = {
+  event: string
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 
@@ -1207,7 +1278,9 @@ export type InteropPluginName =
   | 'hyperlane-hwr'
   | 'hyperlane-merkly-tokenbridge'
   | 'hyperlane-simple-apps'
+  | 'hyperliquid-bridge'
   | 'layerzero-v2'
+  | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
   | 'maker-bridge'
@@ -1247,6 +1320,8 @@ export interface InteropConfig {
   name?: string
   shortName?: string
   description?: string
+  /** Longer markdown description visible on interop detailed pages. */
+  detailedDescription?: string
   type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
@@ -1263,6 +1338,12 @@ export interface InteropConfig {
   /** If configured avg. duration can be split into custom labeled groups.
    The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
+  /** Contracts displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  contracts?: ProjectContracts
+  /** Permissions displayed on the interop project page. For canonical bridges,
+   * this is intentionally a different (narrower) set than the chain page. */
+  permissions?: Record<string, ProjectPermissions>
 }
 
 export type InteropPlugin = {

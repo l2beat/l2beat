@@ -1,8 +1,7 @@
 {
   "Inbox.sol": {
-    "hash": "0x1d730495f5adaba8d5051f7f6ff89bb87ed039b2f192e27b9f80ef175ed92534",
+    "hash": "0x2977d082f35504b1df018a0cbbf557502a6c5dfc5967dd171347c6c34ea465ec",
     "address": "eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee",
-    "chain": "ethereum",
     "blockNumber": 23834069
   }
 }
