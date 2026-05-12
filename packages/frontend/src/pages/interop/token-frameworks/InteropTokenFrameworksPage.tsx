@@ -38,10 +38,10 @@ export function InteropTokenFrameworksPage({
             <MainPageHeader description="This dashboard provides a comprehensive overview of the major token frameworks - multichain standards that can be used for token creation. The page uses cross-chain transfers data to provide insights on volume, transfers, tokens and speed across different chains.">
               Token frameworks
             </MainPageHeader>
-            <div className="mt-4">
+            <div className="mt-4 max-md:bg-surface-primary max-md:p-4 max-md:pb-0">
               <TokenFrameworksChainSelector allChains={interopChains} />
             </div>
-            <div className="mt-4 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
+            <div className="grid md:mt-4 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
               <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
                 <TotalVolumeWidget mobile />
                 <TotalTransfersWidget mobile />
