@@ -1,3 +1,25 @@
+/**
+ * Grammar (EBNF-ish) of the Clingo fact subset accepted by this parser.
+ * Whitespace (space, tab, CR, LF) is permitted between any two tokens
+ * and is never significant.
+ *
+ *   Fact      ::= Ident '(' ParamList ')'         ; Ident must not be "cons"
+ *   ParamList ::= (Param (',' Param)*)?           ; may be empty
+ *   Param     ::= String
+ *               | Number
+ *               | ConsList
+ *               | Fact                            ; Ident followed by '('
+ *               | Atom                            ; bare Ident
+ *   ConsList  ::= 'cons' '(' Param ',' Param ')'  ; tail must be ConsList or 'nil';
+ *                                                 ; denotes a list [head, ...tail]
+ *   Atom      ::= Ident                           ; "nil" denotes the empty list /
+ *                                                 ; absent value; "cons" is reserved
+ *   Ident     ::= [A-Za-z0-9_]+                   ; no internal whitespace
+ *   String    ::= '"' ( '\"' | <any char except '"'> )* '"'
+ *                                                 ; only \" is recognized as an escape
+ *   Number    ::= '-'? [0-9]+ ('.' [0-9]+)?
+ */
+
 import { type Parser, v } from '@l2beat/validate'
 
 export type ClingoValue =
