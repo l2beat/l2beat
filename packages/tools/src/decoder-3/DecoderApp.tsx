@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { clsx } from 'clsx'
 import {
   createContext,
+  type FormEvent,
   Fragment,
   type ReactNode,
   useContext,
@@ -10,6 +11,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { toFunctionSelector } from 'viem'
 import { create } from 'zustand'
 import { Form, type FormValues } from '../decoder-new/form/Form'
 import * as API from './api'
@@ -43,6 +45,7 @@ export function DecoderApp() {
       {showFetch && <FetchTx values={values} setValues={setValues} />}
       {showDecoded && (
         <main className="mx-auto max-w-[1200px] p-12 pb-20">
+          <AbiManager />
           <DecodedView value={value} />
         </main>
       )}
@@ -112,6 +115,7 @@ interface Signature {
   signature: string
   chainId?: number
   address?: `0x${string}`
+  isLocal?: boolean
 }
 
 interface State {
@@ -127,11 +131,27 @@ interface State {
 interface Actions {
   requestSignature(selector: `0x${string}`): void
   addSignatures(signatures: Signature[]): void
+  removeSignature(signature: Signature): void
   requestAddress(chainId: number, address: `0x${string}`): void
   setName(chainId: number, address: `0x${string}`, name: string): void
   requestPreimage(hash: `0x${string}`): void
   setPreimage(hash: `0x${string}`, preimage: string): void
   showTooltip(id: string): void
+}
+
+function compareSignatures(a: Signature, b: Signature): number {
+  function rank(x: Signature) {
+    if (x.isLocal) return 2
+    if (x.address) return 1
+    return 0
+  }
+  const aRank = rank(a)
+  const bRank = rank(b)
+  // higher rank first
+  if (aRank > bRank) return -1
+  if (aRank < bRank) return 1
+  // shorter signature first
+  return a.signature.length - b.signature.length
 }
 
 const useStore = create<State & Actions>((set) => ({
@@ -155,8 +175,22 @@ const useStore = create<State & Actions>((set) => ({
       for (const signature of newSignatures) {
         const array = signatures[signature.selector] ?? []
         if (array.find((x) => x.signature === signature.signature)) continue
-        signatures[signature.selector] = [...array, signature]
+        signatures[signature.selector] = [...array, signature].sort(
+          compareSignatures,
+        )
       }
+      return { signatures }
+    }),
+  removeSignature: (signature) =>
+    set((state) => {
+      const signatures = { ...state.signatures }
+      let array = signatures[signature.selector] ?? []
+      array = array.filter(
+        (x) =>
+          x.isLocal !== signature.isLocal ||
+          x.signature !== signature.signature,
+      )
+      signatures[signature.selector] = array
       return { signatures }
     }),
   requestAddress: (chainId, address) =>
@@ -183,6 +217,9 @@ const useStore = create<State & Actions>((set) => ({
   showTooltip: (id) =>
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
 }))
+
+// @ts-ignore
+window.useStore = useStore
 
 function useDebouncedValue<T>(value: T, delay: number): T {
   const [debounced, setDebounced] = useState(value)
@@ -262,6 +299,95 @@ function APIChecker() {
   return null
 }
 
+interface LocalAbi {
+  selector: `0x${string}`
+  signature: string
+}
+
+function AbiManager() {
+  const store = useStore()
+  const [localAbis, setLocalAbis] = useState<LocalAbi[]>([])
+  const [expanded, setExpanded] = useState(false)
+  const [error, setError] = useState('')
+  const [input, setInput] = useState('')
+
+  useEffect(() => {
+    const abis: LocalAbi[] = JSON.parse(
+      localStorage.getItem('l2beat.decoder.abis') ?? '[]',
+    )
+    setLocalAbis(abis)
+    store.addSignatures(abis.map((x) => ({ ...x, isLocal: true })))
+  }, [])
+
+  function addAbi(abi: LocalAbi) {
+    const newAbis = [...localAbis, abi]
+    localStorage.setItem('l2beat.decoder.abis', JSON.stringify(newAbis))
+    setLocalAbis(newAbis)
+    store.addSignatures([{ ...abi, isLocal: true }])
+  }
+
+  function deleteAbi(abi: LocalAbi) {
+    const newAbis = localAbis.filter((x) => x.signature !== abi.signature)
+    localStorage.setItem('l2beat.decoder.abis', JSON.stringify(newAbis))
+    setLocalAbis(newAbis)
+    store.removeSignature({ ...abi, isLocal: true })
+  }
+
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    try {
+      const selector = toFunctionSelector(input)
+      addAbi({ selector, signature: input })
+      setError('')
+      setInput('')
+    } catch {
+      setError('Invalid ABI')
+    }
+  }
+
+  return (
+    <div className="mb-4 w-[600px]">
+      <button className="text-zinc-500" onClick={() => setExpanded(!expanded)}>
+        {expanded ? '[- ABI manager]' : '[+ ABI manager]'}
+      </button>
+      {expanded && (
+        <>
+          <form className="mt-2 w-full" onSubmit={(e) => submit(e)}>
+            <div className="flex w-full gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="e.g. function foo(uint a, address b)"
+                className="flex-1 bg-zinc-900 px-2 placeholder:text-zinc-500"
+              />
+              <button className="text-zinc-500" type="submit">
+                [Add]
+              </button>
+            </div>
+            {error && <div className="mt-2 text-red-500">{error}</div>}
+          </form>
+          <ul className="mt-2 w-full">
+            {localAbis.map((abi, i) => (
+              <li className="flex w-full items-center gap-2" key={i}>
+                <button
+                  className="text-zinc-500"
+                  onClick={() => deleteAbi(abi)}
+                >
+                  [delete]
+                </button>
+                <span className="font-mono text-orange-600">
+                  {abi.selector}
+                </span>
+                <span className="flex-1 text-zinc-200">{abi.signature}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  )
+}
+
 function DecodedView({ value }: { value: DecodedValue }) {
   const store = useStore()
   const [lessMembers, setLessMembers] = useState(false)
@@ -284,6 +410,19 @@ function DecodedView({ value }: { value: DecodedValue }) {
         decoded.address,
       )
       if (newDecoded) setDecoded(newDecoded)
+    }
+    if (decoded.type === 'call') {
+      const selector = decoded.bytes.slice(0, 10) as `0x${string}`
+      const signatures =
+        store.signatures[selector]?.map((x) => x.signature) ?? []
+      const newDecoded = decode(
+        decoded.bytes,
+        signatures,
+        decoded.chainId ?? 1,
+        decoded.address,
+      )
+      if (newDecoded && newDecoded.functionAbi !== decoded.functionAbi)
+        setDecoded(newDecoded)
     }
   }, [decoded, store.requestSignature, store.signatures])
 

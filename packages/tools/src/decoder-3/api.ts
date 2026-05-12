@@ -83,7 +83,7 @@ export async function getChains() {
 }
 
 export async function retry<T>(fn: () => Promise<T>) {
-  let timeout = 10
+  let timeout = 100
   while (true) {
     try {
       return await fn()
