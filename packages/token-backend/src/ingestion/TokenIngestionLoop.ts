@@ -1,23 +1,50 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, TokenDatabase } from '@l2beat/database'
+import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
+import type { Chain } from '../chains/Chain'
+import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
+import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
+import {
+  buildInteropTransferIndex,
+  normalizeInteropTokenAddress,
+} from './InteropTransferIndex'
+import { TokenIngestionProcessor } from './TokenIngestionProcessor'
 
 const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
 
-export interface TokenIngestionQueueFeederLoopConfig {
+export interface TokenIngestionLoopConfig {
   intervalMs: number
+  etherscanApiKey: string | undefined
+  createChain?: (chainRecord: ChainRecord) => Chain
+  fetchDeployedTokenFacts?: (
+    chain: Chain,
+    address: string,
+  ) => Promise<DeployedTokenFacts>
+  generateAbstractTokenId?: () => string
 }
 
-export class TokenIngestionQueueFeederLoop {
+export class TokenIngestionLoop {
   private running = false
   private intervalHandle: ReturnType<typeof setInterval> | undefined
+  private readonly processor: TokenIngestionProcessor
 
   constructor(
     private readonly db: Database,
     private readonly tokenDb: TokenDatabase,
+    coingeckoClient: CoingeckoClient,
     private readonly logger: Logger,
-    private readonly config: TokenIngestionQueueFeederLoopConfig,
+    private readonly config: TokenIngestionLoopConfig,
   ) {
     this.logger = logger.for(this)
+    this.processor = new TokenIngestionProcessor({
+      db,
+      tokenDb,
+      coingeckoClient,
+      etherscanApiKey: config.etherscanApiKey,
+      createChain: config.createChain,
+      fetchDeployedTokenFacts: config.fetchDeployedTokenFacts,
+      generateAbstractTokenId: config.generateAbstractTokenId,
+    })
   }
 
   start() {
@@ -44,6 +71,11 @@ export class TokenIngestionQueueFeederLoop {
   }
 
   async runOnce() {
+    await this.enqueueNewInteropTransferTokens()
+    await this.drainPendingQueue()
+  }
+
+  private async enqueueNewInteropTransferTokens() {
     const setting = await this.tokenDb.tokenDbSetting.get(
       INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY,
     )
@@ -57,7 +89,13 @@ export class TokenIngestionQueueFeederLoop {
     }
 
     for (const tokenAddress of batch.tokenAddresses) {
-      await this.tokenDb.tokenIngestionQueue.enqueue(tokenAddress)
+      const address = normalizeInteropTokenAddress(tokenAddress.address)
+      if (address) {
+        await this.tokenDb.tokenIngestionQueue.enqueue({
+          chain: tokenAddress.chain,
+          address,
+        })
+      }
     }
 
     await this.tokenDb.tokenDbSetting.set({
@@ -70,6 +108,20 @@ export class TokenIngestionQueueFeederLoop {
       tokenAddresses: batch.tokenAddresses.length,
       lastSerialId: batch.latestSerialId,
     })
+  }
+
+  private async drainPendingQueue() {
+    const transfers = await this.db.interopTransfer.getAll()
+    const transferIndex = buildInteropTransferIndex(transfers)
+
+    while (true) {
+      const entry = await this.tokenDb.tokenIngestionQueue.findNextPending()
+      if (!entry) {
+        return
+      }
+
+      await this.processor.process(entry, transferIndex)
+    }
   }
 
   private async runTick() {

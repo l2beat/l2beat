@@ -3,7 +3,7 @@ import express from 'express'
 import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
 import { getConfig } from './config'
 import { getDb, getTokenDb } from './database/db'
-import { TokenIngestionQueueFeederLoop } from './ingestion/TokenIngestionQueueFeederLoop'
+import { TokenIngestionLoop } from './ingestion/TokenIngestionLoop'
 import { getLogger } from './logger'
 import { createTrpcRouter } from './server/routers/TrpcRouter'
 
@@ -37,12 +37,13 @@ function main() {
     }),
   )
 
-  const tokenIngestionQueueFeeder = config.tokenIngestion.enabled
-    ? new TokenIngestionQueueFeederLoop(db, tokenDb, logger, {
+  const tokenIngestionLoop = config.tokenIngestion.enabled
+    ? new TokenIngestionLoop(db, tokenDb, coingeckoClient, logger, {
         intervalMs: config.tokenIngestion.intervalMs,
+        etherscanApiKey: config.etherscanApiKey,
       })
     : undefined
-  tokenIngestionQueueFeeder?.start()
+  tokenIngestionLoop?.start()
 
   const port = Number.parseInt(process.env['PORT'] ?? '3000', 10)
   const server = app.listen(port, () => {
@@ -51,7 +52,7 @@ function main() {
 
   function shutdown(signal: NodeJS.Signals) {
     console.log(`Received ${signal}, shutting down...`)
-    tokenIngestionQueueFeeder?.stop()
+    tokenIngestionLoop?.stop()
     server.close(() => {
       Promise.all([tokenDb.close(), db.close()])
         .then(() => {

@@ -91,3 +91,38 @@ Verification after the repository rename:
 - `pnpm -C packages/token-backend typecheck` passed.
 - `pnpm -C packages/token-backend lint` passed.
 - `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionQueueFeederLoop.test.ts` passed with `84 passing`; the package Mocha config ran the broader token-backend suite.
+
+## 2026-05-12 - Slice 3: queue drain
+
+Implemented the automatic ingestion queue drain inside the scheduled token ingestion loop.
+
+- Renamed `TokenIngestionQueueFeederLoop` to `TokenIngestionLoop`.
+- Kept the existing pre-step that enqueues new interop transfer token addresses.
+- Added `InteropTransferIndex`, which loads the current interop transfer table once per tick and indexes transfers in memory by normalized `(chain, address)`.
+- Added `TokenIngestionProcessor` for one queue entry at a time.
+- Extracted deployed-token fact fetching from `checkDeployedToken` into `fetchDeployedTokenFacts` so manual form checks and automatic ingestion use the same RPC/explorer logic.
+
+Behavior:
+
+- Each tick first enqueues tokens from new interop transfers, then drains pending queue entries.
+- Interop token addresses are normalized to TokenDB addresses before queueing and processing: bytes32 EVM addresses are cropped to 20-byte addresses and lowercased; zero addresses are ignored.
+- Abstract token resolution first uses non-swapping transfers (`lockAndMint` and `burnAndMint`) and live TokenDB data for the other side.
+- If non-swapping transfer evidence points to more than one abstract token, or disagrees with an existing deployed token abstract, the queue entry is marked `conflict`.
+- If transfer evidence cannot resolve an abstract token, ingestion falls back to CoinGecko platform lookup.
+- If CoinGecko finds a coin with no existing `AbstractToken`, ingestion prepares a new `AbstractToken` with `reviewed: false` and writes it in the same transaction as the deployed token.
+- Deployed-token RPC/explorer facts are fetched only after an abstract token has been resolved.
+- Missing required deployed-token facts (`symbol`, `decimals`, or `deploymentTimestamp`) mark the queue entry as `error`; they are not silently dropped.
+- Queue entries are removed only when no abstract token can be resolved or after successful processing.
+- After a deployed token is inserted or updated, related interop transfers are marked unprocessed and neighboring transfer tokens are re-enqueued. No-op existing tokens do not propagate neighbors, avoiding ping-pong queue loops.
+
+Verification:
+
+- `pnpm -C packages/token-backend format` passed.
+- `pnpm -C packages/token-backend build` passed.
+- `pnpm -C packages/token-backend typecheck` passed.
+- `pnpm -C packages/token-backend lint` passed.
+- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionLoop.test.ts` passed with `89 passing`; the package Mocha config ran the broader token-backend suite.
+
+Follow-up planning note:
+
+- Updated `docs/automatic-token-ingestion.md` with a proposed debug-only `staged` queue state. In debug approval mode, the pre-step can enqueue discovered addresses as `staged`; the drain ignores them until a researcher approves one entry, moving it to `pending`.
