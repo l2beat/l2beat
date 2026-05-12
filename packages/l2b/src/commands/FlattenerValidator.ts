@@ -107,9 +107,11 @@ export const FlattenerValidator = command({
       )
 
       const cursorControl = completed === 1 ? '' : '\x1b[1A\r\x1b[K'
+      const failureMessage =
+        status.type === 'failure' ? `: ${status.message}` : ''
       console.log(
         `${cursorControl}${progress}/${totalText}: ` +
-          `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${contract}`,
+          `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${contract}${failureMessage}`,
       )
       console.log(
         `Status: completed=${completed.toString().padStart(maxLength)}/${totalText} ` +
@@ -222,7 +224,9 @@ function getAllContractAddresses(
   return unique(result)
 }
 
-type VerificationResult = { type: 'success' } | { type: 'failure' }
+type VerificationResult =
+  | { type: 'success' }
+  | { type: 'failure'; message: string }
 
 const FLAT_SOURCE_PATH = 'Flat.sol'
 
@@ -244,73 +248,39 @@ async function verifyBytecode(
 
     const contract = output.contracts[FLAT_SOURCE_PATH]?.[source.name]
     if (contract === undefined) {
-      console.log('Failed to find contract', source.name)
-      return { type: 'failure' }
+      return { type: 'failure', message: 'Root contract not found' }
     }
 
-    if (matchesRuntimeBytecode(contract, bytecode)) {
-      return { type: 'success' }
-    }
+    return matchesRuntimeBytecode(contract, bytecode)
   } catch {
-    console.log('Failure error', source.name)
-    return { type: 'failure' }
+    return { type: 'failure', message: 'An errow was thrown' }
   }
-
-  console.log('Failure not matching bytecode', source.name)
-  return { type: 'failure' }
 }
+
+type SolidityJsonSettings = SolidityJsonInput['settings']
 
 function createCompilerInput(
   source: ContractSource,
   flat: string,
 ): SolidityJsonInput {
-  const compilerSettings = getCompilerSettings(source)
-
   return {
     language: 'Solidity',
-    sources: {
-      [FLAT_SOURCE_PATH]: {
-        content: flat,
-      },
-    },
+    sources: { [FLAT_SOURCE_PATH]: { content: flat } },
     settings: {
-      ...compilerSettings,
+      ...getCompilerSettings(source),
       remappings: source.remappings,
       libraries: getLibraries(source),
-      outputSelection: {
-        '*': {
-          '*': ['evm.deployedBytecode'],
-        },
-      },
+      outputSelection: { '*': { '*': ['evm.deployedBytecode'] } },
     },
   }
 }
 
-function getCompilerSettings(
-  source: ContractSource,
-): SolidityJsonInput['settings'] {
-  const { debug, evmVersion, ...settings } = source.compilerSettings ?? {}
-  const normalizedEvmVersion = evmVersion === 'Default' ? undefined : evmVersion
-
-  if (debug === undefined) {
-    return {
-      ...settings,
-      evmVersion: normalizedEvmVersion,
-    }
-  }
-
-  type RevertStrings = NonNullable<
-    SolidityJsonInput['settings']['debug']
-  >['revertStrings']
-
+function getCompilerSettings(source: ContractSource): SolidityJsonSettings {
+  const { evmVersion, ...settings } = source.compilerSettings ?? {}
   return {
     ...settings,
-    evmVersion: normalizedEvmVersion,
-    debug: {
-      ...debug,
-      revertStrings: debug.revertStrings as RevertStrings,
-    },
-  }
+    evmVersion: evmVersion === 'Default' ? undefined : evmVersion,
+  } as SolidityJsonSettings
 }
 
 function getLibraries(source: ContractSource): Libraries {
@@ -331,22 +301,23 @@ function getLibraries(source: ContractSource): Libraries {
 function matchesRuntimeBytecode(
   contract: SolidityOutputContract,
   deployedBytecode: Bytes,
-): boolean {
+): VerificationResult {
   const compiledBytecode = contract.evm.deployedBytecode.object
   if (compiledBytecode.length === 0) {
-    return false
+    return { type: 'failure', message: 'Compiled bytecode is empty' }
   }
 
   const got = applyTransforms(contract, Bytes.fromHex(`0x${compiledBytecode}`))
   const want = applyTransforms(contract, deployedBytecode)
 
-  const matches = got.equals(want)
-  if (!matches) {
-    console.log(`Failed to match, got ${got.length} want ${want.length}`)
-    console.log(formatOpcodeDiff(got, want))
+  if (!got.equals(want)) {
+    return {
+      type: 'failure',
+      message: `Bytecodes do not match | want ${want.length} bytes got ${got.length} bytes\n\n${formatOpcodeDiff(got, want)}\n\n`,
+    }
   }
 
-  return matches
+  return { type: 'success' }
 }
 
 type Transform = (contract: SolidityOutputContract, input: Bytes) => Bytes
@@ -370,14 +341,13 @@ function maskCallProtection(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   if (!bytecode.slice(0, 1).equals(push20)) {
     return bytecode
   }
-  const zero20 = Bytes.fromHex('0x' + '00'.repeat(20))
-  return push20.concat(zero20).concat(bytecode.slice(21, bytecode.length))
+  const twentyZeroes = Bytes.fromHex('0x' + '00'.repeat(20))
+  return push20.concat(twentyZeroes).concat(bytecode.slice(21, bytecode.length))
 }
 
 function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
-  return Bytes.fromHex(
-    splitAuxdata(bytecode.toString(), AuxdataStyle.SOLIDITY)[0],
-  )
+  const [stripped] = splitAuxdata(bytecode.toString(), AuxdataStyle.SOLIDITY)
+  return Bytes.fromHex(stripped)
 }
 
 // TODO(radomski): This needs to be improved
