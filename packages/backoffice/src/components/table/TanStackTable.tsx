@@ -40,6 +40,8 @@ interface TanStackTableProps<TData extends RowData> {
   pageSizeOption: PageSizeOption
   onPageSizeOptionChange: (value: PageSizeOption) => void
   emptyMessage: string
+  className?: string
+  scrollViewportClassName?: string
   enableVirtualization?: boolean
   enableCsvExport?: boolean
   getCsvFilename?: () => string
@@ -59,6 +61,8 @@ export function TanStackTable<TData extends RowData>({
   pageSizeOption,
   onPageSizeOptionChange,
   emptyMessage,
+  className,
+  scrollViewportClassName,
   enableVirtualization = true,
   enableCsvExport = false,
   getCsvFilename,
@@ -141,7 +145,7 @@ export function TanStackTable<TData extends RowData>({
   }, [syncScrollState])
 
   return (
-    <>
+    <div className={cn('flex flex-col', className)}>
       <div className="flex flex-col gap-3 border-b px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           {onSearchValueChange ? (
@@ -202,7 +206,10 @@ export function TanStackTable<TData extends RowData>({
       </div>
 
       <div
-        className="relative max-h-[80vh] w-full overflow-auto"
+        className={cn(
+          'relative max-h-[80vh] w-full overflow-auto',
+          scrollViewportClassName,
+        )}
         ref={scrollViewportRef}
         onScroll={handleTableScroll}
       >
@@ -362,6 +369,6 @@ export function TanStackTable<TData extends RowData>({
           </Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
