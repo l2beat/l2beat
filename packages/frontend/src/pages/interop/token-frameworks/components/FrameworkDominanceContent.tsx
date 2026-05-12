@@ -19,6 +19,18 @@ import { Last24HoursBadge } from './Last24HoursBadge'
 
 type Metric = 'volume' | 'transfers'
 
+type DisplayFramework = {
+  iconUrl?: string
+  label: string
+  name: string
+  color: string
+}
+
+type DisplayItem = {
+  entry: FrameworkDominanceEntry
+  framework: DisplayFramework
+}
+
 export function FrameworkDominanceContent({
   tokenFrameworks,
   frameworkDominance,
@@ -37,6 +49,9 @@ export function FrameworkDominanceContent({
     : undefined
 
   const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
+  const displayItems = metricData
+    ? buildDisplayItems(metricData.entries, frameworksById)
+    : []
 
   return (
     <div>
@@ -71,23 +86,19 @@ export function FrameworkDominanceContent({
         <TabsContent value={metric} className="mt-1.5 md:mt-4">
           {isLoading ? (
             <RowsSkeleton />
-          ) : !metricData || metricData.entries.length === 0 ? (
+          ) : !metricData || displayItems.length === 0 ? (
             <EmptyState />
           ) : (
             <div className="flex flex-col gap-5">
-              {metricData.entries.map((entry) => {
-                const framework = frameworksById.get(entry.id)
-                if (!framework) return null
-                return (
-                  <FrameworkRowItem
-                    key={entry.id}
-                    entry={entry}
-                    framework={framework}
-                    metric={metric}
-                    total={metricData.total}
-                  />
-                )
-              })}
+              {displayItems.map((item) => (
+                <FrameworkRowItem
+                  key={item.entry.id}
+                  entry={item.entry}
+                  framework={item.framework}
+                  metric={metric}
+                  total={metricData.total}
+                />
+              ))}
             </div>
           )}
         </TabsContent>
@@ -103,7 +114,7 @@ function FrameworkRowItem({
   total,
 }: {
   entry: FrameworkDominanceEntry
-  framework: InteropTokenFramework
+  framework: DisplayFramework
   metric: Metric
   total: number
 }) {
@@ -114,11 +125,13 @@ function FrameworkRowItem({
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <img
-            src={framework.iconUrl}
-            alt={framework.name}
-            className="size-6 rounded-full"
-          />
+          {framework.iconUrl && (
+            <img
+              src={framework.iconUrl}
+              alt={framework.name}
+              className="size-6 rounded-full"
+            />
+          )}
           <div className="flex items-center gap-1">
             <span className="font-bold text-heading-16">{framework.label}</span>
             {framework.label !== framework.name && (
@@ -217,4 +230,51 @@ function EmptyState() {
       No data for the selected chains.
     </div>
   )
+}
+
+function buildDisplayItems(
+  entries: FrameworkDominanceEntry[],
+  frameworksById: Map<string, InteropTokenFramework>,
+): DisplayItem[] {
+  if (entries.length <= 5) {
+    return entries.flatMap((entry) => {
+      const framework = frameworksById.get(entry.id)
+      return framework ? [{ entry, framework }] : []
+    })
+  }
+
+  const top4: DisplayItem[] = entries.slice(0, 4).flatMap((entry) => {
+    const framework = frameworksById.get(entry.id)
+    return framework ? [{ entry, framework }] : []
+  })
+  return [...top4, buildOthersItem(entries.slice(4))]
+}
+
+function buildOthersItem(entries: FrameworkDominanceEntry[]): DisplayItem {
+  const volume = entries.reduce((sum, e) => sum + e.volume, 0)
+  const transferCount = entries.reduce((sum, e) => sum + e.transferCount, 0)
+
+  const durationWeightedSum = entries.reduce(
+    (s, e) => s + (e.averageDurationSeconds ?? 0) * e.transferCount,
+    0,
+  )
+  const averageDurationSeconds =
+    transferCount > 0 ? Math.floor(durationWeightedSum / transferCount) : null
+
+  const averageValue = transferCount > 0 ? volume / transferCount : null
+
+  return {
+    entry: {
+      id: '__others__',
+      volume,
+      transferCount,
+      averageDurationSeconds,
+      averageValue,
+    },
+    framework: {
+      label: 'Others',
+      name: 'Others',
+      color: '#E9BB00',
+    },
+  }
 }
