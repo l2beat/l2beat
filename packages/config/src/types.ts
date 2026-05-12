@@ -843,6 +843,7 @@ export interface TrustedSetup {
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
+  participantCount?: number
 }
 
 // #endregion
