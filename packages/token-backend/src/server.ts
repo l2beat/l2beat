@@ -3,6 +3,8 @@ import express from 'express'
 import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
 import { getConfig } from './config'
 import { getDb, getTokenDb } from './database/db'
+import { TokenIngestionQueueFeederLoop } from './ingestion/TokenIngestionQueueFeederLoop'
+import { getLogger } from './logger'
 import { createTrpcRouter } from './server/routers/TrpcRouter'
 
 dotenv()
@@ -12,6 +14,7 @@ function main() {
   const config = getConfig()
   const tokenDb = getTokenDb(config)
   const db = getDb(config)
+  const logger = getLogger()
 
   app.use(express.json({ limit: `${config.jsonBodyLimitMb}mb` }))
 
@@ -34,6 +37,13 @@ function main() {
     }),
   )
 
+  const tokenIngestionQueueFeeder = config.tokenIngestion.enabled
+    ? new TokenIngestionQueueFeederLoop(db, tokenDb, logger, {
+        intervalMs: config.tokenIngestion.intervalMs,
+      })
+    : undefined
+  tokenIngestionQueueFeeder?.start()
+
   const port = Number.parseInt(process.env['PORT'] ?? '3000', 10)
   const server = app.listen(port, () => {
     console.log(`Token service API listening on port ${port}`)
@@ -41,9 +51,9 @@ function main() {
 
   function shutdown(signal: NodeJS.Signals) {
     console.log(`Received ${signal}, shutting down...`)
+    tokenIngestionQueueFeeder?.stop()
     server.close(() => {
-      tokenDb
-        .close()
+      Promise.all([tokenDb.close(), db.close()])
         .then(() => {
           process.exit(0)
         })

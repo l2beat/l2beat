@@ -368,6 +368,8 @@ model InteropMessage {
 }
 
 model InteropTransfer {
+  serialId BigInt @default(autoincrement()) @db.BigInt
+
   plugin     String   @db.VarChar(64)
   transferId String   @db.VarChar(40)
   type       String   @db.VarChar(64)
@@ -409,6 +411,7 @@ model InteropTransfer {
   isProcessed Boolean
 
   @@id([transferId])
+  @@unique([serialId])
   @@index([type])
   @@index([isProcessed])
   @@index([isProcessed, srcValueUsd, dstValueUsd])
@@ -478,6 +481,14 @@ model TokenIngestionQueueEntry {
 
   @@id([chain, address])
   @@index([state, updatedAt])
+}
+
+model TokenDbSetting {
+  key       String   @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  @@id([key])
 }
 
 model TokenConnection {
