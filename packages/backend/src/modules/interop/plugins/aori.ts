@@ -53,6 +53,12 @@ const AORI_NETWORKS = defineNetworks('aori', [
     chain: 'monad',
     address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
   },
+  {
+    chainId: 4326,
+    eid: 30398,
+    chain: 'megaeth',
+    address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
+  },
   // tempo unsupported
 ])
 

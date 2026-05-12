@@ -1,14 +1,12 @@
 {
   "LazyOracle.sol": {
-    "hash": "0xb435a1c81fa691bd4ab244f90b03bb5ce2c1a97f0a4ff9c39dabf062c0b0bb5c",
+    "hash": "0x9823182305a0c6bf787c26bafca2eddbfa4ecbc7b26466b1647cfd4423127b55",
     "address": "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B",
-    "chain": "ethereum",
     "blockNumber": 24183468
   },
   "LazyOracle_new": {
-    "hash": "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291",
+    "hash": "0x4e35d87bdeaefb350dcfcc6021b16ffae2c9268f30b5c712569f9755dd281f36",
     "address": "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
-    "chain": "ethereum",
     "blockNumber": 24935917
   }
 }

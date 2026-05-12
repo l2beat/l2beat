@@ -1,3 +1,492 @@
+Generated with discovered.json: 0x41e416a4ac90d0eb011a39bb9e167c719e8593bc
+
+# Diff at Fri, 08 May 2026 07:52:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891441
+- current timestamp: 1777891441
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777891441 (main branch discovery), not current.
+
+```diff
+    contract CpuFrilessVerifier (eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6156385d69e1bf7290adaaaa1e5d33748df1c8da588f686403aca38710f05693"
++        "0x95dbba309e90963bdf97703ccc5716ab881b50739f99541b55e4abed3153a9ae"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa78b7bb374044ea6a603766c4b16c5d1ec5573ddc1dfb9b9413701020ebfe195"
++        "0x432fe8c93783a375ba6345117927303066b97cb04acf056253303f6edf6c545a"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
++        "0x75b9c03f92fe5939c6afa765489c0bbe8d66237fabc1dfa3a14fc0f109bc4f38"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xa78b7bb374044ea6a603766c4b16c5d1ec5573ddc1dfb9b9413701020ebfe195"
++        "0x432fe8c93783a375ba6345117927303066b97cb04acf056253303f6edf6c545a"
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_11 (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sourceHashes.0:
+-        "0x4861d3367a504472f64f32236f1345c2ab6b1b5e897ece08bc5e215bf14d3c7a"
++        "0x59a9cd18dfd9d425813a54d5f7fbf4b4df08b6504188fa73f2e324231fdac637"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6156385d69e1bf7290adaaaa1e5d33748df1c8da588f686403aca38710f05693"
++        "0x95dbba309e90963bdf97703ccc5716ab881b50739f99541b55e4abed3153a9ae"
+    }
+```
+
+```diff
+    contract SHARP Multisig (eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
++        "0x1f9f05bf9e73af6dd1b40cc4be8449df1039d30061479c593c4b909d1ef258ea"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
++        "0xb8fd15f34d012cc9f2ca1c8184c9e7e6aa3e5fa28dafc23c6a644be85dc48c3b"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x28E3aD4201ba416B23d9950503dB28a9232BE32a) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xf51c19545fc3804626755b86bd142a8c98efcbfacbd2499b1ae9ecda7a163540"
++        "0x959b66c4e0ca7d27b2f3f35e84911c954165ec82edb6cba3dbf50038c0679928"
+    }
+```
+
+```diff
+    contract FriStatementContract (eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
++        "0xf71797d479a665686e6fcccb6c80b49e5dfb373f38bb8363729d7eacede46b91"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
++        "0x2fe4df71d75d27c76880ece36632b58ea8bdd84a8ca199a326e1f8b95093d268"
+    }
+```
+
+```diff
+    contract MerkleStatementContract (eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
++        "0xaca823368006ed788b5c39c8a5441f4078675429b11a0255fa3c4739da757787"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
++        "0xd446fcab8f5c29a3cb78d30509ab38f9829fd14d35464cfe3d4049d5c82aa13b"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
++        "0x2fe4df71d75d27c76880ece36632b58ea8bdd84a8ca199a326e1f8b95093d268"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
++        "0xf0616d290d472f2ecc84d6aa921864d91e9e0535c3cb9f927dfbaa2c374b932b"
+    }
+```
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+      sourceHashes.0:
+-        "0x1cfb47b7d41edbe1b49e9d32ab6b39caae53d74feac405b948cc774b2d8db7a5"
++        "0xcb7bc19b402a7528b48f945e7e388a0085b0d9596186e8ae3b5a17c8e40f48d6"
+      sourceHashes.1:
+-        "0x7477a4b1d5db367c21e2c2d493553a2f519bd0d4305433a902d9b9322e7b81cb"
++        "0x5fe2d920435811a3cc2a10ecfd4887771e33fb259a37562f01c5f6239daf7618"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
++        "0xe02da9f94c167d2e7810a91f52b8d6ece9428c858d2cb050de600148b6776251"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
++        "0xc4d2148d6cd791873abac02aba0f89a5c902b9b810c5bb301604470ce047c01d"
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sourceHashes.0:
+-        "0xb9dd070b540ba3bad7b65f9cd4ed80b62e8cf034bd4f4acdf0373e4af46068f3"
++        "0x702c3ac8228cb7a90fdc21a1ff9a274add0e7c4d692fafa13cde53c3cab10c45"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x455c07ce6901510356c3380308551257434cb25c1460e324772f60468e46682a"
++        "0x6d84591f30dacfe16b962302797626ed63b321e8875f1ae503e127bed7d5f095"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb1d6c8068e8976bde7fbfd4294f8808b6d28efd5d87ca84820a7e3e890446761"
++        "0x436452908b4069cd28e48ce238a5687878f7a881aaa29423b580e71531692530"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6c96d348b73a5436aaac0d8de8c5f06a7a625c1ff02b0c069fc677f0ac01c009"
++        "0x77b5fe32f7b78f96106850c0c9fb590acd56dce1040e159d3eb1fdc483064ff1"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
++        "0xc2263421f1724484975ff224cd66eeaf740b4c5fd0635b8e9c19c073f4ce1831"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x66F2345D003511a1A60D87E3984Bb8d12C21A970) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0a08e622000c261c38a85bb0054bb2b50ae684e6edf79f0986e931d10fc5c277"
++        "0x375f1f2f62c75f2f26d292b116059a4dc4f08ad647351f30858f4c7578d723a9"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
++        "0x1f9f05bf9e73af6dd1b40cc4be8449df1039d30061479c593c4b909d1ef258ea"
+    }
+```
+
+```diff
+    contract Level3SHARPVerifier (eth:0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) [shared-sharp-verifier/Level3SHARPVerifier] {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      sourceHashes.0:
+-        "0x4a3316e3eb418f807ad2271f24b4764f4069731c7be4041cf2574e66ee2b20cc"
++        "0x81f1d5794593bf5e70a855f51034a88f7bca94b8b77b9bfc055231b61945beef"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x71574057D12541ccDa98643aC56441838353A26D) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
++        "0x941f25b6ad31af56f49fcbac70edce0badb28303f0aadcb5f10407906d42fef7"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
++        "0xc4d2148d6cd791873abac02aba0f89a5c902b9b810c5bb301604470ce047c01d"
+    }
+```
+
+```diff
+    contract SHARPVerifier (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sourceHashes.0:
+-        "0xb9dd070b540ba3bad7b65f9cd4ed80b62e8cf034bd4f4acdf0373e4af46068f3"
++        "0x702c3ac8228cb7a90fdc21a1ff9a274add0e7c4d692fafa13cde53c3cab10c45"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xdc9bb80d233601bb801b1e447c903b9c5a929f3630f4e158f75b9931e44beb9f"
++        "0x26ad17f9da869fe8252fca0474758685abb0de5bcb49fbcdd2334b4931c9f8ad"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
++        "0xc2263421f1724484975ff224cd66eeaf740b4c5fd0635b8e9c19c073f4ce1831"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
++        "0x75b9c03f92fe5939c6afa765489c0bbe8d66237fabc1dfa3a14fc0f109bc4f38"
+    }
+```
+
+```diff
+    contract SHARPVerifier_2024_10 (eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sourceHashes.0:
+-        "0x851b82890362af9467218d27c5666552421bca8023529b83632b6ebc4cc6bc8f"
++        "0xb2fd3a883d471e64996c35699173931df174bd303b3032311d63f2a58ba61b28"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
++        "0xe390f7396234c6cc841aa421a1d1ccb8872ccf3a354a248e45f65729dae6c087"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
++        "0x8c46f2cb0ccf501034b8dbe976044b44d42b9596de9c9b876cc111ba6d2bea7d"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xA9db7bDfbc3664C8954f490e4d94B8607a080f23) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
++        "0x8c46f2cb0ccf501034b8dbe976044b44d42b9596de9c9b876cc111ba6d2bea7d"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x130226ac91c1d6deb82b863eea95c84640b9c20c1e292b26cb88fc6db73c0b15"
++        "0x0775d8ea4da30591eac7620db651cd7edc8ac137d60e39f95118e231a7158372"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xAaAe0edF6536de72E7163D293518c40011179f8a) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
++        "0xb8fd15f34d012cc9f2ca1c8184c9e7e6aa3e5fa28dafc23c6a644be85dc48c3b"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
++        "0xe390f7396234c6cc841aa421a1d1ccb8872ccf3a354a248e45f65729dae6c087"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
++        "0xe3889a0e87718f39844e3ed41e417ae36561dccf53941c5a69bc8300b6934f79"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
++        "0xf0616d290d472f2ecc84d6aa921864d91e9e0535c3cb9f927dfbaa2c374b932b"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb44fea2230221135a15c6fbca5ca2f96e5962e3c7e3ec951f0971b590d8962a5"
++        "0x01d95ec0b312bee91534acb9979182ebb7d818ac53c8d581adfaf33490aa3b4c"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) [shared-sharp-verifier/Level2CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x85234db76e94b2ff3ad7e2f2a1b16709e261ffc53900bb726e05cf1ee79811aa"
++        "0xac0d4d19933d317f0bf831ce01c35f792b2354f8ab4de270f35402f81f1d322f"
+    }
+```
+
+```diff
+    contract Level2SHARPVerifier (eth:0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) [shared-sharp-verifier/Level2SHARPVerifier] {
+    +++ description: Old shared Starkware SHARP verifier that was used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output. Only used as fallback
+      sourceHashes.0:
+-        "0xbe473240e6de093ae7120378ade4c19b5ab4bbe69143651df5cc3fe66c33c3eb"
++        "0x8b984d2626d18ecafa46268a839943172c1e10997e82549b5467ceb45851846d"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
++        "0xd446fcab8f5c29a3cb78d30509ab38f9829fd14d35464cfe3d4049d5c82aa13b"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
++        "0xe02da9f94c167d2e7810a91f52b8d6ece9428c858d2cb050de600148b6776251"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
++        "0xe3889a0e87718f39844e3ed41e417ae36561dccf53941c5a69bc8300b6934f79"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xe155154845950573EC5F518fC0D4950AB71303ff) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
++        "0x941f25b6ad31af56f49fcbac70edce0badb28303f0aadcb5f10407906d42fef7"
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460) [shared-sharp-verifier/MemoryPageFactRegistry] {
+    +++ description: Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.
+      sourceHashes.0:
+-        "0x122eb6d5583cc680f59abc49750d9d6c0a65ca937e292b2ce67e18e8a8cdb114"
++        "0xb39531f2d5802255bd28ef9c4a41c69deeaaacbb0107d4d1a09e89dc64ca2903"
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_12 (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+      sourceHashes.0:
+-        "0x114aa5977a86555ce5c1db3a96c7348dff6f5792982e1f284652996af22cfe4f"
++        "0x6715f44bddbc89fb65bc31bb21ba5e55c72d20db70fee29a588cd33734de9a46"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x6c96d348b73a5436aaac0d8de8c5f06a7a625c1ff02b0c069fc677f0ac01c009"
++        "0x77b5fe32f7b78f96106850c0c9fb590acd56dce1040e159d3eb1fdc483064ff1"
+    }
+```
+
 Generated with discovered.json: 0x6db0b7b2d859fe8bbf1c430788aa6af2ff39db31
 
 # Diff at Tue, 05 May 2026 10:23:03 GMT:

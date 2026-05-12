@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x48b5d870e193334a9781d821d21f3315adffe619
+
+# Diff at Fri, 08 May 2026 07:51:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1743926099
+- current timestamp: 1743926099
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743926099 (main branch discovery), not current.
+
+```diff
+    contract Challenge (eth:0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) [lightlink/Challenge] {
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+      sourceHashes.1:
+-        "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
++        "0xe563047b74b5666137a2ab48df689f3f5edc03f85a4604080bfd9c311b2eb637"
+    }
+```
+
+```diff
+    contract ChainOracle (eth:0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) [lightlink/ChainOracle] {
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+      sourceHashes.1:
+-        "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
++        "0x49a381812e10b2dc362ad30ece7f61e050e06e13d3056a64a03607f51f993361"
+    }
+```
+
+```diff
+    contract Lightlink Multisig 1 (eth:0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) [lightlink/Multisig] {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+      sourceHashes.0:
+-        "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
++        "0x40a9adcbd49c977576606e55cc3bfe7e075b84609d602a79a8a72fdb18c50d28"
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (eth:0x624631881655a310adcF0d1336658Cc977609b72) [lightlink/L1BridgeRegistry] {
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
+      sourceHashes.1:
+-        "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
++        "0x673431da3479cdba41913f19cf31e4bbf4826667c8b72a0c1cc38bb2e2185865"
+    }
+```
+
+```diff
+    contract L1ERC20Predicate (eth:0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) [lightlink/L1ERC20Predicate] {
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
+      sourceHashes.1:
+-        "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
++        "0xc19e12e2dd700da8a31861921327c2aece2a359060efa140c0b89647edd3dc4c"
+    }
+```
+
+```diff
+    contract CanonicalStateChain (eth:0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) [lightlink/CanonicalStateChain] {
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+      sourceHashes.1:
+-        "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
++        "0x283899cfbbbbe16829482acdaf2c59e489de654e5b833b4533d52b93d682985f"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x670E1C42A7A5962348138110E3ede3F422c10e2f) [lightlink/SystemConfig] {
+    +++ description: Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.
+      sourceHashes.1:
+-        "0x91fa96b49f07577afbb47b56e1b36b249127d43e691df431c23bf35d50f03626"
++        "0x18553e27277fbabf80d91294398034f8fe5fe45defd34ddf33671bfbd4a6e91a"
+    }
+```
+
+```diff
+    contract Lightlink Multisig 2 (eth:0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xa22fc4a393301224447cd798adfb870c71a158c78028b18ef2d501128ac6bbcb"
++        "0xe593730ed754d863764a11764d93471ffbd10851580889203bae9861607c809a"
+    }
+```
+
+```diff
+    contract LightLinkPortal (eth:0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE) [lightlink/LightLinkPortal] {
+    +++ description: Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.
+      sourceHashes.1:
+-        "0xc0e63a4f63935a0e855262aed5e9a5b1ae7e6b33e52a78c8ca729cbe4672a8a5"
++        "0xc1a27d357563d202fb4a7fd1cdc31e7e2a750b487f2867d737057a3c88f6b83b"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1862b438ea6e79c6dda9db9eadf4cfc0582195a923d0ea24cbf669e0c4d2e27e"
++        "0xfb3149f1ee629e1614977890ca7019ef4a2c46a79e1e9e6915afd1d21c400926"
+    }
+```
+
 Generated with discovered.json: 0x79390eae24442873619472e94c6c9fad8810e1df
 
 # Diff at Tue, 05 May 2026 10:22:22 GMT:

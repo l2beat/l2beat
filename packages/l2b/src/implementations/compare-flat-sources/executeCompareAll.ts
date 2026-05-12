@@ -1,14 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import { computeStackSimilarity } from './common'
-import { generateAndOpenGraph } from './graph'
 import { colorMap } from './output'
 
 export interface CompareAllCommand {
   paths: DiscoveryPaths
   minProjectSimilarity: number
   minClusterSimilarity: number
-  showGraph: boolean
   logger: Logger
 }
 
@@ -55,10 +53,6 @@ export async function executeCompareAll(
   command.logger.info(`projects: ${Object.keys(matrix).length}`)
   command.logger.info(`clusters: ${clusters.length}`)
   command.logger.info(`unique: ${unique.length}`)
-
-  if (command.showGraph) {
-    await generateAndOpenGraph(matrix, clusters)
-  }
 }
 
 function computeClusters(

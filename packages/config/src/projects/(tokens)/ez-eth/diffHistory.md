@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x488907dbf6d605952821b7afbc486a8f525126bc
+
+# Diff at Fri, 08 May 2026 07:53:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1752830507
+- current timestamp: 1752830507
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830507 (main branch discovery), not current.
+
+```diff
+    contract Renzo Restaked ETH Token (eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xa8e9f180ef81d5b199440aa49bc0e39c74dd551d29934400210f55f5ec3c10f6"
++        "0x65f88721e4038d8f63b8dd0fcc560d6f1cbe8548ae351ac5ce9b84c97343e20b"
+    }
+```
+
 Generated with discovered.json: 0x8f4ddf0aa2e5c595c8022395da4744ebab5649f4
 
 # Diff at Tue, 05 May 2026 10:24:04 GMT:

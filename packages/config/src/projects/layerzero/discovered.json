@@ -15,15 +15,15 @@
       "template": "layerzero/LayerZeroExecutor",
       "sourceHashes": [
         "0x4a43bdaa7c21f911802bc9e3457cf5fef469f43b372ea6944d53823caf2f53f2",
-        "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"
+        "0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.",
+      "description": "Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "description": "execute rsETH OFT messages sent to Unichain through LayerZero.",
+          "description": "receive execution fees for rsETH OFT messages sent to Unichain through LayerZero.",
           "role": ".getExecutorConfig"
         }
       ],
@@ -72,10 +72,10 @@
       "type": "Contract",
       "template": "layerzero/EndpointV2",
       "sourceHashes": [
-        "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
+        "0x48b52fa395fcfec46c79e54baead635a6ab7d473cd9194eb5085ae4c92dc3b56"
       ],
       "proxyType": "immutable",
-      "description": "Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here.",
+      "description": "Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here.",
       "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
@@ -116,7 +116,8 @@
       },
       "implementationNames": {
         "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BlockedMessageLib",
@@ -124,10 +125,10 @@
       "type": "Contract",
       "template": "layerzero/BlockedMessageLib",
       "sourceHashes": [
-        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
+        "0x75d37f7b316a2accab28129969c0434143f38f945ef4dc05ae6e2d32a2253567"
       ],
       "proxyType": "immutable",
-      "description": "Simple LayerZero library that blocks all messages if configured.",
+      "description": "Simple LayerZero library that blocks all messages if selected.",
       "deployerAddress": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "sinceTimestamp": 1706307671,
       "sinceBlock": 19093715,
@@ -150,7 +151,7 @@
       "type": "Contract",
       "template": "layerzero/DVN",
       "sourceHashes": [
-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
       ],
       "proxyType": "immutable",
       "description": "Defines the logic that validates LayerZero Packets for this DVN.",
@@ -158,7 +159,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "description": "verify rsETH OFT messages sent to Unichain through LayerZero.",
+          "description": "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain).",
           "role": ".getUlnConfig"
         },
         {
@@ -203,7 +204,7 @@
       "type": "Contract",
       "template": "layerzero/DVN",
       "sourceHashes": [
-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
       ],
       "proxyType": "immutable",
       "description": "Defines the logic that validates LayerZero Packets for this DVN.",
@@ -211,7 +212,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "description": "verify rsETH OFT messages sent to Unichain through LayerZero.",
+          "description": "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain).",
           "role": ".getUlnConfig"
         },
         {
@@ -266,7 +267,7 @@
       "type": "Contract",
       "template": "layerzero/ReadLib1002",
       "sourceHashes": [
-        "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
+        "0x63667c2b85a023336c85af02869d5f3dbf9f789566540354555921e0c204c589"
       ],
       "proxyType": "immutable",
       "description": "LayerZero library used to read state from remote blockchains.",
@@ -290,7 +291,25 @@
     {
       "address": "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
@@ -308,7 +327,7 @@
       "type": "Contract",
       "template": "layerzero/OFTAdapter",
       "sourceHashes": [
-        "0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a"
+        "0x8e747ea537f6ad5dadfeed406255d8ac95c47880198374a17bd470328a673974"
       ],
       "proxyType": "immutable",
       "description": "An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.",
@@ -343,7 +362,8 @@
       },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "unichain" } }
-      ]
+      ],
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "eth:0x86CbBAEB08861D005fD2147A5123E43e558db167",
@@ -354,11 +374,12 @@
       "name": "ProxyAdmin",
       "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "type": "Contract",
+      "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
@@ -382,7 +403,7 @@
       "type": "Contract",
       "template": "layerzero/DVN",
       "sourceHashes": [
-        "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5"
+        "0x15af06d40884e87fb02496ccba2e672b9d7029e4a65d508bc519c657981216f9"
       ],
       "proxyType": "immutable",
       "description": "Defines the logic that validates LayerZero Packets for this DVN.",
@@ -390,7 +411,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "description": "verify rsETH OFT messages sent to Unichain through LayerZero.",
+          "description": "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain).",
           "role": ".getUlnConfig"
         },
         {
@@ -427,7 +448,7 @@
       "type": "Contract",
       "template": "layerzero/DVN",
       "sourceHashes": [
-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
+        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
       ],
       "proxyType": "immutable",
       "description": "Defines the logic that validates LayerZero Packets for this DVN.",
@@ -435,7 +456,7 @@
         {
           "permission": "interact",
           "from": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "description": "verify rsETH OFT messages sent to Unichain through LayerZero.",
+          "description": "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain).",
           "role": ".getUlnConfig"
         },
         {
@@ -470,7 +491,7 @@
       "type": "Contract",
       "template": "layerzero/SendUln302",
       "sourceHashes": [
-        "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
+        "0xed0d939d416a37a8dd5608191bbb9c6ae79642d6a707cbaa8ae0ed3877499037"
       ],
       "proxyType": "immutable",
       "description": "Send Library used by LayerZero, defining the protocol/execution of sent messages.",
@@ -519,7 +540,7 @@
       "type": "Contract",
       "template": "layerzero/OneSigMultisig",
       "sourceHashes": [
-        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
+        "0x412a3c42c1e7d8239049258ff828a77b62ab1822711221e5a276d4572edbfe49"
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
@@ -588,7 +609,7 @@
       "type": "Contract",
       "template": "layerzero/ReceiveUln302",
       "sourceHashes": [
-        "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
+        "0xc8412ab2ff002dd3b40a167c6532c54e7cb46c1f0718bfaf038f211e3a333a07"
       ],
       "proxyType": "immutable",
       "description": "LayerZero-deployed receive library, defining the validation of received messages.",
@@ -621,7 +642,8 @@
       },
       "implementationNames": {
         "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GnosisSafe",
@@ -630,7 +652,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1529,6 +1551,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/BlockedMessageLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "layerzero/DVN": "0x7e32d155099463e0fda9ec88f537f011145ca152add753ebb469484a9c01c391",
@@ -1541,5 +1564,5 @@
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
   "usedBlockNumbers": { "ethereum": 24970797 },
-  "permissionsConfigHash": "0x54b71d05e16312ae063f4f96b7f856656ae781f2325bf4912f972db304d4695e"
+  "permissionsConfigHash": "0x3f73103d68695bea8ec35287e560c511f9e8df61d6aa9b0b21970f27322cd85d"
 }

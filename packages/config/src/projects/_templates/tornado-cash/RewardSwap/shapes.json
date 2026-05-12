@@ -1,8 +1,7 @@
 {
   "RewardSwap": {
-    "hash": "0xc1a6fac09032d5aeed3632059fdd847eb173330d4fe59d918861e92abdde5d7b",
+    "hash": "0x6cf43bdf6d325f58e50aa37428a9912539a19a6f759cae8f9f62654a06fb7758",
     "address": "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }

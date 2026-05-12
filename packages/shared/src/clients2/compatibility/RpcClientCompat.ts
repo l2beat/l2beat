@@ -295,6 +295,8 @@ export function toEVMLog(log: RpcLog): EVMLog {
     logIndex: Number(log.logIndex ?? -1),
     topics: log.topics,
     transactionHash: log.transactionHash ?? '',
+    blockTimestamp:
+      log.blockTimestamp !== undefined ? Number(log.blockTimestamp) : undefined,
   }
 }
 

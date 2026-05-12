@@ -8,6 +8,7 @@ import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropProtocolData = {
   name: string
+  slug: string
   volume: {
     value: number
     share: number
@@ -48,6 +49,7 @@ export function getTopProtocols(
 
     return {
       name: project.interopConfig.name ?? project.name,
+      slug: project.slug,
       volume: {
         value: data.volume,
         share: totalVolume > 0 ? (data.volume / totalVolume) * 100 : 0,

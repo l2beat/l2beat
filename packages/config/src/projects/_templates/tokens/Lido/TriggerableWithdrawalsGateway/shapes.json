@@ -1,8 +1,7 @@
 {
   "TriggerableWithdrawalsGateway.sol": {
-    "hash": "0x6e0f1e9ab2993ef59e29bff788073adafb044d30f822762a9085b18062c36002",
+    "hash": "0x55a4d669e1d7d7d718aa53167de51e6498b02aef6dbbdd4e3e2e95edb5df0539",
     "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
-    "chain": "ethereum",
     "blockNumber": 24016570
   }
 }

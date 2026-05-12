@@ -24,7 +24,6 @@
     "@l2beat/shared-pure": "workspace:*",
     "kysely": "^0.27.3",
     "lodash": "^4.17.21",
-    "nanoid": "^3.3.7",
     "pg": "^8.8.0"
   },
   "devDependencies": {

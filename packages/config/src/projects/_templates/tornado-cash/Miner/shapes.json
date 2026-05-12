@@ -1,8 +1,7 @@
 {
   "Miner": {
-    "hash": "0xbecce5b48aa1e467ab3739a26b7a07d25808ebece8ab63ce061a35737d316aed",
+    "hash": "0xa087c1bc5ea33b7ecefcd706e2a2fe0d817bbd7cca015119dbeb0f5f5bc799a4",
     "address": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
-    "chain": "ethereum",
     "blockNumber": 24992607
   }
 }
