@@ -1,14 +1,10 @@
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '~/components/core/Card'
+import { Card, CardContent } from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
+import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { TransfersTable } from './table/TransfersTable'
@@ -27,10 +23,10 @@ export function TransfersPage() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col gap-4">
-        <Card className="gap-4">
-          <CardHeader className="flex flex-row items-start justify-between gap-3">
-            <CardTitle>Transfers</CardTitle>
+      <div className="flex flex-col gap-3">
+        <TablePageSummaryCard
+          title="Transfers"
+          actions={
             <Button
               variant="outline"
               size="sm"
@@ -40,19 +36,23 @@ export function TransfersPage() {
               <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
               Refresh
             </Button>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{rows.length} transfer types</Badge>
-            <Badge variant="secondary">{totalTransfers} total transfers</Badge>
-            <Badge variant="secondary">
-              {formatDollars(totalSrcValue)} source value
-            </Badge>
-            <Badge variant="secondary">
-              {formatDollars(totalDstValue)} destination value
-            </Badge>
-            <Badge variant="secondary">{totalPairs} chain pairs</Badge>
-          </CardContent>
-        </Card>
+          }
+          summary={
+            <>
+              <Badge variant="secondary">{rows.length} transfer types</Badge>
+              <Badge variant="secondary">
+                {totalTransfers} total transfers
+              </Badge>
+              <Badge variant="secondary">
+                {formatDollars(totalSrcValue)} source value
+              </Badge>
+              <Badge variant="secondary">
+                {formatDollars(totalDstValue)} destination value
+              </Badge>
+              <Badge variant="secondary">{totalPairs} chain pairs</Badge>
+            </>
+          }
+        />
 
         <Card className="gap-0 py-0">
           <CardContent className="px-0">

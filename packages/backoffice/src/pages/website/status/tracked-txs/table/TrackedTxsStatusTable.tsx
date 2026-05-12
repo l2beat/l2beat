@@ -7,15 +7,11 @@ import { trackedTxsStatusColumns } from './columns'
 interface TrackedTxsStatusTableProps {
   data: TrackedTxsStatusRow[]
   enableCsvExport?: boolean
-  className?: string
-  scrollViewportClassName?: string
 }
 
 export function TrackedTxsStatusTable({
   data,
   enableCsvExport = false,
-  className,
-  scrollViewportClassName,
 }: TrackedTxsStatusTableProps) {
   const {
     filteredRowsCount,
@@ -50,8 +46,7 @@ export function TrackedTxsStatusTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No active tracked tx configs found."
-      className={className}
-      scrollViewportClassName={scrollViewportClassName}
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `tracked-txs-status-${new Date().toISOString()}.csv`
