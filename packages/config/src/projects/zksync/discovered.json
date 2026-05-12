@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "timestamp": 1778580426,
-  "configHash": "0xf8b1fe0c8f3170f466ee620a10f45b5599268f161c995203488c859cf2be6d26",
+  "configHash": "0xf02e89c0899beaa5607215d64aa162f8348f69c8bb9fce3c2efd6f4d6aa077d6",
   "entries": [
     {
       "name": "Multisig 1",
@@ -419,6 +419,7 @@
         "0xb50bdd92f62f1f18bc1e695c5a1cb0467f936a3e8702454a02e5ef54c6f1e9a2"
       ],
       "proxyType": "zkSync Lite proxy",
+      "ignoreInWatchMode": ["migratedTokens"],
       "deployerAddress": "eth:0xd6dfD811E06267b25472753c4e57C0B28652bFB8",
       "sinceTimestamp": 1592218707,
       "sinceBlock": 10269890,
@@ -1175,7 +1176,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0xcf3e85f96decdc6b571453f78068e52e3dadb948582065ffacc927a20dbc87ed",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25078333 },

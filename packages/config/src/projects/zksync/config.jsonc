@@ -177,6 +177,9 @@
       "ignoreMethods": ["isClaimed"],
       "fields": { "paused": { "severity": "HIGH" } },
       "description": "Distributor smart contract that holds tokens migrated from zksync lite rollup contract and allows users withdrawing them."
+    },
+    "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d": {
+      "ignoreRelatives": ["owner"]
     }
   }
 }
