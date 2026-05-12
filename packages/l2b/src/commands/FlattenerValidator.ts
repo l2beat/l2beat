@@ -280,9 +280,14 @@ function createCompilerInput(
 function getCompilerSettings(
   source: ContractSource,
 ): SolidityJsonInput['settings'] {
-  const { debug, ...settings } = source.compilerSettings ?? {}
+  const { debug, evmVersion, ...settings } = source.compilerSettings ?? {}
+  const normalizedEvmVersion = evmVersion === 'Default' ? undefined : evmVersion
+
   if (debug === undefined) {
-    return settings
+    return {
+      ...settings,
+      evmVersion: normalizedEvmVersion,
+    }
   }
 
   type RevertStrings = NonNullable<
@@ -291,6 +296,7 @@ function getCompilerSettings(
 
   return {
     ...settings,
+    evmVersion: normalizedEvmVersion,
     debug: {
       ...debug,
       revertStrings: debug.revertStrings as RevertStrings,
