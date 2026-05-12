@@ -13,10 +13,12 @@ export function SingleChainStats({
   chainId,
   selectedChains,
   linkTopProtocols,
+  hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
   linkTopProtocols?: boolean
+  hideTopProtocols?: boolean
 }) {
   const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
@@ -43,7 +45,7 @@ export function SingleChainStats({
           }))}
         />
       )}
-      {chainData && (
+      {chainData && !hideTopProtocols && (
         <TopItemsList
           label="Top bridges"
           items={chainData.topProtocols.map((p) => ({

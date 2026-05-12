@@ -1,26 +1,26 @@
 {
   "PreimageOracle_v1_0_0": {
-    "hash": "0x665ede6663477caf46bd510bb4ba7de3f2a6d8f51f840d058bad706018c67453",
+    "hash": "0xe9be56d8069214223cd51790b35de680e8ccb6c0be1181994e1271860cba8813",
     "address": "eth:0xE7Fd68F6a389DE7D7C9cFCfCE15486885abeDD44",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_2": {
-    "hash": "0xda65cfcdd58c88318ad76812d92be7f0d10716f389549846646b82ceecf47b2b",
+    "hash": "0xe733f5a1f3831fa47d6ab551d4b193ebceb5755015ee83bc0ab0de7d9ff2f3be",
     "address": "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_3_beta2": {
-    "hash": "0xbc9931ce25f444e5c25ff4a9177edd7ad6ddfb9b58e19aeb6d97d5486b963d85",
+    "hash": "0xb585d47c9e8423137a95adf7f8299290d0c7febdef39f3f5838178271d69eefa",
     "address": "eth:0x5B9bEf4d8C36FB013c70d0A6F455807c6BD5270b",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_3_beta6": {
-    "hash": "0x8c37077a8801302e54dcb780e14b286adb904da070ed5ecf51e5f039aa5b1288",
+    "hash": "0x0b2abbe6731afa0374f1ea8389fa2c6658b35b778cb43eec195a42f59d4df6b8",
     "address": "eth:0xfaB0F466955D87e596Ca87E20c505bB6470D0DC4",
     "blockNumber": 22188285
   },
   "PreimageOracle_v1_1_4": {
-    "hash": "0xd9838f1f137bd5397f583f33c414ec9c0fc3dc69401213fae0f09c36d4ac8e47",
+    "hash": "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615",
     "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
     "blockNumber": 22188285
   }

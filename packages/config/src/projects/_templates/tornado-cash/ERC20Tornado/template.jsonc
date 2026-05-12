@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ERC20Tornado",
+  "description": "Fixed-denomination ERC20 mixer pool from the newer Tornado Cash pool generation. Funds are governed by the withdrawal verifier and the immutable verifier/hasher pair configured at deployment.",
+  "category": "core",
+  "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
+  "fields": {
+    "denomination": {
+      "description": "Fixed deposit amount accepted by this pool.",
+      "severity": "LOW"
+    },
+    "token": {
+      "description": "ERC20 token accepted by this mixer instance."
+    },
+    "verifier": {
+      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
+      "severity": "HIGH"
+    },
+    "hasher": {
+      "description": "Merkle-tree hasher used for commitments and root updates."
+    }
+  }
+}

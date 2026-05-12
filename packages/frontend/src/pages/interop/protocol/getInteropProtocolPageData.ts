@@ -1,3 +1,4 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
@@ -12,7 +13,47 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 export async function getInteropProtocolPageData(
   req: Request<{ slug: string }, unknown, unknown, unknown>,
   manifest: Manifest,
+  cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
+  const [appLayoutProps, data] = await Promise.all([
+    getAppLayoutProps(),
+    cache.get(
+      {
+        key: ['interop', 'protocols', req.params.slug],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getCachedData(req.params.slug, manifest),
+    ),
+  ])
+
+  if (!data) return undefined
+
+  return {
+    head: {
+      manifest,
+      metadata: getMetadata(manifest, {
+        title: `${data.project.name} - L2BEAT`,
+        description: data.project.description,
+        url: req.originalUrl,
+        openGraph: {
+          image: `/meta-images/interop/projects/${data.project.slug}/opengraph-image.png`,
+        },
+      }),
+    },
+    ssr: {
+      page: 'InteropProtocolPage',
+      props: {
+        ...appLayoutProps,
+        projectEntry: data.projectEntry,
+        protocolData: data.protocolData,
+        apiSelection: data.apiSelection,
+      },
+    },
+  }
+}
+
+async function getCachedData(slug: string, manifest: Manifest) {
   const interopChains = getInteropChains()
   const liveChainIds = interopChains
     .filter((chain) => !chain.isUpcoming)
@@ -20,7 +61,7 @@ export async function getInteropProtocolPageData(
   const apiSelection = { from: liveChainIds, to: liveChainIds }
 
   const project = await ps.getProject({
-    slug: req.params.slug,
+    slug,
     select: ['interopConfig'],
     optional: ['statuses', 'display'],
   })
@@ -33,36 +74,26 @@ export async function getInteropProtocolPageData(
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     }))
 
-  const [appLayoutProps, protocolData] = await Promise.all([
-    getAppLayoutProps(),
-    getInteropProtocolData({
-      id: project.id,
-      ...apiSelection,
-    }),
-  ])
-  const projectEntry = getInteropProtocolEntry(project)
+  const protocolData = await getInteropProtocolData({
+    id: project.id,
+    ...apiSelection,
+  })
+
+  const projectEntry = await getInteropProtocolEntry(
+    project,
+    apiSelection,
+    interopChainsWithIcons,
+    protocolData,
+  )
 
   return {
-    head: {
-      manifest,
-      metadata: getMetadata(manifest, {
-        title: `${project.name} - L2BEAT`,
-        description: project.interopConfig.description,
-        url: req.originalUrl,
-        openGraph: {
-          image: `/meta-images/interop/projects/${project.slug}/opengraph-image.png`,
-        },
-      }),
+    project: {
+      name: project.name,
+      slug: project.slug,
+      description: project.interopConfig.description,
     },
-    ssr: {
-      page: 'InteropProtocolPage',
-      props: {
-        ...appLayoutProps,
-        projectEntry,
-        protocolData,
-        interopChains: interopChainsWithIcons,
-        apiSelection,
-      },
-    },
+    projectEntry,
+    protocolData,
+    apiSelection,
   }
 }

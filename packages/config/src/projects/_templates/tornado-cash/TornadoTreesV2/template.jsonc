@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TornadoTreesV2",
+  "description": "Upgradeable batch-based Tornado Trees contract that reuses legacy tree state, queues new leaves from the newer proxy, and accepts batched root updates proven by a verifier.",
+  "category": "core",
+  "ignoreMethods": ["deposits", "withdrawals"],
+  "fields": {
+    "$admin": {
+      "description": "Can upgrade the Tornado Trees implementation.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the Tornado Trees implementation, changing how deposit and withdrawal roots are maintained."
+        }
+      ]
+    },
+    "$implementation": {
+      "description": "Current Tornado Trees implementation.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "governance": {
+      "description": "Governance address controlling the upgraded tree manager.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the proxy allowed to enqueue deposit and withdrawal leaves."
+        },
+        {
+          "type": "interact",
+          "description": "replace the verifier used for batched tree updates."
+        }
+      ]
+    },
+    "depositRoot": {
+      "description": "Current accepted deposit tree root.",
+      "severity": "LOW"
+    },
+    "withdrawalRoot": {
+      "description": "Current accepted withdrawal tree root.",
+      "severity": "LOW"
+    },
+    "tornadoProxy": {
+      "description": "Only this proxy is allowed to enqueue deposit and withdrawal leaves into the upgraded trees.",
+      "severity": "HIGH"
+    },
+    "tornadoTreesV1": {
+      "description": "Legacy tree manager whose historical leaves and roots are reused during migration."
+    },
+    "treeUpdateVerifier": {
+      "description": "Verifier used to prove batched deposit and withdrawal tree updates.",
+      "severity": "HIGH"
+    }
+  }
+}

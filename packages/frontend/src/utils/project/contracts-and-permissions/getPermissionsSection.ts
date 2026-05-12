@@ -18,7 +18,7 @@ type ProjectParams = {
   hostChain?: string
 }
 
-type PermissionSection = Omit<
+export type PermissionSection = Omit<
   PermissionsSectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 >

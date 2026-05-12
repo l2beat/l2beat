@@ -15,7 +15,8 @@ import {
 } from '../zScore'
 
 export { Z_CLASSIC_THRESHOLD } from '../zScore'
-export const VALUE_DIFF_ALERT_THRESHOLD_PERCENT = 5
+export const SIDE_MISMATCH_DIFF_PERCENT = 30
+export const SIDE_MISMATCH_MIN_VOLUME_USD = 1_000_000
 
 const FLAT_LINE_WINDOW_DAYS = 3
 const RATIO_WINDOW_DAYS = 14
@@ -58,7 +59,7 @@ type SrcDstDiffStats = {
   lastPercent: number | null
   prevDayPercent: number | null
   prev7dPercent: number | null
-  isHigh: boolean
+  isSideMismatch: boolean
 }
 
 export type DataRowResult = {
@@ -168,63 +169,91 @@ export function explore(rows: DataRow[]) {
   return results
 }
 
+type MetricSummary =
+  | { kind: 'flat' }
+  | { kind: 'spike' | 'drop'; severity: 'severe' | 'moderate' }
+
 export function interpret(result: DataRowResult) {
   const outputs: string[] = []
 
-  if (result.counts.isFlatLine) {
-    outputs.push('Flat line')
-  }
+  appendMetricLabel(outputs, 'Transfer count', summarizeCount(result.counts))
+  appendMetricLabel(outputs, 'Source volume', summarizeVolume(result.srcVolume))
+  appendMetricLabel(
+    outputs,
+    'Destination volume',
+    summarizeVolume(result.dstVolume),
+  )
 
-  appendRatioLabels(outputs, result.counts, {
-    drop: 'Ratio drop',
-    spike: 'Ratio spike',
-  })
-  appendRatioLabels(outputs, result.srcVolume, {
-    drop: 'Src volume ratio drop',
-    spike: 'Src volume ratio spike',
-  })
-  appendRatioLabels(outputs, result.dstVolume, {
-    drop: 'Dst volume ratio drop',
-    spike: 'Dst volume ratio spike',
-  })
-
-  if (result.srcDstDiff.isHigh) {
+  if (
+    result.srcDstDiff.isSideMismatch &&
+    result.srcDstDiff.lastPercent !== null
+  ) {
     outputs.push(
-      `Src/Dst value mismatch > ${VALUE_DIFF_ALERT_THRESHOLD_PERCENT}%`,
+      `Source/destination volume mismatch (${result.srcDstDiff.lastPercent.toFixed(0)}%)`,
     )
   }
-
-  appendZLabels(outputs, result.counts.z, {
-    classic: 'Z-classic: spike/drop',
-  })
-  appendZLabels(outputs, result.srcVolume.z, {
-    classic: 'Src volume Z-classic: spike/drop',
-    robustPrefix: 'Src volume ',
-  })
-  appendZLabels(outputs, result.dstVolume.z, {
-    classic: 'Dst volume Z-classic: spike/drop',
-    robustPrefix: 'Dst volume ',
-  })
 
   return outputs.join(', ')
 }
 
-export function interpretZRobust(value: number) {
-  if (value > Z_ROBUST_THRESHOLD.spike) {
-    return 'Z-robust - big spike'
+function appendMetricLabel(
+  outputs: string[],
+  label: string,
+  summary: MetricSummary | null,
+) {
+  if (!summary) return
+
+  if (summary.kind === 'flat') {
+    outputs.push(`${label} was flat`)
+    return
   }
 
-  if (value > Z_ROBUST_THRESHOLD.warn) {
-    return 'Z-robust - moderate spike'
+  const intensity = summary.severity === 'moderate' ? ' moderately' : ''
+  const action = summary.kind === 'spike' ? 'spiked' : 'dropped'
+  outputs.push(`${label}${intensity} ${action}`)
+}
+
+function summarizeCount(stats: CountStats): MetricSummary | null {
+  if (stats.isFlatLine) {
+    return { kind: 'flat' }
+  }
+  return summarizeDirectional(stats)
+}
+
+function summarizeVolume(stats: VolumeStats): MetricSummary | null {
+  return summarizeDirectional(stats)
+}
+
+function summarizeDirectional(stats: {
+  isRatioSpike: boolean
+  isRatioDrop: boolean
+  z: ZScore
+}): MetricSummary | null {
+  const robust = stats.z.robust
+  const classic = stats.z.classic
+  const classicHit =
+    classic !== null && Math.abs(classic) > Z_CLASSIC_THRESHOLD ? classic : null
+
+  const severeSpike =
+    stats.isRatioSpike ||
+    (robust !== null && robust > Z_ROBUST_THRESHOLD.spike) ||
+    (classicHit !== null && classicHit > 0)
+  if (severeSpike) return { kind: 'spike', severity: 'severe' }
+
+  const severeDrop =
+    stats.isRatioDrop ||
+    (robust !== null && robust < Z_ROBUST_THRESHOLD.drop) ||
+    (classicHit !== null && classicHit < 0)
+  if (severeDrop) return { kind: 'drop', severity: 'severe' }
+
+  if (robust !== null && robust > Z_ROBUST_THRESHOLD.warn) {
+    return { kind: 'spike', severity: 'moderate' }
+  }
+  if (robust !== null && robust < -Z_ROBUST_THRESHOLD.warn) {
+    return { kind: 'drop', severity: 'moderate' }
   }
 
-  if (value < Z_ROBUST_THRESHOLD.drop) {
-    return 'Z-robust - big drop'
-  }
-
-  if (value < -Z_ROBUST_THRESHOLD.warn) {
-    return 'Z-robust - moderate drop'
-  }
+  return null
 }
 
 function avgVolumePerTransfer(volume: number, transferCount: number) {
@@ -291,44 +320,21 @@ function buildSrcDstDiffStats(points: PeriodPoints): SrcDstDiffStats {
   const period = mapPeriodPoints(points, (dp) =>
     relativePercentDifference(dp.totalSrcValueUsd, dp.totalDstValueUsd),
   )
+  const latestVolume = Math.max(
+    points.last.totalSrcValueUsd,
+    points.last.totalDstValueUsd,
+  )
 
   return {
     lastPercent: period.last,
     prevDayPercent: period.prevDay,
     prev7dPercent: period.prev7d,
-    isHigh:
-      period.last !== null && period.last > VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
-  }
-}
-
-function appendRatioLabels(
-  outputs: string[],
-  ratioStats: { isRatioDrop: boolean; isRatioSpike: boolean },
-  labels: { drop: string; spike: string },
-) {
-  if (ratioStats.isRatioDrop) {
-    outputs.push(labels.drop)
-  }
-
-  if (ratioStats.isRatioSpike) {
-    outputs.push(labels.spike)
-  }
-}
-
-function appendZLabels(
-  outputs: string[],
-  z: ZScore,
-  labels: { classic: string; robustPrefix?: string },
-) {
-  if (z.classic !== null && Math.abs(z.classic) > Z_CLASSIC_THRESHOLD) {
-    outputs.push(labels.classic)
-  }
-
-  if (z.robust !== null) {
-    const zRobustInterpreted = interpretZRobust(z.robust)
-    if (zRobustInterpreted) {
-      outputs.push(`${labels.robustPrefix ?? ''}${zRobustInterpreted}`)
-    }
+    isSideMismatch:
+      period.last !== null &&
+      points.last.totalSrcValueUsd > 0 &&
+      points.last.totalDstValueUsd > 0 &&
+      latestVolume >= SIDE_MISMATCH_MIN_VOLUME_USD &&
+      period.last >= SIDE_MISMATCH_DIFF_PERCENT,
   }
 }
 

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "tornado-cash",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 80,
+  "initialAddresses": ["eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5"],
+  "names": {
+    "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": "ENSRegistry",
+    "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643": "cDAI",
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": "COMP",
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": "WBTC",
+    "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": "DepositTree",
+    "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": "PoseidonHasher",
+    "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": "MiMCHasher",
+    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "WithdrawalTree"
+  },
+  "overrides": {
+    "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6234c4C2734D2B246AE074492F402D8f58ff3226": {
+      "description": "Unverified merkle tree instance that stores legacy Tornado deposit leaves for TornadoTreesV1."
+    },
+    "eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe": {
+      "description": "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations."
+    },
+    "eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2": {
+      "description": "Unverified Poseidon hasher used by the legacy Tornado Trees merkle trees."
+    },
+    "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": {
+      "description": "Unverified merkle tree instance that stores legacy Tornado withdrawal leaves for TornadoTreesV1."
+    },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      "ignoreDiscovery": true
+    }
+  }
+}

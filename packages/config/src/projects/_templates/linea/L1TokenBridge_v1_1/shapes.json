@@ -1,8 +1,7 @@
 {
   "L1TokenBridge_v1_1": {
-    "hash": "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23",
+    "hash": "0x9980be97cab8f3dd79332a9be0ed66420c1170262dff641eabaf803f137140b1",
     "address": "eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff",
-    "chain": "ethereum",
     "blockNumber": 24784001
   }
 }

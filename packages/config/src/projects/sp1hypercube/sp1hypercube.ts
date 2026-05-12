@@ -140,6 +140,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         projectId: ProjectId('taiko'),
         sinceTimestamp: UnixTime(1774964687),
       },
+      {
+        projectId: ProjectId('mantle'),
+        sinceTimestamp: UnixTime(1778001356),
+      },
     ],
     verifierHashes: [
       {

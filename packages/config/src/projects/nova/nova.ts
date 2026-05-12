@@ -188,7 +188,10 @@ export const nova: ScalingProject = orbitStackL2({
         url: 'https://nova.arbitrum.io/rpc',
         callsPerMinute: 300,
       },
-      { type: 'etherscan', chainId },
+      {
+        type: 'blockscout',
+        url: 'https://arbitrum-nova.blockscout.com/api',
+      },
     ],
   },
   nonTemplateProofSystem: {

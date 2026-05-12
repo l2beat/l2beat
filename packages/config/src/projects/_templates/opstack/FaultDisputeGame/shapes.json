@@ -1,54 +1,52 @@
 {
   "FaultDisputeGame_v1_2_0": {
-    "hash": "0xdb01a01fb5143b496ce6858f53dfad238652f6662be66a7b56c75807b5cbfb6a",
+    "hash": "0x4fc52282b95591b430f181af44968eb5f237fa11c460e48899d931c123b8e00c",
     "address": "eth:0xB6846927447e4764acd53b0b354BEd939f9220d7",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_0": {
-    "hash": "0xe34691c8b006a821c6149e989b792a1df994e2e960bf3ac0ef8da5cfc4c5a835",
+    "hash": "0x4eaaf09cf78197a1af1482dcbf78c26d87392c6205cbbef13e3e4420cd523ffd",
     "address": "eth:0xA6f3DFdbf4855a43c529bc42EDE96797252879af",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1": {
-    "hash": "0xdc4e24c5b82a1765af33cbdb94dd9461df3ea2dc8d7d495ff05d450d30edc919",
+    "hash": "0x746559aeb00bdcb39e75c057b9d4734f812af041f752a98ef1caf8dc766e3968",
     "address": "eth:0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1_base": {
-    "hash": "0x82eb7faffd44846ca2ba688f66c100f1140479c534bfae644493892de73a4276",
+    "hash": "0x3117e29ee50130a174a8764e70dcd69a7fafe052b55e06b16ab88eacb0c262b0",
     "address": "eth:0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_3_1_beta2": {
-    "hash": "0x1a2367437cfb7cb21928a5bbd1fe8d8ba9602190438fee88e83a08f25a1e14c6",
+    "hash": "0xc25941b511090e23368c2f7760748e532c09cea9f7b67060ca6d805ea63b2fd5",
     "address": "eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_4_1": {
-    "hash": "0x5998fb7556449af7ebb08bf75378bca0d91d65aba386c371d4c6773ed9eac54f",
+    "hash": "0x3ced5da1d6cee5812e664528074e2bf2d9d94d34c563010eb83b4f12891073ed",
     "address": "eth:0x69361c9134D620B704C2a72c58523a4373eCe86f",
     "blockNumber": 22188285
   },
   "FaultDisputeGame_v1_4_1_base": {
-    "hash": "0x733ed06db1fdbaf42d1ee8fc838bcde0c06e1a5b6ec39b36d3f78c6793fcad31",
+    "hash": "0xe08f754f5be57dae95ce4a88db0d03b5578a83bc32a5794e559a6d17f9cb7793",
     "address": "eth:0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
     "blockNumber": 22437733
   },
   "FaultDisputeGame_v3_5_0": {
-    "hash": "0xa84a2c287a4758ce3cd3e4fd5e99b5cc94278297c2be14317401ae973d4dd23e",
+    "hash": "0xa2f0eeb1ab983d8fc33c13a0a253174c0ebea7fe2bc55d2006b276d55a159c1e",
     "address": "eth:0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F",
     "blockNumber": 22995199
   },
   "FaultDisputeGame.sol": {
-    "hash": "0xefd91bf99438f1ea2fe19cfde2bbab3aefd64672f541c2fa58e9463384b2338d",
+    "hash": "0x1dbd21b456d1b37140889b5d2cb2b29169a45399e0e738ea644ee1aa4c610231",
     "address": "eth:0x478c26109b169a840D61E95B19512FF0b5F19c87",
-    "chain": "ethereum",
     "blockNumber": 23896272
   },
   "FaultDisputeGame_v2_0_0": {
-    "hash": "0x127a5a9b6364f01a1835b317e119b9e894fc7eedf3e9a939569f741f74378a8f",
+    "hash": "0x2987fcaf908b3baa0ae4ff6ad30ef75935c87c0b317ba03f034967803c7778ca",
     "address": "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
-    "chain": "ethereum",
     "blockNumber": 24069615
   }
 }

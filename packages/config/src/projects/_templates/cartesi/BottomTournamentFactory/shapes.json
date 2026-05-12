@@ -1,13 +1,12 @@
 {
   "BottomTournamentFactory": {
-    "hash": "0xf08e842ede6e859b7253cbd468c2e8909b5743fed73e190dc467607e94c07f94",
+    "hash": "0xe57ed14cb07f3dcb8b55bda64c06c1caca158dd5565258d980b2c8a93cb88392",
     "address": "eth:0x4C7ab101e9B114A253475485b301E0D0c9e20647",
     "blockNumber": 22716598
   },
   "BottomTournamentFactory.sol": {
-    "hash": "0x891cb41f153a71a8aa561434276f941f427520fda41f0f7c44d12ba6837e6c13",
+    "hash": "0xfa803cae35a3c7e8d516bbbc0918866fd523067f0727a6c16e98cdea74f9dcce",
     "address": "eth:0x6ccb8955afFA2aE4A88a4fC30916b41074d1F2B6",
-    "chain": "ethereum",
     "blockNumber": 23775846
   }
 }

@@ -1,0 +1,11 @@
+{
+  "name": "eigenda-v2",
+  "timestamp": 1777981500,
+  "configHash": "0x3d8ba112cb6eb3dbca7cb26b8ec6cedc9657bb3668a540954b26c8fe026c2c91",
+  "sharedModules": ["eigenda", "shared-eigenlayer"],
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {},
+  "usedBlockNumbers": {},
+  "permissionsConfigHash": "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
