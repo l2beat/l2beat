@@ -118,6 +118,13 @@ export const ContractSource = v.object({
       }),
       evmVersion: v.string().optional(),
       viaIR: v.boolean().optional(),
+      metadata: v
+        .object({
+          bytecodeHash: v.string().optional(),
+          useLiteralContent: v.boolean().optional(),
+          appendCBOR: v.boolean().optional(),
+        })
+        .optional(),
       remappings: v.array(v.string()).optional(),
     })
     .optional(),

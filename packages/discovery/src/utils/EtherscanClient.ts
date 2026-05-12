@@ -318,6 +318,13 @@ const Settings = v.object({
     .optional(),
   evmVersion: v.string().optional(),
   viaIR: v.boolean().optional(),
+  metadata: v
+    .object({
+      bytecodeHash: v.string().optional(),
+      useLiteralContent: v.boolean().optional(),
+      appendCBOR: v.boolean().optional(),
+    })
+    .optional(),
 })
 const EtherscanSource = v.object({ sources: Sources, settings: Settings })
 
@@ -413,6 +420,7 @@ function decodeEtherscanSource(
       optimizer: verified.settings.optimizer,
       evmVersion: verified.settings.evmVersion,
       viaIR: verified.settings.viaIR,
+      metadata: verified.settings.metadata,
     }
   } catch {
     validated = Sources.parse(parsed)
