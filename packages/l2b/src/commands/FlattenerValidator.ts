@@ -28,7 +28,7 @@ import chalk from 'chalk'
 import { command, number, option, restPositionals } from 'cmd-ts'
 import { dirname, join } from 'path'
 import { ChainSpecificAddressValue } from './types'
-import { intersection } from 'lodash'
+import intersection from 'lodash/intersection'
 
 const statusTable: Record<VerificationResult['type'], string> = {
   success: chalk.bgGreen(' OK '),
@@ -159,7 +159,20 @@ function getAllContractAddresses(
     const discovery = configReader.readDiscovery(project)
     const contractAddresses = discovery.entries
       .filter((e) => e.type === 'Contract' && e.unverified === undefined)
-      .flatMap((e) => [e.address, ...get$Implementations(e.values)])
+      .flatMap((e) => {
+        const result = []
+
+        // NOTE(radomski): We don't verify minimal proxies as they don't
+        // have source code and Etherscan returns the source code for
+        // implementation when asking for source for this address, this in
+        // turn creates false positives
+        if (e.proxyType !== 'EIP1167 proxy') {
+          result.push(e.address)
+        }
+
+        result.push(...get$Implementations(e.values))
+        return result
+      })
 
     result.push(...contractAddresses)
   }
@@ -258,15 +271,21 @@ function matchesRuntimeBytecode(
   )
   const normalizedDeployed = stripAuxdata(deployedBytecode)
 
-  return maskImmutableReferences(
+  const got = maskImmutableReferences(
     normalizedCompiled,
     contract.evm.deployedBytecode.immutableReferences ?? {},
-  ).equals(
-    maskImmutableReferences(
-      normalizedDeployed,
-      contract.evm.deployedBytecode.immutableReferences ?? {},
-    ),
   )
+  const want = maskImmutableReferences(
+    normalizedDeployed,
+    contract.evm.deployedBytecode.immutableReferences ?? {},
+  )
+
+  const matches = got.equals(want)
+  if (!matches) {
+    console.log(`Failed to match, got ${got.length} want ${want.length}`)
+  }
+
+  return matches
 }
 
 function stripAuxdata(bytecode: Bytes): Bytes {
