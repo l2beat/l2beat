@@ -26,9 +26,9 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, option, restPositionals } from 'cmd-ts'
+import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
 import { ChainSpecificAddressValue } from './types'
-import intersection from 'lodash/intersection'
 
 const statusTable: Record<VerificationResult['type'], string> = {
   success: chalk.bgGreen(' OK '),
@@ -222,6 +222,8 @@ function createCompilerInput(
   source: ContractSource,
   flat: string,
 ): SolidityJsonInput {
+  const compilerSettings = getCompilerSettings(source)
+
   return {
     language: 'Solidity',
     sources: {
@@ -230,7 +232,7 @@ function createCompilerInput(
       },
     },
     settings: {
-      ...source.compilerSettings,
+      ...compilerSettings,
       remappings: source.remappings,
       libraries: getLibraries(source),
       outputSelection: {
@@ -238,6 +240,27 @@ function createCompilerInput(
           '*': ['evm.deployedBytecode'],
         },
       },
+    },
+  }
+}
+
+function getCompilerSettings(
+  source: ContractSource,
+): SolidityJsonInput['settings'] {
+  const { debug, ...settings } = source.compilerSettings ?? {}
+  if (debug === undefined) {
+    return settings
+  }
+
+  type RevertStrings = NonNullable<
+    SolidityJsonInput['settings']['debug']
+  >['revertStrings']
+
+  return {
+    ...settings,
+    debug: {
+      ...debug,
+      revertStrings: debug.revertStrings as RevertStrings,
     },
   }
 }

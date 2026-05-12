@@ -75,7 +75,7 @@ export interface ContractSource {
       appendCBOR?: boolean
     }
     debug?: {
-      revertStrings?: string
+      revertStrings: string
       debugInfo?: string[]
     }
   }

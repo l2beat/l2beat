@@ -127,7 +127,7 @@ export const ContractSource = v.object({
         .optional(),
       debug: v
         .object({
-          revertStrings: v.string().optional(),
+          revertStrings: v.string(),
           debugInfo: v.array(v.string()).optional(),
         })
         .optional(),
