@@ -8,11 +8,11 @@ Generated with discovered.json: 0x067510d724db35843c77c7ddf242676ccf31fb58
 
 ## Description
 
-SP1Blobstream `blobstreamProgramVkey` rotation across both deployments:
+The new `blobstreamProgramVkey` corresponds to the Blobstream guest program rebuilt against SP1 zkVM **v6.1.0** ([succinctlabs/sp1-blobstream#66](https://github.com/succinctlabs/sp1-blobstream/pull/66), merged 2026-05-05).
 
-- **ArbitrumBlobstream** (`arb1:0xA83ca777...`) and **BaseBlobstream** (`base:0xA83ca777...`): vkey `0x00de39c1...` → `0x00b451fc...`.
+The underlying prover system moves from `sp1turbo` (v5.x) to `sp1hypercube` (v6.x).
 
-Added the new vkey to `programHashes.ts` as a Celestia Blobstream DA bridge program. Prover system identified by decoding the SP1 proof selector from a recent `commitHeaderRange` call: the first 4 bytes of the proof are `0x5a093a2f`, which routes through `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 (`sp1hypercube`) deployment. `verificationStatus` left as `notVerified` since the program source hasn't been recompiled and the vkey reproduced.
+The new vkey is registered in `programHashes.ts` under `proverSystemProject: ProjectId('sp1hypercube')`. Verification path confirmed on-chain by decoding the SP1 proof selector from a recent `commitHeaderRange` call (first 4 bytes = `0x5a093a2f`, which routes via `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 deployment).
 
 ## Watched changes
 
