@@ -195,11 +195,15 @@ function getAllContractAddresses(
       .flatMap((e) => {
         const result = []
 
-        // NOTE(radomski): We don't verify minimal proxies as they don't
-        // have source code and Etherscan returns the source code for
+        // NOTE(radomski): We don't verify minimal proxies as they don't have
+        // source code and Etherscan returns the source code for
         // implementation when asking for source for this address, this in
-        // turn creates false positives
-        if (e.proxyType !== 'EIP1167 proxy') {
+        // turn creates false positives. Same with gnosis safe zodiac
+        // modules. They are behind a small proxy which destroyes everything
+        if (
+          e.proxyType !== 'EIP1167 proxy' &&
+          e.proxyType !== 'gnosis safe zodiac module'
+        ) {
           result.push(e.address)
         }
 
