@@ -2613,11 +2613,13 @@ Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/f
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
     title: 'Fluent STF guest program',
     proverSystemProject: ProjectId('sp1hypercube'),
-    programUrl:
-      'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
+    // programUrl:
+    //   'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
     description:
       'Guest program implementing state transition function of the Fluent rollup',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the Fluent team, the sources for this program were not yet published. Thus it cannot be verified.',
     //       verificationSteps: `
     // Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
 
