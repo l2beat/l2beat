@@ -144,6 +144,14 @@ export class BlockscoutClient implements IEtherscanClient {
       remappings: result.CompilerSettings?.remappings ?? [],
       files,
       libraries: {},
+      compilerSettings: {
+        optimizer: result.CompilerSettings?.optimizer ?? {
+          enabled: result.OptimizationUsed === '1',
+          runs: result.OptimizationRuns,
+        },
+        evmVersion: result.CompilerSettings?.evmVersion ?? result.EVMVersion,
+        viaIR: result.CompilerSettings?.viaIR,
+      },
     }
   }
 

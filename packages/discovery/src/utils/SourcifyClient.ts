@@ -76,6 +76,11 @@ export class SourcifyClient implements IEtherscanClient {
       remappings: result.compilation.compilerSettings.remappings ?? [],
       libraries: {},
       files,
+      compilerSettings: {
+        optimizer: result.compilation.compilerSettings.optimizer,
+        evmVersion: result.compilation.compilerSettings.evmVersion,
+        viaIR: result.compilation.compilerSettings.viaIR,
+      },
     }
   }
 
@@ -207,6 +212,14 @@ const SourcifySourceSchema = v.object({
     compilerVersion: v.string(),
     compilerSettings: v.object({
       remappings: v.array(v.string()).optional(),
+      optimizer: v
+        .object({
+          enabled: v.boolean().optional(),
+          runs: v.number().optional(),
+        })
+        .optional(),
+      evmVersion: v.string().optional(),
+      viaIR: v.boolean().optional(),
     }),
     name: v.string(),
   }),

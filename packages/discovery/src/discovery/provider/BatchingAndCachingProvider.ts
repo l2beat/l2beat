@@ -659,7 +659,7 @@ export class BatchingAndCachingProvider {
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
     let duration = -performance.now()
-    const entry = await this.cache.entry('getSource-v2', [address], undefined)
+    const entry = await this.cache.entry('getSource-v3', [address], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
       duration += performance.now()

@@ -116,6 +116,8 @@ export const ContractSource = v.object({
         enabled: v.boolean(),
         runs: v.number(),
       }),
+      evmVersion: v.string().optional(),
+      viaIR: v.boolean().optional(),
       remappings: v.array(v.string()).optional(),
     })
     .optional(),
