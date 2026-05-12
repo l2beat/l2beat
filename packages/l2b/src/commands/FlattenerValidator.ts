@@ -1,8 +1,4 @@
-import {
-  AuxdataStyle,
-  decode,
-  splitAuxdata,
-} from '@ethereum-sourcify/bytecode-utils'
+import { AuxdataStyle, splitAuxdata } from '@ethereum-sourcify/bytecode-utils'
 import { useSolidityCompiler } from '@ethereum-sourcify/compilers'
 import type {
   Libraries,
@@ -350,42 +346,22 @@ function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(stripped)
 }
 
-// TODO(radomski): This needs to be improved
 function maskSolidityAuxdata(
   _: SolidityOutputContract,
   bytecode: Bytes,
 ): Bytes {
-  const hex = bytecode.toString().slice(2)
-  const result = hex.split('')
+  let result = bytecode.toString()
 
-  for (let lengthStart = 0; lengthStart <= hex.length - 4; lengthStart += 2) {
-    const lengthHex = hex.slice(lengthStart, lengthStart + 4)
-    const auxdataHexLength = Number.parseInt(lengthHex, 16) * 2
-    const auxdataStart = lengthStart - auxdataHexLength
-
-    if (auxdataStart < 0) {
-      continue
+  while (true) {
+    try {
+      const [stripped] = splitAuxdata(result, AuxdataStyle.SOLIDITY)
+      if (stripped.length >= result.length) {
+        return Bytes.fromHex(result)
+      }
+      result = stripped
+    } catch {
+      return Bytes.fromHex(result)
     }
-    if (!isSolidityAuxdata(hex.slice(auxdataStart, lengthStart))) {
-      continue
-    }
-
-    for (let i = auxdataStart; i < lengthStart + 4; i++) {
-      result[i] = '0'
-    }
-  }
-
-  return Bytes.fromHex(`0x${result.join('')}`)
-}
-
-function isSolidityAuxdata(auxdata: string): boolean {
-  const length = (auxdata.length / 2).toString(16).padStart(4, '0')
-
-  try {
-    const decoded = decode(`0x00${auxdata}${length}`, AuxdataStyle.SOLIDITY)
-    return decoded.solcVersion !== undefined
-  } catch {
-    return false
   }
 }
 
