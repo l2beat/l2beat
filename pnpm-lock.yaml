@@ -500,9 +500,6 @@ importers:
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
-      ohm-js:
-        specifier: ^17.1.0
-        version: 17.1.0
       rimraf:
         specifier: ^5.0.0
         version: 5.0.10
@@ -6813,10 +6810,6 @@ packages:
   object.entries@1.1.8:
     resolution: {integrity: sha512-cmopxi8VwRIAw/fkijJohSfpef5PdN0pMQJN6VC/ZKvn0LIknWD8KtgY6KlQdEc4tIjcQ3HxSMmnvtzIscdaYQ==}
     engines: {node: '>= 0.4'}
-
-  ohm-js@17.1.0:
-    resolution: {integrity: sha512-xc3B5dgAjTBQGHaH7B58M2Pmv6WvzrJ/3/7LeUzXNg0/sY3jQPdSd/S2SstppaleO77rifR1tyhdfFGNIwxf2Q==}
-    engines: {node: '>=0.12.1'}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -14212,8 +14205,6 @@ snapshots:
       call-bind: 1.0.7
       define-properties: 1.2.1
       es-object-atoms: 1.1.1
-
-  ohm-js@17.1.0: {}
 
   on-exit-leak-free@2.1.2: {}
 
