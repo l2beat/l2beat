@@ -1,4 +1,8 @@
-import { AuxdataStyle, splitAuxdata } from '@ethereum-sourcify/bytecode-utils'
+import {
+  AuxdataStyle,
+  decode,
+  splitAuxdata,
+} from '@ethereum-sourcify/bytecode-utils'
 import { useSolidityCompiler } from '@ethereum-sourcify/compilers'
 import type {
   Libraries,
@@ -337,13 +341,17 @@ function matchesRuntimeBytecode(
   )
   const normalizedDeployed = stripAuxdata(deployedBytecode)
 
-  const got = maskImmutableReferences(
-    normalizedCompiled,
-    contract.evm.deployedBytecode.immutableReferences ?? {},
+  const got = maskSolidityAuxdata(
+    maskImmutableReferences(
+      normalizedCompiled,
+      contract.evm.deployedBytecode.immutableReferences ?? {},
+    ),
   )
-  const want = maskImmutableReferences(
-    normalizedDeployed,
-    contract.evm.deployedBytecode.immutableReferences ?? {},
+  const want = maskSolidityAuxdata(
+    maskImmutableReferences(
+      normalizedDeployed,
+      contract.evm.deployedBytecode.immutableReferences ?? {},
+    ),
   )
 
   const matches = got.equals(want)
@@ -358,6 +366,42 @@ function stripAuxdata(bytecode: Bytes): Bytes {
   return Bytes.fromHex(
     splitAuxdata(bytecode.toString(), AuxdataStyle.SOLIDITY)[0],
   )
+}
+
+// TODO(radomski): This needs to be improved
+function maskSolidityAuxdata(bytecode: Bytes): Bytes {
+  const hex = bytecode.toString().slice(2)
+  const result = hex.split('')
+
+  for (let lengthStart = 0; lengthStart <= hex.length - 4; lengthStart += 2) {
+    const lengthHex = hex.slice(lengthStart, lengthStart + 4)
+    const auxdataHexLength = Number.parseInt(lengthHex, 16) * 2
+    const auxdataStart = lengthStart - auxdataHexLength
+
+    if (auxdataStart < 0) {
+      continue
+    }
+    if (!isSolidityAuxdata(hex.slice(auxdataStart, lengthStart))) {
+      continue
+    }
+
+    for (let i = auxdataStart; i < lengthStart + 4; i++) {
+      result[i] = '0'
+    }
+  }
+
+  return Bytes.fromHex(`0x${result.join('')}`)
+}
+
+function isSolidityAuxdata(auxdata: string): boolean {
+  const length = (auxdata.length / 2).toString(16).padStart(4, '0')
+
+  try {
+    const decoded = decode(`0x00${auxdata}${length}`, AuxdataStyle.SOLIDITY)
+    return decoded.solcVersion !== undefined
+  } catch {
+    return false
+  }
 }
 
 function maskImmutableReferences(
