@@ -55,7 +55,7 @@ export const FlattenerValidator = command({
     const allProviders = getProviders(paths)
 
     const now = UnixTime(1778573466)
-    const contracts = getAllContractAddresses(configReader).slice(0, 10)
+    const contracts = getAllContractAddresses(configReader)
     const maxLength = Math.floor(Math.log10(contracts.length)) + 1
     let completed = 0
 
@@ -208,12 +208,9 @@ function createCompilerInput(
       },
     },
     settings: {
+      ...source.compilerSettings,
       remappings: source.remappings,
       libraries: getLibraries(source),
-      optimizer: {
-        enabled: true,
-        runs: 100,
-      },
       outputSelection: {
         '*': {
           '*': ['evm.deployedBytecode'],
