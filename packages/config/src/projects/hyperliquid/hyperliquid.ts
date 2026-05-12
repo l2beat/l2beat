@@ -170,6 +170,5 @@ export const hyperliquid: ScalingProject = {
       },
     ],
     type: 'canonical',
-    transfersTimeMode: 'unknown',
   },
 }
