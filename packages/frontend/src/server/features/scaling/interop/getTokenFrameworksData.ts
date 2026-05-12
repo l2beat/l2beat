@@ -421,7 +421,8 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
       minTransferValueUsd: 50,
       maxTransferValueUsd: 250_000,
       averageTransferSizeUsd: 12_500,
-    }))
+    }),
+  )
 
   const mockTokens: TopTokenItem[] = [
     {
