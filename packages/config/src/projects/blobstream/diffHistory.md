@@ -12,7 +12,7 @@ The new `blobstreamProgramVkey` corresponds to the Blobstream guest program rebu
 
 The underlying prover system moves from `sp1turbo` (v5.x) to `sp1hypercube` (v6.x).
 
-The new vkey is registered in `programHashes.ts` under `proverSystemProject: ProjectId('sp1hypercube')`. Verification path confirmed on-chain by decoding the SP1 proof selector from a recent `commitHeaderRange` call (first 4 bytes = `0x5a093a2f`, which routes via `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 deployment).
+Verification path confirmed on-chain by decoding the SP1 proof selector from a recent `commitHeaderRange` call (first 4 bytes = `0x5a093a2f`, which routes via `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 deployment).
 
 ## Watched changes
 
