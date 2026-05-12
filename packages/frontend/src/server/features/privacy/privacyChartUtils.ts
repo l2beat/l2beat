@@ -1,4 +1,3 @@
-import type { PrivacyFlowBucketTotalRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -24,9 +23,9 @@ export type PrivacyChartPoint = [
   withdrawalsValueUsd: number,
 ]
 
-export type PrivacyTvlChartPoint = [
+export type PrivacyTvsChartPoint = [
   timestamp: number,
-  totalValueLockedUsd: number,
+  totalValueSecuredUsd: number,
 ]
 
 export interface PrivacyChartResponse {
@@ -34,8 +33,8 @@ export interface PrivacyChartResponse {
   syncedUntil: number | undefined
 }
 
-export interface PrivacyTvlChartResponse {
-  chart: PrivacyTvlChartPoint[]
+export interface PrivacyTvsChartResponse {
+  chart: PrivacyTvsChartPoint[]
   syncedUntil: number | undefined
 }
 
@@ -141,139 +140,6 @@ export function buildPrivacyChart(
   }
 }
 
-export function buildPrivacyTvlChart(
-  projects: PrivacyProjectConfig[],
-  dailyRows: Array<{
-    projectId: string
-    bucketId: string
-    timestamp: UnixTime
-    depositCount: number
-    withdrawalCount: number
-    depositAmount: bigint
-    withdrawalAmount: bigint
-  }>,
-  bucketTotals: PrivacyFlowBucketTotalRecord[],
-  syncedUntil: UnixTime | undefined,
-  priceById: Map<string, number>,
-  range: PrivacyChartParams['range'],
-): PrivacyTvlChartResponse {
-  const projectIds = new Set(projects.map((project) => project.id.toString()))
-  const filteredHistoryRows = dailyRows.filter(
-    (row) => projectIds.has(row.projectId) && Number(row.timestamp) > 0,
-  )
-  const filteredTotals = bucketTotals.filter((row) =>
-    projectIds.has(row.projectId),
-  )
-
-  const historySyncedUntil = syncedUntil
-    ? UnixTime.toStartOf(Number(syncedUntil), 'day')
-    : undefined
-  const snapshotSyncedUntil =
-    filteredTotals.length > 0
-      ? UnixTime.toStartOf(
-          Math.max(...dailyRows.map((row) => Number(row.timestamp))),
-          'day',
-        )
-      : undefined
-  const syncedUntilDay = minDefined(historySyncedUntil, snapshotSyncedUntil)
-  const anchorDay =
-    syncedUntilDay ??
-    snapshotSyncedUntil ??
-    (filteredHistoryRows.length > 0
-      ? UnixTime.toStartOf(
-          Math.max(...filteredHistoryRows.map((row) => Number(row.timestamp))),
-          'day',
-        )
-      : undefined)
-
-  if (anchorDay === undefined) {
-    if (range[0] === null) {
-      return { chart: [], syncedUntil: undefined }
-    }
-
-    return {
-      chart: generateTimestamps(normalizePrivacyChartRange(range), 'daily').map(
-        (timestamp) => [timestamp, 0] as PrivacyTvlChartPoint,
-      ),
-      syncedUntil: undefined,
-    }
-  }
-
-  const minTimestamp =
-    filteredHistoryRows.length > 0
-      ? Math.min(...filteredHistoryRows.map((row) => Number(row.timestamp)))
-      : Number(anchorDay)
-  const normalizedRange = normalizePrivacyChartRange(range, minTimestamp)
-  const bucketInfoByKey = buildPrivacyBucketInfoByKey(projects, priceById)
-  const netValueUsdByDay = new Map<number, number>()
-
-  for (const row of filteredHistoryRows) {
-    const bucketInfo = bucketInfoByKey.get(
-      getPrivacyBucketKey(row.projectId, row.bucketId),
-    )
-    if (!bucketInfo) continue
-
-    const netValueUsd =
-      amountToUsd(row.depositAmount, bucketInfo.decimals, bucketInfo.priceUsd) -
-      amountToUsd(
-        row.withdrawalAmount,
-        bucketInfo.decimals,
-        bucketInfo.priceUsd,
-      )
-
-    netValueUsdByDay.set(
-      Number(row.timestamp),
-      (netValueUsdByDay.get(Number(row.timestamp)) ?? 0) + netValueUsd,
-    )
-  }
-
-  const anchorValueUsd = filteredTotals.reduce((sum, row) => {
-    const bucketInfo = bucketInfoByKey.get(
-      getPrivacyBucketKey(row.projectId, row.bucketId),
-    )
-    if (!bucketInfo) return sum
-    const balance =
-      amountToUsd(row.depositAmount, bucketInfo.decimals, bucketInfo.priceUsd) -
-      amountToUsd(
-        row.withdrawalAmount,
-        bucketInfo.decimals,
-        bucketInfo.priceUsd,
-      )
-    return sum + balance
-  }, 0)
-
-  const allTimestamps = generateTimestamps(
-    [UnixTime(minTimestamp), anchorDay],
-    'daily',
-  )
-  const valueByDay = new Map<number, number>()
-  let currentValueUsd = anchorValueUsd
-  valueByDay.set(Number(anchorDay), currentValueUsd)
-
-  for (let index = allTimestamps.length - 2; index >= 0; index--) {
-    const nextDay = allTimestamps[index + 1]
-    const timestamp = allTimestamps[index]
-    if (nextDay === undefined || timestamp === undefined) {
-      continue
-    }
-    currentValueUsd -= netValueUsdByDay.get(nextDay) ?? 0
-    valueByDay.set(timestamp, currentValueUsd)
-  }
-
-  const rangeEnd = Math.min(Number(normalizedRange[1]), Number(anchorDay))
-
-  return {
-    chart: generateTimestamps(
-      [normalizedRange[0], UnixTime(rangeEnd)],
-      'daily',
-    ).map(
-      (timestamp) =>
-        [timestamp, valueByDay.get(timestamp) ?? 0] as PrivacyTvlChartPoint,
-    ),
-    syncedUntil: syncedUntilDay ?? anchorDay,
-  }
-}
-
 export function getPrivacyChartSyncedUntil(
   cursors: { syncedAt: number }[],
 ): UnixTime | undefined {
@@ -296,10 +162,4 @@ function normalizePrivacyChartRange(
   const to = UnixTime.toStartOf(range[1], 'day')
 
   return [UnixTime(from), UnixTime(to)]
-}
-
-function minDefined(a: UnixTime | undefined, b: UnixTime | undefined) {
-  if (a === undefined) return b
-  if (b === undefined) return a
-  return UnixTime(Math.min(Number(a), Number(b)))
 }

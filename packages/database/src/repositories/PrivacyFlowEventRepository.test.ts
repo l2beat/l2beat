@@ -177,15 +177,24 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
           flowEvent('proj-a', START, 101, 'deposit', 2, 200n),
           flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n),
-          flowEvent('proj-a', START, 103, 'deposit', 1, 300n, 0, 'a'.repeat(12), 0, 'bucket-2'),
+          flowEvent(
+            'proj-a',
+            START,
+            103,
+            'deposit',
+            1,
+            300n,
+            0,
+            'a'.repeat(12),
+            0,
+            'bucket-2',
+          ),
           flowEvent('proj-b', START, 104, 'deposit', 1, 400n),
         ]
 
         await repository.upsertMany(records)
 
-        const result = await repository.getBucketTotalsByProjectIds([
-          'proj-a',
-        ])
+        const result = await repository.getBucketTotalsByProjectIds(['proj-a'])
 
         expect(result).toEqualUnsorted([
           {

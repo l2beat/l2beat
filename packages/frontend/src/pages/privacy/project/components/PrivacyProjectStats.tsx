@@ -22,7 +22,7 @@ export function PrivacyProjectStats({
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <ProjectSummaryStat
-        title="Total Value Locked"
+        title="Total Value Secured"
         value={
           <div className="flex flex-col md:gap-1">
             <span>{formatCurrency(totalValueSecuredUsd ?? 0, 'usd')}</span>

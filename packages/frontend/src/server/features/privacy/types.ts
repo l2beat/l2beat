@@ -9,7 +9,7 @@ import type {
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 export type PrivacyProjectConfig = Project<
-  'display' | 'privacyInfo' | 'statuses',
+  'display' | 'privacyInfo' | 'statuses' | 'tvsConfig',
   'contracts' | 'permissions' | 'discoveryInfo'
 >
 

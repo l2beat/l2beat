@@ -1,10 +1,9 @@
-import type { PrivacyPriceRecord } from '@l2beat/database'
+import type { PrivacyPriceRecord, TokenValueRecord } from '@l2beat/database'
 import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { getPrivacyProjects } from './getPrivacyProjects'
 import {
   amountToUsd,
-  bigintToNumber,
   buildPrivacyBucketInfoByKey,
   getPrivacyBucketKey,
   type PrivacyBucketInfo,
@@ -37,14 +36,26 @@ export async function getPrivacySnapshot(
       const last7dCutoff = currentDay - 6 * UnixTime.DAY
       const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
-      const [totals, daily30d] = await Promise.all([
+      const [totals, daily30d, ...projectTokenValues] = await Promise.all([
         db.privacyFlowEvent.getBucketTotalsByProjectIds(projectIds),
         db.privacyFlowEvent.getDailyByProjectIds(
           projectIds,
           last30dCutoff,
           currentDay,
         ),
+        ...projects.map((p) =>
+          db.tvsTokenValue.getLastNonZeroValue(now, p.id.toString()),
+        ),
       ])
+
+      const tokenValuesByProject = new Map<string, TokenValueRecord[]>()
+      for (let i = 0; i < projects.length; i++) {
+        const p = projects[i]
+        const tv = projectTokenValues[i]
+        if (p && tv) {
+          tokenValuesByProject.set(p.id.toString(), tv)
+        }
+      }
 
       const priceIds = new Set<string>()
       for (const project of projects) {
@@ -77,6 +88,7 @@ export async function getPrivacySnapshot(
           dailyIndex,
           last7dCutoff,
           last30dCutoff,
+          tokenValuesByProject.get(project.id.toString()) ?? [],
         ),
       )
 
@@ -151,8 +163,23 @@ function buildProjectSnapshot(
   dailyIndex: DailyIndex,
   last7dCutoff: UnixTime,
   last30dCutoff: UnixTime,
+  tokenValues: TokenValueRecord[],
 ): PrivacyProjectSnapshot {
   const projectId = project.id.toString()
+
+  // Build TVS by token symbol using tvsConfig to map tokenId -> symbol
+  const tvsBySymbol = new Map<string, number>()
+  for (const tv of tokenValues) {
+    const tvsToken = project.tvsConfig?.find((t) => t.id === tv.tokenId)
+    if (tvsToken) {
+      const existing = tvsBySymbol.get(tvsToken.symbol) ?? 0
+      tvsBySymbol.set(tvsToken.symbol, existing + tv.valueForProject)
+    }
+  }
+  const projectTotalTvs = tokenValues.reduce(
+    (sum, tv) => sum + tv.valueForProject,
+    0,
+  )
 
   const assets = project.privacyInfo.tokens.map((token) =>
     buildAssetSnapshot(
@@ -163,6 +190,7 @@ function buildProjectSnapshot(
       dailyIndex,
       last7dCutoff,
       last30dCutoff,
+      tvsBySymbol.get(token.token.symbol) ?? null,
     ),
   )
 
@@ -194,9 +222,7 @@ function buildProjectSnapshot(
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     assets: orderedAssets,
     summary: {
-      totalValueSecuredUsd: sum(
-        orderedAssets.map((asset) => asset.totalValueUsd ?? 0),
-      ),
+      totalValueSecuredUsd: projectTotalTvs,
       bucketCount: sum(orderedAssets.map((asset) => asset.bucketCount)),
       deposits: aggregateDeposits(orderedAssets),
       depositedValueUsd: aggregateDepositedValueUsd(orderedAssets),
@@ -213,6 +239,7 @@ function buildAssetSnapshot(
   dailyIndex: DailyIndex,
   last7dCutoff: UnixTime,
   last30dCutoff: UnixTime,
+  assetTvs: number | null,
 ): PrivacyAssetSnapshot {
   const symbol = token.token.symbol
   const priceUsd =
@@ -232,17 +259,14 @@ function buildAssetSnapshot(
     ),
   )
 
-  const totalAmount = sum(buckets.map((b) => b.totalAmount ?? 0))
-  const totalValueUsd = priceUsd === null ? null : totalAmount * priceUsd
-
   return {
     symbol,
     address: token.token.address,
     decimals: token.token.decimals,
     priceUsd,
     bucketCount: buckets.length,
-    totalAmount,
-    totalValueUsd,
+    totalAmount: 0,
+    totalValueUsd: assetTvs,
     deposits: aggregateDeposits(buckets),
     depositedValueUsd:
       priceUsd === null
@@ -264,7 +288,6 @@ function buildBucketSnapshot(
   last30dCutoff: UnixTime,
 ): PrivacyBucketSnapshot {
   const key = getPrivacyBucketKey(projectId, bucket.id)
-  const bucketInfo = bucketInfoByKey.get(key)
   const total = totalIndex.get(key)
   const dailyRows = dailyIndex.get(key) ?? []
 
@@ -281,51 +304,35 @@ function buildBucketSnapshot(
     .filter((r) => r.timestamp >= last30dCutoff)
     .reduce((sum, r) => sum + r.depositCount, 0)
 
-  const totalAmount =
-    total != null
-      ? bigintToNumber(
-          total.depositAmount - total.withdrawalAmount,
-          bucketInfo?.decimals ?? 0,
-        )
-      : null
-
-  const totalValueUsd =
-    totalAmount === null || bucketInfo?.priceUsd == null
-      ? null
-      : totalAmount * bucketInfo.priceUsd
-
   return {
     id: bucket.id,
     label: bucket.label,
     type: bucket.type,
     denomination: bucket.denomination,
-    totalAmount,
-    totalValueUsd,
+    totalAmount: null,
+    totalValueUsd: null,
     deposits: {
       total: total?.depositCount ?? 0,
       last7d: depositCount7d,
       last30d: depositCount30d,
     },
-    depositedValueUsd:
-      bucketInfo?.priceUsd == null
-        ? emptyDepositedValueUsd()
-        : {
-            total: amountToUsd(
-              total?.depositAmount ?? 0n,
-              bucketInfo.decimals,
-              bucketInfo.priceUsd,
-            ),
-            last7d: amountToUsd(
-              depositAmount7d,
-              bucketInfo.decimals,
-              bucketInfo.priceUsd,
-            ),
-            last30d: amountToUsd(
-              depositAmount30d,
-              bucketInfo.decimals,
-              bucketInfo.priceUsd,
-            ),
-          },
+    depositedValueUsd: {
+      total: amountToUsd(
+        total?.depositAmount ?? 0n,
+        bucketInfoByKey.get(key)?.decimals ?? 0,
+        bucketInfoByKey.get(key)?.priceUsd ?? null,
+      ),
+      last7d: amountToUsd(
+        depositAmount7d,
+        bucketInfoByKey.get(key)?.decimals ?? 0,
+        bucketInfoByKey.get(key)?.priceUsd ?? null,
+      ),
+      last30d: amountToUsd(
+        depositAmount30d,
+        bucketInfoByKey.get(key)?.decimals ?? 0,
+        bucketInfoByKey.get(key)?.priceUsd ?? null,
+      ),
+    },
   }
 }
 

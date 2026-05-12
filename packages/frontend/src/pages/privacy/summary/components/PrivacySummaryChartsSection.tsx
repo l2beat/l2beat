@@ -7,7 +7,7 @@ import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyChartRangeControls } from '../../project/components/PrivacyChartRangeControls'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
-import { PrivacyTvlChart } from './PrivacyTvlChart'
+import { PrivacyTvsChart } from './PrivacyTvsChart'
 
 interface Props {
   defaultRange: ChartRange
@@ -43,9 +43,9 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
     () => getChartTimeRangeFromData(chartData),
     [chartData],
   )
-  const tvlChartData = useMemo(
+  const tvsChartData = useMemo(
     () =>
-      data?.tvlChart.map(([timestamp, value]) => ({
+      data?.tvsChart.map(([timestamp, value]) => ({
         timestamp,
         value,
       })),
@@ -61,12 +61,12 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       metric="count"
     />
   )
-  const tvlChart = (
+  const tvsChart = (
     <div>
-      <h2 className="mb-3 font-bold text-lg md:text-xl">Total value locked</h2>
-      <PrivacyTvlChart
-        data={tvlChartData}
-        syncedUntil={data?.tvlSyncedUntil}
+      <h2 className="mb-3 font-bold text-lg md:text-xl">Total value secured</h2>
+      <PrivacyTvsChart
+        data={tvsChartData}
+        syncedUntil={data?.tvsSyncedUntil}
         isLoading={isLoading}
       />
     </div>
@@ -80,12 +80,12 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       </ChartControlsWrapper>
 
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-        <PrimaryCard>{tvlChart}</PrimaryCard>
+        <PrimaryCard>{tvsChart}</PrimaryCard>
         <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
 
       <div className="space-y-4 lg:hidden">
-        <PrimaryCard>{tvlChart}</PrimaryCard>
+        <PrimaryCard>{tvsChart}</PrimaryCard>
         <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
     </div>

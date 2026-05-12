@@ -2,13 +2,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from '../scaling/tvs/utils/getSummedTvsValues'
 import { getPrivacyProjects } from './getPrivacyProjects'
 import {
   buildPrivacyChart,
-  buildPrivacyTvlChart,
   type PrivacyChartPoint,
   type PrivacyChartResponse,
-  type PrivacyTvlChartPoint,
+  type PrivacyTvsChartPoint,
 } from './privacyChartUtils'
 
 export const PrivacyProjectChartParams = v.object({
@@ -22,8 +25,8 @@ export type PrivacyProjectChartParams = v.infer<
 
 export type PrivacyProjectChartPoint = PrivacyChartPoint
 export interface PrivacyProjectChartResponse extends PrivacyChartResponse {
-  tvlChart: PrivacyTvlChartPoint[]
-  tvlSyncedUntil: number | undefined
+  tvsChart: PrivacyTvsChartPoint[]
+  tvsSyncedUntil: number | undefined
 }
 
 export async function getPrivacyProjectChart(
@@ -37,21 +40,26 @@ export async function getPrivacyProjectChart(
     return {
       chart: [],
       syncedUntil: undefined,
-      tvlChart: [],
-      tvlSyncedUntil: undefined,
+      tvsChart: [],
+      tvsSyncedUntil: undefined,
     }
   }
 
-  const projectIds = [project.id.toString()]
+  const projectIds = [project.id]
 
-  const [dailyRows, bucketTotals, syncedUntil] = await Promise.all([
+  const [dailyRows, _bucketTotals, syncedUntil, tvsValues] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
-      projectIds,
+      [project.id.toString()],
       UnixTime(0),
       UnixTime.now(),
     ),
-    db.privacyFlowEvent.getBucketTotalsByProjectIds(projectIds),
-    db.privacyFlowEvent.getLatestTimestampByProjectIds(projectIds),
+    db.privacyFlowEvent.getBucketTotalsByProjectIds([project.id.toString()]),
+    db.privacyFlowEvent.getLatestTimestampByProjectIds([project.id.toString()]),
+    getSummedTvsValues(projectIds, params.range, {
+      forSummary: false,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: false,
+    }),
   ])
 
   const priceIds = [
@@ -73,18 +81,18 @@ export async function getPrivacyProjectChart(
     priceById,
     params.range,
   )
-  const tvlChart = buildPrivacyTvlChart(
-    [project],
-    dailyRows,
-    bucketTotals,
-    syncedUntil,
-    priceById,
-    params.range,
-  )
+
+  const tvsChart = buildPrivacyTvsChart(tvsValues)
 
   return {
     ...flowChart,
-    tvlChart: tvlChart.chart,
-    tvlSyncedUntil: tvlChart.syncedUntil,
+    tvsChart,
+    tvsSyncedUntil: tvsValues.at(-1)?.timestamp,
   }
+}
+
+function buildPrivacyTvsChart(
+  values: SummedTvsValues[],
+): PrivacyTvsChartPoint[] {
+  return values.map((v) => [v.timestamp, v.value ?? 0])
 }

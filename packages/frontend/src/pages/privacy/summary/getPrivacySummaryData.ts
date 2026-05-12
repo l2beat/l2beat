@@ -16,7 +16,7 @@ export interface PrivacySummaryEntry {
   icon: string
   href: string
   description: string
-  totalValueLockedUsd: number
+  totalValueSecuredUsd: number
   poolsTracked: number
   totalDeposits: number
   totalValueDeposited30dUsd: number
@@ -49,7 +49,7 @@ export async function getPrivacySummaryData(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
-    totalValueLockedUsd: project.summary.totalValueSecuredUsd ?? 0,
+    totalValueSecuredUsd: project.summary.totalValueSecuredUsd ?? 0,
     poolsTracked: project.summary.bucketCount ?? 0,
     totalDeposits: project.summary.deposits.total ?? 0,
     totalValueDeposited30dUsd: project.summary.depositedValueUsd.last30d ?? 0,

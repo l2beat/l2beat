@@ -53,9 +53,9 @@ const columns = [
         "Shows the trusted setup used by the project's proving system and its risk.",
     },
   }),
-  columnHelper.accessor('totalValueLockedUsd', {
-    id: 'totalValueLockedUsd',
-    header: 'Total value locked',
+  columnHelper.accessor('totalValueSecuredUsd', {
+    id: 'totalValueSecuredUsd',
+    header: 'Total value secured',
     cell: (ctx) => (
       <span className="font-medium text-base">
         {formatCurrency(ctx.getValue() ?? 0, 'usd')}
@@ -122,7 +122,9 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
+const initialSorting: SortingState = [
+  { id: 'totalValueSecuredUsd', desc: true },
+]
 
 export function PrivacySummaryTable({
   entries,
