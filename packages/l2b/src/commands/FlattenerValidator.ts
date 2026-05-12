@@ -66,9 +66,18 @@ export const FlattenerValidator = command({
     if (filterAddresses.length > 0) {
       contracts = intersection(contracts, filterAddresses)
     }
+    if (contracts.length === 0) {
+      console.log('No contracts to verify')
+      return
+    }
 
-    const maxLength = Math.floor(Math.log10(contracts.length)) + 1
+    const total = contracts.length
+    const maxLength = Math.floor(Math.log10(total)) + 1
+    const totalText = total.toString().padStart(maxLength)
+    const runStartedAtMs = Date.now()
     let completed = 0
+    let matching = 0
+    let verificationTimeMsTotal = 0
 
     await mapWithConcurrency(contracts, concurrency, async (contract) => {
       const chain = ChainSpecificAddress.longChain(contract)
@@ -78,15 +87,31 @@ export const FlattenerValidator = command({
       const source = await provider.getSource(contract)
       const flat = flattenSource(source)
 
+      const startedAtMs = Date.now()
       const status = await verifyBytecode(source, flat, bytecode, paths)
-      const done = ++completed
+      const verificationTimeMs = Date.now() - startedAtMs
+
+      completed++
+      verificationTimeMsTotal += verificationTimeMs
+      matching += status.type === 'success' ? 1 : 0
+
+      const failed = completed - matching
       const progress = colorMap(
-        `${done.toString().padStart(maxLength)}`,
-        done / contracts.length,
+        `${completed.toString().padStart(maxLength)}`,
+        completed / total,
       )
 
+      const cursorControl = completed === 1 ? '' : '\x1b[1A\r\x1b[K'
       console.log(
-        `${progress}/${contracts.length.toString().padStart(maxLength)}: ${statusTable[status.type]} <- ${contract}`,
+        `${cursorControl}${progress}/${totalText}: ` +
+          `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${contract}`,
+      )
+      console.log(
+        `Status: completed=${completed.toString().padStart(maxLength)}/${totalText} ` +
+          `matching=${matching.toString().padStart(maxLength)} ` +
+          `failed=${failed.toString().padStart(maxLength)} ` +
+          `avg=${formatDuration(verificationTimeMsTotal / completed)} ` +
+          `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`,
       )
     })
   },
@@ -121,6 +146,14 @@ function colorMap(toColor: string, value: number, multiplier = 1): string {
     return chalk.yellowBright(toColor)
   }
   return chalk.greenBright(toColor)
+}
+
+function formatDuration(durationMs: number): string {
+  if (durationMs < 1000) {
+    return `${Math.round(durationMs)}ms`
+  }
+
+  return `${(durationMs / 1000).toFixed(1)}s`
 }
 
 function flattenSource(source: ContractSource): string {
