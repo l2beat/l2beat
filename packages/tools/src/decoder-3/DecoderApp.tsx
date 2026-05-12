@@ -570,11 +570,25 @@ function DisplayBytes(props: { bytes: `0x${string}` }) {
   const store = useStore()
   const [moreBytes, setMoreBytes] = useState(false)
 
+  const preimage = store.preimages[props.bytes]
+
   useEffect(() => {
     if (props.bytes.length === 66) {
       store.requestPreimage(props.bytes)
     }
   }, [props.bytes, store.requestPreimage])
+
+  if (preimage) {
+    return (
+      <ValueWithTooltip items={[{ name: 'Copy bytes', copy: props.bytes }]}>
+        <span className="select-none font-mono text-zinc-500">hash(</span>
+        <span className="select-none text-zinc-500">&ldquo;</span>
+        <span>{preimage}</span>
+        <span className="select-none text-zinc-500">&rdquo;</span>
+        <span className="select-none font-mono text-zinc-500">)</span>
+      </ValueWithTooltip>
+    )
+  }
 
   if (props.bytes.length <= 66) {
     return (

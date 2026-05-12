@@ -164,6 +164,14 @@ function FormExamples(props: { setHash: (hash: string) => void }) {
         >
           Scroll SC upgrade
         </li>
+        <li
+          className="cursor-pointer text-blue-400"
+          onClick={h(
+            '0x76c396ab0ef99f4f25b41879cba5af12e389c7ea6316e80d79f7cb39a6bafeb0',
+          )}
+        >
+          Tx with preimage
+        </li>
       </ul>
     </>
   )
