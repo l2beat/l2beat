@@ -10,8 +10,10 @@
   "names": {
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": "Router",
     "eth:0x06179f7C1be40863405f374E7f5F8806c728660A": "GHOEthereumTokenPool",
-    "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284": "EthereumToArbitrumOnRamp",
-    "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "ArbitrumToEthereumOffRamp",
+    "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa": "EthereumOnRamp_v1_6",
+    "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "ArbitrumToEthereumOffRamp_v1_6",
+    "eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9": "ArbitrumToEthereumOffRamp_v1_5",
+    "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d": "OLD_ArbitrumToEthereumOffRamp",
     "eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749": "ArbitrumToEthereumCommitStore",
     "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad": "PriceRegistry",
     "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": "ARMProxy",
@@ -33,6 +35,19 @@
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "AaveRiskCouncil"
   },
   "overrides": {
+    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      "ignoreRelatives": true
+    },
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      "ignoreRelatives": true
+    },
+    "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f": {
+      "ignoreRelatives": true
+    },
+    "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6": {
+      "ignoreRelatives": true,
+      "ignoreMethods": ["pools", "poolsMap"]
+    },
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
       "canActIndependently": false,
       "description": "Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.",
@@ -45,13 +60,13 @@
             "args": ["4949039107694359620"]
           }
         },
-        "arbitrumOffRamp": {
-          "description": "Arbitrum-to-Ethereum OffRamp allowed to call routeMessage() and deliver messages to Ethereum receivers.",
+        "arbitrumOffRamps": {
+          "description": "Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here.",
           "handler": { "type": "call", "method": "getOffRamps", "args": [] },
           "edit": [
             "pipe",
-            ["find", ["=", "#sourceChainSelector", "4949039107694359620"]],
-            ["get", "offRamp"]
+            ["filter", ["=", "#sourceChainSelector", "4949039107694359620"]],
+            ["map", ["get", "offRamp"]]
           ],
           "permissions": [
             {

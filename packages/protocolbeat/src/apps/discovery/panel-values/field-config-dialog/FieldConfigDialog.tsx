@@ -41,6 +41,7 @@ export function FieldConfigDialog(props: Props) {
   const configIgnoreMethods =
     models.configModel.ignoreMethods?.includes(fieldName)
   const configIgnoreRelatives =
+    models.configModel.ignoreRelatives === true ||
     models.configModel.ignoreRelatives?.includes(fieldName)
   const configIgnoreInWatchMode =
     models.configModel.ignoreInWatchMode?.includes(fieldName)
@@ -48,6 +49,7 @@ export function FieldConfigDialog(props: Props) {
   const templateIgnoreMethods =
     models.templateModel.ignoreMethods?.includes(fieldName)
   const templateIgnoreRelatives =
+    models.templateModel.ignoreRelatives === true ||
     models.templateModel.ignoreRelatives?.includes(fieldName)
   const templateIgnoreInWatchMode =
     models.templateModel.ignoreInWatchMode?.includes(fieldName)

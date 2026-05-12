@@ -1,20 +1,185 @@
-Generated with discovered.json: 0x9ad97bec0b11d789f2687bdf1e6c0c455b699440
+Generated with discovered.json: 0x9c195f0461a7e88d5cd5e7fc8fa7e4f3a473ae92
 
-# Diff at Mon, 11 May 2026 14:08:47 GMT:
+# Diff at Tue, 12 May 2026 16:22:35 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@16c27951daab8bc6e3065fb400714a6b714e9f73 block: 1777388210
-- current timestamp: 1777388210
+- comparing to: main@5b38ed4108fb8232968a603255bf227ce95606a1 block: 1777388210
+- current timestamp: 1778572081
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x1c6460cfe32916196f6977b5442b0F98A826D880) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EthereumToArbitrumOnRampTokenLimitAdmin (eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) [transporter/ManyChainMultiSig]
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
+```
+
+```diff
+    EOA  (eth:0x41eAdbc688797a02bfaBE48472995833489ce69D) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}
+    }
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove authorized price-updater accounts.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"publish or revise token and destination-chain gas prices stored in this FeeQuoter.","role":".getAllAuthorizedCallers"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","description":"add, remove, or reprice fee tokens accepted by this OnRamp.","role":".owner"}
+      directlyReceivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","description":"change Router, PriceRegistry, message size, token count, gas limit, and fee parameters for outbound messages.","role":".owner"}
+      directlyReceivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","description":"change token transfer fee configuration and node operator fee weights.","role":".owner"}
+      directlyReceivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","description":"withdraw accumulated non-LINK fee tokens.","role":".owner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EVM2EVMOnRamp (eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284) [transporter/OnRampV3]
+    +++ description: Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).
+```
+
+```diff
+    EOA  (eth:0x7052cB84079905400ea52B635cAb6a275fDA8823) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.
++++ description: Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here.
+      values.arbitrumOffRamps.2:
++        "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5"
++++ description: Ethereum-to-Arbitrum OnRamp selected by the Router when users call ccipSend() for the Arbitrum chain selector.
+      values.arbitrumOnRamp:
+-        "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+    }
+```
+
+```diff
+    EOA  (eth:0xAe735fd5e74887064DFf99C637f291caE5485A75) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A] {
+    +++ description: None
+      values.totalSupply:
+-        "1823059432764109575639260"
++        "2194168877021750981562816"
+    }
+```
+
+```diff
+    EOA  (eth:0xE062e7D123AC8dF480C56147f911144F55C10f88) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NonceManager (eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumToEthereumOffRamp_v1_6 (eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5) [transporter/OfframpV3]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeQuoter (eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57) [transporter/FeeQuoter]
+    +++ description: v1.6 fee oracle + price registry. Replaces the per-lane PriceRegistry: holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The per-chain v1.6 OnRamp delegates fee quoting to this contract via getValidatedFee().
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenAdminRegistry (eth:0xb22764f98dD05c789929716D677382Df22C05Cb6) [transporter/TokenAdminRegistry]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ccip/.flat/ArbitrumToEthereumOffRamp_v1_6.sol  | 3037 +++++++++++++++++
+ .../EVM2EVMOnRamp.sol => /dev/null                 | 3407 --------------------
+ .../projects/ccip/.flat/EthereumOnRamp_v1_6.sol    | 2354 ++++++++++++++
+ .../dev/null                                       | 1632 ----------
+ .../src/projects/ccip/.flat/FeeQuoter.sol          | 3218 ++++++++++++++++++
+ .../src/projects/ccip/.flat/NonceManager.sol       | 1042 ++++++
+ .../src/projects/ccip/.flat/TokenAdminRegistry.sol |  791 +++++
+ 7 files changed, 10442 insertions(+), 5039 deletions(-)
+```
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x08eAEE68e44caae09aa94367181470d92946310e) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
 
 ```diff
     contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
@@ -78,10 +243,34 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA  (eth:0x316D2E43270ff4091Ca5d269c0E5cD8363524C91) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0x31eD28c2549e0195c4A405B71e4f18EfB935bE6f) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
     EOA  (eth:0x41eAdbc688797a02bfaBE48472995833489ce69D) {
     +++ description: None
       receivedPermissions:
 +        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x41fa7E165F7aD96feC5EeB2a715d18dd9a4681d3) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -105,6 +294,8 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +        {"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
       directlyReceivedPermissions.17:
 +        {"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"rotate the signer tree (signers, group memberships, group quorums, group parents) and optionally clear the active root.","role":".owner"}
+      directlyReceivedPermissions.19:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"pause or unpause commits and change OCR, dynamic config, minimum sequence, and price epoch parameters.","role":".owner"}
       values.AdminRoleGranted:
 -        ["eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"]
       values.adminRoleMemberCount:
@@ -173,6 +364,14 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA  (eth:0x465Cb88B0Bf2A984a7C6c053262C8137D667bEaE) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
     contract RMNCallProxy (eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610) [transporter/CallProxyWithTargetSet] {
     +++ description: Public call proxy that forwards any caller to RMNRemoteOwner, allowing anyone to execute already-scheduled RMNRemoteOwner operations after the timelock delay.
       name:
@@ -190,6 +389,14 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +        {"target":{"description":"Immutable target contract that every call to this proxy is forwarded to. Extracted from the TargetSet event emitted on deployment."}}
       category:
 +        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0x58f94e05e34F9319627FAfdb64bB01E8D590878C) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -273,13 +480,24 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
-    contract EthereumToArbitrumOnRamp (eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284) [transporter/OnRampV3] {
+    contract EVM2EVMOnRamp (eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284) [transporter/OnRampV3] {
     +++ description: Ethereum-to-Arbitrum OnRamp. It receives messages only from the Router, validates send limits and fees, locks or burns tokens through token pools, assigns sequence numbers and nonces, hashes the message, and emits CCIPSendRequested for the offchain DON (ccip consensus).
+      name:
+-        "EthereumToArbitrumOnRamp"
++        "EVM2EVMOnRamp"
 +++ description: Current per-fee-token config (networkFee, gas/premium multipliers, enabled flag), reconstructed from FeeConfigSet event history. The s_feeTokenConfig mapping is internal and the only public getter is per-token, so the event log is replayed; if the same token has been reconfigured multiple times each distinct config emitted will appear as a separate entry.
       values.feeTokenConfig:
 +        [{"token":"eth:0x514910771AF9Ca656af840dff83E8264EcF986CA","networkFeeUSDCents":50,"gasMultiplierWeiPerEth":"1100000000000000000","premiumMultiplierWeiPerEth":"900000000000000000","enabled":true},{"token":"eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","networkFeeUSDCents":50,"gasMultiplierWeiPerEth":"1100000000000000000","premiumMultiplierWeiPerEth":"1000000000000000000","enabled":true},{"token":"eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f","networkFeeUSDCents":50,"gasMultiplierWeiPerEth":"1100000000000000000","premiumMultiplierWeiPerEth":"1000000000000000000","enabled":true}]
       fieldMeta.feeTokenConfig:
 +        {"description":"Current per-fee-token config (networkFee, gas/premium multipliers, enabled flag), reconstructed from FeeConfigSet event history. The s_feeTokenConfig mapping is internal and the only public getter is per-token, so the event log is replayed; if the same token has been reconfigured multiple times each distinct config emitted will appear as a separate entry."}
+    }
+```
+
+```diff
+    EOA  (eth:0x6A985273Db73f21D6a74Ee9f76725112819BD950) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -331,6 +549,29 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +        {"config":{"description":"Decoded signer tree: root quorum, every active group with its quorum/parent/child-groups/members, and a one-line human summary. Disabled groups (slots 0..31 with quorum=0) are dropped."},"getRoot":{"description":"Currently active Merkle root of pending operations and its expiry timestamp."},"getRootMetadata":{"description":"Metadata of the active root: target chainId and multisig, pre/post op counts, and whether it overrode the previous root."},"getOpCount":{"description":"Monotonic counter of ops executed across all roots. Used to detect skipped ops from the previous root."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
       category:
 +        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    EOA  (eth:0x7A3c53356AE7797284B3C8daC27115015A8744BC) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    contract Router (eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) [transporter/RouterV1_2_0] {
+    +++ description: Ethereum CCIP Router for this route. Users call it to send messages to Arbitrum; trusted Arbitrum OffRamps call it to deliver incoming messages to Ethereum receivers.
+      values.arbitrumOffRamp:
+-        "eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d"
++++ description: Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here.
+      values.arbitrumOffRamps:
++        ["eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d","eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9"]
+      fieldMeta.arbitrumOffRamp:
+-        {"description":"Arbitrum-to-Ethereum OffRamp allowed to call routeMessage() and deliver messages to Ethereum receivers."}
+      fieldMeta.arbitrumOffRamps:
++        {"description":"Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here."}
     }
 ```
 
@@ -414,19 +655,39 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```diff
     contract PriceRegistry (eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) [transporter/PriceRegistry] {
     +++ description: PriceRegistry used by the OnRamp and CommitStore to price fees, tokens, and gas for this route.
-+++ description: Latest gas price per destination chain selector (USD with 18 decimals per gas unit, possibly packed with multiple component prices) replayed from UsdPerUnitGasUpdated events.
-      values.destChainGasPrices:
-+        {"6433500567565415381":{"value":9167700000,"timestamp":1777385567},"11344663589394136015":{"value":62094300000,"timestamp":1777385567},"4949039107694359620":{"value":"467624329724279469310483256607254343819689744","timestamp":1777385567},"15971525489660198786":{"value":"76332414321941376089960561466574214186963942","timestamp":1777385567},"3734403246176062136":{"value":"104063342404578628241166529150316204150278592","timestamp":1777385567},"4051577828743386545":{"value":27754164364,"timestamp":1777385567},"5142893604156789321":{"value":23362352000,"timestamp":1777385567},"465200170687744372":{"value":1513007692,"timestamp":1777385567},"1346049177634351622":{"value":18706929322,"timestamp":1777385567},"7264351850409363825":{"value":"1158842070618563892180111707470575658654260058","timestamp":1777385567},"4411394078118774322":{"value":"12298331701538591910687550244126059380917714","timestamp":1777385567},"8805746078405598895":{"value":61791344808,"timestamp":1777385567},"1562403441176082196":{"value":"51476350736912635805709720395346414407449667400","timestamp":1777385567},"13204309965629103672":{"value":"10971882340067761977958031433454654946676017042","timestamp":1777385567},"4627098889531055414":{"value":2271842256796,"timestamp":1777385567},"3016212468291539606":{"value":1735421684,"timestamp":1777385567},"6422105447186081193":{"value":7008955135,"timestamp":1777385567},"4348158687435793198":{"value":22716684900,"timestamp":1777385567},"17198166215261833993":{"value":"46920565451175452938305437609362866252132960","timestamp":1777385567},"1556008542357238666":{"value":"5443590479307718057400885373664738479419725778","timestamp":1777385567},"6916147374840168594":{"value":2137741560,"timestamp":1777385567},"5406759801798337480":{"value":"eth:0x2766414227852487881860020200313973395553","timestamp":1777385567},"2049429975587534727":{"value":"136704887115594359553127987636927293154451257","timestamp":1777385567},"3849287863852499584":{"value":"22432865387586076305976051889066312724410759329","timestamp":1777385567},"3993510008929295315":{"value":23234538,"timestamp":1777385567},"7937294810946806131":{"value":3805661316292,"timestamp":1777385567},"12505351618335765396":{"value":"167332918478784862056499251893292353283133735","timestamp":1777385567},"9043146809313071210":{"value":57084911752,"timestamp":1777385567},"1673871237479749969":{"value":3553704000,"timestamp":1777385567},"7613811247471741961":{"value":"30001693653703464389815842269887336486063771","timestamp":1777385567},"3461204551265785888":{"value":"84089047964580432204324588168544107631503624","timestamp":1777385567},"9027416829622342829":{"value":3018988350,"timestamp":1777385567},"5214452172935136222":{"value":"763215952508423857583715796390152836083961404","timestamp":1777385567},"1294465214383781161":{"value":4312048,"timestamp":1777385567},"1462016016387883143":{"value":2727640796,"timestamp":1777385567},"1923510103922296319":{"value":"60770511513718631467177103269257560274238289","timestamp":1777385567},"241851231317828981":{"value":456679294020,"timestamp":1777385567},"1224752112135636129":{"value":2378707800,"timestamp":1777385567},"3229138320728879060":{"value":84439800000,"timestamp":1777385567},"11690709103138290329":{"value":"489334623134408304199834343109553269262134682","timestamp":1777385567},"1456215246176062136":{"value":26145112500,"timestamp":1777385567},"14894068710063348487":{"value":"156139023060714908438931800715967871768921","timestamp":1777385567},"8788096068760390840":{"value":"448030315180823938996825202007579137145000000","timestamp":1777385567},"5608378062013572713":{"value":"14378323744693902292433765462469380607449225","timestamp":1777385567},"2442541497099098535":{"value":15264128346,"timestamp":1777385567},"1804312132722180201":{"value":"11180264415002314732100756235104879598235273552","timestamp":1777385567},"17164792800244661392":{"value":"533636534940004443469347294283133017174553132","timestamp":1777385567},"13447077090413146373":{"value":"7647300851364036391578291482442840327794971399","timestamp":1777385567},"3577778157919314504":{"value":"19754908493447356233377681449536898373518322206","timestamp":1777385567},"15293031020466096408":{"value":"1478363162646545766353187447208819583954374605","timestamp":1777385567},"17912061998839310979":{"value":12890340000,"timestamp":1777385567},"470401360549526817":{"value":"15240552638875379362106515298790410808700378136","timestamp":1777385567},"3555797439612589184":{"value":"1143615776523359859661490424410048405769755672","timestamp":1777385567},"16468599424800719238":{"value":61944381021,"timestamp":1777385567},"11964252391146578476":{"value":1983936634367,"timestamp":1777385567},"1546563616611573946":{"value":66,"timestamp":1777385567},"465944652040885897":{"value":"12071504100008676542060350700072073885386260","timestamp":1777385567},"4560701533377838164":{"value":110432892955,"timestamp":1777385567},"7222032299962346917":{"value":79267487520,"timestamp":1777385567},"2459028469735686113":{"value":"51078989911701785020018603455275649996694931","timestamp":1777385567},"9813823125703490621":{"value":1813434178,"timestamp":1777385567},"8481857512324358265":{"value":101989546020,"timestamp":1777385567}}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"provide gas and token price data used when committing CCIP state.","role":".priceRegistry"}
 +++ description: Accounts authorized to write token and gas prices through updatePrices(). Typically Chainlink DON OCR transmitters and the CommitStore which piggybacks price updates on commit reports.
       values.getPriceUpdaters:
 +        ["eth:0x4af4B497c998007eF83ad130318eB2b925a79dc8","eth:0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE","eth:0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76","eth:0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75","eth:0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749","eth:0x8DC27D621c41a32140e22E2a4dAf1259639BAe04","eth:0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB","eth:0x118a9389960F86390A4F14ce4C95D6ff076C6bFC","eth:0x831097033C88c82a7F1897b168Aa88cC44540C8f","eth:0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e","eth:0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53","eth:0x3d8a95adA63D406ee8232562AbD83CEdb0B90466","eth:0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194","eth:0x57d6cD9CD44770C807b2763Dbe4CFDA0113dd114","eth:0x9f592c28590595F3F78a8881E8Dbb9984ed705cD","eth:0x1A3D582d1aB9CF630b44B91C54CBD16Ca7e35a8d","eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72","eth:0xFa94e57b12b6C45A3aD3CBb9451ba99a997eb210","eth:0xA48269e5c9A234daBfEBE98b82390Be705536d1c","eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64","eth:0xd8F93Aff87dC2AEEe0D0b0dF347baDA861BFf802","eth:0x52275dC17f9eD92230C8C4d57fD36d128701f694","eth:0xA4755Cd68CA2092447c8c842659a2931f9110320","eth:0x0d26BaE784c8986502E072F4e73B6168e2052045","eth:0x0f89C7c0586536B618e0469402e1c8234bc52959","eth:0x01346721418045A6c07b71052e452eF8615e9084","eth:0x9D93D536Ced80871Bf3DA5Bb47bAedE62c794f8A","eth:0x9B9Ec8E26955c034828bBD78E22ab258d983dCdb","eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D","eth:0x57b548C9c213EA2bcf60193E3D7fd2d2b53Fb9b3","eth:0xA9f9bF2b643348c0884f2eBA4F712E833DA9a2b8","eth:0xDaC3A82Cc5e7C137bF28e6EF4F68f29D66205ffe","eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","eth:0xE41677500B425999cB4133950ca3aB79eA7470a6","eth:0xa58818D1acD8D62ab077a1F79606fCb5CE3741b9","eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159","eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99","eth:0xdCF6F209d36d93A26B251D2CFE994bEF02954110","eth:0x6C8b9672B4482A876168b9415bF8bBEA574bF4B9","eth:0x8A1680fBbDb3Da1e0E7cA9078435631bEaf8a2cF","eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4","eth:0x0f5552d17505dC8f70D6cd65BEADFE20f42bBE75","eth:0x10D5611D4E1fBB0Eb614C25f14ED6AfD6C945c75","eth:0x1807769Abe5133c9B41cA6746044b6a1d83F5633","eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02","eth:0xDb156E875Ef17dDe70c90a1529023fFf376e627c","eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B","eth:0x27A4E7ff4a6E28056Ac3e39445639876Ee9926FB","eth:0x459154447d3BD41392Ea3f49738a887dD3f1e5d0","eth:0xc5164AF94Be6737fE21085eDDa4E43BcBf224F9f","eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d","eth:0xf7D68CcC92B836316C40B24ea77F6805DcBb8F02","eth:0x98d0f843AE9BA7c55F6e3941E6660a5947a67Ed9","eth:0x0428dF02c581E605AABF83005b427b1561b587De","eth:0x8FC54E798eAC51353E160C9113682714F5e9E262","eth:0xfacFe88fdf03Ab7D30d6CA45A070Df7C54551fd6","eth:0x807dd69Bc9BC4e9411490f7b79Ff30c91E799A04","eth:0xA7E77BD47e2fDeE61df271E8b9206F3F1E804427","eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282","eth:0x8D846b1E9032827546B62160c32aDe293f77B1AB","eth:0x0F254ECcC89219CEC945BCeA48A4681eb5a380d7","eth:0x3f1c3541B7035dEd84E4502E41D5C919da4C4527","eth:0x6f4AbCe0B22343e66C856F28e2d07074c5c5BF75","eth:0x607c0979C55628680167260Ca68e0EF22e8f128C","eth:0x67b972054152E6F4B7434D84439EE225e5a00b90","eth:0xF191733ea5be14E4a5f381a3c375A4F3F8fd4793","eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff","eth:0xFE73BccC5b88D22969099EBb4E2eb5e19eFb0165","eth:0xb86C91861A7043fffC26C7740C3678eE09599234","eth:0xbAf669bBe01882082C83F8B2d146057202fc4cB7","eth:0x6818278a6e4DA0aD588ef4dd04b59bC4E6703248","eth:0xd079265E929C845707e816E3855721D055d40235","eth:0x38A806580D93c5B3e295F5181723C11f15c43271","eth:0x70Ac0F926a64D82f0cC69A3E505f0eE57E27006a","eth:0x1bddbA5DC2cd6ED3343A8E94D02023cC720533B9"]
-+++ description: Latest USD price per token (1e18 = 1 USD per 1e18 token units) replayed from UsdPerTokenUpdated events. Keys are token addresses; value is the last (price, timestamp) pair emitted for that token.
-      values.tokenPrices:
-+        {"eth:0x514910771AF9Ca656af840dff83E8264EcF986CA":{"value":"9252865100000000000","timestamp":1777362611},"eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2":{"value":"2284031660000000000000","timestamp":1777362611},"eth:0xB006A31a279fd90be4CdfFFab5fD45Dd605D33CC":{"value":"1000000000000000000","timestamp":1777362611},"eth:0x183015a9bA6fF60230fdEaDc3F43b3D788b13e21":{"value":"1000000000000000000","timestamp":1706812091},"eth:0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8":{"value":"999790000000000000","timestamp":1777362611},"eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48":{"value":1000000000000,"timestamp":1724860007},"eth:0xCA160D11087E03fd398d40f561cd4768825f4958":{"value":"1050000000000000000","timestamp":1724198999},"eth:0xe85411C030fB32A9D8b14Bbbc6CB19417391F711":{"value":"95405014453780000000000","timestamp":1777362611},"eth:0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5":{"value":650000000000000,"timestamp":1724969051},"eth:0xb2F30A7C980f052f02563fb518dcc39e6bf38175":{"value":"1000000000000000000","timestamp":1724839295},"eth:0x888888435FDe8e7d4c54cAb67f206e4199454c60":{"value":"60000000000000000","timestamp":1724839295},"eth:0x85225Ed797fd4128Ac45A992C46eA4681a7A15dA":{"value":"15000000000000000","timestamp":1723550495},"eth:0x911D86C72155c33993d594B0Ec7E6206B4C803da":{"value":"9252865100000000000","timestamp":1777362611},"eth:0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23":{"value":"270000000000000000","timestamp":1725272123},"eth:0x1a2EB478FA07125C9935A77b3C03a82470801E30":{"value":1500000000000000,"timestamp":1723554683},"eth:0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F":{"value":"300000000000000000","timestamp":1724969051},"eth:0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6":{"value":"2705550000000000000000","timestamp":1723574183},"eth:0x98C6616F1CC0D3E938A16200830DD55663dd7DD3":{"value":"1000000000000000000000000000000","timestamp":1724180687},"eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b":{"value":"2284031660000000000000","timestamp":1777362611},"eth:0xDcEe70654261AF21C44c093C300eD3Bb97b78192":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0xDBB5Cf12408a3Ac17d668037Ce289f9eA75439D7":{"value":"300000000000000000000000000000","timestamp":1724969051},"eth:0xd2a530170D71a9Cfe1651Fb468E2B98F7Ed7456b":{"value":"716700000000000000000000000000","timestamp":1777362611},"eth:0x2624Bd0094f474713AC9c634b37A5ebef4e0b1FE":{"value":"234899730000000000","timestamp":1777362611},"eth:0x66cC3FD40612F9c591F977ce026Ef1C79520C472":{"value":"1000000000000000000000000000000","timestamp":1724969051},"eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7":{"value":"2284031660000000000000","timestamp":1777362611},"eth:0xE46a5E19B19711332e33F33c2DB3eA143e86Bc10":{"value":"2284031660000000000000","timestamp":1777362611},"eth:0x32bd822d615A3658A68b6fDD30c2fcb2C996D678":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0x49446A0874197839D15395B908328a74ccc96Bc0":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0x8a053350ca5F9352a16deD26ab333e2D251DAd7c":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0xB60acD2057067DC9ed8c083f5aa227a244044fD6":{"value":"550000000000000000000000000000","timestamp":1725271283},"eth:0xc719d010B63E5bbF2C0551872CD5316ED26AcD83":{"value":"23000000000000000","timestamp":1724079935},"eth:0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b":{"value":"63876417790000000000","timestamp":1777362611},"eth:0x38C2a4a7330b22788374B8Ff70BBa513C8D848cA":{"value":"750000000000000000","timestamp":1724198099},"eth:0x72e364F2ABdC788b7E918bc238B21f109Cd634D7":{"value":"45000000000000000000","timestamp":1724198099},"eth:0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0":{"value":"300000000000000000","timestamp":1724839295},"eth:0xa19f5264F7D7Be11c451C093D8f92592820Bea86":{"value":"6000000000000000000","timestamp":1724839295},"eth:0x8Fe815417913a93Ea99049FC0718ee1647A2a07c":{"value":"50000000000000000","timestamp":1724079935},"eth:0x54Df3076ac0CdC9bC97fA290AB9c5a88E3D23630":{"value":500000000000000,"timestamp":1724969051},"eth:0x60b9C41d99FE3Eb64Ecc1344baD31D87f1bceD6D":{"value":"7000000000000000000","timestamp":1724969051},"eth:0xa7a0B3Fe94121E366D774d60D075F6386F750884":{"value":"1000000000000000000","timestamp":1724969051},"eth:0x0AA1e96D2a46Ec6beB2923dE1E61Addf5F5f1dce":{"value":"850000000000000000","timestamp":1724969051},"eth:0x01aaC2b594F7bdBeC740F0F1AA22910EbB4B74Ab":{"value":"130000000000000000","timestamp":1724969051},"eth:0xf2DbAaBd8F8E0993F11DE4CEd470Df1ED1a4491b":{"value":"50000000000000000","timestamp":1724796011},"eth:0x1Cbc4BF664907669CfAB86a3b1aCC3EC8867a25F":{"value":"600000000000000000","timestamp":1724199095},"eth:0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc":{"value":"100000000000000000","timestamp":1724182127},"eth:0x20157DBAbb84e3BBFE68C349d0d44E48AE7B5AD2":{"value":"768668917000000000000000000000000","timestamp":1777362611},"eth:0x6b5204B0Be36771253Cc38e88012E02B752f0f36":{"value":"100000000000000000","timestamp":1724839295},"eth:0x341c05c0E9b33C0E38d64de76516b2Ce970bB3BE":{"value":"3810000000000000000000","timestamp":1724179031},"eth:0xc4506022Fb8090774E8A628d5084EED61D9B99Ee":{"value":"4226000000000000000000","timestamp":1724179031},"eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f":{"value":"999237240000000000","timestamp":1777362611},"eth:0x3e62fED35c97145e6B445704B8CE74B2544776A9":{"value":"80000000000000000","timestamp":1724839295},"eth:0x18f313Fc6Afc9b5FD6f0908c1b3D476E3feA1DD9":{"value":"3297510000000000000000","timestamp":1777362611},"eth:0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7":{"value":"1000000000000000000","timestamp":1724059883},"eth:0x45fcf0Ebb7d79E3de9Fc308b6c7cb680A981CB7a":{"value":"3000000000000000000","timestamp":1724839295},"eth:0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6":{"value":"1000000000000000000","timestamp":1724839295},"eth:0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222":{"value":"2284031660000000000000","timestamp":1777362611},"eth:0x5F2F8818002dc64753daeDF4A6CB2CcB757CD220":{"value":"90000000000000000000000000000","timestamp":1724969051},"eth:0xAe770d24ec1580A13392E0B71067571351029203":{"value":"1000000000000000000000000000000","timestamp":1724969051},"eth:0xA544b3F0c46c15F0B2b00ba3D67b56C250287905":{"value":"10000000000000000000","timestamp":1724059883},"eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA":{"value":"1090000000000000000","timestamp":1724969051},"eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97":{"value":1,"timestamp":1777362611},"eth:0x325DC9EBceC31940C658aCACa45f8293418d811E":{"value":1,"timestamp":1725271631},"eth:0x30D20208d987713f46DFD34EF128Bb16C404D10f":{"value":"600000000000000000","timestamp":1725271775},"eth:0xd9D920AA40f578ab794426F5C90F6C731D159DEf":{"value":1,"timestamp":1777362611},"eth:0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C":{"value":"1000000000000000000","timestamp":1725878483},"eth:0xbDf245957992bfBC62B07e344128a1EEc7b7eE3f":{"value":"625436300000000000000000000000000","timestamp":1728413831},"eth:0x54EE8A49155F701F0d5Ff088CD36fbBF1a5B9f44":{"value":"1000000000000000000","timestamp":1728414071},"eth:0x08d23468A467d2bb86FaE0e32F247A26C7E2e994":{"value":"21620000000000000000","timestamp":1728414191}}
       fieldMeta:
-+        {"getStalenessThreshold":{"description":"Maximum age, in seconds, of a token or gas price before it is rejected as stale by getValidatedTokenPrice / getValidatedTokenAndGasPrices."},"getFeeTokens":{"description":"Tokens accepted as CCIP fee payment. The OnRamp validates the user-supplied feeToken against this list before quoting."},"getPriceUpdaters":{"description":"Accounts authorized to write token and gas prices through updatePrices(). Typically Chainlink DON OCR transmitters and the CommitStore which piggybacks price updates on commit reports."},"tokenPrices":{"description":"Latest USD price per token (1e18 = 1 USD per 1e18 token units) replayed from UsdPerTokenUpdated events. Keys are token addresses; value is the last (price, timestamp) pair emitted for that token."},"destChainGasPrices":{"description":"Latest gas price per destination chain selector (USD with 18 decimals per gas unit, possibly packed with multiple component prices) replayed from UsdPerUnitGasUpdated events."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
++        {"getStalenessThreshold":{"description":"Maximum age, in seconds, of a token or gas price before it is rejected as stale by getValidatedTokenPrice / getValidatedTokenAndGasPrices."},"getFeeTokens":{"description":"Tokens accepted as CCIP fee payment. The OnRamp validates the user-supplied feeToken against this list before quoting."},"getPriceUpdaters":{"description":"Accounts authorized to write token and gas prices through updatePrices(). Typically Chainlink DON OCR transmitters and the CommitStore which piggybacks price updates on commit reports."},"owner":{"severity":"HIGH","type":"PERMISSION"}}
       category:
 +        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA  (eth:0x90f91a0fFDC93a11c045b3155F0b3cc0D9fB9ef6) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0x925f08725819ED7FA98269A92A7c14093C4395c5) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0x96d1D86b1BEd64053410FdCc2E3585EB578DdE1f) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -439,10 +700,58 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA  (eth:0x9CA9809476bE48b7A700D50B3d10A98D993dd8A5) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xA2B7C82d2B90A4e94F0C3027c0999e4f44f4Cc9F) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xA39B7c0f08e4727c8325b4ad043513AA5185a4E2) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
     EOA  (eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D) {
     +++ description: None
       receivedPermissions:
 +        [{"permission":"interact","from":"eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x79bC82F3931A7d017719146A822e4AD8152b157e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xAD97C0270a243270136E40278155C12ce7C7F87B","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"},{"permission":"interact","from":"eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F","description":"schedule and execute transactions through this multisig once the root group quorum is reached.","role":".config"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xa616AEEa440ECfb1AA8065a19E6E55652743B3FB) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xA69d606205419F67a46d772c66cf685971d5ceed) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xa968cf59aB2BaE618f6eE0a80EcBd5b242ebE991) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -482,6 +791,54 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA  (eth:0xb4a378C2a17f4B8D4767616b4469807223f27a26) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc333b76845bDF806369EF0F00134559988aa985C) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xc4fd363861673327BAcFa1AeE04B9A991459a1D2) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xCbF79800f67af0f5391D49B98C63EE4E3c976E2D) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xCEED45aD0f1c8E621eef28a4643B06AF04A6dEB0) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xD29971a9eac66b42Ba5B1472204C0bcca8E15c6e) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
     contract ARMProxyOwnerGnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
     +++ description: None
       receivedPermissions.0.role:
@@ -490,6 +847,14 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
       receivedPermissions.1.role:
 -        ".ProposerRoleGranted"
 +        ".proposerRoleMembers"
+    }
+```
+
+```diff
+    EOA  (eth:0xd7d7f77069aCEF3116B6D0eDBEA48e45aCc3562e) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
     }
 ```
 
@@ -532,6 +897,22 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 ```
 
 ```diff
+    EOA  (eth:0xe24eD7652Ba5bFa1b3E8CAED4bf6065B93b734a6) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xE336C8e4B6649c82A16a7c78577169A24Baa7fff) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
     contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
     +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A setRoot call is accepted only if the root group reaches its quorum. The owner can rotate the entire signer tree.
       name:
@@ -559,6 +940,96 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
       category:
 +        {"name":"Governance","priority":3}
     }
+```
+
+```diff
+    EOA  (eth:0xe79782642B9D6a9CC8a6619d30e27BE1d761BA44) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    contract OLD_ArbitrumToEthereumOffRamp (eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) [transporter/OffRampV1] {
+    +++ description: Arbitrum-to-Ethereum OffRamp. It accepts OCR execution reports, checks every message against a blessed committed Merkle root, enforces sequence and nonce rules, releases or mints tokens, and calls the Router to deliver ccipReceive() to the receiver.
+      name:
+-        "ArbitrumToEthereumOffRamp"
++        "OLD_ArbitrumToEthereumOffRamp"
+      directlyReceivedPermissions.0.role:
+-        ".arbitrumOffRamp"
++        ".arbitrumOffRamps"
+    }
+```
+
+```diff
+    EOA  (eth:0xf2c04359575b08F71629CA89E9085B2d2076E286) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xf547696fF576aeA0D2C8e41D467daD4CeE904513) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xfc038715c79Ebcf7F9ee5723E466454B21434157) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xfc0A7B612CE625c10DEbC660cD67452EBDBeC207) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
+    EOA  (eth:0xFc52B2196a94D08fc9614b8039821bcE03bF58E8) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3","description":"sign and transmit commit reports that publish Merkle roots for messages accepted by this CommitStore.","role":".ocrConfig"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Gho Token (eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainLink Token (eth:0x514910771AF9Ca656af840dff83E8264EcF986CA) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumToEthereumOffRamp_v1_5 (eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9) [transporter/OfframpV2]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3) [transporter/CommitStoreV1]
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x30eee331d2405cf28886220483944dc18a02653e

@@ -43,8 +43,10 @@ export function useTemplateModel({ templateId, files }: Props) {
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
-    const current = templateModel.ignoreRelatives ?? []
-    const updated = toggleInList(fieldName, current)
+    const current = templateModel.ignoreRelatives
+    // wildcard `true` ignores every field already; toggle is a no-op
+    if (current === true) return
+    const updated = toggleInList(fieldName, current ?? [])
     const newModel = templateModel.setIgnoreRelatives(updated)
     setTemplateModel(newModel)
     saveModelContents(newModel)

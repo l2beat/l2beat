@@ -56,8 +56,7 @@
         "flatten": true,
         "add": {
           "event": "event FeeConfigSet((address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeConfig)"
-        },
-        "ignoreRelative": true
+        }
       },
       "edit": [
         "map",

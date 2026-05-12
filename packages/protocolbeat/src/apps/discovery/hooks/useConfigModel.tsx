@@ -40,8 +40,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
   }
 
   const toggleIgnoreRelatives = (fieldName: string) => {
-    const current = configModel.getIgnoreRelatives(selectedAddress) ?? []
-    const updated = toggleInList(fieldName, current)
+    const current = configModel.getIgnoreRelatives(selectedAddress)
+    // wildcard `true` ignores every field already; toggle is a no-op
+    if (current === true) return
+    const updated = toggleInList(fieldName, current ?? [])
     const newModel = configModel.setIgnoreRelatives(selectedAddress, updated)
     setConfigModel(newModel)
     saveModelContents(newModel)

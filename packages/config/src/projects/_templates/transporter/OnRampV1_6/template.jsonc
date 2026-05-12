@@ -3,22 +3,132 @@
   "ignoreMethods": ["getStaticConfig"],
   "ignoreRelatives": ["getSupportedTokens", "owner"],
   "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
+  "types": {
+    "CCIPChainName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "4426351306075016396": "0g",
+        "4829375610284793157": "ab",
+        "3577778157919314504": "abstract",
+        "4059281736450291836": "adi",
+        "14894068710063348487": "apechain",
+        "4741433654826277614": "aptos",
+        "6433500567565415381": "avalanche",
+        "1294465214383781161": "berachain",
+        "465944652040885897": "opbnb",
+        "7937294810946806131": "bitlayer",
+        "3849287863852499584": "bob",
+        "4560701533377838164": "botanix",
+        "5406759801798337480": "bsquared",
+        "241851231317828981": "bitcoin-merlin",
+        "2135107236357186872": "bittensor",
+        "11344663589394136015": "bsc",
+        "1346049177634351622": "celo",
+        "1224752112135636129": "core",
+        "9043146809313071210": "corn",
+        "18240105181246962294": "creditcoin",
+        "1456215246176062136": "cronos",
+        "8788096068760390840": "cronos-zkevm",
+        "6325494908023253251": "edge",
+        "8805746078405598895": "andromeda",
+        "4949039107694359620": "arbitrum",
+        "15971525489660198786": "base",
+        "7613811247471741961": "hashkey",
+        "3461204551265785888": "ink",
+        "4627098889531055414": "linea",
+        "1556008542357238666": "mantle",
+        "7264351850409363825": "mode",
+        "3734403246176062136": "optimism",
+        "13204309965629103672": "scroll",
+        "16468599424800719238": "taiko",
+        "1923510103922296319": "unichain",
+        "2049429975587534727": "worldchain",
+        "3016212468291539606": "xlayer",
+        "17198166215261833993": "zircuit",
+        "1562403441176082196": "zksync",
+        "13624601974233774587": "etherlink",
+        "1462016016387883143": "fraxtal",
+        "3229138320728879060": "hedera",
+        "1804312132722180201": "hemi",
+        "2442541497099098535": "hyperliquid",
+        "1523760397290643893": "jovay",
+        "9813823125703490621": "kaia",
+        "5608378062013572713": "lens",
+        "15293031020466096408": "lisk",
+        "5009297550715157269": "ethereum",
+        "4051577828743386545": "matic",
+        "6093540873831549674": "megaeth",
+        "13447077090413146373": "metal",
+        "11690709103138290329": "mind",
+        "17164792800244661392": "mint",
+        "8481857512324358265": "monad",
+        "18164309074156128038": "morph",
+        "12657445206920369324": "henesys",
+        "7801139999541420232": "pharos",
+        "9335212494177455608": "plasma",
+        "17912061998839310979": "plume",
+        "6422105447186081193": "astar",
+        "2459028469735686113": "katana",
+        "6916147374840168594": "ronin",
+        "11964252391146578476": "rootstock",
+        "9027416829622342829": "sei",
+        "3993510008929295315": "shibarium",
+        "124615329519749607": "solana",
+        "12505351618335765396": "soneium",
+        "1673871237479749969": "sonic",
+        "16978377838628290997": "stable",
+        "470401360549526817": "superseed",
+        "5936861837188149645": "tac",
+        "7281642695469137430": "tempo",
+        "16448340667252469081": "ton",
+        "17529533435026248318": "sui",
+        "9762610643973837292": "sui-testnet",
+        "6473245816409426016": "memento",
+        "9723842205701363942": "everclear",
+        "5142893604156789321": "wemix",
+        "465200170687744372": "xdai",
+        "17673274061779414707": "xdc",
+        "3555797439612589184": "zora"
+      }
+    }
+  },
   "fields": {
-    "staticConfigAddresses": {
+    "staticConfig": {
+      "description": "Immutable per-OnRamp config: source chain (this contract's chain), RMN remote, NonceManager, TokenAdminRegistry. Set once at construction.",
       "handler": {
         "type": "call",
         "args": [],
         "method": "getStaticConfig"
       },
-      "edit": ["pick", "rmnRemote", "nonceManager", "tokenAdminRegistry"]
+      "edit": ["set", "chainSelector", ["format", "CCIPChainName"]]
     },
-    "staticConfigChains": {
+    "destChainConfigs": {
+      "description": "Per-destination-chain lane config (which local Router can send ccipSend() for this destination, and whether the per-chain allowlist gate is enabled). Replayed from DestChainConfigSet events; keys are CCIP chain selectors, value is the latest (router, allowlistEnabled) pair. The sequenceNumber field on the event reflects the seq at the moment of the config change, not the current send counter, so it is dropped.",
       "handler": {
-        "type": "call",
-        "args": [],
-        "method": "getStaticConfig"
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": ["router", "allowlistEnabled"],
+        "set": {
+          "event": "event DestChainConfigSet(uint64 indexed destChainSelector, uint64 sequenceNumber, address router, bool allowlistEnabled)"
+        }
       },
-      "edit": ["pick", "chainSelector"]
+      "edit": ["map_keys", ["format", "CCIPChainName"]]
+    },
+    "destChainAllowlist": {
+      "description": "Per-destination-chain sender allowlist (addresses that ccipSend() through this OnRamp for that destination when allowlistEnabled is true). Replayed from AllowListSendersAdded / AllowListSendersRemoved events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "select": "senders",
+        "flatten": true,
+        "add": {
+          "event": "event AllowListSendersAdded(uint64 indexed destChainSelector, address[] senders)"
+        },
+        "remove": {
+          "event": "event AllowListSendersRemoved(uint64 indexed destChainSelector, address[] senders)"
+        }
+      },
+      "edit": ["map_keys", ["format", "CCIPChainName"]]
     }
   }
 }

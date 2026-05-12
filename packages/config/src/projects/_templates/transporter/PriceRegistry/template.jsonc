@@ -26,28 +26,6 @@
         }
       ]
     },
-    "tokenPrices": {
-      "description": "Latest USD price per token (1e18 = 1 USD per 1e18 token units) replayed from UsdPerTokenUpdated events. Keys are token addresses; value is the last (price, timestamp) pair emitted for that token.",
-      "handler": {
-        "type": "event",
-        "groupBy": "token",
-        "select": ["value", "timestamp"],
-        "set": {
-          "event": "event UsdPerTokenUpdated(address indexed token, uint256 value, uint256 timestamp)"
-        }
-      }
-    },
-    "destChainGasPrices": {
-      "description": "Latest gas price per destination chain selector (USD with 18 decimals per gas unit, possibly packed with multiple component prices) replayed from UsdPerUnitGasUpdated events.",
-      "handler": {
-        "type": "event",
-        "groupBy": "destChain",
-        "select": ["value", "timestamp"],
-        "set": {
-          "event": "event UsdPerUnitGasUpdated(uint64 indexed destChain, uint256 value, uint256 timestamp)"
-        }
-      }
-    },
     "owner": {
       "severity": "HIGH",
       "type": "PERMISSION",

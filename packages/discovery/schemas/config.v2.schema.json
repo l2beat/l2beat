@@ -41,7 +41,12 @@
             "items": { "type": "string" }
           },
           "ignoreMethods": { "type": "array", "items": { "type": "string" } },
-          "ignoreRelatives": { "type": "array", "items": { "type": "string" } },
+          "ignoreRelatives": {
+            "anyOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "const": true }
+            ]
+          },
           "fields": {
             "type": "object",
             "propertyNames": { "type": "string" },
