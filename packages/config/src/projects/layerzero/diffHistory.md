@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xcc4eb089ba2674c1a5c6e1da1dc49e67e5fd45ac
+
+# Diff at Mon, 11 May 2026 11:10:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@16c27951daab8bc6e3065fb400714a6b714e9f73 block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Config: some adjustments before publishing to FE.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract.
+      description:
+-        "Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control."
++        "Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract."
+      receivedPermissions.0.description:
+-        "execute rsETH OFT messages sent to Unichain through LayerZero."
++        "receive execution fees for rsETH OFT messages sent to Unichain through LayerZero."
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here.
+      description:
+-        "Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here."
++        "Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) [layerzero/BlockedMessageLib] {
+    +++ description: Simple LayerZero library that blocks all messages if selected.
+      description:
+-        "Simple LayerZero library that blocks all messages if configured."
++        "Simple LayerZero library that blocks all messages if selected."
+    }
+```
+
+```diff
+    contract Horizen DVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin","via":[{"address":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","role":".owner"}]
+    }
+```
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+    }
+```
+
+```diff
+    contract Canary DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract Netherming DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0x9c1f5c9c507af35f5cc76855285ee1d66e8277b5
 
 # Diff at Fri, 08 May 2026 07:51:31 GMT:
