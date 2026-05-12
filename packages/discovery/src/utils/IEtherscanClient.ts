@@ -74,6 +74,10 @@ export interface ContractSource {
       useLiteralContent?: boolean
       appendCBOR?: boolean
     }
+    debug?: {
+      revertStrings?: string
+      debugInfo?: string[]
+    }
   }
 }
 

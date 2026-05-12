@@ -125,6 +125,12 @@ export const ContractSource = v.object({
           appendCBOR: v.boolean().optional(),
         })
         .optional(),
+      debug: v
+        .object({
+          revertStrings: v.string().optional(),
+          debugInfo: v.array(v.string()).optional(),
+        })
+        .optional(),
       remappings: v.array(v.string()).optional(),
     })
     .optional(),

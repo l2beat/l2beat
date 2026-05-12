@@ -81,6 +81,7 @@ export class SourcifyClient implements IEtherscanClient {
         evmVersion: result.compilation.compilerSettings.evmVersion,
         viaIR: result.compilation.compilerSettings.viaIR,
         metadata: result.compilation.compilerSettings.metadata,
+        debug: result.compilation.compilerSettings.debug,
       },
     }
   }
@@ -226,6 +227,12 @@ const SourcifySourceSchema = v.object({
           bytecodeHash: v.string().optional(),
           useLiteralContent: v.boolean().optional(),
           appendCBOR: v.boolean().optional(),
+        })
+        .optional(),
+      debug: v
+        .object({
+          revertStrings: v.string().optional(),
+          debugInfo: v.array(v.string()).optional(),
         })
         .optional(),
     }),

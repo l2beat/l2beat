@@ -152,6 +152,7 @@ export class BlockscoutClient implements IEtherscanClient {
         evmVersion: result.CompilerSettings?.evmVersion ?? result.EVMVersion,
         viaIR: result.CompilerSettings?.viaIR,
         metadata: result.CompilerSettings?.metadata,
+        debug: result.CompilerSettings?.debug,
       },
     }
   }
