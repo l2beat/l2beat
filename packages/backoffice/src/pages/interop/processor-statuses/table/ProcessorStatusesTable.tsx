@@ -38,6 +38,7 @@ export function ProcessorStatusesTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No processor statuses found."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-processor-statuses-${new Date().toISOString()}.csv`

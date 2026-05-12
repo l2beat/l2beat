@@ -11,7 +11,8 @@ import { TopProtocolsByVolumeChart } from './TopProtocolsByVolumeChart'
 import { useProtocolColorMap } from './useProtocolColorMap'
 import { getProtocolsDataWithOthers } from './utils/getProtocolsDataWithOthers'
 
-export type DisplayProtocol = InteropProtocolData & {
+export type DisplayProtocol = Omit<InteropProtocolData, 'slug'> & {
+  slug?: string
   color: string
   othersCount?: number
 }
@@ -71,9 +72,15 @@ export function TopProtocolsWidget({
                       style={{ backgroundColor: protocol.color }}
                     />
                     <div className="leading-none">
-                      {protocol.name === 'Others'
-                        ? `Others (${protocol.othersCount ?? 0})`
-                        : protocol.name}
+                      {protocol.slug ? (
+                        <a href={`/interop/protocols/${protocol.slug}`}>
+                          {protocol.name}
+                        </a>
+                      ) : protocol.name === 'Others' ? (
+                        `Others (${protocol.othersCount ?? 0})`
+                      ) : (
+                        protocol.name
+                      )}
                     </div>
                   </td>
                   <td className="@max-[373px]:hidden w-10 text-right font-medium text-2xs text-secondary">
