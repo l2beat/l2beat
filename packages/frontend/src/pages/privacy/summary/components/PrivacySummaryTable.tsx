@@ -7,6 +7,7 @@ import {
 import { useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -21,21 +22,28 @@ const columns = [
     header: 'Project',
     cell: (ctx) => (
       <TableLink href={ctx.row.original.href}>
-        <ProjectNameCell
-          project={{
-            name: ctx.row.original.name,
-            shortName: ctx.row.original.shortName,
-            slug: ctx.row.original.slug,
-            icon: ctx.row.original.icon,
-            backgroundColor: undefined,
-            description: ctx.row.original.description,
-            statuses: {
-              underReview: ctx.row.original.isUnderReview
-                ? 'config'
-                : undefined,
-            },
-          }}
-        />
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <ProjectNameCell
+              project={{
+                name: ctx.row.original.name,
+                shortName: ctx.row.original.shortName,
+                slug: ctx.row.original.slug,
+                icon: ctx.row.original.icon,
+                backgroundColor: undefined,
+                description: ctx.row.original.description,
+                statuses: {
+                  underReview: ctx.row.original.isUnderReview
+                    ? 'config'
+                    : undefined,
+                },
+              }}
+            />
+          </TwoRowCell.First>
+          <TwoRowCell.Second>
+            {formatInteger(ctx.row.original.poolsTracked)} pools tracked
+          </TwoRowCell.Second>
+        </TwoRowCell>
       </TableLink>
     ),
     enableSorting: false,
@@ -105,19 +113,6 @@ const columns = [
       align: 'right',
       tooltip:
         'Deposit count over the last 30 days aggregated across all tracked tokens and buckets.',
-    },
-  }),
-  columnHelper.accessor('poolsTracked', {
-    header: 'Pools tracked',
-    cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue() ?? 0)}
-      </span>
-    ),
-    meta: {
-      align: 'right',
-      tooltip:
-        'The total number of tracked buckets for the protocol, including pools and denominations.',
     },
   }),
 ]
