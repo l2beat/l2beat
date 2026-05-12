@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -31,6 +32,10 @@ const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
 const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
   activeKailuaGame,
   'KAILUA_TREASURY',
+)
+const vanguardAdvantage = discovery.getContractValue<number>(
+  activeKailuaTreasury,
+  'vanguardAdvantage',
 )
 
 export const megaeth: ScalingProject = opStackL2({
@@ -119,8 +124,7 @@ export const megaeth: ScalingProject = opStackL2({
   nonTemplateRiskView: {
     stateValidation: {
       value: 'Fraud proofs (1R, ZK)',
-      description:
-        'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently.',
+      description: `Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals; faulty proposals can be flagged but not replaced, halting the chain until the Vanguard proposes a correct state root.`,
       sentiment: 'bad',
       executionDelay: discovery.getContractValue<number>(
         'OptimismPortal2',

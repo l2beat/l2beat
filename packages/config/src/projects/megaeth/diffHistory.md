@@ -8,13 +8,11 @@ Generated with discovered.json: 0xd6fb873eb77a64098e57a7eecd575d5b753f84fc
 
 ## Description
 
-Kailua dispute-game rotation. MegaETH deployed a new KailuaGame implementation and a new operational treasury, then called `setRespectedGameType(1337, ...)` on `OptimismPortal2` to re-point the bridge at the new impl.
+Kailua `game1337` impl rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...` ([diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84)). Active `KailuaTreasury` is now `0x01853F26...`; `OptimismPortal2.setRespectedGameType(1337)` re-pointed the bridge.
 
-- **OptimismPortal2** (`eth:0x7f82f57F...`) — `respectedGameTypeUpdatedAt` bumped from `1762796999` (2025-11-10, original deploy) to `1778245595` (2026-05-08, the `setRespectedGameType` call). `respectedGameType` unchanged at `1337` (still KailuaGame).
-- **DisputeGameFactory.game1337** (`eth:0x8546840a...`) — implementation rotated `0x78F8F8FE...` → `0x8c0Ed8Dd...` (deployed 2026-05-07). KailuaGame impl [diff](https://disco.l2beat.com/diff/eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9/eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84).
-- **New active KailuaTreasury** `0x01853F26...` (deployed 2026-05-07) — this is the operational treasury the new game impl points to via `KAILUA_TREASURY`. Templated under `megaeth/KailuaTreasury` (shape added; existing variant exists because the generic `risc0/KailuaTreasury` template applies `FormatSeconds` to `vanguardAdvantage()`, which trips a cast assertion on megaeth's contracts).
-- **megaeth.ts** rewired to resolve the active game/treasury dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → its `KAILUA_TREASURY`, instead of name-based `getContract('KailuaGame'/'KailuaTreasury')` lookups (which broke once the upgrade made multiple Kailua instances discoverable).
-- **risc0/KailuaGame** shapes.json extended to cover the new `0x8c0Ed8Dd...` impl so its `ignoreMethods: ["getChallengerDuration"]` applies and the `ignoreRelatives` settings prevent discovery from cascading into tournament-game instances.
+The `proposalParent.childCount() == 1` gate around the vanguard check was removed: `vanguardAdvantage` applies to every proposal (first child and every sibling). With `vanguardAdvantage ≈ 2^60s`, only the Vanguard can submit any proposal. Faulty Vanguard proposals can be marked faulty via `proveOutputFault` but no honest sibling can replace them — chain halts until the Vanguard submits a correct state root.
+
+Plumbing: `megaeth.ts` resolves the active game/treasury dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → its `KAILUA_TREASURY`; `risc0/KailuaGame` and `megaeth/KailuaTreasury` shapes extended for the new contracts.
 
 ## Watched changes
 
