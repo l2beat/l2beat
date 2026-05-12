@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getPrivacyBestPracticesData } from './best-practices/getPrivacyBestPracticesData'
 import { getPrivacyProjectData } from './project/getPrivacyProjectData'
 import { getPrivacySummaryData } from './summary/getPrivacySummaryData'
 
@@ -27,6 +28,18 @@ export function createPrivacyRouter(
       },
       () => getPrivacySummaryData(manifest, req.originalUrl, cache),
     )
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/privacy/best-practices', async (req, res) => {
+    const data = await getPrivacyBestPracticesData(manifest, req.originalUrl)
+
+    if (!data) {
+      res.status(404).send('Not found')
+      return
+    }
+
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

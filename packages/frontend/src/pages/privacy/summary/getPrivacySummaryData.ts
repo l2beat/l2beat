@@ -181,6 +181,9 @@ export async function getPrivacySummaryData(
         ...appLayoutProps,
         entries,
         defaultChartRange,
+        bestPracticesBannerImageUrl: manifest.getUrl(
+          '/partners/arbitrum-orbit/build-on.png',
+        ),
         queryState: helpers.dehydrate(),
       },
     },

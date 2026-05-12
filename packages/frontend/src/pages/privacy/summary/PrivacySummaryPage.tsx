@@ -6,6 +6,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChartRange } from '~/utils/range/range'
+import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
 import { PrivacySummaryTable } from './components/PrivacySummaryTable'
 import type { PrivacySummaryEntry } from './getPrivacySummaryData'
@@ -13,12 +14,14 @@ import type { PrivacySummaryEntry } from './getPrivacySummaryData'
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]
   defaultChartRange: ChartRange
+  bestPracticesBannerImageUrl: string
   queryState: DehydratedState
 }
 
 export function PrivacySummaryPage({
   entries,
   defaultChartRange,
+  bestPracticesBannerImageUrl,
   queryState,
   ...props
 }: Props) {
@@ -30,6 +33,9 @@ export function PrivacySummaryPage({
             Privacy Dashboard
           </MainPageHeader>
           <PrivacySummaryChartsSection defaultRange={defaultChartRange} />
+          <PrivacyBestPracticesBanner
+            backgroundImage={bestPracticesBannerImageUrl}
+          />
           <PrimaryCard className="mt-4 p-0 md:p-0">
             <div className="border-divider border-b px-4 py-3 md:px-6 md:py-4">
               <h2 className="font-bold text-lg md:text-xl">Overview</h2>
