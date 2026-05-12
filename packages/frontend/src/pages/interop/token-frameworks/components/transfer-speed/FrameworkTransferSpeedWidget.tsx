@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { SwapIcon } from '~/icons/Swap'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
@@ -62,7 +62,7 @@ export function FrameworkTransferSpeedWidget({
           className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-divider bg-surface-primary transition-colors hover:bg-surface-secondary"
           aria-label="Swap chains"
         >
-          <SwapIcon className="size-4 fill-brand" />
+          <ArrowRightIcon className="size-4 fill-brand" />
         </button>
         <ChainSelect
           chains={interopChains}
