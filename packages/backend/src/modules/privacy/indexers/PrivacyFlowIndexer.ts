@@ -167,19 +167,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       const matching = configMap.get(key) ?? []
 
       for (const configuration of matching) {
-        let result: { count: number; amount: bigint } | undefined
-        try {
-          result = extractPrivacyFlow(configuration.properties, log)
-        } catch (error) {
-          this.logger.error('Failed to extract privacy flow from log', {
-            configurationId: configuration.id,
-            blockNumber: log.blockNumber,
-            txHash: log.transactionHash,
-            logIndex: log.logIndex,
-            error,
-          })
-          continue
-        }
+        const result = extractPrivacyFlow(configuration.properties, log)
 
         if (!result || (result.count === 0 && result.amount === 0n)) {
           continue
