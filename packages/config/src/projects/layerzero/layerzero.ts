@@ -17,7 +17,7 @@ export const layerzero: BaseProject = {
   addedAt: UnixTime(1769421770),
   interopConfig: {
     description:
-      'LayerZero OFT (omnichain fungible token) is a multichain token framework built on the modular, highly customizable LayerZero messaging protocol. It is validated by multisig-like smart contracts called DVNs and supports a vast set of EVM and non-EVM destinations.',
+      'LayerZero OFT (omnichain fungible token) is a multichain token framework built on the modular, highly customizable LayerZero messaging protocol. While it theoretically supports any form of validation, ~100% of messages are validated by multisig-like smart contracts called DVNs ("Decentralized" Validator Networks). The protocol supports a vast set of EVM and non-EVM destinations.',
     detailedDescription: `
 # Architecture
 LayerZero deploys a single \`Endpoint\` contract on each supported chain. This contract serves as the chain-central registry for omnichain apps (*OApp*s) and their *owners* and *delegates*. An *Oapp* is a smart contract that interacts with the LayerZero protocol through a standardized messaging interface. The most popular OApp flavor is the omnichain fungible token (*OFT*) standard, which enables the transport of tokens across LayerZero-supported chains. Token owners can deploy *OFT Adapter* smart contracts (*OApps* themselves) that connect traditional tokens to the LayerZero protocol. New tokens can be directly bound to LayerZero by deploying them as a native *OFT* smart contract, which is automatically an OApp on LayerZero.
@@ -30,7 +30,7 @@ The modular LayerZero messaging protocol supports any smart contract logic as it
 Core protocol contract code forms a framework that points at security-critical contracts. Although the core framework contract code is immutable, the security config and its implementation contracts can be changed by permissioned actors like the LayerZero team and the *OApp* owners, which effectively results in system upgrades. Application-level contracts like OApps have custom upgradeability.
 
 # Monitoring
-LayerZero provides a [block explorer](https://layerzeroscan.com/) which is mostly intended for users and researchers tracking crosschain transactions and for aggregate metrics. There is currently security or monitoring related tooling for OApp owners like global OFT accounting or global security config tracking.
+LayerZero provides a [block explorer](https://layerzeroscan.com/) which is mostly intended for users and researchers tracking crosschain transactions and for aggregate metrics. There currently is no security or monitoring related tooling for OApp owners like global OFT accounting or global security config tracking.
 `,
     isAggregate: true,
     plugins: [
