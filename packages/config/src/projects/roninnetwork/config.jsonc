@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "roninnetwork",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77", // OptimismPortalProxy — root, all other OP Stack L1 contracts are reachable from here
+    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242" // ETHLockboxProxy — orphan until OptimismPortal.ethLockbox is set post-migration
+  ],
+  "names": {
+    "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77": "OptimismPortal2",
+    "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1": "SystemConfig",
+    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242": "ETHLockbox",
+    "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a": "DisputeGameFactory",
+    "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": "AnchorStateRegistry",
+    "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e": "L1CrossDomainMessenger",
+    "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1": "L1StandardBridge",
+    "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": "L1ERC721Bridge",
+    "eth:0x51639D151456d0384285C6974e441A5D2B784B7D": "OptimismMintableERC20Factory",
+    "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": "AddressManager",
+    "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": "ProxyAdmin"
+  }
+}
