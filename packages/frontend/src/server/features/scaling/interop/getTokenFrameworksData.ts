@@ -113,7 +113,7 @@ export async function getTokenFrameworksData(
     ps.getProjects({ select: ['interopConfig'] }),
     getLatestAggregatedInteropTransferWithTokens(
       params,
-      undefined,
+      ['lockAndMint', 'burnAndMint'],
       frameworkProjectIds,
     ),
   ])
