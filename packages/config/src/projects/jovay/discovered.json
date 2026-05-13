@@ -9,7 +9,7 @@
       "type": "Contract",
       "template": "jovay/DcapAttestationRouter",
       "sourceHashes": [
-        "0x72685fb6903e0fdf30c628dc03d9edfcb4e4b3d794608041b6067813534ece90"
+        "0xdb0d0c431d1fee41dc61fd21d552f96dd689cfdeffa7bbf899a97fbb3f9aee15"
       ],
       "proxyType": "immutable",
       "description": "The DcapAttestationRouter contract is used for routing and verifying Intel SGX/TDX DCAP attestation proofs. The contract sends each quote to the corresponding verification path (cache verifier vs. Automata DCAP contract, and SGX vs. TDX measurement checks).",
@@ -36,7 +36,7 @@
       "type": "Contract",
       "template": "jovay/MeasurementDao",
       "sourceHashes": [
-        "0x07b7f6602924af994b2f11cc4afd891109497ecc6a4778d3566d7fa5f661c91f"
+        "0x5f691d56c69dd42a2593f69fdd57348662acb00882bd090a084a960f92ff4167"
       ],
       "proxyType": "immutable",
       "description": "The MeasurementDao contract is an onchain registry that allowlists SGX MR_ENCLAVE<->MR_SIGNER pairs and TDX RTMR3/MRTD values, and verifies DCAP quotes by matching quote fields to the stored measurements.",
@@ -64,7 +64,7 @@
       "type": "Contract",
       "template": "jovay/TEEVerifierProxy",
       "sourceHashes": [
-        "0x80454675a5da4224889198f682aa88832ceb0090238ea70781541ca71781e547"
+        "0x016dead35ada83cde9a7f93c29121ce47681e47cb2cd799efc25022a92677655"
       ],
       "proxyType": "immutable",
       "description": "The TEEVerifierProxy contract is used to verify L2 batches using TEE attestations. It delegates proof verification to the dcapAttestationRouter contract. ",
@@ -214,7 +214,7 @@
       "template": "jovay/L1ETHBridge",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xc962a92e7061cd67db98262fe8c93bb63cb5243ffa419d7a0de0fbb11ca67ed2"
+        "0x999eea41e760c1104d77283157a23af3dd92ddbf79143aa0e9cac6b62bf3728c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1ETHBridge contract is used to bridge ETH between the L1 and L2.",
@@ -256,7 +256,7 @@
       "type": "Contract",
       "template": "jovay/TEECacheVerifier",
       "sourceHashes": [
-        "0x83e211bc7cab27dfd4f9b534866214075fc19cc7ab8fa549535f3373c27dcd4f"
+        "0xc959736cef221601b95fbf522fae099d638a06d02801db82987c2f2780edf1de"
       ],
       "proxyType": "immutable",
       "description": "A cache-enabled P-256 ECDSA verifier for Intel SGX/TDX DCAP quotes (v3/v4/v5) that authenticates local attestation data, extracts the 32-byte commitment, and lets the owner/authorized callers initialize, manage, and reuse cached attestation keys to skip repeat verifications.",
@@ -284,7 +284,7 @@
       "template": "jovay/L1Mailbox",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x1afeeca3afb0add55ce45f9bed97c7faa33f9e7a59e5b8a43ce5da15d1cfc0f0"
+        "0xc2370021389922ce05e38cd7574c68e85717da9998d7bbca98ea3fafef50ec84"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L1Mailbox contract is used to send messages to the L2.",
@@ -380,7 +380,7 @@
       "type": "Contract",
       "template": "jovay/AutomataDcapAttestationFee",
       "sourceHashes": [
-        "0x78e36d40e4a3b55ce9e4abfe59503bdd40cf6648a024f8228d80c8acae540f95"
+        "0xf3f27ad5242107c0a8d3f091ee68d095444a9039e63f7ad5918d65ceaa32596b"
       ],
       "proxyType": "immutable",
       "description": "Contract used to charge a configurable basis-point fee to verify Intel DCAP quotes. Currently set to 0 basis points.",
@@ -403,7 +403,7 @@
       "template": "jovay/Rollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x847ae7ac442ea5bc5906a79d4ecf73fd4c3b9a115b93d29d5053f76459dace60"
+        "0x5c808860b3d5e90c1028449c6c9e67bf022636cfc5728a92c4b23557b8a4f0e0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Rollup contract is used to submit and verify L2 batches.",

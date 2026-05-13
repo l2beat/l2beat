@@ -38,7 +38,7 @@
       "type": "Contract",
       "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
-        "0x3531085f506af5a2423ca2358f5e8e7b16a0f173c3fb648268bc29725123d370"
+        "0x3feac8c491dc7917dcb42f0d997881f23a455a9a1867e01a6952c86179f13192"
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
@@ -60,7 +60,7 @@
       "type": "Contract",
       "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
-        "0xe768d966c7b9e6eba422736e59046849ce9b3236ab36b790ec7b87cadfa383b8"
+        "0xf39ce0e3dee7adb6cac97682bd2c0404b9b5ff3404e76be3a52cee40371f8c32"
       ],
       "proxyType": "immutable",
       "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
@@ -89,7 +89,7 @@
       "template": "morph/L1Staking",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x351d32023ef4c9c047e2ded56496285abbd64e6b818f635853724d6918661122"
+        "0x0e1d68199446451f14f2a7ef0da1b4b74fb6b05a9f004eb41d199417b1985a34"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
@@ -182,7 +182,7 @@
       "template": "morph/L1ETHGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xeaf8251bfabe03ffd453e312b616d019dd7b0fa4a67298ba9756c5c13a5d8b7c"
+        "0xe92fa45dcb3b7f6f6a441a9da9924129cd8184c78382da028ad13d2e098ee90a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ETH from L1 to L2.",
@@ -326,7 +326,7 @@
       "template": "morph/L1MessageQueueWithGasPriceOracle",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x06be3e07c53c199805b384f80352b668ca35f7bdb1b6d5addc8fcb490ff63eac"
+        "0x50d6f9c37241492993e369b6496118b33438cd7d17915003ca6a471686fa5229"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.",
@@ -399,7 +399,7 @@
       "template": "morph/L1StandardERC20Gateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xa93dc4ec78ab93af1f0e80e7f4a46479115b99d7830bcef40bc1546809b58f0c"
+        "0xd9fd1d2027fa84e5c617578022ac0b91eb03a0d519100e7b2a48aaac4ad3194c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.",
@@ -482,8 +482,8 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0x5553c4f2dc9ebb4f397dabef70540cedb6c655c68ac950596144f4f8c6cbf9e8",
-        "0xd6475b362415a3692a3b5af6ae0a14fcdd0a99ac3a39ffc5523dd78dd2b00713"
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x201f99073fc761fc50bdc6a6f101584c6fe16793fc83bfd0ce67103f30eea656"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 0s.",
@@ -577,7 +577,7 @@
       "type": "Contract",
       "template": "morph/MultipleVersionRollupVerifier",
       "sourceHashes": [
-        "0x4e4c7881c42cbc494da4a596174de793455b993cc0a7b28aba75720d85667af7"
+        "0x3ad3420c0deb4101b654b109a060c171a56f87935a0cd82300a897e9e5085764"
       ],
       "proxyType": "immutable",
       "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
@@ -684,7 +684,7 @@
       "template": "morph/L1GatewayRouter",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xf3090fefca73bff62cc9256f5a3a138a2d248f3067048c920dde508a710a8758"
+        "0xdce116224c949553c8a2b628566e670c07759d121439f2ee728ab3a4cd2eb98f"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.",
@@ -725,7 +725,7 @@
       "template": "morph/Rollup",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x4ae0d375d97899b0fd3cb34e7aa502f2b652e417b27b23df262734b951560256"
+        "0x744e3febdbddacbc25d9934fa259bfb08b24e38cb1325cdce9e9740b9b6f192b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
@@ -1042,7 +1042,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1200,7 +1200,7 @@
       "template": "morph/EnforcedTxGateway",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xb52cf98f79a1b9d6847244beac7ecf26b52a6f424a07d5be2fa8b0708c6144d6"
+        "0x294706d7e04e66317dc12b73ccc3cca5f90ce931686626f7694fecdce0d11f0c"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.",
@@ -1296,7 +1296,7 @@
       "template": "morph/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0xdddbb6a01d10a0241f53955182f6b04e5ee4ec2561e412672adae6aa9177fd49"
+        "0xa9970d78ff281a8a07d08c5be88cdd0c2ec926c46e6f34509a67a27df762ffdf"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
@@ -1389,7 +1389,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1577,7 +1577,7 @@
       "type": "Contract",
       "template": "morph/Whitelist",
       "sourceHashes": [
-        "0x6ea636875dfe6299e58d86fdd103fb219f30d1360320b1a068ad33ca3444c8d6"
+        "0x806904d83b6e7278ee4649059b9c635b05161b0c8707ba085718168c3669bd48"
       ],
       "proxyType": "immutable",
       "description": "Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.",

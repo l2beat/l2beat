@@ -1513,5 +1513,15 @@
   "static/meta-images/publications/governance-review-93.png": "8fe4efef5115147ed89def0ff7fc9462",
   "static/meta-images/scaling/projects/gnosis/opengraph-image.png": "01e0731723bb74a36e20f636a734c704",
   "static/images/architecture/gnosis.png": "0ac38f7f9a4a8c6cb29236cdf886458d",
-  "static/meta-images/publications/monthly-update-2026-04.png": "f1c65bcbd457811e2faafa98e57b038a"
+  "static/meta-images/publications/monthly-update-2026-04.png": "f1c65bcbd457811e2faafa98e57b038a",
+  "static/meta-images/publications/governance-review-94.png": "6e1b0d61f58aca3772da51d84a672f7e",
+  "static/meta-images/interop/projects/hyperliquid/opengraph-image.png": "2cfdd3521e297dd677c7b76052173b8d",
+  "static/meta-images/interop/projects/lighter/opengraph-image.png": "f5b9d05fe294a44a115ba6e23c4bc74e",
+  "static/meta-images/interop/projects/megaeth/opengraph-image.png": "f2a48bac182d3108ef9354d66588a37f",
+  "static/icons/privacy-pools.png": "66ab8fcac90a88abd0eab7ea3b535efc",
+  "static/icons/railgun.png": "38eda21fd8f792cbec523bb6692b9b39",
+  "static/icons/tornado-cash.png": "7501bcbc29c3993d67a3e9cafb96834b",
+  "static/images/architecture/privacy-pools.png": "64590435eaa447a115ad12faeca7729b",
+  "static/images/architecture/railgun.png": "a6b31a49f7d959e4020a7f716b52eb1b",
+  "static/images/architecture/tornado-cash.png": "9a2e963e2c9c43f2f0f9531f93b30932"
 }

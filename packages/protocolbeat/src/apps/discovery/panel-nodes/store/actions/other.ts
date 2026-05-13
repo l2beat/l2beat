@@ -9,18 +9,6 @@ export function hideSelected(state: State): Partial<State> {
   }
 }
 
-export function hideUnknowns(state: State): Partial<State> {
-  const unknownNodes = state.nodes.filter(
-    (node) => node.addressType === 'Unknown',
-  )
-
-  return {
-    hidden: [
-      ...new Set([...state.hidden, ...unknownNodes.map((node) => node.id)]),
-    ],
-  }
-}
-
 export function hideUnreachable(state: State): Partial<State> {
   const unreachableNodes = state.nodes.filter((node) => !node.isReachable)
 

@@ -1,3 +1,214 @@
+Generated with discovered.json: 0x571dcb51b6f58e7eb44e7f205a3967e8cd7c11f9
+
+# Diff at Mon, 11 May 2026 14:16:24 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1778232933
+- current timestamp: 1778508895
+
+## Description
+
+OrbitERC20OFTAdapter (`base:0xDb8E7598...`) — `owner` changed from `0x490a9D8A...` (Friday's new owner) to `0x2448e648...`. This contract is the LayerZero-side adapter that as a designated allowed outbox can pull funds from the Degen L3 canonical bridge escrow; ownership rotated again three days after the previous transfer.
+
+## Watched changes
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) [N/A] {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      values.owner:
+-        "base:0x490a9D8A26d2444537c577F61BF4f13F02312dF7"
++        "base:0x2448e6487c3603860Cf48F0A82f8ab944B761e9B"
+    }
+```
+
+Generated with discovered.json: 0xa3ffd9fec26b238c8dfc59cd9e604b102fd60cc2
+
+# Diff at Fri, 08 May 2026 09:36:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@870293220bb235daca193a6127d1bc5cc991c38c block: 1772656918
+- current timestamp: 1778232933
+
+## Description
+
+OrbitERC20OFTAdapter (`base:0xDb8E7598...`) — `owner` changed from `0xa79c47C3...` → `0x490a9D8A...`. This contract is the LayerZero-side adapter that, as a designated allowed outbox, can pull funds from the Degen L3 canonical bridge escrow; the new owner inherits that bridge-escrow access.
+
+## Watched changes
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) [N/A] {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      values.owner:
+-        "base:0xa79c47C35017d2CD657eb000CC0D0a0c2E385615"
++        "base:0x490a9D8A26d2444537c577F61BF4f13F02312dF7"
+    }
+```
+
+Generated with discovered.json: 0xa185535cc69f7a5ad37acae3bdbffdb877df40e2
+
+# Diff at Fri, 08 May 2026 07:51:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772656918
+- current timestamp: 1772656918
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772656918 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (base:0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0xb926f057e4fad7ff5b169aeec58691133fd46de25932d8356d3dc28e4e793d3a"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (base:0x173FCB92df1854c3B78dC8696C23B1c88437b892) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0xa163417851e926098130f55736a5b43084164e0070f9647198131e57b45a947d"
+    }
+```
+
+```diff
+    contract Inbox (base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+    }
+```
+
+```diff
+    contract ValidatorUtils (base:0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (base:0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0xd64745a0edbb2ada69b81d849f2737d7c082d18ca14a715c23c4165e4eecc637"
+    }
+```
+
+```diff
+    contract UTBDecent (base:0x43019F8BE1F192587883b67dEA2994999f5a2de2) [N/A] {
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+      sourceHashes.0:
+-        "0xdf38c41dfed5147dbd3a1a8d8947ff056a36aa5d6232aa2c5c9dd2b5f4d1ca42"
++        "0xd443682751d513d2cbbe1362f4ee60fd51103035edf60583039f083c7deff570"
+    }
+```
+
+```diff
+    contract SequencerInbox (base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
+    }
+```
+
+```diff
+    contract ChallengeManager (base:0x67812161Bbb6aCF891aA6028BC614a660961ceD8) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x8a2753d8b3f1ce86250bd4a4e7e502d04dd36a5a670b519b7510af6b33618693"
+    }
+```
+
+```diff
+    contract AlchemyMultisig2 (base:0x871e290d5447b958131F6d44f915F10032436ee6) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x618c83d2fbbe19fd6f2d6ee6ee79a60e6206e48bf361eaf4812e1c1fc14b4527"
++        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+    }
+```
+
+```diff
+    contract OneStepProver0 (base:0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0xdec29538ea8b9a7f83edc119a9fbd3761ab24c5e0b512ecfdecc46dcdefccdc1"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (base:0xaA3A7A2ec2477A61082E1C41a2c6710587917028) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+    }
+```
+
+```diff
+    contract DegenFastConfirmerMultisig (base:0xc207cbC35DD3CD172059730380A45aE14eb0e403) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+    }
+```
+
+```diff
+    contract RollupProxy (base:0xD34F3a11F10DB069173b32d84F02eDA578709143) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x689a6510e734cb5e6032f5fca6ce6cb72b6e3af01d74b228d9d2cfd926a25b66"
+    }
+```
+
+```diff
+    contract OrbitERC20OFTAdapter (base:0xDb8E759859058952c34953c8469f464109826e52) [N/A] {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      sourceHashes.0:
+-        "0xa6648e861cb9df5f8a3d15fc05c8f842f7f8a47136470f83c5d452f2b4eca4e6"
++        "0xf20ca792ccac578f6a450aa32e44b27aa68fe831a5fec2c8ff1f6a1793605b48"
+    }
+```
+
+```diff
+    contract OneStepProverMath (base:0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+    }
+```
+
+```diff
+    contract Bridge (base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+    }
+```
+
 Generated with discovered.json: 0x4d308ad8abd7b5987b25aeb13562f5e04b156033
 
 # Diff at Tue, 05 May 2026 10:22:06 GMT:

@@ -50,6 +50,7 @@ export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
+    .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
@@ -114,11 +115,11 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     scalingRisks: {
       self: getProcessedRiskView(p.riskView),
       host:
-        p.type === 'layer3' && hostChain
+        p.type === 'layer3' && hostChain && !p.isUpcoming
           ? getProcessedRiskView(hostChain.riskView)
           : undefined,
       stacked:
-        p.type === 'layer3' && p.stackedRiskView
+        p.type === 'layer3' && p.stackedRiskView && !p.isUpcoming
           ? getProcessedRiskView(p.stackedRiskView)
           : undefined,
     },
@@ -331,9 +332,7 @@ export function adjustDiscoveryInfo(
   }
 }
 
-function getTvsConfig(
-  project: ScalingProject | Bridge,
-): TvsToken[] | undefined {
+function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
   const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
   const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
 

@@ -10,7 +10,7 @@
     "blockNumber": 22188285
   },
   "ProxyAdmin_Blast": {
-    "hash": "0xb6eaecb36b3255721e6a4b99c79ab661b8c1691f6d6e630956458b67ae012104",
+    "hash": "0x68f4fccce7d06f884dca696ec976dcdecc0c4b7a2eb20d8408b860132263d170",
     "address": "eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
     "blockNumber": 22188285
   },
@@ -20,7 +20,7 @@
     "blockNumber": 22188285
   },
   "ProxyAdmin_fraxtal": {
-    "hash": "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730",
+    "hash": "0xf455a6281c19d76a61ffb9a10247b781b9b6dc5ce83f91c4f7e048dee71bd1f2",
     "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
     "blockNumber": 22188285
   },
@@ -63,5 +63,11 @@
     "hash": "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9",
     "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
     "blockNumber": 22535105
+  },
+  "ProxyAdmin_LayerZero.sol": {
+    "hash": "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc",
+    "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+    "chain": "ethereum",
+    "blockNumber": 24970797
   }
 }

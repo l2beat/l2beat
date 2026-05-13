@@ -1,8 +1,7 @@
 {
   "SignalService.sol": {
-    "hash": "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c",
+    "hash": "0x20f8b06e752acd9eaddb6745d7eba47d69302f638a83d0db11476c03ece409d5",
     "address": "eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752",
-    "chain": "ethereum",
     "blockNumber": 24791653
   }
 }

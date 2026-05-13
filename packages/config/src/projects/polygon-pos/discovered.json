@@ -10,7 +10,7 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x428926e63c344a25fc6e1854be10f620c64143f66904314e15837a6734e132b1",
-        "0xda2db56264809ae744116955fe8ee8083707b093633a4d3aa1713a6d5fc0ee1c"
+        "0xf34c01b1d573f2b4c943972dabba17c260d66ef834a1b063c3c5b1da0464b9dd"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
@@ -78,7 +78,7 @@
       "address": "eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
       "type": "Contract",
       "sourceHashes": [
-        "0xd873771bacc2ec458452d650f61ff1f7907e3a4fe09888ae8b93cd61125511fa"
+        "0x7c4e33a4135b3a62e916bcb2802aa4f8945c1e66d7573f0f9fbca21c778e41b6"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
@@ -114,7 +114,7 @@
       "address": "eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
       "type": "Contract",
       "sourceHashes": [
-        "0x66815b2f8b05e9960d6f4c23ca95251145298d7577c32c5e029b90f9a4e38bbb"
+        "0x15161cf43cff2ba16a062022dc8d15a222bffabce8a72476414aebf244222cac"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8",
@@ -135,7 +135,7 @@
       "type": "Contract",
       "template": "polygonposbridge/StateSender",
       "sourceHashes": [
-        "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
+        "0x8122ee5d6f35571649314df7645c999b72a6e3e9cd4c3d1c5959b8dc6b4e625e"
       ],
       "proxyType": "immutable",
       "description": "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.",
@@ -172,8 +172,8 @@
       "type": "Contract",
       "template": "polygonposbridge/WithdrawManager",
       "sourceHashes": [
-        "0x05029129ea02d46e1d659b46c83ec5822b7d15f5d332a3dd100436ebeabb01b4",
-        "0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c"
+        "0x90a87c94f5f2b145e9fae42691e8861b5ea0876e276b2b319e1649a8ca653efc",
+        "0x20e025af1bc435454d93b6cf985e145b760203b05705d1d0d720f50082830dcd"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.",
@@ -204,7 +204,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xe451506fc197d18a883ecbc36c3792de9fb5966cf3ed7031a09148cb12b7f8fe",
-        "0x6bcd5917763490ae131f09d4c3a6866f1af10ca4a99f233b8965efaa8c358b6a"
+        "0x49ea7dca7ae9088144634bb910a7d879e4520293a4bd957c25a0b6451c9a7401"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
@@ -318,7 +318,7 @@
       "address": "eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b",
       "type": "Contract",
       "sourceHashes": [
-        "0xf09e81f94877953f148b12864ec341367f4708956fbcd7803208c364bce87f8d"
+        "0x76759aacba9526feb38826dfeaf56f6a05126b41aafa260d8e2352cec2aa7faf"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A",
@@ -340,8 +340,8 @@
       "type": "Contract",
       "template": "polygonposbridge/DepositManager",
       "sourceHashes": [
-        "0x56357b4fdb898e49aff0370db0c900b81a28004a5c5932d0cbe0f8ac8e017b39",
-        "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"
+        "0x826767fc628832843afce4ce17349ccba573103cab4c382945915b3995259b98",
+        "0x2a37aadf262f095a201912294cdccc6e935e1728d64f5e59a4367abca39f66e8"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
@@ -375,7 +375,7 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x63f5481a49da196498b6cd77450d4e12da12c7608ab022b417dbed836935e0f7",
-        "0xf159b16a5d3a5070602bdcce59b317b67354f3e0daade4bd67d39fc4b7e11476"
+        "0x5d61795be40290be89c2a606f418d8753d722c036da5a377e78b478b0f943f23"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
@@ -444,7 +444,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -489,7 +489,7 @@
       "address": "eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
       "type": "Contract",
       "sourceHashes": [
-        "0x802005602f9307c4394cd8cee610c3c1373e6876b348605733983a5d3d5b9248"
+        "0xa96d5dc9c24c71deb1ce3b02a3968d5c15ce554913f1109dfb738637b57878b4"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x80b12BD0F1793BF6CEa767Fa83Eb2068eaa17DC8",
@@ -510,7 +510,7 @@
       "type": "Contract",
       "template": "polygonposbridge/StakingNFT",
       "sourceHashes": [
-        "0x3d5900e83820883d56342fee2c6ac21046702b686ae86d2ce5d2ac1beafe8b9e"
+        "0x2f8aae1745ceefd7a79c9084c0f5e89a6b621a77d901454f54a62f56fdc147c6"
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["totalSupply"],
@@ -549,7 +549,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -584,7 +584,7 @@
       "address": "eth:0x4EeA1780c06709D7FA0BCaA6D0f1aB29673586c0",
       "type": "Contract",
       "sourceHashes": [
-        "0x64ce795eece141785456d3e10df0bf177f0b6485ced89f7cce54661ef1c811ec"
+        "0x480f11a18ba73f3bf220b01ec644e804083a6af4470bc72e9eca19368e48249c"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x11222a5d5DA8AdaE9e715C843D729E71D285AA3A",
@@ -610,7 +610,7 @@
       "address": "eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84",
       "type": "Contract",
       "sourceHashes": [
-        "0xd8261395dc342e63946716f52052725e094de2da9b6dca487e1f7cf3cecd797f"
+        "0x2ecfe72849c16d42666972e211bde424e9557dfe7cb1b16575ebfb8db2f47c42"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
@@ -638,7 +638,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xb67879bcf8a6042a86ae7689dda6879e93241b0d8a0a4f82adb4d00ab828cd13",
-        "0x5b260eb8b498c90359fa555e522f2fdd615857ea55e37c785de7da84915bfa7d"
+        "0xc1bf1e1ffffdb1c23aebc663048d79f349bed55ade9d09b835d75d291c6d4f61"
       ],
       "proxyType": "Polygon proxy",
       "ignoreInWatchMode": [
@@ -833,7 +833,7 @@
       "template": "polygonposbridge/Governance",
       "sourceHashes": [
         "0x0df18be01283a9eaa99600142abf19bdd63f71974788d53044022ba32643a2f7",
-        "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
+        "0xc574edf94d4eba85f85272edeca4466cf7e76f8b74a96462bcc5f165d91fa30a"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
@@ -866,7 +866,7 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0xcd0a12ca9277d60031fd022482b8174c79dabb5d731b80609041c6778a899455",
-        "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71"
+        "0x1d379529f4861356b1f5c2ddb0867a97ec594242a63138c07de67c371911e1fd"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
@@ -934,8 +934,8 @@
       "type": "Contract",
       "template": "polygonposbridge/RootChain",
       "sourceHashes": [
-        "0xf3a9eafd244e85252bdcfb1873e8503ed1e03781a220e97d71c01fa9dc3a5b33",
-        "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"
+        "0x55cb29f4a614839999c9a82b8eaccc3353be9ebdf40ba77e07f3d1facb238603",
+        "0xde405d310b919ef415c91bb8c9596c5f8e0f51a3ad5a48adfe236585dc3c466b"
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
@@ -990,7 +990,7 @@
       "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x378a22860f926f5ba4dd478549ef1dc9f126335557b56556444e5c1393bdbfef",
-        "0x4dcf96c463738c373c6726e2304e718115843041080f89a520d8d6fb2f357820"
+        "0x3aac7dba4d92121e6f73162e9a3b0ce4fcd60592f91f84e0cec3fdcaa492b5d9"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
@@ -1076,7 +1076,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x34f85d595f0b3aa60f0923146a83aa86f341f7af1ef6f77e26c1a270622921d8",
-        "0x32f8c95c75000ff3e167903d7561c542e4365588e0a7c4cdc6651b3891a40591"
+        "0x800a9eaaca3f0ccd3542904caee78ecb2176a6fc4f885369f25c5fb6c59f1a76"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
@@ -1128,7 +1128,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -1165,7 +1165,7 @@
       "template": "polygonposbridge/RootChainManagerMigrator",
       "sourceHashes": [
         "0xbbbf27b3fdffff6edc7bb78c7f8d8b0e49e427ea37c77f6c0ee0824742a1480a",
-        "0x4d461641f48e1fc41d08d5f5672126575c15044e75679ad3abcd25a23d4575d1"
+        "0x3c42aaa1ea018f27efac80dacecec3f56d62a2b8b92f2f0b56c487b57741b45f"
       ],
       "proxyType": "Polygon proxy",
       "receivedPermissions": [
@@ -3991,7 +3991,7 @@
       "type": "Contract",
       "template": "polygonposbridge/StakingInfo",
       "sourceHashes": [
-        "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
+        "0xea1573aa122981cf085a3aaaabcb1f9813d1d6ba6001cb885c34eb170e66b6d4"
       ],
       "proxyType": "immutable",
       "description": "Contains logging and getter functions about staking.",
@@ -4054,7 +4054,7 @@
       "address": "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642",
       "type": "Contract",
       "sourceHashes": [
-        "0xe388adb0a2a9179ef6156bc2aff8d97746405656abea331f24a11da4b622a864"
+        "0x8f7d87ecf4962c0debd7c27f70578f289f834e812b890c16f7fe2f28f2a16070"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
@@ -4207,7 +4207,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x75b6f36e579b7ca292618007259914df1193b03e1d05204fea00bc8e4d2eec83",
-        "0xbde7c4ae6d29f2d5ac51feeb27ed9d65ea22f779fda4a41e97f24622dcf84a46"
+        "0x55412158ace37850905a083574e7c2bee354950e64b054dbe62a367ea114e41f"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0x63ec5767F54F6943750A70eB6117EA2D9Ca77313",
@@ -4248,7 +4248,7 @@
       "type": "Contract",
       "template": "polygonposbridge/ExitNFT",
       "sourceHashes": [
-        "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
+        "0x79ca55a0bab6b9581de67f17b6e3027ed214d46de02ad0ed742bbb843be00cfc"
       ],
       "proxyType": "immutable",
       "description": "NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).",
@@ -4271,7 +4271,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
-        "0xfb5adba76f3e09db109bb95a396cf305bba6d711df04b5bfd12b226816fc5556"
+        "0x3ba5e3b72dc8014129d816e9f97d23d3ff56b3b89c558939e6204ce70b662c26"
       ],
       "proxyType": "Polygon proxy",
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
@@ -4362,7 +4362,7 @@
       "address": "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166",
       "type": "Contract",
       "sourceHashes": [
-        "0x0efa258772085a1651cde756807a2fa451169f701ccba9eae9d4e25cb85fa558"
+        "0x57d72ce45f5d84b0fb87ef076c7f586f53cfa9a985152dc17148249e6a365670"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
@@ -4429,7 +4429,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [

@@ -1,18 +1,17 @@
 {
   "OptimismPortal2_noForce": {
-    "hash": "0x1e6e48895b45b98acfe8b9c9f4568d3662e2932d82019f4ea721e2f7b57a58fc",
+    "hash": "0x919d06f9ee5985688d2d76782e8da30482b407ae9288e3b7bf6b4aae9175bd10",
     "address": "eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb",
     "blockNumber": 22794595
   },
   "OptimismPortal2_noForce_1": {
-    "hash": "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338",
+    "hash": "0x2f2ea84c79264edec27c3d129e4f162653563349ad731dad63620ae329bdb2d9",
     "address": "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc",
     "blockNumber": 22988752
   },
   "OptimismPortal2.sol": {
-    "hash": "0x9b5cb94efaca7f6a941c6e29cd8f71079ec5ea2360e3f4948e59560dd107d7f9",
+    "hash": "0x4cc0e4525ed77b81565c05c0e673e043a93d9878924197f772581f72c11c91c5",
     "address": "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4",
-    "chain": "ethereum",
     "blockNumber": 24582831
   }
 }

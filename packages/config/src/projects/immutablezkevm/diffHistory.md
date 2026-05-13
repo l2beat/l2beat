@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x60b6f80eea03bf257f646e260dd3370098469085
+
+# Diff at Fri, 08 May 2026 07:51:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772614819
+- current timestamp: 1772614819
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772614819 (main branch discovery), not current.
+
+```diff
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xe65732e356e64373f949ce1e543c2af7a89f91a8e3e8337cf9b83a3cd6ae9082"
++        "0x59e958a0783ea169acb1f9451299a6eeecdfa1db1257cafe5c948a919117c2fc"
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x3bbb1bbee722c566a76a1dbd006c8014bc97e10583a6ff7cc69a72725948746e"
++        "0xe498a176e6620285eb1bc16ee6ba312e3b318fa19456b75c7ca16b7ad8c5831e"
+    }
+```
+
+```diff
+    contract ChildERC20 (eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x444c835c000c2401ad8e7d4d0a67fe0a11cf78d3eccdb105ed7c591296c4cf30"
++        "0x1ed7a6c9cd91cbe088228ad6f80aeef0cff6e6e6e5fa1755de007712dd18dc2d"
+    }
+```
+
+```diff
+    contract Bridge (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xe3da0044c1cc2966f6a45573c47d38d8a1b647879b25570db9b2b8c6efe43e45"
++        "0x8006c5cd43a5c9e33abab127731da890af58bc4dc1e9c8281bc6b4b033ab44c1"
+    }
+```
+
+```diff
+    contract OwnerMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0x6de4a720fb95d6c117798e14e7a3f533be6ef0fe
 
 # Diff at Tue, 05 May 2026 10:22:15 GMT:

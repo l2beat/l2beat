@@ -1,16 +1,41 @@
+import * as RadixSelect from '@radix-ui/react-select'
 import clsx from 'clsx'
+import type { FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode } from '../../../api/api'
 import type { ApiAbi, Field } from '../../../api/types'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconChatbot } from '../../../icons/IconChatbot'
+import { IconChecked } from '../../../icons/IconChcked'
+import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconClose } from '../../../icons/IconClose'
+import { IconCode } from '../../../icons/IconCode'
+import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
+import { IconGear } from '../../../icons/IconGear'
+import { IconList } from '../../../icons/IconList'
+import { IconNodes } from '../../../icons/IconNodes'
+import { IconSigma } from '../../../icons/IconSigma'
+import { IconStamp } from '../../../icons/IconStamp'
+import { IconTerminal } from '../../../icons/IconTerminal'
+import { IconWebApp } from '../../../icons/IconWebApp'
 import { findSelected } from '../../../utils/findSelected'
 import { getProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
+
+const ICONS: Record<PanelId, FC<{ className?: string }>> = {
+  list: IconList,
+  values: IconSigma,
+  nodes: IconNodes,
+  code: IconCode,
+  preview: IconWebApp,
+  terminal: IconTerminal,
+  template: IconStamp,
+  config: IconGear,
+  diffHistory: IconFileDiff,
+}
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(
@@ -29,22 +54,54 @@ export function PanelHeader(props: { id: PanelId }) {
     ? PANEL_IDS.filter((id) => id !== 'terminal')
     : PANEL_IDS
 
+  const Icon = ICONS[props.id]
+
   return (
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
-      <select
-        className={clsx(
-          'rounded-none border-b bg-coffee-800 font-bold text-xs uppercase max-md:w-full',
-          isActive ? 'border-coffee-200' : 'border-coffee-800',
-        )}
+      <RadixSelect.Root
         value={props.id}
-        onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
+        onValueChange={(v) => changePanel(props.id, v as PanelId)}
       >
-        {availablePanels.map((id) => (
-          <option key={id} value={id}>
-            {id.slice(0, 1).toUpperCase() + id.slice(1)}
-          </option>
-        ))}
-      </select>
+        <RadixSelect.Trigger
+          aria-label="Panel"
+          className={clsx(
+            'group/sel inline-flex h-[26px] items-center gap-1.5 border-b px-2 font-bold text-xs uppercase outline-none transition-colors focus-visible:outline-none max-md:w-full',
+            isActive
+              ? 'border-coffee-200 text-coffee-100'
+              : 'border-transparent text-coffee-200 hover:text-coffee-100',
+          )}
+        >
+          <Icon className="size-3.5 shrink-0" />
+          <RadixSelect.Value placeholder={props.id} />
+          <IconChevronDown className="ml-auto size-3 opacity-60 transition-transform group-data-[state=open]/sel:rotate-180" />
+        </RadixSelect.Trigger>
+        <RadixSelect.Portal>
+          <RadixSelect.Content
+            position="popper"
+            sideOffset={4}
+            className="z-[1000] cursor-default select-none border border-coffee-500 bg-coffee-800 font-bold text-coffee-200 text-xs uppercase shadow-lg"
+          >
+            <RadixSelect.Viewport>
+              {availablePanels.map((id) => {
+                const ItemIcon = ICONS[id]
+                return (
+                  <RadixSelect.Item
+                    key={id}
+                    value={id}
+                    className="relative flex cursor-pointer items-center gap-2.5 py-2 pr-9 pl-2.5 outline-none focus-visible:outline-none data-[highlighted]:bg-coffee-600 data-[highlighted]:text-coffee-100"
+                  >
+                    <ItemIcon className="size-3.5 shrink-0" />
+                    <RadixSelect.ItemText>{id}</RadixSelect.ItemText>
+                    <RadixSelect.ItemIndicator className="absolute right-2.5">
+                      <IconChecked className="size-3" />
+                    </RadixSelect.ItemIndicator>
+                  </RadixSelect.Item>
+                )
+              })}
+            </RadixSelect.Viewport>
+          </RadixSelect.Content>
+        </RadixSelect.Portal>
+      </RadixSelect.Root>
       <div
         className={clsx('flex-1', !isFullScreen && 'cursor-move')}
         onMouseDown={

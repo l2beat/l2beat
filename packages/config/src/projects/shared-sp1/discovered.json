@@ -9,7 +9,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -31,7 +31,7 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
@@ -129,7 +129,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
+        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
@@ -162,7 +162,7 @@
       "type": "Contract",
       "template": "shared-sp1/SP1Verifier",
       "sourceHashes": [
-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
       "deployerAddress": "arb1:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
@@ -185,7 +185,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -227,7 +227,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -249,7 +249,7 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
@@ -347,7 +347,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
+        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
@@ -380,7 +380,7 @@
       "type": "Contract",
       "template": "shared-sp1/SP1Verifier",
       "sourceHashes": [
-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
       "deployerAddress": "base:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
@@ -403,7 +403,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -445,7 +445,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -467,7 +467,7 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
@@ -565,7 +565,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
+        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
@@ -598,7 +598,7 @@
       "type": "Contract",
       "template": "shared-sp1/SP1Verifier",
       "sourceHashes": [
-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
@@ -621,7 +621,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [

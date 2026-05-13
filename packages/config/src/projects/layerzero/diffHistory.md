@@ -1,3 +1,264 @@
+Generated with discovered.json: 0xcc4eb089ba2674c1a5c6e1da1dc49e67e5fd45ac
+
+# Diff at Mon, 11 May 2026 11:10:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@16c27951daab8bc6e3065fb400714a6b714e9f73 block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Config: some adjustments before publishing to FE.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract.
+      description:
+-        "Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control."
++        "Contract that can be used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and permissioned addresses who can call this contract."
+      receivedPermissions.0.description:
+-        "execute rsETH OFT messages sent to Unichain through LayerZero."
++        "receive execution fees for rsETH OFT messages sent to Unichain through LayerZero."
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here.
+      description:
+-        "Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here."
++        "Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) [layerzero/BlockedMessageLib] {
+    +++ description: Simple LayerZero library that blocks all messages if selected.
+      description:
+-        "Simple LayerZero library that blocks all messages if configured."
++        "Simple LayerZero library that blocks all messages if selected."
+    }
+```
+
+```diff
+    contract Horizen DVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
++        true
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin","via":[{"address":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3","role":".owner"}]
+    }
+```
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x173272739Bd7Aa6e4e214714048a9fE699453059","role":"admin"}]
+    }
+```
+
+```diff
+    contract Canary DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract Netherming DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      receivedPermissions.0.description:
+-        "verify rsETH OFT messages sent to Unichain through LayerZero."
++        "receive validation fees for rsETH OFT messages sent to Unichain through LayerZero (the incoming vaidating DVN is defined on Unichain)."
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x9c1f5c9c507af35f5cc76855285ee1d66e8277b5
+
+# Diff at Fri, 08 May 2026 07:51:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    contract Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059) [layerzero/LayerZeroExecutor] {
+    +++ description: Used to execute LayerZero message payloads at the destination. Also manages fee logic, gas drop and access control.
+      sourceHashes.1:
+-        "0x6e8f82f43688d48f99f42fc176fd1250c7e5b217d551c5482e0dd168744017bf"
++        "0x914fbceaba4b6418a09bd2104433bfcb47eed119a783154a8f7f6301c06a6d2b"
+    }
+```
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: Part of the LayerZero messaging protocol. The rsETH OFT adapter owner can configure custom receive libraries and verification settings here.
+      sourceHashes.0:
+-        "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
++        "0x48b52fa395fcfec46c79e54baead635a6ab7d473cd9194eb5085ae4c92dc3b56"
+    }
+```
+
+```diff
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) [layerzero/BlockedMessageLib] {
+    +++ description: Simple LayerZero library that blocks all messages if configured.
+      sourceHashes.0:
+-        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
++        "0x75d37f7b316a2accab28129969c0434143f38f945ef4dc05ae6e2d32a2253567"
+    }
+```
+
+```diff
+    contract Horizen DVN (eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      sourceHashes.0:
+-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
++        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
+    }
+```
+
+```diff
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      sourceHashes.0:
+-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
++        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
+    }
+```
+
+```diff
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) [layerzero/ReadLib1002] {
+    +++ description: LayerZero library used to read state from remote blockchains.
+      sourceHashes.0:
+-        "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
++        "0x63667c2b85a023336c85af02869d5f3dbf9f789566540354555921e0c204c589"
+    }
+```
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
+      sourceHashes.0:
+-        "0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a"
++        "0x8e747ea537f6ad5dadfeed406255d8ac95c47880198374a17bd470328a673974"
+    }
+```
+
+```diff
+    contract Canary DVN (eth:0xa4fE5A5B9A846458a70Cd0748228aED3bF65c2cd) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      sourceHashes.0:
+-        "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5"
++        "0x15af06d40884e87fb02496ccba2e672b9d7029e4a65d508bc519c657981216f9"
+    }
+```
+
+```diff
+    contract Netherming DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) [layerzero/DVN] {
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+      sourceHashes.0:
+-        "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
++        "0xe14c8b49fee1ac4a89c3a3335072e4e7713ef67747686d0d8a5a70b1297ef7e8"
+    }
+```
+
+```diff
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) [layerzero/SendUln302] {
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+      sourceHashes.0:
+-        "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
++        "0xed0d939d416a37a8dd5608191bbb9c6ae79642d6a707cbaa8ae0ed3877499037"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      sourceHashes.0:
+-        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
++        "0x412a3c42c1e7d8239049258ff828a77b62ab1822711221e5a276d4572edbfe49"
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) [layerzero/ReceiveUln302] {
+    +++ description: LayerZero-deployed receive library, defining the validation of received messages.
+      sourceHashes.0:
+-        "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
++        "0xc8412ab2ff002dd3b40a167c6532c54e7cb46c1f0718bfaf038f211e3a333a07"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
 Generated with discovered.json: 0xda3ab97bf056cfe55e85d7721b344b77a1e81ba6
 
 # Diff at Tue, 05 May 2026 10:22:21 GMT:

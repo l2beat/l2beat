@@ -37,6 +37,7 @@ export function KnownAppsTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No known apps found."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-known-apps-${new Date().toISOString()}.csv`

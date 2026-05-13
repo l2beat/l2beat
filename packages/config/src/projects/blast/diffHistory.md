@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x70198acdc194db1e054448b7707ad8ef310894e5
+
+# Diff at Fri, 08 May 2026 07:51:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1772118382
+- current timestamp: 1772118382
+
+## Description
+
+Use the new flattener implementation
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772118382 (main branch discovery), not current.
+
+```diff
+    contract DSRYieldProvider (eth:0x0733F618118bF420b6b604c969498ecf143681a8) [N/A] {
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+      sourceHashes.0:
+-        "0xb4bd2b8453fbde4b776b6b9653139c16e0c673e589025d3d3fe553933fdab859"
++        "0xa2ea6af2b3a3cc2b5ad3149197be1b907dc65f3d6c86523a41732093a23a72a1"
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0xd40fa201f3d213c5e7a8e44bcd59d3f28c198741c50a733c20af045c60a2914d"
++        "0x6f18d3d375bfb0591d1169a0f990fefd6b7360221834ea0dbe6ae4bff1ac8b74"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x364289230b8cc7d9120eF962AF37ebCFe23cE883) [global/ProxyAdmin] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xb6eaecb36b3255721e6a4b99c79ab661b8c1691f6d6e630956458b67ae012104"
++        "0x68f4fccce7d06f884dca696ec976dcdecc0c4b7a2eb20d8408b860132263d170"
+    }
+```
+
+```diff
+    contract L1BlastBridge (eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115) [N/A] {
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+      sourceHashes.1:
+-        "0x9b25fea33ece84240133b9633d6edebfa268b929644604f9ec3ef4fbcd97ac60"
++        "0x2de77137c7520591ce7be53e8fdff330d246d95d6713af63b93c30d6188df3c1"
+    }
+```
+
+```diff
+    contract LidoYieldProvider (eth:0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db) [N/A] {
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+      sourceHashes.0:
+-        "0x085a7e18c46eb9d391f5ffaf3469ac7fcb4a361abf098f4aee3e6f4c03670368"
++        "0x476a9614293e04b80561c3979a3b7d10a8725e5739275d018dce616273ee8518"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (eth:0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x5287b087cec2244d57a3cea230c0c70a9b5fd8d4fdca71f7d85d34a8a22792b1"
++        "0xfb5ca7945962ca184ae52d18bad1815f3bd10e5c86cf0f81fe43c6af0aa0a00a"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x62b0361291c40e624393723bdac21e4ecdb590904474346417c941734984bb25"
++        "0x3126968e259fe634511b73797b5d68920a1ac2e5949f110b67593234696d72e2"
+    }
+```
+
+```diff
+    contract LaunchBridge (eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x73794f4d5d902d84fab5db7010571b31475a0a5d0de21348cbea9f221964a26a"
++        "0xcefdabef7fe40aabfc6ac3f03c69e7ad8ac090ee14b0140126c899ea5d561fae"
+      sourceHashes.1:
+-        "0x5c353b5bca59f0970c0a2ab9d5bebc21738761aa447e35d48814660b52ae9955"
++        "0xdb6261e93a3e06970df0452dfa432c4336325a7e33af8ad47989f84f13329751"
+    }
+```
+
+```diff
+    contract BlastMultisig 2 (eth:0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xf5e9d1b6ac4bf84529eacc8e29c0731ef1524f2a84cbd91fb9840cf631cfff7c"
++        "0x377d7d9884c6b5a01cc0338355b17f22b16e609f1ffa70ba947c52603dc670f5"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x6B916DcCa661d23794e78509723A6f4348564847) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x3199ce561d915dec4e96a05f056d262ab4af7342a28a8c1b65b73aad49850d0e"
++        "0x4710eea9a3f4d8962d2a8a22e311386af24c308a65cfb2c25a4538ba6503480a"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x373b0cddb16922a75ab98dfce0c4913a0970c018bfa1d55d123d4ff6511179a6"
++        "0xa8a23a23332311d341acf01f001ca6e041cc46d6e277f1c3197195d288fd1108"
+    }
+```
+
+```diff
+    contract ETHYieldManager (eth:0x98078db053902644191f93988341E31289E1C8FE) [N/A] {
+    +++ description: Contract managing Yield Providers for ETH.
+      sourceHashes.1:
+-        "0x5d1416fc2e9565203ff83a5f989b55c635a3c9c11d7655a7d7f8e4a2e63ede7d"
++        "0xb87f66cb0d382c418fb77d2ac7850660f016f0817764937c3d267c8f4eda3088"
+    }
+```
+
+```diff
+    contract USDYieldManager (eth:0xa230285d5683C74935aD14c446e137c8c8828438) [N/A] {
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+      sourceHashes.1:
+-        "0xf99e492f3d76fa74e24ea285b4e7de6199ab1f71a8de99f523785133dac44581"
++        "0x956934682bbb4fe0586d036110d75b514aac8f9dc5c5aa1958fe59d2d023d69f"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x17f0c97db13062aa8299e78c5d1a68b5152ce948b2fe10e5283857bd6a15ce4f"
++        "0xbf91cfbe2fd261a806ece3b6317522bc80d49e675dbc9334305279b3c521954b"
+    }
+```
+
 Generated with discovered.json: 0x19d4e173ef451f3c1785be8bf87a5e7752b3c02f
 
 # Diff at Tue, 05 May 2026 10:22:00 GMT:

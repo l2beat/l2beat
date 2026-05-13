@@ -21,7 +21,7 @@
       "type": "Contract",
       "template": "taiko/PEMCertChainLib",
       "sourceHashes": [
-        "0x59efc4927f69d03e199767bdde2f8a8ef3a544833cdbf8c2eecf9152b373dcbc"
+        "0x485d6aea22ce7ea49882285986e0169ee60cac9c60adf61616df151dee1ee7b9"
       ],
       "proxyType": "immutable",
       "description": "Library for managing PEM certificate chains.",
@@ -40,7 +40,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+        "0x2844ea9f19c8d87b0e033bd0b25983f2503dcc86aceaacbf4785f0f2507f2278"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
@@ -62,7 +62,7 @@
       "type": "Contract",
       "template": "taiko/Risc0Verifier",
       "sourceHashes": [
-        "0xa750071d4c85280eb006caef33e2d65c25ba3c05b6160ce789076d7d00b68cf5"
+        "0x0fbc7e2c06292d99f25238155902be56c4ab1f218e969ad201343ba6691617d7"
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using RISC Zero.",
@@ -99,7 +99,7 @@
       "type": "Contract",
       "template": "taiko/SgxVerifier",
       "sourceHashes": [
-        "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
+        "0x64982ac2280542d1f822ed34b0d5a76af39b8c23309b9fa29e2e028aaaf409ed"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks.",
@@ -132,7 +132,7 @@
       "type": "Contract",
       "template": "global/TimelockController",
       "sourceHashes": [
-        "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d"
+        "0xd75c3ac3fe43e81cc406b9316c4f35ab4c97b399585f8ed181cc438845d520be"
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
@@ -200,7 +200,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -235,8 +235,8 @@
       "type": "Contract",
       "template": "taiko/SignerList",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x2e03e80de0ae2460891172f783bb22adb3198bbe1184bf5558ce46a0a1426ddb"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xa7ca079fc79b02b1bf21099f18108afd2619a15b9576f07826fd3d40323c362d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A signer list for registering agents, similar to a Multisig.",
@@ -283,8 +283,8 @@
       "type": "Contract",
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xb88d9a2a00b03d84804743d62f07486e1276d8e7c989cc3a3cfd8f0ae26b5cd9"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xa475ba124c54ce3d05a591fa36ad4940d2596ffe8798d8fa7369c35835d9ce4a"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -342,8 +342,8 @@
       "type": "Contract",
       "template": "taiko/TaikoToken",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x2b1eb63ab3adb1a0783bae6252816727a2fb5d150dd0e9912e0a01e4ee224be9"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x41ab29308b74d97dd20c9a343bb0ec5bf06ff5c16e1dce8e573ce3d11b24c37b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.",
@@ -464,7 +464,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -498,7 +498,7 @@
       "type": "Contract",
       "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
-        "0xb44ee6b08f1771b57cb0eaac00eb8ac68c0b86d1f4cbd25e8b80debe791ad2eb"
+        "0x6d31c3046dca02d527c9c812462cb52b4402d54884c3abe822cb6ac8371e4a5b"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
@@ -523,8 +523,8 @@
       "type": "Contract",
       "template": "taiko/EmergencyMultisig",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x5214d838c15a1ddc2fa952f428cd6eeb5b5146d215923c3d4667100066d7f73e"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x06b3c0dcde009443de8e2e9dbc01b7be47d4ab850aa790c61dd3e382d0223139"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
@@ -572,7 +572,7 @@
       "type": "Contract",
       "template": "taiko/EncryptionRegistry",
       "sourceHashes": [
-        "0x95721d01741fd367320ddaabfaf4b41498755af0f0fda0f258599c6ddf848ed2"
+        "0x267e9b80c22b223bc6f3def714d9cc9965d9f1a4f38a3d5fcf94c253fc9bb0b3"
       ],
       "proxyType": "immutable",
       "description": "A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.",
@@ -620,7 +620,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -664,7 +664,7 @@
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+        "0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
@@ -774,7 +774,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -815,7 +815,7 @@
       "type": "Contract",
       "template": "taiko/SigVerifyLib",
       "sourceHashes": [
-        "0x5bf803a773ed2c117313ea970df3b38542eab3522714f18be2b65a75062e0ebf"
+        "0x98e16ff1318818952e17508c8ff77aab49a3dfe9ff98a6d43d8b4c8c3e50fa11"
       ],
       "proxyType": "immutable",
       "description": "Library for verifying signatures.",
@@ -840,7 +840,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -893,7 +893,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -931,8 +931,8 @@
       "type": "Contract",
       "template": "taiko/MainnetInbox",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x8d260fddbc7a72c54273017cb2c35c4eab2166aed34e0ab7265950bbed7bef3f"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xa362200444c4acb7197c44886acc6eb7d90bb3933f19c339e94239e413f132d1"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.",
@@ -1019,7 +1019,7 @@
       "type": "Contract",
       "template": "taiko/TaikoDAOController",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0xacca94dada8d52e2f59e26907cb2b2de0a50f5241a1548ba8ceb5e2162f45040"
       ],
       "proxyType": "EIP1967 proxy",
@@ -1193,7 +1193,7 @@
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
-        "0x8a1f2f8a442ecce12d0692b2117333692fe151bb272cd1e8b2f92ec437bf8d9c"
+        "0xe1cb8acc21214c3652ccc33caf9aca78a1e818c7cba5652c17c9d1a67bce341b"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.0.0).",
@@ -1216,8 +1216,8 @@
       "type": "Contract",
       "template": "taiko/AutomataDcapV3Attestation",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xf03ee5163c982d906a23e9650c5ca9a0f66fa6bf33b9496c71476ce91c8d32ec"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x8b8e5b7672b834fd900d5235a8c921b42d5ee2025e3f2e171556191b1c402c20"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX attestation certificates.",
@@ -1307,7 +1307,7 @@
       "type": "Contract",
       "template": "risc0/RiscZeroVerifierRouter",
       "sourceHashes": [
-        "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364"
+        "0x3cae3ae6b0f352872c4065d61e6035712203a33041678708105f24c097febd2a"
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
@@ -1335,8 +1335,8 @@
       "type": "Contract",
       "template": "taiko/QuotaManager",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x515420aaad70e32a5f53c329c15df869122650ffc387b0ef64bb3de9748b3797"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x6ae3c0946e5703cdce5cd4aab28ec8bba4df9b9be88a368c1078da02c48896de"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines withdrawal limits per token.",
@@ -1411,7 +1411,7 @@
       "type": "Contract",
       "template": "taiko/SP1Verifier",
       "sourceHashes": [
-        "0x1dcfcdf3dd450e8a527f8693f22f23affb00864ffba663c0a9b03a0083fb0b60"
+        "0xdee7636e5fc070c7646f6aa8bc2f927212edf07aa5e46d6d1f2abdf08febce20"
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using SP1.",
@@ -1452,8 +1452,8 @@
       "type": "Contract",
       "template": "taiko/OptimisticTokenVotingPlugin",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x919b8268f27c8e7d5eb3409d5dfa664b37f80dc78898df309e0fe272050c410a"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x565adda256d285c36f58a97eaae35d0845077481920428065b2f2c98a97d05d3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.",
@@ -1544,8 +1544,8 @@
       "type": "Contract",
       "template": "taiko/SharedERC20Vault",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x0112b81e89b367f8ffeb6b571bd245b1be7a1279474ffa11591f8374a2c8b14f"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x4e0dd5fa918b3b1229feb85baaac3bf6d7fffd21febcdeb7a4f3bf62e22c9031"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Shared vault for Taiko chains for bridged ERC20 tokens.",
@@ -1649,7 +1649,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -1700,8 +1700,8 @@
       "type": "Contract",
       "template": "taiko/DAO",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xfe89f584d934a1a68ad809c948a3f0eff7bc0afa661d021946e43c12e83853f6"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
@@ -1954,8 +1954,8 @@
       "type": "Contract",
       "template": "taiko/SignalService",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x20f8b06e752acd9eaddb6745d7eba47d69302f638a83d0db11476c03ece409d5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
@@ -2036,7 +2036,7 @@
       "type": "Contract",
       "template": "risc0/RiscZeroVerifierEmergencyStop",
       "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
+        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
@@ -2066,7 +2066,7 @@
       "type": "Contract",
       "template": "taiko/SgxVerifier",
       "sourceHashes": [
-        "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
+        "0x64982ac2280542d1f822ed34b0d5a76af39b8c23309b9fa29e2e028aaaf409ed"
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks.",
@@ -2095,7 +2095,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2141,7 +2141,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2177,7 +2177,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2234,7 +2234,7 @@
       "type": "Contract",
       "template": "shared-sp1/SP1Verifier",
       "sourceHashes": [
-        "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
+        "0x841e49c8753878bb522d9e0f0d5276aa39929d0cb7d6bd23ca0d5032537b8536"
       ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
@@ -2263,7 +2263,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
@@ -2332,8 +2332,8 @@
       "type": "Contract",
       "template": "taiko/TaikoBridge",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x118c20a34164db28141d7fa6496d1fcf9e139354ed77c4e1c3f33e5eaac65977"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xa98023db33dc6ad6957a1c18e9e67712facad7f801f9437a6b05cf48aca80135"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Shared bridge for Taiko chains for bridged ETH.",
@@ -2431,8 +2431,8 @@
       "type": "Contract",
       "template": "taiko/Multisig",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x2b345501d9a4b9f9fc8537b9a257c07664f8aa5cc1db8755e53d6f7d8a589f91"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x044e282f62e9e82103d7af7f0ea2d090fc2b11d78f0d1925f201d770ac434581"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
@@ -2496,8 +2496,8 @@
       "type": "Contract",
       "template": "taiko/ProverWhitelist",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x324653368e7bcaa7121b944af4794caa9a627937a3fa5afc9e643541abefb9a8"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x57dbd00bc282ee0976f1079d055fadca0cf93f2879731562abf574dd0d828dda"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.",
@@ -2538,8 +2538,8 @@
       "type": "Contract",
       "template": "taiko/L1SharedAddressManager",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x61eadd250e6fee2eea7d778ca5fdb6e04b0fa09044c65eba836b397f585e5535"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xc517995b98b38d37cfdc0d22945faf7a13c32c2eec5931b84ac669cdada0ef56"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
@@ -2664,7 +2664,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2700,7 +2700,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -2801,7 +2801,7 @@
       "type": "Contract",
       "template": "taiko/TaikoDAOController",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
         "0x2031bc459fbe34f9e0c0bbb1b59039b00ed92ea44002b5be98688d952fb1e4e9"
       ],
       "proxyType": "EIP1967 proxy",
@@ -2839,8 +2839,8 @@
       "type": "Contract",
       "template": "taiko/PreconfWhitelist",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x974afbdcc80d21c6158c6eb226d4a8b02a6041f7b8e9affd849a300ce70e21ef"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xbbc82a452c36768ecfa5ae0bddedf9ac6eab01d8818f3952da014b8dc7f365bd"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.",
@@ -2920,8 +2920,8 @@
       "type": "Contract",
       "template": "taiko/L2Bridge",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x5f895f5e5eff391b355fd960e8891da71f24b40a469036685e6306937f582f93"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xfada2b71cfef6dfc63b33a9681baa712699f12de05eaf91f635ed3387a304791"
       ],
       "proxyType": "EIP1967 proxy",
       "deployerAddress": "taiko:0x0000000000000000000000000000000000000000",
@@ -2997,8 +2997,8 @@
       "type": "Contract",
       "template": "taiko/SignalService",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x20f8b06e752acd9eaddb6745d7eba47d69302f638a83d0db11476c03ece409d5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
@@ -3044,8 +3044,8 @@
       "type": "Contract",
       "template": "taiko/L2AddressManager",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x6fe05ffd6df39bf2744926b989c92177a890441393df2e76bc191747b86fe675"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x0cd2f8219748850e9271f472e5adab8d91073814feba07eb5b902fd06403ee6d"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
@@ -3131,8 +3131,8 @@
       "type": "Contract",
       "template": "taiko/Anchor",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0xb7363f9eb2b04eaac9917a7afc61fd33b89e7c7f5140743865a89e1d3e367c25"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
@@ -3212,8 +3212,8 @@
       "type": "Contract",
       "template": "taiko/TaikoDAOController",
       "sourceHashes": [
-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x126c01552edc6ec0f433f57a1cb50dee6524ae96dc62ca10278748794a267e90"
+        "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
+        "0x4616f709cc576ee52199d336b4f7b7be351448caad2db844eafd6cd1a231bca4"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
