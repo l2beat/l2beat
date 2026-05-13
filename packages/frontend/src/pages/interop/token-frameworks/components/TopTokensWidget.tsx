@@ -6,6 +6,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { TopTokenItem } from '~/server/features/scaling/interop/getTokenFrameworksData'
@@ -30,9 +36,10 @@ export function TopTokensWidget({
   })
 
   const items = data?.topTokens[activeTab]
+  const frameworksById = new Map(tokenFrameworks.map((f) => [f.id, f]))
 
   return (
-    <PrimaryCard className="border-divider max-md:border-b md:col-span-2 lg:row-span-5">
+    <PrimaryCard className="@container border-divider max-md:border-b md:col-span-2 lg:row-span-5">
       <div className="flex items-center gap-2.5">
         <h2 className="font-bold text-heading-18 md:text-heading-20">
           Top Tokens by Volume
@@ -76,9 +83,19 @@ export function TopTokensWidget({
             <EmptyState />
           ) : (
             <div className="flex flex-col gap-3">
-              {items.map((token) => (
-                <TokenRow key={token.id} token={token} />
-              ))}
+              {items.map((token) => {
+                const framework =
+                  activeTab === 'all' && token.frameworkId
+                    ? frameworksById.get(token.frameworkId)
+                    : undefined
+                return (
+                  <TokenRow
+                    key={token.id}
+                    token={token}
+                    framework={framework}
+                  />
+                )
+              })}
             </div>
           )}
         </TabsContent>
@@ -87,19 +104,45 @@ export function TopTokensWidget({
   )
 }
 
-function TokenRow({ token }: { token: TopTokenItem }) {
+function TokenRow({
+  token,
+  framework,
+}: {
+  token: TopTokenItem
+  framework: InteropTokenFramework | undefined
+}) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
         <img
           src={token.iconUrl}
           alt={token.symbol}
-          className="size-6 rounded-full"
+          className="size-6 shrink-0 rounded-full"
         />
         <span className="font-bold text-heading-16">{token.symbol}</span>
+        {framework && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div
+                className="flex shrink-0 items-center gap-1 font-bold text-label-value-14"
+                style={{ color: framework.color }}
+              >
+                <img
+                  src={framework.iconUrl}
+                  alt={framework.label}
+                  className="size-4 rounded-sm"
+                />
+                <span className="@max-[450px]:hidden">{framework.label}</span>
+              </div>
+            </TooltipTrigger>
+            <TooltipPortal>
+              <TooltipContent>{framework.label}</TooltipContent>
+            </TooltipPortal>
+          </Tooltip>
+        )}
         {token.topRoute && (
           <div className="flex items-center gap-1 text-label-value-12 text-secondary">
-            <span className="font-medium">Top chain route</span>
+            <span className="font-medium">Top path</span>
             <ChainIcon
               iconUrl={token.topRoute.src.iconUrl}
               alt={token.topRoute.src.id}

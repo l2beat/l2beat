@@ -68,6 +68,7 @@ export type TopTokenItem = {
   volume: number
   transferCount: number
   topRoute: TopTokenChainRoute | undefined
+  frameworkId: string | undefined
 }
 
 export type FrameworkChainPathItem = {
@@ -293,6 +294,10 @@ function getSingleAverageDurationSeconds(
   return Math.floor(data.totalDurationSum / data.transfersWithDurationCount)
 }
 
+const frameworkIdByProjectId = new Map(
+  TOKEN_FRAMEWORKS.map((f) => [f.projectId.toString(), f.id]),
+)
+
 function buildTopTokens(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
@@ -308,6 +313,7 @@ function buildTopTokens(
   for (const [abstractTokenId, data] of sliced) {
     const details = tokensDetailsMap.get(abstractTokenId)
     if (!details) continue
+    const [protocolId] = data.protocols.keys()
     items.push({
       id: abstractTokenId,
       symbol: details.symbol,
@@ -315,6 +321,9 @@ function buildTopTokens(
       volume: data.volume,
       transferCount: data.transferCount,
       topRoute: getTopRoute(data),
+      frameworkId: protocolId
+        ? frameworkIdByProjectId.get(protocolId)
+        : undefined,
     })
   }
   return items
@@ -436,6 +445,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
         src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
         dst: { id: 'arbitrum', iconUrl: '/icons/arbitrum.png' },
       },
+      frameworkId: 'oft',
     },
     {
       id: 'usdt',
@@ -448,6 +458,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
         src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
         dst: { id: 'optimism', iconUrl: '/icons/optimism.png' },
       },
+      frameworkId: 'cct',
     },
     {
       id: 'susde',
@@ -460,6 +471,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
         src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
         dst: { id: 'base', iconUrl: '/icons/base.png' },
       },
+      frameworkId: 'warp',
     },
     {
       id: 'usdt0-2',
@@ -472,6 +484,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
         src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
         dst: { id: 'arbitrum', iconUrl: '/icons/arbitrum.png' },
       },
+      frameworkId: 'ntt',
     },
     {
       id: 'usde',
@@ -484,6 +497,7 @@ function getMockTokenFrameworksData(): TokenFrameworksData {
         src: { id: 'ethereum', iconUrl: '/icons/ethereum.png' },
         dst: { id: 'optimism', iconUrl: '/icons/optimism.png' },
       },
+      frameworkId: 'its',
     },
   ]
 
