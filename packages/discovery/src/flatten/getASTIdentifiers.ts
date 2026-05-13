@@ -39,9 +39,12 @@ export function getASTIdentifiers(
       break
     }
     case 'BreakStatement':
-    case 'ContinueStatement':
-    case 'InlineAssemblyStatement': {
+    case 'ContinueStatement': {
       result = []
+      break
+    }
+    case 'InlineAssemblyStatement': {
+      result = parseAssembly(node.body, visit)
       break
     }
     case 'RevertStatement': {
@@ -333,6 +336,84 @@ function parseExpression(
   }
 
   visit?.(expr, result)
+  return result
+}
+
+function parseAssembly(
+  node: AST.BaseASTNode | null,
+  visit?: VisitFn,
+): string[] {
+  if (!node?.type) {
+    return []
+  }
+
+  const n = node as AST.ASTNode
+  let result: string[]
+  switch (n.type) {
+    case 'AssemblyBlock': {
+      result = n.operations.flatMap((op) => parseAssembly(op, visit))
+      break
+    }
+    case 'AssemblyCall': {
+      const args = n.arguments.flatMap((a) => parseAssembly(a, visit))
+      result = [n.functionName].concat(args)
+      break
+    }
+    case 'AssemblyLocalDefinition':
+    case 'AssemblyAssignment': {
+      const names = (n.names ?? []).flatMap((name) =>
+        parseAssembly(name, visit),
+      )
+      const expression = parseAssembly(n.expression ?? null, visit)
+      result = names.concat(expression)
+      break
+    }
+    case 'AssemblyStackAssignment': {
+      result = [n.name].concat(parseAssembly(n.expression, visit))
+      break
+    }
+    case 'AssemblyIf': {
+      result = parseAssembly(n.condition, visit).concat(
+        parseAssembly(n.body, visit),
+      )
+      break
+    }
+    case 'AssemblyFor': {
+      result = parseAssembly(n.pre, visit)
+        .concat(parseAssembly(n.condition, visit))
+        .concat(parseAssembly(n.post, visit))
+        .concat(parseAssembly(n.body, visit))
+      break
+    }
+    case 'AssemblySwitch': {
+      const expression = parseAssembly(n.expression, visit)
+      const cases = n.cases.flatMap((c) => parseAssembly(c, visit))
+      result = expression.concat(cases)
+      break
+    }
+    case 'AssemblyCase': {
+      result = parseAssembly(n.block, visit)
+      break
+    }
+    case 'AssemblyFunctionDefinition': {
+      result = parseAssembly(n.body, visit)
+      break
+    }
+    case 'AssemblyMemberAccess': {
+      result = [n.expression.name]
+      break
+    }
+    case 'Identifier': {
+      result = [n.name]
+      break
+    }
+    default: {
+      result = []
+      break
+    }
+  }
+
+  visit?.(n, result)
   return result
 }
 

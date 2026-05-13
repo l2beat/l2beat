@@ -1174,6 +1174,42 @@ describe('flatten', () => {
     )
   })
 
+  it('regression - top level constants in assembly', () => {
+    const file = sol(
+      'Root.sol',
+      `
+    uint256 constant CONSTANT = 42;
+    contract Root {
+      function foo() {
+        assembly {
+          let ptr := mload(0x40)
+          mstore(ptr, CONSTANT)
+        }
+      }
+    }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('Root', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+      uint256 constant CONSTANT = 42;
+
+      contract Root {
+        function foo() {
+          assembly {
+            let ptr := mload(0x40)
+            mstore(ptr, CONSTANT)
+          }
+        }
+      }
+  `),
+    )
+  })
+
   describe('name clash disambiguation', () => {
     it('resolves name clash from import alias reversal', () => {
       const files = [
