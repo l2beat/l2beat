@@ -34,6 +34,7 @@ import { ChainSpecificAddressValue } from './types'
 
 const statusTable: Record<VerificationResult['type'], string> = {
   success: chalk.bgGreen(' OK '),
+  skip: chalk.bgYellow('SKIP'),
   failure: chalk.bgRed('FAIL'),
 }
 
@@ -79,7 +80,9 @@ export const FlattenerValidator = command({
     const runStartedAtMs = Date.now()
     let completed = 0
     let matching = 0
+    let failed = 0
     let verificationTimeMsTotal = 0
+    const failures: { address: ChainSpecificAddress; message: string }[] = []
 
     await mapWithConcurrency(contracts, concurrency, async (contract) => {
       const chain = ChainSpecificAddress.longChain(contract)
@@ -93,7 +96,11 @@ export const FlattenerValidator = command({
       verificationTimeMsTotal += verificationTimeMs
       matching += status.type === 'success' ? 1 : 0
 
-      const failed = completed - matching
+      if (status.type === 'failure') {
+        failed += 1
+        failures.push({ address: contract, message: status.message })
+      }
+
       const progress = colorMap(
         `${completed.toString().padStart(maxLength)}`,
         completed / total,
@@ -114,8 +121,29 @@ export const FlattenerValidator = command({
           `elapsed=${formatDuration(Date.now() - runStartedAtMs)}`,
       )
     })
+
+    printFailures(failures)
   },
 })
+
+function printFailures(
+  failures: { address: ChainSpecificAddress; message: string }[],
+): void {
+  if (failures.length === 0) return
+
+  const grouped = new Map<string, ChainSpecificAddress[]>()
+  for (const { address, message } of failures) {
+    const key = message.split('\n')[0] ?? message
+    grouped.set(key, [...(grouped.get(key) ?? []), address])
+  }
+
+  console.log(`\n${chalk.bgRed('FAIL')} ${failures.length} contract(s) failed`)
+  const sorted = [...grouped].sort((a, b) => b[1].length - a[1].length)
+  for (const [message, addresses] of sorted) {
+    console.log(`\n${chalk.yellow(`[${addresses.length}]`)} ${chalk.red(message)}`)
+    for (const a of addresses) console.log(`  - ${a}`)
+  }
+}
 
 async function verifyAddress(
   provider: IProvider,
@@ -127,6 +155,9 @@ async function verifyAddress(
       provider.getBytecode(address),
       provider.getSource(address),
     ])
+
+    if (!source.isVerified) return { type: 'skip' }
+
     const flat = flattenSource(source)
 
     return await verifyBytecode(source, flat, bytecode, paths)
@@ -239,6 +270,7 @@ function getAllContractAddresses(
 
 type VerificationResult =
   | { type: 'success' }
+  | { type: 'skip' }
   | { type: 'failure'; message: string }
 
 const FLAT_SOURCE_PATH = 'Flat.sol'
