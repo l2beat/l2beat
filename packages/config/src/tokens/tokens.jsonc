@@ -2106,6 +2106,11 @@
     {
       "symbol": "FLUID",
       "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb"
+    },
+    {
+      "symbol": "USDS",
+      "category": "stablecoin",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
     }
   ],
   "galxegravity": [
