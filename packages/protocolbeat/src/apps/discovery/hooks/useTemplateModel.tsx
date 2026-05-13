@@ -87,6 +87,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldDescription(fieldName)
   }
 
+  const getFieldPermissions = (fieldName: string) => {
+    return templateModel.getFieldPermissions(fieldName)
+  }
+
   const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
@@ -169,6 +173,7 @@ export function useTemplateModel({ templateId, files }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
