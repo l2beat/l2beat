@@ -1050,6 +1050,56 @@ describe('flatten', () => {
     )
   })
 
+  it('regression - inheritance order violated by type-reference cycle through derived contract', () => {
+    const file = sol(
+      'Root.sol',
+      `
+    contract Inner {
+        Outer public outer;
+    }
+
+    contract Outer {
+        Derived public derived;
+        function callIt() public { derived.act(); }
+    }
+
+    contract Derived is Inner {
+        function act() public {}
+    }
+
+    contract Root {
+        Inner i;
+    }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('Root', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+    // NOTE(l2beat): This is an interface, generated from the contract source code.
+    interface Outer {
+        function derived() external view returns (Derived);
+        function callIt() external;
+    }
+
+    contract Inner {
+        Outer public outer;
+    }
+
+    contract Derived is Inner {
+        function act() public {}
+    }
+
+    contract Root {
+        Inner i;
+    }
+  `),
+    )
+  })
+
   describe('name clash disambiguation', () => {
     it('resolves name clash from import alias reversal', () => {
       const files = [

@@ -104,25 +104,36 @@ function topologicalSort(
   parsedFileManager: ParsedFilesManager,
   rootContract: DeclarationFilePair,
 ): DeclarationFilePair[] {
+  // Post-order DFS that defers a node until its inheritance bases are emitted,
+  // so reference cycles get broken at a signature edge, never an inheritance one.
   const order: DeclarationFilePair[] = []
+  const inOrder = new Set<string>()
   const visited = new Set<string>()
+  const pending: DeclarationFilePair[] = []
+
+  const basesReady = (p: DeclarationFilePair) =>
+    p.declaration.implementationReferences.every((name) => {
+      const base = parsedFileManager.tryFindDeclaration(name, p.file)
+      return !base || inOrder.has(base.declaration.id)
+    })
 
   function visit(pair: DeclarationFilePair): void {
-    const id = pair.declaration.id
-    if (visited.has(id)) return
-    visited.add(id)
-
+    if (visited.has(pair.declaration.id)) return
+    visited.add(pair.declaration.id)
     for (const name of allReferences(pair)) {
       const dep = parsedFileManager.tryFindDeclaration(name, pair.file)
-      if (dep === undefined) continue
-      visit(dep)
+      if (dep) visit(dep)
     }
-
-    order.push(pair)
+    pending.push(pair)
+    for (let p = pending.find(basesReady); p; p = pending.find(basesReady)) {
+      pending.splice(pending.indexOf(p), 1)
+      order.push(p)
+      inOrder.add(p.declaration.id)
+    }
   }
 
   visit(rootContract)
-
+  assert(pending.length === 0, 'inheritance cycle detected')
   return order
 }
 
