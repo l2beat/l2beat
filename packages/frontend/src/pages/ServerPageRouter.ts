@@ -16,6 +16,7 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
+import { createOverviewRouter } from './overview/OverviewRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -48,10 +49,11 @@ export function createServerPageRouter(
   })
 
   router.get('/', (_req, res) => {
-    res.redirect(301, '/scaling/summary')
+    res.redirect(301, '/overview')
   })
 
   const routers = [
+    createOverviewRouter,
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,

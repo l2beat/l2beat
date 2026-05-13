@@ -1,6 +1,8 @@
 export const pageLoaders = {
   IconPreviewPage: async () =>
     (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
+  OverviewPage: async () =>
+    (await import('./overview/OverviewPage')).OverviewPage,
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
   ScalingRiskPage: async () =>

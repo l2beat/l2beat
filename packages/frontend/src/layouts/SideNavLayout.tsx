@@ -16,13 +16,14 @@ import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { OverviewIcon } from '~/icons/pages/Overview'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
-const LOGO_LINK = '/scaling/summary'
+const LOGO_LINK = '/overview'
 
 export interface SideNavLayoutProps {
   children: React.ReactNode
@@ -45,6 +46,15 @@ export function SideNavLayout({
   const groups = useMemo(
     () =>
       compact<NavGroup>([
+        {
+          type: 'single',
+          title: 'Overview',
+          match: 'overview',
+          href: '/overview',
+          icon: (
+            <OverviewIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
+        },
         {
           type: 'multiple',
           title: 'Scaling',
