@@ -87,21 +87,26 @@ export function NodesAndConnections() {
     maxY = Math.max(maxY, from.y, to.y) + 200
   })
 
-  const width = maxX - minX
-  const height = maxY - minY
+  const hasConnections = connections.length > 0
+  const width = hasConnections ? maxX - minX : 0
+  const height = hasConnections ? maxY - minY : 0
+  const viewBoxX = hasConnections ? minX : 0
+  const viewBoxY = hasConnections ? minY : 0
 
   return (
     <>
-      <svg
-        viewBox={`${minX} ${minY} ${width} ${height}`}
-        className="pointer-events-none absolute"
-        style={{ left: minX, top: minY, width, height }}
-        fill="none"
-      >
-        {connections.map(({ key, ...rest }) => (
-          <Connection key={key} {...rest} />
-        ))}
-      </svg>
+      {hasConnections && (
+        <svg
+          viewBox={`${viewBoxX} ${viewBoxY} ${width} ${height}`}
+          className="pointer-events-none absolute"
+          style={{ left: viewBoxX, top: viewBoxY, width, height }}
+          fill="none"
+        >
+          {connections.map(({ key, ...rest }) => (
+            <Connection key={key} {...rest} />
+          ))}
+        </svg>
+      )}
 
       {visible.map((node) => {
         const highlightedIds =

@@ -10,6 +10,7 @@ import {
 import {
   type NodeLocations,
   recallNodeLayout,
+  reconcileHiddenFields,
   type StoredNodeLayout,
 } from '../utils/storage'
 import { layout } from './other'
@@ -43,9 +44,13 @@ export function loadNodes(
     const width = box?.width ?? NODE_WIDTH
     const hiddenFieldsHeight =
       hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+    const visibleFieldsCount = Math.max(
+      0,
+      node.fields.length - hiddenFields.length,
+    )
     const height =
       HEADER_HEIGHT +
-      (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
+      visibleFieldsCount * FIELD_HEIGHT +
       BOTTOM_PADDING +
       hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
@@ -169,7 +174,11 @@ function combinedHiddenFields(
 ): string[] {
   const recalledHiddenFields = saved?.hiddenFields?.[node.id] ?? []
   const defaultHiddenFields = node.hiddenFields
-  return [...new Set([...recalledHiddenFields, ...defaultHiddenFields])]
+  const fieldNames = node.fields.map((f) => f.name)
+  return reconcileHiddenFields(fieldNames, [
+    ...recalledHiddenFields,
+    ...defaultHiddenFields,
+  ])
 }
 
 function placeNewNodes(

@@ -192,17 +192,13 @@ function getNodeFields(
   }
 
   if (value.type === 'object') {
-    return value.values.flatMap(([key, value]) =>
-      [
-        getNodeFields(
-          `${path}.${extractFieldValue(key)}`,
-          value,
-          bannedKeys,
-          bannedValues,
-        ),
-        getNodeFields(`${path}.#key`, key, bannedKeys, bannedValues),
-      ].flat(),
-    )
+    return value.values.flatMap(([key, value]) => {
+      const entryPath = `${path}.${extractFieldValue(key)}`
+      return [
+        getNodeFields(entryPath, value, bannedKeys, bannedValues),
+        getNodeFields(`${entryPath}#key`, key, bannedKeys, bannedValues),
+      ].flat()
+    })
   }
   if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
