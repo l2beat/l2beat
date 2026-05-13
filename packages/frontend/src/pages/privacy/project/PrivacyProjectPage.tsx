@@ -1,61 +1,29 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { Banner } from '~/components/Banner'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
-import type { ProjectNavigationSection } from '~/components/projects/navigation/types'
+import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
+import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
-import { ContractsSection } from '~/components/projects/sections/contracts/ContractsSection'
-import { MarkdownSection } from '~/components/projects/sections/MarkdownSection'
-import { ProjectSection } from '~/components/projects/sections/ProjectSection'
-import { PermissionsSection } from '~/components/projects/sections/permissions/PermissionsSection'
-import { TrustedSetupSection } from '~/components/projects/sections/TrustedSetupsSection'
-import type { ProjectSectionId } from '~/components/projects/sections/types'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ChartRange } from '~/utils/range/range'
-import { PrivacyBreakdownTable } from './components/PrivacyBreakdownTable'
-import { PrivacyFlowsChartsSection } from './components/PrivacyFlowsChartsSection'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
 interface Props extends AppLayoutProps {
   entry: PrivacyProjectEntry
-  defaultChartRange: ChartRange
   queryState: DehydratedState
 }
 
-export function PrivacyProjectPage({
-  entry,
-  defaultChartRange,
-  queryState,
-  ...props
-}: Props) {
-  const navigationSections = getNavigationSections(entry)
-  const bucketCount = entry.assets.reduce(
-    (sum, asset) => sum + asset.bucketCount,
-    0,
-  )
-  const hasRiskSummary = !!entry.riskSummary
-  const hasUpgradesAndGovernance = !!entry.upgradesAndGovernance
-
-  let order = 0
-  const nextOrder = () => String(++order).padStart(2, '0')
-  const riskSummaryOrder = hasRiskSummary ? nextOrder() : undefined
-  const upgradesAndGovernanceOrder = hasUpgradesAndGovernance
-    ? nextOrder()
-    : undefined
-  const chartsOrder = nextOrder()
-  const trustedSetupsOrder = nextOrder()
-  const permissionsOrder = entry.permissionsSection ? nextOrder() : undefined
-  const contractsOrder = entry.contractsSection ? nextOrder() : undefined
+export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
+  const navigationSections = projectDetailsToNavigationSections(entry.sections)
 
   return (
     <AppLayout {...props}>
@@ -115,8 +83,8 @@ export function PrivacyProjectPage({
                         totalValueSecuredUsd={
                           entry.summary.totalValueSecuredUsd
                         }
-                        assetsCount={entry.assets.length}
-                        bucketsCount={bucketCount}
+                        assetsCount={entry.assetsCount}
+                        bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
                       />
                       {entry.badges.length > 0 && (
@@ -127,84 +95,7 @@ export function PrivacyProjectPage({
                       )}
                     </PrimaryCard>
 
-                    {hasRiskSummary &&
-                      entry.riskSummary &&
-                      riskSummaryOrder && (
-                        <MarkdownSection
-                          id="risk-summary"
-                          title="Risk summary"
-                          sectionOrder={riskSummaryOrder}
-                          content={entry.riskSummary}
-                          mdClassName="[&_h2]:mb-0 [&_h2]:font-bold [&_h2]:text-red-300 [&_h2]:text-paragraph-15 md:[&_h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0"
-                        />
-                      )}
-
-                    {hasUpgradesAndGovernance &&
-                      entry.upgradesAndGovernance &&
-                      upgradesAndGovernanceOrder && (
-                        <MarkdownSection
-                          id="upgrades-and-governance"
-                          title="Upgrades & Governance"
-                          sectionOrder={upgradesAndGovernanceOrder}
-                          content={entry.upgradesAndGovernance}
-                        />
-                      )}
-
-                    <ProjectSection
-                      id={'charts' as unknown as ProjectSectionId}
-                      title="Value Locked"
-                      sectionOrder={chartsOrder}
-                    >
-                      <PrivacyFlowsChartsSection
-                        defaultRange={defaultChartRange}
-                        project={{
-                          id: entry.id,
-                          name: entry.name,
-                          shortName: entry.shortName,
-                          iconUrl: entry.icon,
-                        }}
-                      />
-                      <div className="mt-8">
-                        <h3 className="mb-3 font-bold text-lg md:text-xl">
-                          Assets Breakdown
-                        </h3>
-                        <PrivacyBreakdownTable assets={entry.assets} />
-                      </div>
-                    </ProjectSection>
-
-                    <TrustedSetupSection
-                      id="trusted-setups"
-                      title="Trusted setup"
-                      sectionOrder={trustedSetupsOrder}
-                      trustedSetups={[
-                        {
-                          name: entry.trustedSetup.name,
-                          risk: entry.trustedSetup.risk,
-                          description: entry.trustedSetup.longDescription,
-                          proofSystems: [],
-                        },
-                      ]}
-                    />
-
-                    {entry.permissionsSection && permissionsOrder && (
-                      <PermissionsSection
-                        {...entry.permissionsSection}
-                        id="permissions"
-                        title="Permissions"
-                        sectionOrder={permissionsOrder}
-                        discoUi={entry.discoUi}
-                      />
-                    )}
-
-                    {entry.contractsSection && contractsOrder && (
-                      <ContractsSection
-                        {...entry.contractsSection}
-                        id="contracts"
-                        title="Smart contracts"
-                        sectionOrder={contractsOrder}
-                        discoUi={entry.discoUi}
-                      />
-                    )}
+                    <ProjectDetails items={entry.sections} />
                   </HighlightableLinkContextProvider>
                 </div>
 
@@ -227,55 +118,4 @@ export function PrivacyProjectPage({
       </HydrationBoundary>
     </AppLayout>
   )
-}
-
-function getNavigationSections(
-  entry: PrivacyProjectEntry,
-): ProjectNavigationSection[] {
-  return [
-    {
-      id: 'summary',
-      title: 'Summary',
-    },
-    ...(entry.riskSummary
-      ? [
-          {
-            id: 'risk-summary',
-            title: 'Risk summary',
-          },
-        ]
-      : []),
-    ...(entry.upgradesAndGovernance
-      ? [
-          {
-            id: 'upgrades-and-governance',
-            title: 'Upgrades & Governance',
-          },
-        ]
-      : []),
-    {
-      id: 'charts',
-      title: 'Value Locked',
-    },
-    {
-      id: 'trusted-setups',
-      title: 'Trusted setup',
-    },
-    ...(entry.permissionsSection
-      ? [
-          {
-            id: 'permissions',
-            title: 'Permissions',
-          },
-        ]
-      : []),
-    ...(entry.contractsSection
-      ? [
-          {
-            id: 'contracts',
-            title: 'Smart contracts',
-          },
-        ]
-      : []),
-  ]
 }

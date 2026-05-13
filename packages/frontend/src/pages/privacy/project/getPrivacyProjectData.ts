@@ -3,10 +3,8 @@ import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
-import type { ContractsSectionProps } from '~/components/projects/sections/contracts/ContractsSection'
-import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
-import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -39,20 +37,8 @@ export interface PrivacyProjectEntry {
       mobile: string
     }
   }
-  assets: PrivacyAssetSnapshot[]
-  trustedSetup: {
-    name: string
-    risk: 'green' | 'yellow' | 'red' | 'N/A'
-    longDescription: string
-  }
-  riskSummary?: string
-  upgradesAndGovernance?: string
-  permissionsSection:
-    | Omit<PermissionsSectionProps, 'id' | 'title' | 'sectionOrder'>
-    | undefined
-  contractsSection:
-    | Omit<ContractsSectionProps, 'id' | 'title' | 'sectionOrder' | 'discoUi'>
-    | undefined
+  bucketCount: number
+  assetsCount: number
   summary: {
     totalValueSecuredUsd: number
     deposits: {
@@ -67,6 +53,7 @@ export interface PrivacyProjectEntry {
     red?: ProjectRedWarning
     emergency?: string
   }
+  sections: ProjectDetailsSection[]
 }
 
 const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
@@ -153,12 +140,108 @@ export async function getPrivacyProjectData(
     EMPTY_TVS_BREAKDOWN,
   )
 
+  const discoUi = {
+    href: `https://disco.l2beat.com/ui/p/${details.id}`,
+    images: {
+      desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
+      mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
+    },
+  }
+  const icon = manifest.getUrl(`/icons/${details.slug}.png`)
+  const bucketCount = details.assets.reduce(
+    (sum, asset) => sum + asset.bucketCount,
+    0,
+  )
+
+  const sections: ProjectDetailsSection[] = []
+
+  if (details.riskSummary) {
+    sections.push({
+      type: 'MarkdownSection',
+      sideNavTitle: 'Risk summary',
+      props: {
+        id: 'risk-summary',
+        title: 'Risk summary',
+        content: details.riskSummary,
+        mdClassName:
+          '[&_h2]:mb-0 [&_h2]:font-bold [&_h2]:text-red-300 [&_h2]:text-paragraph-15 md:[&_h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
+      },
+    })
+  }
+
+  if (details.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: details.upgradesAndGovernance,
+      },
+    })
+  }
+
+  sections.push({
+    type: 'PrivacyChartsSection',
+    props: {
+      id: 'privacy-charts',
+      title: 'Value Locked',
+      defaultRange: defaultChartRange,
+      project: {
+        id: details.id,
+        name: details.name,
+        shortName: details.shortName,
+        iconUrl: icon,
+      },
+      assets: details.assets,
+    },
+  })
+
+  sections.push({
+    type: 'TrustedSetupSection',
+    props: {
+      id: 'trusted-setups',
+      title: 'Trusted setup',
+      trustedSetups: [
+        {
+          name: details.trustedSetup.name,
+          risk: details.trustedSetup.risk,
+          description: details.trustedSetup.longDescription,
+          proofSystems: [],
+        },
+      ],
+    },
+  })
+
+  if (permissionsSection) {
+    sections.push({
+      type: 'PermissionsSection',
+      props: {
+        ...permissionsSection,
+        id: 'permissions',
+        title: 'Permissions',
+        discoUi,
+      },
+    })
+  }
+
+  if (contractsSection) {
+    sections.push({
+      type: 'ContractsSection',
+      props: {
+        ...contractsSection,
+        id: 'contracts',
+        title: 'Smart contracts',
+        discoUi,
+      },
+    })
+  }
+
   const projectEntry: PrivacyProjectEntry = {
     id: details.id,
     slug: details.slug,
     name: details.name,
     shortName: details.shortName,
-    icon: manifest.getUrl(`/icons/${details.slug}.png`),
+    icon,
     description: details.display.description,
     badges: details.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
@@ -166,23 +249,9 @@ export async function getPrivacyProjectData(
     }),
     projectLinks: getProjectLinks(details.display.links),
     discoveryHref: `https://disco.l2beat.com/ui/p/${details.id}`,
-    discoUi: {
-      href: `https://disco.l2beat.com/ui/p/${details.id}`,
-      images: {
-        desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
-        mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
-      },
-    },
-    assets: details.assets,
-    trustedSetup: {
-      name: details.trustedSetup.name,
-      risk: details.trustedSetup.risk,
-      longDescription: details.trustedSetup.longDescription,
-    },
-    riskSummary: details.riskSummary,
-    upgradesAndGovernance: details.upgradesAndGovernance,
-    permissionsSection,
-    contractsSection,
+    discoUi,
+    bucketCount,
+    assetsCount: details.assets.length,
     summary: {
       totalValueSecuredUsd: details.summary.totalValueSecuredUsd,
       deposits: {
@@ -197,6 +266,7 @@ export async function getPrivacyProjectData(
       red: details.statuses.redWarning,
       emergency: details.statuses.emergencyWarning,
     },
+    sections,
   }
 
   return {
@@ -221,7 +291,6 @@ export async function getPrivacyProjectData(
       props: {
         ...appLayoutProps,
         entry: projectEntry,
-        defaultChartRange,
         queryState: helpers.dehydrate(),
       },
     },

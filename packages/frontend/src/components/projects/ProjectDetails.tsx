@@ -15,6 +15,7 @@ import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
+import { PrivacyChartsSection } from './sections/privacy/PrivacyChartsSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -286,6 +287,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'UpgradesAndGovernanceSection':
             return (
               <UpgradesAndGovernanceSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'PrivacyChartsSection':
+            return (
+              <PrivacyChartsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
