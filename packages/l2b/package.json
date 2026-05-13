@@ -19,7 +19,9 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
-    "lint": "biome check --formatter-enabled=false ."
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "test:watch": "mocha --watch"
   },
   "dependencies": {
     "@l2beat/validate": "workspace:*",
@@ -47,9 +49,13 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.14.198",
     "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.6",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.11",
     "@types/readline-sync": "^1.4.8",
+    "earl": "^1.1.0",
+    "esbuild-register": "^3.6.0",
+    "mocha": "^10.2.0",
     "mock-fs": "^5.2.0"
   }
 }

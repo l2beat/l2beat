@@ -11,6 +11,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createEcosystemsModule } from './modules/ecosystems/EcosystemsModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
+import { createPrivacyModule } from './modules/privacy/PrivacyModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
@@ -50,8 +51,13 @@ export class Application {
     // Modules with TRPC
     const interopModule = createInteropModule(deps)
     const trackedTxsModule = createTrackedTxsModule(deps)
+    const dataAvailabilityModule = initDataAvailabilityModule(deps)
 
-    const modulesWithTrpc = [interopModule, trackedTxsModule]
+    const modulesWithTrpc = [
+      interopModule,
+      trackedTxsModule,
+      dataAvailabilityModule,
+    ]
 
     const trpcContributions = modulesWithTrpc.flatMap((module) =>
       module?.trpc ? [module.trpc] : [],
@@ -64,11 +70,12 @@ export class Application {
     // All-modules entrypoint
     const modules: (ApplicationModule | undefined)[] = [
       initActivityModule(deps),
-      initDataAvailabilityModule(deps),
+      dataAvailabilityModule,
       createUpdateMonitorModule(deps),
       createFlatSourcesModule(deps),
       trackedTxsModule,
       initTvsModule(deps),
+      createPrivacyModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),

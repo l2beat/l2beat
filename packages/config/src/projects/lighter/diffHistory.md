@@ -1,14 +1,67 @@
-Generated with discovered.json: 0x5b9e7d0ab107bf24f9da27c909c7c5dea24302a1
+Generated with discovered.json: 0x9a0ec9edf50f0ec821971ac3536f1f0164e2e91c
 
-# Diff at Fri, 08 May 2026 07:51:32 GMT:
+# Diff at Tue, 12 May 2026 10:02:05 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777891445
-- current timestamp: 1777891445
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1777891445
+- current timestamp: 1778579977
 
 ## Description
 
-Use the new flattener implementation
+New verifier deployed (no sources published yet). Also, rotated two multisig members for upgrade master MS.
+
+Config: use the new flattener implementation
+
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        54
++        56
+    }
+```
+
+```diff
+    contract Lighter Multisig 2 (eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3"
+      values.$members.1:
+-        "eth:0x89f550Fce5c191b34AF95671c28bCF6CCDF1203a"
+      values.$members.2:
+-        "eth:0x6d340Dd53b89b1f0bD94b473227612427125Bc8D"
++        "eth:0xa0B3781B830DF57B1f018C434c58551c2Fc6b3Af"
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x5bee4c4522233c699516029292bf16813f3dea03e484fe718e479ac2ace77653"
++        "0x01d2d0bcda8de284060e58013910fa6454b5a8fd3d146e173364e231f0cf04e0"
+      values.$implementation:
+-        "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82"
++        "eth:0x21c7480b72c47fe93102BE5B865d18b770338098"
+      values.getTarget:
+-        "eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82"
++        "eth:0x21c7480b72c47fe93102BE5B865d18b770338098"
+      implementationNames.eth:0x01E5D9B6Db77FAA52Fc4Db1299A0163e5DaF5F82:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0x21c7480b72c47fe93102BE5B865d18b770338098:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
 
 ## Config/verification related changes
 
