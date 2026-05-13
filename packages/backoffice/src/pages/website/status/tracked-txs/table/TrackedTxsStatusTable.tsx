@@ -29,7 +29,7 @@ export function TrackedTxsStatusTable({
     columns: trackedTxsStatusColumns,
     initialSorting: [
       { id: 'status', desc: false },
-      { id: 'latestTimestamp', desc: false },
+      { id: 'ageSeconds', desc: false },
       { id: 'projectId', desc: false },
       { id: 'feature', desc: false },
       { id: 'configId', desc: false },
