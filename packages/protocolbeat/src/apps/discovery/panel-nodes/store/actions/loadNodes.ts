@@ -30,9 +30,7 @@ export function loadNodes(
     const newNode = nodes.find((x) => x.id === node.id)
     return newNode ? { ...newNode, box: node.box, color: node.color } : node
   })
-  const knownIds = new Set(
-    [...toAddRaw, ...existingRaw].map((node) => node.id),
-  )
+  const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
     ...node,
     fields: node.fields.filter((field) => knownIds.has(field.target)),
