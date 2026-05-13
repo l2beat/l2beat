@@ -443,22 +443,36 @@ function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(stripped)
 }
 
+// IPFS CBOR prefix: map(2) + text("ipfs") + bytes(34). The section ends with a
+// 2-byte big-endian length equal to its own size — used here as a checksum.
+const IPFS_CBOR_MARKER = 'a264697066735822'
+
 function maskSolidityAuxdata(
   _: SolidityOutputContract,
   bytecode: Bytes,
 ): Bytes {
-  let result = bytecode.toString()
-
-  while (true) {
-    try {
-      const [stripped, style] = splitAuxdata(result, AuxdataStyle.SOLIDITY)
-      if (style === undefined) {
-        return Bytes.fromHex(result)
-      }
-      result = stripped
-    } catch {
-      return Bytes.fromHex(result)
+  let hex = bytecode.toString().replace(/^0x/, '').toLowerCase()
+  for (let i = 0; (i = hex.indexOf(IPFS_CBOR_MARKER, i)) !== -1; ) {
+    if (i % 2 !== 0) {
+      i++
+      continue
     }
+    const bytes = findCborTotalBytes(hex, i / 2)
+    if (bytes === undefined) {
+      i += 2
+      continue
+    }
+    hex = hex.slice(0, i) + '0'.repeat(bytes * 2) + hex.slice(i + bytes * 2)
+    i += bytes * 2
+  }
+  return Bytes.fromHex('0x' + hex)
+}
+
+function findCborTotalBytes(hex: string, start: number): number | undefined {
+  for (let len = 51; len <= 80; len++) {
+    const pos = (start + len) * 2
+    if (pos + 4 > hex.length) return
+    if (parseInt(hex.slice(pos, pos + 4), 16) === len) return len + 2
   }
 }
 
