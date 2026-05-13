@@ -4262,6 +4262,10 @@
       },
       {
         "chain": "ethereum",
+        "tx": "0x4d76c29a53347e095f751f8af8aa27602e729d7bb1123a08c5b7b7cc8e34dc5b" // ethereum -> solana lockAndMint
+      },
+      {
+        "chain": "ethereum",
         "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
       }
     ],
@@ -4275,7 +4279,13 @@
         },
         {
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "ethereum" } } }
         }
