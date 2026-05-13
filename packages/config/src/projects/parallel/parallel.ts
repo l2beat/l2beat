@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -40,78 +36,6 @@ export const parallel: ScalingProject = orbitStackL2({
       ],
     },
   },
-  trackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x8f111f3c',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x6f12b0c9',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0xe0bc9729',
-        functionSignature:
-          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
-        selector: '0x3e5aa082',
-        functionSignature:
-          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: UnixTime(1712861435),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0xb6e0586616ebe79b2f86ddb32048c500d23b3ac3'),
-        selector: '0xa04cee60',
-        functionSignature:
-          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: UnixTime(1704125939),
-      },
-    },
-  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
