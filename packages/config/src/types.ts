@@ -113,6 +113,7 @@ export interface BaseProject {
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
   zkCatalogInfo?: ProjectZkCatalogInfo
+  privacyInfo?: ProjectPrivacyInfo
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -150,6 +151,7 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
   links: ProjectLinks
   badges: Badge[]
 }
@@ -822,10 +824,128 @@ export interface ZkCatalogTag {
 export interface TrustedSetup {
   id: string
   name: string
+  participantCount?: number
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
 }
+
+// #endregion
+
+// #region privacy data
+export interface ProjectPrivacyInfo {
+  trustedSetup: TrustedSetup
+  assets: ProjectPrivacyAsset[]
+  riskSummary?: string
+  upgradesAndGovernance?: string
+}
+
+export interface ProjectPrivacyAsset {
+  asset: {
+    address?: EthereumAddress
+    symbol?: string
+  }
+  buckets: ProjectPrivacyBucket[]
+}
+
+export interface ProjectPrivacyBucket {
+  id: string
+  type: 'pool' | 'denomination'
+  label: string
+  address?: ChainSpecificAddress
+  denomination?: string
+  deposits?: PrivacyDepositMetricSource
+  flows?: PrivacyBucketFlowsConfig
+  totalValue?: PrivacyMetricSource
+}
+
+export interface PrivacyDepositMetricSource {
+  total?: PrivacyMetricSource
+  last7d?: PrivacyMetricSource
+  last30d?: PrivacyMetricSource
+}
+
+export interface PrivacyBucketFlowsConfig {
+  sinceBlock: number
+  deposit?: PrivacyFlowSource
+  withdrawal?: PrivacyFlowSource
+}
+
+export type PrivacyMetricSource =
+  | {
+      type: 'discoveryValue'
+      contract: string
+      key: string
+    }
+  | {
+      type: 'nativeBalance'
+      chain: string
+      holder: ChainSpecificAddress
+    }
+  | {
+      type: 'erc20BalanceOf'
+      chain: string
+      tokenAddress: ChainSpecificAddress
+      holder: ChainSpecificAddress
+    }
+  | {
+      type: 'eventCount'
+      chain: string
+      event: string
+      address?: ChainSpecificAddress
+      fromLastBlock?: number
+    }
+  | ({
+      type: 'eventExtract'
+      chain: string
+      event: string
+      address?: ChainSpecificAddress
+      fromLastBlock?: number
+    } & PrivacyMetricExtractorConfig)
+
+export type PrivacyFlowSource = {
+  chain: string
+  event: string
+  address?: ChainSpecificAddress
+} & PrivacyFlowExtractorConfig
+
+export type PrivacyMetricExtractorConfig = {
+  extractor: 'railgunShieldDeposits'
+  params: {
+    tokenAddress: EthereumAddress
+  }
+}
+
+export type PrivacyMetricExtractor = PrivacyMetricExtractorConfig['extractor']
+export type PrivacyMetricExtractorParams =
+  PrivacyMetricExtractorConfig['params']
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 

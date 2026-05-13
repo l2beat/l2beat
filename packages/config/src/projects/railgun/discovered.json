@@ -181,7 +181,7 @@
       }
     },
     {
-      "name": "DAO",
+      "name": "Delegator",
       "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
       "type": "Contract",
       "template": "railgun/Delegator",
@@ -201,6 +201,12 @@
           "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
           "description": "approve verification key update (i.e. zk circuit logic update) on the key contract.",
           "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+          "description": "mint RAIL tokens up to the cap.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
@@ -293,6 +299,7 @@
       "name": "RailToken",
       "address": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
       "type": "Contract",
+      "template": "railgun/RailToken",
       "sourceHashes": [
         "0xa82346e65e8737f6ecea9914efe8654029b2c87c2af1186d3515a49ce1b9db39"
       ],
@@ -751,8 +758,9 @@
   "usedTemplates": {
     "railgun/Delegator": "0xc04930700142a4832ff948883e6ed52b480426c2852cc39659daf374c9ca78d3",
     "railgun/RailgunSmartWallet": "0xbd0e212266f20188ba4f5347869d904bfba8f748e6be147db4ebe9dc7153e620",
+    "railgun/RailToken": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "railgun/VKeySetter": "0xa776e2f4ac35e4d76017ef554585cdcbf5a1134b3d0741a972261951d375ffcb"
   },
   "usedBlockNumbers": { "ethereum": 24842709 },
-  "permissionsConfigHash": "0x3aae860f4a132fb1cc35d70b26068228ff5cbbaa1d0cab558901abd23600a01b"
+  "permissionsConfigHash": "0x444ea795eaa51e78ec91fa2b593ab7c6c2a135f162527e28c00ca5d6d3f9793f"
 }

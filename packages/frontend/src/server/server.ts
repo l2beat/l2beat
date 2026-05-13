@@ -15,6 +15,7 @@ import {
 } from '../paths'
 import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { startPrivacyRefreshLoop } from './features/privacy/refresh/startPrivacyRefreshLoop'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
@@ -84,7 +85,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
       )
   }
 
-  app.use(timeout('25s'))
+  app.use(timeout('60s'))
   app.use(SafeSendHandler)
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
@@ -119,6 +120,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
         ? `http://localhost:${port}`
         : `Server running on port ${port}`,
     })
+    startPrivacyRefreshLoop(baseLogger)
   })
 
   server.on('error', (err: NodeJS.ErrnoException) => {

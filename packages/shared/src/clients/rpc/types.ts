@@ -169,6 +169,7 @@ export const EVMLog = z.object({
   address: z.string(),
   topics: z.array(z.string()),
   blockNumber: Quantity.decode.transform((n) => Number(n)),
+  blockTimestamp: Quantity.decode.transform((n) => Number(n)).optional(),
   blockHash: z.string(),
   transactionHash: z.string(),
   data: z.string(),

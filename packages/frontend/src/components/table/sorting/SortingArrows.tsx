@@ -17,8 +17,9 @@ export function SortingArrows({
   onClick,
 }: Props) {
   return (
-    <div
-      className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1"
+    <button
+      type="button"
+      className="group/sorting-arrows flex w-max cursor-pointer select-none items-end gap-1 border-0 bg-transparent p-0 text-left text-inherit"
       onClick={onClick}
     >
       <svg
@@ -46,6 +47,6 @@ export function SortingArrows({
         />
       </svg>
       {children}
-    </div>
+    </button>
   )
 }

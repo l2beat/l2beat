@@ -1496,5 +1496,14 @@
   "static/meta-images/brand-kit/opengraph-image.png": "035cce33d5e9316aee8045fefc0f5c21",
   "static/meta-images/da-risk-framework/opengraph-image.png": "1bc782c865062cf0e07a5e185cbfddc2",
   "static/meta-images/icon-preview/opengraph-image.png": "6c387d9d861e02146b9e6b97f0f9c5bd",
-  "static/meta-images/multisig-report/opengraph-image.png": "997d38e58cbd6fbe19592176036e5188"
+  "static/meta-images/multisig-report/opengraph-image.png": "997d38e58cbd6fbe19592176036e5188",
+  "static/icons/privacy-pools.png": "af88d4704aef95f64a139d55414ea8d3",
+  "static/icons/railgun.png": "c539e68c8b23ee1c9fc39745b3a4de7b",
+  "static/icons/tornado-cash.png": "3bd22bcd3b7043b001b99e506dcd3e15",
+  "static/images/badges/Compliance.png": "8252d28e0160a1d38813d03220ce3208",
+  "static/images/badges/PrivateTransfers.png": "7bef0ce4fb2d1dffa36fe1b8feaa7dd9",
+  "static/images/badges/SmartContractInteractions.png": "445f1bb7b26dfd4be29603f067757664",
+  "static/images/architecture/privacy-pools.png": "9dd20b4f88d28691c0c2bab2ea107054",
+  "static/images/architecture/railgun.png": "03cce018821a4b9a0b5433d1d910537a",
+  "static/images/architecture/tornado-cash.png": "230b1fc477ce8c8ffa7a9ff3295c513b"
 }

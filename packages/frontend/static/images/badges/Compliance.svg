@@ -1,0 +1,125 @@
+<svg
+  width="204"
+  height="216"
+  viewBox="0 0 204 216"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <clipPath id="shield-clip">
+      <path d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z" />
+    </clipPath>
+    <linearGradient
+      id="shield-fill"
+      x1="24"
+      y1="18"
+      x2="180"
+      y2="199"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#F5F8FF" />
+      <stop offset="1" stop-color="#E7EEFF" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M102 8L192 46V115C192 159 156 197 102 212C48 197 12 159 12 115V46L102 8Z"
+    fill="#ECF2FF"
+    stroke="#2B67C5"
+    stroke-width="8"
+  />
+  <path
+    d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z"
+    fill="url(#shield-fill)"
+  />
+  <g clip-path="url(#shield-clip)">
+    <rect x="102" y="10" width="92" height="194" fill="#F8FBFF" />
+    <path
+      d="M94 18L182 106"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M88 30L182 124"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M82 42L176 136"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M76 54L170 148"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M70 66L164 160"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M64 78L158 172"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+  </g>
+  <path d="M102 18V199" stroke="#D8E3FC" stroke-width="3" />
+  <path
+    d="M71 58C71 52.4772 75.4772 48 81 48H123L139 64V115C139 120.523 134.523 125 129 125H81C75.4772 125 71 120.523 71 115V58Z"
+    fill="#F9FBFF"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M123 48V64H139"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M82 73H110"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M82 88H106"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M82 103H106"
+    stroke="#A7BBE9"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <circle cx="111" cy="93" r="24" fill="#FFFFFF" stroke="#2B67C5" stroke-width="6" />
+  <path
+    d="M99 93L107 101L122 86"
+    stroke="#25A663"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <text
+    x="102"
+    y="154"
+    fill="#2B67C5"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="20"
+    font-weight="700"
+    letter-spacing="0.7px"
+    text-anchor="middle"
+  >
+    COMPLIANCE
+  </text>
+</svg>

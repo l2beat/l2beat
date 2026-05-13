@@ -1,0 +1,153 @@
+<svg
+  width="204"
+  height="216"
+  viewBox="0 0 204 216"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <clipPath id="shield-clip-private-transfers">
+      <path d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z" />
+    </clipPath>
+    <linearGradient
+      id="shield-fill-private-transfers"
+      x1="24"
+      y1="18"
+      x2="180"
+      y2="199"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#F5F8FF" />
+      <stop offset="1" stop-color="#E7EEFF" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M102 8L192 46V115C192 159 156 197 102 212C48 197 12 159 12 115V46L102 8Z"
+    fill="#ECF2FF"
+    stroke="#2B67C5"
+    stroke-width="8"
+  />
+  <path
+    d="M102 18L180 51V112C180 150 149 186 102 199C55 186 24 150 24 112V51L102 18Z"
+    fill="url(#shield-fill-private-transfers)"
+  />
+  <g clip-path="url(#shield-clip-private-transfers)">
+    <rect x="102" y="10" width="92" height="194" fill="#F8FBFF" />
+    <path
+      d="M94 18L182 106"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M88 30L182 124"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M82 42L176 136"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M76 54L170 148"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M70 66L164 160"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M64 78L158 172"
+      stroke="#C8D6F6"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+  </g>
+  <path d="M102 18V199" stroke="#D8E3FC" stroke-width="3" />
+  <path
+    d="M59 80C72 66 86 61 102 61C118 61 132 66 145 80"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+  <path
+    d="M136 69L145 80L132 82"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M145 104C132 118 118 123 102 123C86 123 72 118 59 104"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+  <path
+    d="M68 102L59 104L70 113"
+    stroke="#2B67C5"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <g>
+    <ellipse cx="61" cy="84" rx="18" ry="7" fill="#F9FBFF" stroke="#2B67C5" stroke-width="4" />
+    <path d="M43 84V100" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <path d="M79 84V100" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <ellipse cx="61" cy="100" rx="18" ry="7" fill="#F1F6FF" stroke="#2B67C5" stroke-width="4" />
+    <ellipse cx="61" cy="92" rx="18" ry="7" fill="#FFFFFF" stroke="#2B67C5" stroke-width="4" />
+  </g>
+  <g>
+    <ellipse cx="143" cy="84" rx="18" ry="7" fill="#F9FBFF" stroke="#2B67C5" stroke-width="4" />
+    <path d="M125 84V100" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <path d="M161 84V100" stroke="#2B67C5" stroke-width="4" stroke-linecap="round" />
+    <ellipse cx="143" cy="100" rx="18" ry="7" fill="#F1F6FF" stroke="#2B67C5" stroke-width="4" />
+    <ellipse cx="143" cy="92" rx="18" ry="7" fill="#FFFFFF" stroke="#2B67C5" stroke-width="4" />
+  </g>
+  <path
+    d="M102 70L118 77V91C118 100 111 108 102 111C93 108 86 100 86 91V77L102 70Z"
+    fill="#FFFFFF"
+    stroke="#2B67C5"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M102 82C104.761 82 107 79.7614 107 77C107 74.2386 104.761 72 102 72C99.2386 72 97 74.2386 97 77C97 79.7614 99.2386 82 102 82Z"
+    fill="#E8F0FF"
+  />
+  <path
+    d="M97 89C97 86.2386 99.2386 84 102 84C104.761 84 107 86.2386 107 89V96H97V89Z"
+    fill="#2B67C5"
+  />
+  <text
+    x="102"
+    y="153"
+    fill="#2B67C5"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="18"
+    font-weight="700"
+    letter-spacing="0.5px"
+    text-anchor="middle"
+  >
+    PRIVATE
+  </text>
+  <text
+    x="102"
+    y="173"
+    fill="#2B67C5"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="18"
+    font-weight="700"
+    letter-spacing="0.5px"
+    text-anchor="middle"
+  >
+    TRANSFERS
+  </text>
+</svg>

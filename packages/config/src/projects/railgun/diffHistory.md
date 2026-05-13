@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6ed16b4ac24e47c1622e0b50c5ba3aef5388cc66
+Generated with discovered.json: 0xc5af2168bf72c714b9b7f2a396d490e7f06c1900
 
-# Diff at Fri, 10 Apr 2026 15:36:45 GMT:
+# Diff at Tue, 21 Apr 2026 14:18:21 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current timestamp: 1775744335
@@ -43,7 +43,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract DAO (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)
     +++ description: None
 ```
 

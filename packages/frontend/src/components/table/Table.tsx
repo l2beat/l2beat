@@ -78,6 +78,7 @@ const TableRow = ({
     <tr
       className={cn(
         'group/row border-b border-b-divider transition-colors',
+        'md:hover:bg-pure-black/[0.02] md:dark:hover:bg-pure-white/[0.03]',
         isSelected && 'animate-row-highlight',
         className,
       )}
