@@ -272,8 +272,9 @@ function getAllContractAddresses(
     result.push(...contractAddresses)
   }
 
+  const ignoredChains = new Set(['kinto', 'zksync2', 'gateway'])
   return unique(result).filter(
-    (a) => ChainSpecificAddress.longChain(a) !== 'kinto',
+    (a) => !ignoredChains.has(ChainSpecificAddress.longChain(a)),
   )
 }
 
