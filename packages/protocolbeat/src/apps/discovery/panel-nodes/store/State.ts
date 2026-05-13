@@ -10,6 +10,7 @@ export interface State {
     readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
+    readonly highlightOverlapping: boolean
   }
   readonly transform: {
     readonly offsetX: number

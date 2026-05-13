@@ -65,6 +65,7 @@ const INITIAL_STATE: State = {
     hideUnknownOnLoad: true,
     enableDimming: true,
     hideLargeArrays: true,
+    highlightOverlapping: true,
   },
   loaded: false,
 }

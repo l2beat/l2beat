@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import { perfStats } from '../perf/perfStats'
+import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
@@ -11,6 +12,9 @@ export function NodesAndConnections() {
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
+  )
+  const highlightOverlapping = useStore(
+    ({ userPreferences }) => userPreferences.highlightOverlapping !== false,
   )
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
@@ -90,6 +94,14 @@ export function NodesAndConnections() {
   const width = maxX - minX
   const height = maxY - minY
 
+  const overlappingIds = useMemo(
+    () =>
+      highlightOverlapping ? computeOverlappingIds(visible) : new Set<string>(),
+    // visible is rebuilt each render; nodes and hidden refs are the real signal
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [nodes, hidden, highlightOverlapping],
+  )
+
   return (
     <>
       <svg
@@ -137,9 +149,50 @@ export function NodesAndConnections() {
             selected={selected.includes(node.id)}
             isDimmed={isDimmed}
             isGrayedOut={isGrayedOut}
+            isOverlapping={overlappingIds.has(node.id)}
           />
         )
       })}
     </>
   )
+}
+
+// Sweep-line on the x-axis: sort by left edge, maintain an `active` set of
+// nodes whose right edge hasn't passed the current node's left edge, and only
+// check those for y-overlap. Sort dominates at O(n log n); the sweep is near
+// linear when node widths are small relative to the canvas (the typical case
+// here, since every node is NODE_WIDTH wide). Worst case is still O(n²) if
+// every node spans the full x-range — if that ever becomes the workload,
+// switch to a uniform-grid spatial hash keyed on NODE_WIDTH-sized cells.
+function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
+  const overlapping = new Set<string>()
+  if (nodes.length < 2) return overlapping
+
+  const sorted = nodes.slice().sort((a, b) => a.box.x - b.box.x)
+  const active: Node[] = []
+
+  for (const node of sorted) {
+    const left = node.box.x
+    const top = node.box.y
+    const bottom = top + node.box.height
+
+    for (let k = active.length - 1; k >= 0; k--) {
+      const candidate = active[k]
+      if (!candidate) continue
+      if (candidate.box.x + candidate.box.width <= left) {
+        active[k] = active[active.length - 1] as Node
+        active.pop()
+        continue
+      }
+      if (
+        candidate.box.y < bottom &&
+        candidate.box.y + candidate.box.height > top
+      ) {
+        overlapping.add(node.id)
+        overlapping.add(candidate.id)
+      }
+    }
+    active.push(node)
+  }
+  return overlapping
 }
