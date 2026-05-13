@@ -14,8 +14,8 @@ import {
   get$Implementations,
   getChainConfigs,
   getDiscoveryPaths,
+  type IProvider,
   SQLiteCache,
-  IProvider,
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
@@ -65,16 +65,16 @@ export const FlattenerValidator = command({
     const allProviders = getProviders(paths)
 
     const now = UnixTime(1778573466)
-    let contracts = getAllContractAddresses(configReader)
+    let addresses = getAllContractAddresses(configReader)
     if (filterAddresses.length > 0) {
-      contracts = intersection(contracts, filterAddresses)
+      addresses = intersection(addresses, filterAddresses)
     }
-    if (contracts.length === 0) {
+    if (addresses.length === 0) {
       console.log('No contracts to verify')
       return
     }
 
-    const total = contracts.length
+    const total = addresses.length
     const maxLength = Math.floor(Math.log10(total)) + 1
     const totalText = total.toString().padStart(maxLength)
     const runStartedAtMs = Date.now()
@@ -84,12 +84,12 @@ export const FlattenerValidator = command({
     let verificationTimeMsTotal = 0
     const failures: { address: ChainSpecificAddress; message: string }[] = []
 
-    await mapWithConcurrency(contracts, concurrency, async (contract) => {
-      const chain = ChainSpecificAddress.longChain(contract)
+    await mapWithConcurrency(addresses, concurrency, async (address) => {
+      const chain = ChainSpecificAddress.longChain(address)
       const provider = await allProviders.get(chain, now)
 
       const startedAtMs = Date.now()
-      const status = await verifyAddress(provider, contract, paths)
+      const status = await verifyAddress(provider, address, paths)
       const verificationTimeMs = Date.now() - startedAtMs
 
       completed++
@@ -98,7 +98,7 @@ export const FlattenerValidator = command({
 
       if (status.type === 'failure') {
         failed += 1
-        failures.push({ address: contract, message: status.message })
+        failures.push({ address, message: status.message })
       }
 
       const progress = colorMap(
@@ -111,7 +111,7 @@ export const FlattenerValidator = command({
         status.type === 'failure' ? `: ${status.message}` : ''
       console.log(
         `${cursorControl}${progress}/${totalText}: ` +
-          `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${contract}${failureMessage}`,
+          `${statusTable[status.type]} ${formatDuration(verificationTimeMs).padStart(6)} <- ${address}${failureMessage}`,
       )
       console.log(
         `Status: completed=${completed.toString().padStart(maxLength)}/${totalText} ` +
@@ -140,7 +140,9 @@ function printFailures(
   console.log(`\n${chalk.bgRed('FAIL')} ${failures.length} contract(s) failed`)
   const sorted = [...grouped].sort((a, b) => b[1].length - a[1].length)
   for (const [message, addresses] of sorted) {
-    console.log(`\n${chalk.yellow(`[${addresses.length}]`)} ${chalk.red(message)}`)
+    console.log(
+      `\n${chalk.yellow(`[${addresses.length}]`)} ${chalk.red(message)}`,
+    )
     for (const a of addresses) console.log(`  - ${a}`)
   }
 }
