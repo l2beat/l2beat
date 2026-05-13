@@ -10,9 +10,23 @@ const QueueEntryAddress = v.object({
   address: v.string(),
 })
 
+const QueuePageInput = v.object({
+  page: v.number(),
+  pageSize: v.number(),
+})
+
 export const tokenIngestionQueueRouter = router({
   getAll: readOnlyProcedure.query(({ ctx }) => {
     return ctx.tokenDb.tokenIngestionQueue.getAll()
+  }),
+  getPage: readOnlyProcedure.input(QueuePageInput).query(({ ctx, input }) => {
+    const page = Math.max(1, Math.floor(input.page))
+    const pageSize = Math.min(500, Math.max(1, Math.floor(input.pageSize)))
+
+    return ctx.tokenDb.tokenIngestionQueue.getPage({
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
+    })
   }),
   approve: readWriteProcedure
     .input(QueueEntryAddress)

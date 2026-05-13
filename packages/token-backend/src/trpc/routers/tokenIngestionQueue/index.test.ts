@@ -33,6 +33,31 @@ describe('tokenIngestionQueueRouter', () => {
     })
   })
 
+  describe('getPage', () => {
+    it('returns one page of queue entries', async () => {
+      const page = {
+        entries: [
+          queueEntry({ chain: 'ethereum', address: '0x111', state: 'staged' }),
+        ],
+        totalCount: 12,
+      }
+      const getPage = mockFn().resolvesTo(page)
+
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+            getPage,
+          }),
+        }),
+      )
+
+      const result = await caller.getPage({ page: 2, pageSize: 5 })
+
+      expect(result).toEqual(page)
+      expect(getPage).toHaveBeenCalledWith({ offset: 5, limit: 5 })
+    })
+  })
+
   describe('approve', () => {
     it('approves a staged entry', async () => {
       const approve = mockFn().resolvesTo(1)

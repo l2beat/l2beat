@@ -1,12 +1,20 @@
-import { CheckIcon, EyeIcon, ListChecksIcon } from 'lucide-react'
-import { useState } from 'react'
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EyeIcon,
+  ListChecksIcon,
+} from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
   Card,
+  CardAction,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
@@ -33,18 +41,38 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 
+const PAGE_SIZE = 100
+
 export function TokenIngestionQueuePage() {
   const utils = api.useUtils()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
-  const { data: queue, isLoading } = api.tokenIngestionQueue.getAll.useQuery(
-    undefined,
-    { refetchInterval: 10_000 },
-  )
+  const [page, setPage] = useState(1)
+  const { data: queuePage, isLoading } =
+    api.tokenIngestionQueue.getPage.useQuery(
+      { page, pageSize: PAGE_SIZE },
+      { refetchInterval: 10_000 },
+    )
   const { data: chains } = api.chains.getAll.useQuery()
+  const queue = queuePage?.entries ?? []
+  const totalCount = queuePage?.totalCount ?? 0
+  const pageCount = queuePage
+    ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
+    : page
+  const chainsByName = useMemo(
+    () => new Map(chains?.map((chain) => [chain.name, chain])),
+    [chains],
+  )
+
+  useEffect(() => {
+    if (page > pageCount) {
+      setPage(pageCount)
+    }
+  }, [page, pageCount])
+
   const approve = api.tokenIngestionQueue.approve.useMutation({
     onSuccess: async () => {
-      await utils.tokenIngestionQueue.getAll.invalidate()
+      await utils.tokenIngestionQueue.getPage.invalidate()
       toast.success('Queue entry approved')
     },
     onError: (error) => toast.error(error.message),
@@ -77,11 +105,45 @@ export function TokenIngestionQueuePage() {
       <Card className="flex h-[calc(100vh-16px)] flex-col">
         <CardHeader>
           <CardTitle>Token ingestion queue</CardTitle>
+          {queuePage && (
+            <CardDescription>
+              {formatQueueRange(page, totalCount)}
+            </CardDescription>
+          )}
+          {queuePage && totalCount > PAGE_SIZE && (
+            <CardAction>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page <= 1}
+                  onClick={() => setPage((page) => Math.max(1, page - 1))}
+                >
+                  <ChevronLeftIcon />
+                  Previous
+                </Button>
+                <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                  Page {page} of {pageCount}
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page >= pageCount}
+                  onClick={() =>
+                    setPage((page) => Math.min(pageCount, page + 1))
+                  }
+                >
+                  Next
+                  <ChevronRightIcon />
+                </Button>
+              </div>
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (
             <LoadingState className="h-full" />
-          ) : queue?.length === 0 ? (
+          ) : queue.length === 0 ? (
             <Empty className="h-full">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
@@ -104,11 +166,9 @@ export function TokenIngestionQueuePage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {queue?.map((entry) => {
+                {queue.map((entry) => {
                   const key = getQueueEntryKey(entry)
-                  const chain = chains?.find(
-                    (chain) => chain.name === entry.chain,
-                  )
+                  const chain = chainsByName.get(entry.chain)
 
                   return (
                     <TableRow key={key}>
@@ -151,6 +211,8 @@ export function TokenIngestionQueuePage() {
                             <ButtonWithSpinner
                               variant="outline"
                               size="sm"
+                              className="border-green-600/40 text-green-700 hover:bg-green-50 hover:text-green-800 dark:border-green-500/40 dark:text-green-400 dark:hover:bg-green-950/30 dark:hover:text-green-300"
+                              spinnerClassName="fill-green-700 dark:fill-green-400"
                               isLoading={
                                 approve.isPending && approvingKey === key
                               }
@@ -203,6 +265,16 @@ function QueueStateBadge({
 
 function getQueueEntryKey(entry: { chain: string; address: string }) {
   return `${entry.chain}:${entry.address}`
+}
+
+function formatQueueRange(page: number, totalCount: number) {
+  if (totalCount === 0) {
+    return '0 entries'
+  }
+
+  const start = (page - 1) * PAGE_SIZE + 1
+  const end = Math.min(page * PAGE_SIZE, totalCount)
+  return `Showing ${start}-${end} of ${totalCount} entries`
 }
 
 function formatTimestamp(timestamp: number) {

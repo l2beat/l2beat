@@ -25,6 +25,11 @@ export interface TokenIngestionQueueRecord extends TokenIngestionQueueAddress {
   updatedAt: UnixTime
 }
 
+export interface TokenIngestionQueuePage {
+  entries: TokenIngestionQueueRecord[]
+  totalCount: number
+}
+
 function normalizeAddress(
   address: TokenIngestionQueueAddress,
 ): TokenIngestionQueueAddress {
@@ -167,6 +172,29 @@ export class TokenIngestionQueueRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getPage(options: {
+    offset: number
+    limit: number
+  }): Promise<TokenIngestionQueuePage> {
+    const rows = await this.db
+      .selectFrom('TokenIngestionQueueEntry')
+      .selectAll()
+      .orderBy(['chain', 'address'])
+      .offset(options.offset)
+      .limit(options.limit)
+      .execute()
+
+    const count = await this.db
+      .selectFrom('TokenIngestionQueueEntry')
+      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .executeTakeFirstOrThrow()
+
+    return {
+      entries: rows.map(toRecord),
+      totalCount: Number(count.count),
+    }
   }
 
   async deleteAll(): Promise<number> {

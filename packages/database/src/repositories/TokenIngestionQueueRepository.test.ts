@@ -106,6 +106,23 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
     })
   })
 
+  describe(TokenIngestionQueueRepository.prototype.getPage.name, () => {
+    it('returns one page with the total count', async () => {
+      await repository.enqueue({ chain: 'ethereum', address: '0x111' })
+      await repository.enqueue({ chain: 'arbitrum', address: '0x222' })
+      await repository.enqueue({ chain: 'base', address: '0x333' })
+
+      const page = await repository.getPage({ offset: 1, limit: 1 })
+
+      expect(page.totalCount).toEqual(3)
+      expect(page.entries).toHaveLength(1)
+      expect(page.entries[0]!).toHaveSubset({
+        chain: 'base',
+        address: '0x333',
+      })
+    })
+  })
+
   describe(TokenIngestionQueueRepository.prototype.retry.name, () => {
     it('moves conflict and error entries back to pending', async () => {
       const conflict = { chain: 'ethereum', address: '0x111' }
