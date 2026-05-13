@@ -98,7 +98,6 @@ export function NodesAndConnections() {
     () =>
       highlightOverlapping ? computeOverlappingIds(visible) : new Set<string>(),
     // visible is rebuilt each render; nodes and hidden refs are the real signal
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [nodes, hidden, highlightOverlapping],
   )
 
