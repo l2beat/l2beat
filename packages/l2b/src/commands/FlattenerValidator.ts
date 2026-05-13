@@ -239,7 +239,7 @@ async function verifyBytecode(
       join(dirname(paths.cache), 'soljson'),
       source.solidityVersion,
       input,
-      true,
+      false,
     )
 
     const contract = output.contracts[FLAT_SOURCE_PATH]?.[source.name]
@@ -303,10 +303,14 @@ function matchesRuntimeBytecode(
     return { type: 'failure', message: 'Compiled bytecode is empty' }
   }
 
-  const got = applyTransforms(contract, Bytes.fromHex(`0x${compiledBytecode}`))
-  const want = applyTransforms(contract, deployedBytecode)
+  const mismatch = getBytecodeMismatch(
+    contract,
+    deployedBytecode,
+    Bytes.fromHex(`0x${compiledBytecode}`),
+  )
 
-  if (!got.equals(want)) {
+  if (mismatch) {
+    const { want, got } = mismatch
     return {
       type: 'failure',
       message: `Bytecodes do not match | want ${want.length} bytes got ${got.length} bytes\n\n${formatOpcodeDiff(got, want)}\n\n`,
@@ -318,10 +322,11 @@ function matchesRuntimeBytecode(
 
 type Transform = (contract: SolidityOutputContract, input: Bytes) => Bytes
 
-function applyTransforms(
+function getBytecodeMismatch(
   contract: SolidityOutputContract,
-  bytecode: Bytes,
-): Bytes {
+  deployedBytecode: Bytes,
+  compiledBytecode: Bytes,
+): { got: Bytes; want: Bytes } | undefined {
   const transforms: Transform[] = [
     maskCallProtection,
     stripAuxdata,
@@ -329,7 +334,16 @@ function applyTransforms(
     maskSolidityAuxdata,
   ]
 
-  return transforms.reduce((acc, xform) => xform(contract, acc), bytecode)
+  let got = compiledBytecode
+  let want = deployedBytecode
+
+  for (const xform of transforms) {
+    if (got.equals(want)) return
+    got = xform(contract, got)
+    want = xform(contract, want)
+  }
+
+  return got.equals(want) ? undefined : { got, want }
 }
 
 function maskCallProtection(_: SolidityOutputContract, bytecode: Bytes): Bytes {
@@ -354,8 +368,8 @@ function maskSolidityAuxdata(
 
   while (true) {
     try {
-      const [stripped] = splitAuxdata(result, AuxdataStyle.SOLIDITY)
-      if (stripped.length >= result.length) {
+      const [stripped, style] = splitAuxdata(result, AuxdataStyle.SOLIDITY)
+      if (style === undefined) {
         return Bytes.fromHex(result)
       }
       result = stripped
