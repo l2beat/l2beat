@@ -5,7 +5,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
-import { PrivacyChartRangeControls } from '../../project/components/PrivacyChartRangeControls'
+import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyTvsChart } from './PrivacyTvsChart'
 
@@ -103,7 +103,7 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
         </div>
       </div>
       <ChartControlsWrapper className="justify-end">
-        <PrivacyChartRangeControls range={range} setRange={setRange} />
+        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </>
   )

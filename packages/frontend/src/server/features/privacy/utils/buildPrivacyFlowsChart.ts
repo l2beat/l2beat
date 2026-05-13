@@ -2,20 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ChartRange } from '~/utils/range/range'
-import {
-  amountToUsd,
-  buildPrivacyBucketInfoByKey,
-  getPrivacyBucketKey,
-} from './privacyUtils'
-import type { PrivacyProjectConfig } from './types'
 
-export const PrivacyChartParams = v.object({
+export const PrivacyFlowsChartParams = v.object({
   range: ChartRange,
 })
 
-export type PrivacyChartParams = v.infer<typeof PrivacyChartParams>
+export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
 
-export type PrivacyChartPoint = [
+export type PrivacyFlowsChartPoint = [
   timestamp: number,
   depositsCount: number,
   withdrawalsCount: number,
@@ -23,37 +17,20 @@ export type PrivacyChartPoint = [
   withdrawalsValueUsd: number,
 ]
 
-export type PrivacyTvsChartPoint = [
-  timestamp: number,
-  totalValueSecuredUsd: number,
-]
-
-export interface PrivacyChartResponse {
-  chart: PrivacyChartPoint[]
-  syncedUntil: number | undefined
-}
-
-export interface PrivacyTvsChartResponse {
-  chart: PrivacyTvsChartPoint[]
-  syncedUntil: number | undefined
-}
-
-export function buildPrivacyChart(
-  projects: PrivacyProjectConfig[],
+export function buildPrivacyFlowsChart(
+  projects: string[],
   dailyRows: Array<{
     projectId: string
-    bucketId: string
     timestamp: UnixTime
     depositCount: number
     withdrawalCount: number
-    depositAmount: bigint
-    withdrawalAmount: bigint
+    depositValueUsd: number
+    withdrawalValueUsd: number
   }>,
   syncedUntil: UnixTime | undefined,
-  priceById: Map<string, number>,
-  range: PrivacyChartParams['range'],
-): PrivacyChartResponse {
-  const projectIds = new Set(projects.map((project) => project.id.toString()))
+  range: PrivacyFlowsChartParams['range'],
+): { chart: PrivacyFlowsChartPoint[]; syncedUntil: number | undefined } {
+  const projectIds = new Set(projects)
   const historyRows = dailyRows.filter(
     (row) => projectIds.has(row.projectId) && Number(row.timestamp) > 0,
   )
@@ -67,7 +44,7 @@ export function buildPrivacyChart(
     }
 
     return {
-      chart: generateTimestamps(normalizePrivacyChartRange(range), 'daily').map(
+      chart: generateTimestamps(normalizePrivacyFlowsChartRange(range), 'daily').map(
         (timestamp) => [timestamp, 0, 0, 0, 0],
       ),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
@@ -77,8 +54,7 @@ export function buildPrivacyChart(
   const minTimestamp = Math.min(
     ...historyRows.map((row) => Number(row.timestamp)),
   )
-  const normalizedRange = normalizePrivacyChartRange(range, minTimestamp)
-  const bucketInfoByKey = buildPrivacyBucketInfoByKey(projects, priceById)
+  const normalizedRange = normalizePrivacyFlowsChartRange(range, minTimestamp)
   const grouped = new Map<
     number,
     {
@@ -97,11 +73,6 @@ export function buildPrivacyChart(
       continue
     }
 
-    const bucketInfo = bucketInfoByKey.get(
-      getPrivacyBucketKey(row.projectId, row.bucketId),
-    )
-    if (!bucketInfo) continue
-
     const entry = grouped.get(Number(row.timestamp)) ?? {
       depositsCount: 0,
       withdrawalsCount: 0,
@@ -111,16 +82,8 @@ export function buildPrivacyChart(
 
     entry.depositsCount += row.depositCount
     entry.withdrawalsCount += row.withdrawalCount
-    entry.depositsValueUsd += amountToUsd(
-      row.depositAmount,
-      bucketInfo.decimals,
-      bucketInfo.priceUsd,
-    )
-    entry.withdrawalsValueUsd += amountToUsd(
-      row.withdrawalAmount,
-      bucketInfo.decimals,
-      bucketInfo.priceUsd,
-    )
+    entry.depositsValueUsd += row.depositValueUsd
+    entry.withdrawalsValueUsd += row.withdrawalValueUsd
 
     grouped.set(Number(row.timestamp), entry)
   }
@@ -134,25 +97,14 @@ export function buildPrivacyChart(
         entry?.withdrawalsCount ?? 0,
         entry?.depositsValueUsd ?? 0,
         entry?.withdrawalsValueUsd ?? 0,
-      ] as PrivacyChartPoint
+      ] as PrivacyFlowsChartPoint
     }),
     syncedUntil: syncedUntil ? Number(syncedUntil) : Number(normalizedRange[1]),
   }
 }
 
-export function getPrivacyChartSyncedUntil(
-  cursors: { syncedAt: number }[],
-): UnixTime | undefined {
-  if (cursors.length === 0) return undefined
-
-  return UnixTime.toStartOf(
-    Math.min(...cursors.map((cursor) => cursor.syncedAt)),
-    'day',
-  )
-}
-
-function normalizePrivacyChartRange(
-  range: PrivacyChartParams['range'],
+function normalizePrivacyFlowsChartRange(
+  range: PrivacyFlowsChartParams['range'],
   minTimestamp?: number,
 ): [UnixTime, UnixTime] {
   const from =

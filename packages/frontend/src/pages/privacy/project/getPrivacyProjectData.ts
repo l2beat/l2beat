@@ -5,7 +5,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ContractsSectionProps } from '~/components/projects/sections/contracts/ContractsSection'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
-import { getPrivacySnapshot } from '~/server/features/privacy/getPrivacySnapshot'
+import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -61,7 +61,6 @@ export interface PrivacyProjectEntry {
       last30d: number
     }
   }
-  unpricedAssets: string[]
   isUnderReview: boolean
   warnings: {
     yellow?: string
@@ -97,13 +96,20 @@ export async function getPrivacyProjectData(
   const defaultChartRange = optionToRange('1y')
   const [
     appLayoutProps,
-    snapshot,
+    details,
     contractUtils,
     allProjectsWithContracts,
     zkCatalogProjects,
   ] = await Promise.all([
     getAppLayoutProps(),
-    getPrivacySnapshot(cache),
+    cache.get(
+      {
+        key: ['privacy', 'project', slug],
+        ttl: 60,
+        staleWhileRevalidate: 5 * 60,
+      },
+      () => getPrivacyProjectDetails(slug),
+    ),
     getContractUtils(),
     ps.getProjects({
       select: ['contracts'],
@@ -113,21 +119,20 @@ export async function getPrivacyProjectData(
     }),
   ])
 
-  const project = snapshot.projects.find((project) => project.slug === slug)
-  if (!project) {
+  if (!details) {
     return undefined
   }
 
   await helpers.privacy.projectChart.prefetch({
-    projectId: project.id,
+    projectId: details.id,
     range: defaultChartRange,
   })
 
   const permissionsSection = getPermissionsSection(
     {
-      id: project.id,
-      permissions: project.permissions,
-      isUnderReview: !!project.statuses.reviewStatus,
+      id: details.id,
+      permissions: details.permissions,
+      isUnderReview: !!details.statuses.reviewStatus,
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
@@ -135,11 +140,11 @@ export async function getPrivacyProjectData(
 
   const contractsSection = getContractsSection(
     {
-      id: project.id,
-      slug: project.slug,
-      contracts: project.contracts,
+      id: details.id,
+      slug: details.slug,
+      contracts: details.contracts,
       isVerified: true,
-      isUnderReview: !!project.statuses.reviewStatus,
+      isUnderReview: !!details.statuses.reviewStatus,
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
@@ -149,49 +154,48 @@ export async function getPrivacyProjectData(
   )
 
   const projectEntry: PrivacyProjectEntry = {
-    id: project.id,
-    slug: project.slug,
-    name: project.name,
-    shortName: project.shortName,
-    icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    description: project.display.description,
-    badges: project.display.badges.flatMap((badge) => {
+    id: details.id,
+    slug: details.slug,
+    name: details.name,
+    shortName: details.shortName,
+    icon: manifest.getUrl(`/icons/${details.slug}.png`),
+    description: details.display.description,
+    badges: details.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []
     }),
-    projectLinks: getProjectLinks(project.display.links),
-    discoveryHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    projectLinks: getProjectLinks(details.display.links),
+    discoveryHref: `https://disco.l2beat.com/ui/p/${details.id}`,
     discoUi: {
-      href: `https://disco.l2beat.com/ui/p/${project.id}`,
+      href: `https://disco.l2beat.com/ui/p/${details.id}`,
       images: {
         desktop: manifest.getUrl('/images/disco-ui-desktop.png'),
         mobile: manifest.getUrl('/images/disco-ui-mobile.png'),
       },
     },
-    assets: project.assets,
+    assets: details.assets,
     trustedSetup: {
-      name: project.trustedSetup.name,
-      risk: project.trustedSetup.risk,
-      longDescription: project.trustedSetup.longDescription,
+      name: details.trustedSetup.name,
+      risk: details.trustedSetup.risk,
+      longDescription: details.trustedSetup.longDescription,
     },
-    riskSummary: project.riskSummary,
-    upgradesAndGovernance: project.upgradesAndGovernance,
+    riskSummary: details.riskSummary,
+    upgradesAndGovernance: details.upgradesAndGovernance,
     permissionsSection,
     contractsSection,
     summary: {
-      totalValueSecuredUsd: project.summary.totalValueSecuredUsd ?? 0,
+      totalValueSecuredUsd: details.summary.totalValueSecuredUsd,
       deposits: {
-        total: project.summary.deposits.total ?? 0,
-        last7d: project.summary.deposits.last7d ?? 0,
-        last30d: project.summary.deposits.last30d ?? 0,
+        total: details.summary.deposits.total,
+        last7d: details.summary.deposits.last7d,
+        last30d: details.summary.deposits.last30d,
       },
     },
-    unpricedAssets: project.unpricedAssets,
-    isUnderReview: !!project.statuses.reviewStatus,
+    isUnderReview: !!details.statuses.reviewStatus,
     warnings: {
-      yellow: project.statuses.yellowWarning,
-      red: project.statuses.redWarning,
-      emergency: project.statuses.emergencyWarning,
+      yellow: details.statuses.yellowWarning,
+      red: details.statuses.redWarning,
+      emergency: details.statuses.emergencyWarning,
     },
   }
 
@@ -199,11 +203,11 @@ export async function getPrivacyProjectData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: `${project.name} - Privacy Dashboard - L2BEAT`,
+        title: `${details.name} - Privacy Dashboard - L2BEAT`,
         description: getProjectMetadataDescription({
-          name: project.name,
+          name: details.name,
           display: {
-            description: project.display.description,
+            description: details.display.description,
           },
         }),
         url,

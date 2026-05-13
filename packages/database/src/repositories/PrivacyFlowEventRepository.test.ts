@@ -60,10 +60,10 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     () => {
       it('aggregates daily deposits and withdrawals', async () => {
         const records = [
-          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
-          flowEvent('proj-a', START, 101, 'deposit', 2, 200n),
-          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n),
-          flowEvent('proj-b', START, 103, 'deposit', 1, 300n),
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n, 50),
+          flowEvent('proj-b', START, 103, 'deposit', 1, 300n, 300),
         ]
 
         await repository.upsertMany(records)
@@ -83,6 +83,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
             withdrawalCount: 1,
             depositAmount: 300n,
             withdrawalAmount: 50n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 50,
           },
         ])
       })
@@ -174,9 +176,9 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     () => {
       it('aggregates totals by bucket', async () => {
         const records = [
-          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
-          flowEvent('proj-a', START, 101, 'deposit', 2, 200n),
-          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n),
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n, 100),
+          flowEvent('proj-a', START, 101, 'deposit', 2, 200n, 200),
+          flowEvent('proj-a', START, 102, 'withdrawal', 1, 50n, 50),
           flowEvent(
             'proj-a',
             START,
@@ -184,12 +186,12 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
             'deposit',
             1,
             300n,
-            0,
+            300,
             'a'.repeat(12),
             0,
             'bucket-2',
           ),
-          flowEvent('proj-b', START, 104, 'deposit', 1, 400n),
+          flowEvent('proj-b', START, 104, 'deposit', 1, 400n, 400),
         ]
 
         await repository.upsertMany(records)
@@ -204,6 +206,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
             withdrawalCount: 1,
             depositAmount: 300n,
             withdrawalAmount: 50n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 50,
           },
           {
             projectId: 'proj-a',
@@ -212,6 +216,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
             withdrawalCount: 0,
             depositAmount: 300n,
             withdrawalAmount: 0n,
+            depositValueUsd: 300,
+            withdrawalValueUsd: 0,
           },
         ])
       })

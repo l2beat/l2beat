@@ -22,7 +22,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyBreakdownTable } from './components/PrivacyBreakdownTable'
-import { PrivacyChartsSection } from './components/PrivacyChartsSection'
+import { PrivacyFlowsChartsSection } from './components/PrivacyFlowsChartsSection'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
@@ -125,11 +125,6 @@ export function PrivacyProjectPage({
                           className="lg:min-w-0"
                         />
                       )}
-                      {entry.unpricedAssets.length > 0 && (
-                        <Banner type="warning">
-                          {`USD totals exclude ${entry.unpricedAssets.join(', ')} because a price is not available.`}
-                        </Banner>
-                      )}
                     </PrimaryCard>
 
                     {hasRiskSummary &&
@@ -160,7 +155,7 @@ export function PrivacyProjectPage({
                       title="Value Locked"
                       sectionOrder={chartsOrder}
                     >
-                      <PrivacyChartsSection
+                      <PrivacyFlowsChartsSection
                         defaultRange={defaultChartRange}
                         project={{
                           id: entry.id,

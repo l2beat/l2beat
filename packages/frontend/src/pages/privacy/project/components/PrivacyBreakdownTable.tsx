@@ -9,7 +9,6 @@ import {
 } from '~/components/table/Table'
 import type {
   PrivacyAssetSnapshot,
-  PrivacyDepositedValueUsd,
 } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -82,7 +81,7 @@ export function PrivacyBreakdownTable({
               />
             </TableCell>
             <TableCell align="right" className="font-medium">
-              {formatUsdValue(asset.totalValueUsd)}
+              {asset.totalValueUsd === null ? '—' : formatCurrency(asset.totalValueUsd, 'usd')}
             </TableCell>
           </PrivacyExpandableAssetRow>
         ))}
@@ -118,7 +117,7 @@ export function PrivacyBreakdownTable({
             align="right"
             className="border-divider border-t-4 font-bold"
           >
-            {formatUsdValue(totals.totalValueUsd)}
+            {totals.totalValueUsd === null ? '—' : formatCurrency(totals.totalValueUsd, 'usd')}
           </TableCell>
         </TableRow>
       </TableBody>
@@ -201,7 +200,7 @@ function PrivacyBucketBreakdownTable({
                       !isLastRow && 'border-divider border-b',
                     )}
                   >
-                    {formatUsdValue(bucket.totalValueUsd)}
+                    {bucket.totalValueUsd === null ? '—' : formatCurrency(bucket.totalValueUsd, 'usd')}
                   </td>
                 </tr>
               )
@@ -219,14 +218,14 @@ function PrivacyDepositsMetric({
   className,
 }: {
   deposits: number
-  depositedValueUsd: PrivacyDepositedValueUsd[keyof PrivacyDepositedValueUsd]
+  depositedValueUsd: number
   className?: string
 }) {
   return (
     <div className={className}>
       <div className="font-bold">{formatInteger(deposits)}</div>
       <div className="text-[10px] text-secondary leading-none md:text-[11px]">
-        {formatUsdValue(depositedValueUsd)}
+        {formatCurrency(depositedValueUsd, 'usd')}
       </div>
     </div>
   )
@@ -234,10 +233,6 @@ function PrivacyDepositsMetric({
 
 function formatBucketLabel(label: string) {
   return label.toLowerCase().endsWith('bucket') ? label : `${label} bucket`
-}
-
-function formatUsdValue(value: number | null) {
-  return value === null ? '—' : formatCurrency(value, 'usd')
 }
 
 function getTotals(assets: PrivacyAssetSnapshot[]) {
@@ -253,15 +248,15 @@ function getTotals(assets: PrivacyAssetSnapshot[]) {
     },
     depositedValueUsd: {
       total: assets.reduce(
-        (sum, asset) => sum + (asset.depositedValueUsd.total ?? 0),
+        (sum, asset) => sum + asset.depositedValueUsd.total,
         0,
       ),
       last7d: assets.reduce(
-        (sum, asset) => sum + (asset.depositedValueUsd.last7d ?? 0),
+        (sum, asset) => sum + asset.depositedValueUsd.last7d,
         0,
       ),
       last30d: assets.reduce(
-        (sum, asset) => sum + (asset.depositedValueUsd.last30d ?? 0),
+        (sum, asset) => sum + asset.depositedValueUsd.last30d,
         0,
       ),
     },

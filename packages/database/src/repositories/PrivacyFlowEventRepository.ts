@@ -30,6 +30,8 @@ export interface PrivacyFlowDailyRecord {
   withdrawalCount: number
   depositAmount: bigint
   withdrawalAmount: bigint
+  depositValueUsd: number
+  withdrawalValueUsd: number
 }
 
 export interface PrivacyFlowBucketTotalRecord {
@@ -39,6 +41,8 @@ export interface PrivacyFlowBucketTotalRecord {
   withdrawalCount: number
   depositAmount: bigint
   withdrawalAmount: bigint
+  depositValueUsd: number
+  withdrawalValueUsd: number
 }
 
 export function toRecord(
@@ -121,6 +125,14 @@ export class PrivacyFlowEventRepository extends BaseRepository {
         sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
           'withdrawalAmount',
         ),
+        eb.fn
+          .sum<number>('valueUsd')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositValueUsd'),
+        eb.fn
+          .sum<number>('valueUsd')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalValueUsd'),
       ])
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
@@ -137,6 +149,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       withdrawalCount: Number(row.withdrawalCount ?? 0),
       depositAmount: BigInt(row.depositAmount),
       withdrawalAmount: BigInt(row.withdrawalAmount),
+      depositValueUsd: Number(row.depositValueUsd ?? 0),
+      withdrawalValueUsd: Number(row.withdrawalValueUsd ?? 0),
     }))
   }
 
@@ -192,6 +206,14 @@ export class PrivacyFlowEventRepository extends BaseRepository {
         sql<string>`COALESCE(SUM("amount") FILTER (WHERE "direction" = 'withdrawal'), 0)`.as(
           'withdrawalAmount',
         ),
+        eb.fn
+          .sum<number>('valueUsd')
+          .filterWhere('direction', '=', 'deposit')
+          .as('depositValueUsd'),
+        eb.fn
+          .sum<number>('valueUsd')
+          .filterWhere('direction', '=', 'withdrawal')
+          .as('withdrawalValueUsd'),
       ])
       .where('projectId', 'in', projectIds)
       .groupBy(['projectId', 'bucketId'])
@@ -204,6 +226,8 @@ export class PrivacyFlowEventRepository extends BaseRepository {
       withdrawalCount: Number(row.withdrawalCount ?? 0),
       depositAmount: BigInt(row.depositAmount),
       withdrawalAmount: BigInt(row.withdrawalAmount),
+      depositValueUsd: Number(row.depositValueUsd ?? 0),
+      withdrawalValueUsd: Number(row.withdrawalValueUsd ?? 0),
     }))
   }
 

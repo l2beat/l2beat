@@ -6,7 +6,7 @@ interface Props {
   setRange: (range: ChartRange) => void
 }
 
-export function PrivacyChartRangeControls({ range, setRange }: Props) {
+export function PrivacyFlowsChartRangeControls({ range, setRange }: Props) {
   return (
     <ChartRangeControls
       name="privacyProjectChart"

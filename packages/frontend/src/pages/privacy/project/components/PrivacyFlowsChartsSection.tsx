@@ -6,7 +6,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyTvsChart } from '../../summary/components/PrivacyTvsChart'
-import { PrivacyChartRangeControls } from './PrivacyChartRangeControls'
+import { PrivacyFlowsChartRangeControls } from './PrivacyFlowsChartRangeControls'
 import { PrivacyFlowChart } from './PrivacyFlowChart'
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
   defaultRange: ChartRange
 }
 
-export function PrivacyChartsSection({ project, defaultRange }: Props) {
+export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const { data, isLoading } = api.privacy.projectChart.useQuery({
     projectId: project.id,
@@ -62,7 +62,7 @@ export function PrivacyChartsSection({ project, defaultRange }: Props) {
     <div className="space-y-6">
       <ChartControlsWrapper>
         <ProjectChartTimeRange timeRange={timeRange} />
-        <PrivacyChartRangeControls range={range} setRange={setRange} />
+        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
 
       <div>

@@ -2,17 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
-import {
-  getSummedTvsValues,
-  type SummedTvsValues,
-} from '../scaling/tvs/utils/getSummedTvsValues'
+import { getSummedTvsValues } from '../scaling/tvs/utils/getSummedTvsValues'
 import { getPrivacyProjects } from './getPrivacyProjects'
-import {
-  buildPrivacyChart,
-  type PrivacyChartPoint,
-  type PrivacyChartResponse,
-  type PrivacyTvsChartPoint,
-} from './privacyChartUtils'
+import type { PrivacyFlowsChartPoint } from './utils/buildPrivacyFlowsChart'
+import { buildPrivacyFlowsChart } from './utils/buildPrivacyFlowsChart'
 
 export const PrivacyProjectChartParams = v.object({
   projectId: v.string(),
@@ -23,9 +16,10 @@ export type PrivacyProjectChartParams = v.infer<
   typeof PrivacyProjectChartParams
 >
 
-export type PrivacyProjectChartPoint = PrivacyChartPoint
-export interface PrivacyProjectChartResponse extends PrivacyChartResponse {
-  tvsChart: PrivacyTvsChartPoint[]
+export interface PrivacyProjectChartResponse {
+  chart: PrivacyFlowsChartPoint[]
+  syncedUntil: number | undefined
+  tvsChart: [timestamp: number, totalValueSecuredUsd: number][]
   tvsSyncedUntil: number | undefined
 }
 
@@ -47,13 +41,12 @@ export async function getPrivacyProjectChart(
 
   const projectIds = [project.id]
 
-  const [dailyRows, _bucketTotals, syncedUntil, tvsValues] = await Promise.all([
+  const [dailyRows, syncedUntil, tvsValues] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
       [project.id.toString()],
       UnixTime(0),
       UnixTime.now(),
     ),
-    db.privacyFlowEvent.getBucketTotalsByProjectIds([project.id.toString()]),
     db.privacyFlowEvent.getLatestTimestampByProjectIds([project.id.toString()]),
     getSummedTvsValues(projectIds, params.range, {
       forSummary: false,
@@ -62,37 +55,16 @@ export async function getPrivacyProjectChart(
     }),
   ])
 
-  const priceIds = [
-    ...new Set(project.privacyInfo.tokens.map((token) => token.token.priceId)),
-  ]
-  const priceRecords = await Promise.all(
-    priceIds.map((priceId) => db.privacyPrice.getLatestPriceByPriceId(priceId)),
-  )
-  const priceById = new Map(
-    priceRecords
-      .filter((p) => p !== undefined)
-      .map((p) => [p.priceId, p.priceUsd]),
-  )
-
-  const flowChart = buildPrivacyChart(
-    [project],
+  const flowsChart = buildPrivacyFlowsChart(
+    [project.id.toString()],
     dailyRows,
     syncedUntil,
-    priceById,
     params.range,
   )
 
-  const tvsChart = buildPrivacyTvsChart(tvsValues)
-
   return {
-    ...flowChart,
-    tvsChart,
+    ...flowsChart,
+    tvsChart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
     tvsSyncedUntil: tvsValues.at(-1)?.timestamp,
   }
-}
-
-function buildPrivacyTvsChart(
-  values: SummedTvsValues[],
-): PrivacyTvsChartPoint[] {
-  return values.map((v) => [v.timestamp, v.value ?? 0])
 }

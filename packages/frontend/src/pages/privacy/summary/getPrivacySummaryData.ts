@@ -1,7 +1,7 @@
 import type { TrustedSetup } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getPrivacySnapshot } from '~/server/features/privacy/getPrivacySnapshot'
+import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -32,29 +32,36 @@ export async function getPrivacySummaryData(
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
-  const [appLayoutProps, snapshot] = await Promise.all([
+  const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
-    getPrivacySnapshot(cache),
+    cache.get(
+      {
+        key: ['privacy', 'summary', 'entries'],
+        ttl: 60,
+        staleWhileRevalidate: 5 * 60,
+      },
+      () => getPrivacySummaryEntries(),
+    ),
     helpers.privacy.summaryChart.prefetch({
       range: defaultChartRange,
     }),
   ])
 
-  const entries: PrivacySummaryEntry[] = snapshot.projects.map((project) => ({
-    id: project.id,
-    slug: project.slug,
-    name: project.name,
-    shortName: project.shortName,
-    icon: manifest.getUrl(`/icons/${project.slug}.png`),
-    href: `/privacy/projects/${project.slug}`,
-    description: project.display.description,
-    totalValueSecuredUsd: project.summary.totalValueSecuredUsd ?? 0,
-    poolsTracked: project.summary.bucketCount ?? 0,
-    totalDeposits: project.summary.deposits.total ?? 0,
-    totalValueDeposited30dUsd: project.summary.depositedValueUsd.last30d ?? 0,
-    totalDeposits30d: project.summary.deposits.last30d ?? 0,
-    isUnderReview: !!project.statuses.reviewStatus,
-    trustedSetup: project.trustedSetup,
+  const mappedEntries: PrivacySummaryEntry[] = entries.map((entry) => ({
+    id: entry.id,
+    slug: entry.slug,
+    name: entry.name,
+    shortName: entry.shortName,
+    icon: manifest.getUrl(`/icons/${entry.slug}.png`),
+    href: `/privacy/projects/${entry.slug}`,
+    description: entry.description,
+    totalValueSecuredUsd: entry.totalValueSecuredUsd,
+    poolsTracked: entry.poolsTracked,
+    totalDeposits: entry.totalDeposits,
+    totalValueDeposited30dUsd: entry.totalValueDeposited30dUsd,
+    totalDeposits30d: entry.totalDeposits30d,
+    isUnderReview: entry.isUnderReview,
+    trustedSetup: entry.trustedSetup,
   }))
 
   return {
@@ -74,7 +81,7 @@ export async function getPrivacySummaryData(
       page: 'PrivacySummaryPage',
       props: {
         ...appLayoutProps,
-        entries,
+        entries: mappedEntries,
         defaultChartRange,
         queryState: helpers.dehydrate(),
       },

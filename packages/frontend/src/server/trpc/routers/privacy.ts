@@ -3,7 +3,7 @@ import {
   PrivacyProjectChartParams,
 } from '~/server/features/privacy/getPrivacyProjectChart'
 import { getPrivacySummaryChart } from '~/server/features/privacy/getPrivacySummaryChart'
-import { PrivacyChartParams } from '~/server/features/privacy/privacyChartUtils'
+import { PrivacyFlowsChartParams } from '~/server/features/privacy/utils/buildPrivacyFlowsChart'
 import { procedure, router } from '../trpc'
 
 export const privacyRouter = router({
@@ -11,6 +11,6 @@ export const privacyRouter = router({
     .input(PrivacyProjectChartParams)
     .query(({ input }) => getPrivacyProjectChart(input)),
   summaryChart: procedure
-    .input(PrivacyChartParams)
+    .input(PrivacyFlowsChartParams)
     .query(({ input }) => getPrivacySummaryChart(input)),
 })
