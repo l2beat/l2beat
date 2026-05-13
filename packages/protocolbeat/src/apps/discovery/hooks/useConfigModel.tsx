@@ -76,6 +76,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldDescription(selectedAddress, fieldName)
   }
 
+  const getFieldPermissions = (fieldName: string) => {
+    return configModel.getFieldPermissions(selectedAddress, fieldName)
+  }
+
   const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
@@ -177,6 +181,7 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,

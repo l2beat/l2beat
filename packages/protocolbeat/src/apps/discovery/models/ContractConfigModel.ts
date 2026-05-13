@@ -85,6 +85,10 @@ export class ContractConfigModel {
     return this.fields[name]?.description
   }
 
+  getFieldPermissions(name: string) {
+    return this.fields[name]?.permissions
+  }
+
   setFieldHandler(name: string, handler: FieldConfigSchema['handler']) {
     return this.patchField(name, (field) => field.setHandler(handler))
   }
