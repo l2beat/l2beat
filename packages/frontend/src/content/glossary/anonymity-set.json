@@ -1,0 +1,5 @@
+{
+    "term": "Anonymity set",
+    "definition": "In privacy protocols, anonymity set denotes all users, to which a particular withdrawal could be plausibly attribtued. Anonymity set depends on a particular withdrawal, the size of the anonymity set is a metric for level of user's privacy.",
+    "isSpicy": false
+}
