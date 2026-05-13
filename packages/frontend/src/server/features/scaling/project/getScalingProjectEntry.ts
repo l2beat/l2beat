@@ -139,6 +139,7 @@ interface ProjectScalingInteropData {
   interopChains: InteropChainWithIcon[]
   protocols: {
     id: string
+    slug: string
     name: string
     iconUrl: string
   }[]
@@ -192,6 +193,7 @@ async function getProjectScalingInteropData(
   const allInteropChainIds = orderedInteropChains.map((chain) => chain.id)
   const protocols = interopProjects.map((protocol) => ({
     id: protocol.id,
+    slug: protocol.slug,
     name: protocol.interopConfig.name ?? protocol.name,
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
