@@ -926,7 +926,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": {
             "tokenAddress": "0x000000000000000000000000243c9be13faba09f945ccc565547293337da0ad7",
             "wasBurned": false,
@@ -938,7 +938,7 @@
         {
           "type": "ccip.Transfer",
           "plugin": "ccip",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
           "dst": {
             "tokenAddress": "0x00000000000000000000000080ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
@@ -1724,7 +1724,27 @@
         "chain": "polygonpos",
         "tx": "0x86fd6f0fa2719ab88d35cfae7d124ee4f8214f09a5b993550d49ae097481859a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "axelar-squid.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "axelar.Transfer",
+          "bridgeType": "lockAndMint"
+        }
+      ]
+    }
   },
   "axelar-its": {
     "txs": [
@@ -1764,7 +1784,23 @@
         "chain": "arbitrum",
         "tx": "0x3ea610acd6fc3422099437b3c6c5d47ccc1c97b7e9c75e0adc9577cda3bebe5c"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "axelar-its.Transfer",
+          "bridgeType": "lockAndMint"
+        }
+      ]
+    }
   },
   "centrifuge": {
     "txs": [
@@ -2058,14 +2094,14 @@
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
         {
           "type": "wormhole-ntt.Transfer",
           "plugin": "wormhole-ntt",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
         }
@@ -4134,7 +4170,7 @@
       "transfers": [
         {
           "type": "hyperlaneHwr.Transfer",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "lockAndMint",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
         },
