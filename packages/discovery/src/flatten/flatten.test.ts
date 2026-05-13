@@ -954,7 +954,7 @@ describe('flatten', () => {
       // NOTE(l2beat): This is an interface, generated from the contract source code.
       interface Whitelist {
           function isAllowed(address) external view returns (bool);
-          function setWhitelist(address[] memory user, bool[] memory val) external;
+          function setWhitelist(address[] calldata user, bool[] calldata val) external;
       }
 
       abstract contract WhitelistConsumer {

@@ -62,7 +62,7 @@ interface E {
         B
     }
 
-    function B(uint256 element, MyStruct memory arg2) external returns (uint256);
+    function B(uint256 element, MyStruct calldata arg2) external returns (uint256);
     function X() external returns (uint256);
 }`
     expect(result).toEqual(expected)
@@ -102,6 +102,29 @@ interface E {
     function A(uint256 element) external override returns (uint256);
     function X() external override(C1) returns (uint256);
     function XYZ(address receiver) external payable override(C1, C2) returns (uint256);
+}`
+    expect(result).toEqual(expected)
+  })
+
+  it('converts memory to calldata for dynamic params in external functions', () => {
+    const source = String.raw`contract E {
+            function stakeFor(address user, uint256 amount, uint256 heimdallFee, bool acceptDelegation, bytes memory signerPubkey) public;
+            function stakeForPOL(address user, uint256 amount, uint256 heimdallFee, bool acceptDelegation, bytes memory signerPubkey) public;
+            function startAuction(uint256 validatorId, uint256 amount, bool acceptDelegation, bytes calldata signerPubkey) external;
+            function setName(string memory name) public;
+            function setItems(uint256[] memory items) public;
+        }`
+    const { declaration, typeMap } = fromSource(source, 'E')
+
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
+
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function stakeFor(address user, uint256 amount, uint256 heimdallFee, bool acceptDelegation, bytes calldata signerPubkey) external;
+    function stakeForPOL(address user, uint256 amount, uint256 heimdallFee, bool acceptDelegation, bytes calldata signerPubkey) external;
+    function startAuction(uint256 validatorId, uint256 amount, bool acceptDelegation, bytes calldata signerPubkey) external;
+    function setName(string calldata name) external;
+    function setItems(uint256[] calldata items) external;
 }`
     expect(result).toEqual(expected)
   })

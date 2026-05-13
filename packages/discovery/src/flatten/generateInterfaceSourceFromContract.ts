@@ -188,15 +188,8 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   prefix = fn.isReceiveEther ? 'receive' : prefix
   prefix = fn.isFallback ? 'fallback' : prefix
 
-  let declaration = `${prefix}(`
-  if (fn.parameters.length > 0) {
-    const params = []
-    for (const param of fn.parameters) {
-      params.push(formatParameter(param))
-    }
-    declaration += params.join(', ')
-  }
-  declaration += ')'
+  const inputs = fn.parameters.map(asExternalInput).map(formatParameter)
+  let declaration = `${prefix}(${inputs.join(', ')})`
 
   const addons: string[] = []
   addons.push('external')
@@ -258,15 +251,23 @@ function unwindGetterType(
 
 function formatParameter(param: AST.VariableDeclaration): string {
   assert(param.typeName !== null, 'Parameter must have a type')
-  let result = `${formatTypeName(param.typeName)}`
+  let result = formatTypeName(param.typeName)
   if (param.storageLocation !== null) {
     result += ` ${param.storageLocation}`
   }
   if (param.identifier !== null) {
     result += ` ${param.identifier.name}`
   }
-
   return result
+}
+
+// External function inputs cannot use `memory` for reference-type params —
+// they must be `calldata`. Return params are unaffected.
+function asExternalInput(
+  param: AST.VariableDeclaration,
+): AST.VariableDeclaration {
+  if (param.storageLocation !== 'memory') return param
+  return { ...param, storageLocation: 'calldata' }
 }
 
 function formatTypeName(typeName: AST.TypeName): string {
