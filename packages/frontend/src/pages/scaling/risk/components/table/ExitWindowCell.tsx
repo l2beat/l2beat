@@ -7,8 +7,6 @@ import {
 import { SentimentText } from '~/components/SentimentText'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
-import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 
 interface Props {
   value: ExitWindowRisk
@@ -21,6 +19,7 @@ type ExitWindowRisk = TableReadyValue & {
 
 export function ExitWindowCell({ value, href }: Props) {
   const regular = value.regular
+  const regularDescription = regular ? value.warning?.value : undefined
 
   const trigger = (
     <TableLink href={href}>
@@ -53,21 +52,54 @@ export function ExitWindowCell({ value, href }: Props) {
         <TooltipTrigger disabledOnMobile className="h-[inherit]">
           {trigger}
         </TooltipTrigger>
-        <TooltipContent>
-          {value.warning && (
-            <WarningBar
-              className="mb-2"
-              text={value.warning.value}
-              icon={RoundedWarningIcon}
-              color={sentimentToWarningBarColor(value.warning.sentiment)}
-              ignoreMarkdown
+        <TooltipContent className="font-normal">
+          {regular ? (
+            <div className="flex flex-col gap-3">
+              <ExitWindowTooltipSection
+                label="Emergency"
+                value={value.value}
+                sentiment={value.sentiment ?? 'neutral'}
+                description={value.description}
+              />
+              <ExitWindowTooltipSection
+                label="Regular"
+                value={regular.value}
+                sentiment={regular.sentiment ?? 'neutral'}
+                description={regularDescription}
+              />
+            </div>
+          ) : (
+            <ExitWindowTooltipSection
+              value={value.value}
+              sentiment={value.sentiment ?? 'neutral'}
+              description={value.description}
             />
           )}
-          {value.description}
         </TooltipContent>
       </Tooltip>
     )
   }
 
   return trigger
+}
+
+function ExitWindowTooltipSection({
+  label,
+  value,
+  sentiment,
+  description,
+}: {
+  label?: string
+  value: string
+  sentiment: NonNullable<TableReadyValue['sentiment']>
+  description?: string
+}) {
+  return (
+    <div>
+      <SentimentText sentiment={sentiment} className="font-medium">
+        {label ? `${label}: ${value}` : value}
+      </SentimentText>
+      {description && <p className="mt-1 text-primary">{description}</p>}
+    </div>
+  )
 }
