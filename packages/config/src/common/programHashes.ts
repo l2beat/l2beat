@@ -2645,4 +2645,38 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
     verificationSteps:
       'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
   },
+  '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
+    title: 'Fluent Nitro TEE verifier',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+1. Install prerequesits: docker, python3, git, jq.
+2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+3. Build Nitro program for the mainnet within docker: \`make build-nitro-validator-docker NETWORK=mainnet\`. This command will create \`nitro-validaotr-mainnet.vkey\` file with the program hash string.
+    `,
+  },
+  '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
+    title: 'Fluent STF guest program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    // programUrl:
+    //   'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
+    description:
+      'Guest program implementing state transition function of the Fluent rollup',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the Fluent team, the sources for this program were not yet published. Thus it cannot be verified.',
+    //       verificationSteps: `
+    // Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+    // 1. Install prerequesits: docker, python3, git, jq.
+    // 2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+    // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
+    //     `
+  },
 }
