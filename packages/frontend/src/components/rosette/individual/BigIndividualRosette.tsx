@@ -1,4 +1,3 @@
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
@@ -6,10 +5,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { SentimentText } from '../../SentimentText'
-import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
 import { rosetteParameters } from '../parameters'
 import { PizzaRosetteLabels } from '../pizza/PizzaRosetteLabels'
+import { RosetteTooltipRisk } from '../RosetteTooltipRisk'
 import type { RosetteValueTuple } from './IndividualRosetteIcon'
 import { IndividualPizzaRosetteIcon } from './IndividualRosetteIcon'
 import {
@@ -117,82 +115,27 @@ function RosetteTooltipContent() {
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.outerProjectName}
         </span>
-        <SentimentText
-          sentiment={content.outer.sentiment ?? 'neutral'}
-          vibrant={true}
-          className="flex items-center gap-1 font-medium"
-        >
-          {content.outer.regular
-            ? `Emergency: ${content.outer.value}`
-            : content.outer.value}
-        </SentimentText>
-        {content.outer.regular && (
-          <SentimentText
-            sentiment={content.outer.regular.sentiment ?? 'neutral'}
-            vibrant={true}
-            className="font-medium"
-          >
-            {`Regular: ${content.outer.regular.value}`}
-          </SentimentText>
-        )}
-        {content.outer.warning && !content.outer.regular && (
-          <WarningBar
-            icon={RoundedWarningIcon}
-            text={content.outer.warning.value}
-            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
-          />
-        )}
-        {content.outer.warning && content.outer.regular && (
-          <WarningBar
-            className="px-3 py-2"
-            icon={RoundedWarningIcon}
-            text={content.outer.warning.value}
-            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
-            ignoreMarkdown
-          />
-        )}
-        <span className="text-xs">{content.outer.description}</span>
+        <RosetteTooltipRisk
+          risk={content.outer}
+          valueClassName="flex items-center gap-1 font-medium"
+          regularClassName="font-medium"
+          regularWarningClassName="px-3 py-2"
+          ignoreRegularWarningMarkdown
+          descriptionClassName="text-xs"
+        />
       </div>
       <div className="flex flex-col gap-1">
         <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.innerProjectName}
         </span>
-        <SentimentText
-          sentiment={content.inner.sentiment ?? 'neutral'}
-          vibrant={true}
-          className="flex items-center gap-1 font-medium"
-        >
-          {content.inner.regular
-            ? `Emergency: ${content.inner.value}`
-            : content.inner.value}
-        </SentimentText>
-        {content.inner.regular && (
-          <SentimentText
-            sentiment={content.inner.regular.sentiment ?? 'neutral'}
-            vibrant={true}
-            className="font-medium"
-          >
-            {`Regular: ${content.inner.regular.value}`}
-          </SentimentText>
-        )}
-        {content.inner.warning && !content.inner.regular && (
-          <WarningBar
-            icon={RoundedWarningIcon}
-            text={content.inner.warning.value}
-            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
-          />
-        )}
-        {content.inner.warning && content.inner.regular && (
-          <WarningBar
-            className="px-3 py-2"
-            icon={RoundedWarningIcon}
-            text={content.inner.warning.value}
-            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
-            ignoreMarkdown
-          />
-        )}
-
-        <span className="text-xs">{content.inner.description}</span>
+        <RosetteTooltipRisk
+          risk={content.inner}
+          valueClassName="flex items-center gap-1 font-medium"
+          regularClassName="font-medium"
+          regularWarningClassName="px-3 py-2"
+          ignoreRegularWarningMarkdown
+          descriptionClassName="text-xs"
+        />
       </div>
     </TooltipContent>
   )
