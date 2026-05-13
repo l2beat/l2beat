@@ -3,12 +3,14 @@ import { useSolidityCompiler } from '@ethereum-sourcify/compilers'
 import type {
   Libraries,
   SolidityJsonInput,
+  SolidityOutput,
   SolidityOutputContract,
 } from '@ethereum-sourcify/compilers-types'
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   ConfigReader,
+  type DiscoveryCache,
   type DiscoveryPaths,
   flattenStartingFrom,
   get$Implementations,
@@ -27,6 +29,7 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, option, restPositionals } from 'cmd-ts'
+import { createHash } from 'crypto'
 import intersection from 'lodash/intersection'
 import { dirname, join } from 'path'
 import { formatOpcodeDiff } from '../implementations/common/disassemble'
@@ -62,7 +65,7 @@ export const FlattenerValidator = command({
 
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
-    const allProviders = getProviders(paths)
+    const { allProviders, cache } = getProviders(paths)
 
     const now = UnixTime(1778573466)
     let addresses = getAllContractAddresses(configReader)
@@ -89,7 +92,7 @@ export const FlattenerValidator = command({
       const provider = await allProviders.get(chain, now)
 
       const startedAtMs = Date.now()
-      const status = await verifyAddress(provider, address, paths)
+      const status = await verifyAddress(provider, address, paths, cache)
       const verificationTimeMs = Date.now() - startedAtMs
 
       completed++
@@ -151,6 +154,7 @@ async function verifyAddress(
   provider: IProvider,
   address: ChainSpecificAddress,
   paths: DiscoveryPaths,
+  cache: DiscoveryCache,
 ): Promise<VerificationResult> {
   try {
     const [bytecode, source] = await Promise.all([
@@ -162,7 +166,7 @@ async function verifyAddress(
 
     const flat = flattenSource(source)
 
-    return await verifyBytecode(source, flat, bytecode, paths)
+    return await verifyBytecode(source, flat, bytecode, paths, cache)
   } catch {
     return { type: 'failure', message: 'Top level thrown an error' }
   }
@@ -231,7 +235,10 @@ function getProviders(paths: DiscoveryPaths) {
   const cache = new SQLiteCache(paths.cache)
   const logger = Logger.INFO
 
-  return new AllProviders(chainConfigs, http, cache, logger)
+  return {
+    cache,
+    allProviders: new AllProviders(chainConfigs, http, cache, logger),
+  }
 }
 
 function getAllContractAddresses(
@@ -282,17 +289,10 @@ async function verifyBytecode(
   flat: string,
   bytecode: Bytes,
   paths: DiscoveryPaths,
+  cache: DiscoveryCache,
 ): Promise<VerificationResult> {
   try {
-    const input = createCompilerInput(source, flat)
-    const output = await useSolidityCompiler(
-      join(dirname(paths.cache), 'solc'),
-      join(dirname(paths.cache), 'soljson'),
-      source.solidityVersion,
-      input,
-      false,
-    )
-
+    const output = await compile(source, flat, paths, cache)
     const contract = output.contracts[FLAT_SOURCE_PATH]?.[source.name]
     if (contract === undefined) {
       return { type: 'failure', message: 'Root contract not found' }
@@ -302,6 +302,38 @@ async function verifyBytecode(
   } catch {
     return { type: 'failure', message: 'An errow was thrown' }
   }
+}
+
+function sha256(input: string): string {
+  return createHash('sha256').update(input).digest('hex')
+}
+
+async function compile(
+  source: ContractSource,
+  flat: string,
+  paths: DiscoveryPaths,
+  cache: DiscoveryCache,
+) {
+  const input = createCompilerInput(source, flat)
+  const cacheKey = `solidity-compilation-${sha256(JSON.stringify([input, source.solidityVersion]))}`
+  const entry = await cache.get(cacheKey)
+  if (entry !== undefined) {
+    try {
+      return JSON.parse(entry) as SolidityOutput
+    } catch {}
+  }
+
+  const output = await useSolidityCompiler(
+    join(dirname(paths.cache), 'solc'),
+    join(dirname(paths.cache), 'soljson'),
+    source.solidityVersion,
+    input,
+    false,
+  )
+
+  await cache.set(cacheKey, JSON.stringify(output))
+
+  return output
 }
 
 type SolidityJsonSettings = SolidityJsonInput['settings']
