@@ -358,7 +358,8 @@ function getCompilerSettings(source: ContractSource): SolidityJsonSettings {
   const { evmVersion, ...settings } = source.compilerSettings ?? {}
   return {
     ...settings,
-    evmVersion: evmVersion === 'Default' ? undefined : evmVersion,
+    evmVersion:
+      evmVersion?.toLowerCase() === 'default' ? undefined : evmVersion,
   } as SolidityJsonSettings
 }
 
@@ -472,7 +473,7 @@ function findCborTotalBytes(hex: string, start: number): number | undefined {
   for (let len = 51; len <= 80; len++) {
     const pos = (start + len) * 2
     if (pos + 4 > hex.length) return
-    if (parseInt(hex.slice(pos, pos + 4), 16) === len) return len + 2
+    if (Number.parseInt(hex.slice(pos, pos + 4), 16) === len) return len + 2
   }
 }
 
