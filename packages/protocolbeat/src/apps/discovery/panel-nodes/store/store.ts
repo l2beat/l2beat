@@ -16,7 +16,6 @@ import {
   clear,
   colorSelected,
   hideSelected,
-  hideUnknowns,
   hideUnreachable,
   layout,
   setPreferences,
@@ -62,7 +61,6 @@ const INITIAL_STATE: State = {
   positionsBeforeMove: {},
   projectId: '',
   userPreferences: {
-    hideUnknownOnLoad: true,
     enableDimming: true,
     hideLargeArrays: true,
   },
@@ -79,7 +77,6 @@ export const useStore = create<StoreState>()(
       undo: wrapAction(set, undo),
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),
-      hideUnknowns: wrapUndoableAction(set, hideUnknowns),
       hideUnreachable: wrapUndoableAction(set, hideUnreachable),
       showUnreachable: wrapUndoableAction(set, showUnreachable),
       showHidden: wrapUndoableAction(set, showHidden),

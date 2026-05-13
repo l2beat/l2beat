@@ -23,14 +23,22 @@ export function loadNodes(
   projectId: string,
   nodes: Node[],
 ): Partial<State> {
-  const toAdd: Node[] = nodes.filter(
+  const toAddRaw: Node[] = nodes.filter(
     (x) => !state.nodes.some((y) => x.id === y.id),
   )
-  const existing: Node[] = state.nodes.map((node) => {
+  const existingRaw: Node[] = state.nodes.map((node) => {
     const newNode = nodes.find((x) => x.id === node.id)
     return newNode ? { ...newNode, box: node.box, color: node.color } : node
   })
-  toAdd.push(...createUnknownNodes([...toAdd, ...existing]))
+  const knownIds = new Set(
+    [...toAddRaw, ...existingRaw].map((node) => node.id),
+  )
+  const dropDanglingFields = (node: Node): Node => ({
+    ...node,
+    fields: node.fields.filter((field) => knownIds.has(field.target)),
+  })
+  const toAdd = toAddRaw.map(dropDanglingFields)
+  const existing = existingRaw.map(dropDanglingFields)
 
   const saved = recallNodeLayout(projectId)
   const nodesWithoutSavedLayout = new Set<string>()
@@ -65,17 +73,12 @@ export function loadNodes(
 
   const allNodes = existing.concat(added)
   const allNodeIds = new Set(allNodes.map((node) => node.id))
-  const unknownNodeIds = state.userPreferences.hideUnknownOnLoad
-    ? allNodes
-        .filter((node) => node.addressType === 'Unknown')
-        .map((node) => node.id)
-    : []
 
   const savedHiddenNodes = saved?.hiddenNodes ?? []
   const shouldReuseCurrentHidden = state.projectId === projectId
   const baseHiddenNodes = shouldReuseCurrentHidden ? state.hidden : []
   const hiddenNodes = [
-    ...new Set([...savedHiddenNodes, ...baseHiddenNodes, ...unknownNodeIds]),
+    ...new Set([...savedHiddenNodes, ...baseHiddenNodes]),
   ].filter((id) => allNodeIds.has(id))
   const visibleNodes = allNodes.filter((node) => !hiddenNodes.includes(node.id))
   const hasSavedLayout =
@@ -125,42 +128,6 @@ export function loadNodes(
     },
     nodesWithFallback,
   )
-}
-
-function createUnknownNodes(nodes: Node[]): Node[] {
-  const unknownIds = new Set<string>()
-  const knownIds = new Set(nodes.map((node) => node.id))
-
-  for (const node of nodes) {
-    for (const field of node.fields) {
-      if (!knownIds.has(field.target)) {
-        unknownIds.add(field.target)
-      }
-    }
-  }
-
-  return [...unknownIds].map(idToUnknown)
-}
-
-function idToUnknown(id: string): Node {
-  // TODO: better address treatment
-  const address = id.split(':')[1] as string
-  const name = `Unknown ${address.slice(0, 6)}…${address.slice(-4)}`
-  return {
-    id,
-    address,
-    isReachable: false,
-    isInitial: false,
-    hasTemplate: false,
-    addressType: 'Unknown',
-    name,
-    box: { x: 0, y: 0, width: 0, height: 0 },
-    color: 0,
-    hueShift: 0,
-    fields: [],
-    hiddenFields: [],
-    data: null,
-  }
 }
 
 function combinedHiddenFields(
