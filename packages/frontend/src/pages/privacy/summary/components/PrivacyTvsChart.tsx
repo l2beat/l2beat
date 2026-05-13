@@ -6,6 +6,8 @@ import type {
 } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
@@ -69,6 +71,7 @@ export function PrivacyTvsChart({ data, syncedUntil, isLoading }: Props) {
           }}
           syncedUntil={syncedUntil}
         />
+        <ChartLegend content={<ChartLegendContent />} />
       </AreaChart>
     </ChartContainer>
   )
