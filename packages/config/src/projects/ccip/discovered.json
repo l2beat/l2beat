@@ -1761,6 +1761,2791 @@
         "KEYSTONE_PRICE_DECIMALS": 18,
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "tokenPriceFeeds": {},
+        "tokenTransferFeeConfig": {
+          "solana": [
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 370000,
+                "destBytesOverhead": 916,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3fea1cb36D2C5523c062d0E060EAC253608b4DAf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 200000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 200000,
+                "destBytesOverhead": 916,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 200000,
+                "destBytesOverhead": 916,
+                "isEnabled": true
+              }
+            }
+          ],
+          "0g": [
+            {
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 360000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "aptos": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 50000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "sonic": [
+            {
+              "token": "eth:0xdd4c6FD31Ccf66E250790643947675153c221A91",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 250000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "plasma": [
+            {
+              "token": "eth:0xcEfec48c8E79b2862154057aadbfb0a81b5Fd792",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7cCb1D96cCFFC191B020144f829c835eBC99d969",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3f83e509942081979Baa6d34d16B3837d287D80F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1C4a6ac25bAe073d8339Be57D1013A21b7AB8032",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x95E422ABdd3589f2901F6Bd75b44dfFDa2afA656",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDc0fA13fC1B43aCB789b330680Cd66184383Ff93",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x25e31c09814Da4B860913b1e55924fed59997B03",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2BB8cf7e7C77E575A9dd5557659DDe73488941dC",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x63974F85B72CB8FA7dC28dDffA1f0fC2CAb44193",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0D47E32eE58F0a34C9c25D32F1E518ad1C0F6493",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7d76d6E2219d57F41987af5071575519d482093e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x87c297B74dC7044222B19938b9726AAe7Cf75212",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8E2D7dFA36618D0a0225C0A2d547f28d41Dd6D75",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE49C929570fc9C87B1f4bB71916728eb04F7bf9F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x24846A6259D1dF6EF9cb656071419cD1F3bCB1Cc",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x18187B6eA570877B113B11Bca1401E18083a2B13",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xdA5B6328C6581428c435A2F84c47d7978b72965f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2a8a295adE51B3dc93E142F72ca4eBAE3E1aE0Ea",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9D2c623C55dcF3e1E8dD89dc2A2ca6B6Bb109935",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xaD805Aa19C2a2Bd397E598c07302dCD746f30F40",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9c46b49513Af2e513F559b7d04e3af2b24c86305",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x912AeE44b5A7F39d5B9ac4a9f43a4952322f4017",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5A2e5a48C0e5f56f40a87A52B39ae1820EAfD3B0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB4B09667794E2984029255FB0C615E81A6Bf2A83",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6670Ba5DB26c3688baF6A4089a34b80Fc1b8efA4",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8356F4Af7A96431Cf68cE7fF98d811590b829A85",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7934AfACB40B60d83D8Ad8266ed5746253F2f458",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9f74dbeF10E69994A8bd437630a99f9c57eca99e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDAA1B05C2c3409c5f5CB10b510de2af043E404Fd",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE8eb840E5D3a860cCec70f59b61855C1cBBEfa3A",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xb758cAAe002031a246e91c3aE89f8239E595ab05",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xBE9517f4E29f9bacEb831a67679f1fFEc0AC2bdE",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0adAA676c5E9dA685Ee31Db105794c3fEFb40426",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x58110137DED3F55a5C2Ebf5fed953cBD6336647f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x936d899eD37F1C9334F9f64813042300E9d07116",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xF3A60e2AB399E5E7C595E154D0eBb18AbdCB9Ba3",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x28b0baC5B24537F9907a2c567891ad03Fd31AAC0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3a0Db80b0c741A44ABc3958d8e26d105d313E866",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "etherlink": [
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 410000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            }
+          ],
+          "tac": [
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 410000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            }
+          ],
+          "ab": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 175000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "monad": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 550000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 950000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 950000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 550000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 950000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 950000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x93783ccd94763e11B9a57394e63Ddd9CeedaD925",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 550000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x96043804D00DCeC238718EEDaD9ac10719778380",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 225000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x4C1Dab3Be86347977F3DfC4b9688224ef2272939",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 400000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3fea1cb36D2C5523c062d0E060EAC253608b4DAf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 200000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9f6714C302ffe3c3bAFaf2Ccb44201fF64f6371C",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 900000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "stable": [
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 410000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 410000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            }
+          ],
+          "mantle": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 175000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x004E9C3EF86bc1ca1f0bB5C7662861Ee93350568",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 95000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "morph": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 175000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "megaeth": [
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 1300000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 950000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 400000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "xlayer": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 175000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "plume": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 175000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "hyperliquid": [
+            {
+              "token": "eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xBE9517f4E29f9bacEb831a67679f1fFEc0AC2bdE",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x28b0baC5B24537F9907a2c567891ad03Fd31AAC0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xF3A60e2AB399E5E7C595E154D0eBb18AbdCB9Ba3",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0adAA676c5E9dA685Ee31Db105794c3fEFb40426",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9f74dbeF10E69994A8bd437630a99f9c57eca99e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x936d899eD37F1C9334F9f64813042300E9d07116",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDAA1B05C2c3409c5f5CB10b510de2af043E404Fd",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x58110137DED3F55a5C2Ebf5fed953cBD6336647f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7934AfACB40B60d83D8Ad8266ed5746253F2f458",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xb758cAAe002031a246e91c3aE89f8239E595ab05",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3a0Db80b0c741A44ABc3958d8e26d105d313E866",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE8eb840E5D3a860cCec70f59b61855C1cBBEfa3A",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5E75a1aD7b10523f7ed98C1C7CA0b4A79B1bBDee",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3f83e509942081979Baa6d34d16B3837d287D80F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDc0fA13fC1B43aCB789b330680Cd66184383Ff93",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x25e31c09814Da4B860913b1e55924fed59997B03",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5A2e5a48C0e5f56f40a87A52B39ae1820EAfD3B0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2BB8cf7e7C77E575A9dd5557659DDe73488941dC",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8E2D7dFA36618D0a0225C0A2d547f28d41Dd6D75",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB4B09667794E2984029255FB0C615E81A6Bf2A83",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x912AeE44b5A7F39d5B9ac4a9f43a4952322f4017",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x63974F85B72CB8FA7dC28dDffA1f0fC2CAb44193",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xdA5B6328C6581428c435A2F84c47d7978b72965f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xaD805Aa19C2a2Bd397E598c07302dCD746f30F40",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x24846A6259D1dF6EF9cb656071419cD1F3bCB1Cc",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x95E422ABdd3589f2901F6Bd75b44dfFDa2afA656",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7d76d6E2219d57F41987af5071575519d482093e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9c46b49513Af2e513F559b7d04e3af2b24c86305",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x18187B6eA570877B113B11Bca1401E18083a2B13",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7cCb1D96cCFFC191B020144f829c835eBC99d969",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x87c297B74dC7044222B19938b9726AAe7Cf75212",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6670Ba5DB26c3688baF6A4089a34b80Fc1b8efA4",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0D47E32eE58F0a34C9c25D32F1E518ad1C0F6493",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1C4a6ac25bAe073d8339Be57D1013A21b7AB8032",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE49C929570fc9C87B1f4bB71916728eb04F7bf9F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9D2c623C55dcF3e1E8dD89dc2A2ca6B6Bb109935",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xcEfec48c8E79b2862154057aadbfb0a81b5Fd792",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8356F4Af7A96431Cf68cE7fF98d811590b829A85",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2a8a295adE51B3dc93E142F72ca4eBAE3E1aE0Ea",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "jovay": [
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 360000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "tempo": [
+            {
+              "token": "eth:0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 715000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x80ac24aA929eaF5013f6436cdA2a7ba190f5Cc0b",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 850000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "adi": [
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "ink": [
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 390000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            }
+          ],
+          "base": [
+            {
+              "token": "eth:0x20157DBAbb84e3BBFE68C349d0d44E48AE7B5AD2",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xc719d010B63E5bbF2C0551872CD5316ED26AcD83",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xc4506022Fb8090774E8A628d5084EED61D9B99Ee",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xF3A60e2AB399E5E7C595E154D0eBb18AbdCB9Ba3",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x58110137DED3F55a5C2Ebf5fed953cBD6336647f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE8eb840E5D3a860cCec70f59b61855C1cBBEfa3A",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xCA160D11087E03fd398d40f561cd4768825f4958",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 250000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xaD805Aa19C2a2Bd397E598c07302dCD746f30F40",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9D2c623C55dcF3e1E8dD89dc2A2ca6B6Bb109935",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2a8a295adE51B3dc93E142F72ca4eBAE3E1aE0Ea",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x912AeE44b5A7F39d5B9ac4a9f43a4952322f4017",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x341c05c0E9b33C0E38d64de76516b2Ce970bB3BE",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xAe770d24ec1580A13392E0B71067571351029203",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 400000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3f83e509942081979Baa6d34d16B3837d287D80F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x63974F85B72CB8FA7dC28dDffA1f0fC2CAb44193",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x87c297B74dC7044222B19938b9726AAe7Cf75212",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6b5204B0Be36771253Cc38e88012E02B752f0f36",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 410000,
+                "destBytesOverhead": 320,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x08d23468A467d2bb86FaE0e32F247A26C7E2e994",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9f74dbeF10E69994A8bd437630a99f9c57eca99e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3a0Db80b0c741A44ABc3958d8e26d105d313E866",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6eb935F5b649fc98BC7a3079F0211f5255C8B3eA",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDc0fA13fC1B43aCB789b330680Cd66184383Ff93",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8E2D7dFA36618D0a0225C0A2d547f28d41Dd6D75",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x95E422ABdd3589f2901F6Bd75b44dfFDa2afA656",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDBB5Cf12408a3Ac17d668037Ce289f9eA75439D7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 640,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x98C6616F1CC0D3E938A16200830DD55663dd7DD3",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 100000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0adAA676c5E9dA685Ee31Db105794c3fEFb40426",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x18187B6eA570877B113B11Bca1401E18083a2B13",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8Fe815417913a93Ea99049FC0718ee1647A2a07c",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xe85411C030fB32A9D8b14Bbbc6CB19417391F711",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 90000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x28b0baC5B24537F9907a2c567891ad03Fd31AAC0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5e53AeBE377eFC92213514eC07f8EF3Af426DD1d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 160000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x01aaC2b594F7bdBeC740F0F1AA22910EbB4B74Ab",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x54EE8A49155F701F0d5Ff088CD36fbBF1a5B9f44",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x936d899eD37F1C9334F9f64813042300E9d07116",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDAA1B05C2c3409c5f5CB10b510de2af043E404Fd",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB4B09667794E2984029255FB0C615E81A6Bf2A83",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xE49C929570fc9C87B1f4bB71916728eb04F7bf9F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x2BB8cf7e7C77E575A9dd5557659DDe73488941dC",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x72e364F2ABdC788b7E918bc238B21f109Cd634D7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA544b3F0c46c15F0B2b00ba3D67b56C250287905",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 50,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xBE9517f4E29f9bacEb831a67679f1fFEc0AC2bdE",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6670Ba5DB26c3688baF6A4089a34b80Fc1b8efA4",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5E75a1aD7b10523f7ed98C1C7CA0b4A79B1bBDee",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xdA5B6328C6581428c435A2F84c47d7978b72965f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xb758cAAe002031a246e91c3aE89f8239E595ab05",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x25e31c09814Da4B860913b1e55924fed59997B03",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7cCb1D96cCFFC191B020144f829c835eBC99d969",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x0D47E32eE58F0a34C9c25D32F1E518ad1C0F6493",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xcEfec48c8E79b2862154057aadbfb0a81b5Fd792",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x004E9C3EF86bc1ca1f0bB5C7662861Ee93350568",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 95000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1C4a6ac25bAe073d8339Be57D1013A21b7AB8032",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5A2e5a48C0e5f56f40a87A52B39ae1820EAfD3B0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x24846A6259D1dF6EF9cb656071419cD1F3bCB1Cc",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7d76d6E2219d57F41987af5071575519d482093e",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8356F4Af7A96431Cf68cE7fF98d811590b829A85",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xFc209EeBA3D744aA741cc5C2A73Ebf9C977B5F82",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB60acD2057067DC9ed8c083f5aa227a244044fD6",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7934AfACB40B60d83D8Ad8266ed5746253F2f458",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 0,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9b13b86eeb48Ec9cA1A72FaE969d7daA60870100",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x9c46b49513Af2e513F559b7d04e3af2b24c86305",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ],
+          "arbitrum": [
+            {
+              "token": "eth:0x341c05c0E9b33C0E38d64de76516b2Ce970bB3BE",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xAe770d24ec1580A13392E0B71067571351029203",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 400000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xc4506022Fb8090774E8A628d5084EED61D9B99Ee",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x325DC9EBceC31940C658aCACa45f8293418d811E",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xe85411C030fB32A9D8b14Bbbc6CB19417391F711",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x98C6616F1CC0D3E938A16200830DD55663dd7DD3",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xB60acD2057067DC9ed8c083f5aa227a244044fD6",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xa7a0B3Fe94121E366D774d60D075F6386F750884",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 640,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x54Df3076ac0CdC9bC97fA290AB9c5a88E3D23630",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x30D20208d987713f46DFD34EF128Bb16C404D10f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8a053350ca5F9352a16deD26ab333e2D251DAd7c",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x888888435FDe8e7d4c54cAb67f206e4199454c60",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5F2F8818002dc64753daeDF4A6CB2CcB757CD220",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x32bd822d615A3658A68b6fDD30c2fcb2C996D678",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x8BF591Eae535f93a242D5A954d3Cde648b48A5A8",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x72e364F2ABdC788b7E918bc238B21f109Cd634D7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 150000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x6b5204B0Be36771253Cc38e88012E02B752f0f36",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xA95C5ebB86E0dE73B4fB8c47A45B792CFeA28C23",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 50,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x08d23468A467d2bb86FaE0e32F247A26C7E2e994",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xf2DbAaBd8F8E0993F11DE4CEd470Df1ED1a4491b",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1Cbc4BF664907669CfAB86a3b1aCC3EC8867a25F",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 120000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x004E9C3EF86bc1ca1f0bB5C7662861Ee93350568",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 95000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x5e53AeBE377eFC92213514eC07f8EF3Af426DD1d",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 160000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x60b9C41d99FE3Eb64Ecc1344baD31D87f1bceD6D",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x49446A0874197839D15395B908328a74ccc96Bc0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 550,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xbDf245957992bfBC62B07e344128a1EEc7b7eE3f",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 180000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x1c22531AA9747d76fFF8F0A43b37954ca67d28e0",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x18f313Fc6Afc9b5FD6f0908c1b3D476E3feA1DD9",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x20157DBAbb84e3BBFE68C349d0d44E48AE7B5AD2",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x3e62fED35c97145e6B445704B8CE74B2544776A9",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xDBB5Cf12408a3Ac17d668037Ce289f9eA75439D7",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 130000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0x911D86C72155c33993d594B0Ec7E6206B4C803da",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            },
+            {
+              "token": "eth:0xCA160D11087E03fd398d40f561cd4768825f4958",
+              "tokenTransferFeeConfig": {
+                "minFeeUSDCents": 50,
+                "maxFeeUSDCents": 4294967295,
+                "deciBps": 0,
+                "destGasOverhead": 140000,
+                "destBytesOverhead": 32,
+                "isEnabled": true
+              }
+            }
+          ]
+        },
         "typeAndVersion": "FeeQuoter 1.6.3"
       },
       "fieldMeta": {
@@ -1775,6 +4560,9 @@
         },
         "destChainConfigs": {
           "description": "Per-destination-chain config (isEnabled, max sizes, gas overheads, DA multipliers, chain-family selector, default token fee, gas multiplier, network fee, etc.). Replayed from DestChainAdded / DestChainConfigUpdated events; keys are CCIP chain selectors, value is the latest DestChainConfig set for that chain."
+        },
+        "tokenTransferFeeConfig": {
+          "description": "Per-(destChain, token) transfer fee overrides (minFeeUSDCents, maxFeeUSDCents, deciBps, destGasOverhead, destBytesOverhead, isEnabled). When no override exists for a (destChain, token), the DestChainConfig defaults apply. Replayed from TokenTransferFeeConfigUpdated / TokenTransferFeeConfigDeleted events; outer keys are destination chain names, latest config per (chain, token) wins."
         },
         "tokenPriceFeeds": {
           "description": "Per-token Chainlink data-feed fallback config (dataFeedAddress, tokenDecimals, isEnabled). When set, the OnRamp can fall back to the feed for USD pricing if the OCR/Keystone path stale-checks fail. Replayed from PriceFeedPerTokenUpdated events. Empty mapping means no token has a data feed configured."
@@ -9809,7 +12597,7 @@
     "transporter/CallProxy": "0x4770aa5c570af6c39a6fa38038b1833dab91e11e67547ccda6021e195e48fe3e",
     "transporter/CallProxyWithTargetSet": "0x1f7fe3ae93f97dd7ec53cdd0d543f12ccca2b0ac35f9134cb2c018ef994e4f20",
     "transporter/CommitStoreV1": "0xc2fbef8db671c30ce8d88b2ab25d1e50a5e68ed8e46a612a7cd3a7ca9c227fe1",
-    "transporter/FeeQuoter": "0x33950f4a697a5fa6b5aa6e0eb41c587d1c3389a4484af1a5223a8412d20011b9",
+    "transporter/FeeQuoter": "0x0b27a340648d63a7e02808ceea483cecd80620dfbcdbce41265394798e49ba3c",
     "transporter/ManyChainMultiSig": "0xcb07649e24d3a2643d28343698d73862ff2ce7f437f123e6665cbd2f568ffd8c",
     "transporter/OffRampV1": "0xd299a9a3d7d35d0688dce1ec566f5beefd91f130913835b3625e750c848c6f43",
     "transporter/OfframpV2": "0x10d0b7d25ce268af9b6e9b5f73a3de7dc3f0899c08c0f464218b87114bd7054e",

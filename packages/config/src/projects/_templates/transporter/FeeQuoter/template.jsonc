@@ -164,6 +164,45 @@
         ["map_keys", ["format", "CCIPChainName"]]
       ]
     },
+    "tokenTransferFeeConfig": {
+      "description": "Per-(destChain, token) transfer fee overrides (minFeeUSDCents, maxFeeUSDCents, deciBps, destGasOverhead, destBytesOverhead, isEnabled). When no override exists for a (destChain, token), the DestChainConfig defaults apply. Replayed from TokenTransferFeeConfigUpdated / TokenTransferFeeConfigDeleted events; outer keys are destination chain names, latest config per (chain, token) wins.",
+      "handler": {
+        "type": "event",
+        "groupBy": "destChainSelector",
+        "dedupBy": "token",
+        "select": ["token", "tokenTransferFeeConfig"],
+        "add": {
+          "event": "event TokenTransferFeeConfigUpdated(uint64 indexed destChainSelector, address indexed token, (uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead, bool isEnabled) tokenTransferFeeConfig)"
+        },
+        "remove": {
+          "event": "event TokenTransferFeeConfigDeleted(uint64 indexed destChainSelector, address indexed token)"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "map",
+            [
+              "set",
+              "tokenTransferFeeConfig",
+              [
+                "shape",
+                "minFeeUSDCents",
+                "maxFeeUSDCents",
+                "deciBps",
+                "destGasOverhead",
+                "destBytesOverhead",
+                "isEnabled"
+              ]
+            ]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
     "tokenPriceFeeds": {
       "description": "Per-token Chainlink data-feed fallback config (dataFeedAddress, tokenDecimals, isEnabled). When set, the OnRamp can fall back to the feed for USD pricing if the OCR/Keystone path stale-checks fail. Replayed from PriceFeedPerTokenUpdated events. Empty mapping means no token has a data feed configured.",
       "handler": {
