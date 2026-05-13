@@ -189,13 +189,14 @@ async function getProjectScalingInteropData(
   const defaultSelectedChains = orderedInteropChains
     .map((chain) => chain.id)
     .slice(0, MAX_SELECTED_CHAINS)
+  const allInteropChainIds = orderedInteropChains.map((chain) => chain.id)
   const protocols = interopProjects.map((protocol) => ({
     id: protocol.id,
     name: protocol.interopConfig.name ?? protocol.name,
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
   const interopFlows = await helpers.interop.flows.fetch({
-    chains: defaultSelectedChains,
+    chains: allInteropChainIds,
     protocolIds: protocols.map((protocol) => protocol.id),
   })
   const currentChainData = interopFlows.chainData.find(

@@ -44,8 +44,7 @@ export function InteropFlowsSection({
         chains={interopChains}
         protocols={protocols}
         defaultSelectedChains={defaultSelectedChains}
-        defaultHighlightedChains={[defaultStatsChainId]}
-        lockedChainIds={[defaultStatsChainId]}
+        pinnedChainId={defaultStatsChainId}
       >
         <Content
           interopChains={interopChains}

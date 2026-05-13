@@ -26,7 +26,7 @@ export function FlowsChainsSelector({
 }) {
   const {
     selectedChains,
-    lockedChainIds,
+    pinnedChainId,
     toggleChainSelection,
     deselectAllChains,
   } = useInteropFlows()
@@ -44,7 +44,7 @@ export function FlowsChainsSelector({
   const isAtMax = selectedChains.length >= MAX_SELECTED_CHAINS
   const isBelowMin = selectedChains.length < MIN_SELECTED_CHAINS
   const selectedUnlockedCount = selectedChains.filter(
-    (chainId) => !lockedChainIds.includes(chainId),
+    (chainId) => chainId !== pinnedChainId,
   ).length
 
   const trigger = (
@@ -81,10 +81,10 @@ export function FlowsChainsSelector({
           isSelected={chain.isSelected}
           toggleSelected={toggleChainSelection}
           disabled={
-            lockedChainIds.includes(chain.id) || (isAtMax && !chain.isSelected)
+            chain.id === pinnedChainId || (isAtMax && !chain.isSelected)
           }
           disabledTooltip={
-            lockedChainIds.includes(chain.id)
+            chain.id === pinnedChainId
               ? 'This chain cannot be deselected'
               : 'Deselect a chain to select another'
           }

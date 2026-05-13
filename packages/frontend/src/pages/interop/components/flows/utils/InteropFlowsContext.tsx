@@ -20,7 +20,7 @@ interface InteropFlowsContextType {
   allChains: InteropChainWithIcon[]
   toggleChainSelection: (chainId: string) => void
   deselectAllChains: () => void
-  lockedChainIds: string[]
+  pinnedChainId: string | undefined
   toggleProtocolSelection: (protocolId: string) => void
   selectAllProtocols: () => void
   deselectAllProtocols: () => void
@@ -39,8 +39,7 @@ interface InteropFlowsProviderProps {
     id: string
   })[]
   defaultSelectedChains: string[]
-  defaultHighlightedChains?: [] | [string] | [string, string]
-  lockedChainIds?: string[]
+  pinnedChainId?: string
 }
 
 export function InteropFlowsProvider({
@@ -48,13 +47,15 @@ export function InteropFlowsProvider({
   chains,
   protocols,
   defaultSelectedChains,
-  defaultHighlightedChains = [],
-  lockedChainIds: providedLockedChainIds = [],
+  pinnedChainId: providedPinnedChainId,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
-  const lockedChainIds = useMemo(
-    () => allChainIds.filter((id) => providedLockedChainIds.includes(id)),
-    [allChainIds, providedLockedChainIds],
+  const pinnedChainId = useMemo(
+    () =>
+      providedPinnedChainId && allChainIds.includes(providedPinnedChainId)
+        ? providedPinnedChainId
+        : undefined,
+    [allChainIds, providedPinnedChainId],
   )
   const allProtocolIds = useMemo(
     () => protocols.map((protocol) => protocol.id),
@@ -63,10 +64,12 @@ export function InteropFlowsProvider({
 
   const defaultSelectedChainIds = useMemo(() => {
     const provided = new Set(defaultSelectedChains)
-    return allChainIds
-      .filter((id) => provided.has(id))
-      .slice(0, MAX_SELECTED_CHAINS)
-  }, [allChainIds, defaultSelectedChains])
+    const selected = allChainIds.filter((id) => provided.has(id))
+    return [
+      ...(pinnedChainId ? [pinnedChainId] : []),
+      ...selected.filter((id) => id !== pinnedChainId),
+    ].slice(0, MAX_SELECTED_CHAINS)
+  }, [allChainIds, defaultSelectedChains, pinnedChainId])
 
   const [chainsParam, setChainsParam] = useQueryParam(
     CHAINS_QUERY_KEY,
@@ -82,35 +85,41 @@ export function InteropFlowsProvider({
   const selectedChains = useMemo(() => {
     const parsed = parseIdsParam(chainsParam, allChainIds)
     const unlockedSelectedChains = allChainIds.filter(
-      (id) => !lockedChainIds.includes(id) && parsed.includes(id),
+      (id) => id !== pinnedChainId && parsed.includes(id),
     )
-    return [...lockedChainIds, ...unlockedSelectedChains].slice(
-      0,
-      MAX_SELECTED_CHAINS,
-    )
-  }, [chainsParam, allChainIds, lockedChainIds])
+    return [
+      ...(pinnedChainId ? [pinnedChainId] : []),
+      ...unlockedSelectedChains,
+    ].slice(0, MAX_SELECTED_CHAINS)
+  }, [chainsParam, allChainIds, pinnedChainId])
+
+  const [highlightedChainIds, setHighlightedChainIds] = useState<string[]>([])
+  const highlightedChains = useMemo(
+    () =>
+      uniqueChains([
+        ...(pinnedChainId ? [pinnedChainId] : []),
+        ...highlightedChainIds,
+      ]).slice(0, 2),
+    [highlightedChainIds, pinnedChainId],
+  )
   const selectedProtocols = useMemo(
     () => parseIdsParam(protocolsParam, allProtocolIds),
     [protocolsParam, allProtocolIds],
-  )
-
-  const [highlightedChains, setHighlightedChains] = useState<string[]>(
-    defaultHighlightedChains.filter((id) => allChainIds.includes(id)),
   )
 
   const setSelectedChains = useCallback(
     (next: string[]) => {
       // Keep canonical order so that a selection equal to the default serializes identically and gets removed from the URL
       const unlockedSelectedChains = allChainIds.filter(
-        (id) => !lockedChainIds.includes(id) && next.includes(id),
+        (id) => id !== pinnedChainId && next.includes(id),
       )
-      const canonical = [...lockedChainIds, ...unlockedSelectedChains].slice(
-        0,
-        MAX_SELECTED_CHAINS,
-      )
+      const canonical = [
+        ...(pinnedChainId ? [pinnedChainId] : []),
+        ...unlockedSelectedChains,
+      ].slice(0, MAX_SELECTED_CHAINS)
       setChainsParam(canonical.join(','))
     },
-    [allChainIds, lockedChainIds, setChainsParam],
+    [allChainIds, pinnedChainId, setChainsParam],
   )
 
   const setSelectedProtocols = useCallback(
@@ -123,11 +132,11 @@ export function InteropFlowsProvider({
 
   const toggleChainSelection = useCallback(
     (chainId: string) => {
-      if (lockedChainIds.includes(chainId)) {
+      if (chainId === pinnedChainId) {
         return
       }
       if (selectedChains.includes(chainId)) {
-        setHighlightedChains((h) => h.filter((id) => id !== chainId))
+        setHighlightedChainIds((h) => h.filter((id) => id !== chainId))
         setSelectedChains(selectedChains.filter((id) => id !== chainId))
         return
       }
@@ -136,15 +145,13 @@ export function InteropFlowsProvider({
       }
       setSelectedChains([...selectedChains, chainId])
     },
-    [lockedChainIds, selectedChains, setSelectedChains],
+    [pinnedChainId, selectedChains, setSelectedChains],
   )
 
   const deselectAllChains = useCallback(() => {
-    setSelectedChains(lockedChainIds)
-    setHighlightedChains((chains) =>
-      chains.filter((id) => lockedChainIds.includes(id)),
-    )
-  }, [lockedChainIds, setSelectedChains])
+    setSelectedChains(pinnedChainId ? [pinnedChainId] : [])
+    setHighlightedChainIds([])
+  }, [pinnedChainId, setSelectedChains])
 
   const toggleProtocolSelection = useCallback(
     (protocolId: string) => {
@@ -169,8 +176,8 @@ export function InteropFlowsProvider({
 
   const toggleHighlightedChain = useCallback(
     (chainId: string) => {
-      setHighlightedChains((prev) => {
-        if (lockedChainIds.length === 0) {
+      setHighlightedChainIds((prev) => {
+        if (!pinnedChainId) {
           if (prev.includes(chainId)) {
             return prev.filter((id) => id !== chainId)
           }
@@ -181,31 +188,18 @@ export function InteropFlowsProvider({
           return previousSecond ? [previousSecond, chainId] : [chainId]
         }
 
-        const lockedHighlightedChains = lockedChainIds.filter((id) =>
-          selectedChains.includes(id),
-        )
-
-        if (lockedChainIds.includes(chainId)) {
-          return prev.includes(chainId)
-            ? uniqueChains([...lockedHighlightedChains, ...prev]).slice(0, 2)
-            : uniqueChains([
-                ...lockedHighlightedChains,
-                chainId,
-                ...prev,
-              ]).slice(0, 2)
+        if (chainId === pinnedChainId) {
+          return prev
         }
 
         if (prev.includes(chainId)) {
-          return uniqueChains([
-            ...lockedHighlightedChains,
-            ...prev.filter((id) => id !== chainId),
-          ]).slice(0, 2)
+          return prev.filter((id) => id !== chainId)
         }
 
-        return uniqueChains([...lockedHighlightedChains, chainId]).slice(0, 2)
+        return [chainId]
       })
     },
-    [lockedChainIds, selectedChains],
+    [pinnedChainId],
   )
 
   return (
@@ -213,7 +207,7 @@ export function InteropFlowsProvider({
       value={{
         allChains: chains,
         selectedChains,
-        lockedChainIds,
+        pinnedChainId,
         selectedProtocols,
         toggleChainSelection,
         deselectAllChains,
