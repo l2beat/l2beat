@@ -38,12 +38,12 @@ export function IngestionPreviewDialog({
   return (
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="max-w-3xl"
+        className="max-h-[calc(100vh-2rem)] max-w-[calc(100vw-2rem)] overflow-y-auto sm:max-w-6xl"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        <DialogHeader>
+        <DialogHeader className="min-w-0">
           <DialogTitle>Ingestion preview</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="break-words pr-6">
             What would happen if {state.chain}:{state.address} were processed
             right now. No changes are written.
           </DialogDescription>
@@ -69,7 +69,7 @@ export function IngestionPreviewDialog({
 
 function TraceView({ trace }: { trace: IngestionTrace }) {
   return (
-    <div className="space-y-4">
+    <div className="min-w-0 space-y-4">
       <section className="space-y-1">
         <h3 className="font-medium text-sm">Steps</h3>
         <ol className="list-decimal space-y-1 pl-5 text-sm">
@@ -222,25 +222,25 @@ function OutcomeView({ outcome }: { outcome: IngestionOutcome }) {
       )
     case 'write':
       return (
-        <div className="space-y-3 text-sm">
+        <div className="min-w-0 space-y-3 text-sm">
           <Badge>Write</Badge>
           {outcome.newAbstractToken && (
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <h4 className="font-medium">New abstract token</h4>
-              <pre className="overflow-x-auto rounded bg-muted p-2 text-xs">
+              <pre className="max-w-full overflow-x-auto rounded bg-muted p-2 text-xs">
                 {JSON.stringify(outcome.newAbstractToken, null, 2)}
               </pre>
             </div>
           )}
           {outcome.deployedToken.type === 'insert' ? (
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <h4 className="font-medium">New deployed token</h4>
-              <pre className="overflow-x-auto rounded bg-muted p-2 text-xs">
+              <pre className="max-w-full overflow-x-auto rounded bg-muted p-2 text-xs">
                 {JSON.stringify(outcome.deployedToken.record, null, 2)}
               </pre>
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <h4 className="font-medium">Deployed token update</h4>
               <Diff
                 differences={diff(outcome.deployedToken.existing, {
