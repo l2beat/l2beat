@@ -5058,6 +5058,20 @@
       "supply": "zero"
     },
     {
+      "name": "Ronin",
+      "coingeckoId": "ronin",
+      "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
+      "symbol": "RON",
+      "decimals": 18,
+      "deploymentTimestamp": 1636027117,
+      "coingeckoListingTimestamp": 1643241600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20009/large/photo_2024-04-06_22-52-24.jpg?1712415367",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "rsETH",
       "coingeckoId": "kelp-dao-restaked-eth",
       "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",

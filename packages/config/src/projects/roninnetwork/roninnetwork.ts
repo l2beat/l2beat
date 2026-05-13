@@ -21,7 +21,7 @@ export const roninNetwork: ScalingProject = opStackL2({
   discovery,
   genesisTimestamp,
   daProvider: EIGENDA_DA_PROVIDER(false),
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Other.MigratedFromL1],
   associatedTokens: ['RON'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

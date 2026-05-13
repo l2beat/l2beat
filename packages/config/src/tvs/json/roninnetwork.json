@@ -1,0 +1,305 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "roninnetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "roninnetwork-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+        "chain": "ethereum",
+        "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+        "decimals": 18,
+        "sinceTimestamp": 1698969600,
+        "untilTimestamp": 1747440000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-AXS",
+      "priceId": "axie-infinity",
+      "symbol": "AXS",
+      "name": "Axie Infinity Shard",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 18,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 18,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242",
+            "decimals": 18,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 18,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 18,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+        "decimals": 18,
+        "sinceTimestamp": 1689552000,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+        "decimals": 18,
+        "sinceTimestamp": 1706918400,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 6,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 6,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 6,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 6,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 8,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 8,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 18,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 18,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "roninnetwork-YGG",
+      "priceId": "yield-guild-games",
+      "symbol": "YGG",
+      "name": "Yield Guild Games Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73",
+            "chain": "ethereum",
+            "escrowAddress": "0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1",
+            "decimals": 18,
+            "sinceTimestamp": 1771964639
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73",
+            "chain": "ethereum",
+            "escrowAddress": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+            "decimals": 18,
+            "sinceTimestamp": 1655883630
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "RON",
+      "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
+      "coingeckoId": "ronin"
+    },
+    {
       "symbol": "AZTEC",
       "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
       "coingeckoId": "aztec"
