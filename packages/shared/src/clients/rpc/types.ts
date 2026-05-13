@@ -181,7 +181,8 @@ export const EVMLog = z.object({
   // see: https://github.com/ethereum/execution-apis/issues/295
   blockTimestamp: z
     .union([Quantity.decode, z.number().transform(BigInt)])
-    .transform((n) => Number(n))
+    // Some logs return 0x0 as block timestamp, which is invalid
+    .transform((n) => (n === 0n ? undefined : Number(n)))
     .optional(),
 })
 

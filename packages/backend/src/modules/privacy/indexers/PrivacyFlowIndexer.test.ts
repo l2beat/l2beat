@@ -288,24 +288,49 @@ describe(PrivacyFlowIndexer.name, () => {
         }),
       ]
 
-      const log: Log = {
-        address: ADDRESS_A.toString(),
-        topics: [TOPIC_A],
-        data: '0x',
-        blockNumber: 100,
-        blockHash: '0x',
-        transactionHash: '0xtx1',
-        logIndex: 0,
-        // blockTimestamp omitted on purpose
-      }
+      // Two logs in the same block + one in another block, none with
+      // blockTimestamp. getBlockTimestamps must be called with deduped
+      // block numbers.
+      const logs: Log[] = [
+        {
+          address: ADDRESS_A.toString(),
+          topics: [TOPIC_A],
+          data: '0x',
+          blockNumber: 100,
+          blockHash: '0x',
+          transactionHash: '0xtx1',
+          logIndex: 0,
+        },
+        {
+          address: ADDRESS_A.toString(),
+          topics: [TOPIC_A],
+          data: '0x',
+          blockNumber: 100,
+          blockHash: '0x',
+          transactionHash: '0xtx2',
+          logIndex: 1,
+        },
+        {
+          address: ADDRESS_A.toString(),
+          topics: [TOPIC_A],
+          data: '0x',
+          blockNumber: 200,
+          blockHash: '0x',
+          transactionHash: '0xtx3',
+          logIndex: 0,
+        },
+      ]
 
       const logsProvider = mockObject<LogsProvider>({
-        getLogs: mockFn().returnsOnce([log]),
+        getLogs: mockFn().returnsOnce(logs),
       })
 
       const blockProvider = mockObject<BlockProvider>({
         getBlockTimestamps: mockFn().returnsOnce(
-          new Map<number, UnixTime>([[100, blockTimestamp]]),
+          new Map<number, UnixTime>([
+            [100, blockTimestamp],
+            [200, blockTimestamp],
+          ]),
         ),
       })
 
@@ -314,7 +339,7 @@ describe(PrivacyFlowIndexer.name, () => {
       >({
         findBlockNumberByChainAndTimestamp: mockFn()
           .returnsOnce(50)
-          .returnsOnce(150),
+          .returnsOnce(250),
       })
 
       const privacyPriceRepo = mockObject<Database['privacyPrice']>({
@@ -352,7 +377,9 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       await updateFn()
 
-      expect(blockProvider.getBlockTimestamps).toHaveBeenOnlyCalledWith([100])
+      expect(blockProvider.getBlockTimestamps).toHaveBeenOnlyCalledWith([
+        100, 200,
+      ])
       expect(privacyFlowEventRepo.upsertMany).toHaveBeenCalledTimes(1)
     })
 
