@@ -1,5 +1,4 @@
 import type { TrustedSetup } from '@l2beat/config'
-import type { TokenValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
@@ -33,29 +32,19 @@ export async function getPrivacySummaryEntries(): Promise<
   const currentDay = UnixTime.toStartOf(now, 'day')
   const last30dCutoff = currentDay - 29 * UnixTime.DAY
 
-  const [totals, daily30d, ...projectTokenValues] = await Promise.all([
+  const [totals, daily30d, tokenValues] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds(projectIds),
     db.privacyFlowEvent.getDailyByProjectIds(
       projectIds,
       last30dCutoff,
       currentDay,
     ),
-    ...projects.map((p) =>
-      db.tvsTokenValue.getLastNonZeroValue(now, p.id.toString()),
-    ),
+    db.tvsTokenValue.getLastNonZeroValueByProjects(now, projectIds),
   ])
 
   const totalsByProject = groupByProjectId(totals)
   const dailyByProject = groupByProjectId(daily30d)
-
-  const tokenValuesByProject = new Map<string, TokenValueRecord[]>()
-  for (let i = 0; i < projects.length; i++) {
-    const p = projects[i]
-    const tv = projectTokenValues[i]
-    if (p && tv) {
-      tokenValuesByProject.set(p.id.toString(), tv)
-    }
-  }
+  const tokenValuesByProject = groupByProjectId(tokenValues)
 
   const entries = projects.map((project): PrivacySummaryEntry => {
     const projectId = project.id.toString()

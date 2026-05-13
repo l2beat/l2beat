@@ -209,6 +209,36 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLastNonZeroValueByProjects(
+    timestamp: UnixTime,
+    projects: string[],
+  ): Promise<TokenValueRecord[]> {
+    if (projects.length === 0) return []
+
+    const latest = this.db
+      .selectFrom('TokenValue')
+      .select(['projectId', 'tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('value', '>', 0)
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .where('projectId', 'in', projects)
+      .groupBy(['projectId', 'tokenId'])
+      .as('latest')
+
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .innerJoin(latest, (join) =>
+        join
+          .onRef('TokenValue.projectId', '=', 'latest.projectId')
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('TokenValue')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,
