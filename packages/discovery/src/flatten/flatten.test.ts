@@ -1012,6 +1012,44 @@ describe('flatten', () => {
     )
   })
 
+  it('regression - using imports functions', () => {
+    const file = sol(
+      'root.sol',
+      `
+      type Timestamp is uint256;
+
+      function addTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {
+        return Timestamp.wrap(Timestamp.unwrap(_a) + Timestamp.unwrap(_b));
+      }
+
+      using { addTimestamp as + } for Timestamp global;
+
+      contract R {
+        Timestamp timestamp;
+      }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('R', 'root.sol', [file], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      dedent(`
+      function addTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {
+        return Timestamp.wrap(Timestamp.unwrap(_a) + Timestamp.unwrap(_b));
+      }
+
+      using { addTimestamp as + } for Timestamp global;
+
+      type Timestamp is uint256;
+
+      contract R {
+        Timestamp timestamp;
+      }
+    `),
+    )
+  })
+
   describe('name clash disambiguation', () => {
     it('resolves name clash from import alias reversal', () => {
       const files = [

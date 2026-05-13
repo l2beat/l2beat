@@ -174,7 +174,8 @@ export function getASTIdentifiers(
     case 'UsingForDeclaration': {
       const typeName = parseTypeName(node.typeName, visit)
       const libraryName = node.libraryName ?? []
-      result = typeName.concat(libraryName)
+      const functions = node.functions ?? []
+      result = typeName.concat(libraryName).concat(functions)
       break
     }
     case 'InheritanceSpecifier': {
