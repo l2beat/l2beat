@@ -180,7 +180,6 @@ function buildState(nodes: Node[]): State {
       future: [],
     },
     userPreferences: {
-      hideUnknownOnLoad: false,
       enableDimming: true,
       hideLargeArrays: false,
     },
