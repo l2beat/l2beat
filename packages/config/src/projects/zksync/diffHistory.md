@@ -15,7 +15,7 @@ Paused deposits to zksync. Upgraded zksync contract by adding token migration to
 - `setClaimRoot` function that sets withdrawal smart contracts and activates exodus mode
 - `migrateToken` function that transfers given token to the registered claim distributor contract.
 
-Deposits to L2 were halted, claim distributor contract was set to 0x0a14B696350546110a0D8acDb86226983af9D2a0, exodus mode activated and several tokens were migrated to the claim contract.
+Deposits to L2 were halted, claim distributor contract was set to 0x0a14B696350546110a0D8acDb86226983af9D2a0, exodus mode activated and several tokens were migrated to the claim contract. In the exodus mode, tokens could not be deposited and withdrawn, new blocks could not be committed, proven or executed.
 
 Config: use the new flattener implementation.
 
