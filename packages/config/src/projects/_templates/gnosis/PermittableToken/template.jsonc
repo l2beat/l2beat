@@ -25,7 +25,5 @@
       "severity": "HIGH"
     }
   },
-  "ignoreInWatchMode": [
-    "totalSupply"
-  ]
+  "ignoreInWatchMode": ["totalSupply"]
 }
