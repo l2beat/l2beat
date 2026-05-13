@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import { getScalingBadgeDialogData } from '~/server/features/projects/badges/getScalingBadgeDialogData'
+import { getRecentChanges } from '~/server/features/projects/recent-changes/getRecentChanges'
 import { getSearchBarProjects } from '~/server/features/projects/search-bar/getSearchBarProjects'
 import { procedure, router } from '../trpc'
 
@@ -10,4 +11,13 @@ export const projectsRouter = router({
   badgesDialog: procedure
     .input(v.object({ badgeId: v.string() }))
     .query(({ input }) => getScalingBadgeDialogData(input)),
+  recentChanges: procedure
+    .input(
+      v.object({
+        projectId: v.string(),
+        page: v.number(),
+        pageSize: v.number(),
+      }),
+    )
+    .query(({ input }) => getRecentChanges(input)),
 })

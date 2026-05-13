@@ -14,14 +14,23 @@ import { formatLink } from '~/utils/formatLink'
 import { DiscoUiLink } from './DiscoUiLink'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
 import { parseCustom } from './parseCustom'
+import { RecentChangesPill } from './RecentChangesPill'
 import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]
   discoUiHref?: string
+  recentChanges?: {
+    projectId: string
+    projectName: string
+  }
 }
 
-export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
+export function DesktopProjectLinks({
+  projectLinks,
+  discoUiHref,
+  recentChanges,
+}: Props) {
   return (
     <NavigationMenu asChild>
       <div>
@@ -29,6 +38,14 @@ export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
           {projectLinks.map((link) => (
             <ProjectLinkItem key={link.name} projectLink={link} />
           ))}
+          {recentChanges && (
+            <NavigationMenuItem>
+              <RecentChangesPill
+                projectId={recentChanges.projectId}
+                projectName={recentChanges.projectName}
+              />
+            </NavigationMenuItem>
+          )}
           {discoUiHref && <DiscoUiLink href={discoUiHref} />}
         </NavigationMenuList>
       </div>

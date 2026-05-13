@@ -9,18 +9,24 @@ import { CustomIcon } from '~/icons/products/CustomIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
 import { parseCustom } from './parseCustom'
+import { RecentChangesPill } from './RecentChangesPill'
 import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]
   className?: string
   triggerClassName?: string
+  recentChanges?: {
+    projectId: string
+    projectName: string
+  }
 }
 
 export function MobileProjectLinks({
   projectLinks,
   className,
   triggerClassName,
+  recentChanges,
 }: Props) {
   return (
     <Accordion type="single" collapsible={true} className={className}>
@@ -86,6 +92,14 @@ export function MobileProjectLinks({
           </table>
         </AccordionContent>
       </AccordionItem>
+      {recentChanges && (
+        <div className="border-divider border-t py-3">
+          <RecentChangesPill
+            projectId={recentChanges.projectId}
+            projectName={recentChanges.projectName}
+          />
+        </div>
+      )}
     </Accordion>
   )
 }

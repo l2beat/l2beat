@@ -78,6 +78,14 @@ function Content({
             <div className="max-md:hidden">
               <DesktopProjectLinks
                 projectLinks={projectEntry.header.links ?? []}
+                recentChanges={
+                  projectEntry.hasRecentChanges
+                    ? {
+                        projectId: projectEntry.id,
+                        projectName: projectEntry.name,
+                      }
+                    : undefined
+                }
               />
             </div>
           </div>
@@ -92,6 +100,14 @@ function Content({
                 <div className="border-divider border-b px-4 md:hidden">
                   <MobileProjectLinks
                     projectLinks={projectEntry.header.links}
+                    recentChanges={
+                      projectEntry.hasRecentChanges
+                        ? {
+                            projectId: projectEntry.id,
+                            projectName: projectEntry.name,
+                          }
+                        : undefined
+                    }
                   />
                 </div>
               )}

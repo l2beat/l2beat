@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { hasRecentChanges } from '~/server/features/projects/recent-changes/getRecentChanges'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -128,6 +129,7 @@ export interface ProjectScalingEntry {
   hostChainName: string
   stageConfig: ProjectScalingStage
   discoUiHref: string | undefined
+  hasRecentChanges: boolean
 }
 
 export async function getScalingProjectEntry(
@@ -314,6 +316,8 @@ export async function getScalingProjectEntry(
     discoUiHref: project.discoveryInfo?.hasDiscoUi
       ? `https://disco.l2beat.com/ui/p/${project.id}`
       : undefined,
+    hasRecentChanges:
+      !!project.discoveryInfo?.hasDiscoUi && hasRecentChanges(project.id),
   }
 
   const sections: ProjectDetailsSection[] = []

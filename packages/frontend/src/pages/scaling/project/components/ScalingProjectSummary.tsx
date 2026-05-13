@@ -229,7 +229,14 @@ export function ProjectScalingSummary({ project }: Props) {
 
       <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-[calc(100%+2rem)] md:my-4" />
       <div className="md:hidden">
-        <MobileProjectLinks projectLinks={project.header.links} />
+        <MobileProjectLinks
+          projectLinks={project.header.links}
+          recentChanges={
+            project.hasRecentChanges
+              ? { projectId: project.id, projectName: project.name }
+              : undefined
+          }
+        />
       </div>
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">

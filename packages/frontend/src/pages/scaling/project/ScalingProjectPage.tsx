@@ -97,6 +97,14 @@ export function ScalingProjectPage({
                     <DesktopProjectLinks
                       projectLinks={projectEntry.header.links}
                       discoUiHref={projectEntry.discoUiHref}
+                      recentChanges={
+                        projectEntry.hasRecentChanges
+                          ? {
+                              projectId: projectEntry.id,
+                              projectName: projectEntry.name,
+                            }
+                          : undefined
+                      }
                     />
                   </div>
                 </div>

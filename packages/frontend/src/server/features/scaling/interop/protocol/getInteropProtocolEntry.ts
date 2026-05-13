@@ -6,6 +6,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '~/pages/interop/components/flows/consts'
 import type { InteropSelection } from '~/pages/interop/utils/types'
+import { hasRecentChanges } from '~/server/features/projects/recent-changes/getRecentChanges'
 import { getProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { InteropProtocolDashboardData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -38,10 +39,11 @@ export interface InteropProtocolEntry {
     hostChain?: string
   }
   sections: ProjectDetailsSection[]
+  hasRecentChanges: boolean
 }
 
 export async function getInteropProtocolEntry(
-  project: Project<'interopConfig', 'display' | 'statuses'>,
+  project: Project<'interopConfig', 'display' | 'statuses' | 'discoveryInfo'>,
   apiSelection: InteropSelection,
   interopChains: InteropChainWithIcon[],
   data: InteropProtocolDashboardData,
@@ -189,6 +191,8 @@ export async function getInteropProtocolEntry(
     }),
     header,
     sections,
+    hasRecentChanges:
+      !!project.discoveryInfo?.hasDiscoUi && hasRecentChanges(project.id),
   }
 }
 

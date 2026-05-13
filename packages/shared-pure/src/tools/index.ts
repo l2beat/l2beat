@@ -1,5 +1,6 @@
 export * from './assert.js'
 export * from './ChainConverter.js'
+export * from './DiffHistoryParser.js'
 export * from './errors.js'
 export * from './InMemoryCache.js'
 export * from './openPanelPlugin.js'

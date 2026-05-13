@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { DiffHistoryParser } from './DiffHistoryParser'
+import { DiffHistoryParser } from './DiffHistoryParser.js'
 
 const parser = new DiffHistoryParser()
 
