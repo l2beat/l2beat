@@ -5,16 +5,20 @@ import { getPrivacyProjects } from './getPrivacyProjects'
 import type { PrivacyFlowsChartPoint } from './utils/buildPrivacyFlowsChart'
 import { buildPrivacyFlowsChart } from './utils/buildPrivacyFlowsChart'
 
-export interface PrivacySummaryChartResponse {
-  chart: PrivacyFlowsChartPoint[]
-  syncedUntil: number | undefined
-  tvsChart: [timestamp: number, totalValueSecuredUsd: number][]
-  tvsSyncedUntil: number | undefined
+export interface PrivacySummaryChartsResponse {
+  flows: {
+    chart: PrivacyFlowsChartPoint[]
+    syncedUntil: number | undefined
+  }
+  tvs: {
+    chart: [timestamp: number, totalValueSecuredUsd: number][]
+    syncedUntil: number | undefined
+  }
 }
 
 export async function getPrivacySummaryChart(params: {
   range: [UnixTime | null, UnixTime]
-}): Promise<PrivacySummaryChartResponse> {
+}): Promise<PrivacySummaryChartsResponse> {
   const db = getDb()
   const projects = await getPrivacyProjects()
   const projectIds = projects.map((p) => p.id)
@@ -35,7 +39,7 @@ export async function getPrivacySummaryChart(params: {
     }),
   ])
 
-  const flowsChart = buildPrivacyFlowsChart(
+  const flows = buildPrivacyFlowsChart(
     projects.map((p) => p.id.toString()),
     dailyRows,
     syncedUntil,
@@ -43,8 +47,10 @@ export async function getPrivacySummaryChart(params: {
   )
 
   return {
-    ...flowsChart,
-    tvsChart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
-    tvsSyncedUntil: tvsValues.at(-1)?.timestamp,
+    flows,
+    tvs: {
+      chart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
+      syncedUntil: tvsValues.at(-1)?.timestamp,
+    },
   }
 }

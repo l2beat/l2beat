@@ -123,7 +123,7 @@ export async function getPrivacyProjectData(
     return undefined
   }
 
-  await helpers.privacy.projectChart.prefetch({
+  await helpers.privacy.projectCharts.prefetch({
     projectId: details.id,
     range: defaultChartRange,
   })

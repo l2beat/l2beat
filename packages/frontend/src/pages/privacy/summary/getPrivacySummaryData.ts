@@ -24,7 +24,7 @@ export async function getPrivacySummaryData(
       },
       () => getPrivacySummaryEntries(),
     ),
-    helpers.privacy.summaryChart.prefetch({
+    helpers.privacy.summaryCharts.prefetch({
       range: defaultChartRange,
     }),
   ])

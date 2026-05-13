@@ -16,26 +16,28 @@ export type PrivacyProjectChartParams = v.infer<
   typeof PrivacyProjectChartParams
 >
 
-export interface PrivacyProjectChartResponse {
-  chart: PrivacyFlowsChartPoint[]
-  syncedUntil: number | undefined
-  tvsChart: [timestamp: number, totalValueSecuredUsd: number][]
-  tvsSyncedUntil: number | undefined
+export interface PrivacyProjectChartsResponse {
+  flows: {
+    chart: PrivacyFlowsChartPoint[]
+    syncedUntil: number | undefined
+  }
+  tvs: {
+    chart: [timestamp: number, totalValueSecuredUsd: number][]
+    syncedUntil: number | undefined
+  }
 }
 
 export async function getPrivacyProjectChart(
   params: PrivacyProjectChartParams,
-): Promise<PrivacyProjectChartResponse> {
+): Promise<PrivacyProjectChartsResponse> {
   const db = getDb()
   const projects = await getPrivacyProjects()
   const project = projects.find((project) => project.id === params.projectId)
 
   if (!project) {
     return {
-      chart: [],
-      syncedUntil: undefined,
-      tvsChart: [],
-      tvsSyncedUntil: undefined,
+      flows: { chart: [], syncedUntil: undefined },
+      tvs: { chart: [], syncedUntil: undefined },
     }
   }
 
@@ -55,7 +57,7 @@ export async function getPrivacyProjectChart(
     }),
   ])
 
-  const flowsChart = buildPrivacyFlowsChart(
+  const flows = buildPrivacyFlowsChart(
     [project.id.toString()],
     dailyRows,
     syncedUntil,
@@ -63,8 +65,10 @@ export async function getPrivacyProjectChart(
   )
 
   return {
-    ...flowsChart,
-    tvsChart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
-    tvsSyncedUntil: tvsValues.at(-1)?.timestamp,
+    flows,
+    tvs: {
+      chart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
+      syncedUntil: tvsValues.at(-1)?.timestamp,
+    },
   }
 }

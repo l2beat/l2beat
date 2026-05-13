@@ -16,14 +16,14 @@ interface Props {
 
 export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = api.privacy.projectChart.useQuery({
+  const { data, isLoading } = api.privacy.projectCharts.useQuery({
     projectId: project.id,
     range,
   })
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(
+      data?.flows.chart.map(
         ([
           timestamp,
           depositsCount,
@@ -43,7 +43,7 @@ export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
 
   const tvsChartData = useMemo(
     () =>
-      data?.tvsChart.map(([timestamp, value]) => ({
+      data?.tvs.chart.map(([timestamp, value]) => ({
         timestamp,
         value,
       })),
@@ -71,7 +71,7 @@ export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
         </h3>
         <PrivacyTvsChart
           data={tvsChartData}
-          syncedUntil={data?.tvsSyncedUntil}
+          syncedUntil={data?.tvs.syncedUntil}
           isLoading={isLoading}
         />
       </div>
@@ -82,7 +82,7 @@ export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
         </h3>
         <PrivacyFlowChart
           data={chartData}
-          syncedUntil={data?.syncedUntil}
+          syncedUntil={data?.flows.syncedUntil}
           isLoading={isLoading}
           metric="count"
           project={project}
@@ -95,7 +95,7 @@ export function PrivacyFlowsChartsSection({ project, defaultRange }: Props) {
         </h3>
         <PrivacyFlowChart
           data={chartData}
-          syncedUntil={data?.syncedUntil}
+          syncedUntil={data?.flows.syncedUntil}
           isLoading={isLoading}
           metric="value"
           project={project}

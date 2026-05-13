@@ -15,13 +15,13 @@ interface Props {
 
 export function PrivacySummaryChartsSection({ defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = api.privacy.summaryChart.useQuery({
+  const { data, isLoading } = api.privacy.summaryCharts.useQuery({
     range,
   })
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(
+      data?.flows.chart.map(
         ([
           timestamp,
           depositsCount,
@@ -41,7 +41,7 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
 
   const tvsChartData = useMemo(
     () =>
-      data?.tvsChart.map(([timestamp, value]) => ({
+      data?.tvs.chart.map(([timestamp, value]) => ({
         timestamp,
         value,
       })),
@@ -74,7 +74,7 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       </div>
       <PrivacyFlowChart
         data={chartData}
-        syncedUntil={data?.syncedUntil}
+        syncedUntil={data?.flows.syncedUntil}
         isLoading={isLoading}
         metric={'count'}
       />
@@ -88,7 +88,7 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       </div>
       <PrivacyTvsChart
         data={tvsChartData}
-        syncedUntil={data?.tvsSyncedUntil}
+        syncedUntil={data?.tvs.syncedUntil}
         isLoading={isLoading}
       />
     </div>
