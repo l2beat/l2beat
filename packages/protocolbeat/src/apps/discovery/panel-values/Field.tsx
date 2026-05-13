@@ -106,7 +106,7 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   ] as const
 
   return (
-    <li className="group/field overflow-hidden border-coffee-800 border-b text-sm last:border-b-0">
+    <li className="group/field border-coffee-800 border-b text-sm last:border-b-0">
       <div className="sticky top-0 z-10 border-coffee-800 border-b bg-coffee-800">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1 text-xs">
           <div className="flex flex-wrap items-center gap-1 font-bold">
