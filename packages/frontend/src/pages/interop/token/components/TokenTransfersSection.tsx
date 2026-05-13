@@ -14,7 +14,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
-  columns,
+  getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
@@ -73,7 +73,7 @@ export function TokenTransfersSection({
 
   const table = useTable<TransferRow>({
     data: fetchedItems,
-    columns,
+    columns: getTransferColumns({ from: selectedFrom, to: selectedTo }),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,

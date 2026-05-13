@@ -174,9 +174,11 @@ export type InteropProtocolTransferDetailsItem = {
   timestamp: number
   srcAmount: number | undefined
   srcSymbol: string
+  srcTokenIssuer: string | null
   srcTokenIconUrl: string
   dstAmount: number | undefined
   dstSymbol: string
+  dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number | undefined
@@ -250,8 +252,8 @@ export type InteropTokensResponse = {
 
 export type TokensPairData = {
   id: string
-  tokenA: { symbol: string; iconUrl: string }
-  tokenB: { symbol: string; iconUrl: string }
+  tokenA: { id: string; symbol: string; issuer: string | null; iconUrl: string }
+  tokenB: { id: string; symbol: string; issuer: string | null; iconUrl: string }
   topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number

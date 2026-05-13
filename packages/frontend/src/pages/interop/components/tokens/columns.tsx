@@ -313,9 +313,11 @@ const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
 export const getTopTokensPairsColumns = ({
   showTopProtocolColumn,
   showFlowsColumn,
+  selectedChains,
 }: {
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
+  selectedChains?: InteropSelection
 } = {}) => [
   tokensPairColumnHelper.accessor(
     (row) =>
@@ -339,7 +341,7 @@ export const getTopTokensPairsColumns = ({
               height={20}
               alt={`${tokenA.symbol} icon`}
             />
-            <span>{tokenA.symbol}</span>
+            <TokenPairSymbol token={tokenA} selectedChains={selectedChains} />
             <BidirectionalArrowIcon className="size-4 shrink-0 fill-brand" />
             <img
               className="size-[20px] rounded-full bg-white shadow"
@@ -348,7 +350,7 @@ export const getTopTokensPairsColumns = ({
               height={20}
               alt={`${tokenB.symbol} icon`}
             />
-            <span>{tokenB.symbol}</span>
+            <TokenPairSymbol token={tokenB} selectedChains={selectedChains} />
           </div>
         )
       },
@@ -364,3 +366,24 @@ export const getTopTokensPairsColumns = ({
     showFlowsColumn,
   ),
 ]
+
+function TokenPairSymbol({
+  token,
+  selectedChains,
+}: {
+  token: TokensPairRow['tokenA']
+  selectedChains: InteropSelection | undefined
+}) {
+  if (!selectedChains || token.id === 'unknown') {
+    return <span>{token.symbol}</span>
+  }
+
+  return (
+    <a
+      href={getInteropTokenUrl(token, selectedChains)}
+      className="hover:underline"
+    >
+      {token.symbol}
+    </a>
+  )
+}

@@ -17,7 +17,9 @@ import { getSummaryTokensData } from './utils/getSummaryTokensData'
 import { getTopItems, type TopItems } from './utils/getTopItems'
 
 export interface FlowToken {
+  id: string
   symbol: string
+  issuer: string | null
   iconUrl: string
   volume: number
 }
@@ -165,7 +167,9 @@ export async function getInteropFlows(
     const details = detailsMap.get(entry.id)
     if (!details) return undefined
     return {
+      id: entry.id,
       symbol: details.symbol,
+      issuer: details.issuer,
       iconUrl: details.iconUrl,
       volume: entry.volume,
     }
@@ -435,7 +439,9 @@ function getMockInteropFlows(): InteropFlowsData {
           }
         : undefined,
       topToken: {
+        id: 'eth',
         symbol: 'ETH',
+        issuer: 'ethereum',
         iconUrl: '/icons/tokens/ether.png',
         volume: 1_000_000,
       },

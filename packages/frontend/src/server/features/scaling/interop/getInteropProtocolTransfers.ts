@@ -218,12 +218,20 @@ export function toInteropProtocolTransferDetailsItem(
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
     srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    srcTokenIssuer:
+      transfer.srcAbstractTokenId !== undefined
+        ? (tokensDetailsMap.get(transfer.srcAbstractTokenId)?.issuer ?? null)
+        : null,
     srcTokenIconUrl: getTokenIconUrl(
       transfer.srcAbstractTokenId,
       tokensDetailsMap,
     ),
     dstAmount: transfer.dstAmount,
     dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    dstTokenIssuer:
+      transfer.dstAbstractTokenId !== undefined
+        ? (tokensDetailsMap.get(transfer.dstAbstractTokenId)?.issuer ?? null)
+        : null,
     dstTokenIconUrl: getTokenIconUrl(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
@@ -301,9 +309,11 @@ function getMockInteropProtocolTransfers({
       timestamp: timestamp - i * 60,
       srcAmount: 1_000,
       srcSymbol: 'ETH',
+      srcTokenIssuer: 'ethereum',
       srcTokenIconUrl: ethIcon,
       dstAmount: 1_000,
       dstSymbol: 'ETH',
+      dstTokenIssuer: 'ethereum',
       dstTokenIconUrl: ethIcon,
       valueUsd: 1_000,
       duration: 60_000,

@@ -8,6 +8,7 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { TokensDialog } from '../tokens/TokensDialog'
 import { InteropTopItems } from '../top-items/TopItems'
 import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
@@ -189,7 +190,13 @@ export function FlowsGeneralStats({
                 className="border-0 p-0!"
                 value={
                   topToken ? (
-                    <div className="flex items-center gap-1.5">
+                    <a
+                      href={getInteropTokenUrl(topToken, {
+                        from: selectedChains,
+                        to: selectedChains,
+                      })}
+                      className="flex items-center gap-1.5 hover:underline"
+                    >
                       <img
                         src={topToken.iconUrl}
                         alt={topToken.symbol}
@@ -201,7 +208,7 @@ export function FlowsGeneralStats({
                       <span className="font-medium text-label-value-14 text-secondary">
                         {formatCurrency(topToken.volume, 'usd')}
                       </span>
-                    </div>
+                    </a>
                   ) : (
                     '-'
                   )
