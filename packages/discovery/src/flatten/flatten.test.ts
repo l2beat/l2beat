@@ -1100,6 +1100,31 @@ describe('flatten', () => {
     )
   })
 
+  it('regression - constructor arguments in base contracts', () => {
+    const file = sol(
+      'Root.sol',
+      `
+    uint256 constant CONSTANT = 42;
+    contract Base { constructor(uint256 x) {} }
+    contract Root is Base(CONSTANT) { }
+    `,
+    )
+
+    const flattened = flattenStartingFrom('Root', 'Root.sol', [file], [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+      contract Base { constructor(uint256 x) {} }
+
+      uint256 constant CONSTANT = 42;
+
+      contract Root is Base(CONSTANT) { }
+  `),
+    )
+  })
+
   describe('name clash disambiguation', () => {
     it('resolves name clash from import alias reversal', () => {
       const files = [
