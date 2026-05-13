@@ -266,13 +266,12 @@ export class TokenIngestionProcessor {
     | { type: 'resolved'; abstractTokenId: string | undefined }
     | { type: 'conflict'; message: string }
   > {
-    const nonSwapping = transfers.filter((match) =>
-      isNonSwappingTransfer(match.transfer),
+    const usableNonSwapping = transfers.filter(
+      (match): match is InteropTransferMatch & { otherToken: TokenAddress } =>
+        isNonSwappingTransfer(match.transfer) && match.otherToken !== undefined,
     )
     const otherTokens = uniqueTokenAddresses(
-      nonSwapping
-        .map((match) => match.otherToken)
-        .filter((address): address is TokenAddress => address !== undefined),
+      usableNonSwapping.map((match) => match.otherToken),
     )
 
     const otherDeployedTokens =
@@ -292,7 +291,7 @@ export class TokenIngestionProcessor {
     steps.push({
       kind: 'transfer-evidence',
       total: transfers.length,
-      nonSwapping: nonSwapping.length,
+      nonSwapping: usableNonSwapping.length,
       abstractTokenIds: Array.from(abstractTokenIds),
     })
 
