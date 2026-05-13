@@ -96,10 +96,12 @@ export function InteropFlowsProvider({
   const [highlightedChainIds, setHighlightedChainIds] = useState<string[]>([])
   const highlightedChains = useMemo(
     () =>
-      uniqueChains([
-        ...(pinnedChainId ? [pinnedChainId] : []),
-        ...highlightedChainIds,
-      ]).slice(0, 2),
+      [
+        ...new Set([
+          ...(pinnedChainId ? [pinnedChainId] : []),
+          ...highlightedChainIds,
+        ]),
+      ].slice(0, 2),
     [highlightedChainIds, pinnedChainId],
   )
   const selectedProtocols = useMemo(
@@ -235,8 +237,4 @@ function parseIdsParam(value: string, validIds: string[]): string[] {
   if (!value) return []
   const provided = new Set(value.split(','))
   return validIds.filter((id) => provided.has(id))
-}
-
-function uniqueChains(chainIds: string[]) {
-  return [...new Set(chainIds)]
 }
