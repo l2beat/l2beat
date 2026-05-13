@@ -106,42 +106,44 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   ] as const
 
   return (
-    <li className="group/field overflow-hidden border-coffee-800 border-b text-sm last:border-b-0">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1 text-xs">
-        <div className="flex flex-wrap items-center gap-1 font-bold">
-          <span>{field.name}</span>
-          {templateTags
-            .filter((x) => x.isActive)
-            .map((x) => (
-              <FieldTag
-                key={`${field.name}:${x.tag}`}
-                source="template"
-                onRemoveClick={canModify ? x.onClick : undefined}
-              >
-                {x.tag}
-              </FieldTag>
-            ))}
-          {configTags
-            .filter((x) => x.isActive)
-            .map((x) => (
-              <FieldTag
-                key={`${field.name}:${x.tag}`}
-                source="config"
-                onRemoveClick={canModify ? x.onClick : undefined}
-              >
-                {x.tag}
-              </FieldTag>
-            ))}
+    <li className="group/field border-coffee-800 border-b text-sm last:border-b-0">
+      <div className="sticky top-0 z-10 border-coffee-800 border-b bg-coffee-800">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1 text-xs">
+          <div className="flex flex-wrap items-center gap-1 font-bold">
+            <span>{field.name}</span>
+            {templateTags
+              .filter((x) => x.isActive)
+              .map((x) => (
+                <FieldTag
+                  key={`${field.name}:${x.tag}`}
+                  source="template"
+                  onRemoveClick={canModify ? x.onClick : undefined}
+                >
+                  {x.tag}
+                </FieldTag>
+              ))}
+            {configTags
+              .filter((x) => x.isActive)
+              .map((x) => (
+                <FieldTag
+                  key={`${field.name}:${x.tag}`}
+                  source="config"
+                  onRemoveClick={canModify ? x.onClick : undefined}
+                >
+                  {x.tag}
+                </FieldTag>
+              ))}
+          </div>
           <div className="opacity-0 group-hover/field:opacity-100">
             {canModify && <FieldConfigDialog field={field} />}
           </div>
         </div>
+        {description && (
+          <div className="whitespace-normal px-5 pb-1 font-serif text-coffee-200 italic">
+            {description}
+          </div>
+        )}
       </div>
-      {description && (
-        <div className="whitespace-normal px-5 pb-1 font-serif text-coffee-200 italic">
-          {description}
-        </div>
-      )}
       {sourcedPermissions.length > 0 && (
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 whitespace-normal px-5 pb-1 text-xs">
           {sourcedPermissions.map(({ permission, source }, i) => (

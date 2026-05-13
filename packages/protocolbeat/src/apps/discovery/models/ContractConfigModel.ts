@@ -105,6 +105,18 @@ export class ContractConfigModel {
     }
   }
 
+  getFieldEdit(name: string) {
+    return this.fields[name]?.edit
+  }
+
+  getFieldEditString(name: string) {
+    const edit = this.fields[name]?.edit
+
+    if (edit) {
+      return stringify(edit, null, 2)
+    }
+  }
+
   setDescription(description: string | undefined) {
     const trimmed = description?.trim()
 
