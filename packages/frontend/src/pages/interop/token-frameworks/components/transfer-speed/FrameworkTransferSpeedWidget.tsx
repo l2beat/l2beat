@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../../components/chain-selector/types'
@@ -79,7 +80,7 @@ export function FrameworkTransferSpeedWidget({
       <h3 className="mt-5 font-medium text-label-value-13 text-secondary">
         All Frameworks
       </h3>
-      <div className="mt-2 flex max-h-42 flex-1 flex-col gap-2.5 overflow-auto">
+      <ScrollWithGradient className="mt-2 flex max-h-42 flex-1 flex-col gap-2.5">
         {isLoading
           ? tokenFrameworks.map((f) => <Skeleton key={f.id} className="h-7" />)
           : sorted.map((entry) => {
@@ -93,7 +94,7 @@ export function FrameworkTransferSpeedWidget({
                 />
               )
             })}
-      </div>
+      </ScrollWithGradient>
     </PrimaryCard>
   )
 }
