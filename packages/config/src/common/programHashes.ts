@@ -510,6 +510,29 @@ fn main() {
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
+  '0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745': {
+    title: 'Celestia Blobstream DA bridge program',
+    description:
+      'ZK-friendly implementation of Celestia Blobstream DA bridge that proves that enough Celestia validators have confirmed a given data root.',
+    programUrl:
+      'https://github.com/succinctlabs/sp1-blobstream/tree/78a9d3419339a8c60bf51e1e3241f242bc44d434/program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct commit hash in [sp1-blobstream](https://github.com/succinctlabs/sp1-blobstream/tree/main) repo:  \`git checkout 78a9d3419339a8c60bf51e1e3241f242bc44d434\`.
+2. Make sure docker is running by running  \`docker ps\`.
+3. From the  \`sp1-blobstream/program\` dir run:  \`cargo prove build --docker --tag v6.1.0 --elf-name blobstream-elf --output-directory ../elf\` to build the blobstream program elf within a docker container and place it in \`sp1-blobstream/elf\`.
+4. From \`sp1-blobstream\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`blobstream-elf\` program.
+    `,
+  },
   '0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1': {
     title: 'Avail VectorX DA bridge program',
     description:

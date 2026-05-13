@@ -6305,6 +6305,20 @@
       "supply": "zero"
     },
     {
+      "name": "USDS Stablecoin",
+      "coingeckoId": "usds",
+      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "symbol": "USDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1725290327,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "USUAL",
       "coingeckoId": "usual",
       "address": "0xC4441c2BE5d8fA8126822B9929CA0b81Ea0DE38E",
