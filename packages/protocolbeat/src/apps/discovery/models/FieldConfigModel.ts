@@ -64,6 +64,10 @@ export class FieldConfigModel {
     return this.config.handler
   }
 
+  get edit() {
+    return this.config.edit
+  }
+
   get permissions() {
     return this.config.permissions
   }
