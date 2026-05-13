@@ -35,11 +35,10 @@ export async function getPrivacySummaryData(
   const [appLayoutProps, snapshot] = await Promise.all([
     getAppLayoutProps(),
     getPrivacySnapshot(cache),
+    helpers.privacy.summaryChart.prefetch({
+      range: defaultChartRange,
+    }),
   ])
-
-  await helpers.privacy.summaryChart.prefetch({
-    range: defaultChartRange,
-  })
 
   const entries: PrivacySummaryEntry[] = snapshot.projects.map((project) => ({
     id: project.id,
