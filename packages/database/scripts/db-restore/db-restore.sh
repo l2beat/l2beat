@@ -2,7 +2,7 @@
 
 source .env
 
-FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "tokens-ui" "tracked-txs")
+FEATURES_NAMES=("da" "liveness" "tvs" "activity" "shared" "interop" "interop-aggregates" "tokens-ui" "tracked-txs" "privacy")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability Blob SyncMetadata"
     "IndexerState IndexerConfiguration Liveness AggregatedLiveness"
@@ -13,6 +13,7 @@ FEATURES_TABLES=(
     "IndexerState IndexerConfiguration AggregatedInteropTransfer AggregatedInteropToken"
     "AbstractToken DeployedToken TokenConnection Chain"
     "IndexerState IndexerConfiguration L2Cost Liveness AggregatedL2Cost AggregatedLiveness"
+    "IndexerState IndexerConfiguration PrivacyBlockTimestamp PrivacyFlowEvent PrivacyPrice"
 )
 
 clear_tables() {
