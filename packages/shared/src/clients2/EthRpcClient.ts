@@ -498,7 +498,7 @@ const RpcLog = v.passthroughObject({
   blockTimestamp: v
     .union([vQuantity, v.number()])
     // Some logs return 0x0 as block timestamp, which is invalid
-    .transform((n) => (n === 0 ? undefined : BigInt(n)))
+    .transform((n) => (BigInt(n) === 0n ? undefined : BigInt(n)))
     .optional(),
 })
 
