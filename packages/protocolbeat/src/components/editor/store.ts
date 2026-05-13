@@ -43,14 +43,14 @@ interface CodeState {
 interface DiffSettings {
   fold: boolean
   removeUnchanged: boolean
-  considerComments: boolean
+  ignoreComments: boolean
   swapped: boolean
 }
 
 interface DiffSettingsStore extends DiffSettings {
   toggleFold: () => void
   toggleRemoveUnchanged: () => void
-  toggleConsiderComments: () => void
+  toggleIgnoreComments: () => void
   toggleSwapped: () => void
   setSettings: (settings: Partial<DiffSettings>) => void
 }
@@ -120,14 +120,14 @@ export const useCodeStore = create<CodeState>((set, get) => ({
 export const useDiffSettingsStore = create<DiffSettingsStore>((set) => ({
   fold: false,
   removeUnchanged: false,
-  considerComments: false,
+  ignoreComments: false,
   swapped: false,
 
   toggleFold: () => set((state) => ({ fold: !state.fold })),
   toggleRemoveUnchanged: () =>
     set((state) => ({ removeUnchanged: !state.removeUnchanged })),
-  toggleConsiderComments: () =>
-    set((state) => ({ considerComments: !state.considerComments })),
+  toggleIgnoreComments: () =>
+    set((state) => ({ ignoreComments: !state.ignoreComments })),
   toggleSwapped: () => set((state) => ({ swapped: !state.swapped })),
 
   setSettings: (settings) => set((state) => ({ ...state, ...settings })),

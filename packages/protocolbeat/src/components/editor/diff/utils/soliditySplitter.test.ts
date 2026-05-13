@@ -2,7 +2,7 @@ import { expect } from 'earl'
 import { splitCode } from './soliditySplitter'
 
 describe('splitCode', () => {
-  describe('removeSameDeclarations with considerComments=false', () => {
+  describe('removeSameDeclarations with ignoreComments=true', () => {
     it('omits a declaration whose only difference is in comments', () => {
       // When the user toggles "remove unchanged sections" and is also
       // ignoring comments, declarations that differ only in comments
@@ -18,7 +18,7 @@ describe('splitCode', () => {
         'contract A': '// new comment\ncontract A { uint x; }',
         'contract B': 'contract B { uint y; }',
       }
-      const [leftOut, rightOut] = splitCode(left, right, true, false)
+      const [leftOut, rightOut] = splitCode(left, right, true, true)
       expect(leftOut.includes('contract A')).toEqual(false)
       expect(rightOut.includes('contract A')).toEqual(false)
     })
@@ -30,19 +30,19 @@ describe('splitCode', () => {
       const right = {
         'contract A': '// comment\ncontract A { uint y; }',
       }
-      const [leftOut, rightOut] = splitCode(left, right, true, false)
+      const [leftOut, rightOut] = splitCode(left, right, true, true)
       expect(leftOut.includes('uint x')).toEqual(true)
       expect(rightOut.includes('uint y')).toEqual(true)
     })
 
-    it('keeps a comment-only diff when considerComments=true', () => {
+    it('keeps a comment-only diff when ignoreComments=false', () => {
       const left = {
         'contract A': '// old comment\ncontract A { uint x; }',
       }
       const right = {
         'contract A': '// new comment\ncontract A { uint x; }',
       }
-      const [leftOut, rightOut] = splitCode(left, right, true, true)
+      const [leftOut, rightOut] = splitCode(left, right, true, false)
       expect(leftOut.includes('// old comment')).toEqual(true)
       expect(rightOut.includes('// new comment')).toEqual(true)
     })

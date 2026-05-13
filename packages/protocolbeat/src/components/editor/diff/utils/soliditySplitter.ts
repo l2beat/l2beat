@@ -4,7 +4,7 @@ export function splitCode(
   left: Record<string, string>,
   right: Record<string, string>,
   removeSameDeclarations = false,
-  considerComments = true,
+  ignoreComments = false,
 ): [string, string] {
   // For the "are these declarations effectively the same?" comparison, use a
   // comment-stripped view when comments are being ignored downstream by the
@@ -12,8 +12,8 @@ export function splitCode(
   // comment edit stays visible in the "unchanged removed" view because the
   // raw strings differ, but its line changes are then filtered out — leaving
   // a large block of identical-looking content.
-  const leftForMatch = considerComments ? left : stripCommentsFromAll(left)
-  const rightForMatch = considerComments ? right : stripCommentsFromAll(right)
+  const leftForMatch = ignoreComments ? stripCommentsFromAll(left) : left
+  const rightForMatch = ignoreComments ? stripCommentsFromAll(right) : right
   const matched = matchUp(leftForMatch, rightForMatch, removeSameDeclarations)
 
   let smallerLeft = ''

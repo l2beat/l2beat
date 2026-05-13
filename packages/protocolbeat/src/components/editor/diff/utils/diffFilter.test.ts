@@ -9,29 +9,29 @@ import {
 
 describe('decideChanges', () => {
   it('returns an empty list when there are no changes', () => {
-    expect(decideChanges([], 'a', 'b', false)).toEqual([])
+    expect(decideChanges([], 'a', 'b', true)).toEqual([])
   })
 
   it('drops a whitespace-only change', () => {
     const left = 'a = 1'
     const right = 'a  =  1'
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'drop' },
     ])
   })
 
-  it('drops a comment-only change when considerComments is false', () => {
-    const left = '// foo\nx'
-    const right = '// bar\nx'
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
-      { kind: 'drop' },
-    ])
-  })
-
-  it('narrows a comment-only change to the comment line when considerComments is true', () => {
+  it('drops a comment-only change when ignoreComments is true', () => {
     const left = '// foo\nx'
     const right = '// bar\nx'
     expect(decide(left, right, [whole(left, right)], true)).toEqual([
+      { kind: 'drop' },
+    ])
+  })
+
+  it('narrows a comment-only change to the comment line when ignoreComments is false', () => {
+    const left = '// foo\nx'
+    const right = '// bar\nx'
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 2) },
     ])
   })
@@ -39,7 +39,7 @@ describe('decideChanges', () => {
   it('keeps a real code change unchanged', () => {
     const left = 'x = 1'
     const right = 'x = 2'
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'keep' },
     ])
   })
@@ -47,7 +47,7 @@ describe('decideChanges', () => {
   it('narrows by trimming a common leading line', () => {
     const left = 'shared\nold'
     const right = 'shared\nnew'
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(2, 3), modified: range(2, 3) },
     ])
   })
@@ -55,7 +55,7 @@ describe('decideChanges', () => {
   it('narrows by trimming a common trailing line', () => {
     const left = 'old\nshared'
     const right = 'new\nshared'
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 2) },
     ])
   })
@@ -63,7 +63,7 @@ describe('decideChanges', () => {
   it('narrows an insert-only change to a zero-width range on the left', () => {
     const left = 'func()'
     const right = '// docs\nfunc()'
-    expect(decide(left, right, [whole(left, right)], true)).toEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 1), modified: range(1, 2) },
     ])
   })
@@ -71,12 +71,33 @@ describe('decideChanges', () => {
   it('narrows a removal-only change to a zero-width range on the right', () => {
     const left = '// docs\nfunc()'
     const right = 'func()'
-    expect(decide(left, right, [whole(left, right)], true)).toEqual([
+    expect(decide(left, right, [whole(left, right)], false)).toEqual([
       { kind: 'narrow', original: range(1, 2), modified: range(1, 1) },
     ])
   })
 
-  it('drops a comment+reformat change when considerComments is false', () => {
+  it('drops a comment+reformat change when ignoreComments is true', () => {
+    const left = [
+      'function compareOneOf(bytes32[] storage compValue, bytes32 value)',
+      '    internal',
+      '    view',
+      '{',
+    ].join('\n')
+    const right = [
+      '/// @dev allowlist check',
+      '/// @param compValue array',
+      '/// @param value param',
+      'function compareOneOf(',
+      '    bytes32[] storage compValue,',
+      '    bytes32 value',
+      ') internal view {',
+    ].join('\n')
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
+      { kind: 'drop' },
+    ])
+  })
+
+  it('narrows a comment+reformat change to the inserted comments when ignoreComments is false', () => {
     const left = [
       'function compareOneOf(bytes32[] storage compValue, bytes32 value)',
       '    internal',
@@ -93,27 +114,6 @@ describe('decideChanges', () => {
       ') internal view {',
     ].join('\n')
     expect(decide(left, right, [whole(left, right)], false)).toEqual([
-      { kind: 'drop' },
-    ])
-  })
-
-  it('narrows a comment+reformat change to the inserted comments when considerComments is true', () => {
-    const left = [
-      'function compareOneOf(bytes32[] storage compValue, bytes32 value)',
-      '    internal',
-      '    view',
-      '{',
-    ].join('\n')
-    const right = [
-      '/// @dev allowlist check',
-      '/// @param compValue array',
-      '/// @param value param',
-      'function compareOneOf(',
-      '    bytes32[] storage compValue,',
-      '    bytes32 value',
-      ') internal view {',
-    ].join('\n')
-    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(1, 1), modified: range(1, 4) },
     ])
   })
@@ -130,7 +130,7 @@ describe('decideChanges', () => {
         left,
         right,
         [{ original: range(2, 3), modified: range(2, 3) }],
-        true,
+        false,
       ),
     ).toEqual([{ kind: 'keep' }])
   })
@@ -155,7 +155,7 @@ describe('decideChanges', () => {
       '    IAnchorStateRegistry _anchorStateRegistry',
       ')',
     ].join('\n')
-    expect(decide(left, right, [whole(left, right)], false)).toEqual([
+    expect(decide(left, right, [whole(left, right)], true)).toEqual([
       { kind: 'narrow', original: range(3, 5), modified: range(3, 4) },
     ])
   })
@@ -177,7 +177,7 @@ describe('decideChanges', () => {
       { original: range(3, 4), modified: range(3, 4) },
       { original: range(5, 7), modified: range(5, 7) },
     ]
-    expect(decide(left, right, changes, false)).toEqual([
+    expect(decide(left, right, changes, true)).toEqual([
       { kind: 'keep' },
       { kind: 'drop' },
       { kind: 'narrow', original: range(6, 7), modified: range(6, 7) },
@@ -221,9 +221,9 @@ function decide(
   left: string,
   right: string,
   changes: LineRangeMapping[],
-  considerComments: boolean,
+  ignoreComments: boolean,
 ): ChangeDecision[] {
-  return decideChanges(changes, left, right, considerComments)
+  return decideChanges(changes, left, right, ignoreComments)
 }
 
 function range(start: number, endExclusive: number): LineRange {

@@ -17,7 +17,7 @@ export type { LineRange, LineRangeMapping } from './utils/diffFilter'
 
 const EMPTY_ALIGNMENT_GAPS: readonly LineRangeMapping[] = Object.freeze([])
 
-let considerComments = false
+let ignoreComments = false
 let singleton: CustomDiffProvider | null = null
 
 export function getSharedDiffProvider(): CustomDiffProvider {
@@ -27,11 +27,11 @@ export function getSharedDiffProvider(): CustomDiffProvider {
   return singleton
 }
 
-export function setConsiderComments(value: boolean): void {
-  if (considerComments === value) {
+export function setIgnoreComments(value: boolean): void {
+  if (ignoreComments === value) {
     return
   }
-  considerComments = value
+  ignoreComments = value
   singleton?.fireChange()
 }
 
@@ -75,7 +75,7 @@ export class CustomDiffProvider {
       result.changes,
       originalLines.join('\n'),
       modifiedLines.join('\n'),
-      considerComments,
+      ignoreComments,
     )
 
     this.alignmentGapsByModified.set(modified, alignmentGaps)
@@ -93,7 +93,7 @@ function applyDecisions(
   monacoChanges: LineRangeMapping[],
   originalSource: string,
   modifiedSource: string,
-  considerComments: boolean,
+  ignoreComments: boolean,
 ): { changes: LineRangeMapping[]; alignmentGaps: LineRangeMapping[] } {
   let decisions: ChangeDecision[]
   try {
@@ -101,7 +101,7 @@ function applyDecisions(
       monacoChanges,
       originalSource,
       modifiedSource,
-      considerComments,
+      ignoreComments,
     )
   } catch (error) {
     console.error(

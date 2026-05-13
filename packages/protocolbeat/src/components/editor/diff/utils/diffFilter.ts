@@ -60,7 +60,7 @@ export function decideChanges(
   changes: LineRangeMapping[],
   originalSource: string,
   modifiedSource: string,
-  considerComments: boolean,
+  ignoreComments: boolean,
 ): ChangeDecision[] {
   if (changes.length === 0) {
     return []
@@ -70,7 +70,7 @@ export function decideChanges(
   const modifiedTokens = tokenizeSolidity(modifiedSource)
 
   return changes.map((change) =>
-    decideChange(change, originalTokens, modifiedTokens, considerComments),
+    decideChange(change, originalTokens, modifiedTokens, ignoreComments),
   )
 }
 
@@ -78,7 +78,7 @@ function decideChange(
   change: LineRangeMapping,
   originalTokens: Token[],
   modifiedTokens: Token[],
-  considerComments: boolean,
+  ignoreComments: boolean,
 ): ChangeDecision {
   const left = effectiveTokens(
     tokensInRange(
@@ -86,7 +86,7 @@ function decideChange(
       change.original.startLineNumber,
       change.original.endLineNumberExclusive,
     ),
-    considerComments,
+    ignoreComments,
   )
   const right = effectiveTokens(
     tokensInRange(
@@ -94,7 +94,7 @@ function decideChange(
       change.modified.startLineNumber,
       change.modified.endLineNumberExclusive,
     ),
-    considerComments,
+    ignoreComments,
   )
 
   const narrowed = narrowChange(change, left, right)
@@ -128,11 +128,11 @@ function tokensInRange(
   return result
 }
 
-function effectiveTokens(tokens: Token[], considerComments: boolean): Token[] {
-  if (considerComments) {
-    return tokens
+function effectiveTokens(tokens: Token[], ignoreComments: boolean): Token[] {
+  if (ignoreComments) {
+    return tokens.filter((t) => t.type !== 'comment')
   }
-  return tokens.filter((t) => t.type !== 'comment')
+  return tokens
 }
 
 function narrowChange(
