@@ -1,9 +1,9 @@
 import clsx from 'clsx'
+import { memo } from 'react'
 
 import { AddressIcon } from '../../../../components/AddressIcon'
 import { IconInitial } from '../../../../icons/IconInitial'
 import type { Field, Node } from '../store/State'
-import { useStore } from '../store/store'
 import {
   FIELD_HEIGHT,
   HEADER_HEIGHT,
@@ -13,14 +13,23 @@ import { getColor } from './colors/colors'
 
 export interface NodeViewProps {
   node: Node
-  selected: boolean
-  isDimmed?: boolean
-  isGrayedOut?: boolean
-  isOverlapping?: boolean
+  isSelected: boolean
+  isDimmed: boolean
+  isGrayedOut: boolean
+  isOverlapping: boolean
+  // Per-field flags packed into a string ("01101..."). Stable enough for `===`
+  // comparison in the memo comparator; cheaper than allocating an array per
+  // render.
+  fieldHighlightedMask: string
+  fieldTargetHiddenMask: string
 }
 
-export function NodeView(props: NodeViewProps) {
+function NodeViewImpl(props: NodeViewProps) {
   const { color, isDark } = getColor(props.node)
+  const hiddenFields =
+    props.node.hiddenFields.length > 0
+      ? new Set(props.node.hiddenFields)
+      : undefined
 
   const fullHeight =
     props.node.addressType === 'EOA' && props.node.fields.length === 0
@@ -40,7 +49,7 @@ export function NodeView(props: NodeViewProps) {
         className={clsx(
           'absolute bg-black',
           fullHeight ? 'rounded-2xl' : 'rounded',
-          props.selected && 'outline outline-4 outline-autumn-300',
+          props.isSelected && 'outline outline-4 outline-autumn-300',
         )}
       >
         <div
@@ -63,16 +72,18 @@ export function NodeView(props: NodeViewProps) {
             )}
           </div>
         </div>
-        {props.node.fields
-          .filter((field) => !props.node.hiddenFields.includes(field.name))
-          .map((field, i) => (
+        {props.node.fields.map((field, i) => {
+          if (hiddenFields?.has(field.name)) return null
+          return (
             <NodeField
               key={i}
               field={field}
-              selected={props.selected}
-              isDimmed={props.isDimmed}
+              isSelected={props.isSelected}
+              isHighlighted={props.fieldHighlightedMask[i] === '1'}
+              targetHidden={props.fieldTargetHiddenMask[i] === '1'}
             />
-          ))}
+          )
+        })}
         {props.node.hiddenFields.length > 0 && (
           <div
             className="flex items-end justify-center text-center text-coffee-200/40 text-xs italic"
@@ -103,6 +114,18 @@ export function NodeView(props: NodeViewProps) {
   )
 }
 
+export const NodeView = memo(NodeViewImpl, (prev, next) => {
+  return (
+    prev.node === next.node &&
+    prev.isSelected === next.isSelected &&
+    prev.isDimmed === next.isDimmed &&
+    prev.isGrayedOut === next.isGrayedOut &&
+    prev.isOverlapping === next.isOverlapping &&
+    prev.fieldHighlightedMask === next.fieldHighlightedMask &&
+    prev.fieldTargetHiddenMask === next.fieldTargetHiddenMask
+  )
+})
+
 function getTitleBackground(node: Node): string {
   const { color, isDark } = getColor(node)
   if (!node.isInitial) {
@@ -112,8 +135,8 @@ function getTitleBackground(node: Node): string {
   const baseColor = color
 
   const contrastColorCSS = isDark
-    ? `color-mix(in oklch, ${baseColor}, black 15%)` // Mix dark color with white
-    : `color-mix(in oklch, ${baseColor}, white 15%)` // Mix light color with black
+    ? `color-mix(in oklch, ${baseColor}, black 15%)`
+    : `color-mix(in oklch, ${baseColor}, white 15%)`
 
   return `repeating-radial-gradient(
     circle,
@@ -122,18 +145,14 @@ function getTitleBackground(node: Node): string {
   )`
 }
 
-function NodeField(props: {
+interface NodeFieldProps {
   field: Field
-  selected: boolean
-  isDimmed?: boolean
-}) {
-  const isHighlighted = useStore((state) =>
-    state.selected.includes(props.field.target),
-  )
-  const targetHidden = useStore((state) =>
-    state.hidden.includes(props.field.target),
-  )
+  isSelected: boolean
+  isHighlighted: boolean
+  targetHidden: boolean
+}
 
+function NodeFieldImpl(props: NodeFieldProps) {
   const isLeft = props.field.connection.from.direction === 'left'
 
   return (
@@ -141,7 +160,7 @@ function NodeField(props: {
       <div
         className={clsx(
           'w-full truncate rounded-full px-2 font-mono text-xs',
-          isHighlighted && 'bg-autumn-300 text-black',
+          props.isHighlighted && 'bg-autumn-300 text-black',
         )}
         style={{
           height: FIELD_HEIGHT,
@@ -150,11 +169,13 @@ function NodeField(props: {
       >
         {props.field.name}
       </div>
-      {!targetHidden && (
+      {!props.targetHidden && (
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',
-            isHighlighted || props.selected ? 'bg-autumn-300' : 'bg-coffee-400',
+            props.isHighlighted || props.isSelected
+              ? 'bg-autumn-300'
+              : 'bg-coffee-400',
           )}
           style={{
             left: isLeft ? -5 : undefined,
@@ -166,3 +187,5 @@ function NodeField(props: {
     </div>
   )
 }
+
+const NodeField = memo(NodeFieldImpl)

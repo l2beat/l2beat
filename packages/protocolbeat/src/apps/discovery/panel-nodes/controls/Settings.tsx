@@ -9,12 +9,6 @@ export function Settings({ className }: { className?: string }) {
   const preferences = useStore((state) => state.userPreferences)
   const setPreferences = useStore((state) => state.setPreferences)
 
-  const toggleHideUnknowns = useCallback(() => {
-    setPreferences({
-      hideUnknownOnLoad: !preferences.hideUnknownOnLoad,
-    })
-  }, [preferences.hideUnknownOnLoad, setPreferences])
-
   const toggleEnableDimming = useCallback(() => {
     setPreferences({
       enableDimming: !preferences.enableDimming,
@@ -49,20 +43,6 @@ export function Settings({ className }: { className?: string }) {
         </Dialog.Description>
 
         <div className="flex flex-col gap-3">
-          <div>
-            <div
-              className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"
-              onClick={toggleHideUnknowns}
-            >
-              <Checkbox checked={preferences.hideUnknownOnLoad} />
-              Hide unknowns on load
-            </div>
-            <div className="pl-5 font-light text-coffee-400 text-xs">
-              Nodes representing unverified or unidentified contracts start
-              hidden when the panel opens. Reveal them later via the show
-              controls.
-            </div>
-          </div>
           <div>
             <div
               className="flex cursor-pointer select-none items-center gap-1 font-light text-sm hover:underline"

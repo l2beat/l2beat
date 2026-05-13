@@ -85,6 +85,10 @@ export class ContractConfigModel {
     return this.fields[name]?.description
   }
 
+  getFieldPermissions(name: string) {
+    return this.fields[name]?.permissions
+  }
+
   setFieldHandler(name: string, handler: FieldConfigSchema['handler']) {
     return this.patchField(name, (field) => field.setHandler(handler))
   }
@@ -98,6 +102,18 @@ export class ContractConfigModel {
 
     if (handler) {
       return stringify(handler, null, 2)
+    }
+  }
+
+  getFieldEdit(name: string) {
+    return this.fields[name]?.edit
+  }
+
+  getFieldEditString(name: string) {
+    const edit = this.fields[name]?.edit
+
+    if (edit) {
+      return stringify(edit, null, 2)
     }
   }
 

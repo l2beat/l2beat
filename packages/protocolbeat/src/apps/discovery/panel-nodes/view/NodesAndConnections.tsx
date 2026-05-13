@@ -1,10 +1,29 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
-import { perfStats } from '../perf/perfStats'
 import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { Connection } from './Connection'
+import { Connection, type ConnectionProps } from './Connection'
 import { NodeView } from './NodeView'
+
+interface ConnectionView extends ConnectionProps {
+  key: string
+}
+
+interface NodeFlags {
+  isSelected: boolean
+  isDimmed: boolean
+  isGrayedOut: boolean
+  isOverlapping: boolean
+  fieldHighlightedMask: string
+  fieldTargetHiddenMask: string
+}
+
+interface DerivedView {
+  visible: Node[]
+  connections: ConnectionView[]
+  flags: Map<string, NodeFlags>
+  bounds: { minX: number; minY: number; width: number; height: number } | null
+}
 
 export function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
@@ -19,136 +38,61 @@ export function NodesAndConnections() {
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
-  const visible = nodes.filter((n) => !hidden.includes(n.id))
 
-  const connections = visible
-    .flatMap((node) =>
-      node.fields.map((field, i) => {
-        const shouldHide =
-          hidden.includes(field.target) ||
-          node.hiddenFields.includes(field.name)
-
-        if (shouldHide) return null
-
-        const targetNode = visible.find((n) => n.id === field.target)
-        const isDashed =
-          targetNode?.addressType === 'EOA' ||
-          targetNode?.addressType === 'EOAPermissioned'
-        const isHighlighted =
-          selected.includes(node.id) || selected.includes(field.target)
-        const isDimmed = enableDimming && selected.length > 0 && !isHighlighted
-        const isGrayedOut =
-          markUnreachableEntries &&
-          !(node.isReachable && targetNode?.isReachable)
-
-        return {
-          key: `${node.id}-${i}-${field.target}`,
-          from: field.connection.from,
-          to: field.connection.to,
-          isHighlighted,
-          isDashed,
-          isDimmed,
-          isGrayedOut,
-        }
-      }),
-    )
-    .filter(Boolean) as {
-    key: string
-    from: { x: number; y: number; direction: 'left' | 'right' }
-    to: { x: number; y: number; direction: 'left' | 'right' }
-    isHighlighted: boolean
-    isDashed: boolean
-    isDimmed: boolean
-  }[]
-  const fieldCount = nodes.reduce((sum, node) => sum + node.fields.length, 0)
-  const hiddenCount = nodes.length - visible.length
-
-  useEffect(() => {
-    perfStats.setScene({
-      nodes: nodes.length,
-      visibleNodes: visible.length,
-      hiddenNodes: hiddenCount,
-      connections: connections.length,
-      fields: fieldCount,
-    })
-  }, [
-    connections.length,
-    fieldCount,
-    hiddenCount,
-    nodes.length,
-    visible.length,
-  ])
-
-  let minX = Number.POSITIVE_INFINITY
-  let minY = Number.POSITIVE_INFINITY
-  let maxX = Number.NEGATIVE_INFINITY
-  let maxY = Number.NEGATIVE_INFINITY
-
-  connections.forEach(({ from, to }) => {
-    minX = Math.min(minX, from.x, to.x) - 200
-    maxX = Math.max(maxX, from.x, to.x) + 200
-    minY = Math.min(minY, from.y, to.y) - 200
-    maxY = Math.max(maxY, from.y, to.y) + 200
-  })
-
-  const width = maxX - minX
-  const height = maxY - minY
-
-  const overlappingIds = useMemo(
+  const view = useMemo<DerivedView>(
     () =>
-      highlightOverlapping ? computeOverlappingIds(visible) : new Set<string>(),
-    // visible is rebuilt each render; nodes and hidden refs are the real signal
-    [nodes, hidden, highlightOverlapping],
+      buildView(
+        nodes,
+        hidden,
+        selected,
+        enableDimming,
+        highlightOverlapping,
+        markUnreachableEntries,
+      ),
+    [
+      nodes,
+      hidden,
+      selected,
+      enableDimming,
+      highlightOverlapping,
+      markUnreachableEntries,
+    ],
+  )
+
+  const bounds = view.bounds
+  const svg = bounds && (
+    <svg
+      viewBox={`${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`}
+      className="pointer-events-none absolute"
+      style={{
+        left: bounds.minX,
+        top: bounds.minY,
+        width: bounds.width,
+        height: bounds.height,
+      }}
+      fill="none"
+    >
+      {view.connections.map(({ key, ...rest }) => (
+        <Connection key={key} {...rest} />
+      ))}
+    </svg>
   )
 
   return (
     <>
-      <svg
-        viewBox={`${minX} ${minY} ${width} ${height}`}
-        className="pointer-events-none absolute"
-        style={{ left: minX, top: minY, width, height }}
-        fill="none"
-      >
-        {connections.map(({ key, ...rest }) => (
-          <Connection key={key} {...rest} />
-        ))}
-      </svg>
-
-      {visible.map((node) => {
-        const highlightedIds =
-          enableDimming && selected.length
-            ? new Set([
-                ...selected,
-                ...visible
-                  .filter((n) => selected.includes(n.id))
-                  .flatMap((n) =>
-                    n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
-                      .map((f) => f.target),
-                  ),
-                ...visible
-                  .filter((n) =>
-                    n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
-                      .some((f) => selected.includes(f.target)),
-                  )
-                  .map((n) => n.id),
-              ])
-            : new Set()
-
-        const nodeHighlighted = highlightedIds.has(node.id)
-        const isDimmed =
-          enableDimming && selected.length > 0 && !nodeHighlighted
-        const isGrayedOut = markUnreachableEntries && !node.isReachable
-
+      {svg}
+      {view.visible.map((node) => {
+        const flags = view.flags.get(node.id) as NodeFlags
         return (
           <NodeView
             key={node.id}
             node={node}
-            selected={selected.includes(node.id)}
-            isDimmed={isDimmed}
-            isGrayedOut={isGrayedOut}
-            isOverlapping={overlappingIds.has(node.id)}
+            isSelected={flags.isSelected}
+            isDimmed={flags.isDimmed}
+            isGrayedOut={flags.isGrayedOut}
+            isOverlapping={flags.isOverlapping}
+            fieldHighlightedMask={flags.fieldHighlightedMask}
+            fieldTargetHiddenMask={flags.fieldTargetHiddenMask}
           />
         )
       })}
@@ -159,10 +103,8 @@ export function NodesAndConnections() {
 // Sweep-line on the x-axis: sort by left edge, maintain an `active` set of
 // nodes whose right edge hasn't passed the current node's left edge, and only
 // check those for y-overlap. Sort dominates at O(n log n); the sweep is near
-// linear when node widths are small relative to the canvas (the typical case
-// here, since every node is NODE_WIDTH wide). Worst case is still O(n²) if
-// every node spans the full x-range — if that ever becomes the workload,
-// switch to a uniform-grid spatial hash keyed on NODE_WIDTH-sized cells.
+// linear when node widths are small relative to the canvas. Worst case is
+// still O(n²) if every node spans the full x-range.
 function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
   const overlapping = new Set<string>()
   if (nodes.length < 2) return overlapping
@@ -193,5 +135,149 @@ function computeOverlappingIds(nodes: readonly Node[]): Set<string> {
     }
     active.push(node)
   }
+
   return overlapping
+}
+
+function buildView(
+  nodes: readonly Node[],
+  hidden: readonly string[],
+  selected: readonly string[],
+  enableDimming: boolean,
+  highlightOverlapping: boolean,
+  markUnreachableEntries: boolean,
+): DerivedView {
+  const hiddenSet = new Set(hidden)
+  const selectedSet = new Set(selected)
+  const visible: Node[] = []
+  const visibleById = new Map<string, Node>()
+
+  for (const node of nodes) {
+    if (!hiddenSet.has(node.id)) {
+      visible.push(node)
+      visibleById.set(node.id, node)
+    }
+  }
+
+  const overlappingIds = highlightOverlapping
+    ? computeOverlappingIds(visible)
+    : new Set<string>()
+
+  // Highlight set: selected nodes plus, when dimming is on, every node either
+  // pointed-at by a selected node or pointing at a selected node through a
+  // non-hidden field.
+  const highlightedSet = new Set<string>(selectedSet)
+  if (enableDimming && selected.length > 0) {
+    for (const node of visible) {
+      if (!selectedSet.has(node.id)) continue
+      const hiddenFields =
+        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+      for (const field of node.fields) {
+        if (hiddenFields?.has(field.name)) continue
+        highlightedSet.add(field.target)
+      }
+    }
+    for (const node of visible) {
+      if (highlightedSet.has(node.id)) continue
+      const hiddenFields =
+        node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+      for (const field of node.fields) {
+        if (hiddenFields?.has(field.name)) continue
+        if (selectedSet.has(field.target)) {
+          highlightedSet.add(node.id)
+          break
+        }
+      }
+    }
+  }
+
+  const connections: ConnectionView[] = []
+  const flags = new Map<string, NodeFlags>()
+  let minX = Number.POSITIVE_INFINITY
+  let minY = Number.POSITIVE_INFINITY
+  let maxX = Number.NEGATIVE_INFINITY
+  let maxY = Number.NEGATIVE_INFINITY
+
+  for (const node of visible) {
+    const isSelected = selectedSet.has(node.id)
+    const isDimmed =
+      enableDimming && selected.length > 0 && !highlightedSet.has(node.id)
+    const isGrayedOut = markUnreachableEntries && !node.isReachable
+    const isOverlapping = overlappingIds.has(node.id)
+
+    const hiddenFieldsSet =
+      node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+
+    let fieldHighlightedMask = ''
+    let fieldTargetHiddenMask = ''
+
+    for (let i = 0; i < node.fields.length; i++) {
+      const field = node.fields[i]
+      if (!field) continue
+
+      const targetSelected = selectedSet.has(field.target)
+      const targetHidden = hiddenSet.has(field.target)
+      fieldHighlightedMask += targetSelected ? '1' : '0'
+      fieldTargetHiddenMask += targetHidden ? '1' : '0'
+
+      const fieldHidden = hiddenFieldsSet?.has(field.name) ?? false
+      if (fieldHidden || targetHidden) continue
+
+      const targetNode = visibleById.get(field.target)
+      const isDashed =
+        targetNode?.addressType === 'EOA' ||
+        targetNode?.addressType === 'EOAPermissioned'
+      const isHighlighted = isSelected || targetSelected
+      const isConnDimmed =
+        enableDimming && selected.length > 0 && !isHighlighted
+      const isConnGrayedOut =
+        markUnreachableEntries && !(node.isReachable && targetNode?.isReachable)
+
+      const from = field.connection.from
+      const to = field.connection.to
+      connections.push({
+        key: `${node.id}-${i}-${field.target}`,
+        fromX: from.x,
+        fromY: from.y,
+        fromDirection: from.direction,
+        toX: to.x,
+        toY: to.y,
+        toDirection: to.direction,
+        isHighlighted,
+        isDashed,
+        isDimmed: isConnDimmed,
+        isGrayedOut: isConnGrayedOut,
+      })
+
+      if (from.x < minX) minX = from.x
+      if (to.x < minX) minX = to.x
+      if (from.x > maxX) maxX = from.x
+      if (to.x > maxX) maxX = to.x
+      if (from.y < minY) minY = from.y
+      if (to.y < minY) minY = to.y
+      if (from.y > maxY) maxY = from.y
+      if (to.y > maxY) maxY = to.y
+    }
+
+    flags.set(node.id, {
+      isSelected,
+      isDimmed,
+      isGrayedOut,
+      isOverlapping,
+      fieldHighlightedMask,
+      fieldTargetHiddenMask,
+    })
+  }
+
+  const bounds =
+    connections.length > 0
+      ? {
+          minX: minX - 200,
+          minY: minY - 200,
+          width: maxX - minX + 400,
+          height: maxY - minY + 400,
+        }
+      : null
+
+  return { visible, connections, flags, bounds }
 }
