@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x1c1a3e2a2ba4409ce855715c755bd366ceb63c35
+
+# Diff at Wed, 13 May 2026 13:08:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@997302eeeb5feeafaefdf45fdcde9800fc0de1ba block: 1776865911
+- current timestamp: 1778677605
+
+## Description
+
+AZUP-1: Cut the Leash is queued after a successful sequencer signaling round. The proposal aims to make the escape hatch of the current rollup immutable and get it to Stage 2. Details here: https://aztecgov.nethermind.io/3. The executable payload address is https://etherscan.io/address/0xa156E3a14f45099ecdF9C6A393a118809C5d06e6#code and is simple:
+- revoke ownership of the rollup
+- gov execution delay 30d -> 2d
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x037947290dce4fd67d2e27b45452f68da58fc4d7
 
 # Diff at Fri, 08 May 2026 07:51:07 GMT:
