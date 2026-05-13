@@ -155,3 +155,67 @@ Verification:
 - `pnpm -C packages/token-ui typecheck` passed.
 - `pnpm -C packages/token-ui lint` passed.
 - `pnpm -C packages/token-ui build` passed. Vite reported the existing large chunk warning.
+
+## 2026-05-13 - Slice 5: dry-run preview and trace
+
+Split `TokenIngestionProcessor.process()` into a read-only `plan()` phase and
+a write-only `apply()` phase. The plan produces an `IngestionTrace` — an
+ordered list of decision steps plus a single outcome — and the apply reads
+that trace and performs the corresponding TokenDB and queue mutations.
+`process()` is now `plan()` then `apply()`. The preview/dry-run feature falls
+out of this split: it is just `plan()` without `apply()`.
+
+- Added `IngestionTrace`, `IngestionStep`, `IngestionOutcome`, and
+  `DeployedTokenWrite` types in `packages/token-backend/src/ingestion/IngestionTrace.ts`.
+- Refactored `TokenIngestionProcessor` to push every decision into the trace
+  and move every write into `apply()`. Neighbor propagation is now declared
+  in the outcome (`neighborsToEnqueue`) so `apply()` is self-contained.
+- Hoisted processor construction to `server.ts` so the preview tRPC route
+  works even when the loop is disabled. `TokenIngestionLoop` now takes a
+  `TokenIngestionProcessor` instance instead of constructing one itself.
+- Added the processor to the tRPC context.
+- Added `tokenIngestionQueue.preview` tRPC mutation: builds the interop
+  transfer index from the current snapshot, synthesizes a queue entry, calls
+  `processor.plan()`, and returns the trace. No mutations.
+- Exported the trace types from `@l2beat/token-backend`.
+- Added `IngestionPreviewDialog` in `packages/token-ui/src/components/`.
+  Renders the step timeline and outcome block, reusing the existing `Diff`
+  component for update outcomes.
+- Added a "Preview" button on every row of `TokenIngestionQueuePage`,
+  regardless of state. The dialog is read-only and the existing approve
+  button is unchanged.
+- Updated affected router test files (`abstractTokens`, `chains`,
+  `deployedTokens`, `search`, `tokenIngestionQueue`) to pass
+  `tokenIngestionProcessor: {} as never` when constructing test contexts.
+
+Behavior preserved:
+
+- All five outcomes (`skip`, `conflict`, `error`, `noop`, `write`) map to
+  the same queue and TokenDB side-effects as before.
+- `interopTransfer.markAsUnprocessedByTokens` still runs for both `write`
+  and `noop` outcomes, matching the previous behavior.
+- Neighbors are deduplicated in the trace; `apply()` calls `enqueue` once
+  per unique neighbor instead of once per transfer.
+
+Documentation:
+
+- Wrote `docs/mdbook/specs/l2b_specs/automatic_token_ingestion.md`. This is
+  intended as the consolidated reference for the automatic ingestion
+  algorithm and supersedes the working notes in
+  `docs/automatic-token-ingestion.md` and earlier `PROGRESS.md` slices.
+- Added it to `docs/mdbook/specs/SUMMARY.md`.
+- Linked it from `packages/token-backend/README.md`.
+
+Verification:
+
+- `pnpm -C packages/token-backend format:fix` passed.
+- `pnpm -C packages/token-backend build` passed.
+- `pnpm -C packages/token-backend typecheck` passed.
+- `pnpm -C packages/token-backend lint` passed.
+- `pnpm -C packages/token-backend test` passed with `93 passing` (full
+  token-backend suite ran because of the package Mocha config).
+- `pnpm -C packages/token-ui format:fix` passed.
+- `pnpm -C packages/token-ui typecheck` passed.
+- `pnpm -C packages/token-ui lint` passed.
+- `pnpm -C packages/token-ui build` passed. Vite reported the existing
+  large chunk warning.
