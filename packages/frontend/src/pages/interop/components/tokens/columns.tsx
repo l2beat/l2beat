@@ -54,7 +54,10 @@ function getCommonColumns<T extends CommonRow>(
           if (!topProtocol) return EM_DASH
 
           return (
-            <div className="flex items-center gap-1.5">
+            <a
+              href={`/interop/protocols/${topProtocol.slug}`}
+              className="flex items-center gap-1.5 hover:underline"
+            >
               <img
                 className="size-4 rounded-full bg-white shadow"
                 src={topProtocol.iconUrl}
@@ -65,7 +68,7 @@ function getCommonColumns<T extends CommonRow>(
               <span className="font-medium text-label-value-15">
                 {topProtocol.name}
               </span>
-            </div>
+            </a>
           )
         },
         meta: {

@@ -50,6 +50,7 @@ export function MessageDetailsTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No messages found for the selected filters."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-message-details-${new Date().toISOString()}.csv`

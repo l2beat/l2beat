@@ -172,6 +172,7 @@ export function getAllProtocolsColumns(
           protocol={{
             id: ctx.row.original.id,
             name: ctx.row.original.name,
+            slug: ctx.row.original.slug,
             iconUrl: ctx.row.original.iconUrl,
           }}
         />
@@ -313,6 +314,7 @@ export function getAllProtocolsColumns(
               protocol={{
                 id: ctx.row.original.id,
                 name: ctx.row.original.name,
+                slug: ctx.row.original.slug,
                 iconUrl: ctx.row.original.iconUrl,
                 bridgeTypes: ctx.row.original.bridgeTypes,
               }}

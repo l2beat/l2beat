@@ -17,6 +17,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { createRemoteJWKSet } from 'jose'
+import type { PrivacyConfig } from '../modules/privacy/types'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -59,6 +60,7 @@ export interface Config {
   readonly blockSync: BlockSyncModuleConfig
   readonly anomalies: AnomaliesConfig | false
   readonly interop: InteropFeatureConfig | false
+  readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
 
   readonly backoffice: BackofficeFeatureConfig | false

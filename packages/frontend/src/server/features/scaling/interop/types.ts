@@ -39,6 +39,7 @@ export type ProtocolEntry = {
 
 export type ProtocolDisplayable = {
   name: string
+  slug: string
   iconUrl: string
 }
 

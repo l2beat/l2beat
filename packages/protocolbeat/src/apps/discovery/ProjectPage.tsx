@@ -9,6 +9,7 @@ import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
 import { CodePanel } from './panel-code/CodePanel'
 import { ConfigPanel } from './panel-config/ConfigPanel'
+import { DiffHistoryPanel } from './panel-diff-history/DiffHistoryPanel'
 import { ListPanel } from './panel-list/ListPanel'
 import { NodesPanel } from './panel-nodes/NodesPanel'
 import { PreviewPanel } from './panel-preview/PreviewPanel'
@@ -59,6 +60,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   terminal: TerminalPanel,
   template: TemplatePanel,
   config: ConfigPanel,
+  diffHistory: DiffHistoryPanel,
 }
 
 const READONLY_PANELS: Record<
@@ -72,6 +74,7 @@ const READONLY_PANELS: Record<
   code: CodePanel,
   template: TemplatePanel,
   config: ConfigPanel,
+  diffHistory: DiffHistoryPanel,
 }
 
 function Panel(props: { kind: PanelId }) {

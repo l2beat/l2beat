@@ -16,11 +16,16 @@
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265199,
       "sinceBlock": 22153709,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": "WithdrawalVerifier"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": {
+        "name": "Shared Infrastructure",
+        "priority": 4
+      }
     },
     {
       "name": "PrivacyPoolUSDS",
@@ -81,7 +86,10 @@
       "implementationNames": {
         "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolWstETH",
@@ -142,7 +150,10 @@
       "implementationNames": {
         "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolDAI",
@@ -203,7 +214,10 @@
       "implementationNames": {
         "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolsASPPostman",
@@ -240,7 +254,9 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "UUPS-upgradeable hub for Privacy Pools. It accepts deposits, relays withdrawals, tracks association-set roots published by the ASP, and maps each supported asset and scope to a pool. Trusting this contract means trusting OWNER_ROLE holders to upgrade it, manage pools and fees, and withdraw fees, and trusting ASP_POSTMAN holders to publish the latest association-set root used by withdrawals.",
-      "ignoreInWatchMode": ["latestRoot"],
+      "ignoreInWatchMode": [
+        "latestRoot"
+      ],
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265247,
       "sinceBlock": 22153713,
@@ -251,20 +267,29 @@
           [
             "2025-03-29T16:20:47.000Z",
             "0x4987385c58c49c9e3117244180094c5b7c5a0566c8547d13880df5e19076776c",
-            ["eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"]
+            [
+              "eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"
+            ]
           ],
           [
             "2025-05-22T20:30:23.000Z",
             "0xde1c41f546e3b6064433e0db1309d8ca5a3ac78a8fc626f934b13d05ee67578f",
-            ["eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"]
+            [
+              "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"
+            ]
           ]
         ],
         "$upgradeCount": 2,
         "accessControl": {
-          "DEFAULT_ADMIN_ROLE": { "adminRole": "OWNER_ROLE", "members": [] },
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "OWNER_ROLE",
+            "members": []
+          },
           "OWNER_ROLE": {
             "adminRole": "OWNER_ROLE",
-            "members": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"]
+            "members": [
+              "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"
+            ]
           },
           "ASP_POSTMAN": {
             "adminRole": "OWNER_ROLE",
@@ -280,7 +305,9 @@
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestRoot": "12251761450139241298987886334382639136527285160047904414009832340685225700382",
-        "ownerRoleMembers": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
+        "ownerRoleMembers": [
+          "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"
+        ],
         "registeredPools": [
           "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
           "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0",
@@ -326,7 +353,10 @@
         "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": "ERC1967Proxy",
         "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": "Entrypoint"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolWOETH",
@@ -387,7 +417,10 @@
       "implementationNames": {
         "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "RagequitVerifier",
@@ -402,11 +435,16 @@
       "deployerAddress": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "sinceTimestamp": 1743265211,
       "sinceBlock": 22153710,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true
+      },
       "implementationNames": {
         "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": "CommitmentVerifier"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": {
+        "name": "Shared Infrastructure",
+        "priority": 4
+      }
     },
     {
       "name": "PrivacyPoolsAdminSafe",
@@ -450,7 +488,9 @@
           "role": ".ownerRoleMembers"
         }
       ],
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": [
+        "nonce"
+      ],
       "deployerAddress": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
       "sinceTimestamp": 1742919851,
       "sinceBlock": 22125088,
@@ -540,7 +580,10 @@
       "implementationNames": {
         "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolBOLD",
@@ -601,7 +644,10 @@
       "implementationNames": {
         "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolSUSDS",
@@ -662,7 +708,10 @@
       "implementationNames": {
         "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolUSD1",
@@ -723,7 +772,10 @@
       "implementationNames": {
         "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolFrxUSD",
@@ -784,7 +836,10 @@
       "implementationNames": {
         "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolFxUSD",
@@ -845,7 +900,10 @@
       "implementationNames": {
         "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
@@ -935,7 +993,10 @@
       "implementationNames": {
         "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolUSDT",
@@ -996,7 +1057,10 @@
       "implementationNames": {
         "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolETH",
@@ -1057,7 +1121,10 @@
       "implementationNames": {
         "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": "PrivacyPoolSimple"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     },
     {
       "name": "PrivacyPoolWBTC",
@@ -1118,7 +1185,10 @@
       "implementationNames": {
         "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": "PrivacyPoolComplex"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": {
+        "name": "Local Infrastructure",
+        "priority": 5
+      }
     }
   ],
   "abis": {
@@ -2021,6 +2091,8 @@
     "privacy-pools/PrivacyPoolSimple": "0xd0e9393e828033bd062a089147a4eb32a24f23f58884256bd8c90a7896d25ba3",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24994181 },
+  "usedBlockNumbers": {
+    "ethereum": 24994181
+  },
   "permissionsConfigHash": "0x32e24e73ac93e35e0d94d98aca02b8ed60c8a91a9d288f517f5436f0b7a25deb"
 }

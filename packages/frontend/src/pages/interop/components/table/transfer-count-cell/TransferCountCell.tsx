@@ -36,6 +36,7 @@ export function TransferCountCell({
   protocol: {
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
   }
 }) {
@@ -70,6 +71,7 @@ function TransferDetailsDialog({
   protocol: {
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
   }
   type: KnownInteropBridgeType | undefined
@@ -141,12 +143,14 @@ function TransferDetailsDialog({
           <DrawerHeader className="mb-2">
             <DrawerTitle className="mb-0 text-xl">
               <span>Transfers for </span>
-              <img
-                src={protocol.iconUrl}
-                alt={protocol.name}
-                className="relative bottom-px mx-1 inline-block size-6"
-              />
-              <span>{protocol.name}</span>
+              <a href={`/interop/protocols/${protocol.slug}`}>
+                <img
+                  src={protocol.iconUrl}
+                  alt={protocol.name}
+                  className="relative bottom-px mx-1 inline-block size-6"
+                />
+                <span>{protocol.name}</span>
+              </a>
             </DrawerTitle>
             <BetweenChainsInfo />
           </DrawerHeader>
@@ -179,12 +183,14 @@ function TransferDetailsDialog({
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Transfers for </span>
-            <img
-              src={protocol.iconUrl}
-              alt={protocol.name}
-              className="relative bottom-0.5 mx-1 inline-block size-6"
-            />
-            <span>{protocol.name}</span>
+            <a href={`/interop/protocols/${protocol.slug}`}>
+              <img
+                src={protocol.iconUrl}
+                alt={protocol.name}
+                className="relative bottom-0.5 mx-1 inline-block size-6"
+              />
+              <span>{protocol.name}</span>
+            </a>
           </DialogTitle>
           <BetweenChainsInfo className="mt-1" />
         </DialogHeader>

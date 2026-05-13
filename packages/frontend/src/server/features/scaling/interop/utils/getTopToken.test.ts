@@ -47,6 +47,7 @@ describe(getTopToken.name, () => {
       transferCount: 19,
       topProtocol: {
         name: 'Wormhole',
+        slug: 'wormhole',
         iconUrl: '/icons/wormhole.png',
       },
     })
@@ -86,6 +87,7 @@ describe(getTopToken.name, () => {
       transferCount: 10,
       topProtocol: {
         name: 'Main protocol',
+        slug: 'main',
         iconUrl: '/icons/main.png',
       },
     })
@@ -117,6 +119,7 @@ describe(getTopToken.name, () => {
 
     expect(result?.topProtocol).toEqual({
       name: 'Wormhole',
+      slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
     })
   })

@@ -18,6 +18,7 @@ describe(getTopProtocolDisplay.name, () => {
 
     expect(result).toEqual({
       name: 'Wormhole',
+      slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
     })
   })

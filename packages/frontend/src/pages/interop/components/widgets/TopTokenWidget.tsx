@@ -183,14 +183,17 @@ function TopTokenStatCards({
           isLoading={isLoading}
           value={
             topToken?.topProtocol ? (
-              <span className="inline-flex items-center gap-1.5">
+              <a
+                href={`/interop/protocols/${topToken.topProtocol.slug}`}
+                className="inline-flex items-center gap-1.5"
+              >
                 <img
                   src={topToken.topProtocol.iconUrl}
                   alt={topToken.topProtocol.name}
                   className="size-4 rounded-full bg-white shadow"
                 />
                 <span className="truncate">{topToken.topProtocol.name}</span>
-              </span>
+              </a>
             ) : (
               <span className="text-label-value-15">{EM_DASH}</span>
             )
@@ -242,14 +245,17 @@ function TopTokenStatRows({
           isLoading={isLoading}
           value={
             topToken?.topProtocol ? (
-              <span className="inline-flex items-center gap-1.5">
+              <a
+                href={`/interop/protocols/${topToken.topProtocol.slug}`}
+                className="inline-flex items-center gap-1.5"
+              >
                 <img
                   src={topToken.topProtocol.iconUrl}
                   alt={topToken.topProtocol.name}
                   className="size-4 rounded-full bg-white shadow"
                 />
                 <span className="truncate">{topToken.topProtocol.name}</span>
-              </span>
+              </a>
             ) : (
               <span className="text-label-value-15">{EM_DASH}</span>
             )
