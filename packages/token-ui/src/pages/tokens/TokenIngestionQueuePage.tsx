@@ -1,8 +1,9 @@
-import { CheckIcon, ListChecksIcon } from 'lucide-react'
+import { CheckIcon, EyeIcon, ListChecksIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
+import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
@@ -24,6 +25,10 @@ import {
   TableRow,
 } from '~/components/core/Table'
 import { ExplorerLink } from '~/components/ExplorerLink'
+import {
+  IngestionPreviewDialog,
+  type IngestionPreviewState,
+} from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
@@ -31,6 +36,7 @@ import { api } from '~/react-query/trpc'
 export function TokenIngestionQueuePage() {
   const utils = api.useUtils()
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
+  const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
   const { data: queue, isLoading } = api.tokenIngestionQueue.getAll.useQuery(
     undefined,
     { refetchInterval: 10_000 },
@@ -44,6 +50,27 @@ export function TokenIngestionQueuePage() {
     onError: (error) => toast.error(error.message),
     onSettled: () => setApprovingKey(undefined),
   })
+  const previewMutation = api.tokenIngestionQueue.preview.useMutation({
+    onSuccess: (trace) => {
+      setPreview((prev) => (prev ? { ...prev, trace, isLoading: false } : prev))
+    },
+    onError: (error) => {
+      setPreview((prev) =>
+        prev ? { ...prev, error: error.message, isLoading: false } : prev,
+      )
+    },
+  })
+
+  function startPreview(entry: { chain: string; address: string }) {
+    setPreview({
+      chain: entry.chain,
+      address: entry.address,
+      trace: undefined,
+      isLoading: true,
+      error: undefined,
+    })
+    previewMutation.mutate({ chain: entry.chain, address: entry.address })
+  }
 
   return (
     <AppLayout>
@@ -106,25 +133,40 @@ export function TokenIngestionQueuePage() {
                       <TableCell>{formatTimestamp(entry.updatedAt)}</TableCell>
                       <TableCell>{formatTimestamp(entry.createdAt)}</TableCell>
                       <TableCell className="text-right">
-                        {entry.state === 'staged' && (
-                          <ButtonWithSpinner
+                        <div className="flex justify-end gap-2">
+                          <Button
                             variant="outline"
                             size="sm"
-                            isLoading={
-                              approve.isPending && approvingKey === key
-                            }
-                            onClick={() => {
-                              setApprovingKey(key)
-                              approve.mutate({
+                            onClick={() =>
+                              startPreview({
                                 chain: entry.chain,
                                 address: entry.address,
                               })
-                            }}
+                            }
                           >
-                            <CheckIcon />
-                            Approve
-                          </ButtonWithSpinner>
-                        )}
+                            <EyeIcon />
+                            Preview
+                          </Button>
+                          {entry.state === 'staged' && (
+                            <ButtonWithSpinner
+                              variant="outline"
+                              size="sm"
+                              isLoading={
+                                approve.isPending && approvingKey === key
+                              }
+                              onClick={() => {
+                                setApprovingKey(key)
+                                approve.mutate({
+                                  chain: entry.chain,
+                                  address: entry.address,
+                                })
+                              }}
+                            >
+                              <CheckIcon />
+                              Approve
+                            </ButtonWithSpinner>
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   )
@@ -134,6 +176,10 @@ export function TokenIngestionQueuePage() {
           )}
         </CardContent>
       </Card>
+      <IngestionPreviewDialog
+        state={preview}
+        onClose={() => setPreview(undefined)}
+      />
     </AppLayout>
   )
 }

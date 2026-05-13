@@ -26,6 +26,11 @@ import {
   buildAliasToChainMap,
   platformsToChainAddressPairs,
 } from '../trpc/routers/deployedTokens/chainAliases'
+import type {
+  IngestionOutcome,
+  IngestionStep,
+  IngestionTrace,
+} from './IngestionTrace'
 import {
   getTokenKey,
   type InteropTransferIndex,
@@ -61,9 +66,6 @@ type AbstractTokenResolution =
 type NewDeployedTokenResult =
   | { type: 'ready'; record: DeployedTokenRecord }
   | { type: 'error'; message: string }
-type WriteResolvedTokenResult =
-  | { type: 'success'; didWrite: boolean }
-  | { type: 'error'; message: string }
 
 const ABSTRACT_TOKEN_ID_CHARS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -78,65 +80,140 @@ export class TokenIngestionProcessor {
   async process(
     entry: TokenIngestionQueueRecord,
     transferIndex: InteropTransferIndex,
-  ) {
+  ): Promise<IngestionTrace> {
+    const trace = await this.plan(entry, transferIndex)
+    await this.apply(entry, trace)
+    return trace
+  }
+
+  async plan(
+    entry: TokenIngestionQueueRecord,
+    transferIndex: InteropTransferIndex,
+  ): Promise<IngestionTrace> {
+    const steps: IngestionStep[] = []
     const address = normalizeQueuedAddress(entry)
     if (!address) {
-      await this.deps.tokenDb.tokenIngestionQueue.remove(entry)
-      return
+      steps.push({ kind: 'invalid-address', rawAddress: entry.address })
+      return {
+        address: { chain: entry.chain, address: entry.address },
+        steps,
+        outcome: { kind: 'skip', reason: 'Address could not be normalized' },
+      }
     }
 
     const existing =
       await this.deps.tokenDb.deployedToken.findByChainAndAddress(address)
+    steps.push(
+      existing
+        ? { kind: 'existing-token', record: existing }
+        : { kind: 'no-existing-token' },
+    )
+
     const transfers = transferIndex.findInvolving(address)
     const resolution = await this.resolveAbstractToken(
       address,
       existing,
       transfers,
+      steps,
     )
 
     if (resolution.type === 'conflict') {
-      await this.deps.tokenDb.tokenIngestionQueue.markConflict(
-        entry,
-        resolution.message,
-      )
-      return
+      return {
+        address,
+        steps,
+        outcome: { kind: 'conflict', message: resolution.message },
+      }
     }
     if (resolution.type === 'missing') {
-      await this.deps.tokenDb.tokenIngestionQueue.remove(entry)
-      return
+      return {
+        address,
+        steps,
+        outcome: {
+          kind: 'skip',
+          reason: 'No abstract token could be resolved',
+        },
+      }
     }
 
-    const writeResult = await this.writeResolvedToken(
+    return {
       address,
-      existing,
-      resolution,
-    )
-    if (writeResult.type === 'error') {
-      await this.deps.tokenDb.tokenIngestionQueue.markError(
-        entry,
-        writeResult.message,
-      )
-      return
+      steps,
+      outcome: await this.buildWriteOutcome(
+        address,
+        existing,
+        resolution,
+        transfers,
+        steps,
+      ),
     }
+  }
 
-    if (writeResult.didWrite) {
-      await this.enqueueTransferNeighbors(address, transfers)
+  async apply(
+    entry: TokenIngestionQueueRecord,
+    trace: IngestionTrace,
+  ): Promise<void> {
+    const { outcome } = trace
+    const queue = this.deps.tokenDb.tokenIngestionQueue
+
+    switch (outcome.kind) {
+      case 'skip':
+        await queue.remove(entry)
+        return
+      case 'conflict':
+        await queue.markConflict(entry, outcome.message)
+        return
+      case 'error':
+        await queue.markError(entry, outcome.message)
+        return
+      case 'noop':
+        await this.deps.db.interopTransfer.markAsUnprocessedByTokens([
+          { chain: trace.address.chain, tokenAddress: trace.address.address },
+        ])
+        await queue.remove(entry)
+        return
+      case 'write':
+        await this.deps.tokenDb.transaction(async () => {
+          if (outcome.newAbstractToken) {
+            await this.deps.tokenDb.abstractToken.insert(
+              outcome.newAbstractToken,
+            )
+          }
+          if (outcome.deployedToken.type === 'insert') {
+            await this.deps.tokenDb.deployedToken.insert(
+              outcome.deployedToken.record,
+            )
+          } else {
+            await this.deps.tokenDb.deployedToken.updateByChainAndAddress(
+              outcome.deployedToken.pk,
+              outcome.deployedToken.update,
+            )
+          }
+        }, 'serializable')
+
+        for (const neighbor of outcome.neighborsToEnqueue) {
+          await this.deps.tokenDb.tokenIngestionQueue.enqueue(
+            neighbor,
+            this.deps.newQueueState ?? 'pending',
+          )
+        }
+        await this.deps.db.interopTransfer.markAsUnprocessedByTokens([
+          { chain: trace.address.chain, tokenAddress: trace.address.address },
+        ])
+        await queue.remove(entry)
+        return
     }
-
-    await this.deps.db.interopTransfer.markAsUnprocessedByTokens([
-      { chain: address.chain, tokenAddress: address.address },
-    ])
-
-    await this.deps.tokenDb.tokenIngestionQueue.remove(entry)
   }
 
   private async resolveAbstractToken(
     address: TokenAddress,
     existing: DeployedTokenRecord | undefined,
     transfers: InteropTransferMatch[],
+    steps: IngestionStep[],
   ): Promise<AbstractTokenResolution> {
-    const fromTransfers =
-      await this.resolveAbstractFromNonSwappingTransfers(transfers)
+    const fromTransfers = await this.resolveAbstractFromNonSwappingTransfers(
+      transfers,
+      steps,
+    )
 
     if (fromTransfers.type === 'conflict') {
       return fromTransfers
@@ -153,29 +230,47 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const abstractTokenId =
-      fromTransfers.abstractTokenId ?? existing?.abstractTokenId
-    if (abstractTokenId) {
+    if (fromTransfers.abstractTokenId) {
+      steps.push({
+        kind: 'resolved-from-transfers',
+        abstractTokenId: fromTransfers.abstractTokenId,
+      })
       return {
         type: 'resolved',
-        abstractTokenId,
+        abstractTokenId: fromTransfers.abstractTokenId,
         newAbstractToken: undefined,
         symbolFallback: undefined,
       }
     }
 
-    return await this.resolveAbstractFromCoingecko(address)
+    if (existing?.abstractTokenId) {
+      steps.push({
+        kind: 'resolved-from-existing',
+        abstractTokenId: existing.abstractTokenId,
+      })
+      return {
+        type: 'resolved',
+        abstractTokenId: existing.abstractTokenId,
+        newAbstractToken: undefined,
+        symbolFallback: undefined,
+      }
+    }
+
+    return await this.resolveAbstractFromCoingecko(address, steps)
   }
 
   private async resolveAbstractFromNonSwappingTransfers(
     transfers: InteropTransferMatch[],
+    steps: IngestionStep[],
   ): Promise<
     | { type: 'resolved'; abstractTokenId: string | undefined }
     | { type: 'conflict'; message: string }
   > {
+    const nonSwapping = transfers.filter((match) =>
+      isNonSwappingTransfer(match.transfer),
+    )
     const otherTokens = uniqueTokenAddresses(
-      transfers
-        .filter((match) => isNonSwappingTransfer(match.transfer))
+      nonSwapping
         .map((match) => match.otherToken)
         .filter((address): address is TokenAddress => address !== undefined),
     )
@@ -194,6 +289,13 @@ export class TokenIngestionProcessor {
       }
     }
 
+    steps.push({
+      kind: 'transfer-evidence',
+      total: transfers.length,
+      nonSwapping: nonSwapping.length,
+      abstractTokenIds: Array.from(abstractTokenIds),
+    })
+
     if (abstractTokenIds.size > 1) {
       return {
         type: 'conflict',
@@ -209,15 +311,27 @@ export class TokenIngestionProcessor {
 
   private async resolveAbstractFromCoingecko(
     address: TokenAddress,
+    steps: IngestionStep[],
   ): Promise<AbstractTokenResolution> {
     const coin = await this.findCoingeckoCoin(address)
     if (!coin) {
+      steps.push({ kind: 'coingecko-coin-not-found' })
       return { type: 'missing' }
     }
+    steps.push({
+      kind: 'coingecko-coin-found',
+      coinId: coin.id,
+      symbol: coin.symbol,
+    })
 
     const abstractToken =
       await this.deps.tokenDb.abstractToken.findByCoingeckoId(coin.id)
     if (abstractToken) {
+      steps.push({
+        kind: 'resolved-from-coingecko-existing-abstract',
+        abstractTokenId: abstractToken.id,
+        coinId: coin.id,
+      })
       return {
         type: 'resolved',
         abstractTokenId: abstractToken.id,
@@ -227,6 +341,10 @@ export class TokenIngestionProcessor {
     }
 
     const newAbstractToken = await this.buildAbstractToken(coin.id)
+    steps.push({
+      kind: 'resolved-from-coingecko-new-abstract',
+      record: newAbstractToken,
+    })
     return {
       type: 'resolved',
       abstractTokenId: newAbstractToken.id,
@@ -235,50 +353,53 @@ export class TokenIngestionProcessor {
     }
   }
 
-  private async writeResolvedToken(
+  private async buildWriteOutcome(
     address: TokenAddress,
     existing: DeployedTokenRecord | undefined,
     resolution: Extract<AbstractTokenResolution, { type: 'resolved' }>,
-  ): Promise<WriteResolvedTokenResult> {
+    transfers: InteropTransferMatch[],
+    steps: IngestionStep[],
+  ): Promise<IngestionOutcome> {
+    const neighborsToEnqueue = collectTransferNeighbors(address, transfers)
+
     if (existing) {
       if (existing.abstractTokenId === resolution.abstractTokenId) {
-        return { type: 'success', didWrite: false }
+        return { kind: 'noop', deployedToken: existing }
       }
-
-      await this.deps.tokenDb.transaction(async () => {
-        if (resolution.newAbstractToken) {
-          await this.deps.tokenDb.abstractToken.insert(
-            resolution.newAbstractToken,
-          )
-        }
-        await this.deps.tokenDb.deployedToken.updateByChainAndAddress(address, {
-          abstractTokenId: resolution.abstractTokenId,
-        })
-      }, 'serializable')
-
-      return { type: 'success', didWrite: true }
+      return {
+        kind: 'write',
+        newAbstractToken: resolution.newAbstractToken,
+        deployedToken: {
+          type: 'update',
+          pk: { chain: address.chain, address: address.address },
+          existing,
+          update: { abstractTokenId: resolution.abstractTokenId },
+        },
+        neighborsToEnqueue,
+      }
     }
 
-    const newDeployedToken = await this.buildDeployedToken(address, resolution)
+    const newDeployedToken = await this.buildDeployedToken(
+      address,
+      resolution,
+      steps,
+    )
     if (newDeployedToken.type === 'error') {
-      return newDeployedToken
+      return { kind: 'error', message: newDeployedToken.message }
     }
 
-    await this.deps.tokenDb.transaction(async () => {
-      if (resolution.newAbstractToken) {
-        await this.deps.tokenDb.abstractToken.insert(
-          resolution.newAbstractToken,
-        )
-      }
-      await this.deps.tokenDb.deployedToken.insert(newDeployedToken.record)
-    }, 'serializable')
-
-    return { type: 'success', didWrite: true }
+    return {
+      kind: 'write',
+      newAbstractToken: resolution.newAbstractToken,
+      deployedToken: { type: 'insert', record: newDeployedToken.record },
+      neighborsToEnqueue,
+    }
   }
 
   private async buildDeployedToken(
     address: TokenAddress,
     resolution: Extract<AbstractTokenResolution, { type: 'resolved' }>,
+    steps: IngestionStep[],
   ): Promise<NewDeployedTokenResult> {
     if (!address.address.startsWith('0x')) {
       return {
@@ -296,6 +417,7 @@ export class TokenIngestionProcessor {
     }
 
     const facts = await this.fetchFacts(chainRecord, address.address)
+    steps.push({ kind: 'fetched-facts', facts })
     if (facts.isContract === false) {
       return {
         type: 'error',
@@ -355,22 +477,6 @@ export class TokenIngestionProcessor {
       this.deps.fetchDeployedTokenFacts ?? fetchDeployedTokenFacts
 
     return await fetchFacts(createChain(chainRecord), address)
-  }
-
-  private async enqueueTransferNeighbors(
-    address: TokenAddress,
-    transfers: InteropTransferMatch[],
-  ) {
-    for (const transfer of transfers) {
-      const otherToken = transfer.otherToken
-      if (!otherToken || getTokenKey(otherToken) === getTokenKey(address)) {
-        continue
-      }
-      await this.deps.tokenDb.tokenIngestionQueue.enqueue(
-        otherToken,
-        this.deps.newQueueState ?? 'pending',
-      )
-    }
   }
 
   private async findCoingeckoCoin(
@@ -489,6 +595,22 @@ function uniqueTokenAddresses(addresses: TokenAddress[]): TokenAddress[] {
       addresses.map((address) => [getTokenKey(address), address]),
     ).values(),
   )
+}
+
+function collectTransferNeighbors(
+  address: TokenAddress,
+  transfers: InteropTransferMatch[],
+): TokenAddress[] {
+  const seen = new Map<string, TokenAddress>()
+  const ownKey = getTokenKey(address)
+  for (const transfer of transfers) {
+    const otherToken = transfer.otherToken
+    if (!otherToken) continue
+    const key = getTokenKey(otherToken)
+    if (key === ownKey || seen.has(key)) continue
+    seen.set(key, otherToken)
+  }
+  return Array.from(seen.values())
 }
 
 function isNonSwappingTransfer(transfer: InteropTransferRecord) {

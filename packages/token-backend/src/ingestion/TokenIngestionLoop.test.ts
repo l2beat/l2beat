@@ -20,6 +20,7 @@ import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
 import { TokenIngestionLoop } from './TokenIngestionLoop'
+import { TokenIngestionProcessor } from './TokenIngestionProcessor'
 
 describe(TokenIngestionLoop.name, () => {
   describe(TokenIngestionLoop.prototype.runOnce.name, () => {
@@ -518,37 +519,44 @@ function createLoop(deps: {
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
 }) {
-  return new TokenIngestionLoop(
+  const db =
     deps.db ??
-      mockObject<Database>({
-        interopTransfer: mockObject<InteropTransferRepository>({
-          getTokenAddressesAfterSerialId: mockFn().resolvesTo({
-            latestSerialId: undefined,
-            transferCount: 0,
-            tokenAddresses: [],
-          }),
-          getAll: mockFn().resolvesTo([]),
+    mockObject<Database>({
+      interopTransfer: mockObject<InteropTransferRepository>({
+        getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+          latestSerialId: undefined,
+          transferCount: 0,
+          tokenAddresses: [],
         }),
+        getAll: mockFn().resolvesTo([]),
       }),
+    })
+  const tokenDb =
     deps.tokenDb ??
-      mockObject<TokenDatabase>({
-        tokenDbSetting: mockObject<TokenDbSettingRepository>({
-          get: mockFn().resolvesTo(undefined),
-        }),
-        tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
-          findNextPending: mockFn().resolvesTo(undefined),
-        }),
+    mockObject<TokenDatabase>({
+      tokenDbSetting: mockObject<TokenDbSettingRepository>({
+        get: mockFn().resolvesTo(undefined),
       }),
-    deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
-    Logger.SILENT,
-    {
-      intervalMs: 60_000,
-      etherscanApiKey: undefined,
-      newQueueState: deps.newQueueState,
-      fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
-      generateAbstractTokenId: deps.generateAbstractTokenId,
-    },
-  )
+      tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+        findNextPending: mockFn().resolvesTo(undefined),
+      }),
+    })
+  const coingeckoClient =
+    deps.coingeckoClient ?? mockObject<CoingeckoClient>({})
+  const processor = new TokenIngestionProcessor({
+    db,
+    tokenDb,
+    coingeckoClient,
+    etherscanApiKey: undefined,
+    fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
+    generateAbstractTokenId: deps.generateAbstractTokenId,
+    newQueueState: deps.newQueueState,
+  })
+
+  return new TokenIngestionLoop(db, tokenDb, processor, Logger.SILENT, {
+    intervalMs: 60_000,
+    newQueueState: deps.newQueueState,
+  })
 }
 
 function token(chain: string, shortAddress: string) {

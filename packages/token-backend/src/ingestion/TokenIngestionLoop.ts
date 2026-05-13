@@ -1,53 +1,31 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, TokenDatabase } from '@l2beat/database'
-import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { TokenIngestionQueueState } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
-import type { Chain } from '../chains/Chain'
-import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
-import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
 import {
   buildInteropTransferIndex,
   normalizeInteropTokenAddress,
 } from './InteropTransferIndex'
-import { TokenIngestionProcessor } from './TokenIngestionProcessor'
+import type { TokenIngestionProcessor } from './TokenIngestionProcessor'
 
 const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
 
 export interface TokenIngestionLoopConfig {
   intervalMs: number
-  etherscanApiKey: string | undefined
   newQueueState?: Extract<TokenIngestionQueueState, 'staged' | 'pending'>
-  createChain?: (chainRecord: ChainRecord) => Chain
-  fetchDeployedTokenFacts?: (
-    chain: Chain,
-    address: string,
-  ) => Promise<DeployedTokenFacts>
-  generateAbstractTokenId?: () => string
 }
 
 export class TokenIngestionLoop {
   private running = false
   private intervalHandle: ReturnType<typeof setInterval> | undefined
-  private readonly processor: TokenIngestionProcessor
 
   constructor(
     private readonly db: Database,
     private readonly tokenDb: TokenDatabase,
-    coingeckoClient: CoingeckoClient,
+    private readonly processor: TokenIngestionProcessor,
     private readonly logger: Logger,
     private readonly config: TokenIngestionLoopConfig,
   ) {
     this.logger = logger.for(this)
-    this.processor = new TokenIngestionProcessor({
-      db,
-      tokenDb,
-      coingeckoClient,
-      etherscanApiKey: config.etherscanApiKey,
-      createChain: config.createChain,
-      fetchDeployedTokenFacts: config.fetchDeployedTokenFacts,
-      generateAbstractTokenId: config.generateAbstractTokenId,
-      newQueueState: config.newQueueState,
-    })
   }
 
   start() {

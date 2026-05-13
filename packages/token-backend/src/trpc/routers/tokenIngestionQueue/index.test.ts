@@ -71,6 +71,7 @@ function createRouter(tokenDb: TokenDatabase) {
   return createCallerFactory(tokenIngestionQueueRouter)({
     db: {} as never,
     tokenDb,
+    tokenIngestionProcessor: {} as never,
     headers: new Headers(),
     session: {
       email: 'dev@l2beat.com',
