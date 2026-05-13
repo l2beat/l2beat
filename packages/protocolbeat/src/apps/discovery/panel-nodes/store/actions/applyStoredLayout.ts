@@ -69,8 +69,7 @@ export function applyStoredLayout(
       ? fileHidden
       : [...new Set([...state.hidden, ...fileHidden])]
 
-  return updateNodePositions({
-    ...state,
+  return updateNodePositions(state, {
     nodes: updatedNodes,
     hidden: newHidden,
   })
