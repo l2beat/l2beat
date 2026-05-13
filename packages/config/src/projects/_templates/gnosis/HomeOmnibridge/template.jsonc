@@ -31,7 +31,10 @@
     "mediatorContractOnOtherSide": {
       "description": "Counterpart Omnibridge mediator on Ethereum.",
       "severity": "HIGH",
-      "edit": ["format", "EthereumAddress"]
+      "edit": [
+        "format",
+        "EthereumAddress"
+      ]
     },
     "tokenFactory": {
       "description": "Factory used to deploy wrapped tokens for assets bridged from Ethereum to Gnosis.",
@@ -49,5 +52,8 @@
       "description": "Module that chooses request gas limits for Omnibridge cross-chain messages.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": [
+    "getCurrentDay"
+  ]
 }
