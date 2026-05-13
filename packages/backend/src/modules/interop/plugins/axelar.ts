@@ -8,8 +8,8 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import { findParsedAround } from './logScan'
+import { getTokenFrameworkBridgeType } from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -73,6 +73,7 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Avalanche', chain: 'avalanche' },
   { axelarChainName: 'hyperliquid', chain: 'hyperevm' },
   { axelarChainName: 'monad', chain: 'monad' },
+  { axelarChainName: 'solana', chain: 'solana' },
   // tempo unsupported
 ])
 
@@ -385,7 +386,7 @@ export class AxelarPlugin implements InteropPlugin {
       const dstWasMinted = contractCallExecuted.args.dstWasMinted
       // we are using this implicitly with
       // defaultBridgeType = 'burnAndMint' because axelar has axlUSDC
-      const bridgeType = getBridgeType({
+      const bridgeType = getTokenFrameworkBridgeType({
         srcTokenAddress,
         dstTokenAddress,
         srcWasBurned,

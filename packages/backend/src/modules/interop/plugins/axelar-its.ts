@@ -11,8 +11,8 @@ import {
   ContractCallApproved,
   ContractCallExecuted,
 } from './axelar'
-import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
 import { findParsedAround } from './logScan'
+import { getTokenFrameworkBridgeType } from './tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -178,7 +178,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       const dstTokenAddress = interchainTransferReceived.args.tokenAddress
       const srcWasBurned = interchainTransfer.args.srcWasBurned
       const dstWasMinted = interchainTransferReceived.args.dstWasMinted
-      const bridgeType = getBridgeType({
+      const bridgeType = getTokenFrameworkBridgeType({
         srcTokenAddress,
         dstTokenAddress,
         srcWasBurned,
