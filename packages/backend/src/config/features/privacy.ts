@@ -89,8 +89,6 @@ export async function getPrivacyConfig(
     }
   })
 
-  assertPriceBeforeFlow(priceConfigs, flowConfigs)
-
   const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
 
   const blockTimestampConfigs: PrivacyBlockTimestampConfig[] = chains.map(
@@ -146,19 +144,3 @@ function toFlowConfig(
   }
 }
 
-function assertPriceBeforeFlow(
-  priceConfigs: PrivacyPriceIndexerConfig[],
-  flowConfigs: PrivacyFlowIndexerConfig[],
-) {
-  const priceSinceByPriceId = new Map(
-    priceConfigs.map((c) => [c.priceId, c.sinceTimestamp]),
-  )
-  for (const flow of flowConfigs) {
-    const priceSince = priceSinceByPriceId.get(flow.priceId)
-    if (priceSince !== undefined && priceSince > flow.sinceTimestamp) {
-      throw new Error(
-        `Price "${flow.priceId}" is tracked since ${priceSince} but flow ${flow.projectId}/${flow.bucketId}/${flow.direction} starts at ${flow.sinceTimestamp}`,
-      )
-    }
-  }
-}
