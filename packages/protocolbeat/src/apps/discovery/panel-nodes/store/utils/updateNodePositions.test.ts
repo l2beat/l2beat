@@ -1,5 +1,10 @@
 import { expect } from 'earl'
 import type { Node, State } from '../State'
+import {
+  BOTTOM_PADDING,
+  HEADER_HEIGHT,
+  HIDDEN_FIELDS_FOOTER_HEIGHT,
+} from './constants'
 import { updateNodePositions } from './updateNodePositions'
 
 describe('updateNodePositions', () => {
@@ -166,6 +171,14 @@ describe('updateNodePositions', () => {
       false,
     )
     expect(result.nodes[0]?.fields[0]?.connection.to.x === 0).toEqual(false)
+  })
+
+  it('clamps visible field count to zero when hidden fields exceed field count', () => {
+    const result = buildState([makeNode('a', 0, 0, [], ['stale-hidden-field'])])
+
+    expect(result.nodes[0]?.box.height).toEqual(
+      HEADER_HEIGHT + BOTTOM_PADDING + HIDDEN_FIELDS_FOOTER_HEIGHT,
+    )
   })
 })
 
