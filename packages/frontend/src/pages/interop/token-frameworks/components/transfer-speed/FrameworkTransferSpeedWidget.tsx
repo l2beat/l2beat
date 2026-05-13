@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -17,9 +16,8 @@ export function FrameworkTransferSpeedWidget({
   tokenFrameworks: InteropTokenFramework[]
   interopChains: InteropChainWithIcon[]
 }) {
-  assert(interopChains[0] && interopChains[1])
-  const [src, setSrc] = useState(interopChains[0].id)
-  const [dst, setDst] = useState(interopChains[1].id)
+  const [src, setSrc] = useState('arbitrum')
+  const [dst, setDst] = useState('base')
 
   const { data, isLoading } = api.interop.tokenFrameworks.useQuery({
     from: [src],
