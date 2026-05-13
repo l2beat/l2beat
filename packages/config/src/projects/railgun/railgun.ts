@@ -84,7 +84,10 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
         type: 'pool',
         label: resolved.symbol,
         address: railgunCore.address,
-        sinceTimestamp: railgunCore.sinceTimestamp ?? 0,
+        sinceTimestamp: Math.max(
+          railgunCore.sinceTimestamp ?? 0,
+          resolved.coingeckoListingTimestamp,
+        ),
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',

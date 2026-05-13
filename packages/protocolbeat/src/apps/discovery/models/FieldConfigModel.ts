@@ -67,4 +67,8 @@ export class FieldConfigModel {
   get edit() {
     return this.config.edit
   }
+
+  get permissions() {
+    return this.config.permissions
+  }
 }

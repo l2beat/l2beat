@@ -495,7 +495,11 @@ const RpcLog = v.passthroughObject({
   // non-standard optimisation, number in sonic
   // although this is included in reth, geth and Nethermind since late 2025
   // see: https://github.com/ethereum/execution-apis/issues/295
-  blockTimestamp: v.union([vQuantity, v.number()]).transform(BigInt).optional(),
+  blockTimestamp: v
+    .union([vQuantity, v.number()])
+    // Some logs return 0x0 as block timestamp, which is invalid
+    .transform((n) => (BigInt(n) === 0n ? undefined : BigInt(n)))
+    .optional(),
 })
 
 export type RpcReceipt = v.infer<typeof RpcReceipt>

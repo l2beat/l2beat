@@ -1,6 +1,6 @@
 {
   "name": "degen",
-  "timestamp": 1778232933,
+  "timestamp": 1778508895,
   "configHash": "0xac73565451bcb6b0375c7e4462f03490c93c8ae43dfea55b7a6d5232c8eade01",
   "entries": [
     {
@@ -117,6 +117,19 @@
       }
     },
     {
+      "address": "base:0x2448e6487c3603860Cf48F0A82f8ab944B761e9B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xDb8E759859058952c34953c8469f464109826e52",
+          "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.",
+          "role": ".owner"
+        }
+      ]
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "base:0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F",
       "type": "Contract",
@@ -197,19 +210,6 @@
       }
     },
     {
-      "address": "base:0x490a9D8A26d2444537c577F61BF4f13F02312dF7",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xDb8E759859058952c34953c8469f464109826e52",
-          "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge.",
-          "role": ".owner"
-        }
-      ]
-    },
-    {
       "name": "SequencerInbox",
       "address": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
       "type": "Contract",
@@ -250,7 +250,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 44062,
+        "batchCount": 44136,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": ["base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -652,7 +652,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 10987,
+        "nonce": 11061,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -733,13 +733,13 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 13683,
+        "firstUnresolvedNode": 13757,
         "inbox": "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 13682,
-        "latestNodeCreated": 13682,
+        "latestConfirmed": 13756,
+        "latestNodeCreated": 13757,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -847,7 +847,7 @@
         "oApp": "base:0xDb8E759859058952c34953c8469f464109826e52",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "base:0x490a9D8A26d2444537c577F61BF4f13F02312dF7",
+        "owner": "base:0x2448e6487c3603860Cf48F0A82f8ab944B761e9B",
         "preCrime": "base:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
@@ -981,8 +981,8 @@
         ],
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 44062,
-        "sequencerReportedSubMessageCount": 26791785
+        "sequencerMessageCount": 44136,
+        "sequencerReportedSubMessageCount": 26796239
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1850,6 +1850,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 45721793 },
-  "permissionsConfigHash": "0x19fb47194596af03dc49e47525231d1ddd0c304efa01305f03807b84260b7a66"
+  "usedBlockNumbers": { "base": 45859774 },
+  "permissionsConfigHash": "0x0744e5a32f919b7df0d15636e26e421198ad089f60b1a2b576ccc8bb6c281122"
 }

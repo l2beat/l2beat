@@ -1,14 +1,31 @@
-Generated with discovered.json: 0x328308478423a9c2044e8fbc64f26ef18512ac08
+Generated with discovered.json: 0x736262f257991f926400a58db9faf8ae65730d96
 
-# Diff at Fri, 08 May 2026 07:52:20 GMT:
+# Diff at Tue, 12 May 2026 09:49:19 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@488d190650457a1fba9b18a83f14a17ab8b2c84c block: 1777882868
-- current timestamp: 1777882868
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e08a4d47318721a3851fee0bc0991367ebd1fb4 block: 1777882868
+- current timestamp: 1778579292
 
 ## Description
 
-Use the new flattener implementation
+Upgraded one EOA (Cyfrin SC multisig memeber) to 7702.
+
+Config: use the new flattener implementation
+
+## Watched changes
+
+```diff
+    EOA  (eth:0xa5D0084A766203b463b3164DFc49D91509C12daB) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x6fcf212849ffbf34d907a048df4d05a6c97f876a620c7386a770735262604c54"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xa5D0084A766203b463b3164DFc49D91509C12daB","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x7ae1b89ca3e105dc1aea89eb8fe060b288b2180a436d4cdcd92bca09b870a96a","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
 
 ## Config/verification related changes
 
