@@ -27,6 +27,7 @@ export type DeclarationType =
   | 'event'
   | 'error'
   | 'using'
+  | 'pragma'
 
 type TopLevelDeclarationNode =
   | AST.StructDefinition

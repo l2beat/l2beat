@@ -28,7 +28,8 @@ export function flattenStartingFrom(
     rootFile,
   )
   assert(rootContract !== undefined, 'Failed to find the root contract')
-  const order = topologicalSort(parsedFileManager, rootContract)
+  const sorted = topologicalSort(parsedFileManager, rootContract)
+  const order = [...collectPragmas(sorted), ...sorted]
   const shouldBeInterface = computeShouldBeInterface(
     parsedFileManager,
     rootContract,
@@ -185,6 +186,31 @@ function buildTypeMap(
     }
   }
   return map
+}
+
+// NOTE(radomski): We want to have all pragrams without the ones that configure
+// the Solidity version. Also the pragrams should be deduplicated.
+function collectPragmas(order: DeclarationFilePair[]): DeclarationFilePair[] {
+  const byContent = new Map<string, DeclarationFilePair>()
+  for (const { file } of order) {
+    for (const n of file.rootASTNode.children) {
+      if (n.type !== 'PragmaDirective' || n.name === 'solidity') continue
+      const content = `pragma ${n.name} ${n.value};`
+      byContent.set(content, {
+        file,
+        declaration: {
+          ast: n,
+          name: content,
+          type: 'pragma',
+          content,
+          id: content,
+          implementationReferences: [],
+          signatureReferences: [],
+        },
+      })
+    }
+  }
+  return [...byContent.values()]
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

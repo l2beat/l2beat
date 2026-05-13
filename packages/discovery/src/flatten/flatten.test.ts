@@ -1100,6 +1100,55 @@ describe('flatten', () => {
     )
   })
 
+  it('preserves ABIEncoderV2 pragma but drops solidity version pragma', () => {
+    const files = [
+      sol(
+        'Root.sol',
+        `
+        pragma solidity ^0.7.0;
+        pragma experimental ABIEncoderV2;
+        import { Lib } from "Lib.sol";
+
+        contract Root {
+            function f() public pure returns (Lib.S memory) {
+                return Lib.S({ x: 1 });
+            }
+        }
+      `,
+      ),
+      sol(
+        'Lib.sol',
+        `
+        pragma solidity ^0.7.0;
+
+        library Lib {
+            struct S { uint256 x; }
+        }
+      `,
+      ),
+    ]
+
+    const flattened = flattenStartingFrom('Root', 'Root.sol', files, [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      dedent(`
+      pragma experimental ABIEncoderV2;
+
+      library Lib {
+          struct S { uint256 x; }
+      }
+
+      contract Root {
+          function f() public pure returns (Lib.S memory) {
+              return Lib.S({ x: 1 });
+          }
+      }
+    `),
+    )
+  })
+
   it('regression - constructor arguments in base contracts', () => {
     const file = sol(
       'Root.sol',
