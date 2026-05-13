@@ -5,9 +5,11 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -20,6 +22,7 @@ const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 const columns = [
   columnHelper.accessor('name', {
     header: 'Project',
+    enableHiding: false,
     cell: (ctx) => (
       <TableLink href={ctx.row.original.href}>
         <TwoRowCell>
@@ -63,7 +66,7 @@ const columns = [
   }),
   columnHelper.accessor('totalValueSecuredUsd', {
     id: 'totalValueSecuredUsd',
-    header: 'Total value secured',
+    header: 'TVS',
     cell: (ctx) => (
       <span className="font-medium text-base">
         {formatCurrency(ctx.getValue() ?? 0, 'usd')}
@@ -140,8 +143,9 @@ export function PrivacySummaryTable({
   })
 
   return (
-    <div className="[&_thead]:normal-case! [&_th]:normal-case!">
+    <PrimaryCard className="mt-4">
+      <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} />
-    </div>
+    </PrimaryCard>
   )
 }
