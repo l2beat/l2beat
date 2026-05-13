@@ -16,6 +16,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { getBestEffortTokenFrameworkBridgeType } from '../tokenFrameworkBridgeTyping'
 import {
   createEventParser,
   createInteropEventType,
@@ -697,7 +698,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
             dstTokenAddress: dstToken.address,
             dstAmount: dstToken.amount,
             dstWasMinted: dstToken.wasMinted,
-            bridgeType: 'burnAndMint',
+            bridgeType: getBestEffortTokenFrameworkBridgeType({
+              srcWasBurned: undefined,
+              dstWasMinted: dstToken.wasMinted,
+            }),
           }),
         )
       }
@@ -764,7 +768,10 @@ export class CCIPPlugin implements InteropPluginResyncable {
         srcTokenAddress: delivery.args.token,
         srcAmount: delivery.args.amount,
         srcWasBurned: delivery.args.wasBurned,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortTokenFrameworkBridgeType({
+          srcWasBurned: delivery.args.wasBurned,
+          dstWasMinted: undefined,
+        }),
       }),
     ]
   }
