@@ -75,6 +75,10 @@ const mainPages: MainPage[] = [
     title: 'Liveness',
   },
   {
+    type: 'privacy',
+    title: 'Summary',
+  },
+  {
     title: 'ZK Catalog',
   },
   {

@@ -1,4 +1,3 @@
-import type { TrustedSetup } from '@l2beat/config'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
@@ -7,23 +6,6 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
-
-export interface PrivacySummaryEntry {
-  id: string
-  slug: string
-  name: string
-  shortName?: string
-  icon: string
-  href: string
-  description: string
-  totalValueSecuredUsd: number
-  poolsTracked: number
-  totalDeposits: number
-  totalValueDeposited30dUsd: number
-  totalDeposits30d: number
-  isUnderReview: boolean
-  trustedSetup: TrustedSetup
-}
 
 export async function getPrivacySummaryData(
   manifest: Manifest,
@@ -47,33 +29,16 @@ export async function getPrivacySummaryData(
     }),
   ])
 
-  const mappedEntries: PrivacySummaryEntry[] = entries.map((entry) => ({
-    id: entry.id,
-    slug: entry.slug,
-    name: entry.name,
-    shortName: entry.shortName,
-    icon: manifest.getUrl(`/icons/${entry.slug}.png`),
-    href: `/privacy/projects/${entry.slug}`,
-    description: entry.description,
-    totalValueSecuredUsd: entry.totalValueSecuredUsd,
-    poolsTracked: entry.poolsTracked,
-    totalDeposits: entry.totalDeposits,
-    totalValueDeposited30dUsd: entry.totalValueDeposited30dUsd,
-    totalDeposits30d: entry.totalDeposits30d,
-    isUnderReview: entry.isUnderReview,
-    trustedSetup: entry.trustedSetup,
-  }))
-
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Privacy Dashboard - L2BEAT',
+        title: 'Privacy - L2BEAT',
         description:
           'Track live balances and daily privacy flows across tracked privacy protocols.',
         url,
         openGraph: {
-          image: '/meta-images/data-availability/summary/opengraph-image.png',
+          image: '/meta-images/privacy/summary/opengraph-image.png',
         },
       }),
     },
@@ -81,7 +46,7 @@ export async function getPrivacySummaryData(
       page: 'PrivacySummaryPage',
       props: {
         ...appLayoutProps,
-        entries: mappedEntries,
+        entries,
         defaultChartRange,
         queryState: helpers.dehydrate(),
       },

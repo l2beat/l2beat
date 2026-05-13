@@ -7,7 +7,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
 import { PrivacySummaryTable } from './components/PrivacySummaryTable'
-import type { PrivacySummaryEntry } from './getPrivacySummaryData'
+import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]

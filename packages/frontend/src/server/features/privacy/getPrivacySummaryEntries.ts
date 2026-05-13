@@ -1,13 +1,17 @@
+import type { TrustedSetup } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import { manifest } from '~/utils/Manifest'
 import { getPrivacyProjects } from './getPrivacyProjects'
 
-export interface PrivacySummaryEntryData {
+export interface PrivacySummaryEntry {
   id: string
   slug: string
   name: string
   shortName?: string
+  icon: string
+  href: string
   description: string
   totalValueSecuredUsd: number
   poolsTracked: number
@@ -15,18 +19,11 @@ export interface PrivacySummaryEntryData {
   totalValueDeposited30dUsd: number
   totalDeposits30d: number
   isUnderReview: boolean
-  trustedSetup: {
-    id: string
-    name: string
-    risk: 'green' | 'yellow' | 'red' | 'N/A'
-    shortDescription: string
-    longDescription: string
-    participantCount?: number
-  }
+  trustedSetup: TrustedSetup
 }
 
 export async function getPrivacySummaryEntries(): Promise<
-  PrivacySummaryEntryData[]
+  PrivacySummaryEntry[]
 > {
   const db = getDb()
   const projects = await getPrivacyProjects()
@@ -60,7 +57,7 @@ export async function getPrivacySummaryEntries(): Promise<
     }
   }
 
-  const entries = projects.map((project) => {
+  const entries = projects.map((project): PrivacySummaryEntry => {
     const projectId = project.id.toString()
     const projectTotals = totalsByProject.get(projectId) ?? []
     const projectDaily = dailyByProject.get(projectId) ?? []
@@ -92,6 +89,8 @@ export async function getPrivacySummaryEntries(): Promise<
       slug: project.slug,
       name: project.name,
       shortName: project.shortName,
+      icon: manifest.getUrl(`/icons/${project.slug}.png`),
+      href: `/privacy/projects/${project.slug}`,
       description: project.display.description,
       totalValueSecuredUsd,
       poolsTracked,
