@@ -15,6 +15,7 @@ import {
   getChainConfigs,
   getDiscoveryPaths,
   SQLiteCache,
+  IProvider,
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
@@ -84,12 +85,8 @@ export const FlattenerValidator = command({
       const chain = ChainSpecificAddress.longChain(contract)
       const provider = await allProviders.get(chain, now)
 
-      const bytecode = await provider.getBytecode(contract)
-      const source = await provider.getSource(contract)
-      const flat = flattenSource(source)
-
       const startedAtMs = Date.now()
-      const status = await verifyBytecode(source, flat, bytecode, paths)
+      const status = await verifyAddress(provider, contract, paths)
       const verificationTimeMs = Date.now() - startedAtMs
 
       completed++
@@ -119,6 +116,24 @@ export const FlattenerValidator = command({
     })
   },
 })
+
+async function verifyAddress(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+  paths: DiscoveryPaths,
+): Promise<VerificationResult> {
+  try {
+    const [bytecode, source] = await Promise.all([
+      provider.getBytecode(address),
+      provider.getSource(address),
+    ])
+    const flat = flattenSource(source)
+
+    return await verifyBytecode(source, flat, bytecode, paths)
+  } catch {
+    return { type: 'failure', message: 'Top level thrown an error' }
+  }
+}
 
 function assertPositiveInteger(value: number, name: string): void {
   if (!Number.isInteger(value) || value < 1) {
