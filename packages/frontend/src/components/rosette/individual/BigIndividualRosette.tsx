@@ -143,7 +143,13 @@ function RosetteTooltipContent() {
           />
         )}
         {content.outer.warning && content.outer.regular && (
-          <span className="text-xs">{content.outer.warning.value}</span>
+          <WarningBar
+            className="px-3 py-2"
+            icon={RoundedWarningIcon}
+            text={content.outer.warning.value}
+            color={sentimentToWarningBarColor(content.outer.warning.sentiment)}
+            ignoreMarkdown
+          />
         )}
         <span className="text-xs">{content.outer.description}</span>
       </div>
@@ -177,7 +183,13 @@ function RosetteTooltipContent() {
           />
         )}
         {content.inner.warning && content.inner.regular && (
-          <span className="text-xs">{content.inner.warning.value}</span>
+          <WarningBar
+            className="px-3 py-2"
+            icon={RoundedWarningIcon}
+            text={content.inner.warning.value}
+            color={sentimentToWarningBarColor(content.inner.warning.sentiment)}
+            ignoreMarkdown
+          />
         )}
 
         <span className="text-xs">{content.inner.description}</span>

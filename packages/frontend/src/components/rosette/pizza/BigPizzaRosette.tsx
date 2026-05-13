@@ -138,7 +138,13 @@ function RosetteTooltipContent() {
         />
       )}
       {selectedRisk.warning && selectedRisk.regular && (
-        <p className="mb-2">{selectedRisk.warning.value}</p>
+        <WarningBar
+          className="mb-2 px-3 py-2"
+          icon={RoundedWarningIcon}
+          text={selectedRisk.warning.value}
+          color={sentimentToWarningBarColor(selectedRisk.warning.sentiment)}
+          ignoreMarkdown
+        />
       )}
       <span>{selectedRisk.description}</span>
     </TooltipContent>
