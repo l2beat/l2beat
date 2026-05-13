@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
+import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
@@ -46,18 +48,44 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
     [data],
   )
 
+  const flowChartTimeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        chartData?.map((point) => ({ timestamp: point.timestamp })),
+      ),
+    [chartData],
+  )
+
+  const tvsChartTimeRange = useMemo(
+    () =>
+      getChartTimeRangeFromData(
+        tvsChartData?.map((point) => ({ timestamp: point.timestamp })),
+      ),
+    [tvsChartData],
+  )
+
   const countsChart = (
-    <PrivacySummaryChartCard
-      title="Total deposit and withdrawal counts"
-      data={chartData}
-      syncedUntil={data?.syncedUntil}
-      isLoading={isLoading}
-      metric="count"
-    />
+    <div>
+      <div className="mb-3">
+        <h2 className="font-bold text-lg md:text-xl">
+          Total deposit and withdrawal counts
+        </h2>
+        <ChartTimeRange timeRange={flowChartTimeRange} />
+      </div>
+      <PrivacyFlowChart
+        data={chartData}
+        syncedUntil={data?.syncedUntil}
+        isLoading={isLoading}
+        metric={'count'}
+      />
+    </div>
   )
   const tvsChart = (
     <div>
-      <h2 className="mb-3 font-bold text-lg md:text-xl">Total value secured</h2>
+      <div className="mb-3">
+        <h2 className="font-bold text-lg md:text-xl">Total value secured</h2>
+        <ChartTimeRange timeRange={tvsChartTimeRange} />
+      </div>
       <PrivacyTvsChart
         data={tvsChartData}
         syncedUntil={data?.tvsSyncedUntil}
@@ -67,50 +95,16 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
   )
 
   return (
-    <PrimaryCard>
-      <div className="mb-3 grid grid-cols-2 gap-x-6">
-        {tvsChart}
-        {countsChart}
+    <>
+      <div className="mb-3">
+        <div className="grid grid-cols-2 gap-x-3">
+          <PrimaryCard>{tvsChart}</PrimaryCard>
+          <PrimaryCard>{countsChart}</PrimaryCard>
+        </div>
       </div>
       <ChartControlsWrapper className="justify-end">
         <PrivacyChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-    </PrimaryCard>
-  )
-}
-
-interface PrivacySummaryChartCardProps {
-  title: string
-  data:
-    | {
-        timestamp: number
-        depositsCount: number
-        withdrawalsCount: number
-        depositsValueUsd: number
-        withdrawalsValueUsd: number
-      }[]
-    | undefined
-  syncedUntil: number | undefined
-  isLoading: boolean
-  metric: 'count' | 'value'
-}
-
-function PrivacySummaryChartCard({
-  title,
-  data,
-  syncedUntil,
-  isLoading,
-  metric,
-}: PrivacySummaryChartCardProps) {
-  return (
-    <div>
-      <h2 className="mb-3 font-bold text-lg md:text-xl">{title}</h2>
-      <PrivacyFlowChart
-        data={data}
-        syncedUntil={syncedUntil}
-        isLoading={isLoading}
-        metric={metric}
-      />
-    </div>
+    </>
   )
 }
