@@ -1,5 +1,6 @@
 import express from 'express'
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from '~/server/projects'
 
@@ -40,7 +41,7 @@ const STATIC_PATHS = [
   '/terms-of-service',
   '/stages',
   '/publications',
-  '/privacy/summary',
+  ...(env.CLIENT_SIDE_PRIVACY_ENABLED ? ['/privacy/summary'] : []),
 ]
 
 export function createSitemapRouter() {
@@ -89,7 +90,9 @@ async function getDynamicPaths(): Promise<string[]> {
     ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
-    ps.getProjects({ where: ['privacyInfo'] }),
+    env.CLIENT_SIDE_PRIVACY_ENABLED
+      ? ps.getProjects({ where: ['privacyInfo'] })
+      : [],
   ])
 
   const paths: string[] = []

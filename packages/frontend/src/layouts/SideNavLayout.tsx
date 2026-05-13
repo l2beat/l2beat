@@ -173,7 +173,7 @@ export function SideNavLayout({
             <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
           ),
         },
-        {
+        env.CLIENT_SIDE_PRIVACY_ENABLED && {
           type: 'single',
           title: 'Privacy',
           match: 'privacy',
