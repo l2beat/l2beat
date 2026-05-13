@@ -83,6 +83,11 @@ type OFTSentTransferData = {
   burned: boolean
 }
 
+const LAYERZERO_OFT_ONE_SIDED_BRIDGE_TYPE_FALLBACK_PRIORITY = [
+  'burnAndMint',
+  'lockAndMint',
+] as const satisfies KnownInteropBridgeType[]
+
 export function getBridgeType({
   srcTokenAddress,
   dstTokenAddress,
@@ -153,6 +158,57 @@ export function getBridgeType({
   return srcAbstractToken.issuer === dstAbstractToken.issuer
     ? 'nonMinting'
     : 'lockAndMint'
+}
+
+export function getBestEffortLayerZeroOFTOneSidedBridgeType({
+  srcWasBurned,
+  dstWasMinted,
+}: {
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+}): KnownInteropBridgeType | undefined {
+  const candidates = getBridgeTypeCandidatesFromPartialSupplyActions({
+    srcWasBurned,
+    dstWasMinted,
+  })
+
+  // One-sided OFT events expose only the local supply action. Pick the best
+  // LayerZero display fallback from the bridge types that are still possible.
+  return LAYERZERO_OFT_ONE_SIDED_BRIDGE_TYPE_FALLBACK_PRIORITY.find(
+    (bridgeType) => candidates.has(bridgeType),
+  )
+}
+
+function getBridgeTypeCandidatesFromPartialSupplyActions({
+  srcWasBurned,
+  dstWasMinted,
+}: {
+  srcWasBurned: boolean | undefined
+  dstWasMinted: boolean | undefined
+}): Set<KnownInteropBridgeType> {
+  const candidates = new Set<KnownInteropBridgeType>()
+  const srcCandidates =
+    srcWasBurned === undefined ? [false, true] : [srcWasBurned]
+  const dstCandidates =
+    dstWasMinted === undefined ? [false, true] : [dstWasMinted]
+
+  if (srcWasBurned === undefined && dstWasMinted === undefined) {
+    return candidates
+  }
+
+  for (const srcCandidate of srcCandidates) {
+    for (const dstCandidate of dstCandidates) {
+      if (srcCandidate && dstCandidate) {
+        candidates.add('burnAndMint')
+      } else if (srcCandidate || dstCandidate) {
+        candidates.add('lockAndMint')
+      } else {
+        candidates.add('nonMinting')
+      }
+    }
+  }
+
+  return candidates
 }
 
 function parseMatchingOFTSentTransfer(
@@ -365,7 +421,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
           dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
           dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
           dstWasMinted: oftReceivedPacketDelivered.args.minted,
-          bridgeType: 'burnAndMint',
+          bridgeType: getBestEffortLayerZeroOFTOneSidedBridgeType({
+            srcWasBurned: undefined,
+            dstWasMinted: oftReceivedPacketDelivered.args.minted,
+          }),
           extraEvents: packetDelivered ? [packetDelivered] : undefined,
         }),
       ]
@@ -435,7 +494,10 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcAmount: oftSentPacketSent.args.amountSentLD,
         srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
         srcWasBurned: oftSentPacketSent.args.burned,
-        bridgeType: 'burnAndMint',
+        bridgeType: getBestEffortLayerZeroOFTOneSidedBridgeType({
+          srcWasBurned: oftSentPacketSent.args.burned,
+          dstWasMinted: undefined,
+        }),
         extraEvents: packetSent ? [packetSent] : undefined,
       }),
     ]
