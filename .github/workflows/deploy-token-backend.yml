@@ -27,7 +27,7 @@ jobs:
 
   build:
     needs: check-changes
-    if: needs.check-changes.outputs.should_deploy == 'true'
+    if: ${{ always() && (needs.check-changes.result != 'success' || needs.check-changes.outputs.should_deploy == 'true') }}
     uses: ./.github/workflows/build-docker-image.yml
     with:
       project: token-backend
@@ -38,6 +38,7 @@ jobs:
 
   deploy:
     needs: build
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}

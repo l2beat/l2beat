@@ -2533,6 +2533,15 @@
       {
         "chain": "unichain",
         "tx": "0xc6ae8abbfdb4b01f4cae51e52748c86186ac0dfe6568585b5479d7df5f1ad6b9"
+      },
+      // megaeth related txs: direct portal ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x6fa097e8c75bda7f784014655957cff35817e05534a6c6c19464508b1363eb3f"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x4d9b09120db5c4f129b6963ca5fb605baca8f07a2be96eef7203dd67f8370aa0"
       }
     ],
     "events": [
@@ -2965,6 +2974,65 @@
       "opstack-standardbridge.L1ToL2Transfer",
       "opstack-standardbridge.L2ToL1Transfer"
     ]
+  },
+  "opstack-standardbridge-megaeth-eth": {
+    "tags": ["opstack"],
+    "description": "megaeth <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: ~0.186 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xf37b0a88752ee08a388f06979aaa5f2784621b54bcb95e584a7fa193b843ba75"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x22a00319a061b24cad8efcc4f86ed56ecbb5c5e3c869a8671ada250a94ac5298"
+      },
+      // L2 -> L1: ~53.4 ETH withdrawal
+      {
+        "chain": "megaeth",
+        "tx": "0xd19d0e90e5e4d490106f58c9920caa16014c1c4b2860bd7a4e7ca26d40641dbe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x14b48eb64ca4f2c0e0aae70f9e6bed464ad1827458c823cdcfa6664b7f9fbf51"
+      }
+    ],
+    "expects": {
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 0.186125 } }
+        },
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 53.407822 } }
+        }
+      ]
+    }
+  },
+  "opstack-standardbridge-megaeth-erc20": {
+    "tags": ["opstack"],
+    "description": "megaeth <- ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: 2,000,000 snMUSDC deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x9cc30700cbffd4a14a82d0ca9d36f4782090f5137c17378dbcef4e82b7495ac1"
+      },
+      {
+        "chain": "megaeth",
+        "tx": "0x5aab3cf99e59fb8cb84a3b2d6eb0def991c7f6114a79f044f638fd1b5e516d85"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
   },
   "opstack-standardbridge-ink-eth": {
     "tags": ["opstack"],

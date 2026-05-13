@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "NativeGateway",
+  "category": "core",
+  "description": "L1 entry point for ETH deposits into Fluent. Forwards ETH to L1FluentBridge for actual escrow custody and emits the corresponding bridge message. UUPS-upgradeable; upgrades are gated by the contract owner.",
+  "ignoreMethods": ["proxiableUUID"]
+}

@@ -91,6 +91,7 @@ function getTokensByVolumeColumn<
     tokens: TopItems<TokenData>
     id: ProjectId
     name: string
+    slug: string
     iconUrl: string
   },
 >(
@@ -115,6 +116,7 @@ function getTokensByVolumeColumn<
         protocol={{
           id: ctx.row.original.id,
           name: ctx.row.original.name,
+          slug: ctx.row.original.slug,
           iconUrl: ctx.row.original.iconUrl,
         }}
       />

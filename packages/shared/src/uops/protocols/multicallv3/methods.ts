@@ -1,4 +1,4 @@
-import { parseAbiItem } from 'viem'
+import { parseAbiItem } from 'viem/utils'
 import type { Method } from '../../types'
 import { defineMethod } from '../defineMethod'
 

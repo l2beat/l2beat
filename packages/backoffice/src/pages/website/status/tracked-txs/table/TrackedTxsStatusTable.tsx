@@ -46,6 +46,7 @@ export function TrackedTxsStatusTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No active tracked tx configs found."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `tracked-txs-status-${new Date().toISOString()}.csv`

@@ -1,10 +1,11 @@
-import { ApiPromise, WsProvider } from '@polkadot/api'
+import type { ApiPromise } from '@polkadot/api'
 
 export class AvailWsClient {
   private api!: ApiPromise
   constructor(private readonly wsUrl: string) {}
 
   async connect() {
+    const { ApiPromise, WsProvider } = await import('@polkadot/api')
     const wsProvider = new WsProvider(this.wsUrl)
     this.api = new ApiPromise({ provider: wsProvider, noInitWarn: true })
     await this.api.isReady

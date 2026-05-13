@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xe740c87d2a389a8ef46b645f64d123407e40092b
+
+# Diff at Mon, 11 May 2026 14:16:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1778233010
+- current timestamp: 1778508927
+
+## Description
+
+- **RollupProxy** (`arb-nova:0x04ea347c...`): two sequential `setValidator()` calls — `setValidator([0x8273A6b1...], [true])` at block 84931832, then `setValidator([0xB2464216...], [false])` at block 84931833. Net effect: validator swap. `setValidatorCount` counts events.
+- **UpgradeExecutor** (`arb-nova:0x0611b78A...`): EXECUTOR_ROLE member rotated `0x10Fe3cb8...` → `0x04b47Ba4...` (a new Safe, created in this diff).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        5
+      values.validators.0:
+-        "arb-nova:0xB246421622FB931BdAc20B4a26816F881771Db1e"
++        "arb-nova:0x8273A6b13Ee8F7eF85bc769E27e4e508f53009Cc"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
++        "arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"
+      values.executors.0:
+-        "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
++        "arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.0:
+-        "arb-nova:0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"
++        "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458"
+      values.dacKeyset.membersCount:
+-        2
++        1
+      values.dacKeyset.blsSignatures.0:
+-        "YBlgGETG0JAkF0lRA3szPn3L5opNuQWdu2c9OsvmyiFTuut4zl6E8tcgnXSzlX1cwxFb/dKGoetJtdHbrfN4a70U5wD5NXsMjvZGJC9grFkyEQ4gQfOfMcW/NX5CEp3FvBfLYp9lTR/sAjU/uZ7JNGMj1ol0xyYkOkyAQvbN7ri9z05Jo3H8hhHYpvAkaIpgVQw2nSQg1nlMMhmUdn0g2XEBzijYfDvQC3MZDurPXmiC9eARVq+gLXF57By/3m1u8hZoshxjU2aG24ukLjEXEqGvqDR158jZpQE7ZMtv8c7ma1XSUSXLqm1LQMWlK2FRJwErkKGyUQM4luTI4fGoycDnpdQq2eI6+TZXm2PYY1nJrPo7lMghYL+CLkCSCvMmPQ=="
+      values.dacKeyset.blsSignatures.1:
+-        "YAImQLIbSOCL4/9H1Cz7q4xAOZPVli5CulIEqvuMF4JjZwEhRDa8n3tie56cEykcxhgd8kixHEdOm2YcGOetbcUN7HUgfDpVMEqspHjIYzp06QM/IEC0SC2oUxsXorqewxPqukssVdSDsZQ26R/A9uZ2+wpHhGd8V9itDIRK+1HXzECMMd02yic2cyGjmOxPXAGfMay9PnLViYszEOKRNsiRWBO6Z6n8VP3GJF4S4/XFPHQ58wFxIi8zWR12BvzCbw6UUKohmrC2SIHtu9hJ6rbj3EcXlNGa/YsGatysgfcVR20/rMysbmqy7E1zhsYwvhRQaOBUpoVUzH4DajylpiJdWpbk46dlq0127k2vtGgWXNErbBRES1IK2cDfbP+Ztw=="
++        "YBhPN6Tq6nXoJS041bPwKYcDeU1Y84s1URBM4MJHKup49TzNB/23scWwhETSvpAl1RnMwh0S/Z+LZ8UGFWlLYmquyJi5weYTsMF6rChTnuZnqY4I1zQZPemy5hK0sIJDlQaqb/llv/8ujT5q3p4DhBLXZ3eIUMcXs4j7F+QMNZyO87mbTnrulLiPfZbAno1SKg8k2Q76fbNPQs76GK4aseCPeA5hPguvjijDIqDVK5Ffz/PhQ6nap8K6UlApBm+CMBIOmAP9IdMyAVs+wirhgMvR88+JVhoMW9kU3F90bWks78tHYqASrw/lXBFI8TgiGhlvvsmUJAC3dyzjccjMyO0M05JjmM1i8bkAdYuCWRF0KV63rABVXUAFGtKAzrLPpw=="
+      values.keySetUpdates:
+-        4
++        5
+      values.setIsBatchPosterCount:
+-        3
++        5
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/playblock/.flat/SafeL2/SafeL2.sol | 1286 ++++++++++++++++++++
+ .../playblock/.flat/SafeL2/SafeProxy.p.sol         |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
 Generated with discovered.json: 0x8b83cdad2b61e4f006a0b276653f9a2e2e94ee3a
 
 # Diff at Fri, 08 May 2026 09:37:53 GMT:
