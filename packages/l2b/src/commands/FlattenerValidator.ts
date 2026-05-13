@@ -232,7 +232,9 @@ function getAllContractAddresses(
     result.push(...contractAddresses)
   }
 
-  return unique(result)
+  return unique(result).filter(
+    (a) => ChainSpecificAddress.longChain(a) !== 'kinto',
+  )
 }
 
 type VerificationResult =
