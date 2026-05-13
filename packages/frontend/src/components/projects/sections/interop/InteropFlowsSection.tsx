@@ -155,7 +155,7 @@ function Content({
         <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
           {hasRouteSelection ? 'Route stats' : 'Chain stats'}
         </div>
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
           {hasRouteSelection ? (
             <MultipleChainsStats
               chainIdA={statsChainA}
