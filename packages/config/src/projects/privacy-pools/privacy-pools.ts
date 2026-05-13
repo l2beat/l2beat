@@ -18,7 +18,6 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
-const MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS = 20
 
 interface PrivacyPoolBucket {
   id: string
@@ -145,11 +144,6 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
   const pools = discovery
     .getContracts()
     .filter((entry) => entry.template?.startsWith('privacy-pools/PrivacyPool'))
-    .filter(
-      (pool) =>
-        Number(pool.values?.totalDeposits ?? 0) >=
-        MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS,
-    )
 
   return pools.map((pool) => {
     const asset = pool.values?.ASSET?.toString()
@@ -165,7 +159,7 @@ function getPrivacyPoolBuckets(): PrivacyPoolBucket[] {
     assert(resolved, `Unknown asset ${asset}`)
 
     return {
-      id: `privacy-pools-${resolved.symbol}-${pool.address}`,
+      id: `privacy-pools-${resolved.symbol}`,
       address: pool.address,
       tokenAddress,
       tokenInfo: {
