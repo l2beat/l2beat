@@ -1,7 +1,7 @@
 {
   "name": "syndicate",
   "timestamp": 1775599220,
-  "configHash": "0x1d76554d7c5671cab922c84bb7b4dcd4b817d975bdb51eef7206bd4205506516",
+  "configHash": "0x0e3923dbaf7703860e05a0efcee6e419ea7c9ad303b96a94b125bd351d88ed88",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -852,7 +852,8 @@
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
         "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
+        "sequencerReportedSubMessageCount",
+        "delayedMessageCount"
       ],
       "deployerAddress": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
       "sinceTimestamp": 1753808975,

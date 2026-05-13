@@ -10,6 +10,7 @@ import { IconChecked } from '../../../icons/IconChcked'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconClose } from '../../../icons/IconClose'
 import { IconCode } from '../../../icons/IconCode'
+import { IconFileDiff } from '../../../icons/IconFileDiff'
 import { IconFullscreen } from '../../../icons/IconFullscreen'
 import { IconFullscreenExit } from '../../../icons/IconFullscreenExit'
 import { IconGear } from '../../../icons/IconGear'
@@ -33,6 +34,7 @@ const ICONS: Record<PanelId, FC<{ className?: string }>> = {
   terminal: IconTerminal,
   template: IconStamp,
   config: IconGear,
+  diffHistory: IconFileDiff,
 }
 
 export function PanelHeader(props: { id: PanelId }) {

@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x067510d724db35843c77c7ddf242676ccf31fb58
+
+# Diff at Mon, 11 May 2026 14:19:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1760005725
+- current timestamp: 1778509082
+
+## Description
+
+The new `blobstreamProgramVkey` corresponds to the Blobstream guest program rebuilt against SP1 zkVM **v6.1.0** ([succinctlabs/sp1-blobstream#66](https://github.com/succinctlabs/sp1-blobstream/pull/66), merged 2026-05-05).
+
+The underlying prover system moves from `sp1turbo` (v5.x) to `sp1hypercube` (v6.x).
+
+Verification path confirmed on-chain by decoding the SP1 proof selector from a recent `commitHeaderRange` call (first 4 bytes = `0x5a093a2f`, which routes via `SP1VerifierGateway.activeVerifiers` to `0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A` — the SP1Verifier v6.1.0 deployment).
+
+## Watched changes
+
+```diff
+    contract ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
+```diff
+    contract BaseBlobstream (base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
+```diff
+    contract EthereumBlobstream (eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) [succinct/SP1Blobstream] {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
++        "0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745"
+    }
+```
+
 Generated with discovered.json: 0x05c882d6eb3fe952224f265f30d1a9872f77cdbc
 
 # Diff at Fri, 08 May 2026 07:51:08 GMT:

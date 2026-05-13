@@ -56,6 +56,7 @@ export function SuspiciousTransfersTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No suspicious transfers found for the current thresholds."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-suspicious-transfers-${new Date().toISOString()}.csv`

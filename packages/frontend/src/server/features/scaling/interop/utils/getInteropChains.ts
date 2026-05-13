@@ -6,10 +6,10 @@ interface InteropChainWithUpcoming extends InteropChain {
 }
 
 export function getInteropChains(): InteropChainWithUpcoming[] {
-  const disabledSet = new Set(env.INTEROP_DISABLED_CHAINS)
+  const enabledSet = new Set(env.INTEROP_CHAINS)
   const upcomingSet = new Set(env.INTEROP_UPCOMING_CHAINS)
 
-  return INTEROP_CHAINS.filter((chain) => !disabledSet.has(chain.id)).map(
+  return INTEROP_CHAINS.filter((chain) => enabledSet.has(chain.id)).map(
     (chain) => ({
       ...chain,
       isUpcoming: upcomingSet.has(chain.id),

@@ -64,7 +64,7 @@ const SERVER_CONFIG = {
     .unknown()
     .transform((v) => Number(v))
     .optional(),
-  INTEROP_DISABLED_CHAINS: stringArray.optional(),
+  INTEROP_CHAINS: stringArray.optional(),
   INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE: z
     .string()
     .transform((v) => UnixTime(Number(v)))
@@ -130,7 +130,7 @@ function getRawEnv(): Record<
     ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
-    INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
+    INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE:
       process.env.INTEROP_AGGREGATE_TIMESTAMP_OVERRIDE,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,

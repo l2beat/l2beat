@@ -31,5 +31,6 @@
       "description": "Whether the one-time legacy state migration path has already been used.",
       "severity": "LOW"
     }
-  }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
 }
