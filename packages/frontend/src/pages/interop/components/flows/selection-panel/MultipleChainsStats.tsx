@@ -12,12 +12,14 @@ export function MultipleChainsStats({
   chainIdA,
   chainIdB,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainIdA: string
   chainIdB: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -25,6 +27,7 @@ export function MultipleChainsStats({
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
     protocolIds: selectedProtocols,
+    tokenId,
   })
 
   if (!data || isLoading) {

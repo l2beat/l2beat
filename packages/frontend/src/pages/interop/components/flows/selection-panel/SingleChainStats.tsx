@@ -12,11 +12,13 @@ import { TopItemsList } from './TopItemsList'
 export function SingleChainStats({
   chainId,
   selectedChains,
+  tokenId,
   linkTopProtocols,
   hideTopProtocols,
 }: {
   chainId: string
   selectedChains: string[]
+  tokenId?: string
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
@@ -24,6 +26,7 @@ export function SingleChainStats({
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
     protocolIds: selectedProtocols,
+    tokenId,
   })
 
   if (!data || isLoading) {

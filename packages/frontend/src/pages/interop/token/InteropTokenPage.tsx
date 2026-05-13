@@ -100,12 +100,9 @@ function Content({
                 slug: token.slug,
                 icon: token.iconUrl,
               }}
-              secondLine={[
-                token.issuer && `Issued by ${token.issuer}`,
-                token.category,
-              ]
-                .filter(Boolean)
-                .join(' · ')}
+              secondLine={
+                token.issuer ? `Issued by ${token.issuer}` : undefined
+              }
             />
             <HorizontalSeparator className="my-4 md:hidden" />
           </div>
