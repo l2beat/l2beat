@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
@@ -7,9 +8,9 @@ import {
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
 import { FlowsChainsSelector } from '~/pages/interop/components/flows/FlowsChainsSelector'
-import { FlowsGeneralStats } from '~/pages/interop/components/flows/FlowsGeneralStats'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import { InactiveChainsDialog } from '~/pages/interop/components/flows/graph/InactiveChainsDialog'
+import { useScaledParticleCounts } from '~/pages/interop/components/flows/graph/utils/useScaledParticleCounts'
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
 import {
@@ -18,6 +19,7 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { api } from '~/trpc/React'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function TokenVolumeSection({
   tokenId,
@@ -94,11 +96,42 @@ function Content({
     visibleHighlightedChains.length === 2
       ? interopChains.find((c) => c.id === visibleHighlightedChains[1])
       : undefined
+  const { dollarsPerParticle } = useScaledParticleCounts(
+    selectedChains,
+    data?.chainData,
+    data?.flows,
+    25,
+  )
+  const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="mx-auto">
+      <div className="flex min-h-5 flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <FlowsChainsSelector allChains={interopChains} />
+        {!isLoading && data && (
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-medium text-label-value-11 text-secondary md:text-label-value-12">
+            <span>
+              Avg value per second ≈{' '}
+              <span className="font-bold text-brand">
+                {formatCurrency(avgValuePerSecond, 'usd')}
+              </span>
+            </span>
+            {dollarsPerParticle && (
+              <>
+                <span className="text-tertiary">|</span>
+                <span className="inline-flex items-center gap-1">
+                  <span className="size-1.5 rounded-full bg-brand" />1 particle
+                  ≈{' '}
+                  <span className="font-bold text-brand">
+                    {formatCurrency(dollarsPerParticle, 'usd', {
+                      decimals: 0,
+                    })}
+                  </span>
+                </span>
+              </>
+            )}
+          </div>
+        )}
       </div>
       <FlowsGraphPanel
         activeChains={activeChains}
@@ -122,13 +155,6 @@ function Content({
           )}
         </div>
       )}
-      <FlowsGeneralStats
-        tokenId={tokenId}
-        title="Token stats"
-        description="For past 24h between the selected chains and protocols"
-        hideTokenStats
-        className="max-lg:order-3"
-      />
       {chainA && (
         <div className="grid grid-cols-1 gap-2 max-lg:order-3 md:grid-cols-2 md:grid-rows-2 md:[&>*:first-child]:row-span-2">
           {visibleHighlightedChains.length === 1 && (
