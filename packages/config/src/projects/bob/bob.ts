@@ -1,11 +1,29 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
+
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal2',
+  'respectedGameType',
+)
+const activeKailuaGame = discovery.getContractValue<ChainSpecificAddress>(
+  'DisputeGameFactory',
+  `game${respectedGameType}`,
+)
+const activeKailuaTreasury = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaGame,
+  'KAILUA_TREASURY',
+)
+const activeKailuaVerifier = discovery.getContractValue<ChainSpecificAddress>(
+  activeKailuaTreasury,
+  'KAILUA_VERIFIER',
+)
 
 export const bob: ScalingProject = opStackL2({
   ecosystemInfo: {
@@ -102,9 +120,10 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
-  // RiscZeroVerifierRouter + emergency-stop wrappers were removed from the
-  // deployment on 2026-05-11 alongside the game1337 implementation swap to
-  // an unverified contract (0xD37b0BEd...). nonTemplateZkVerifiers left
-  // empty until the new proof system is identified and re-wired.
-  nonTemplateZkVerifiers: [],
+  nonTemplateZkVerifiers: [activeKailuaVerifier],
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(
+      discovery.getContractValue<string>(activeKailuaVerifier, 'FPVM_IMAGE_ID'),
+    ),
+  ],
 })

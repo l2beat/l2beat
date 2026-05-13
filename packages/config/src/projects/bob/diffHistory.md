@@ -1,33 +1,58 @@
-Generated with discovered.json: 0xe54ad1b936ded9630a5b1a8291a0102f0d433ad5
+Generated with discovered.json: 0x5f9890e9b02642b06268f4639ed6396f7bb2cd39
 
-# Diff at Mon, 11 May 2026 14:39:55 GMT:
+# Diff at Wed, 13 May 2026 13:31:40 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@37cdce03260dfa5682c2b693e3c1d4a9ccb125af block: 1773320760
-- current timestamp: 1778510295
+- comparing to: main@da451cba8e944a28754be7e17bcb7555d857f312 block: 1773320760
+- current timestamp: 1778679029
 
 ## Description
 
-Discovery run only.
+Upgrade to Kailua [v1.2.0](https://github.com/boundless-xyz/kailua/releases/tag/v1.2.0). New active contracts: `KailuaGame` `0xD37b0BEd…`, `KailuaTreasury` `0x9937033C…`, `KailuaVerifier` `0xa23bf382…` (a new v1.2.0 proxy-wrapped proof verifier that gates `verifyProof` with fault-proof permits before delegating to `RISC_ZERO_VERIFIER` `0x8EaB2D97…`). FPVM image ID rotated to `0x3768ea4f…` (now stored on KailuaVerifier, not KailuaTreasury).
+
+`bob.ts` resolves the active game/treasury/verifier dynamically via `OptimismPortal2.respectedGameType` → `DisputeGameFactory.game{N}` → `KAILUA_TREASURY` → `KAILUA_VERIFIER`; `nonTemplateZkVerifiers` and `nonTemplateProgramHashes` read from those. New `risc0/KailuaGame` and `risc0/KailuaTreasury` shape entries (`*_v1_2`) collapse the discovery cascade.
+
+Vanguard scope verified against the [v1.2.0 source](https://github.com/boundless-xyz/kailua/blob/v1.2.0/crates/contracts/foundry/src/KailuaTreasury.sol#L376-L387): the `proposalParent.childCount() == 1` gate is present — `vanguardAdvantage` applies only to the first child of each parent, siblings remain permissionless.
 
 ## Watched changes
 
 ```diff
--   Status: DELETED
-    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController]
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
     +++ description: A timelock with access control. The current minimum delay is 3d.
-```
-
-```diff
--   Status: DELETED
-    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop]
-    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
-```
-
-```diff
--   Status: DELETED
-    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier]
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.CANCELLER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.12:
++        {"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.13:
++        {"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
++++ severity: HIGH
+      values.callsExecuted.14:
++        {"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.15:
++        {"id":"0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.16:
++        {"id":"0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
++++ description: since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.
+      values.callsScheduled.17:
++        {"id":"0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d","index":0,"target":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","value":0,"data":"0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609","predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.Canceller.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Executor.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Proposer.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
 ```
 
 ```diff
@@ -37,21 +62,11 @@ Discovery run only.
 ```
 
 ```diff
--   Status: DELETED
-    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier]
-    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
-```
-
-```diff
--   Status: DELETED
-    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop]
-    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
-```
-
-```diff
--   Status: DELETED
-    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter]
-    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53","description":"propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.","role":".vanguard"}]
+    }
 ```
 
 ```diff
@@ -71,37 +86,47 @@ Discovery run only.
 ```
 
 ```diff
--   Status: DELETED
-    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop]
-    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
-```
-
-```diff
--   Status: DELETED
-    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier]
-    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+    contract Bob Multisig 1 (eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d","role":"admin"}
+    }
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [N/A]
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53) [risc0/KailuaTreasury]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
 ```
 
 ## Source code changes
 
 ```diff
-.../.flat@1773320760/KailuaGame.sol => /dev/null   | 7564 --------------------
- .../KailuaTreasury.sol => /dev/null                | 7318 -------------------
- .../dev/null                                       | 1780 -----
- .../dev/null                                       | 1780 -----
- .../RiscZeroSetVerifier.sol => /dev/null           |  900 ---
- .../dev/null                                       |  366 -
- .../dev/null                                       |  366 -
- .../dev/null                                       |  366 -
- .../RiscZeroVerifierRouter.sol => /dev/null        |  282 -
- .../TimelockController.sol => /dev/null            | 1111 ---
- 10 files changed, 21833 deletions(-)
+.../bob/{.flat@1773320760 => .flat}/KailuaGame.sol | 6959 +++++---------------
+ .../{.flat@1773320760 => .flat}/KailuaTreasury.sol | 6925 +++++--------------
+ .../bob/.flat/KailuaVerifier/KailuaVerifier.sol    |  509 ++
+ .../projects/bob/.flat/KailuaVerifier/Proxy.p.sol  |  120 +
+ .../null => ./src/projects/bob/.flat/Safe/Safe.sol | 1216 ++++
+ .../src/projects/bob/.flat/Safe/SafeProxy.p.sol    |   42 +
+ 6 files changed, 5226 insertions(+), 10545 deletions(-)
 ```
 
 Generated with discovered.json: 0x4061049f25662896532596c9725ba5fa0e5d136e

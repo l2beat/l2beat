@@ -169,6 +169,23 @@ export const risc0: BaseProject = {
           'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes16 value of CONTROL_ROOT_0, bytes16 value of CONTROL_ROOT_1.',
       },
       {
+        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        name: 'Kailua v1.2.0 verifier',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        description:
+          'Kailua v1.2.0 introduces a dedicated KailuaVerifier wrapper contract (deployed behind a proxy) that gates proof verification with optional fault-proof permits before delegating to the underlying RISC Zero verifier at `RISC_ZERO_VERIFIER`.',
+      },
+      {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
         name: 'RiscZero v3.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,

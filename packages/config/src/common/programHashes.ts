@@ -1358,6 +1358,11 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
     ...KAILUA_FP('Risc0 v3.0.3'),
     verificationStatus: 'notVerified',
   },
+  '0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934': {
+    ...KAILUA_FP('Kailua v1.2.0'),
+    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.2.0',
+    verificationStatus: 'notVerified',
+  },
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
     // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     ...KAILUA_FP('Risc0 v3.0.4, Kailua v1.1.8'),
