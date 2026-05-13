@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getAltDaStage } from '../../common/stages/getAltDaStage'
@@ -107,43 +111,21 @@ export const roninNetwork: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
-  // No state proposals yet (gameCount = 0), so the dispute game's
-  // absolute prestate is not initialised — skip the program-hash lookup.
-  nonTemplateProgramHashes: [],
-  // The opStackSequencerInbox handler infers the batch inbox from the
-  // batcher's recent L1 txs. Ronin migrated minutes ago and no batches
-  // have landed yet, so the heuristic returns 0x0. Pin the reference link
-  // to the actual `batchInbox` configured in SystemConfig.
-  nonTemplateTechnology: {
-    dataAvailability: {
-      name: 'Data is posted to EigenDA',
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08',
+      ),
+      name: 'MainchainGateway',
       description:
-        'Transactions roots are posted onchain and the full data is posted on EigenDA. The sequencer is publishing data to EigenDA v2. Since the DACert Verifier is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the sequencer posts an unavailable transaction root.',
-          isCritical: true,
-        },
-        {
-          category: 'Funds can be lost if',
-          text: 'the data is not available on the external provider.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        { title: 'EigenDA Docs - Overview', url: 'https://docs.eigenda.xyz/overview' },
-        {
-          title: 'Derivation: Batch submission - OP Mainnet specs',
-          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
-        },
-        {
-          title: 'BatchInbox - address',
-          url: 'https://etherscan.io/address/0x003A7A2d3129838Adb01c8d9b7DA62Ac6Ec27961#code',
-        },
-      ],
-    },
-  },
+        'Legacy Ronin sidechain bridge — still the primary user-facing canonical bridge after the L2 migration. ETH, WETH, USDC, AXS and other ERC-20 deposits are held here and released on withdrawal via signatures from the Ronin BridgeOperators. Independent of the OP Stack canonical bridge, which is deployed but currently unused for asset bridging.',
+      tokens: '*',
+    }),
+  ],
+  nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
+  // No game has resolved/anchored yet, so the dispute game's absolute
+  // prestate (Cannon MIPS64 image hash) cannot be read from a clone.
+  // Remove once `AnchorStateRegistry.anchorGame` is set.
+  nonTemplateProgramHashes: [],
   isNodeAvailable: 'UnderReview',
 })

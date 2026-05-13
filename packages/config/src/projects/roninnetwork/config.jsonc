@@ -4,7 +4,8 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77", // OptimismPortalProxy — root, all other OP Stack L1 contracts are reachable from here
-    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242" // ETHLockboxProxy — orphan until OptimismPortal.ethLockbox is set post-migration
+    "eth:0xDD42F308E85dE1Bd2590Fa8d0C97AB2dFc830242", // ETHLockboxProxy — orphan until OptimismPortal.ethLockbox is set post-migration
+    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08" // Legacy MainchainGateway — still holds all bridged user funds (ETH, USDC, AXS, WETH)
   ],
   "names": {
     "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77": "OptimismPortal2",
@@ -17,6 +18,25 @@
     "eth:0x3a63087B36Ad5a2fD89C7C8517832dE067Fe4959": "L1ERC721Bridge",
     "eth:0x51639D151456d0384285C6974e441A5D2B784B7D": "OptimismMintableERC20Factory",
     "eth:0x6FFbcf498CcF81111f397fa6065dEA13A47E573C": "AddressManager",
-    "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": "ProxyAdmin"
+    "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": "ProxyAdmin",
+    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "MainchainGateway",
+    "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": "MainchainBridgeManager",
+    "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": "PauseEnforcer"
+  },
+  "overrides": {
+    // Legacy MainchainGateway uses overloaded view methods that the default
+    // handler can't probe (need explicit indices/length). Ignore them — the
+    // ones we care about (admin, impl, paused, depositCount) come through.
+    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
+      "ignoreMethods": [
+        "checkHighTierVoteWeightThreshold",
+        "checkThreshold",
+        "withdrawalHash",
+        "withdrawalLocked"
+      ]
+    },
+    "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
+      "ignoreMethods": ["checkThreshold", "globalProposalRelayed", "round"]
+    }
   }
 }

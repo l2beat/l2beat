@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf6575a6bbf37193806f080162b9a82ed056b5828
+Generated with discovered.json: 0x9835ad948b4707b3b61c7546a569e2613936126c
 
-# Diff at Tue, 12 May 2026 19:24:01 GMT:
+# Diff at Wed, 13 May 2026 21:59:23 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- current timestamp: 1778613778
+- current timestamp: 1778709498
 
 ## Description
 
@@ -15,6 +15,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13]
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract MainchainBridgeManager (eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -49,8 +55,20 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract GnosisSafe (eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame]
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MainchainGateway (eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -85,6 +103,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SystemConfig (eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1) [opstack/SystemConfig]
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
@@ -99,6 +123,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract SuperchainConfig (eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c) [opstack/SuperchainConfigFake_expiry]
     +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+```
+
+```diff
++   Status: CREATED
+    contract PauseEnforcer (eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062) [N/A]
+    +++ description: None
 ```
 
 ```diff
