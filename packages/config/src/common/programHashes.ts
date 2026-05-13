@@ -510,6 +510,29 @@ fn main() {
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'notVerified',
   },
+  '0x00b451fcd696cd0a4025e30bfed96343b1767ac6523a360fee1183f9e2e20745': {
+    title: 'Celestia Blobstream DA bridge program',
+    description:
+      'ZK-friendly implementation of Celestia Blobstream DA bridge that proves that enough Celestia validators have confirmed a given data root.',
+    programUrl:
+      'https://github.com/succinctlabs/sp1-blobstream/tree/78a9d3419339a8c60bf51e1e3241f242bc44d434/program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct commit hash in [sp1-blobstream](https://github.com/succinctlabs/sp1-blobstream/tree/main) repo:  \`git checkout 78a9d3419339a8c60bf51e1e3241f242bc44d434\`.
+2. Make sure docker is running by running  \`docker ps\`.
+3. From the  \`sp1-blobstream/program\` dir run:  \`cargo prove build --docker --tag v6.1.0 --elf-name blobstream-elf --output-directory ../elf\` to build the blobstream program elf within a docker container and place it in \`sp1-blobstream/elf\`.
+4. From \`sp1-blobstream\` run: \`cargo run --bin vkey --release\` to print the vkey of the \`blobstream-elf\` program.
+    `,
+  },
   '0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1': {
     title: 'Avail VectorX DA bridge program',
     description:
@@ -2626,5 +2649,39 @@ In our experience, cartesi-machine could not be installed from cartesi APT packa
     verificationStatus: 'unsuccessful',
     verificationSteps:
       'According to Automata Network, the linked program was compiled in a non-reporducible way (without docker). The compiled binary could not be reproduced.',
+  },
+  '0x0085924e73e2b0d0e2626c592825fe092d3cfb63b108757965b2a6c06c8c311b': {
+    title: 'Fluent Nitro TEE verifier',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: `
+Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+1. Install prerequesits: docker, python3, git, jq.
+2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+3. Build Nitro program for the mainnet within docker: \`make build-nitro-validator-docker NETWORK=mainnet\`. This command will create \`nitro-validaotr-mainnet.vkey\` file with the program hash string.
+    `,
+  },
+  '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
+    title: 'Fluent STF guest program',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    // programUrl:
+    //   'https://github.com/fluentlabs-xyz/fluent-stf/tree/djadjka/release-1.0.1/bin/client',
+    description:
+      'Guest program implementing state transition function of the Fluent rollup',
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'According to the Fluent team, the sources for this program were not yet published. Thus it cannot be verified.',
+    //       verificationSteps: `
+    // Regeneration steps are based on [this guide](https://github.com/fluentlabs-xyz/fluent-stf/blob/v1.0.0/README.md). The process is reproducible on a Linux machnie.
+
+    // 1. Install prerequesits: docker, python3, git, jq.
+    // 2. Checkout correct branch in https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.0: \`git checkout v1.0.0\`. Commit hash should be \`c8023c370a3fb859b591223bf81a9fe81df43778\`.
+    // 3. Build client program for the mainnet within docker: \`make build-client-docker NETWORK=mainnet\`. This command will create \`rsp-client-mainnet.vkey\` file with the program hash string.
+    //     `
   },
 }

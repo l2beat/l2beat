@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x7fa4c2f397421cbec5a2dccef8b3c67a3446fc90
+
+# Diff at Wed, 13 May 2026 13:47:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1776866286
+- current timestamp: 1778679898
+
+## Description
+
+one lido vault pauses deposits. one oeth-related safe adds a member.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) [GnosisSafe] {
+    +++ description: None
+      values.GnosisSafe_modules.0:
++        "base:0xf633980A61E9F90a41d030676059Dc201D9d4A37"
+    }
+```
+
+```diff
+    contract StakingVault (eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711) [tokens/Lido/StakingVault] {
+    +++ description: None
+      values.beaconChainDepositsPaused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x6868667d94c3a07f27718ffcc36bf6d94754c178
 
 # Diff at Fri, 08 May 2026 07:52:35 GMT:

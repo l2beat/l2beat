@@ -1,0 +1,14 @@
+{
+  "NitroVerifier.sol": {
+    "hash": "0x789c3ae8ee0cf8c915b3c37d1ed740e83c870d3a7339705387234d47d2f3768b",
+    "address": "eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F",
+    "chain": "ethereum",
+    "blockNumber": 24913471
+  },
+  "NitroVerifier_v2": {
+    "hash": "0x17ebba808188277d149acdefb76c655cee8c640b959efd8d89269297a96fafdf",
+    "address": "eth:0x207FBb4AC5227Ab598B8072BdC1E150dF687AC5B",
+    "chain": "ethereum",
+    "blockNumber": 24893560
+  }
+}

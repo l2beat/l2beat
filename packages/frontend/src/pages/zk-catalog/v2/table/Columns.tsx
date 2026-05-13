@@ -40,6 +40,7 @@ export const zkCatalogColumns = [
   }),
   columnHelper.accessor((row) => row.tvs.value, {
     id: 'tvs',
+    header: 'TVS',
     meta: {
       tooltip:
         'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them and are listed on L2BEAT.',
@@ -154,6 +155,7 @@ export const zkCatalogColumns = [
   }),
   columnHelper.display({
     id: 'arrow',
+    enableHiding: false,
     cell: (ctx) => {
       const { finalWrap, zkVM, snark } = ctx.row.original.techStack
 

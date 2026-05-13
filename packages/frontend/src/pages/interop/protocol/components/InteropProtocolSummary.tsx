@@ -141,6 +141,7 @@ export function InteropProtocolSummary({
               protocol={{
                 id: protocol.id,
                 name: protocolData?.entry?.name ?? '',
+                slug: protocol.slug,
                 iconUrl: protocolData?.entry?.iconUrl ?? '',
                 bridgeTypes: protocolData?.entry?.bridgeTypes ?? [],
               }}

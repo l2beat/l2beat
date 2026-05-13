@@ -37,6 +37,7 @@ export function EventsTable({
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No events found."
+      fillHeight
       enableCsvExport={enableCsvExport}
       getCsvFilename={() => `interop-events-${new Date().toISOString()}.csv`}
       totalRowsCount={totalRowsCount}
