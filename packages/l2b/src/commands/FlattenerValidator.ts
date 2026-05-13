@@ -445,36 +445,38 @@ function stripAuxdata(_: SolidityOutputContract, bytecode: Bytes): Bytes {
   return Bytes.fromHex(stripped)
 }
 
-// IPFS CBOR prefix: map(2) + text("ipfs") + bytes(34). The section ends with a
-// 2-byte big-endian length equal to its own size — used here as a checksum.
-const IPFS_CBOR_MARKER = 'a264697066735822'
+// CBOR metadata prefixes per hash scheme: map(2) + key + bytes(N). The section
+// ends with a 2-byte big-endian length equal to its own size — used as a
+// checksum to confirm the match and determine how much to mask.
+const CBOR_MARKERS: Buffer[] = [
+  Buffer.from([0xa2, 0x64, 0x69, 0x70, 0x66, 0x73, 0x58, 0x22]), //       "ipfs"  + bytes(34)
+  Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x31, 0x58, 0x20]), // "bzzr1" + bytes(32)
+  Buffer.from([0xa2, 0x65, 0x62, 0x7a, 0x7a, 0x72, 0x30, 0x58, 0x20]), // "bzzr0" + bytes(32)
+]
 
 function maskSolidityAuxdata(
   _: SolidityOutputContract,
   bytecode: Bytes,
 ): Bytes {
-  let hex = bytecode.toString().replace(/^0x/, '').toLowerCase()
-  for (let i = 0; (i = hex.indexOf(IPFS_CBOR_MARKER, i)) !== -1; ) {
-    if (i % 2 !== 0) {
-      i++
-      continue
+  const buf = bytecode.toBuffer()
+  for (const marker of CBOR_MARKERS) {
+    for (let i = 0; (i = buf.indexOf(marker, i)) !== -1; ) {
+      const total = findCborTotalBytes(buf, i)
+      if (total === undefined) {
+        i++
+        continue
+      }
+      buf.fill(0, i, i + total)
+      i += total
     }
-    const bytes = findCborTotalBytes(hex, i / 2)
-    if (bytes === undefined) {
-      i += 2
-      continue
-    }
-    hex = hex.slice(0, i) + '0'.repeat(bytes * 2) + hex.slice(i + bytes * 2)
-    i += bytes * 2
   }
-  return Bytes.fromHex('0x' + hex)
+  return Bytes.fromBuffer(buf)
 }
 
-function findCborTotalBytes(hex: string, start: number): number | undefined {
-  for (let len = 51; len <= 80; len++) {
-    const pos = (start + len) * 2
-    if (pos + 4 > hex.length) return
-    if (Number.parseInt(hex.slice(pos, pos + 4), 16) === len) return len + 2
+function findCborTotalBytes(buf: Buffer, start: number): number | undefined {
+  for (let len = 50; len <= 80; len++) {
+    if (start + len + 2 > buf.length) return
+    if (buf.readUInt16BE(start + len) === len) return len + 2
   }
 }
 
