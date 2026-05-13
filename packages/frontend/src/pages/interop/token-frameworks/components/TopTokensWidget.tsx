@@ -147,7 +147,7 @@ function TokenRow({
               iconUrl={token.topRoute.src.iconUrl}
               alt={token.topRoute.src.id}
             />
-            <ArrowRightIcon className="size-4 fill-brand" />
+            <ArrowRightIcon className="size-4 shrink-0 fill-brand" />
             <ChainIcon
               iconUrl={token.topRoute.dst.iconUrl}
               alt={token.topRoute.dst.id}
