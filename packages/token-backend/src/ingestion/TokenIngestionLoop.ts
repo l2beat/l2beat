@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, TokenDatabase } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
+import type { TokenIngestionQueueState } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
 import type { DeployedTokenFacts } from '../chains/fetchDeployedTokenFacts'
@@ -15,6 +16,7 @@ const INTEROP_TRANSFERS_LAST_SERIAL_ID_KEY = 'interop-transfers:lastSerialId'
 export interface TokenIngestionLoopConfig {
   intervalMs: number
   etherscanApiKey: string | undefined
+  newQueueState?: Extract<TokenIngestionQueueState, 'staged' | 'pending'>
   createChain?: (chainRecord: ChainRecord) => Chain
   fetchDeployedTokenFacts?: (
     chain: Chain,
@@ -44,6 +46,7 @@ export class TokenIngestionLoop {
       createChain: config.createChain,
       fetchDeployedTokenFacts: config.fetchDeployedTokenFacts,
       generateAbstractTokenId: config.generateAbstractTokenId,
+      newQueueState: config.newQueueState,
     })
   }
 
@@ -91,10 +94,13 @@ export class TokenIngestionLoop {
     for (const tokenAddress of batch.tokenAddresses) {
       const address = normalizeInteropTokenAddress(tokenAddress.address)
       if (address) {
-        await this.tokenDb.tokenIngestionQueue.enqueue({
-          chain: tokenAddress.chain,
-          address,
-        })
+        await this.tokenDb.tokenIngestionQueue.enqueue(
+          {
+            chain: tokenAddress.chain,
+            address,
+          },
+          this.getNewQueueState(),
+        )
       }
     }
 
@@ -108,6 +114,10 @@ export class TokenIngestionLoop {
       tokenAddresses: batch.tokenAddresses.length,
       lastSerialId: batch.latestSerialId,
     })
+  }
+
+  private getNewQueueState() {
+    return this.config.newQueueState ?? 'pending'
   }
 
   private async drainPendingQueue() {

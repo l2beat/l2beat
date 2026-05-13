@@ -41,6 +41,9 @@ function main() {
     ? new TokenIngestionLoop(db, tokenDb, coingeckoClient, logger, {
         intervalMs: config.tokenIngestion.intervalMs,
         etherscanApiKey: config.etherscanApiKey,
+        newQueueState: config.tokenIngestion.requireApproval
+          ? 'staged'
+          : 'pending',
       })
     : undefined
   tokenIngestionLoop?.start()

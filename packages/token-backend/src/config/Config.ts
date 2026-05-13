@@ -33,4 +33,5 @@ export interface AuthConfig {
 export interface TokenIngestionConfig {
   enabled: boolean
   intervalMs: number
+  requireApproval: boolean
 }

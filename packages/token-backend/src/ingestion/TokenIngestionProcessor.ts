@@ -6,7 +6,10 @@ import type {
   TokenDatabase,
 } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import type { TokenIngestionQueueRecord } from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
+import type {
+  TokenIngestionQueueRecord,
+  TokenIngestionQueueState,
+} from '@l2beat/database/dist/repositories/TokenIngestionQueueRepository'
 import { UnixTime } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../shared/build'
 import { Chain } from '../chains/Chain'
@@ -42,6 +45,7 @@ interface TokenIngestionProcessorDeps {
     address: string,
   ) => Promise<DeployedTokenFacts>
   generateAbstractTokenId?: () => string
+  newQueueState?: Extract<TokenIngestionQueueState, 'staged' | 'pending'>
 }
 
 type AbstractTokenResolution =
@@ -362,7 +366,10 @@ export class TokenIngestionProcessor {
       if (!otherToken || getTokenKey(otherToken) === getTokenKey(address)) {
         continue
       }
-      await this.deps.tokenDb.tokenIngestionQueue.enqueue(otherToken)
+      await this.deps.tokenDb.tokenIngestionQueue.enqueue(
+        otherToken,
+        this.deps.newQueueState ?? 'pending',
+      )
     }
   }
 

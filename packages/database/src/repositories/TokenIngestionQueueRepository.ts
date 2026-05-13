@@ -4,6 +4,7 @@ import { BaseRepository } from '../BaseRepository'
 import type { TokenIngestionQueueEntry } from '../kysely/generated/types'
 
 export const TOKEN_INGESTION_QUEUE_STATES = [
+  'staged',
   'pending',
   'conflict',
   'error',
@@ -48,11 +49,12 @@ function toRecord(
 
 function toRow(
   record: TokenIngestionQueueAddress,
+  state: Extract<TokenIngestionQueueState, 'staged' | 'pending'>,
 ): Insertable<TokenIngestionQueueEntry> {
   const now = new Date()
   return {
     ...normalizeAddress(record),
-    state: 'pending',
+    state,
     message: null,
     createdAt: now,
     updatedAt: now,
@@ -60,10 +62,13 @@ function toRow(
 }
 
 export class TokenIngestionQueueRepository extends BaseRepository {
-  async enqueue(address: TokenIngestionQueueAddress): Promise<void> {
+  async enqueue(
+    address: TokenIngestionQueueAddress,
+    state: Extract<TokenIngestionQueueState, 'staged' | 'pending'> = 'pending',
+  ): Promise<void> {
     await this.db
       .insertInto('TokenIngestionQueueEntry')
-      .values(toRow(address))
+      .values(toRow(address, state))
       .onConflict((cb) => cb.columns(['chain', 'address']).doNothing())
       .execute()
   }
@@ -126,6 +131,23 @@ export class TokenIngestionQueueRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
+  async approve(address: TokenIngestionQueueAddress): Promise<number> {
+    const normalized = normalizeAddress(address)
+    const result = await this.db
+      .updateTable('TokenIngestionQueueEntry')
+      .set({
+        state: 'pending',
+        message: null,
+        updatedAt: new Date(),
+      })
+      .where('chain', '=', normalized.chain)
+      .where('address', '=', normalized.address)
+      .where('state', '=', 'staged')
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
   async remove(address: TokenIngestionQueueAddress): Promise<number> {
     const normalized = normalizeAddress(address)
     const result = await this.db
@@ -156,7 +178,7 @@ export class TokenIngestionQueueRepository extends BaseRepository {
 
   private async setState(
     address: TokenIngestionQueueAddress,
-    state: Exclude<TokenIngestionQueueState, 'pending'>,
+    state: Extract<TokenIngestionQueueState, 'conflict' | 'error'>,
     message: string,
   ): Promise<number> {
     const normalized = normalizeAddress(address)

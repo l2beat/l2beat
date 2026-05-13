@@ -5,6 +5,7 @@ import { chainsRouter } from './routers/chains'
 import { deployedTokensRouter } from './routers/deployedTokens'
 import { planRouter } from './routers/plan'
 import { searchRouter } from './routers/search'
+import { tokenIngestionQueueRouter } from './routers/tokenIngestionQueue'
 import { router } from './trpc'
 
 interface AppRouterDeps {
@@ -22,6 +23,7 @@ export function createAppRouter({
     abstractTokens: abstractTokensRouter({ coingeckoClient }),
     deployedTokens: deployedTokensRouter({ coingeckoClient, etherscanApiKey }),
     search: searchRouter,
+    tokenIngestionQueue: tokenIngestionQueueRouter,
   })
 }
 

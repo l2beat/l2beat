@@ -23,6 +23,22 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       })
     })
 
+    it('can insert a staged entry', async () => {
+      await repository.enqueue(
+        { chain: 'ethereum', address: '0xABC' },
+        'staged',
+      )
+
+      const all = await repository.getAll()
+      expect(all).toHaveLength(1)
+      expect(all[0]!).toHaveSubset({
+        chain: 'ethereum',
+        address: '0xabc',
+        state: 'staged',
+        message: null,
+      })
+    })
+
     it('does not change an existing entry', async () => {
       const address = { chain: 'ethereum', address: '0xabc' }
       await repository.enqueue(address)
@@ -44,7 +60,7 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
     it('returns the oldest pending entry', async () => {
       const first = { chain: 'ethereum', address: '0x111' }
       const second = { chain: 'arbitrum', address: '0x222' }
-      await repository.enqueue(first)
+      await repository.enqueue(first, 'staged')
       await repository.enqueue(second)
       await repository.markConflict(first, 'needs review')
 
@@ -121,6 +137,30 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       await repository.enqueue(address)
 
       expect(await repository.retry(address)).toEqual(0)
+    })
+  })
+
+  describe(TokenIngestionQueueRepository.prototype.approve.name, () => {
+    it('moves staged entries to pending', async () => {
+      const address = { chain: 'ethereum', address: '0x111' }
+      await repository.enqueue(address, 'staged')
+
+      expect(await repository.approve(address)).toEqual(1)
+
+      const entries = await repository.getAll()
+      expect(entries).toHaveLength(1)
+      expect(entries[0]!).toHaveSubset({
+        ...address,
+        state: 'pending',
+        message: null,
+      })
+    })
+
+    it('does not touch non-staged entries', async () => {
+      const address = { chain: 'ethereum', address: '0x111' }
+      await repository.enqueue(address)
+
+      expect(await repository.approve(address)).toEqual(0)
     })
   })
 

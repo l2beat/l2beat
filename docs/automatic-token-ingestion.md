@@ -88,6 +88,8 @@ This mode is only a rollout/debugging aid. The long-term fully automatic
 mode should enqueue new addresses directly as `pending`, and the UI should
 usually focus on `conflict` and `error` entries.
 
+Implementation toggle: `TOKEN_INGESTION_REQUIRE_APPROVAL=true`.
+
 ## Building blocks
 
 - **`enqueue(address)`** — add as pending if not already in the queue. In

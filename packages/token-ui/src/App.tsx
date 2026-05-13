@@ -10,6 +10,7 @@ import { SearchPage } from './pages/search/SearchPage'
 import { AbstractTokenPage } from './pages/tokens/AbstractTokenPage'
 import { AddTokensPage } from './pages/tokens/add-tokens/AddTokensPage'
 import { DeployedTokenPage } from './pages/tokens/DeployedTokenPage'
+import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
 import { TRPCReactProvider } from './react-query/trpc'
@@ -28,6 +29,10 @@ export function App() {
             <Route
               path="/tokens/suggestions"
               element={<TokenSuggestionsPage />}
+            />
+            <Route
+              path="/tokens/ingestion-queue"
+              element={<TokenIngestionQueuePage />}
             />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/tokens/new" element={<AddTokensPage />} />

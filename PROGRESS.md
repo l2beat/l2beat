@@ -126,3 +126,32 @@ Verification:
 Follow-up planning note:
 
 - Updated `docs/automatic-token-ingestion.md` with a proposed debug-only `staged` queue state. In debug approval mode, the pre-step can enqueue discovered addresses as `staged`; the drain ignores them until a researcher approves one entry, moving it to `pending`.
+
+## 2026-05-13 - Slice 4: queue UI and staged approval
+
+Implemented the Token UI page for inspecting and approving automatic ingestion queue entries.
+
+- Added `staged` as a first-class `TokenIngestionQueueEntry` state.
+- Added `TokenIngestionQueueRepository.approve`, which moves only staged entries to `pending`.
+- Added `TOKEN_INGESTION_REQUIRE_APPROVAL`; when enabled, newly discovered transfer tokens and neighbor tokens are enqueued as `staged` instead of `pending`.
+- Added a `tokenIngestionQueue` tRPC router with `getAll` and `approve`.
+- Added `/tokens/ingestion-queue` in token-ui and a sidebar link under Tokens.
+- The page shows status, chain, address, message, created/updated timestamps, explorer links when chain metadata is available, and an approve button for staged entries.
+- Updated `docs/automatic-token-ingestion.md` to name `TOKEN_INGESTION_REQUIRE_APPROVAL=true` as the rollout/debug toggle.
+
+Verification:
+
+- `pnpm -C packages/database format:fix` passed.
+- `pnpm -C packages/database typecheck` passed.
+- `pnpm -C packages/database build` passed.
+- `pnpm -C packages/database lint` passed.
+- `pnpm -C packages/database exec mocha --no-config --require esbuild-register --timeout 10000 src/repositories/TokenIngestionQueueRepository.test.ts` passed with `10 passing`.
+- `pnpm -C packages/token-backend format:fix` passed.
+- `pnpm -C packages/token-backend build` passed.
+- `pnpm -C packages/token-backend typecheck` passed.
+- `pnpm -C packages/token-backend lint` passed.
+- `pnpm -C packages/token-backend test -- src/ingestion/TokenIngestionLoop.test.ts src/trpc/routers/tokenIngestionQueue/index.test.ts` passed with `93 passing`; the package Mocha config ran the broader token-backend suite.
+- `pnpm -C packages/token-ui format:fix` passed.
+- `pnpm -C packages/token-ui typecheck` passed.
+- `pnpm -C packages/token-ui lint` passed.
+- `pnpm -C packages/token-ui build` passed. Vite reported the existing large chunk warning.

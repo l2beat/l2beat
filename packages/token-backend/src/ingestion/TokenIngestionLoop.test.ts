@@ -73,6 +73,38 @@ describe(TokenIngestionLoop.name, () => {
       })
     })
 
+    it('stages newly discovered addresses when approval is required', async () => {
+      const enqueue = mockFn().resolvesTo(undefined)
+
+      const loop = createLoop({
+        newQueueState: 'staged',
+        tokenDb: mockObject<TokenDatabase>({
+          tokenDbSetting: mockObject<TokenDbSettingRepository>({
+            get: mockFn().resolvesTo(undefined),
+            set: mockFn().resolvesTo(undefined),
+          }),
+          tokenIngestionQueue: mockObject<TokenIngestionQueueRepository>({
+            enqueue,
+            findNextPending: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        db: mockObject<Database>({
+          interopTransfer: mockObject<InteropTransferRepository>({
+            getTokenAddressesAfterSerialId: mockFn().resolvesTo({
+              latestSerialId: '1',
+              transferCount: 1,
+              tokenAddresses: [{ chain: 'ethereum', address: '0xaaa' }],
+            }),
+            getAll: mockFn().resolvesTo([]),
+          }),
+        }),
+      })
+
+      await loop.runOnce()
+
+      expect(enqueue).toHaveBeenCalledWith(token('ethereum', '0xaaa'), 'staged')
+    })
+
     it('starts from zero when no cursor exists', async () => {
       const getTokenAddressesAfterSerialId = mockFn().resolvesTo({
         latestSerialId: undefined,
@@ -479,6 +511,7 @@ function createLoop(deps: {
   db?: Database
   tokenDb?: TokenDatabase
   coingeckoClient?: CoingeckoClient
+  newQueueState?: 'staged' | 'pending'
   fetchDeployedTokenFacts?: (
     chain: Chain,
     address: string,
@@ -511,6 +544,7 @@ function createLoop(deps: {
     {
       intervalMs: 60_000,
       etherscanApiKey: undefined,
+      newQueueState: deps.newQueueState,
       fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
       generateAbstractTokenId: deps.generateAbstractTokenId,
     },
