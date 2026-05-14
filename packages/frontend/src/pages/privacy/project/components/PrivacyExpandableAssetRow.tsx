@@ -2,11 +2,11 @@ import type React from 'react'
 import { useId, useState } from 'react'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
+import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { cn } from '~/utils/cn'
 
 interface Props {
-  asset: PrivacyAssetSnapshot
+  asset: PrivacyAsset
   idPrefix: string
   children: React.ReactNode
   detail: React.ReactNode

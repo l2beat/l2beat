@@ -7,7 +7,7 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/components/table/Table'
-import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
+import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { PrivacyExpandableAssetRow } from './PrivacyExpandableAssetRow'
@@ -15,7 +15,7 @@ import { PrivacyExpandableAssetRow } from './PrivacyExpandableAssetRow'
 export function PrivacyAssetsBreakdownTable({
   assets,
 }: {
-  assets: PrivacyAssetSnapshot[]
+  assets: PrivacyAsset[]
 }) {
   const showBucketsColumn = assets.some((asset) => asset.bucketCount > 1)
   const totals = getTotals(assets)
@@ -128,7 +128,7 @@ function PrivacyBucketBreakdownRows({
   asset,
   showBucketsColumn,
 }: {
-  asset: PrivacyAssetSnapshot
+  asset: PrivacyAsset
   showBucketsColumn: boolean
 }) {
   return (
@@ -200,7 +200,7 @@ function formatBucketLabel(label: string) {
   return label.toLowerCase().endsWith('bucket') ? label : `${label} bucket`
 }
 
-function getTotals(assets: PrivacyAssetSnapshot[]) {
+function getTotals(assets: PrivacyAsset[]) {
   return {
     totalValueUsd: assets.reduce(
       (sum, asset) => sum + (asset.totalValueUsd ?? 0),

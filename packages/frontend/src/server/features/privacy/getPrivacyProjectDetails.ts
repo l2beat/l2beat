@@ -1,19 +1,14 @@
-import type { TokenValueRecord } from '@l2beat/database'
+import type {
+  ProjectContracts,
+  ProjectDisplay,
+  ProjectPermissions,
+  ProjectStatuses,
+} from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { getPrivacyProjects } from './getPrivacyProjects'
-import type {
-  ProjectDisplay,
-  ProjectStatuses,
-  ProjectContracts,
-  ProjectPermissions,
-} from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
-import type {
-  PrivacyAssetSnapshot,
-  PrivacyBucketSnapshot,
-  PrivacyProjectConfig,
-} from './types'
+import type { PrivacyAsset, PrivacyBucket } from './types'
 
 export interface PrivacyProjectDetails {
   id: ProjectId
@@ -33,7 +28,7 @@ export interface PrivacyProjectDetails {
   }
   riskSummary?: string
   upgradesAndGovernance?: string
-  assets: PrivacyAssetSnapshot[]
+  assets: PrivacyAsset[]
   summary: {
     totalValueSecuredUsd: number
     bucketCount: number
@@ -61,9 +56,6 @@ export async function getPrivacyProjectDetails(
 
   const db = getDb()
   const projectId = project.id.toString()
-
-  type PrivacyToken = PrivacyProjectConfig['privacyInfo']['tokens'][number]
-  type PrivacyBucket = PrivacyToken['buckets'][number]
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -123,11 +115,11 @@ export async function getPrivacyProjectDetails(
     dailyIndex.set(key, existing)
   }
 
-  const assets = project.privacyInfo.tokens.map((token: PrivacyToken) => {
+  const assets = project.privacyInfo.tokens.map((token) => {
     const symbol = token.token.symbol
     const assetTvs = tvsBySymbol.get(symbol) ?? null
 
-    const buckets = token.buckets.map((bucket: PrivacyBucket) => {
+    const buckets = token.buckets.map((bucket) => {
       const key = `${projectId}::${bucket.id}`
       const total = totalIndex.get(key)
       const daily = dailyIndex.get(key)
@@ -193,7 +185,7 @@ export async function getPrivacyProjectDetails(
           last7d: depositValueUsd7d,
           last30d: depositValueUsd30d,
         },
-      } satisfies PrivacyBucketSnapshot
+      } satisfies PrivacyBucket
     })
 
     return {
@@ -216,7 +208,7 @@ export async function getPrivacyProjectDetails(
       buckets: buckets.sort((a, b) =>
         a.label.localeCompare(b.label, undefined, { numeric: true }),
       ),
-    } satisfies PrivacyAssetSnapshot
+    } satisfies PrivacyAsset
   })
 
   const orderedAssets = assets.sort((a, b) => {

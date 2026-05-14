@@ -12,7 +12,7 @@ export interface PrivacyDepositedValueUsd {
   last30d: number
 }
 
-export interface PrivacyBucketSnapshot {
+export interface PrivacyBucket {
   id: string
   label: string
   type: 'pool' | 'denomination'
@@ -27,7 +27,7 @@ export interface PrivacyBucketSnapshot {
   depositedValueUsd: PrivacyDepositedValueUsd
 }
 
-export interface PrivacyAssetSnapshot {
+export interface PrivacyAsset {
   symbol: string
   address?: EthereumAddress
   decimals: number
@@ -40,5 +40,5 @@ export interface PrivacyAssetSnapshot {
     last30d: number
   }
   depositedValueUsd: PrivacyDepositedValueUsd
-  buckets: PrivacyBucketSnapshot[]
+  buckets: PrivacyBucket[]
 }
