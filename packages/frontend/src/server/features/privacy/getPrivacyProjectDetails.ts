@@ -31,7 +31,7 @@ export interface PrivacyProjectDetails {
   upgradesAndGovernance?: string
   assets: PrivacyAsset[]
   summary: {
-    totalValueSecuredUsd: number
+    totalValueLockedUsd: number
     bucketCount: number
     deposits: {
       total: number
@@ -72,17 +72,17 @@ export async function getPrivacyProjectDetails(
     db.tvsTokenValue.getLastNonZeroValue(now, projectId),
   ])
 
-  const tvsBySymbol = new Map<string, number>()
+  const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
-    const tvsToken = project.tvsConfig?.find(
+    const tvlToken = project.tvsConfig?.find(
       (t: { id: string; symbol: string }) => t.id === tv.tokenId,
     )
-    if (tvsToken) {
-      const existing = tvsBySymbol.get(tvsToken.symbol) ?? 0
-      tvsBySymbol.set(tvsToken.symbol, existing + tv.valueForProject)
+    if (tvlToken) {
+      const existing = tvlBySymbol.get(tvlToken.symbol) ?? 0
+      tvlBySymbol.set(tvlToken.symbol, existing + tv.valueForProject)
     }
   }
-  const projectTotalTvs = tokenValues.reduce(
+  const projectTotalTvl = tokenValues.reduce(
     (sum, tv) => sum + tv.valueForProject,
     0,
   )
@@ -131,7 +131,7 @@ export async function getPrivacyProjectDetails(
 
   const assets = project.privacyInfo.tokens.map((token) => {
     const symbol = token.token.symbol
-    const assetTvs = tvsBySymbol.get(symbol) ?? null
+    const assetTvl = tvlBySymbol.get(symbol) ?? null
 
     let assetDepositsTotal = 0
     let assetDeposits7d = 0
@@ -187,7 +187,7 @@ export async function getPrivacyProjectDetails(
       decimals: token.token.decimals,
       bucketCount: buckets.length,
       totalAmount: 0,
-      totalValueUsd: assetTvs,
+      totalValueUsd: assetTvl,
       deposits: {
         total: assetDepositsTotal,
         last7d: assetDeposits7d,
@@ -242,7 +242,7 @@ export async function getPrivacyProjectDetails(
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     assets: orderedAssets,
     summary: {
-      totalValueSecuredUsd: projectTotalTvs,
+      totalValueLockedUsd: projectTotalTvl,
       bucketCount: summaryBucketCount,
       deposits: {
         total: summaryDepositsTotal,

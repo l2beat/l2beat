@@ -22,23 +22,23 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
-interface PrivacyTvsChartDataPoint {
+interface PrivacyTvlChartDataPoint {
   timestamp: number
   value: number
 }
 
 interface Props {
-  data: PrivacyTvsChartDataPoint[] | undefined
+  data: PrivacyTvlChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
 }
 
-export function PrivacyTvsChart({ data, syncedUntil, isLoading }: Props) {
+export function PrivacyTvlChart({ data, syncedUntil, isLoading }: Props) {
   const chartMeta = useMemo(
     () =>
       ({
         value: {
-          label: 'TVS',
+          label: 'TVL',
           color: 'var(--chart-pink)',
           indicatorType: { shape: 'line' },
         },
@@ -50,18 +50,18 @@ export function PrivacyTvsChart({ data, syncedUntil, isLoading }: Props) {
     <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>
-          <PinkFillGradientDef id="privacy-tvs-fill" />
-          <PinkStrokeGradientDef id="privacy-tvs-stroke" />
+          <PinkFillGradientDef id="privacy-tvl-fill" />
+          <PinkStrokeGradientDef id="privacy-tvl-stroke" />
         </defs>
         <Area
           dataKey="value"
-          fill="url(#privacy-tvs-fill)"
+          fill="url(#privacy-tvl-fill)"
           fillOpacity={1}
-          stroke="url(#privacy-tvs-stroke)"
+          stroke="url(#privacy-tvl-stroke)"
           strokeWidth={2}
           isAnimationActive={false}
         />
-        <ChartTooltip filterNull={false} content={<PrivacyTvsChartTooltip />} />
+        <ChartTooltip filterNull={false} content={<PrivacyTvlChartTooltip />} />
         <ChartCommonComponents
           data={data}
           isLoading={isLoading}
@@ -77,7 +77,7 @@ export function PrivacyTvsChart({ data, syncedUntil, isLoading }: Props) {
   )
 }
 
-function PrivacyTvsChartTooltip({ payload, label }: CustomChartTooltipProps) {
+function PrivacyTvlChartTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 

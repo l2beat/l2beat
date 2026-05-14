@@ -12,7 +12,7 @@ export interface PrivacySummaryEntry {
   icon: string
   href: string
   description: string
-  totalValueSecuredUsd: number
+  totalValueLockedUsd: number
   poolsTracked: number
   totalDeposits: number
   totalValueDeposited30dUsd: number
@@ -51,7 +51,7 @@ export async function getPrivacySummaryEntries(
     const projectDaily = dailyByProject.get(projectId) ?? []
     const tokenValues = tokenValuesByProject.get(projectId) ?? []
 
-    const totalValueSecuredUsd = tokenValues.reduce(
+    const totalValueLockedUsd = tokenValues.reduce(
       (sum, tv) => sum + tv.valueForProject,
       0,
     )
@@ -76,7 +76,7 @@ export async function getPrivacySummaryEntries(
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       href: `/privacy/projects/${project.slug}`,
       description: project.display.description,
-      totalValueSecuredUsd,
+      totalValueLockedUsd,
       poolsTracked,
       totalDeposits,
       totalValueDeposited30dUsd,
@@ -86,7 +86,7 @@ export async function getPrivacySummaryEntries(
     }
   })
 
-  return entries.sort((a, b) => b.totalValueSecuredUsd - a.totalValueSecuredUsd)
+  return entries.sort((a, b) => b.totalValueLockedUsd - a.totalValueLockedUsd)
 }
 
 function groupByProjectId<T extends { projectId: string }>(

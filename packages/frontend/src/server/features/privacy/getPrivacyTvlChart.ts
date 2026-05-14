@@ -4,21 +4,21 @@ import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 
-export const PrivacyTvsChartParams = v.object({
+export const PrivacyTvlChartParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
 })
 
-export type PrivacyTvsChartParams = v.infer<typeof PrivacyTvsChartParams>
+export type PrivacyTvlChartParams = v.infer<typeof PrivacyTvlChartParams>
 
-export interface PrivacyTvsChartResponse {
+export interface PrivacyTvlChartResponse {
   chart: [timestamp: number, valuesByProject: Record<string, number | null>][]
   syncedUntil: number | undefined
 }
 
-export async function getPrivacyTvsChart(
-  params: PrivacyTvsChartParams,
-): Promise<PrivacyTvsChartResponse> {
+export async function getPrivacyTvlChart(
+  params: PrivacyTvlChartParams,
+): Promise<PrivacyTvlChartResponse> {
   if (params.projectIds.length === 0) {
     return { chart: [], syncedUntil: undefined }
   }
@@ -63,7 +63,7 @@ export async function getPrivacyTvsChart(
     { addTarget: true },
   )
 
-  const chart: PrivacyTvsChartResponse['chart'] = timestamps.map(
+  const chart: PrivacyTvlChartResponse['chart'] = timestamps.map(
     (timestamp) => {
       const valuesByProjectAtTimestamp: Record<string, number | null> = {}
       for (const projectId of params.projectIds) {

@@ -17,7 +17,7 @@ import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidents
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
-import { PrivacyTvsSection } from './sections/privacy/PrivacyTvsSection'
+import { PrivacyTvlSection } from './sections/privacy/PrivacyTvlSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -294,9 +294,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'PrivacyTvsSection':
+          case 'PrivacyTvlSection':
             return (
-              <PrivacyTvsSection
+              <PrivacyTvlSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

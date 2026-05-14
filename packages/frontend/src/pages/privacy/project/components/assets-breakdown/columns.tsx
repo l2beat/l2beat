@@ -56,8 +56,8 @@ export const privacyAssetsBreakdownColumns = [
     meta: { align: 'right' },
   }),
   columnHelper.accessor((row) => row.totalValueUsd, {
-    id: 'valueSecured',
-    header: 'Value Secured',
+    id: 'valueLocked',
+    header: 'Value Locked',
     cell: (ctx) => {
       const value = ctx.getValue()
       return value === null ? '—' : formatCurrency(value, 'usd')

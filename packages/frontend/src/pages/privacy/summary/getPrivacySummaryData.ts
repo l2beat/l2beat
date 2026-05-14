@@ -65,7 +65,7 @@ async function getCachedData() {
       projectIds,
       range: defaultChartRange,
     }),
-    helpers.privacy.tvsChart.prefetch({
+    helpers.privacy.tvlChart.prefetch({
       projectIds,
       range: defaultChartRange,
     }),

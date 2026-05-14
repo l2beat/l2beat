@@ -87,8 +87,8 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                       className="border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                     >
                       <PrivacyProjectStats
-                        totalValueSecuredUsd={
-                          entry.summary.totalValueSecuredUsd
+                        totalValueLockedUsd={
+                          entry.summary.totalValueLockedUsd
                         }
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
