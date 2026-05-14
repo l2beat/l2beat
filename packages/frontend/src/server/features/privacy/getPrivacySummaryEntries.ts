@@ -1,4 +1,4 @@
-import type { TrustedSetup } from '@l2beat/config'
+import type { PrivacyAttribute, TrustedSetup } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
@@ -17,6 +17,7 @@ export interface PrivacySummaryEntry {
   totalDeposits: number
   totalValueDeposited30dUsd: number
   totalDeposits30d: number
+  attributes: PrivacyAttribute[]
   isUnderReview: boolean
   trustedSetup: TrustedSetup
 }
@@ -85,6 +86,7 @@ export async function getPrivacySummaryEntries(
       totalDeposits,
       totalValueDeposited30dUsd,
       totalDeposits30d,
+      attributes: project.privacyInfo.attributes ?? [],
       isUnderReview: !!project.statuses.reviewStatus,
       trustedSetup: project.privacyInfo.trustedSetup,
     }

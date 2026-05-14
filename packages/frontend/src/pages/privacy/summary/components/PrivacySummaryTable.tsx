@@ -16,6 +16,7 @@ import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { PrivacyAttributesCell } from './PrivacyAttributesCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
@@ -122,6 +123,16 @@ const columns = [
       align: 'right',
       tooltip:
         'Deposit count over the last 30 days aggregated across all tracked tokens and buckets.',
+    },
+  }),
+  columnHelper.accessor('attributes', {
+    header: 'Attributes',
+    cell: (ctx) => <PrivacyAttributesCell attributes={ctx.getValue()} />,
+    enableSorting: false,
+    meta: {
+      tooltip:
+        'Protocol-level privacy, compliance, upgradeability, and usage attributes.',
+      cellClassName: 'pr-1!',
     },
   }),
 ]
