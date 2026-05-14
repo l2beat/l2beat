@@ -47,6 +47,7 @@ interface E {
     struct MyStructDifferent {
         mapping(uint256 => uint256) elementInside;
     }
+
     struct MyStruct {
         uint256 elementInside;
         MyStructDifferent[] array;
