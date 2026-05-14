@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -96,6 +97,12 @@ Protocol pools were [sanctioned by OFAC in August 2022](https://home.treasury.go
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
     tokens: getPrivacyTokens(),
+    attributes: [
+      PRIVACY_ATTRIBUTES.immutable,
+      PRIVACY_ATTRIBUTES.uncensorable,
+      PRIVACY_ATTRIBUTES.fixedAmounts,
+      PRIVACY_ATTRIBUTES.openSource,
+    ],
     riskSummary: `## Funds can be lost if
 1. the zk proof system is broken, allowing invalid withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.

@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -168,6 +169,14 @@ Additionally, Railgun users can share a read-only viewing key to expose all sent
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
+    attributes: [
+      PRIVACY_ATTRIBUTES.upgradeable,
+      PRIVACY_ATTRIBUTES.optCompliance,
+      PRIVACY_ATTRIBUTES.transfers,
+      PRIVACY_ATTRIBUTES.defi,
+      PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.openSource,
+    ],
     riskSummary: `## Funds can be lost if
 1. the zk proof system is broken, allowing invalid spends or withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.

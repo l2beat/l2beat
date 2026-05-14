@@ -854,8 +854,15 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  attributes?: PrivacyAttribute[]
   riskSummary?: string
   upgradesAndGovernance?: string
+}
+
+export interface PrivacyAttribute {
+  id: string
+  label: string
+  description: string
 }
 
 export interface ProjectPrivacyToken {

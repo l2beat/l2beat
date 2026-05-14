@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -89,6 +90,12 @@ ASP is designed to guarantee that withdrawals from Privacy Pools are not related
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     tokens: getPrivacyTokens(),
+    attributes: [
+      PRIVACY_ATTRIBUTES.immutable,
+      PRIVACY_ATTRIBUTES.enforcedCompliance,
+      PRIVACY_ATTRIBUTES.anyAmount,
+      PRIVACY_ATTRIBUTES.openSource,
+    ],
     riskSummary: `## Funds can be lost if
 1. the zk proof system is broken, allowing invalid withdrawals.
 2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid withdrawals.
