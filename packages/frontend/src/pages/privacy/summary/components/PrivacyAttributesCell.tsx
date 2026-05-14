@@ -25,7 +25,7 @@ export function PrivacyAttributesCell({
   attributes: PrivacyAttribute[]
 }) {
   return (
-    <div className="flex min-w-[240px] flex-wrap gap-x-[5px] gap-y-1 py-2">
+    <div className="flex min-w-[220px] flex-wrap gap-1 py-1.5">
       {attributes.map((attribute) => (
         <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
       ))}
@@ -39,7 +39,7 @@ function PrivacyAttributeTag({ attribute }: { attribute: PrivacyAttribute }) {
       <TooltipTrigger asChild>
         <div
           className={cn(
-            'select-none rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
+            'inline-flex select-none items-center rounded px-1.5 py-0.5 font-medium text-xs',
             ATTRIBUTE_CLASS_NAMES[attribute.id],
           )}
         >

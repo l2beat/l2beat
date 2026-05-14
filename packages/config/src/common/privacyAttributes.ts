@@ -3,19 +3,19 @@ import type { PrivacyAttribute } from '../types'
 export const PRIVACY_ATTRIBUTES = {
   upgradeable: {
     id: 'upgradeable',
-    label: 'upgradeable',
+    label: 'Upgradeable',
     description:
       'DAO can vote on upgrades that are executable with a 7d delay.',
   },
   optCompliance: {
     id: 'optCompliance',
-    label: 'opt compliance',
+    label: 'Opt compliance',
     description:
       "Optional 'proofs of innocence' (POIs), can disassociate the deposit from a list of flagged addresses.",
   },
   transfers: {
     id: 'transfers',
-    label: 'transfers',
+    label: 'Transfers',
     description: 'Private transfers within the shielded pool.',
   },
   defi: {
@@ -26,34 +26,34 @@ export const PRIVACY_ATTRIBUTES = {
   },
   anyAmount: {
     id: 'anyAmount',
-    label: 'any amount',
+    label: 'Any amount',
     description: 'Deposits and withdrawals can have any size.',
   },
   fixedAmounts: {
     id: 'fixedAmounts',
-    label: 'fixed amounts',
+    label: 'Fixed amounts',
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
   openSource: {
     id: 'openSource',
-    label: 'open source',
+    label: 'Open source',
     description:
       'There is at least one practical way to use exclusively open source software to interact with this protocol.',
   },
   immutable: {
     id: 'immutable',
-    label: 'immutable',
+    label: 'Immutable',
     description: 'Core smart contract code cannot be changed.',
   },
   uncensorable: {
     id: 'uncensorable',
-    label: 'uncensorable',
+    label: 'Uncensorable',
     description: 'Deposits and withdrawals cannot be censored.',
   },
   enforcedCompliance: {
     id: 'enforcedCompliance',
-    label: 'enforced compliance',
+    label: 'Enforced compliance',
     description:
       'ASPs (association set providers) can censor any deposits, excluding them from the anonymity set.',
   },
