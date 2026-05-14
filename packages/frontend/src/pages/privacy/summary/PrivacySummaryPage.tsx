@@ -4,10 +4,10 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
 import { PrivacySummaryTable } from './components/PrivacySummaryTable'
-import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]

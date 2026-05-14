@@ -37,9 +37,10 @@ export function buildPrivacyFlowsChart(
     }
 
     return {
-      chart: generateTimestamps(normalizePrivacyFlowsChartRange(range), 'daily').map(
-        (timestamp) => [timestamp, 0, 0, 0, 0],
-      ),
+      chart: generateTimestamps(
+        normalizePrivacyFlowsChartRange(range),
+        'daily',
+      ).map((timestamp) => [timestamp, 0, 0, 0, 0]),
       syncedUntil: syncedUntil ? Number(syncedUntil) : undefined,
     }
   }

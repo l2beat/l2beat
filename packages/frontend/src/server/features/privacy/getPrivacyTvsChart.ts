@@ -12,10 +12,7 @@ export const PrivacyTvsChartParams = v.object({
 export type PrivacyTvsChartParams = v.infer<typeof PrivacyTvsChartParams>
 
 export interface PrivacyTvsChartResponse {
-  chart: [
-    timestamp: number,
-    valuesByProject: Record<string, number | null>,
-  ][]
+  chart: [timestamp: number, valuesByProject: Record<string, number | null>][]
   syncedUntil: number | undefined
 }
 

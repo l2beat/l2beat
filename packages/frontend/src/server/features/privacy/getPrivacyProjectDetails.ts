@@ -7,9 +7,9 @@ import type {
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getPrivacyProjects } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket } from './types'
-import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface PrivacyProjectDetails {
   id: ProjectId

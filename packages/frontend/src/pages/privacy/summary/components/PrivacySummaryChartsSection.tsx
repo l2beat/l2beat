@@ -5,8 +5,8 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
-import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
+import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import type { PrivacyTvsBreakdownProject } from './PrivacyTvsBreakdownChart'
 import { PrivacyTvsBreakdownChart } from './PrivacyTvsBreakdownChart'
 
@@ -15,10 +15,7 @@ interface Props {
   defaultRange: ChartRange
 }
 
-export function PrivacySummaryChartsSection({
-  projects,
-  defaultRange,
-}: Props) {
+export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectIds = useMemo(() => projects.map((p) => p.id), [projects])
   const { data: flowsData, isLoading: isFlowsLoading } =
