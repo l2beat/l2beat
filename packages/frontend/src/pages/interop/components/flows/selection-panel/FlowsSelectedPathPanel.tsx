@@ -17,8 +17,8 @@ export function FlowsSelectedPathPanel({
     visibleHighlightedChains.length === 2
       ? allChains.find((c) => c.id === visibleHighlightedChains[1])
       : undefined
-  const selectedChainsLabel = `${selectedChains.length} selected ${pluralize(selectedChains.length, 'chain')}`
 
+  const selectedChainsLabel = `${selectedChains.length - 1} selected ${pluralize(selectedChains.length - 1, 'chain')}`
   if (!chainA) {
     return null
   }
