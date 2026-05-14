@@ -1,5 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import sortedUniq from 'lodash/sortedUniq'
 import { ChartRange } from '~/utils/range/range'
 import { getSummedTvsValues } from '../scaling/tvs/utils/getSummedTvsValues'
 
@@ -11,7 +12,10 @@ export const PrivacyTvsChartParams = v.object({
 export type PrivacyTvsChartParams = v.infer<typeof PrivacyTvsChartParams>
 
 export interface PrivacyTvsChartResponse {
-  chart: [timestamp: number, totalValueSecuredUsd: number][]
+  chart: [
+    timestamp: number,
+    valuesByProject: Record<string, number | null>,
+  ][]
   syncedUntil: number | undefined
 }
 
@@ -24,18 +28,49 @@ export async function getPrivacyTvsChart(
 
   const forSummary = params.projectIds.length !== 1
 
-  const tvsValues = await getSummedTvsValues(
-    params.projectIds.map((id) => ProjectId(id)),
-    params.range,
-    {
-      forSummary,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: false,
+  const perProject = await Promise.all(
+    params.projectIds.map(async (id) => {
+      const values = await getSummedTvsValues([ProjectId(id)], params.range, {
+        forSummary,
+        excludeAssociatedTokens: false,
+        excludeRwaRestrictedTokens: false,
+      })
+      return { id, values }
+    }),
+  )
+
+  const timestamps = sortedUniq(
+    perProject
+      .flatMap((p) => p.values.map((v) => v.timestamp))
+      .sort((a, b) => a - b),
+  )
+
+  const valuesByProjectByTimestamp = new Map<
+    number,
+    Record<string, number | null>
+  >()
+  for (const { id, values } of perProject) {
+    for (const point of values) {
+      const existing = valuesByProjectByTimestamp.get(point.timestamp) ?? {}
+      existing[id] = point.value
+      valuesByProjectByTimestamp.set(point.timestamp, existing)
+    }
+  }
+
+  const chart: PrivacyTvsChartResponse['chart'] = timestamps.map(
+    (timestamp) => {
+      const valuesByProject = valuesByProjectByTimestamp.get(timestamp) ?? {}
+      for (const { id } of perProject) {
+        if (!(id in valuesByProject)) {
+          valuesByProject[id] = null
+        }
+      }
+      return [timestamp, valuesByProject]
     },
   )
 
   return {
-    chart: tvsValues.map((v) => [v.timestamp, v.value ?? 0]),
-    syncedUntil: tvsValues.at(-1)?.timestamp,
+    chart,
+    syncedUntil: timestamps.at(-1),
   }
 }

@@ -7,18 +7,20 @@ import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyFlowsChartRangeControls } from '../../project/components/PrivacyFlowsChartRangeControls'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
-import { PrivacyTvsChart } from './PrivacyTvsChart'
+import type { PrivacyTvsBreakdownProject } from './PrivacyTvsBreakdownChart'
+import { PrivacyTvsBreakdownChart } from './PrivacyTvsBreakdownChart'
 
 interface Props {
-  projectIds: string[]
+  projects: PrivacyTvsBreakdownProject[]
   defaultRange: ChartRange
 }
 
 export function PrivacySummaryChartsSection({
-  projectIds,
+  projects,
   defaultRange,
 }: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
+  const projectIds = useMemo(() => projects.map((p) => p.id), [projects])
   const { data: flowsData, isLoading: isFlowsLoading } =
     api.privacy.flowsChart.useQuery({ projectIds, range })
   const { data: tvsData, isLoading: isTvsLoading } =
@@ -44,15 +46,6 @@ export function PrivacySummaryChartsSection({
     [flowsData],
   )
 
-  const tvsChartData = useMemo(
-    () =>
-      tvsData?.chart.map(([timestamp, value]) => ({
-        timestamp,
-        value,
-      })),
-    [tvsData],
-  )
-
   const flowChartTimeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
@@ -64,9 +57,9 @@ export function PrivacySummaryChartsSection({
   const tvsChartTimeRange = useMemo(
     () =>
       getChartTimeRangeFromData(
-        tvsChartData?.map((point) => ({ timestamp: point.timestamp })),
+        tvsData?.chart.map(([timestamp]) => ({ timestamp })),
       ),
-    [tvsChartData],
+    [tvsData],
   )
 
   const countsChart = (
@@ -91,8 +84,9 @@ export function PrivacySummaryChartsSection({
         <h2 className="font-bold text-lg md:text-xl">Total value secured</h2>
         <ChartTimeRange timeRange={tvsChartTimeRange} />
       </div>
-      <PrivacyTvsChart
-        data={tvsChartData}
+      <PrivacyTvsBreakdownChart
+        data={tvsData?.chart}
+        projects={projects}
         syncedUntil={tvsData?.syncedUntil}
         isLoading={isTvsLoading}
       />

@@ -29,7 +29,7 @@ export function PrivacySummaryPage({
             Privacy Dashboard
           </MainPageHeader>
           <PrivacySummaryChartsSection
-            projectIds={entries.map((e) => e.id)}
+            projects={entries.map((e) => ({ id: e.id, name: e.name }))}
             defaultRange={defaultChartRange}
           />
           <PrivacySummaryTable entries={entries} />

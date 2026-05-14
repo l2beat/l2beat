@@ -28,11 +28,11 @@ export function PrivacyTvsSection({
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, value]) => ({
+      data?.chart.map(([timestamp, valuesByProject]) => ({
         timestamp,
-        value,
+        value: valuesByProject[project.id] ?? 0,
       })),
-    [data],
+    [data, project.id],
   )
 
   const timeRange = useMemo(
