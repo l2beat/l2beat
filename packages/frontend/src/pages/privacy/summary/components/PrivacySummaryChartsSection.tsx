@@ -3,6 +3,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ChartTabs } from '~/pages/scaling/summary/components/ChartTabs'
 import { api } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
@@ -92,13 +93,15 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
 
   return (
     <>
-      <div className="mb-3">
-        <div className="grid grid-cols-2 gap-x-3">
-          <PrimaryCard>{tvsChart}</PrimaryCard>
-          <PrimaryCard>{countsChart}</PrimaryCard>
-        </div>
+      <div className="mb-3 grid grid-cols-2 gap-x-3 max-md:mt-2 max-lg:hidden">
+        <PrimaryCard>{tvsChart}</PrimaryCard>
+        <PrimaryCard>{countsChart}</PrimaryCard>
       </div>
-      <ChartControlsWrapper className="justify-end">
+      <ChartTabs
+        className="mt-2 mb-3 lg:hidden"
+        charts={[tvsChart, countsChart]}
+      />
+      <ChartControlsWrapper className="justify-end max-md:pr-4">
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </>
