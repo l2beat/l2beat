@@ -168,6 +168,11 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     gaszipId: 514,
     chainId: 4326,
   }),
+  gasZipNetwork({
+    chain: 'worldchain',
+    gaszipId: 269,
+    chainId: 480,
+  }),
 ])
 
 interface GasZipApiChain {

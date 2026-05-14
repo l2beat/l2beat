@@ -17,15 +17,13 @@
           "type": "interact",
           "description": "replace the withdrawal verifier."
         },
-        {
-          "type": "interact",
-          "description": "transfer the operator role."
-        }
+        { "type": "interact", "description": "transfer the operator role." }
       ]
     },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"
     }
-  }
+  },
+  "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]
 }

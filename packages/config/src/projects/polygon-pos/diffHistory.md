@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xefad4ab01eb138033d007fe802dffdbc1b8818fb
+
+# Diff at Wed, 13 May 2026 13:45:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b18d53b57004d29236893505e028d7202c63b265 block: 1777964012
+- current timestamp: 1778679802
+
+## Description
+
+adjust staking reward.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) [N/A] {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "34695980000000000000000"
++        "29414916286149162861491"
+    }
+```
+
 Generated with discovered.json: 0x5c4d889da3d26778734b8745a8c633d9d1355a89
 
 # Diff at Fri, 08 May 2026 07:51:48 GMT:

@@ -1,15 +1,10 @@
 import { RefreshCwIcon } from 'lucide-react'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/core/Card'
+import { Card, CardContent } from '~/components/core/Card'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
+import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { MessagesTable } from './table/MessagesTable'
@@ -34,16 +29,11 @@ export function MessagesPage() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col gap-4">
-        <Card className="gap-4">
-          <CardHeader className="flex flex-row items-start justify-between gap-3">
-            <div className="space-y-1">
-              <CardTitle>Messages</CardTitle>
-              <CardDescription>
-                Message type stats and chain-pair drill-down migrated from the
-                legacy interop router.
-              </CardDescription>
-            </div>
+      <div className="flex flex-col gap-3">
+        <TablePageSummaryCard
+          title="Messages"
+          description="Message type stats and chain-pair drill-down migrated from the legacy interop router."
+          actions={
             <Button
               variant="outline"
               size="sm"
@@ -53,19 +43,21 @@ export function MessagesPage() {
               <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
               Refresh
             </Button>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{rows.length} message types</Badge>
-            <Badge variant="secondary">{totalMessages} total messages</Badge>
-            <Badge variant="secondary">
-              {totalKnownMessages} messages with known app
-            </Badge>
-            <Badge variant="secondary">
-              {knownCoverage} known app coverage
-            </Badge>
-            <Badge variant="secondary">{totalPairs} chain pairs</Badge>
-          </CardContent>
-        </Card>
+          }
+          summary={
+            <>
+              <Badge variant="secondary">{rows.length} message types</Badge>
+              <Badge variant="secondary">{totalMessages} total messages</Badge>
+              <Badge variant="secondary">
+                {totalKnownMessages} messages with known app
+              </Badge>
+              <Badge variant="secondary">
+                {knownCoverage} known app coverage
+              </Badge>
+              <Badge variant="secondary">{totalPairs} chain pairs</Badge>
+            </>
+          }
+        />
 
         <Card className="gap-0 py-0">
           <CardContent className="px-0">

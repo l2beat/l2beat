@@ -89,6 +89,10 @@ export function useTemplateModel({ templateId, files }: Props) {
     return templateModel.getFieldDescription(fieldName)
   }
 
+  const getFieldPermissions = (fieldName: string) => {
+    return templateModel.getFieldPermissions(fieldName)
+  }
+
   const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
@@ -113,6 +117,14 @@ export function useTemplateModel({ templateId, files }: Props) {
 
   const getFieldHandlerString = (fieldName: string) => {
     return templateModel.getFieldHandlerString(fieldName)
+  }
+
+  const getFieldEdit = (fieldName: string) => {
+    return templateModel.getFieldEdit(fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return templateModel.getFieldEditString(fieldName)
   }
 
   const saveMutation = useMutation({
@@ -171,9 +183,12 @@ export function useTemplateModel({ templateId, files }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 

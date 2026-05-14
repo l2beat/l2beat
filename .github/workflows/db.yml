@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       perform_db_dump:
-        description: Perform database dump before migration
+        description: Perform database dump before migration (currently unsupported)
         type: boolean
         default: false
         required: false
@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -32,26 +30,12 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install
-      - name: Create DB snapshot for STAGING database
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
-        run: |
-          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_DEV }}
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to STAGING
         run: |
           cd packages/database
           pnpm prisma migrate deploy
         env:
           PRISMA_DB_URL: ${{ secrets.STAGING_DATABASE_URL }}
-      - name: Create DB snapshot for PRODUCTION database
-        if: ${{ (github.event_name == 'workflow_dispatch' && inputs.perform_db_dump) }}
-        run: |
-          heroku pg:backups:capture -a ${{ secrets.HEROKU_BACKEND_PROD }}
-        env:
-          HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
       - name: Apply migrations to PRODUCTION
         run: |
           cd packages/database

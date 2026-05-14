@@ -99,8 +99,7 @@ export function applyHistorySnapshot(
     (id) => nodeIds.has(id) && !hiddenSet.has(id),
   )
 
-  return updateNodePositions({
-    ...state,
+  return updateNodePositions(state, {
     nodes,
     hidden,
     selected,

@@ -78,6 +78,10 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     return configModel.getFieldDescription(selectedAddress, fieldName)
   }
 
+  const getFieldPermissions = (fieldName: string) => {
+    return configModel.getFieldPermissions(selectedAddress, fieldName)
+  }
+
   const setFieldDescription = (
     fieldName: string,
     description: string | undefined,
@@ -125,6 +129,14 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
 
   const getFieldHandlerString = (fieldName: string) => {
     return configModel.getFieldHandlerString(selectedAddress, fieldName)
+  }
+
+  const getFieldEdit = (fieldName: string) => {
+    return configModel.getFieldEdit(selectedAddress, fieldName)
+  }
+
+  const getFieldEditString = (fieldName: string) => {
+    return configModel.getFieldEditString(selectedAddress, fieldName)
   }
 
   const configString = useMemo(() => {
@@ -179,9 +191,12 @@ export function useConfigModel({ project, config, selectedAddress }: Props) {
     getFieldSeverity,
     getFieldDescription,
     setFieldDescription,
+    getFieldPermissions,
     setFieldHandler,
     getFieldHandler,
     getFieldHandlerString,
+    getFieldEdit,
+    getFieldEditString,
     setCategory,
     setDescription,
 
