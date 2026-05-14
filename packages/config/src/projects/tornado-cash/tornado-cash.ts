@@ -19,7 +19,6 @@ const TORNADO_DEPOSIT_EVENT =
   '0xa945e51eec50ab98c161376f0db4cf2aeba3ec92755fe2fcd388bdbbb80ff196'
 const TORNADO_WITHDRAWAL_EVENT =
   '0xe9e508bad6d4c3227e881ca19068f099da81b5164dd6d62b2eaf1e8bc6c34931'
-const MIN_RELEVANT_DEPOSITS_TORNADO = 100
 
 function formatDenomination(amount: bigint, decimals: number): string {
   return utils.formatUnits(amount, decimals).replace(/\.?0+$/, '')
@@ -154,12 +153,7 @@ function getTornadoBuckets(): TornadoBucket[] {
     'getAllInstanceAddresses',
   )
 
-  const pools = poolAddresses
-    .map((address) => discovery.getContract(address))
-    .filter(
-      (pool) =>
-        Number(pool.values?.nextIndex ?? 0) >= MIN_RELEVANT_DEPOSITS_TORNADO,
-    )
+  const pools = poolAddresses.map((address) => discovery.getContract(address))
 
   return pools.map((pool) => {
     const token = pool.values?.token?.toString()

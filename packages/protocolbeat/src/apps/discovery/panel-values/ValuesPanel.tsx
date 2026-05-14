@@ -33,7 +33,7 @@ export function ValuesPanel() {
   }
 
   return (
-    <div className="h-full w-full overflow-x-auto">
+    <div className="h-full w-full">
       {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
         <Display

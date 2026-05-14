@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
-import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
+import { assert, type Log, UnixTime, unique } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -141,7 +141,6 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     )
 
     const blockTimestampLookup = await this.buildBlockTimestampLookup(logs)
-
     const configMap = buildConfigMap(configurations)
     const rawRecords = this.extractRawRecords(
       logs,
@@ -273,11 +272,16 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     }
 
     this.logger.info('Fetching block timestamps for logs without timestamps', {
-      logs: logsWithoutTimestamps.length,
+      logsWithTimestamps: logsWithTimestamps.length,
+      logsWithoutTimestamps: logsWithoutTimestamps.length,
+      blocksWithTimestamps: unique(logsWithTimestamps.map((l) => l[0])).length,
+      blocksWithoutTimestamps: unique(
+        logsWithoutTimestamps.map((l) => l.blockNumber),
+      ).length,
     })
 
     const timestamps = await this.$.blockProvider.getBlockTimestamps(
-      logsWithoutTimestamps.map((l) => l.blockNumber),
+      unique(logsWithoutTimestamps.map((l) => l.blockNumber)),
     )
     for (const [blockNumber, timestamp] of timestamps) {
       lookup.set(blockNumber, timestamp)
