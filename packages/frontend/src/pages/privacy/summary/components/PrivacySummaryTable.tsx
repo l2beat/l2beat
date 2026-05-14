@@ -9,6 +9,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
@@ -20,6 +21,7 @@ import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 const columnHelper = createColumnHelper<PrivacySummaryEntry>()
 
 const columns = [
+  ...getCommonProjectColumns(columnHelper, (row) => row.href),
   columnHelper.accessor('name', {
     header: 'Project',
     enableHiding: false,
@@ -50,6 +52,10 @@ const columns = [
       </TableLink>
     ),
     enableSorting: false,
+    meta: {
+      cellClassName: 'pl-4',
+      headClassName: 'pl-4',
+    },
   }),
   columnHelper.display({
     id: 'trustedSetup',
