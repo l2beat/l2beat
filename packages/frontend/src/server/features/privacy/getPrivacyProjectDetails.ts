@@ -93,10 +93,11 @@ export async function getPrivacyProjectDetails(
     totalIndex.set(`${total.projectId}::${total.bucketId}`, total)
   }
 
-  const dailyIndex = new Map<string, (typeof daily30d)[number]>()
+  const daily30dIndex = new Map<string, (typeof daily30d)[number]>()
+  const daily7dIndex = new Map<string, (typeof daily30d)[number]>()
   for (const row of daily30d) {
     const key = `${row.projectId}::${row.bucketId}`
-    const existing = dailyIndex.get(key) ?? {
+    const base = {
       projectId: row.projectId,
       bucketId: row.bucketId,
       timestamp: row.timestamp,
@@ -107,13 +108,26 @@ export async function getPrivacyProjectDetails(
       depositValueUsd: 0,
       withdrawalValueUsd: 0,
     }
-    existing.depositCount += row.depositCount
-    existing.withdrawalCount += row.withdrawalCount
-    existing.depositAmount += row.depositAmount
-    existing.withdrawalAmount += row.withdrawalAmount
-    existing.depositValueUsd += row.depositValueUsd
-    existing.withdrawalValueUsd += row.withdrawalValueUsd
-    dailyIndex.set(key, existing)
+
+    const existing30d = daily30dIndex.get(key) ?? { ...base }
+    existing30d.depositCount += row.depositCount
+    existing30d.withdrawalCount += row.withdrawalCount
+    existing30d.depositAmount += row.depositAmount
+    existing30d.withdrawalAmount += row.withdrawalAmount
+    existing30d.depositValueUsd += row.depositValueUsd
+    existing30d.withdrawalValueUsd += row.withdrawalValueUsd
+    daily30dIndex.set(key, existing30d)
+
+    if (row.timestamp >= last7dCutoff) {
+      const existing7d = daily7dIndex.get(key) ?? { ...base }
+      existing7d.depositCount += row.depositCount
+      existing7d.withdrawalCount += row.withdrawalCount
+      existing7d.depositAmount += row.depositAmount
+      existing7d.withdrawalAmount += row.withdrawalAmount
+      existing7d.depositValueUsd += row.depositValueUsd
+      existing7d.withdrawalValueUsd += row.withdrawalValueUsd
+      daily7dIndex.set(key, existing7d)
+    }
   }
 
   const assets = project.privacyInfo.tokens.map((token) => {
@@ -123,51 +137,8 @@ export async function getPrivacyProjectDetails(
     const buckets = token.buckets.map((bucket) => {
       const key = `${projectId}::${bucket.id}`
       const total = totalIndex.get(key)
-      const daily = dailyIndex.get(key)
-
-      const depositCount7d =
-        daily?.depositCount ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last7dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositCount, 0)
-
-      const depositCount30d =
-        daily?.depositCount ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last30dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositCount, 0)
-
-      const depositValueUsd7d =
-        daily?.depositValueUsd ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last7dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositValueUsd, 0)
-
-      const depositValueUsd30d =
-        daily?.depositValueUsd ??
-        daily30d
-          .filter(
-            (r) =>
-              r.projectId === projectId &&
-              r.bucketId === bucket.id &&
-              r.timestamp >= last30dCutoff,
-          )
-          .reduce((sum, r) => sum + r.depositValueUsd, 0)
+      const daily7d = daily7dIndex.get(key)
+      const daily30d = daily30dIndex.get(key)
 
       return {
         id: bucket.id,
@@ -178,13 +149,13 @@ export async function getPrivacyProjectDetails(
         totalValueUsd: null,
         deposits: {
           total: total?.depositCount ?? 0,
-          last7d: depositCount7d,
-          last30d: depositCount30d,
+          last7d: daily7d?.depositCount ?? 0,
+          last30d: daily30d?.depositCount ?? 0,
         },
         depositedValueUsd: {
           total: total?.depositValueUsd ?? 0,
-          last7d: depositValueUsd7d,
-          last30d: depositValueUsd30d,
+          last7d: daily7d?.depositValueUsd ?? 0,
+          last30d: daily30d?.depositValueUsd ?? 0,
         },
       } satisfies PrivacyBucket
     })
