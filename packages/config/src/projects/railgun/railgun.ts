@@ -145,7 +145,10 @@ Practical privacy also depends on the timing and amounts of deposits and withdra
 
 Railgun protocol does not enforce any compliance measures. However it allows using [Private Proof of Innocence](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence), which can attest to the origin and history of shielded tokens. Practically, broadcasters and some wallets only process transactions with valid PPoI.
 
-Additionally, Railgun users can share a read-only viewing key to expose all sent and received private transactions, if required by a regulator or enforcer. `,
+Additionally, Railgun users can share a read-only viewing key to expose all sent and received private transactions, if required by a regulator or enforcer. 
+### Anonymity set
+
+Because Railgun allows private transfers and interactions with DeFi, anonymity set is not well defined. A withdrawal from Railgun could be connected with a deposit of another token, or could even not correspond to any deposit if a user received a private transfer from another user. The anonymity set roughly corresponds to the set of all Railgun users.`,
     links: {
       websites: ['https://railgun.org'],
     },
