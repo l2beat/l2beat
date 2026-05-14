@@ -10,11 +10,11 @@ Generated with discovered.json: 0x5f9890e9b02642b06268f4639ed6396f7bb2cd39
 
 Upgrade to Kailua [v1.2.0](https://github.com/boundless-xyz/kailua/releases/tag/v1.2.0).
 
+- Vanguard advantage activated: previously `0s` (disabled), now `1mo` with a designated vanguard (`0x7cB1022D…`). The vanguard can delay the first child proposal of each parent tournament by up to a month; sibling proposals stay permissionless (v1.2.0 retains the `childCount() == 1` gate).
 - `KailuaGame` impl rotated ([diff](https://disco.l2beat.com/diff/eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF/eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b)) — now holds a direct `KAILUA_VERIFIER` reference (read once from the treasury at construction) and calls the verifier for proof checking; vanguard and tournament logic unchanged.
 - `KailuaTreasury` rotated ([diff](https://disco.l2beat.com/diff/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C/eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53)) — drops the `RISC_ZERO_VERIFIER`, `FPVM_IMAGE_ID`, and `ROLLUP_CONFIG_HASH` immutables (moved to KailuaVerifier) and holds a `KAILUA_VERIFIER` reference instead.
 - `KailuaVerifier` (new in v1.2.0) — proxy-wrapped, holds the proof config that used to sit on KailuaTreasury, and replaces the previous `RiscZeroVerifierRouter` + emergency-stop path. Adds optional fault-proof permits: a prover can lock collateral to reserve an exclusive window for collecting the fault-proof reward (anti-front-run). Effectively negligible on bob (`PERMIT_DELAY=0`, `PERMIT_DURATION=1` → 1-second active window); fault-proof submission remains permissionless.
 - New FPVM image ID deployed alongside the v1.2.0 contracts.
-- Vanguard advantage activated: previously `0s` (disabled), now `1mo` with a designated vanguard (`0x7cB1022D…`). The vanguard can delay the first child proposal of each parent tournament by up to a month; sibling proposals stay permissionless (v1.2.0 retains the `childCount() == 1` gate).
 
 ## Watched changes
 
