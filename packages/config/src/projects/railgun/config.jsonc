@@ -2,7 +2,6 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "railgun",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 50,
   "initialAddresses": [
     "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
     "eth:0xe90275239D734899e8D94646139213F6F97bEB0E",
@@ -11,23 +10,10 @@
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"
   ],
   "names": {
-    "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "ArbitrumInbox",
-    "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0": "PayoutBeneficiary_5a02",
-    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
-    "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624": "SweeperProxyOwner",
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VerificationKeySetter_64DA",
     "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "GovernorRewardsSweeper",
-    "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": "Ae8AStreamPayout",
-    "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F": "Beneficiary5a02OneOffPayout",
-    "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": "Ae8AOneOffPayout",
     "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VerificationKeySetter_9086",
-    "eth:0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3": "PayoutBeneficiary_A4f2",
-    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper",
-    "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": "A4f2OneOffPayout",
-    "eth:0xaE8A17EB859E024cF6B541802B08932B2268dcEe": "PayoutBeneficiary_Ae8A",
-    "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2": "VKeySetterOwner_bbc2",
-    "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D": "A4f2StreamPayout",
-    "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A": "Beneficiary5a02StreamPayout"
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": "LegacySweeper"
   },
   "overrides": {
     "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
