@@ -16,7 +16,6 @@ export interface PrivacySummaryEntry {
   poolsTracked: number
   totalDeposits: number
   totalValueDeposited30dUsd: number
-  totalDeposits30d: number
   attributes: PrivacyAttribute[]
   isUnderReview: boolean
   trustedSetup: TrustedSetup
@@ -68,10 +67,6 @@ export async function getPrivacySummaryEntries(
       (sum, row) => sum + row.depositValueUsd,
       0,
     )
-    const totalDeposits30d = projectDaily.reduce(
-      (sum, row) => sum + row.depositCount,
-      0,
-    )
 
     return {
       id: project.id,
@@ -85,7 +80,6 @@ export async function getPrivacySummaryEntries(
       poolsTracked,
       totalDeposits,
       totalValueDeposited30dUsd,
-      totalDeposits30d,
       attributes: project.privacyInfo.attributes ?? [],
       isUnderReview: !!project.statuses.reviewStatus,
       trustedSetup: project.privacyInfo.trustedSetup,

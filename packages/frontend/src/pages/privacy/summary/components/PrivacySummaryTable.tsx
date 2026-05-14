@@ -100,7 +100,7 @@ const columns = [
   }),
   columnHelper.accessor('totalValueDeposited30dUsd', {
     id: 'totalValueDeposited30dUsd',
-    header: 'Total value deposited 30D',
+    header: '30D volume',
     cell: (ctx) => (
       <span className="font-medium text-base">
         {formatCurrency(ctx.getValue() ?? 0, 'usd')}
@@ -110,19 +110,6 @@ const columns = [
       align: 'right',
       tooltip:
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
-    },
-  }),
-  columnHelper.accessor('totalDeposits30d', {
-    header: 'Total deposits 30D',
-    cell: (ctx) => (
-      <span className="font-medium text-base">
-        {formatInteger(ctx.getValue() ?? 0)}
-      </span>
-    ),
-    meta: {
-      align: 'right',
-      tooltip:
-        'Deposit count over the last 30 days aggregated across all tracked tokens and buckets.',
     },
   }),
   columnHelper.accessor('attributes', {
