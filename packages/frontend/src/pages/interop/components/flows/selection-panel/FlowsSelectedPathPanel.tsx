@@ -1,3 +1,4 @@
+import { pluralize } from '@l2beat/shared-pure'
 import { Button } from '~/components/core/Button'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
@@ -17,6 +18,7 @@ export function FlowsSelectedPathPanel({
       ? allChains.find((c) => c.id === visibleHighlightedChains[1])
       : undefined
 
+  const selectedChainsLabel = `${selectedChains.length - 1} selected ${pluralize(selectedChains.length - 1, 'chain')}`
   if (!chainA) {
     return null
   }
@@ -36,7 +38,7 @@ export function FlowsSelectedPathPanel({
       <div className="mt-1 flex items-center gap-1 font-medium text-label-value-14 text-secondary">
         <span>{chainA.name}</span>
         <BidirectionalArrowIcon className="size-3.5 fill-secondary" />
-        <span>{chainB?.name ?? 'All supported chains'}</span>
+        <span>{chainB?.name ?? selectedChainsLabel}</span>
       </div>
       <div className="mt-3 grid grid-cols-1 gap-2 md:max-lg:grid-cols-2">
         {visibleHighlightedChains.length === 1 && (
