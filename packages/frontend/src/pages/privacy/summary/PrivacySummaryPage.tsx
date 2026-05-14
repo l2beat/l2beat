@@ -6,18 +6,21 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { ChartRange } from '~/utils/range/range'
+import { PrivacyBestPracticesBanner } from './components/PrivacyBestPracticesBanner'
 import { PrivacySummaryChartsSection } from './components/PrivacySummaryChartsSection'
 import { PrivacySummaryTable } from './components/PrivacySummaryTable'
 
 interface Props extends AppLayoutProps {
   entries: PrivacySummaryEntry[]
   defaultChartRange: ChartRange
+  bestPracticesBannerImageUrl: string
   queryState: DehydratedState
 }
 
 export function PrivacySummaryPage({
   entries,
   defaultChartRange,
+  bestPracticesBannerImageUrl,
   queryState,
   ...props
 }: Props) {
@@ -31,6 +34,9 @@ export function PrivacySummaryPage({
           <PrivacySummaryChartsSection
             projects={entries.map((e) => ({ id: e.id, name: e.name }))}
             defaultRange={defaultChartRange}
+          />
+          <PrivacyBestPracticesBanner
+            backgroundImage={bestPracticesBannerImageUrl}
           />
           <PrivacySummaryTable entries={entries} />
         </SideNavLayout>

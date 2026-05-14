@@ -42,6 +42,9 @@ export async function getPrivacySummaryData(
         ...appLayoutProps,
         entries,
         defaultChartRange,
+        bestPracticesBannerImageUrl: manifest.getUrl(
+          '/images/best-practices-banner.png',
+        ),
         queryState,
       },
     },
