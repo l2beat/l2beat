@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4e5c6008be37a2b2a714925274682f98ab2b4446
+Generated with discovered.json: 0x685054d79d7696a894fcd8a1a09378ea9c7a5f28
 
-# Diff at Wed, 13 May 2026 06:29:30 GMT:
+# Diff at Wed, 13 May 2026 13:27:58 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@7bdbfcd6069ae420581b806d57b982f87fe0b467 block: 1777388210
+- comparing to: main@170a9eff7fb05e32aa0bda5ee3356b12ec6a4691 block: 1777388210
 - current timestamp: 1778572081
 
 ## Description
@@ -90,6 +90,18 @@ Discovery rerun on the same block number with only config-related changes.
       values.arbitrumOnRamp:
 -        "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284"
 +        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.arbitrum:
+-        "eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.base:
+-        "eth:0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.ink:
+-        "eth:0xEEe2AE1d0Fa6D1D38BBBa555A7C7B90C8734a8e2"
++        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+      values.onRamps.everclear:
+-        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
++        "eth:0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -120,6 +132,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RegistryModuleOwnerCustom (eth:0x13022e3e6C77524308BD56AEd716E88311b2E533) [transporter/RegistryModuleOwnerCustom]
+    +++ description: Permissionless registry-module wrapper. Anyone can call it, but each entry-point (registerAdminViaGetCCIPAdmin, registerAdminViaOwner, and in v1.6 registerAccessControlDefaultAdmin) succeeds only when msg.sender is the token's own admin/owner per the named check. On success it calls TokenAdminRegistry.proposeAdministrator(token, msg.sender), which the TokenAdminRegistry only accepts because this address is whitelisted in its registryModules set. The contract has no privileged owner or state of its own.
+```
+
+```diff
++   Status: CREATED
     contract NonceManager (eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52) [N/A]
     +++ description: None
 ```
@@ -144,6 +162,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RegistryModuleOwnerCustom (eth:0x4855174E9479E211337832E109E7721d43A4CA64) [transporter/RegistryModuleOwnerCustom]
+    +++ description: Permissionless registry-module wrapper. Anyone can call it, but each entry-point (registerAdminViaGetCCIPAdmin, registerAdminViaOwner, and in v1.6 registerAccessControlDefaultAdmin) succeeds only when msg.sender is the token's own admin/owner per the named check. On success it calls TokenAdminRegistry.proposeAdministrator(token, msg.sender), which the TokenAdminRegistry only accepts because this address is whitelisted in its registryModules set. The contract has no privileged owner or state of its own.
+```
+
+```diff
++   Status: CREATED
     contract EthereumOnRamp_v1_6 (eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa) [transporter/OnRampV1_6]
     +++ description: None
 ```
@@ -163,8 +187,10 @@ Discovery rerun on the same block number with only config-related changes.
  .../dev/null                                       | 1632 ----------
  .../src/projects/ccip/.flat/FeeQuoter.sol          | 3218 ++++++++++++++++++
  .../src/projects/ccip/.flat/NonceManager.sol       | 1042 ++++++
+ ...:0x13022e3e6C77524308BD56AEd716E88311b2E533.sol |   75 +
+ ...:0x4855174E9479E211337832E109E7721d43A4CA64.sol |  479 +++
  .../src/projects/ccip/.flat/TokenAdminRegistry.sol |  791 +++++
- 7 files changed, 10442 insertions(+), 5039 deletions(-)
+ 9 files changed, 10996 insertions(+), 5039 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -568,10 +594,17 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +++ description: Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here.
       values.arbitrumOffRamps:
 +        ["eth:0xeFC4a18af59398FF23bfe7325F2401aD44286F4d","eth:0xdf615eF8D4C64d0ED8Fd7824BBEd2f6a10245aC9"]
++++ description: All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp.
+      values.onRamps:
++        {"optimism":"eth:0x3455D8E039736944e66e19eAc77a42e8077B07bf","matic":"eth:0x15a9D79d6b3485F70bF82bC49dDD1fcB37A7149c","arbitrum":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","avalanche":"eth:0xaFd31C0C78785aDF53E4c185670bfd5376249d8A","bsc":"eth:0x948306C220Ac325fa9392A6E601042A3CD0b480d","base":"eth:0xb8a882f3B88bd52D1Ff56A873bfDB84b70431937","wemix":"eth:0xdEFeADd30D5BFD403d86245b43e39a73d76423cC","xdai":"eth:0xf50B9A46C394bD98491ce163d420222d8030F6F0","celo":"eth:0x741599d9a5a1bfC40A22f530fbCd85E2718e9F90","mode":"eth:0xeA6d4a24B262aB3e61a8A62f018A30beCD086f82","blast":"eth:0x6751cA96b769129dFE6eB8E349c310deCEDb4e36","andromeda":"eth:0x75d536eED32f4c8Bb39F4B0c992163f5BA49B84e","zksync":"eth:0x9B14AE850653dD0E30fBC93ab7f77D0d638a365B","linea":"eth:0x626189C882A80fF0D036d8D9f6447555e81F78E9","scroll":"eth:0x362A221C3cfd7F992DFE221687323F0BA9BA8187","xlayer":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","polygonzkevm":"eth:0x33417f13DFBC2FfB9e1B43051c3737370F3691a4","astar":"eth:0xD8E8720709a3d9A18a9B281E6148E94149B2E252","zircuit":"eth:0x4Cc3D95d9384D3287724B83099f01BC3025702c0","mantle":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","ronin":"eth:0xdC5b578ff3AFcC4A4a6E149892b9472390b50844","bsquared":"eth:0xddF4b4aF7A9603869C90189EFa8826683D0D234b","worldchain":"eth:0xdB6ebB3ea15595E516dEf4a9875479573a4F19b6","bob":"eth:0x1B960560324c03db5565545B353198fdd07A195d","shibarium":"eth:0x3Ac0D8fe5b4e8d0a95C507CCd83F6A8d73A8c6b1","bitlayer":"eth:0x4FB5407d6911DaA0B8bde58A754E7D01CB8b05c5","corn":"eth:0x7B78f8D16C4ae6E51c29295D58f05dCC67180A2b","soneium":"eth:0x093844Bd4b26792791cD4038e94Bec70f88CaD63","sonic":"eth:0x4fdAaDe22bd05537EeaB204cF7319589CE595D6a","ink":"eth:0xEEe2AE1d0Fa6D1D38BBBa555A7C7B90C8734a8e2","hashkey":"eth:0x61B4B85364a2609177D2C498ff864E01a63148a5","sei":"eth:0x5739E5376702AAc79a53B375ca160EE3C12025E0","treasure":"eth:0x0000000000000000000000000000000000000000","bitcoin-merlin":"eth:0x20fD5ab74D519df395f41c958D982BecB6b64432","berachain":"eth:0xBeFfEF56Cd6FA063d2e04E126cF1b93269886c42","fraxtal":"eth:0x31ee106a4585a796caacC645172B9F7e9c2f8D37","unichain":"eth:0x5E7397CA539C94185BBD950706F0Dd8628587E04","core":"eth:0xa6D806e4EB8726542cf536518fC47f39d68cCb48","hedera":"eth:0x08C798376AfA295C047bDb5c011097865895672d","mind":"eth:0x9cb0FF2Ea9110dc8831b39F620811a0da09747D3","cronos":"eth:0x03CB4C67D01a78F44289541281E57C33E6b834d9","cronos-zkevm":"eth:0x8b858ED23502611aB86109717C8842A7A8f117ec","apechain":"eth:0x48F836a7697c0082B2Ecb4B2639f6da79de21980","lens":"eth:0x6715EA73EcAf1CaE1c736731129637B2E94a6B49","hyperliquid":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","hemi":"eth:0x7d7C4933f17B414f50C97d1a8862A1ace82557B3","abstract":"eth:0x266e520E272FCca3cE46A379a06Dc5ba62717b8F","metal":"eth:0xDAa386621aB173C4E788ecebC4F8c2E6EB016819","lisk":"eth:0x74Cb66502D855992137c5dC8A502c396A6E77931","mint":"eth:0x1Fa3aF677DC1b627f8A57e26b2a55d5F7945F06b","plume":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","superseed":"eth:0x486170Bca7fE5126AFeaF171d3a60A211bF2C44C","zora":"eth:0xc46e2F17c04f2C880Ea56a0c69c4520AdB4aBF88","taiko":"eth:0x5F6e7707DE5019E13BaFbD2f4569B2453F16eB3e","rootstock":"eth:0x34748FbeD8fD8468eD66D53A7D102ce793cB4094","tron":"eth:0x57da0fAD1CC3B98a8f04545A45Ba156e944db4DE","opbnb":"eth:0xffbEC42C001f0E54924078C6D36412128bBC4330","solana":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","botanix":"eth:0x86768e4e4B2E3C1CF812D5C8A7c7becFA4c8D486","neox":"eth:0x4109D281EB5C768556dFF78ba400cE2E3564d5B0","katana":"eth:0xc5Dbe2055Fa233ece44c99432526F3Fc46cA3FC2","etherlink":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","kaia":"eth:0x8469b5AbD81987F9347c0bAbd47b9eB11dA7d0dF","morph":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","aptos":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","monad":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","xdc":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","tac":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","memento":"eth:0x0000000000000000000000000000000000000000","plasma":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","0g":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","bittensor":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","everclear":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","ab":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","henesys":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","jovay":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","stable":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","megaeth":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","sui":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","pharos":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","edge":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","adi":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","ton":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","tempo":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa","creditcoin":"eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"}
       fieldMeta.arbitrumOffRamp:
 -        {"description":"Arbitrum-to-Ethereum OffRamp allowed to call routeMessage() and deliver messages to Ethereum receivers."}
+      fieldMeta.onRamps:
++        {"description":"All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp."}
       fieldMeta.arbitrumOffRamps:
 +        {"description":"Every Arbitrum-to-Ethereum OffRamp the Router accepts routeMessage() calls from. Multiple OffRamps can be active in parallel during a version migration, all are listed here."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"4426351306075016396":"0g","4829375610284793157":"ab","3577778157919314504":"abstract","4059281736450291836":"adi","14894068710063348487":"apechain","4741433654826277614":"aptos","6433500567565415381":"avalanche","1294465214383781161":"berachain","465944652040885897":"opbnb","7937294810946806131":"bitlayer","3849287863852499584":"bob","4560701533377838164":"botanix","5406759801798337480":"bsquared","241851231317828981":"bitcoin-merlin","2135107236357186872":"bittensor","11344663589394136015":"bsc","1346049177634351622":"celo","1224752112135636129":"core","9043146809313071210":"corn","18240105181246962294":"creditcoin","1456215246176062136":"cronos","8788096068760390840":"cronos-zkevm","6325494908023253251":"edge","8805746078405598895":"andromeda","4949039107694359620":"arbitrum","15971525489660198786":"base","7613811247471741961":"hashkey","3461204551265785888":"ink","4627098889531055414":"linea","1556008542357238666":"mantle","7264351850409363825":"mode","3734403246176062136":"optimism","13204309965629103672":"scroll","16468599424800719238":"taiko","1923510103922296319":"unichain","2049429975587534727":"worldchain","3016212468291539606":"xlayer","17198166215261833993":"zircuit","1562403441176082196":"zksync","13624601974233774587":"etherlink","1462016016387883143":"fraxtal","3229138320728879060":"hedera","1804312132722180201":"hemi","2442541497099098535":"hyperliquid","1523760397290643893":"jovay","9813823125703490621":"kaia","5608378062013572713":"lens","15293031020466096408":"lisk","5009297550715157269":"ethereum","4051577828743386545":"matic","6093540873831549674":"megaeth","13447077090413146373":"metal","11690709103138290329":"mind","17164792800244661392":"mint","8481857512324358265":"monad","18164309074156128038":"morph","12657445206920369324":"henesys","7801139999541420232":"pharos","9335212494177455608":"plasma","17912061998839310979":"plume","6422105447186081193":"astar","2459028469735686113":"katana","6916147374840168594":"ronin","11964252391146578476":"rootstock","9027416829622342829":"sei","3993510008929295315":"shibarium","124615329519749607":"solana","12505351618335765396":"soneium","1673871237479749969":"sonic","16978377838628290997":"stable","470401360549526817":"superseed","5936861837188149645":"tac","7281642695469137430":"tempo","16448340667252469081":"ton","5142893604156789321":"wemix","465200170687744372":"xdai","17673274061779414707":"xdc","3555797439612589184":"zora","17529533435026248318":"sui","9762610643973837292":"sui-testnet","6473245816409426016":"memento","9723842205701363942":"everclear","1546563616611573946":"tron","4348158687435793198":"polygonzkevm","4411394078118774322":"blast","5214452172935136222":"treasure","7222032299962346917":"neox"}}]
     }
 ```
 
