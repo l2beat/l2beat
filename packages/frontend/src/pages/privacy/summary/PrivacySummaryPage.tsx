@@ -35,10 +35,10 @@ export function PrivacySummaryPage({
             projects={entries.map((e) => ({ id: e.id, name: e.name }))}
             defaultRange={defaultChartRange}
           />
+          <PrivacySummaryTable entries={entries} />
           <PrivacyBestPracticesBanner
             backgroundImage={bestPracticesBannerImageUrl}
           />
-          <PrivacySummaryTable entries={entries} />
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
