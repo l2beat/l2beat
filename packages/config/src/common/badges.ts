@@ -20,6 +20,7 @@ export const BadgeType = {
   Infra: 'Infra',
   L3ParentChain: 'L3ParentChain',
   Other: 'Other',
+  Privacy: 'Privacy',
   RaaS: 'RaaS',
 } as const
 
@@ -754,6 +755,41 @@ export const badges = [
       type: 'scalingFilter',
       id: 'other',
       value: 'Privacy',
+    },
+  },
+  {
+    id: 'Compliance',
+    type: BadgeType.Privacy,
+    name: 'Compliance',
+    description: 'This project introduces compliance-related features',
+    action: {
+      type: 'scalingFilter',
+      id: 'other',
+      value: 'Compliance',
+    },
+  },
+  {
+    id: 'PrivateTransfers',
+    type: BadgeType.Privacy,
+    name: 'Private Transfers',
+    description:
+      'This project allows in-protocol transfers of deposited private tokens',
+    action: {
+      type: 'scalingFilter',
+      id: 'other',
+      value: 'Private Transfers',
+    },
+  },
+  {
+    id: 'SmartContractInteractions',
+    type: BadgeType.Privacy,
+    name: 'Smart Contract Interactions',
+    description:
+      'This project supports interactions between deposited private tokens and public smart contracts',
+    action: {
+      type: 'scalingFilter',
+      id: 'other',
+      value: 'Smart Contract Interactions',
     },
   },
   {

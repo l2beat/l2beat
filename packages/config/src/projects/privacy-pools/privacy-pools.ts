@@ -5,6 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -56,7 +57,7 @@ export const privacyPools: BaseProject = {
     links: {
       websites: ['https://www.privacypools.com'],
     },
-    badges: [],
+    badges: [BADGES.Privacy.Compliance],
   },
   escrows: BUCKETS.map((bucket) => ({
     address: ChainSpecificAddress.address(bucket.address),

@@ -7,6 +7,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -128,7 +129,12 @@ export const railgun: BaseProject = {
     links: {
       websites: ['https://railgun.org'],
     },
-    badges: [],
+    badges: [
+      BADGES.Privacy.Compliance,
+      BADGES.Privacy.PrivateTransfers,
+      BADGES.Privacy.SmartContractInteractions,
+      BADGES.Other.Governance,
+    ],
   },
   escrows: TRACKED_TOKENS.map((token) => ({
     address: ChainSpecificAddress.address(railgunCore.address),
