@@ -161,6 +161,18 @@ export async function getPrivacyProjectData(
 
   const sections: ProjectDetailsSection[] = []
 
+  if (details.display.detailedDescription) {
+    sections.push({
+      type: 'DetailedDescriptionSection',
+      props: {
+        id: 'detailed-description',
+        title: 'Protocol description',
+        description: undefined,
+        detailedDescription: details.display.detailedDescription,
+      },
+    })
+  }
+
   const chartProject = {
     id: details.id,
     name: details.name,
