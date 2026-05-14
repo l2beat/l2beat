@@ -76,8 +76,9 @@ function SidebarProvider({
 function Sidebar({
   className,
   children,
+  suppressDesktop = false,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<'div'> & { suppressDesktop?: boolean }) {
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
@@ -101,6 +102,10 @@ function Sidebar({
         </SheetContent>
       </Sheet>
     )
+  }
+
+  if (suppressDesktop) {
+    return null
   }
 
   return (

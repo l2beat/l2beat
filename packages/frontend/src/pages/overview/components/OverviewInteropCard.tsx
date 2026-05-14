@@ -177,7 +177,7 @@ function OverviewInteropCardContent({
           }
         />
       </div>
-      <div className="-mx-2 mt-3 flex min-h-[280px] flex-1 flex-col">
+      <div className="-mx-2 mt-2 flex min-h-[190px] flex-1 flex-col">
         <FlowsGraphPanel
           activeChains={activeChains}
           data={data}

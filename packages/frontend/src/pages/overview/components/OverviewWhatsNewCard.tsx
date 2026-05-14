@@ -31,7 +31,7 @@ export function OverviewWhatsNewCard() {
   }
   return (
     <PrimaryCard
-      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex h-full flex-col gap-3')}
+      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex flex-col gap-3')}
     >
       <span className="font-bold text-xl">What's new</span>
       <ul className="flex flex-1 flex-col gap-2">

@@ -5,6 +5,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -14,9 +15,10 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { ChartRange } from '~/utils/range/range'
 import type { OverviewSparklineDataPoint } from './charts/OverviewSparkline'
 import { OverviewSparkline } from './charts/OverviewSparkline'
-import type { StackedSparklinePoint } from './charts/OverviewStackedSparkline'
-import { OverviewStackedSparkline } from './charts/OverviewStackedSparkline'
-import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+import {
+  OVERVIEW_CARD_PADDING_CLASS,
+  OVERVIEW_CHART_RIGHT_INSET_CLASS,
+} from './overviewChartHeight'
 
 interface Props {
   tvsRange: ChartRange
@@ -26,43 +28,21 @@ interface Props {
     validiumsAndOptimiums: number
     others: number
   }
+  compactCharts?: boolean
 }
 
-interface TvsStackedPoint extends StackedSparklinePoint {
+interface TvsPoint {
+  timestamp: number
   rollups: number | null
   validiumsAndOptimiums: number | null
   others: number | null
 }
 
-const TVS_SERIES = [
-  {
-    dataKey: 'rollups',
-    label: 'Rollups',
-    color: 'pink',
-  },
-  {
-    dataKey: 'validiumsAndOptimiums',
-    label: 'Validiums & Optimiums',
-    color: 'cyan',
-  },
-  {
-    dataKey: 'others',
-    label: 'Others',
-    color: 'yellow',
-  },
-] as const
-
-const MOCK_TVS_BASE = {
-  rollups: 38e9,
-  validiumsAndOptimiums: 8e9,
-  others: 2e9,
-}
-const MOCK_ACTIVITY_UOPS = 240
-
 export function OverviewScalingCard({
   tvsRange,
   activityRange,
   scalingCategoryCounts,
+  compactCharts = false,
 }: Props) {
   const { data: tvs, isLoading: isTvsLoading } =
     api.tvs.recategorisedChart.useQuery({
@@ -78,7 +58,7 @@ export function OverviewScalingCard({
       filter: { type: 'all' },
     })
 
-  const realTvsStackedData = useMemo<TvsStackedPoint[] | undefined>(
+  const tvsSeriesPoints = useMemo<TvsPoint[] | undefined>(
     () =>
       tvs?.chart.map(([timestamp, rollups, validiumsAndOptimiums, others]) => ({
         timestamp,
@@ -89,40 +69,47 @@ export function OverviewScalingCard({
     [tvs],
   )
 
-  const tvsStackedData = useMemo<TvsStackedPoint[]>(
+  const tvsChartData = useMemo<OverviewSparklineDataPoint[] | undefined>(
     () =>
-      hasStackedVariation(realTvsStackedData)
-        ? realTvsStackedData
-        : generateMockStackedSeries(tvsRange, MOCK_TVS_BASE),
-    [tvsRange, realTvsStackedData],
+      tvsSeriesPoints?.map(
+        ({ timestamp, rollups, validiumsAndOptimiums }) => {
+          const hasAny = rollups !== null || validiumsAndOptimiums !== null
+          const total =
+            (rollups ?? 0) + (validiumsAndOptimiums ?? 0)
+          return {
+            timestamp,
+            value: hasAny ? total : null,
+            tvsBreakdown: {
+              rollups,
+              validiumsAndOptimiums,
+            },
+          }
+        },
+      ),
+    [tvsSeriesPoints],
   )
 
   const tvsStats = useMemo(() => {
-    const withData = tvsStackedData.filter(
-      (d) =>
-        d.rollups !== null ||
-        d.validiumsAndOptimiums !== null ||
-        d.others !== null,
+    if (!tvsSeriesPoints) return undefined
+    const withData = tvsSeriesPoints.filter(
+      (d) => d.rollups !== null || d.validiumsAndOptimiums !== null,
     )
     const first = withData.at(0)
     const last = withData.at(-1)
     if (!first || !last) return undefined
-    const sum = (point: TvsStackedPoint) =>
-      (point.rollups ?? 0) +
-      (point.validiumsAndOptimiums ?? 0) +
-      (point.others ?? 0)
-    const firstTotal = sum(first)
-    const lastTotal = sum(last)
+    const sumRv = (point: TvsPoint) =>
+      (point.rollups ?? 0) + (point.validiumsAndOptimiums ?? 0)
+    const firstTotal = sumRv(first)
+    const lastTotal = sumRv(last)
     const change = firstTotal === 0 ? 0 : lastTotal / firstTotal - 1
     return { total: lastTotal, change }
-  }, [tvsStackedData])
+  }, [tvsSeriesPoints])
 
   const realActivitySparkline = useMemo(
     () =>
-      activity?.data.map(([timestamp, rollupsUops, vAndOUops, othersUops]) => {
-        const hasAny =
-          rollupsUops !== null || vAndOUops !== null || othersUops !== null
-        const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0) + (othersUops ?? 0)
+      activity?.data.map(([timestamp, rollupsUops, vAndOUops]) => {
+        const hasAny = rollupsUops !== null || vAndOUops !== null
+        const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
         return {
           timestamp,
           value: hasAny ? sum / UnixTime.DAY : null,
@@ -131,24 +118,11 @@ export function OverviewScalingCard({
     [activity],
   )
 
-  const activitySparkline = useMemo(
-    () =>
-      hasVariation(realActivitySparkline)
-        ? realActivitySparkline
-        : generateMockSparkline(activityRange, {
-            base: MOCK_ACTIVITY_UOPS,
-            amplitude: 0.3,
-            trend: 0.6,
-            phase: 0.4,
-          }),
-    [activityRange, realActivitySparkline],
-  )
+  const activitySparkline = realActivitySparkline
 
   const pastDayActivityUops = useMemo(() => {
     if (!activitySparkline) return undefined
-    const last = [...activitySparkline]
-      .reverse()
-      .find((d) => d.value !== null)
+    const last = [...activitySparkline].reverse().find((d) => d.value !== null)
     return last?.value ?? undefined
   }, [activitySparkline])
 
@@ -157,20 +131,35 @@ export function OverviewScalingCard({
     [activitySparkline],
   )
 
+  const chartHeight = compactCharts ? 48 : 96
+
   return (
     <PrimaryCard
-      className={cn(OVERVIEW_CARD_PADDING_CLASS, 'flex h-full flex-col')}
+      className={cn(
+        OVERVIEW_CARD_PADDING_CLASS,
+        'flex h-full flex-col pb-4',
+        compactCharts && 'xl:pt-5 xl:pb-3',
+      )}
     >
       <Header counts={scalingCategoryCounts} />
-      <HorizontalSeparator className="my-3" />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6">
+      <HorizontalSeparator className={cn(compactCharts ? 'my-2' : 'my-3')} />
+      <div
+        className={cn(
+          'grid grid-cols-1',
+          compactCharts ? 'gap-3' : 'gap-3.5',
+          !compactCharts && 'md:grid-cols-2 md:gap-6',
+        )}
+      >
         <SparklineSection
           label="Total value secured"
+          compactCharts={compactCharts}
           stat={
-            tvsStats === undefined || isTvsLoading ? (
+            isTvsLoading ? (
               <Skeleton className="h-4 w-32" />
+            ) : tvsStats === undefined ? (
+              <NoDataStat />
             ) : (
-              <span className="flex items-baseline gap-1.5 whitespace-nowrap font-medium text-label-value-13 tabular-nums">
+              <span className="flex flex-wrap items-baseline justify-end gap-x-1.5 gap-y-1 font-medium text-label-value-13 tabular-nums">
                 {formatCurrency(tvsStats.total, 'usd')}
                 <PercentChange
                   value={tvsStats.change}
@@ -180,22 +169,26 @@ export function OverviewScalingCard({
             )
           }
         >
-          <OverviewStackedSparkline
-            data={tvsStackedData}
+          <OverviewSparkline
+            data={tvsChartData}
             isLoading={isTvsLoading}
-            series={[...TVS_SERIES]}
-            height={120}
+            color="pink"
+            height={chartHeight}
+            tooltipLabel="Total value secured"
             formatValue={(value) => formatCurrency(value, 'usd')}
             syncedUntil={tvs?.syncedUntil}
           />
         </SparklineSection>
         <SparklineSection
           label="Scaling activity (UOPS)"
+          compactCharts={compactCharts}
           stat={
-            isActivityLoading || pastDayActivityUops === undefined ? (
+            isActivityLoading ? (
               <Skeleton className="h-4 w-20" />
+            ) : pastDayActivityUops === undefined ? (
+              <NoDataStat />
             ) : (
-              <span className="flex items-baseline gap-1.5 whitespace-nowrap font-medium text-label-value-13 tabular-nums">
+              <span className="flex flex-wrap items-baseline justify-end gap-x-1.5 gap-y-1 font-medium text-label-value-13 tabular-nums">
                 {formatActivityCount(pastDayActivityUops)} UOPS
                 {pastDayActivityUopsChange !== undefined && (
                   <PercentChange
@@ -211,7 +204,7 @@ export function OverviewScalingCard({
             data={activitySparkline}
             isLoading={isActivityLoading}
             color="cyan"
-            height={120}
+            height={chartHeight}
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             syncedUntil={activity?.syncedUntil}
@@ -260,11 +253,10 @@ function CountsLine({
   const items = [
     { label: 'Rollups', value: counts.rollups, dot: 'bg-pink-100' },
     {
-      label: 'V&O',
+      label: 'Validiums & Optimiums',
       value: counts.validiumsAndOptimiums,
       dot: 'bg-blue-500',
     },
-    { label: 'Others', value: counts.others, dot: 'bg-gray-450' },
   ]
 
   return (
@@ -283,22 +275,46 @@ function CountsLine({
 function SparklineSection({
   label,
   stat,
+  statFooter,
+  compactCharts: _compactCharts,
   children,
 }: {
   label: string
   stat?: ReactNode
+  statFooter?: ReactNode
+  compactCharts?: boolean
   children: ReactNode
 }) {
+  const statsColumn =
+    statFooter !== undefined && statFooter !== null ? (
+      <div className="flex min-w-0 shrink-0 flex-col items-end gap-0.5 text-right">
+        {stat}
+        {statFooter}
+      </div>
+    ) : (
+      stat
+    )
+
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-label-value-12 text-secondary leading-tight">
+    <div className="flex min-w-0 flex-col gap-1">
+      <div className="flex min-w-0 flex-nowrap items-start justify-between gap-x-2">
+        <span className="min-w-0 shrink font-medium text-label-value-12 text-secondary leading-tight">
           {label}
         </span>
-        {stat}
+        <div className="min-w-0 shrink-0">{statsColumn}</div>
       </div>
-      {children}
+      <div className={cn('min-w-0', OVERVIEW_CHART_RIGHT_INSET_CLASS)}>
+        {children}
+      </div>
     </div>
+  )
+}
+
+function NoDataStat() {
+  return (
+    <span className="whitespace-nowrap font-medium text-label-value-13 text-secondary">
+      {EM_DASH}
+    </span>
   )
 }
 
@@ -322,91 +338,4 @@ function computeSparklineChange(
   const ref = data[refIdx]?.value
   if (ref === null || ref === undefined || ref === 0) return undefined
   return last / ref - 1
-}
-
-function hasVariation(
-  data: OverviewSparklineDataPoint[] | undefined,
-): data is OverviewSparklineDataPoint[] {
-  if (!data || data.length < 2) return false
-  const values = data.map((d) => d.value).filter((v): v is number => v !== null)
-  if (values.length < 2) return false
-  const first = values[0]
-  return values.some((v) => v !== first)
-}
-
-function hasStackedVariation(
-  data: TvsStackedPoint[] | undefined,
-): data is TvsStackedPoint[] {
-  if (!data || data.length < 2) return false
-  for (const key of ['rollups', 'validiumsAndOptimiums', 'others'] as const) {
-    const values = data
-      .map((d) => d[key])
-      .filter((v): v is number => v !== null)
-    if (values.length >= 2 && values.some((v) => v !== values[0])) {
-      return true
-    }
-  }
-  return false
-}
-
-interface MockOptions {
-  base: number
-  amplitude: number
-  trend: number
-  phase: number
-}
-
-function generateMockSparkline(
-  range: ChartRange,
-  { base, amplitude, trend, phase }: MockOptions,
-): OverviewSparklineDataPoint[] {
-  const end = range[1]
-  const start = range[0] ?? end - 365 * UnixTime.DAY
-  const span = Math.max(end - start, UnixTime.DAY)
-  const points: OverviewSparklineDataPoint[] = []
-  for (let t = start; t <= end; t += UnixTime.DAY) {
-    const progress = (t - start) / span
-    const seasonal = Math.sin(progress * Math.PI * 4 + phase) * 0.6
-    const drift = Math.cos(progress * Math.PI * 7 + phase * 1.7) * 0.25
-    const value = base * (1 + trend * progress + amplitude * (seasonal + drift))
-    points.push({ timestamp: t, value: Math.max(0, value) })
-  }
-  return points
-}
-
-const SERIES_PROFILES: Record<
-  keyof typeof MOCK_TVS_BASE,
-  Omit<MockOptions, 'base'>
-> = {
-  rollups: { amplitude: 0.18, trend: 0.55, phase: 0 },
-  validiumsAndOptimiums: { amplitude: 0.22, trend: 0.85, phase: 1.4 },
-  others: { amplitude: 0.3, trend: -0.1, phase: 2.6 },
-}
-
-function generateMockStackedSeries(
-  range: ChartRange,
-  bases: typeof MOCK_TVS_BASE,
-): TvsStackedPoint[] {
-  const end = range[1]
-  const start = range[0] ?? end - 365 * UnixTime.DAY
-  const span = Math.max(end - start, UnixTime.DAY)
-  const points: TvsStackedPoint[] = []
-  for (let t = start; t <= end; t += UnixTime.DAY) {
-    const progress = (t - start) / span
-    const valueFor = (key: keyof typeof bases) => {
-      const { amplitude, trend, phase } = SERIES_PROFILES[key]
-      const seasonal = Math.sin(progress * Math.PI * 4 + phase) * 0.6
-      const drift = Math.cos(progress * Math.PI * 7 + phase * 1.7) * 0.25
-      const value =
-        bases[key] * (1 + trend * progress + amplitude * (seasonal + drift))
-      return Math.max(0, value)
-    }
-    points.push({
-      timestamp: t,
-      rollups: valueFor('rollups'),
-      validiumsAndOptimiums: valueFor('validiumsAndOptimiums'),
-      others: valueFor('others'),
-    })
-  }
-  return points
 }

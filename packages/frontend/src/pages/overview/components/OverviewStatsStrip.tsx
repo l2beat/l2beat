@@ -20,8 +20,10 @@ interface Tile {
 
 export function OverviewStatsStrip({
   counts,
+  variant = 'default',
 }: {
   counts: OverviewProjectCounts
+  variant?: 'default' | 'overviewRightColumn'
 }) {
   const tiles: Tile[] = [
     {
@@ -68,12 +70,26 @@ export function OverviewStatsStrip({
     },
   ]
 
+  const narrow = variant === 'overviewRightColumn'
+
   return (
-    <PrimaryCard className="p-3 md:p-3 lg:px-6 lg:py-3">
-      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider">
+    <PrimaryCard
+      className={cn(
+        'p-3 md:p-3',
+        narrow ? 'xl:px-6 xl:py-3' : 'lg:px-6 lg:py-3',
+      )}
+    >
+      <ul
+        className={cn(
+          'grid grid-cols-2 gap-2 md:grid-cols-3',
+          narrow
+            ? 'xl:grid-cols-1 xl:gap-0 xl:divide-y xl:divide-divider'
+            : 'lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-divider',
+        )}
+      >
         {tiles.map((tile) => (
           <li key={tile.label}>
-            <StatTile tile={tile} />
+            <StatTile tile={tile} narrow={narrow} />
           </li>
         ))}
       </ul>
@@ -81,7 +97,7 @@ export function OverviewStatsStrip({
   )
 }
 
-function StatTile({ tile }: { tile: Tile }) {
+function StatTile({ tile, narrow }: { tile: Tile; narrow: boolean }) {
   const labelSuffix = tile.label === 'Interop' ? 'chains' : 'projects'
   return (
     <a
@@ -89,24 +105,46 @@ function StatTile({ tile }: { tile: Tile }) {
       className={cn(
         'group flex h-full items-center gap-2.5 rounded-lg border border-divider px-2.5 py-2',
         'transition-colors duration-200 hover:border-link-stroke hover:bg-surface-secondary',
-        'lg:gap-2 lg:rounded-md lg:border-0 lg:px-3 lg:py-1.5 lg:-mx-3 lg:hover:border-transparent',
+        narrow
+          ? 'xl:-mx-3 xl:gap-2 xl:rounded-md xl:border-0 xl:px-3 xl:py-1.5 xl:hover:border-transparent'
+          : 'lg:-mx-3 lg:gap-2 lg:rounded-md lg:border-0 lg:px-3 lg:py-1.5 lg:hover:border-transparent',
       )}
     >
       <div
         className={cn(
           'flex size-8 shrink-0 items-center justify-center rounded-md',
-          'lg:size-6 lg:rounded',
-          '[&>svg]:lg:size-3.5',
+          narrow
+            ? 'xl:size-6 xl:rounded [&>svg]:xl:size-3.5'
+            : 'lg:size-6 lg:rounded [&>svg]:lg:size-3.5',
           tile.iconBgClassName,
         )}
       >
         {tile.icon}
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-row lg:items-baseline lg:gap-2">
-        <span className="truncate font-medium text-label-value-12 text-secondary leading-tight lg:flex-1 lg:text-label-value-13 lg:text-primary">
+      <div
+        className={cn(
+          'flex min-w-0 flex-1 flex-col justify-center',
+          narrow
+            ? 'xl:flex-row xl:items-baseline xl:gap-2'
+            : 'lg:flex-row lg:items-baseline lg:gap-2',
+        )}
+      >
+        <span
+          className={cn(
+            'truncate font-medium text-label-value-12 text-secondary leading-tight',
+            narrow
+              ? 'xl:flex-1 xl:text-label-value-13 xl:text-primary'
+              : 'lg:flex-1 lg:text-label-value-13 lg:text-primary',
+          )}
+        >
           {tile.label}
         </span>
-        <span className="flex items-baseline gap-1 whitespace-nowrap font-bold text-label-value-16 leading-tight lg:text-label-value-13">
+        <span
+          className={cn(
+            'flex items-baseline gap-1 whitespace-nowrap font-bold text-label-value-16 leading-tight',
+            narrow ? 'xl:text-label-value-13' : 'lg:text-label-value-13',
+          )}
+        >
           {formatInteger(tile.count)}
           <span className="font-medium text-label-value-12 text-secondary">
             {labelSuffix}

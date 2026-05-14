@@ -14,6 +14,7 @@ import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
 } from '~/components/table/cells/ProjectNameCell'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
@@ -96,6 +97,21 @@ type OverviewTopChainRow = ReturnType<typeof toTableRows>[number] & {
 
 const columnHelper = createColumnHelper<OverviewTopChainRow>()
 
+function getScalingType(row: OverviewTopChainRow) {
+  return row.filterable?.find((item) => item.id === 'type')?.value
+}
+
+function formatScalingType(type: string) {
+  switch (type) {
+    case 'Optimistic Rollup':
+      return 'OP Rollup'
+    case 'ZK Rollup':
+      return 'ZK Rollup'
+    default:
+      return type
+  }
+}
+
 function getOverviewTopChainsColumns(opts?: { isTvsLoading?: boolean }) {
   return [
     ...getCommonProjectColumns(
@@ -114,6 +130,42 @@ function getOverviewTopChainsColumns(opts?: { isTvsLoading?: boolean }) {
         </div>
       ),
       enableHiding: false,
+    }),
+    columnHelper.accessor((row) => getScalingType(row), {
+      id: 'type',
+      header: 'Type',
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        if (!value) {
+          return <span className="text-secondary">{EM_DASH}</span>
+        }
+        return (
+          <span className="whitespace-nowrap font-medium text-label-value-13">
+            {formatScalingType(value)}
+          </span>
+        )
+      },
+      meta: {
+        tooltip:
+          'Project type, such as OP Rollup, ZK Rollup, Validium, Optimium, or Other.',
+      },
+    }),
+    columnHelper.display({
+      id: 'stage',
+      header: 'Stage',
+      cell: (ctx) => (
+        <StageCell
+          href={`/scaling/projects/${ctx.row.original.slug}#stage`}
+          stageConfig={ctx.row.original.stage}
+          isAppchain={ctx.row.original.capability === 'appchain'}
+          emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
+        />
+      ),
+      meta: {
+        align: 'center',
+        tooltip:
+          'Project stage where applicable, based on L2BEAT staging criteria.',
+      },
     }),
     columnHelper.display({
       id: 'risks',

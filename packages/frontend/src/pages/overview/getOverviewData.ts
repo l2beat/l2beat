@@ -8,13 +8,8 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
-import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import { MAX_SELECTED_CHAINS } from '../interop/components/flows/consts'
-import {
-  SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
-  SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
-} from '../scaling/summary/scalingSummaryConstants'
 import { getOverviewProjectCounts } from './getOverviewProjectCounts'
 
 const TOP_CHAINS_COUNT = 5
@@ -63,11 +58,6 @@ export async function getOverviewData(
 async function getCachedData() {
   const helpers = getSsrHelpers()
 
-  const tvsChartRange = optionToRange(...SCALING_SUMMARY_TVS_CHART_RANGE_ARGS)
-  const activityChartRange = optionToRange(
-    ...SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
-  )
-
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
@@ -83,29 +73,6 @@ async function getCachedData() {
       getRecentProjectsForOverview(),
       getOverviewProjectCounts(),
       ps.getProjects({ select: ['interopConfig'] }),
-      helpers.tvs.recategorisedChart.prefetch({
-        range: tvsChartRange,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: true,
-        filter: { type: 'layer2' },
-      }),
-      helpers.activity.recategorisedChart.prefetch({
-        range: activityChartRange,
-        filter: { type: 'all' },
-      }),
-      helpers.activity.ethereumChart.prefetch({
-        range: activityChartRange,
-      }),
-      helpers.da.projectCharts.prefetch({
-        projectId: 'ethereum',
-        range: activityChartRange,
-        includeScalingOnly: false,
-      }),
-      helpers.tvs.table.prefetch({
-        type: 'rollups',
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: true,
-      }),
     ])
 
   const scalingCategoryCounts = {
@@ -120,40 +87,16 @@ async function getCachedData() {
     iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
   }))
 
-  const initialFlowsChainIds = activeInteropChains
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map((chain) => chain.id)
-  const flowsData = await helpers.interop.flows.fetch({
-    chains: initialFlowsChainIds,
-    protocolIds: protocols.map((protocol) => protocol.id),
-  })
-
-  const chainsByVolume = flowsData.chainData
-    .toSorted((a, b) => b.totalVolume - a.totalVolume)
-    .map((chain) => chain.chainId)
-
-  const activeChainsById = new Map(
-    activeInteropChains.map((chain) => [chain.id, chain]),
+  const sortedChains: InteropChainWithIcon[] = activeInteropChains.toSorted(
+    (a, b) => a.name.localeCompare(b.name),
   )
-  const sortedChains: InteropChainWithIcon[] =
-    chainsByVolume.length > 0
-      ? chainsByVolume
-          .map((chainId) => activeChainsById.get(chainId))
-          .filter((chain): chain is InteropChainWithIcon => chain !== undefined)
-      : activeInteropChains
 
   const defaultSelectedFlowChains = sortedChains
     .slice(0, MAX_SELECTED_CHAINS)
     .map((chain) => chain.id)
 
-  const totalInterop24hVolume = flowsData.flows.reduce(
-    (acc, flow) => acc + flow.volume,
-    0,
-  )
-
-  const chainVolumeMap: Record<string, number> = Object.fromEntries(
-    flowsData.chainData.map((chain) => [chain.chainId, chain.totalVolume]),
-  )
+  const totalInterop24hVolume = 0
+  const chainVolumeMap: Record<string, number> = {}
 
   const topChains = summaryTabs.rollups.slice(0, TOP_CHAINS_COUNT)
 

@@ -5,6 +5,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
 import { api } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -14,18 +15,23 @@ import { formatBytes } from '~/utils/number-format/formatBytes'
 import type { ChartRange } from '~/utils/range/range'
 import type { OverviewSparklineDataPoint } from './charts/OverviewSparkline'
 import { OverviewSparkline } from './charts/OverviewSparkline'
-import { OVERVIEW_CARD_PADDING_CLASS } from './overviewChartHeight'
+import {
+  OVERVIEW_CARD_PADDING_CLASS,
+  OVERVIEW_CHART_RIGHT_INSET_CLASS,
+} from './overviewChartHeight'
 
 interface Props {
   activityRange: ChartRange
   daRange: ChartRange
+  /** Narrow column: stacked charts at smaller height. */
+  compactCharts?: boolean
 }
 
-const MOCK_PAST_DAY_UOPS = 11.4
-const MOCK_TOTAL_DATA_POSTED_BYTES = 14 * 1024 ** 4 // 14 TiB across the range
-const MOCK_ROLLUP_SHARE = 0.86
-
-export function OverviewEthereumCard({ activityRange, daRange }: Props) {
+export function OverviewEthereumCard({
+  activityRange,
+  daRange,
+  compactCharts = false,
+}: Props) {
   const { data: activity, isLoading: isActivityLoading } =
     api.activity.ethereumChart.useQuery({ range: activityRange })
 
@@ -54,31 +60,8 @@ export function OverviewEthereumCard({ activityRange, daRange }: Props) {
     [daCharts],
   )
 
-  const activitySparkline = useMemo(
-    () =>
-      hasVariation(realActivitySparkline)
-        ? realActivitySparkline
-        : generateMockSeries(activityRange, {
-            base: MOCK_PAST_DAY_UOPS,
-            amplitude: 0.25,
-            trend: 0.4,
-            phase: 0.6,
-          }),
-    [activityRange, realActivitySparkline],
-  )
-
-  const dataPostedSparkline = useMemo(
-    () =>
-      hasVariation(realDataPostedSparkline)
-        ? realDataPostedSparkline
-        : generateMockSeries(daRange, {
-            base: 700 * 1024 ** 3, // ~700 GiB / day baseline
-            amplitude: 0.35,
-            trend: 0.5,
-            phase: 0,
-          }),
-    [daRange, realDataPostedSparkline],
-  )
+  const activitySparkline = realActivitySparkline
+  const dataPostedSparkline = realDataPostedSparkline
 
   const realTotalPosted = useMemo(() => {
     if (!daCharts) return undefined
@@ -108,67 +91,85 @@ export function OverviewEthereumCard({ activityRange, daRange }: Props) {
   const realPastDayUops = activity?.stats?.uops.pastDayCount ?? undefined
   const realPastDayUopsChange = activity?.stats?.uops.pastDayChange
 
-  const showFallbackStats = !hasVariation(realDataPostedSparkline)
-
-  const pastDayUops = realPastDayUops ?? MOCK_PAST_DAY_UOPS
+  const pastDayUops = realPastDayUops
   const pastDayUopsChange =
-    realPastDayUopsChange !== undefined && realPastDayUopsChange !== 0
+    realPastDayUopsChange !== undefined
       ? realPastDayUopsChange
       : computeSparklineChange(activitySparkline)
-  const totalPosted = showFallbackStats
-    ? MOCK_TOTAL_DATA_POSTED_BYTES
-    : (realTotalPosted ?? MOCK_TOTAL_DATA_POSTED_BYTES)
+  const totalPosted = realTotalPosted
   const dataPostedChange = computeSparklineChange(dataPostedSparkline)
-  const rollupShare = realRollupShare ?? MOCK_ROLLUP_SHARE
+  const rollupShare = realRollupShare
+
+  const chartHeight = compactCharts ? 48 : 96
 
   return (
     <PrimaryCard
       className={cn(
         OVERVIEW_CARD_PADDING_CLASS,
-        'flex h-full flex-col lg:py-6',
+        'flex h-full flex-col pb-4',
+        compactCharts && 'xl:pt-5 xl:pb-3',
+        !compactCharts && 'lg:py-6',
       )}
     >
       <Header />
-      <HorizontalSeparator className="my-3" />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6">
-        <SparklineSection
-          label="Data posted to Ethereum blobs"
-          stat={
-            isDaLoading ? (
-              <Skeleton className="h-4 w-32" />
-            ) : (
-              <span className="flex items-baseline gap-1.5 whitespace-nowrap font-medium text-label-value-13 tabular-nums">
-                {formatBytes(totalPosted)}
-                {dataPostedChange !== undefined && (
-                  <PercentChange
-                    value={dataPostedChange}
-                    textClassName="font-medium text-label-value-12"
-                  />
-                )}
-                <span className="font-medium text-label-value-12 text-secondary">
-                  · {formatPercent(rollupShare)} by rollups
+      <HorizontalSeparator className={cn(compactCharts ? 'my-2' : 'my-3')} />
+      <div
+        className={cn(
+          'grid grid-cols-1',
+          compactCharts ? 'gap-3' : 'gap-3.5',
+          !compactCharts && 'md:grid-cols-2 md:gap-6',
+        )}
+      >
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex min-w-0 items-start gap-2">
+            <span className="min-w-0 flex-1 font-medium text-label-value-12 text-secondary leading-tight">
+              Data posted to Ethereum blobs
+            </span>
+            <div className="flex shrink-0 flex-col items-end gap-0.5 text-right">
+              {isDaLoading ? (
+                <Skeleton className="h-4 w-32" />
+              ) : totalPosted === undefined ? (
+                <NoDataStat />
+              ) : (
+                <span className="flex flex-wrap items-baseline justify-end gap-x-1.5 gap-y-1 font-medium text-label-value-13 tabular-nums">
+                  {formatBytes(totalPosted)}
+                  {dataPostedChange !== undefined && (
+                    <PercentChange
+                      value={dataPostedChange}
+                      textClassName="font-medium text-label-value-12"
+                    />
+                  )}
                 </span>
-              </span>
-            )
-          }
-        >
-          <OverviewSparkline
-            data={dataPostedSparkline}
-            isLoading={isDaLoading}
-            color="sky"
-            height={120}
-            tooltipLabel="Data posted"
-            formatValue={(value) => formatBytes(value)}
-            syncedUntil={daCharts?.syncedUntil}
-          />
-        </SparklineSection>
+              )}
+              {!isDaLoading && rollupShare !== undefined ? (
+                <span className="font-medium text-label-value-12 text-secondary tabular-nums">
+                  {formatPercent(rollupShare)} by rollups
+                </span>
+              ) : null}
+            </div>
+          </div>
+          <div className={cn('min-w-0', OVERVIEW_CHART_RIGHT_INSET_CLASS)}>
+            <OverviewSparkline
+              data={dataPostedSparkline}
+              isLoading={isDaLoading}
+              color="sky"
+              height={chartHeight}
+              tooltipLabel="Data posted"
+              formatValue={(value) => formatBytes(value)}
+              syncedUntil={daCharts?.syncedUntil}
+            />
+          </div>
+        </div>
         <SparklineSection
           label="Ethereum activity (UOPS)"
+          compactCharts={compactCharts}
           stat={
             isActivityLoading ? (
               <Skeleton className="h-4 w-20" />
+            ) : pastDayUops === undefined ? (
+              <NoDataStat />
             ) : (
-              <span className="flex items-baseline gap-1.5 whitespace-nowrap font-medium text-label-value-13 tabular-nums">
+              <span className="flex flex-wrap items-baseline justify-end gap-x-1.5 gap-y-1 font-medium text-label-value-13 tabular-nums">
                 {formatActivityCount(pastDayUops)} UOPS
                 {pastDayUopsChange !== undefined && (
                   <PercentChange
@@ -184,7 +185,7 @@ export function OverviewEthereumCard({ activityRange, daRange }: Props) {
             data={activitySparkline}
             isLoading={isActivityLoading}
             color="purple"
-            height={120}
+            height={chartHeight}
             tooltipLabel="UOPS"
             formatValue={(value) => formatActivityCount(value)}
             syncedUntil={activity?.syncedUntil}
@@ -213,22 +214,46 @@ function Header() {
 function SparklineSection({
   label,
   stat,
+  statFooter,
+  compactCharts: _compact,
   children,
 }: {
   label: string
   stat?: ReactNode
+  statFooter?: ReactNode
+  compactCharts?: boolean
   children: ReactNode
 }) {
+  const statsColumn =
+    statFooter !== undefined && statFooter !== null ? (
+      <div className="flex min-w-0 shrink-0 flex-col items-end gap-0.5 text-right">
+        {stat}
+        {statFooter}
+      </div>
+    ) : (
+      stat
+    )
+
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-label-value-12 text-secondary leading-tight">
+    <div className="flex min-w-0 flex-col gap-1">
+      <div className="flex min-w-0 flex-nowrap items-start justify-between gap-x-2">
+        <span className="min-w-0 shrink font-medium text-label-value-12 text-secondary leading-tight">
           {label}
         </span>
-        {stat}
+        <div className="min-w-0 shrink-0">{statsColumn}</div>
       </div>
-      {children}
+      <div className={cn('min-w-0', OVERVIEW_CHART_RIGHT_INSET_CLASS)}>
+        {children}
+      </div>
     </div>
+  )
+}
+
+function NoDataStat() {
+  return (
+    <span className="whitespace-nowrap font-medium text-label-value-13 text-secondary">
+      {EM_DASH}
+    </span>
   )
 }
 
@@ -252,39 +277,4 @@ function computeSparklineChange(
   const ref = data[refIdx]?.value
   if (ref === null || ref === undefined || ref === 0) return undefined
   return last / ref - 1
-}
-
-function hasVariation(
-  data: OverviewSparklineDataPoint[] | undefined,
-): data is OverviewSparklineDataPoint[] {
-  if (!data || data.length < 2) return false
-  const values = data.map((d) => d.value).filter((v): v is number => v !== null)
-  if (values.length < 2) return false
-  const first = values[0]
-  return values.some((v) => v !== first)
-}
-
-interface MockOptions {
-  base: number
-  amplitude: number
-  trend: number
-  phase: number
-}
-
-function generateMockSeries(
-  range: ChartRange,
-  { base, amplitude, trend, phase }: MockOptions,
-): OverviewSparklineDataPoint[] {
-  const end = range[1]
-  const start = range[0] ?? end - 365 * UnixTime.DAY
-  const span = Math.max(end - start, UnixTime.DAY)
-  const points: OverviewSparklineDataPoint[] = []
-  for (let t = start; t <= end; t += UnixTime.DAY) {
-    const progress = (t - start) / span
-    const seasonal = Math.sin(progress * Math.PI * 4 + phase) * 0.6
-    const drift = Math.cos(progress * Math.PI * 7 + phase * 1.7) * 0.25
-    const value = base * (1 + trend * progress + amplitude * (seasonal + drift))
-    points.push({ timestamp: t, value: Math.max(0, value) })
-  }
-  return points
 }

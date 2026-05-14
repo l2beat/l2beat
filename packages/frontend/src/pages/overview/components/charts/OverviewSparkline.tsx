@@ -14,16 +14,22 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { CyanFillGradientDef } from '~/components/core/chart/defs/CyanGradientDef'
 import { PinkFillGradientDef } from '~/components/core/chart/defs/PinkGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { EM_DASH } from '~/consts/characters'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 
 export type OverviewSparklineColor = 'pink' | 'cyan' | 'sky' | 'purple'
 
-type SparklineHeight = 60 | 80 | 100 | 120 | 140 | 160
+type SparklineHeight = 44 | 48 | 56 | 60 | 80 | 96 | 100 | 120 | 140 | 160
 
 export interface OverviewSparklineDataPoint {
   timestamp: number
   value: number | null
+  /** If set, TVS tooltip shows rollups / Validiums & Optimiums for this day */
+  tvsBreakdown?: {
+    rollups: number | null
+    validiumsAndOptimiums: number | null
+  }
 }
 
 interface Props {
@@ -47,8 +53,12 @@ const STROKE_COLOR: Record<OverviewSparklineColor, string> = {
 
 // Tailwind needs to see every full class string statically.
 const HEIGHT_OVERRIDE: Record<SparklineHeight, string> = {
+  44: '[&_.recharts-responsive-container]:!h-[44px] [&_.recharts-responsive-container]:!min-h-[44px]',
+  48: '[&_.recharts-responsive-container]:!h-[48px] [&_.recharts-responsive-container]:!min-h-[48px]',
+  56: '[&_.recharts-responsive-container]:!h-[56px] [&_.recharts-responsive-container]:!min-h-[56px]',
   60: '[&_.recharts-responsive-container]:!h-[60px] [&_.recharts-responsive-container]:!min-h-[60px]',
   80: '[&_.recharts-responsive-container]:!h-[80px] [&_.recharts-responsive-container]:!min-h-[80px]',
+  96: '[&_.recharts-responsive-container]:!h-[96px] [&_.recharts-responsive-container]:!min-h-[96px]',
   100: '[&_.recharts-responsive-container]:!h-[100px] [&_.recharts-responsive-container]:!min-h-[100px]',
   120: '[&_.recharts-responsive-container]:!h-[120px] [&_.recharts-responsive-container]:!min-h-[120px]',
   140: '[&_.recharts-responsive-container]:!h-[140px] [&_.recharts-responsive-container]:!min-h-[140px]',
@@ -171,13 +181,15 @@ function SparklineTooltip({
   if (!payload || typeof label !== 'number') return null
   const entry = payload[0]
   if (!entry) return null
+  const row = entry.payload as OverviewSparklineDataPoint | undefined
+  const breakdown = row?.tvsBreakdown
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-44 flex-col gap-1">
+      <div className="flex min-w-[15rem] max-w-[min(100vw-2rem,20rem)] flex-col gap-1">
         <span className="font-medium text-label-value-13 text-secondary">
           {formatTimestamp(label, { longMonthName: true })}
         </span>
-        <div className="flex items-center justify-between gap-2 font-medium text-label-value-14">
+        <div className="flex items-center justify-between gap-3 font-medium text-label-value-14">
           <span className="text-secondary">{tooltipLabel}</span>
           <span className="text-primary tabular-nums">
             {entry.value !== null && entry.value !== undefined
@@ -185,6 +197,26 @@ function SparklineTooltip({
               : 'No data'}
           </span>
         </div>
+        {breakdown !== undefined ? (
+          <div className="mt-1 border-divider border-t pt-2 font-medium text-label-value-12 leading-snug text-secondary">
+            <p className="text-pretty">
+              <span className="text-primary">Rollups</span>{' '}
+              <span className="tabular-nums text-primary">
+                {breakdown.rollups !== null && breakdown.rollups !== undefined
+                  ? formatValue(breakdown.rollups)
+                  : EM_DASH}
+              </span>
+              <span> · </span>
+              <span className="text-primary">Validiums & Optimiums</span>{' '}
+              <span className="tabular-nums text-primary">
+                {breakdown.validiumsAndOptimiums !== null &&
+                breakdown.validiumsAndOptimiums !== undefined
+                  ? formatValue(breakdown.validiumsAndOptimiums)
+                  : EM_DASH}
+              </span>
+            </p>
+          </div>
+        ) : null}
       </div>
     </ChartTooltipWrapper>
   )

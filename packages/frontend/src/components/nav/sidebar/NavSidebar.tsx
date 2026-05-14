@@ -32,12 +32,20 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
+  suppressDesktopSidebar?: boolean
+  omitSecondaryDrawerLinks?: boolean
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+export function NavSidebar({
+  groups,
+  logoLink,
+  sideLinks,
+  suppressDesktopSidebar = false,
+  omitSecondaryDrawerLinks = false,
+}: Props) {
   const pathname = usePathname()
   return (
-    <Sidebar>
+    <Sidebar suppressDesktop={suppressDesktopSidebar}>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
           <a href={logoLink}>
@@ -74,19 +82,21 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             </SidebarGroup>
           )
         })}
-        <SidebarGroup className="mt-8 gap-1.5">
-          {sideLinks.map((link) => (
-            <SidebarGroupItem key={link.title}>
-              <SidebarGroupSmallLink
-                href={link.href}
-                isActive={isLinkActive({ href: link.href, pathname })}
-              >
-                {link.title}
-                {link.accessory}
-              </SidebarGroupSmallLink>
-            </SidebarGroupItem>
-          ))}
-        </SidebarGroup>
+        {!omitSecondaryDrawerLinks && (
+          <SidebarGroup className="mt-8 gap-1.5">
+            {sideLinks.map((link) => (
+              <SidebarGroupItem key={link.title}>
+                <SidebarGroupSmallLink
+                  href={link.href}
+                  isActive={isLinkActive({ href: link.href, pathname })}
+                >
+                  {link.title}
+                  {link.accessory}
+                </SidebarGroupSmallLink>
+              </SidebarGroupItem>
+            ))}
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter>
         <div className="flex gap-2 lg:justify-between">
