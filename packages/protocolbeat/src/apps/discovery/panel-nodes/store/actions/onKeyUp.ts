@@ -11,8 +11,7 @@ export function onKeyUp(state: State, event: KeyboardEvent): Partial<State> {
   }
   if (event.key === SHIFT_KEY) {
     // When shift is pressed we snap dragged nodes to an axis
-    return updateNodePositions({
-      ...state,
+    return updateNodePositions(state, {
       input: { ...state.input, shiftPressed: false },
     })
   }

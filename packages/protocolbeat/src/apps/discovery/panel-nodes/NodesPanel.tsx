@@ -8,12 +8,9 @@ import type {
 } from '../../../api/types'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
-import { SHOW_PERFORMANCE } from '../../../config/perf'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
-import { PerfMeter } from './perf/PerfMeter'
-import { startPerfTicker } from './perf/perfStats'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
@@ -28,9 +25,6 @@ export function NodesPanel() {
 
   useLoadNodes(response.data, project)
   useSynchronizeSelection()
-  if (SHOW_PERFORMANCE) {
-    useStartPerfTicker()
-  }
 
   if (response.isLoading) {
     return <LoadingState />
@@ -43,7 +37,6 @@ export function NodesPanel() {
     <div className="h-full w-full overflow-x-hidden">
       <div className="relative h-full w-full flex-1">
         <Viewport />
-        {SHOW_PERFORMANCE && <PerfMeter />}
         <Controls />
       </div>
     </div>
@@ -163,12 +156,6 @@ function useSynchronizeSelection() {
     selectAndFocus,
     loaded,
   ])
-}
-
-function useStartPerfTicker() {
-  useEffect(() => {
-    startPerfTicker()
-  }, [])
 }
 
 function toNodeFields(input: ApiField[]): Field[] {

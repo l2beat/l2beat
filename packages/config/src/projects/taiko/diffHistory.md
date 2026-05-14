@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x371f86238030e6a9855d01f4dad62cb1b3a38897
+
+# Diff at Wed, 13 May 2026 12:35:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dd13366f13be78635363f6f5a496347735f4ea4e block: 1777963387
+- current timestamp: 1778675086
+
+## Description
+
+RiscZeroVerifierRouter: add new multisig as ac admin (was EOA-only before).
+
+L2BEAT removes one safe member from the SC safe.
+
+config related: ignore anchor details
+
+## Watched changes
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.CANCELLER_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Canceller.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Executor.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+      values.Proposer.1:
++        "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"
+    }
+```
+
+```diff
+    contract L2BEAT (eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
+      values.operatorMapping.1:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.2:
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1216 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1258 insertions(+)
+```
+
 Generated with discovered.json: 0x162b74128293b8977052b5258247837e74935ac9
 
 # Diff at Fri, 08 May 2026 07:52:33 GMT:
