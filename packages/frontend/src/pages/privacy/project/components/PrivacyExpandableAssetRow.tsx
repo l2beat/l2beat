@@ -8,7 +8,6 @@ import { cn } from '~/utils/cn'
 interface Props {
   asset: PrivacyAssetSnapshot
   idPrefix: string
-  colSpan: number
   children: React.ReactNode
   detail: React.ReactNode
 }
@@ -16,7 +15,6 @@ interface Props {
 export function PrivacyExpandableAssetRow({
   asset,
   idPrefix,
-  colSpan,
   children,
   detail,
 }: Props) {
@@ -56,16 +54,7 @@ export function PrivacyExpandableAssetRow({
         </TableCell>
         {children}
       </TableRow>
-      {isExpandable && isOpen && (
-        <tr
-          id={detailId}
-          className="border-divider border-b bg-surface-secondary/30"
-        >
-          <td colSpan={colSpan} className="px-3 pb-3 md:px-4">
-            {detail}
-          </td>
-        </tr>
-      )}
+      {isExpandable && isOpen && detail}
     </>
   )
 }

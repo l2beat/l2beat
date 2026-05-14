@@ -1,9 +1,10 @@
-import { PrivacyBreakdownTable } from '~/pages/privacy/project/components/PrivacyBreakdownTable'
+import { PrivacyAssetsBreakdownTable } from '~/pages/privacy/project/components/PrivacyAssetsBreakdownTable'
 import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
-export interface PrivacyAssetsBreakdownSectionProps extends ProjectSectionProps {
+export interface PrivacyAssetsBreakdownSectionProps
+  extends ProjectSectionProps {
   assets: PrivacyAssetSnapshot[]
 }
 
@@ -13,7 +14,7 @@ export function PrivacyAssetsBreakdownSection({
 }: PrivacyAssetsBreakdownSectionProps) {
   return (
     <ProjectSection {...projectSectionProps}>
-      <PrivacyBreakdownTable assets={assets} />
+      <PrivacyAssetsBreakdownTable assets={assets} />
     </ProjectSection>
   )
 }

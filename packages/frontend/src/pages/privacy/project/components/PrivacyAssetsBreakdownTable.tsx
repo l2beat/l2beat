@@ -7,21 +7,17 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/components/table/Table'
-import type {
-  PrivacyAssetSnapshot,
-} from '~/server/features/privacy/types'
-import { cn } from '~/utils/cn'
+import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { PrivacyExpandableAssetRow } from './PrivacyExpandableAssetRow'
 
-export function PrivacyBreakdownTable({
+export function PrivacyAssetsBreakdownTable({
   assets,
 }: {
   assets: PrivacyAssetSnapshot[]
 }) {
   const showBucketsColumn = assets.some((asset) => asset.bucketCount > 1)
-  const colSpan = showBucketsColumn ? 6 : 5
   const totals = getTotals(assets)
 
   return (
@@ -46,9 +42,8 @@ export function PrivacyBreakdownTable({
             key={asset.symbol}
             asset={asset}
             idPrefix="privacy-breakdown"
-            colSpan={colSpan}
             detail={
-              <PrivacyBucketBreakdownTable
+              <PrivacyBucketBreakdownRows
                 asset={asset}
                 showBucketsColumn={showBucketsColumn}
               />
@@ -81,7 +76,9 @@ export function PrivacyBreakdownTable({
               />
             </TableCell>
             <TableCell align="right" className="font-medium">
-              {asset.totalValueUsd === null ? '—' : formatCurrency(asset.totalValueUsd, 'usd')}
+              {asset.totalValueUsd === null
+                ? '—'
+                : formatCurrency(asset.totalValueUsd, 'usd')}
             </TableCell>
           </PrivacyExpandableAssetRow>
         ))}
@@ -117,7 +114,9 @@ export function PrivacyBreakdownTable({
             align="right"
             className="border-divider border-t-4 font-bold"
           >
-            {totals.totalValueUsd === null ? '—' : formatCurrency(totals.totalValueUsd, 'usd')}
+            {totals.totalValueUsd === null
+              ? '—'
+              : formatCurrency(totals.totalValueUsd, 'usd')}
           </TableCell>
         </TableRow>
       </TableBody>
@@ -125,7 +124,7 @@ export function PrivacyBreakdownTable({
   )
 }
 
-function PrivacyBucketBreakdownTable({
+function PrivacyBucketBreakdownRows({
   asset,
   showBucketsColumn,
 }: {
@@ -133,82 +132,48 @@ function PrivacyBucketBreakdownTable({
   showBucketsColumn: boolean
 }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-divider bg-surface-secondary">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-max border-separate border-spacing-0">
-          <tbody>
-            {asset.buckets.map((bucket, index) => {
-              const isLastRow = index === asset.buckets.length - 1
-
-              return (
-                <tr key={bucket.id}>
-                  <td
-                    className={cn(
-                      'px-3 py-2 font-medium text-primary text-xs md:px-4 md:text-sm',
-                      !isLastRow && 'border-divider border-b',
-                    )}
-                  >
-                    {formatBucketLabel(bucket.label)}
-                  </td>
-                  {showBucketsColumn && (
-                    <td
-                      className={cn(
-                        'w-[1%] whitespace-nowrap px-3 py-2 text-right text-secondary text-xs md:px-4 md:text-sm',
-                        !isLastRow && 'border-divider border-b',
-                      )}
-                    />
-                  )}
-                  <td
-                    className={cn(
-                      'px-3 py-2 text-right text-xs md:px-4 md:text-sm',
-                      !isLastRow && 'border-divider border-b',
-                    )}
-                  >
-                    <PrivacyDepositsMetric
-                      deposits={bucket.deposits.last7d}
-                      depositedValueUsd={bucket.depositedValueUsd.last7d}
-                      className="text-right"
-                    />
-                  </td>
-                  <td
-                    className={cn(
-                      'px-3 py-2 text-right text-xs md:px-4 md:text-sm',
-                      !isLastRow && 'border-divider border-b',
-                    )}
-                  >
-                    <PrivacyDepositsMetric
-                      deposits={bucket.deposits.last30d}
-                      depositedValueUsd={bucket.depositedValueUsd.last30d}
-                      className="text-right"
-                    />
-                  </td>
-                  <td
-                    className={cn(
-                      'px-3 py-2 text-right text-xs md:px-4 md:text-sm',
-                      !isLastRow && 'border-divider border-b',
-                    )}
-                  >
-                    <PrivacyDepositsMetric
-                      deposits={bucket.deposits.total}
-                      depositedValueUsd={bucket.depositedValueUsd.total}
-                      className="text-right"
-                    />
-                  </td>
-                  <td
-                    className={cn(
-                      'px-3 py-2 text-right font-medium text-xs md:px-4 md:text-sm',
-                      !isLastRow && 'border-divider border-b',
-                    )}
-                  >
-                    {bucket.totalValueUsd === null ? '—' : formatCurrency(bucket.totalValueUsd, 'usd')}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      {asset.buckets.map((bucket) => (
+        <TableRow
+          key={bucket.id}
+          highlightId={undefined}
+          className="bg-surface-secondary/30"
+        >
+          <TableCell className="pl-8 font-medium text-primary md:pl-10">
+            {formatBucketLabel(bucket.label)}
+          </TableCell>
+          {showBucketsColumn && (
+            <TableCell align="right" className="w-[1%] whitespace-nowrap" />
+          )}
+          <TableCell align="right">
+            <PrivacyDepositsMetric
+              deposits={bucket.deposits.last7d}
+              depositedValueUsd={bucket.depositedValueUsd.last7d}
+              className="text-right"
+            />
+          </TableCell>
+          <TableCell align="right">
+            <PrivacyDepositsMetric
+              deposits={bucket.deposits.last30d}
+              depositedValueUsd={bucket.depositedValueUsd.last30d}
+              className="text-right"
+            />
+          </TableCell>
+          <TableCell align="right">
+            <PrivacyDepositsMetric
+              deposits={bucket.deposits.total}
+              depositedValueUsd={bucket.depositedValueUsd.total}
+              className="text-right"
+            />
+          </TableCell>
+          <TableCell align="right" className="font-medium">
+            {bucket.totalValueUsd === null
+              ? '—'
+              : formatCurrency(bucket.totalValueUsd, 'usd')}
+          </TableCell>
+        </TableRow>
+      ))}
+    </>
   )
 }
 
