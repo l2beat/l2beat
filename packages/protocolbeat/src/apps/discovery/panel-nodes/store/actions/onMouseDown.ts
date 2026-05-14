@@ -77,8 +77,7 @@ export function onMouseDown(
           mouseUpAction = { type: 'DeselectOne', id: node.id }
         }
 
-        return updateNodePositions({
-          ...state,
+        return updateNodePositions(state, {
           selected,
           input: {
             ...state.input,
@@ -101,8 +100,7 @@ export function onMouseDown(
       }
     }
 
-    return updateNodePositions({
-      ...state,
+    return updateNodePositions(state, {
       selected: event.shiftKey ? state.selected : [],
       input: {
         ...state.input,
