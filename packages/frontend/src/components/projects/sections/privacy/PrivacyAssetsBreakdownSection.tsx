@@ -1,4 +1,4 @@
-import { PrivacyAssetsBreakdownTable } from '~/pages/privacy/project/components/PrivacyAssetsBreakdownTable'
+import { PrivacyAssetsBreakdownTable } from '~/pages/privacy/project/components/assets-breakdown/PrivacyAssetsBreakdownTable'
 import type { PrivacyAsset } from '~/server/features/privacy/types'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'

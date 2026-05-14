@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
@@ -8,6 +9,7 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { MobileSectionNavigation } from '~/components/section-navigation/MobileSectionNavigation'
@@ -65,20 +67,8 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                     <PrimaryCard
                       id="summary"
                       data-role="nav-section"
-                      className="space-y-6 max-md:rounded-none md:mt-2"
+                      className="max-md:rounded-none"
                     >
-                      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                        <div className="max-w-3xl space-y-3">
-                          <div>
-                            <div className="font-semibold text-secondary text-subtitle-12 uppercase">
-                              About
-                            </div>
-                            <p className="mt-2 text-paragraph-15 text-primary md:text-paragraph-16">
-                              {entry.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
                       <PrivacyProjectStats
                         totalValueSecuredUsd={
                           entry.summary.totalValueSecuredUsd
@@ -87,12 +77,18 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
                       />
-                      {entry.badges.length > 0 && (
-                        <BadgesSection
-                          badges={entry.badges}
-                          className="lg:min-w-0"
-                        />
-                      )}
+
+                      <HorizontalSeparator className="my-4" />
+                      <div className="max-md:hidden">
+                        <div className="flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
+                          {entry.badges && entry.badges.length > 0 && (
+                            <BadgesSection badges={entry.badges} withDialog />
+                          )}
+                          {entry.description && (
+                            <AboutSection description={entry.description} />
+                          )}
+                        </div>
+                      </div>
                     </PrimaryCard>
 
                     <ProjectDetails items={entry.sections} />

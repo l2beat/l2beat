@@ -61,7 +61,7 @@ export function PrivacyFlowsSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
-      <ChartControlsWrapper>
+      <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
@@ -72,7 +72,7 @@ export function PrivacyFlowsSection({
         metric={metric}
         project={project}
       />
-      <div className="mt-3 flex items-center justify-between gap-2">
+      <div className="mt-2 flex items-center justify-between gap-2">
         {isLoading ? (
           <Skeleton className="h-8 w-[120px]" />
         ) : (

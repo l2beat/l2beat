@@ -29,6 +29,7 @@ export interface PrivacyBucket {
 
 export interface PrivacyAsset {
   symbol: string
+  iconUrl: string
   address?: EthereumAddress
   decimals: number
   bucketCount: number

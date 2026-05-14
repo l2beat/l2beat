@@ -73,6 +73,7 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   return {
     token: {
       address: EthereumAddress(token.address),
+      iconUrl: resolved.iconUrl,
       symbol: resolved.symbol,
       decimals: resolved.decimals,
       priceId: resolved.coingeckoId,

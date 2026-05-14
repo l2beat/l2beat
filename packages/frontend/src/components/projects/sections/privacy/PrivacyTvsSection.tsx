@@ -42,7 +42,7 @@ export function PrivacyTvsSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
-      <ChartControlsWrapper>
+      <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>

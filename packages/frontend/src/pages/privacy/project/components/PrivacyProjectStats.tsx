@@ -32,22 +32,18 @@ export function PrivacyProjectStats({
             </span>
           </div>
         }
-        valueClassName="text-heading-28"
       />
       <ProjectSummaryStat
         title="Deposits 7D"
         value={formatInteger(deposits.last7d ?? 0)}
-        valueClassName="text-heading-28"
       />
       <ProjectSummaryStat
         title="Deposits 30D"
         value={formatInteger(deposits.last30d ?? 0)}
-        valueClassName="text-heading-28"
       />
       <ProjectSummaryStat
         title="Deposits Total"
         value={formatInteger(deposits.total ?? 0)}
-        valueClassName="text-heading-28"
       />
     </div>
   )

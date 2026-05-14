@@ -860,6 +860,7 @@ export interface ProjectPrivacyInfo {
 export interface ProjectPrivacyToken {
   token: {
     address: EthereumAddress
+    iconUrl: string | undefined
     symbol: string
     decimals: number
     priceId: string

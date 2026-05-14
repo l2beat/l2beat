@@ -9,6 +9,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { getPrivacyProjects } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket } from './types'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface PrivacyProjectDetails {
   id: ProjectId
@@ -190,6 +191,7 @@ export async function getPrivacyProjectDetails(
 
     return {
       symbol,
+      iconUrl: token.token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       address: token.token.address,
       decimals: token.token.decimals,
       bucketCount: buckets.length,

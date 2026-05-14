@@ -28,7 +28,12 @@ interface TornadoBucket {
   id: string
   address: ChainSpecificAddress
   tokenAddress: EthereumAddress
-  tokenInfo: { symbol: string; decimals: number; priceId: string }
+  tokenInfo: {
+    symbol: string
+    decimals: number
+    priceId: string
+    iconUrl: string | undefined
+  }
   denomination: string
   denominationAmount: string
   sinceTimestamp: UnixTime
@@ -99,6 +104,7 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       asset = {
         token: {
           address: bucket.tokenAddress,
+          iconUrl: bucket.tokenInfo.iconUrl,
           symbol: bucket.tokenInfo.symbol,
           decimals: bucket.tokenInfo.decimals,
           priceId: bucket.tokenInfo.priceId,
@@ -182,6 +188,7 @@ function getTornadoBuckets(): TornadoBucket[] {
         symbol: resolved.symbol,
         decimals: resolved.decimals,
         priceId: resolved.coingeckoId,
+        iconUrl: resolved.iconUrl,
       },
       denomination,
       denominationAmount: denominationAmount.toString(),
