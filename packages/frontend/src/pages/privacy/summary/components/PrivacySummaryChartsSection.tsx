@@ -10,18 +10,23 @@ import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
 import { PrivacyTvsChart } from './PrivacyTvsChart'
 
 interface Props {
+  projectIds: string[]
   defaultRange: ChartRange
 }
 
-export function PrivacySummaryChartsSection({ defaultRange }: Props) {
+export function PrivacySummaryChartsSection({
+  projectIds,
+  defaultRange,
+}: Props) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const { data, isLoading } = api.privacy.summaryCharts.useQuery({
-    range,
-  })
+  const { data: flowsData, isLoading: isFlowsLoading } =
+    api.privacy.flowsChart.useQuery({ projectIds, range })
+  const { data: tvsData, isLoading: isTvsLoading } =
+    api.privacy.tvsChart.useQuery({ projectIds, range })
 
   const chartData = useMemo(
     () =>
-      data?.flows.chart.map(
+      flowsData?.chart.map(
         ([
           timestamp,
           depositsCount,
@@ -36,16 +41,16 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
           withdrawalsValueUsd,
         }),
       ),
-    [data],
+    [flowsData],
   )
 
   const tvsChartData = useMemo(
     () =>
-      data?.tvs.chart.map(([timestamp, value]) => ({
+      tvsData?.chart.map(([timestamp, value]) => ({
         timestamp,
         value,
       })),
-    [data],
+    [tvsData],
   )
 
   const flowChartTimeRange = useMemo(
@@ -74,8 +79,8 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       </div>
       <PrivacyFlowChart
         data={chartData}
-        syncedUntil={data?.flows.syncedUntil}
-        isLoading={isLoading}
+        syncedUntil={flowsData?.syncedUntil}
+        isLoading={isFlowsLoading}
         metric={'count'}
       />
     </div>
@@ -88,8 +93,8 @@ export function PrivacySummaryChartsSection({ defaultRange }: Props) {
       </div>
       <PrivacyTvsChart
         data={tvsChartData}
-        syncedUntil={data?.tvs.syncedUntil}
-        isLoading={isLoading}
+        syncedUntil={tvsData?.syncedUntil}
+        isLoading={isTvsLoading}
       />
     </div>
   )

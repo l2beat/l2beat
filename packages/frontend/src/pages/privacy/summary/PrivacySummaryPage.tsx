@@ -28,7 +28,10 @@ export function PrivacySummaryPage({
           <MainPageHeader description="Daily aggregated privacy flows and live balances sourced from the configured onchain metric definitions for tracked privacy protocols.">
             Privacy Dashboard
           </MainPageHeader>
-          <PrivacySummaryChartsSection defaultRange={defaultChartRange} />
+          <PrivacySummaryChartsSection
+            projectIds={entries.map((e) => e.id)}
+            defaultRange={defaultChartRange}
+          />
           <PrivacySummaryTable entries={entries} />
         </SideNavLayout>
       </HydrationBoundary>

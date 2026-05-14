@@ -2,7 +2,7 @@ import type { TrustedSetup } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
-import { getPrivacyProjects } from './getPrivacyProjects'
+import type { PrivacyProject } from './types'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -21,11 +21,10 @@ export interface PrivacySummaryEntry {
   trustedSetup: TrustedSetup
 }
 
-export async function getPrivacySummaryEntries(): Promise<
-  PrivacySummaryEntry[]
-> {
+export async function getPrivacySummaryEntries(
+  projects: PrivacyProject[],
+): Promise<PrivacySummaryEntry[]> {
   const db = getDb()
-  const projects = await getPrivacyProjects()
   const projectIds = projects.map((p) => p.id.toString())
 
   const now = UnixTime.now()
@@ -91,9 +90,7 @@ export async function getPrivacySummaryEntries(): Promise<
     }
   })
 
-  return entries.sort(
-    (a, b) => b.totalValueSecuredUsd - a.totalValueSecuredUsd,
-  )
+  return entries.sort((a, b) => b.totalValueSecuredUsd - a.totalValueSecuredUsd)
 }
 
 function groupByProjectId<T extends { projectId: string }>(

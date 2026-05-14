@@ -110,10 +110,16 @@ export async function getPrivacyProjectData(
     return undefined
   }
 
-  await helpers.privacy.projectCharts.prefetch({
-    projectId: details.id,
-    range: defaultChartRange,
-  })
+  await Promise.all([
+    helpers.privacy.flowsChart.prefetch({
+      projectIds: [details.id],
+      range: defaultChartRange,
+    }),
+    helpers.privacy.tvsChart.prefetch({
+      projectIds: [details.id],
+      range: defaultChartRange,
+    }),
+  ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -155,6 +161,42 @@ export async function getPrivacyProjectData(
 
   const sections: ProjectDetailsSection[] = []
 
+  const chartProject = {
+    id: details.id,
+    name: details.name,
+    shortName: details.shortName,
+    iconUrl: icon,
+  }
+
+  sections.push({
+    type: 'PrivacyTvsSection',
+    props: {
+      id: 'privacy-tvs',
+      title: 'Value Locked',
+      defaultRange: defaultChartRange,
+      project: chartProject,
+    },
+  })
+
+  sections.push({
+    type: 'PrivacyFlowsSection',
+    props: {
+      id: 'privacy-flows',
+      title: 'Flows',
+      defaultRange: defaultChartRange,
+      project: chartProject,
+    },
+  })
+
+  sections.push({
+    type: 'PrivacyAssetsBreakdownSection',
+    props: {
+      id: 'privacy-assets-breakdown',
+      title: 'Assets Breakdown',
+      assets: details.assets,
+    },
+  })
+
   if (details.riskSummary) {
     sections.push({
       type: 'MarkdownSection',
@@ -179,22 +221,6 @@ export async function getPrivacyProjectData(
       },
     })
   }
-
-  sections.push({
-    type: 'PrivacyChartsSection',
-    props: {
-      id: 'privacy-charts',
-      title: 'Value Locked',
-      defaultRange: defaultChartRange,
-      project: {
-        id: details.id,
-        name: details.name,
-        shortName: details.shortName,
-        iconUrl: icon,
-      },
-      assets: details.assets,
-    },
-  })
 
   sections.push({
     type: 'TrustedSetupSection',

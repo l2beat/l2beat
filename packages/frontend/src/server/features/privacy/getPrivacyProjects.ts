@@ -1,7 +1,7 @@
 import { ps } from '~/server/projects'
-import type { PrivacyProjectConfig } from './types'
+import type { PrivacyProject } from './types'
 
-export async function getPrivacyProjects(): Promise<PrivacyProjectConfig[]> {
+export async function getPrivacyProjects(): Promise<PrivacyProject[]> {
   return (
     await ps.getProjects({
       where: ['privacyInfo'],

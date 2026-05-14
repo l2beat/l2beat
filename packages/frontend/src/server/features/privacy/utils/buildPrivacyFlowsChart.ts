@@ -1,13 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { ChartRange } from '~/utils/range/range'
-
-export const PrivacyFlowsChartParams = v.object({
-  range: ChartRange,
-})
-
-export type PrivacyFlowsChartParams = v.infer<typeof PrivacyFlowsChartParams>
+import type { ChartRange } from '~/utils/range/range'
 
 export type PrivacyFlowsChartPoint = [
   timestamp: number,
@@ -28,7 +21,7 @@ export function buildPrivacyFlowsChart(
     withdrawalValueUsd: number
   }>,
   syncedUntil: UnixTime | undefined,
-  range: PrivacyFlowsChartParams['range'],
+  range: ChartRange,
 ): { chart: PrivacyFlowsChartPoint[]; syncedUntil: number | undefined } {
   const projectIds = new Set(projects)
   const historyRows = dailyRows.filter(
@@ -104,7 +97,7 @@ export function buildPrivacyFlowsChart(
 }
 
 function normalizePrivacyFlowsChartRange(
-  range: PrivacyFlowsChartParams['range'],
+  range: ChartRange,
   minTimestamp?: number,
 ): [UnixTime, UnixTime] {
   const from =
