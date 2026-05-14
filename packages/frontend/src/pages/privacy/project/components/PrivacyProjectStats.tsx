@@ -22,6 +22,7 @@ export function PrivacyProjectStats({
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <ProjectSummaryStat
+        className="max-md:hidden"
         title="Total Value Secured"
         value={
           <div className="flex flex-col md:gap-1">
@@ -32,6 +33,21 @@ export function PrivacyProjectStats({
             </span>
           </div>
         }
+      />
+      <ProjectSummaryStat
+        className="md:hidden"
+        title="TVS"
+        value={formatCurrency(totalValueSecuredUsd ?? 0, 'usd')}
+      />
+      <ProjectSummaryStat
+        className="md:hidden"
+        title="Assets tracked"
+        value={formatInteger(assetsCount ?? 0)}
+      />
+      <ProjectSummaryStat
+        className="md:hidden"
+        title="Buckets tracked"
+        value={formatInteger(bucketsCount ?? 0)}
       />
       <ProjectSummaryStat
         title="Deposits 7D"
