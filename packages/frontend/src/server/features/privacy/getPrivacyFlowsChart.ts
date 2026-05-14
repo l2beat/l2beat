@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getDb } from '~/server/database'
 import { ChartRange } from '~/utils/range/range'
@@ -29,8 +28,7 @@ export async function getPrivacyFlowsChart(
   const [dailyRows, syncedUntil] = await Promise.all([
     db.privacyFlowEvent.getDailyByProjectIds(
       params.projectIds,
-      UnixTime(0),
-      UnixTime.now(),
+      ...params.range,
     ),
     db.privacyFlowEvent.getLatestTimestampByProjectIds(params.projectIds),
   ])

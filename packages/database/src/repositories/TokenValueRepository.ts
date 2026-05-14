@@ -544,6 +544,7 @@ export class TokenValueRepository extends BaseRepository {
     projectIds: string[],
     ranges: [UnixTime | null, UnixTime][],
     opts: {
+      forSummary?: boolean
       excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
@@ -570,7 +571,7 @@ export class TokenValueRepository extends BaseRepository {
       return []
     }
 
-    const valueField = 'valueForProject'
+    const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     const rangeQueries = ranges.map(([from, to]) => {
       let query = this.db

@@ -99,13 +99,13 @@ export class PrivacyFlowEventRepository extends BaseRepository {
 
   async getDailyByProjectIds(
     projectIds: string[],
-    fromInclusive: UnixTime,
+    fromInclusive: UnixTime | null,
     toInclusive: UnixTime,
   ): Promise<PrivacyFlowDailyRecord[]> {
     if (projectIds.length === 0) return []
 
     const day = sql<Date>`date_trunc('day', "timestamp")`
-    const rows = await this.db
+    let query = this.db
       .selectFrom('PrivacyFlowEvent')
       .select((eb) => [
         'projectId',
@@ -135,11 +135,17 @@ export class PrivacyFlowEventRepository extends BaseRepository {
           .as('withdrawalValueUsd'),
       ])
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+
+    if (fromInclusive !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    query = query
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .groupBy(['projectId', 'bucketId', day])
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    const rows = await query.execute()
 
     return rows.map((row) => ({
       projectId: row.projectId,
