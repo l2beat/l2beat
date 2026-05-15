@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x3e5081f3ffc34a20e5e393dd521c184fbcad7d5a
+Generated with discovered.json: 0x19e760d29a04397f62fad60de1062e229af37b67
 
-# Diff at Fri, 15 May 2026 11:48:56 GMT:
+# Diff at Fri, 15 May 2026 13:02:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@9f2b9afdaf04bde4aad74b718dbbc72f9934a354 block: 1777388210
+- comparing to: main@8564a234fe883277ad48c181d695fcb04a089459 block: 1777388210
 - current timestamp: 1778572081
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Provide description of changes. This section will be preserved.
 
 ## Watched changes
 
@@ -37,16 +37,6 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
     contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
     +++ description: Timelock administering the CCIP Router, PriceRegistry, CommitStore, OffRamp, OnRamp, and ARM proxy.
-      directlyReceivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add destination chains and update per-chain config (gas overheads, DA multipliers, fee parameters, size limits).","role":".owner"}
-      directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove authorized price-updater accounts.","role":".owner"}
-      directlyReceivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"add or remove fee tokens accepted by CCIP pricing.","role":".owner"}
-      directlyReceivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"publish or revise token and destination-chain gas prices stored in this FeeQuoter.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.5:
-+        {"permission":"interact","from":"eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57","description":"update per-token transfer fee overrides (deciBps, min/max fee, dest gas overhead).","role":".owner"}
       directlyReceivedPermissions.4:
 -        {"permission":"interact","from":"eth:0x69eCC4E2D8ea56E2d0a05bF57f4Fd6aEE7f2c284","description":"add, remove, or reprice fee tokens accepted by this OnRamp.","role":".owner"}
       directlyReceivedPermissions.5:
@@ -150,8 +140,8 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract FeeQuoter (eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57) [transporter/FeeQuoter]
-    +++ description: v1.6 fee oracle + price registry. Replaces the per-lane PriceRegistry: holds the per-destination-chain config (gas overheads, DA multipliers, network fee, gas multiplier, size limits, chain-family selector, etc.), the per-fee-token premium config, the per-(destChain, token) transfer fee overrides, and the live USD price tables for tokens and destination gas. The per-chain v1.6 OnRamp delegates fee quoting to this contract via getValidatedFee().
+    contract FeeQuoter (eth:0x300F2cA3e3867133BAEA866C89096F097d57Bf57) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -1089,6 +1079,33 @@ discovery. Values are for block 1777388210 (main branch discovery), not current.
 +   Status: CREATED
     contract CommitStore (eth:0xf7B343A17445F175f2Dd9f5CB29BAf0a8dE75ed3) [transporter/CommitStoreV1]
     +++ description: None
+```
+
+Generated with discovered.json: 0xbf06d64d74f8a96d44023635c14ffc4afa14299e
+
+# Diff at Fri, 15 May 2026 12:35:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a5152b9ba7ad7f85f2af3d814f74630fcaa7c917 block: 1777388210
+- current timestamp: 1777388210
+
+## Description
+
+Shape hashes update after flattener improvements
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777388210 (main branch discovery), not current.
+
+```diff
+    contract GHOEthereumTokenPool (eth:0x06179f7C1be40863405f374E7f5F8806c728660A) [transporter/TokenPool] {
+    +++ description: GHO lock-and-release token pool on Ethereum. It trusts configured Arbitrum remote pools and only accepts inbound token releases routed through CCIP OffRamps.
+      sourceHashes.1:
+-        "0x39415a58cb2a072d97bd39f2f579e01c82ace7c06e80bf5619dc0be2bf2620e8"
++        "0x9c4424aa5c0675489f24e9cf8b9bf148ee3c51c282747bbf58f9bbba8bfd05d9"
+    }
 ```
 
 Generated with discovered.json: 0x30eee331d2405cf28886220483944dc18a02653e
